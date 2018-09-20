@@ -22,4 +22,4 @@ const createMap = function () {
 }
 
 
-export default createMap;
+export {createMap};
