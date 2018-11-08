@@ -9,7 +9,8 @@ describe("wms.js", function () {
             expect(_.isNumber(sid)).toEqual(true);
         });
     });
-    /*
+
+    /* TODO
     describe("makeParams", function () {
 
     });
