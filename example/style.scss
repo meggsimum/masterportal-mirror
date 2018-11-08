@@ -1,0 +1,60 @@
+/* CSS for example page. Do not manipulate map itself here, has no effect on prod. */
+html, body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    height: 100%;
+    background: #225533;
+    font-family: 'Roboto', sans-serif;
+
+    .mock-header {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        height: 50px;
+        font-size: 2em;
+        color: #0000CC;
+        background: #FFFFCC;
+    }
+
+    .mock-body {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+
+        .mock-sidebar {
+            color: #0000CC;
+            background: #FFFFCC;
+            width: 200px;
+            ul {
+                padding: 0;
+                li {
+                    list-style-type: none;
+                    padding: 1em;
+                    width: 100%;
+                    &:hover {
+                        cursor: pointer;
+                        background: #CCFFCC;
+                    }
+                }
+            }
+        }
+
+        .mock-content {
+            padding: 1em;
+            color: #DEDEDE;
+            background: #225533;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            .content-mock {
+                padding: 0.2em;
+            }
+        }
+
+        .map-background {
+            background: #22222222;
+        }
+    }
+}

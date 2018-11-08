@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1001",
+    "typ": "WMS",
+    "name": "WebAtlasDe",
+    "url": "https://sg.geodatenzentrum.de/wms_webatlasde__54a30b0f-b92f-34ba-39c0-3af32cfa13d6",
+    "format": "image/png",
+    "version": "1.1.1",
+    "transparent": false,
+    "layers": "webatlasde",
+    "singleTile": false,
+    "tilesize": "256",
+    "gutter": 0,
+    "minScale": 1,
+    "maxScale": 200
+  },
+  {
+    "id" : "2001",
+    "typ" : "GeoJSON",
+    "name" : "Landesgrenze Hamburg",
+    "url" : "https://geoportal-hamburg.de/lgv-config/landesgrenze_hh.json"
+  }
+]

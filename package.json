@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest .test.js --config ./jest.config.js --collectCoverage",
     "test:watch": "jest .test.js --config ./jest.config.js --watch",
+    "example": "parcel example/index.html",
     "generate-jsdoc": "jsdoc ./src -r -d ./docs/ -R ./README.md"
   },
   "author": "Landesbetrieb Geoinformation und Vermessung Hamburg",
@@ -20,9 +21,12 @@
     "@babel/plugin-transform-modules-commonjs": "^7.1.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
+    "babel-polyfill": "^6.26.0",
     "canvas": "^2.1.0",
     "jest": "^23.6.0",
-    "jest-canvas-mock": "^1.1.0"
+    "jest-canvas-mock": "^1.1.0",
+    "parcel-bundler": "^1.10.3",
+    "sass": "^1.14.3"
   },
   "peerDependencies": {},
   "engines": {
