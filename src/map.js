@@ -4,7 +4,7 @@ import {defaults as olDefaultInteractions} from "ol/interaction.js";
 
 import defaults from "./defaults";
 import * as wms from "./layer/wms";
-import * as geojson from "./geojson";
+import * as geojson from "./layer/geojson";
 import {createMapView} from "./mapView";
 import {initializeLayerList, getLayerWhere} from "./rawLayerList";
 import {registerProjections} from "./initialization/registerProjections";
