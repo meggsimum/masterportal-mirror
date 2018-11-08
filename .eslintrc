@@ -2,9 +2,6 @@
     "env": {
         "es6": true
     },
-    "plugins": [
-        "chai-friendly"
-    ],
     "parserOptions": {
         "sourceType": "module"
     },
@@ -87,7 +84,6 @@
         "no-throw-literal": "error",
         "no-unmodified-loop-condition": "error",
         "no-unused-expressions": 0,
-        "chai-friendly/no-unused-expressions": 2,
         "no-unused-labels": "error",
         "no-useless-call": "error",
         "no-useless-concat": "error",

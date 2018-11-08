@@ -21,5 +21,8 @@ const createMap = function () {
     return map;
 }
 
+const addLayer = function () {
+  console.warn("not yet implemented")
+}
 
-export {createMap};
+export {createMap, addLayer};

@@ -1,6 +1,6 @@
-package-lock.json
 /node_modules
+/example
 /dist
 /docs
-/coverage
 /.cache
+/coverage
