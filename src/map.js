@@ -7,7 +7,7 @@ import * as wms from "./layer/wms";
 import * as geojson from "./layer/geojson";
 import {createMapView} from "./mapView";
 import {initializeLayerList, getLayerWhere} from "./rawLayerList";
-import {registerProjections} from "./initialization/registerProjections";
+import {registerProjections} from "./crs";
 
 var layerBuilderMap = {
         wms: wms,
