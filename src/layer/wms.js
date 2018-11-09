@@ -47,7 +47,7 @@ export function createTileGrid (rawLayer, resolutions) {
  * @param {object} rawLayer - layer specification as in services.json
  * @returns {(ol/source/TileWMS|ol/source/ImageWMS)} TileWMS or ImageWMS, depending on whether singleTile is true.
  */
-function createLayerSource (rawLayer) {
+export function createLayerSource (rawLayer) {
     var params = makeParams(rawLayer);
 
     if (rawLayer.singleTile) {
