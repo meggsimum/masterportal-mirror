@@ -15,6 +15,7 @@ export default {
         {resolution: 0.2645831904584105, scale: 1000, zoomLevel: 8},
         {resolution: 0.13229159522920521, scale: 500, zoomLevel: 9}
     ],
+    namedProjections: ["EPSG:25832", "+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"],
     startResolution: 15.874991427504629,
     startCenter: [565874, 5934140],
     layerConf: "http://geoportal-hamburg.de/lgv-config/services-internet.json",
