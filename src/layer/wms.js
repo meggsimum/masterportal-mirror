@@ -137,8 +137,10 @@ export function getGfiURL (layer, map, coordinate) {
         resolution = map.getView().getResolution(),
         projection = map.getView().getProjection(),
         params = _.extend({
-            INFO_FORMAT: rawLayer.infoFormat || "text/xml"
-        }, _.isUndefined(rawLayer.featureCount) ? {} : {FEATURE_COUNT: rawLayer.featureCount});
+            INFO_FORMAT: (rawLayer && rawLayer.infoFormat) || "text/xml"
+        }, rawLayer && !_.isUndefined(rawLayer.featureCount)
+            ? {FEATURE_COUNT: rawLayer.featureCount}
+            : {});
 
     return layer.getSource().getGetFeatureInfoUrl(coordinate, resolution, projection, params);
 }
