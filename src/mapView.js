@@ -14,7 +14,9 @@ export function createMapView (config) {
             center: options.startCenter,
             extent: options.extent,
             resolution: options.startResolution,
-            resolutions: options.options.map(entry => entry.resolution)
+            resolutions: options.options.map(function (entry) {
+                return entry.resolution;
+            })
         };
 
     return new View(viewParams);

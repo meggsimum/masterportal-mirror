@@ -1,21 +1,46 @@
 import _ from "underscore";
-import loadLayerList from "./loadLayerList.js";
+import defaults from "./defaults";
 
 /** @type{Array} layerList that contains all known services. */
 let layerList = [];
 
 /**
- * TODO rewrite async so that IE11 works (waiting on decision how to handle asynchronous flow here)
  * Initializes the layer list with either an object or an URL. May be used again to override the layer list.
+ * createMap will call this for you, but won't notify you of when it's done. Use this function manually with a
+ * callback to know when layers can be added programmatically.
  * @param {string|object} parameter - either the URL to fetch the services from, or the object containing the services
- * @returns {object} the layerList in use by this module now
+ * @param {function} [callback] - called with services after loaded; called with false and error on error
+ * @returns {undefined} nothing, add callback to receive layerList
  */
-export async function initializeLayerList (parameter) {
-    layerList = _.isArray(parameter)
-        ? parameter
-        : await loadLayerList(parameter);
+export function initializeLayerList (parameter, callback) {
+    var layerConf = parameter || defaults.layerConf,
+        Http;
 
-    return layerList;
+    if (_.isArray(layerConf)) {
+        // case: parameter was services.json contents
+        layerList = layerConf;
+        if (_.isFunction(callback)) {
+            callback(layerList);
+            return;
+        }
+        return;
+    }
+
+    // case: parameter is URL
+    Http = new XMLHttpRequest();
+    Http.open("GET", layerConf);
+    Http.send();
+    Http.onload = function () {
+        layerList = JSON.parse(Http.responseText);
+        if (_.isFunction(callback)) {
+            return callback(layerList);
+        }
+        return true;
+    };
+    Http.onerror = function (e) {
+        console.error("An error occured when trying to fetch services from '" + layerConf + "':", e);
+        callback(false, e);
+    };
 }
 
 /**
