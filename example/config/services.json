@@ -6,10 +6,10 @@
     "url": "https://sg.geodatenzentrum.de/wms_webatlasde__54a30b0f-b92f-34ba-39c0-3af32cfa13d6",
     "format": "image/png",
     "version": "1.1.1",
-    "transparent": false,
     "layers": "webatlasde",
+    "transparent": true,
     "singleTile": false,
-    "tilesize": "256",
+    "tilesize": 256,
     "gutter": 0,
     "minScale": 1,
     "maxScale": 200
