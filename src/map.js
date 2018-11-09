@@ -2,6 +2,7 @@ import _ from "underscore";
 import {Map} from "ol";
 import {defaults as olDefaultInteractions} from "ol/interaction.js";
 
+import setBackgroundImage from "./lib/setBackgroundImage";
 import defaults from "./defaults";
 import * as wms from "./layer/wms";
 import * as geojson from "./layer/geojson";
@@ -23,12 +24,13 @@ var layerBuilderMap = {
  */
 export function createMap (config, params) {
     registerProjections(config.namedProjections);
+    initializeLayerList(config.layerConf);
+    setBackgroundImage(config);
     map = new Map(_.extend({
         target: config.target || defaults.target,
         interactions: olDefaultInteractions({altShiftDragRotate: false, pinchRotate: false}),
         view: createMapView(config)
     }, params));
-    initializeLayerList(config.layerConf);
     return map;
 }
 
