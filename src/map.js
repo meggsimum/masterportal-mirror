@@ -50,7 +50,7 @@ export function addLayer (id) {
     }
     layerBuilder = layerBuilderMap[rawLayer.typ.toLowerCase()];
     if (!layerBuilder) {
-        console.warn("Layer with id '" + id + "' has unknown type '" + rawLayer.typ + "'. No layer added to map.");
+        console.error("Layer with id '" + id + "' has unknown type '" + rawLayer.typ + "'. No layer added to map.");
         return null;
     }
     layer = layerBuilder.createLayer(rawLayer);
