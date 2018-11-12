@@ -115,28 +115,6 @@ export function updateSource (layer) {
 }
 
 /**
- * Generates an array of URLs that are supposed to hold legend graphics.
- * @param {*} rawLayer - layer specification as in services.json
- * @returns {string[]} URLs of legend graphics for the rawLayer.
- */
-export function getLegendURLs (rawLayer) {
-    if (rawLayer.legendURL) {
-        return rawLayer.legendURL === "ignore" ? [] : [rawLayer.legendURL];
-    }
-    return rawLayer.layers
-        .split(",")
-        .filter(_.identity /* filters empty string since it's falsy */)
-        .map(function (layerName) {
-            return (
-                rawLayer.url +
-                "&SERVICE=WMS&REQUEST=GetLegendGraphic&FORMAT=image/png" +
-                "?VERSION=" + rawLayer.version +
-                "&LAYER=" + layerName
-            );
-        });
-}
-
-/**
  * Creates the gfiURL from clicked layer, map, and coordinate.
  * @param {ol/Layer} layer - what to get the gfiURL for
  * @param {ol/Map} map - needed for resolution/projection
