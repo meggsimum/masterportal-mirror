@@ -13,7 +13,7 @@ describe("rawLayerList.js", function () {
             expect(rll.getLayerList()).toBe(services);
         });
 
-        /* TODO asynchronous test where services.json is mock-loaded, with callback */
+        // did not test async path where URL string is given instead of services object; doesn't seem worth the mock effort
     });
 
     describe("getDisplayNamesOfFeatureAttributes", function () {
