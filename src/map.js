@@ -53,7 +53,7 @@ export function addLayer (id) {
         console.error("Layer with id '" + id + "' has unknown type '" + rawLayer.typ + "'. No layer added to map.");
         return null;
     }
-    layer = layerBuilder.createLayer(rawLayer);
+    layer = layerBuilder.createLayer(rawLayer, map);
     map.addLayer(layer);
     return layer;
 }

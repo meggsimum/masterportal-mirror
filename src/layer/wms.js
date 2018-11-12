@@ -14,6 +14,12 @@ export function generateSessionId () {
 /**
  * Creates query parameters for webservice requests from rawLayer.
  * @param {object} rawLayer - layer specification as in services.json
+ * @param {string} [rawLayer.format="image/png"] - format of images requested
+ * @param {string} layers - comma-separated list of requested layers
+ * @param {version} version - webservice version as string, e.g. "1.1.1"
+ * @param {boolean} transparent - whether tiles from this service should have transparency where no information is available
+ * @param {boolean} singleTile - whether only one tile shall be requested that fills the whole view
+ * @param {string|number} tilesize - if singleTile is true, this is the requested tilesize
  * @returns {object} maps query parameter names to values
  */
 export function makeParams (rawLayer) {
@@ -30,13 +36,17 @@ export function makeParams (rawLayer) {
 /**
  * Creates a TileGrid for a TileLayer.
  * @param {object} rawLayer - layer specification as in services.json
- * @param {number[]} resolutions - array of resolutions active in mapView
- * @returns {ol/tilegrid/TileGrid} TileGrid for WMS
+ * @param {object} [map] - required for defined resolutions, returns undefined if not given
+ * @returns {undefined|ol/tilegrid/TileGrid} TileGrid for WMS
  */
-export function createTileGrid (rawLayer, resolutions) {
+export function createTileGrid (rawLayer, map) {
+    if (!map) {
+        return undefined;
+    }
+
     return new TileGrid({
-        resolutions: resolutions,
-        // TODO magic numbers, probably HH? I guess this is to synch tile requests for caching - check and annotate
+        resolutions: map.getView().getResolutions(),
+        // HH-specific default
         origin: [442800, 5809000],
         tileSize: parseInt(rawLayer.tileSize, 10) || 256
     });
@@ -45,35 +55,36 @@ export function createTileGrid (rawLayer, resolutions) {
 /**
  * Creates an ol/source element for the rawLayer.
  * @param {object} rawLayer - layer specification as in services.json
+ * @param {string} [rawLayer.serverType] - optional servertype definition: "geoserver" or "mapserver" or "qgis"
+ * @param {object} [map] - optionally give map to create a defined TileGrid
  * @returns {(ol/source/TileWMS|ol/source/ImageWMS)} TileWMS or ImageWMS, depending on whether singleTile is true.
  */
-export function createLayerSource (rawLayer) {
+export function createLayerSource (rawLayer, map) {
     var params = makeParams(rawLayer);
 
     if (rawLayer.singleTile) {
         return new ImageWMS({
             url: rawLayer.url,
             params: params,
-            // TODO seems optional, try not using or parameterizing; elem {geoserver, mapserver, qgis}
-            serverType: "geoserver"
+            serverType: rawLayer.serverType
         });
     }
     return new TileWMS({
         url: rawLayer.url,
         params: params,
-        gutter: rawLayer.gutter || 0
-        // TODO somehow throw resolutions in here; I guess map must be given as parameter
-        // tileGrid: createTileGrid(rawLayer, RESOLUTIONS)
+        gutter: rawLayer.gutter || 0,
+        tileGrid: createTileGrid(rawLayer, map)
     });
 }
 
 /**
  * Creates complete ol/Layer from rawLayer containing all required children.
  * @param {*} rawLayer - layer specification as in services.json
+ * @param {object} [map] - optionally give map to create a defined TileGrid
  * @returns {ol/Layer} Layer that can be added to map.
  */
-export function createLayer (rawLayer) {
-    var source = createLayerSource(rawLayer),
+export function createLayer (rawLayer, map) {
+    var source = createLayerSource(rawLayer, map),
         Layer = rawLayer.singleTile ? ImageLayer : TileLayer;
 
     return new Layer({
