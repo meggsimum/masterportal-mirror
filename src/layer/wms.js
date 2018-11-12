@@ -36,16 +36,26 @@ export function makeParams (rawLayer) {
 /**
  * Creates a TileGrid for a TileLayer.
  * @param {object} rawLayer - layer specification as in services.json
- * @param {object} [map] - required for defined resolutions, returns undefined if not given
+ * @param {object|Array} [param] - required for defined resolutions, returns undefined if not given; either ol/map or array of resolutions
  * @returns {undefined|ol/tilegrid/TileGrid} TileGrid for WMS
  */
-export function createTileGrid (rawLayer, map) {
-    if (!map) {
+export function createTileGrid (rawLayer, param) {
+    var resolutions;
+
+    if (!param) {
+        return undefined;
+    }
+
+    resolutions = _.isArray(param)
+        ? param
+        : param.getView() && param.getView().getResolutions();
+
+    if (!resolutions) {
         return undefined;
     }
 
     return new TileGrid({
-        resolutions: map.getView().getResolutions(),
+        resolutions: resolutions,
         // HH-specific default
         origin: [442800, 5809000],
         tileSize: parseInt(rawLayer.tileSize, 10) || 256
