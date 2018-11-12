@@ -8,16 +8,15 @@ import defaults from "./defaults";
  * @returns {ol/View} view with start values from config
  */
 export function createMapView (config) {
-    var options = _.extend({}, defaults, config),
-        viewParams = {
-            projection: options.epsg,
-            center: options.startCenter,
-            extent: options.extent,
-            resolution: options.startResolution,
-            resolutions: options.options.map(function (entry) {
-                return entry.resolution;
-            })
-        };
+    var mergedConfig = _.extend({}, defaults, config);
 
-    return new View(viewParams);
+    return new View({
+        projection: mergedConfig.epsg,
+        center: mergedConfig.startCenter,
+        extent: mergedConfig.extent,
+        resolution: mergedConfig.startResolution,
+        resolutions: mergedConfig.options.map(function (entry) {
+            return entry.resolution;
+        })
+    });
 }
