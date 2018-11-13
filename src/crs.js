@@ -87,7 +87,7 @@ export function transformToMapProjection (map, sourceProjection, point) {
 }
 
 /**
- * Projects a point to the given map.
+ * Projects a point from the given map.
  * @param {ol/Map} map - map to project from, and point must be in map's projection
  * @param {string|object} targetProjection - projection name or projection to project to
  * @param {[number, number]} point - point to project
