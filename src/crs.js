@@ -1,4 +1,3 @@
-import _ from "underscore";
 import proj4 from "proj4";
 import * as Proj from "ol/proj.js";
 import {register} from "ol/proj/proj4.js";
@@ -10,13 +9,11 @@ import defaults from "./defaults";
  * @returns {undefined}
  */
 export function registerProjections (namedProjections) {
-    var projections = namedProjections || defaults.namedProjections;
+    const projections = namedProjections || defaults.namedProjections;
 
     proj4.defs(projections);
     register(proj4);
-    _.each(projections, function (projection) {
-        Proj.addProjection(Proj.get(projection[0]));
-    });
+    projections.forEach(projection => Proj.addProjection(Proj.get(projection[0])));
 }
 
 /**
@@ -35,11 +32,7 @@ export function getProjection (name) {
 export function getProjections () {
     return Object
         .keys(proj4.defs)
-        .map(function (name) {
-            return _.extend(proj4.defs(name), {
-                name: name
-            });
-        });
+        .map(name => Object.assign(proj4.defs(name), {name}));
 }
 
 /**
@@ -58,7 +51,7 @@ function getMapProjection (map) {
  * @returns {object|undefined} proj4 projection or undefined or parameter
  */
 function getProj4Projection (projection) {
-    return _.isString(projection)
+    return typeof projection === "string"
         ? getProjection(projection)
         : projection;
 }
@@ -71,17 +64,14 @@ function getProj4Projection (projection) {
  * @returns {[number, number]|undefined} transformed point
  */
 export function transform (sourceProjection, targetProjection, point) {
-    var source = getProj4Projection(sourceProjection),
+    const source = getProj4Projection(sourceProjection),
         target = getProj4Projection(targetProjection);
 
     if (source && target && point) {
         return proj4(source, target, point);
     }
 
-    console.error("Cancelled coordinate transformation with invalid parameters: "
-        + sourceProjection + "; "
-        + targetProjection + "; "
-        + point);
+    console.error(`Cancelled coordinate transformation with invalid parameters: ${sourceProjection}; ${targetProjection}; ${point}`);
     return undefined;
 }
 

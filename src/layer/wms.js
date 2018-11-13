@@ -1,4 +1,3 @@
-import _ from "underscore";
 import {Tile as TileLayer, Image as ImageLayer} from "ol/layer.js";
 import TileGrid from "ol/tilegrid/TileGrid.js";
 import TileWMS from "ol/source/TileWMS.js";
@@ -8,7 +7,7 @@ import {getLayerWhere} from "../rawLayerList";
 
 /** @returns {number} random session id in range (0, 9999999) */
 export function generateSessionId () {
-    return _.random(9999999);
+    return Math.floor(Math.random() * 9999999);
 }
 
 /**
@@ -23,7 +22,7 @@ export function generateSessionId () {
  * @returns {object} maps query parameter names to values
  */
 export function makeParams (rawLayer) {
-    return _.extend({
+    return Object.assign({
         SESSIONID: generateSessionId(),
         FORMAT: rawLayer.format || "image/png",
         LAYERS: rawLayer.layers,
@@ -39,14 +38,12 @@ export function makeParams (rawLayer) {
  * @param {object|Array} [param] - required for defined resolutions, returns undefined if not given; either ol/map or array of resolutions
  * @returns {undefined|ol/tilegrid/TileGrid} TileGrid for WMS
  */
-export function createTileGrid (rawLayer, param) {
-    var resolutions;
-
+export function createTileGrid ({tileSize}, param) {
     if (!param) {
         return undefined;
     }
 
-    resolutions = _.isArray(param)
+    const resolutions = Array.isArray(param)
         ? param
         : param.getView() && param.getView().getResolutions();
 
@@ -55,10 +52,10 @@ export function createTileGrid (rawLayer, param) {
     }
 
     return new TileGrid({
-        resolutions: resolutions,
+        resolutions,
         // HH-specific default
         origin: [442800, 5809000],
-        tileSize: parseInt(rawLayer.tileSize, 10) || 256
+        tileSize: parseInt(tileSize, 10) || 256
     });
 }
 
@@ -70,18 +67,18 @@ export function createTileGrid (rawLayer, param) {
  * @returns {(ol/source/TileWMS|ol/source/ImageWMS)} TileWMS or ImageWMS, depending on whether singleTile is true.
  */
 export function createLayerSource (rawLayer, map) {
-    var params = makeParams(rawLayer);
+    const params = makeParams(rawLayer);
 
     if (rawLayer.singleTile) {
         return new ImageWMS({
             url: rawLayer.url,
-            params: params,
+            params,
             serverType: rawLayer.serverType
         });
     }
     return new TileWMS({
         url: rawLayer.url,
-        params: params,
+        params,
         gutter: rawLayer.gutter || 0,
         tileGrid: createTileGrid(rawLayer, map)
     });
@@ -94,11 +91,11 @@ export function createLayerSource (rawLayer, map) {
  * @returns {ol/Layer} Layer that can be added to map.
  */
 export function createLayer (rawLayer, map) {
-    var source = createLayerSource(rawLayer, map),
+    const source = createLayerSource(rawLayer, map),
         Layer = rawLayer.singleTile ? ImageLayer : TileLayer;
 
     return new Layer({
-        source: source,
+        source,
         minResolution: rawLayer.minScale,
         maxResolution: rawLayer.maxScale,
         // id passed to help identification in services.json
@@ -112,8 +109,8 @@ export function createLayer (rawLayer, map) {
  * @returns {number} the new sessionID
  */
 export function updateSource (layer) {
-    var oldSessionId = layer.getSource().getParams().SESSIONID,
-        newSessionId = oldSessionId;
+    const oldSessionId = layer.getSource().getParams().SESSIONID;
+    let newSessionId = oldSessionId;
 
     // to avoid rolling the same ID again; never happens except in your presentation
     while (oldSessionId === newSessionId) {
@@ -132,12 +129,12 @@ export function updateSource (layer) {
  * @returns {(string|undefined)} the gfiURL, or undefined if it could not be constructed
  */
 export function getGfiURL (layer, map, coordinate) {
-    var rawLayer = getLayerWhere({Id: layer.get("id")}),
+    const rawLayer = getLayerWhere({Id: layer.get("id")}),
         resolution = map.getView().getResolution(),
         projection = map.getView().getProjection(),
-        params = _.extend({
+        params = Object.assign({
             INFO_FORMAT: (rawLayer && rawLayer.infoFormat) || "text/xml"
-        }, rawLayer && !_.isUndefined(rawLayer.featureCount)
+        }, rawLayer && typeof rawLayer.featureCount !== "undefined"
             ? {FEATURE_COUNT: rawLayer.featureCount}
             : {});
 

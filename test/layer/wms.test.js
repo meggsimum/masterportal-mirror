@@ -4,7 +4,6 @@ import TileWMS from "ol/source/TileWMS.js";
 import ImageWMS from "ol/source/ImageWMS.js";
 import TileGrid from "ol/tilegrid/TileGrid.js";
 
-import _ from "underscore";
 import * as wms from "../../src/layer/wms";
 
 describe("wms.js", function () {
@@ -12,7 +11,7 @@ describe("wms.js", function () {
         it("returns a number", function () {
             const sid = wms.generateSessionId();
 
-            expect(_.isNumber(sid)).toBe(true);
+            expect(typeof sid).toBe("number");
         });
     });
 

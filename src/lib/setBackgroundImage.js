@@ -1,4 +1,3 @@
-import _ from "underscore";
 import defaults from "../defaults";
 
 /**
@@ -8,20 +7,15 @@ import defaults from "../defaults";
  * @param {string} [config.backgroundImage] - image URL to set; "" means none, undefined means default
  * @returns {undefined}
  */
-export default function setBackgroundImage (config) {
-    var backgroundImage = config.backgroundImage,
-        div,
-        urlString;
-
-    // keep "" as explicit none
-    if (!_.isString(backgroundImage)) {
-        backgroundImage = defaults.backgroundImage;
-    }
-
-    div = document.getElementById(config.target || defaults.target);
+export default function setBackgroundImage ({backgroundImage, target}) {
+    const div = document.getElementById(target || defaults.target);
 
     if (div) {
-        urlString = "url(" + backgroundImage + ")";
+        const urlString = `url(${
+            // keep "" as explicit none
+            typeof backgroundImage === "string" ? backgroundImage : defaults.backgroundImage
+        })`;
+
         div.style.backgroundImage = urlString;
     }
 }

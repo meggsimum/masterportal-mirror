@@ -1,4 +1,3 @@
-import _ from "underscore";
 import {Map} from "ol";
 import {defaults as olDefaultInteractions} from "ol/interaction.js";
 
@@ -10,11 +9,14 @@ import {createMapView} from "./mapView";
 import {initializeLayerList, getLayerWhere} from "./rawLayerList";
 import {registerProjections} from "./crs";
 
-var layerBuilderMap = {
-        wms: wms,
-        geojson: geojson
-    },
-    map;
+/** @type {object} lookup for layer constructors */
+const layerBuilderMap = {
+    wms: wms,
+    geojson: geojson
+};
+
+/** @type {ol/Map} last map created by createMap */
+let map;
 
 /**
  * Creates an openlayers map according to configuration.
@@ -26,7 +28,7 @@ export function createMap (config, params) {
     registerProjections(config.namedProjections);
     initializeLayerList(config.layerConf);
     setBackgroundImage(config);
-    map = new Map(_.extend({
+    map = new Map(Object.assign({
         target: config.target || defaults.target,
         interactions: olDefaultInteractions({altShiftDragRotate: false, pinchRotate: false}),
         view: createMapView(config)
@@ -40,9 +42,8 @@ export function createMap (config, params) {
  * @returns {ol/Layer|null} added layer
  */
 export function addLayer (id) {
-    var layer,
-        layerBuilder,
-        rawLayer = getLayerWhere({id});
+    const rawLayer = getLayerWhere({id});
+    var layer, layerBuilder;
 
     if (!rawLayer) {
         console.error("Layer with id '" + id + "' not found. No layer added to map.");
@@ -53,6 +54,7 @@ export function addLayer (id) {
         console.error("Layer with id '" + id + "' has unknown type '" + rawLayer.typ + "'. No layer added to map.");
         return null;
     }
+
     layer = layerBuilder.createLayer(rawLayer, map);
     map.addLayer(layer);
     return layer;

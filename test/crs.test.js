@@ -1,4 +1,3 @@
-import _ from "underscore";
 import {Map, View} from "ol";
 import proj4 from "proj4";
 import * as Proj from "ol/proj.js";
@@ -12,15 +11,13 @@ const namedProjections = [
 ];
 
 describe("crs.js", function () {
-    beforeAll(function () {
-        crs.registerProjections(namedProjections);
-    });
+    beforeAll(() => crs.registerProjections(namedProjections));
 
     describe("registerProjections", function () {
         it("registers the projections", function () {
             // registerProjection was called in beforeAll
-            _.each(namedProjections, function (namedProjection) {
-                var proj4Return = proj4.defs(namedProjection[0]),
+            namedProjections.forEach(namedProjection => {
+                const proj4Return = proj4.defs(namedProjection[0]),
                     olReturn = Proj.get(namedProjection[0]);
 
                 expect(typeof proj4Return).toBe("object");
@@ -38,27 +35,19 @@ describe("crs.js", function () {
     describe("getProjections", function () {
         it("returns all known projections", function () {
             const projections = crs.getProjections(),
-                projectionNames = projections.map(function (entry) {
-                    return entry.name;
-                }),
-                knownProjectionNames = namedProjections.map(function (entry) {
-                    return entry[0];
-                });
+                projectionNames = projections.map(entry => entry.name),
+                knownProjectionNames = namedProjections.map(entry => entry[0]);
 
             // proj4 may come with default projections, hence >=
             expect(projectionNames.length >= knownProjectionNames.length).toBe(true);
-            _.each(projections, function (projection) {
-                expect(typeof projection).toBe("object");
-            });
-            _.each(knownProjectionNames, function (name) {
-                expect(projectionNames).toContain(name);
-            });
+            projections.forEach(projection => expect(typeof projection).toBe("object"));
+            knownProjectionNames.forEach(name => expect(projectionNames).toContain(name));
         });
     });
 
     describe("transform", function () {
         it("transforms based on projection names", function () {
-            var resultA = crs.transform("EPSG:25832", "EPSG:4326", [0, 0]),
+            const resultA = crs.transform("EPSG:25832", "EPSG:4326", [0, 0]),
                 resultB = crs.transform("EPSG:4326", "EPSG:25832", resultA);
 
             expect(resultA[0]).toBeCloseTo(4.511256115);
@@ -68,7 +57,7 @@ describe("crs.js", function () {
         });
 
         it("transforms based on projections", function () {
-            var resultA = crs.transform(proj4.defs("EPSG:25832"), proj4.defs("EPSG:4326"), [0, 0]),
+            const resultA = crs.transform(proj4.defs("EPSG:25832"), proj4.defs("EPSG:4326"), [0, 0]),
                 resultB = crs.transform(proj4.defs("EPSG:4326"), proj4.defs("EPSG:25832"), resultA);
 
             expect(resultA[0]).toBeCloseTo(4.511256115);
@@ -78,9 +67,9 @@ describe("crs.js", function () {
         });
 
         it("returns undefined and logs error if transformation can not be performed", function () {
-            var consoleError = console.error,
-                mockError = jest.fn(),
-                result;
+            const consoleError = console.error,
+                mockError = jest.fn();
+            let result = null;
 
             console.error = mockError;
             result = crs.transform(proj4.defs("EPSG:WHOOPS_TYPO"), proj4.defs("EPSG:4326"), [0, 0]);

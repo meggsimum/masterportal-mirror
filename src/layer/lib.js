@@ -1,5 +1,3 @@
-import _ from "lodash";
-
 /**
  * @param {ol/Layer} layer - layer to check
  * @param {number} params - parameter object
@@ -7,12 +5,12 @@ import _ from "lodash";
  * @param {object} [params.map] - map to check; if not given, resolution is required
  * @returns {boolean} whether layer is visible in given resolution
  */
-export function isLayerVisibleInResolution (layer, params) {
-    var resolution = _.isUndefined(params.resolution)
-        ? params.map.getView().getResolution()
-        : params.resolution;
+export function isLayerVisibleInResolution (layer, {resolution, map}) {
+    const r = typeof resolution === "undefined"
+        ? map.getView().getResolution()
+        : resolution;
 
-    return layer.getMaxResolution() >= resolution && resolution >= layer.getMinResolution();
+    return layer.getMaxResolution() >= r && r >= layer.getMinResolution();
 }
 
 /**
@@ -20,21 +18,12 @@ export function isLayerVisibleInResolution (layer, params) {
  * @param {*} rawLayer - layer specification as in services.json
  * @returns {string[]} URLs of legend graphics for the rawLayer.
  */
-export function getLegendURLs (rawLayer) {
-    if (rawLayer.legendURL) {
-        return rawLayer.legendURL === "ignore" ? [] : [rawLayer.legendURL];
+export function getLegendURLs ({legendURL, layers, url, typ, format, version}) {
+    if (legendURL) {
+        return legendURL === "ignore" ? [] : [legendURL];
     }
-    return rawLayer.layers
+    return layers
         .split(",")
-        .filter(_.identity /* filters empty string since it's falsy */)
-        .map(function (layerName) {
-            return (
-                rawLayer.url +
-                "&SERVICE=" + rawLayer.typ +
-                "&REQUEST=GetLegendGraphic" +
-                "&FORMAT=" + rawLayer.format || "image/png" +
-                "?VERSION=" + rawLayer.version +
-                "&LAYER=" + layerName
-            );
-        });
+        .filter(x => x /* filters empty string since it's falsy */)
+        .map(layerName => `${url}&SERVICE=${typ}&REQUEST=GetLegendGraphic&FORMAT=${format || "image/png"}?VERSION=${version}&LAYER=${layerName}`);
 }

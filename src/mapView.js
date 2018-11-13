@@ -1,4 +1,3 @@
-import _ from "underscore";
 import {View} from "ol";
 import defaults from "./defaults";
 
@@ -8,15 +7,13 @@ import defaults from "./defaults";
  * @returns {ol/View} view with start values from config
  */
 export function createMapView (config) {
-    var mergedConfig = _.extend({}, defaults, config);
+    const mergedConfig = Object.assign({}, defaults, config);
 
     return new View({
         projection: mergedConfig.epsg,
         center: mergedConfig.startCenter,
         extent: mergedConfig.extent,
         resolution: mergedConfig.startResolution,
-        resolutions: mergedConfig.options.map(function (entry) {
-            return entry.resolution;
-        })
+        resolutions: mergedConfig.options.map(entry => entry.resolution)
     });
 }

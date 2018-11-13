@@ -7,7 +7,7 @@ import * as geojson from "./layer/geojson";
 import * as layerLib from "./layer/lib";
 import setBackgroundImage from "./lib/setBackgroundImage";
 
-var lib = {
+const lib = {
     setBackgroundImage
 };
 
