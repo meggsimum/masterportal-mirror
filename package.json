@@ -21,6 +21,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "canvas": "^2.1.0",
     "jest": "^23.6.0",
     "jest-canvas-mock": "^1.1.0",
