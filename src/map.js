@@ -9,13 +9,20 @@ import {createMapView} from "./mapView";
 import {initializeLayerList, getLayerWhere} from "./rawLayerList";
 import {registerProjections} from "./crs";
 
-/** @type {object} lookup for layer constructors */
+/**
+ * lookup for layer constructors
+ * @ignore
+ */
 const layerBuilderMap = {
     wms: wms,
     geojson: geojson
 };
 
-/** @type {ol/Map} last map created by createMap */
+/**
+ * last map created by createMap
+ * @type {ol/Map}
+ * @ignore
+ */
 let map;
 
 /**

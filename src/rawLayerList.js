@@ -1,7 +1,10 @@
 import defaults from "./defaults";
 import findWhere from "./lib/findWhere";
 
-/** @type{Array} layerList that contains all known services. */
+/** layerList that contains all known services.
+ * @type{Array}
+ * @ignore
+ */
 let layerList = [];
 
 /**

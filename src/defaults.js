@@ -1,7 +1,8 @@
 /**
  * Since all functions are exported for users, all functions with defaults
  * have to import this object themselves to use fallbacks.
- * @type {object} default configuration object
+ * @type {object}
+ * @ignore
  */
 export default {
     target: "map",

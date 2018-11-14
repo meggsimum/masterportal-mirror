@@ -5,7 +5,7 @@ import defaults from "./defaults";
 
 /**
  * The configured named projections and proj4 have to be registered initially.
- * @param {[string, string][]} [namedProjections] - projection name, projection definition string
+ * @param {string[]} [namedProjections] - projection name, projection definition string
  * @returns {undefined}
  */
 export function registerProjections (namedProjections) {
@@ -60,8 +60,8 @@ function getProj4Projection (projection) {
  * Transforms a given point from a source to a target projection.
  * @param {string|object} sourceProjection - projection name or projection of point
  * @param {string|object} targetProjection - projection name or projection to project point to
- * @param {[number, number]} point - point to project
- * @returns {[number, number]|undefined} transformed point
+ * @param {number[]} point - point to project
+ * @returns {number[]|undefined} transformed point
  */
 export function transform (sourceProjection, targetProjection, point) {
     const source = getProj4Projection(sourceProjection),
@@ -79,8 +79,8 @@ export function transform (sourceProjection, targetProjection, point) {
  * Projects a point to the given map.
  * @param {ol/Map} map - map to project to
  * @param {string|object} sourceProjection - projection name or projection of point
- * @param {[number, number]} point - point to project
- * @returns {[number, number]|undefined} new point or undefined
+ * @param {number[]} point - point to project
+ * @returns {number[]|undefined} new point or undefined
  */
 export function transformToMapProjection (map, sourceProjection, point) {
     return transform(sourceProjection, getMapProjection(map), point);
@@ -90,8 +90,8 @@ export function transformToMapProjection (map, sourceProjection, point) {
  * Projects a point from the given map.
  * @param {ol/Map} map - map to project from, and point must be in map's projection
  * @param {string|object} targetProjection - projection name or projection to project to
- * @param {[number, number]} point - point to project
- * @returns {[number, number]|undefined} new point or undefined
+ * @param {number[]} point - point to project
+ * @returns {number[]|undefined} new point or undefined
  */
 export function transformFromMapProjection (map, targetProjection, point) {
     return transform(getMapProjection(map), targetProjection, point);
