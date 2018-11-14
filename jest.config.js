@@ -5,5 +5,9 @@ module.exports = {
     /** node_modules are usually ignored by babel-jest, but ol is published in ES6 */
     "transformIgnorePatterns": ["/node_modules/(?!(ol)/).*/"],
     /** only consider files in src/ for coverage */
-    "collectCoverageFrom": ["src/**/*.js"]
+    "collectCoverageFrom": ["src/**/*.js"],
+    /** mapping svg to string representation since jest can't handle svg */
+    "moduleNameMapper": {
+        "marker.svg": "<rootDir>/public/stringMarker.js"
+    }
 };
