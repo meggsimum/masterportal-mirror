@@ -14,7 +14,7 @@ By importing the project by module name like ``import ... from "masterportalAPI"
 
 |Script|Effect|
 |-|-|
-|``npm run example``|Starts a dev server with a running example. Please mind that the page seen is _not_ part of the masterportalAPI, but merely an environment for manual testing. Change code within ``~/example/index.js`` to try things. Free hot reloading thanks to parcel.|
+|``npm run example``|Starts a dev server with a running example. Please mind that the page seen is _not_ part of the masterportalAPI, but merely an environment for manual testing. Change code within ``./example/index.js`` to try things. Free hot reloading thanks to parcel.|
 |``npm run generate-jsdoc``|Generates the project documentation within the folder ``./docs``.|
 |``npm test``|Runs all tests. Prints code coverage to console.|
 |``npm test:watch``|Runs all tests in watch mode. Good practive to let this run during development in a separate terminal. |
