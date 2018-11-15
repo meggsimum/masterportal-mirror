@@ -33,8 +33,10 @@ jest.mock("../src/mapView.js");
 describe("map.js", function () {
     describe("createMap", function () {
         it("calls all initialization functions", function () {
-            createMap(defaults);
-            expect(initializeLayerList).toHaveBeenCalledWith(defaults.layerConf);
+            const callback = jest.fn();
+
+            createMap(defaults, {callback});
+            expect(initializeLayerList).toHaveBeenCalledWith(defaults.layerConf, callback);
             expect(registerProjections).toHaveBeenCalledWith(defaults.namedProjections);
             expect(setBackgroundImage).toHaveBeenCalledWith(defaults);
         });
@@ -45,7 +47,7 @@ describe("map.js", function () {
         });
 
         it("creates and returns a Map object from openlayers with optional additional params", function () {
-            const ret = createMap(defaults, {test: 1});
+            const ret = createMap(defaults, {mapParams: {test: 1}});
 
             expect(Map.mock.calls[Map.mock.calls.length - 1][0].test).toBe(1);
             expect(ret).toBeInstanceOf(Map);
