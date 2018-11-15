@@ -87,10 +87,11 @@ export function createLayerSource (rawLayer, map) {
 /**
  * Creates complete ol/Layer from rawLayer containing all required children.
  * @param {*} rawLayer - layer specification as in services.json
- * @param {object} [map] - optionally give map to create a defined TileGrid
+ * @param {object} [param={}] - parameter object
+ * @param {object} [param.map] - optionally give map to create a defined TileGrid
  * @returns {ol/Layer} Layer that can be added to map.
  */
-export function createLayer (rawLayer, map) {
+export function createLayer (rawLayer, {map} = {}) {
     const source = createLayerSource(rawLayer, map),
         Layer = rawLayer.singleTile ? ImageLayer : TileLayer;
 

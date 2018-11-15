@@ -62,7 +62,7 @@ export function addLayer (id) {
         return null;
     }
 
-    layer = layerBuilder.createLayer(rawLayer, map);
+    layer = layerBuilder.createLayer(rawLayer, {map});
     map.addLayer(layer);
     return layer;
 }
