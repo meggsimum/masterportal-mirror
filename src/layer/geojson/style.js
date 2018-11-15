@@ -52,8 +52,10 @@ const marker = new Icon({
  * @returns {ol/Style} style for feature
  * @ignore
  */
-export default function (feature) {
+function style (feature) {
     const type = feature.getGeometry().getType();
 
     return customStyles[type] || defaultStyles[type];
 }
+
+export default style;

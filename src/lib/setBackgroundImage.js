@@ -7,7 +7,7 @@ import defaults from "../defaults";
  * @param {string} [config.backgroundImage] - image URL to set; "" means none, undefined means default
  * @returns {undefined}
  */
-export default function setBackgroundImage ({backgroundImage, target} = {}) {
+function setBackgroundImage ({backgroundImage, target} = {}) {
     const div = document.getElementById(target || defaults.target);
 
     if (div) {
@@ -19,3 +19,5 @@ export default function setBackgroundImage ({backgroundImage, target} = {}) {
         div.style.backgroundImage = urlString;
     }
 }
+
+export default setBackgroundImage;

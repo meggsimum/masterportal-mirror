@@ -5,7 +5,7 @@
  * @returns {*} first array entry that meets condition, else null
  * @ignore
  */
-export default function (array, condition) {
+function findWhere (array, condition) {
     for (let i = 0; i < array.length; i++) {
         if (condition(array[i])) {
             return array[i];
@@ -14,3 +14,5 @@ export default function (array, condition) {
 
     return null;
 }
+
+export default findWhere;
