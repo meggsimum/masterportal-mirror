@@ -2,49 +2,80 @@
 import "babel-polyfill";
 import "ol/ol.css";
 
-import {createMap, addLayer} from "../src/index.js";
-import {initializeLayerList} from "../src/rawLayerList.js";
+import {Style, Stroke, Fill} from "ol/style.js";
+
+import * as mpapi from "../src";
+
 import services from "./config/services.json";
 import portalConfig from "./config/portal.json";
+import localGeoJSON from "./config/localGeoJSON.js";
+
+//* Add elements to window to play with API in console
+window.mpapi = {
+    ...mpapi,
+    map: null,
+    layers: []
+};
+// */
 
 //* Cleans up map before it is re-rendered (happens on every save during dev mode)
 document.getElementById(portalConfig.target).innerHTML = "";
 // */
 
-let config, map, layerWMS, layerGeoJSON;
-
-const log = () => {
-    console.log("%c¯ log example state ¯", "background: #222; color: #bada55");
-    console.log("config", config);
-    console.log("map", map);
-    console.log("layerWMS", layerWMS);
-    console.log("layerGeoJSON", layerGeoJSON);
-    console.log("%c_ /log example state _", "background: #222; color: #bada55");
+//* Fake service that holds client-side prepared geojson; also nice to test automatic transformation since data is in WGS 84
+const localService = {
+    id: "2002",
+    typ: "GeoJSON",
+    features: localGeoJSON
 };
+services.push(localService);
+// */
 
-const renderMap = ({ configuration, wmsLayerId, geoJsonLayerId }) => {
-    config = configuration;
-    map = createMap(config);
-    layerWMS = addLayer(wmsLayerId);
-    layerGeoJSON = addLayer(geoJsonLayerId);
-    log();
+//* geojson styling function call to override default styling
+mpapi.geojson.setCustomStyles({
+    MultiPolygon: new Style({
+        stroke: new Stroke({
+            width: 2,
+            color: "#000000"
+        }),
+        fill: new Fill({
+            color: "#FFFFFF55"
+        })
+    })
+});
+// */
+
+const renderMap = (configuration, layerIds) => {
+    window.mpapi.map = mpapi.createMap(configuration);
+    layerIds.forEach(id =>
+        window.mpapi.layers.push(mpapi.addLayer(id))
+    );
 }
 
-/* SYNCHRONOUS EXAMPLE: layerConf is known
-renderMap({
-    configuration: { ...portalConfig, layerConf: services },
-    wmsLayerId: "1001",
-    geoJsonLayerId: "2001"
-});
+//* SYNCHRONOUS EXAMPLE: layerConf is known
+renderMap(
+    {
+        ...portalConfig,
+        layerConf: services
+    },
+    [
+        "1001",
+        "2001",
+        // fake local layer:
+        "2002"
+    ]
+);
 //*/
 
-//* ASYNCHRONOUS EXAMPLE: layer Conf is loaded
+/* ASYNCHRONOUS EXAMPLE: layer Conf is loaded
 initializeLayerList(
     "http://geoportal-hamburg.de/lgv-config/services-internet.json",
-    conf => renderMap({
-        configuration: { ...portalConfig, layerConf: conf },
-        wmsLayerId: "6357",
-        geoJsonLayerId: "6074"
-    })
+    conf => renderMap(
+        {
+            ...portalConfig,
+            layerConf: conf
+        },
+        ["6357", "6074"]
+    )
 );
 //*/

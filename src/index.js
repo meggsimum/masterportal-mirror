@@ -7,10 +7,6 @@ import * as geojson from "./layer/geojson";
 import * as layerLib from "./layer/lib";
 import setBackgroundImage from "./lib/setBackgroundImage";
 
-const lib = {
-    setBackgroundImage
-};
-
 export {
     createMap,
     createMapView,
@@ -18,7 +14,7 @@ export {
     wms,
     geojson,
     layerLib,
-    lib,
+    setBackgroundImage,
     rawLayerList,
     crs
 };
