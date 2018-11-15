@@ -6,6 +6,8 @@ module.exports = {
     "transformIgnorePatterns": ["/node_modules/(?!(ol)/).*/"],
     /** only consider files in src/ for coverage */
     "collectCoverageFrom": ["src/**/*.js"],
+    /** coverage reporters */
+    "coverageReporters": ["json", "lcov", "text", "clover", "cobertura"],
     /** mapping svg to string representation since jest can't handle svg */
     "moduleNameMapper": {
         "marker.svg": "<rootDir>/public/stringMarker.js"
