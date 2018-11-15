@@ -20,18 +20,28 @@ const layerBuilderMap = {
 
 /**
  * last map created by createMap
- * @type {ol/Map}
+ * @type {ol.Map}
  * @ignore
  */
 let map;
 
 /**
- * Creates an openlayers map according to configuration.
+ * Creates an openlayers map according to configuration. Does not set many default values itself, but uses function that do.
+ * Check the called functions for default values, or [the defaults file]{@link ./defaults.js}.
  * @param {object} config - configuration object
- * @param {object} params - additional parameter object that is spread into the ol.Map constructor object
+ * @param {string} [config.target="map"] - div id to render map to
+ * @param {string} [config.backgroundImage] - background image for map; "" to use none
+ * @param {string} [config.epsg] - CRS to use
+ * @param {number[]} [config.extent] - extent to use
+ * @param {Array.<{resolution: number, scale: number, zoomLevel: number}>} [config.options] - zoom level definition
+ * @param {Array.<string[]>} [config.options] - each sub-array has two values: projection name, and projection description
+ * @param {number} [config.startResolution] - initial resolution
+ * @param {number[]} [config.startCenter] - initial position
+ * @param {(string|object)} [config.layerConf] - services registry or URL thereof
+ * @param {object} [params={}] - additional parameter object that is spread into the ol.Map constructor object
  * @returns {object} map object from ol
  */
-export function createMap (config, params) {
+export function createMap (config, params = {}) {
     registerProjections(config.namedProjections);
     initializeLayerList(config.layerConf);
     setBackgroundImage(config);
@@ -46,7 +56,7 @@ export function createMap (config, params) {
 /**
  * Adds a layer to the map by id. This id is looked up within the array of all known services.
  * @param {string} id - if of layer to add to map
- * @returns {ol/Layer|null} added layer
+ * @returns {?ol.Layer} added layer
  */
 export function addLayer (id) {
     const rawLayer = getLayerWhere({id});

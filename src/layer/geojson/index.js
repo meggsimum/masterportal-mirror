@@ -10,7 +10,7 @@ export {setCustomStyles};
  * onAddFeature function for source that ensures a feature has an id.
  * If feature has no id, the ol_uid is set to feature.id.
  * @param {object} param - parameter object
- * @param {ol/Feature} param.feature - openlayers feature added to source
+ * @param {ol.Feature} param.feature - openlayers feature added to source
  * @returns {undefined}
  * @ignore
  */
@@ -25,8 +25,8 @@ function onAddFeature ({feature}) {
  * @param {object} rawLayer - rawLayer as specified in services.json
  * @param {string} [rawLayer.url] - url to fetch geojson from; if no rawLayer.features given, this is required
  * @param {object} [rawLayer.features] - if features are transmitted via rawLayer, they will be used instead of requesting an URL
- * @param {ol/Map} [map] - map the geojson is to be projected on; if rawLayer.features given, this is used to infer the target projection
- * @returns {VectorSource} created VectorSource
+ * @param {ol.Map} [map] - map the geojson is to be projected on; if rawLayer.features given, this is used to infer the target projection
+ * @returns {ol.source.Vector} created VectorSource
  */
 export function createLayerSource ({features, url}, map) {
     const parser = new GeoJSON(),
@@ -49,9 +49,9 @@ export function createLayerSource ({features, url}, map) {
  * Creates a layer for GeoJSON.
  * @param {object} rawLayer - rawLayer as specified in services.json
  * @param {object} [param={}] - parameter object
- * @param {ol/Map} [param.map] - map the geojson is to be projected on
- * @param {ol/Style} [param.layerStyle] - optional style; if not given, default styling (modifiable by setCustomStyles) is used
- * @returns {VectorLayer} Layer with id and source specified in rawLayer
+ * @param {ol.Map} [param.map] - map the geojson is to be projected on
+ * @param {ol.Style} [param.layerStyle] - optional style; if not given, default styling (modifiable by setCustomStyles) is used
+ * @returns {ol.layer.Vector} Layer with id and source specified in rawLayer
  */
 export function createLayer (rawLayer, {map, layerStyle} = {}) {
     return new VectorLayer({
@@ -63,7 +63,7 @@ export function createLayer (rawLayer, {map, layerStyle} = {}) {
 
 /**
  * GeoJSON layer with an URL will be reloaded. All other layers will be cleared.
- * @param {VectorLayer} layer - GeoJSON layer to update
+ * @param {ol.layer.Vector} layer - GeoJSON layer to update
  * @returns {undefined}
  */
 export function updateSource (layer) {
@@ -73,8 +73,8 @@ export function updateSource (layer) {
 
 /**
  * Sets a style to all given features.
- * @param {ol/Feature[]} features - openlayers features to be styled
- * @param {ol/style/Style~StyleLike} featureStyle - style, array of styles, or style function
+ * @param {ol.Feature[]} features - openlayers features to be styled
+ * @param {ol.style.Style~StyleLike} featureStyle - style, array of styles, or style function
  * @returns {undefined}
  */
 export function setFeatureStyle (features, featureStyle) {
@@ -82,7 +82,7 @@ export function setFeatureStyle (features, featureStyle) {
 }
 
 /**
- * @param {ol/Layer} layer - layer to hide all features of
+ * @param {ol.Layer} layer - layer to hide all features of
  * @returns {undefined}
  */
 export function hideAllFeatures (layer) {
@@ -91,7 +91,7 @@ export function hideAllFeatures (layer) {
 }
 
 /**
- * @param {ol/Layer} layer - layer to show all features of
+ * @param {ol.Layer} layer - layer to show all features of
  * @returns {undefined}
  */
 export function showAllFeatures (layer) {
@@ -100,7 +100,7 @@ export function showAllFeatures (layer) {
 }
 
 /**
- * @param {ol/Layer} layer - layer to show some features of
+ * @param {ol.Layer} layer - layer to show some features of
  * @param {string[]} featureIdList - list of feature.id to show
  * @returns {undefined}
  */

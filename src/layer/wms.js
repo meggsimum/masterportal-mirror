@@ -18,7 +18,7 @@ export function generateSessionId () {
  * @param {version} version - webservice version as string, e.g. "1.1.1"
  * @param {boolean} transparent - whether tiles from this service should have transparency where no information is available
  * @param {boolean} singleTile - whether only one tile shall be requested that fills the whole view
- * @param {string|number} tilesize - if singleTile is true, this is the requested tilesize
+ * @param {(string|number)} tilesize - if singleTile is true, this is the requested tilesize
  * @returns {object} maps query parameter names to values
  */
 export function makeParams (rawLayer) {
@@ -35,8 +35,8 @@ export function makeParams (rawLayer) {
 /**
  * Creates a TileGrid for a TileLayer.
  * @param {object} rawLayer - layer specification as in services.json
- * @param {object|Array} [param] - required for defined resolutions, returns undefined if not given; either ol/map or array of resolutions
- * @returns {undefined|ol/tilegrid/TileGrid} TileGrid for WMS
+ * @param {(object|Array)} [param] - required for defined resolutions, returns undefined if not given; either ol/map or array of resolutions
+ * @returns {(undefined|ol.tilegrid.TileGrid)} TileGrid for WMS
  */
 export function createTileGrid ({tileSize}, param) {
     if (!param) {
@@ -64,7 +64,7 @@ export function createTileGrid ({tileSize}, param) {
  * @param {object} rawLayer - layer specification as in services.json
  * @param {string} [rawLayer.serverType] - optional servertype definition: "geoserver" or "mapserver" or "qgis"
  * @param {object} [map] - optionally give map to create a defined TileGrid
- * @returns {(ol/source/TileWMS|ol/source/ImageWMS)} TileWMS or ImageWMS, depending on whether singleTile is true.
+ * @returns {(ol.source.TileWMS|ol.source.ImageWMS)} TileWMS or ImageWMS, depending on whether singleTile is true.
  */
 export function createLayerSource (rawLayer, map) {
     const params = makeParams(rawLayer);
@@ -89,7 +89,7 @@ export function createLayerSource (rawLayer, map) {
  * @param {*} rawLayer - layer specification as in services.json
  * @param {object} [param={}] - parameter object
  * @param {object} [param.map] - optionally give map to create a defined TileGrid
- * @returns {ol/Layer} Layer that can be added to map.
+ * @returns {ol.Layer} Layer that can be added to map.
  */
 export function createLayer (rawLayer, {map} = {}) {
     const source = createLayerSource(rawLayer, map),
@@ -106,7 +106,7 @@ export function createLayer (rawLayer, {map} = {}) {
 
 /**
  * Forces an update by giving a layer a new sessionID.
- * @param {ol/Layer} layer - the layer that is to be updated
+ * @param {ol.Layer} layer - the layer that is to be updated
  * @returns {number} the new sessionID
  */
 export function updateSource (layer) {
@@ -124,9 +124,9 @@ export function updateSource (layer) {
 
 /**
  * Creates the gfiURL from clicked layer, map, and coordinate.
- * @param {ol/Layer} layer - what to get the gfiURL for
- * @param {ol/Map} map - needed for resolution/projection
- * @param {ol/coordinate} coordinate - which point to get the gfiURL for
+ * @param {ol.Layer} layer - what to get the gfiURL for
+ * @param {ol.Map} map - needed for resolution/projection
+ * @param {ol.coordinate} coordinate - which point to get the gfiURL for
  * @returns {(string|undefined)} the gfiURL, or undefined if it could not be constructed
  */
 export function getGfiURL (layer, map, coordinate) {

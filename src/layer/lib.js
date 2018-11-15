@@ -1,5 +1,5 @@
 /**
- * @param {ol/Layer} layer - layer to check
+ * @param {ol.Layer} layer - layer to check
  * @param {number} params - parameter object
  * @param {number} [params.resolution] - resolution to check; if not given, map is required
  * @param {object} [params.map] - map to check; if not given, resolution is required
