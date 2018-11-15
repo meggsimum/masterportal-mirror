@@ -10,6 +10,8 @@ import services from "./config/services.json";
 import portalConfig from "./config/portal.json";
 import localGeoJSON from "./config/localGeoJSON.js";
 
+const hamburgServicesUrl = "http://geoportal-hamburg.de/lgv-config/services-internet.json";
+
 //* Add elements to window to play with API in console
 window.mpapi = {
     ...mpapi,
@@ -45,37 +47,39 @@ mpapi.geojson.setCustomStyles({
 });
 // */
 
-const renderMap = (configuration, layerIds) => {
-    window.mpapi.map = mpapi.createMap(configuration);
-    layerIds.forEach(id =>
-        window.mpapi.layers.push(mpapi.addLayer(id))
-    );
-}
-
 //* SYNCHRONOUS EXAMPLE: layerConf is known
-renderMap(
-    {
-        ...portalConfig,
-        layerConf: services
-    },
-    [
-        "1001",
-        "2001",
-        // fake local layer:
-        "2002"
-    ]
+window.mpapi.map = mpapi.createMap({
+    ...portalConfig,
+    layerConf: services
+});
+["1001", "2001", "2002"].forEach(id =>
+    window.mpapi.layers.push(mpapi.addLayer(id))
 );
 //*/
 
-/* ASYNCHRONOUS EXAMPLE: layer Conf is loaded
-initializeLayerList(
-    "http://geoportal-hamburg.de/lgv-config/services-internet.json",
-    conf => renderMap(
-        {
+/* ASYNCHRONOUS EXAMPLE 1: work with layerConf callback
+mpapi.rawLayerList.initializeLayerList(
+    hamburgServicesUrl,
+    conf => {
+        window.mpapi.map = mpapi.createMap({
             ...portalConfig,
             layerConf: conf
-        },
-        ["6357", "6074"]
-    )
+        });
+        ["6357", "6074"].forEach(id =>
+            window.mpapi.layers.push(mpapi.addLayer(id))
+        );
+    }
+);
+//*/
+
+/* ASYNCHRONOUS EXAMPLE 2: work with createMap callback
+window.mpapi.map = mpapi.createMap(
+    {...portalConfig, layerConf: hamburgServicesUrl},
+    {
+        callback: () =>
+            ["6357", "6074"].forEach(id =>
+                window.mpapi.layers.push(mpapi.addLayer(id))
+            )
+    }
 );
 //*/

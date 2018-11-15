@@ -29,6 +29,7 @@ export function initializeLayerList (layerConf = defaults.layerConf, callback) {
     // case: parameter is URL
     const Http = new XMLHttpRequest();
 
+    Http.timeout = 10000;
     Http.open("GET", layerConf);
     Http.send();
     Http.onload = function () {

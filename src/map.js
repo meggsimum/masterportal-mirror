@@ -38,18 +38,20 @@ let map;
  * @param {number} [config.startResolution] - initial resolution
  * @param {number[]} [config.startCenter] - initial position
  * @param {(string|object)} [config.layerConf] - services registry or URL thereof
- * @param {object} [params={}] - additional parameter object that is spread into the ol.Map constructor object
+ * @param {object} [params={}] - parameter object
+ * @param {object} [params.mapParams] - additional parameter object that is spread into the ol.Map constructor object
+ * @param {function} [params.callback] - optional callback for layer list loading
  * @returns {object} map object from ol
  */
-export function createMap (config, params = {}) {
+export function createMap (config, {mapParams, callback} = {}) {
     registerProjections(config.namedProjections);
-    initializeLayerList(config.layerConf);
+    initializeLayerList(config.layerConf, callback);
     setBackgroundImage(config);
     map = new Map(Object.assign({
         target: config.target || defaults.target,
         interactions: olDefaultInteractions({altShiftDragRotate: false, pinchRotate: false}),
         view: createMapView(config)
-    }, params));
+    }, mapParams));
     return map;
 }
 
