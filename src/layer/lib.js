@@ -15,13 +15,16 @@ export function isLayerVisibleInResolution (layer, {resolution, map}) {
 
 /**
  * Generates an array of URLs that are supposed to hold legend graphics.
+ *
  * @param {*} rawLayer - layer specification as in services.json
+ * @param {string} [rawLayer.layers=""] - comma separated list of service layers
  * @returns {string[]} URLs of legend graphics for the rawLayer.
  */
-export function getLegendURLs ({legendURL, layers, url, typ, format, version}) {
+export function getLegendURLs ({legendURL, layers = "", url, typ, format, version}) {
     if (legendURL) {
         return legendURL === "ignore" ? [] : [legendURL];
     }
+
     return layers
         .split(",")
         .filter(x => x /* filters empty string since it's falsy */)
