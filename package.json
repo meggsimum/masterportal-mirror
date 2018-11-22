@@ -16,7 +16,7 @@
     "proj4": "^2.5.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.5",
+    "@babel/core": "^7.1.6",
     "@babel/plugin-transform-modules-commonjs": "^7.1.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
@@ -25,6 +25,7 @@
     "canvas": "^2.1.0",
     "jest": "^23.6.0",
     "jest-canvas-mock": "^1.1.0",
+    "jsdoc": "^3.5.5",
     "parcel-bundler": "^1.10.3",
     "sass": "^1.14.3"
   },

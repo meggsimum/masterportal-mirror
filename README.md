@@ -6,10 +6,6 @@ Install the masterportalAPI in your project with ``npm install git+https://bitbu
 
 By importing the project by module name like ``import ... from "masterportalAPI"``, most bundlers and bundler configurations will include the whole masterportalAPI. If you only need a subset of the provided functions and want to keep your build clean, directly import the needed functions like ``import {createMap, addLayer} from "masterportalAPI/src/map.js``.
 
-## Global modules for development environment
-
-``npm i -g eslint jsdoc``
-
 ## Scripts
 
 |Script|Effect|
