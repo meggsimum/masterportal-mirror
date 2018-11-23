@@ -1,4 +1,4 @@
-import {Map} from "ol";
+import {Map, PluggableMap} from "ol";
 import {defaults as olDefaultInteractions} from "ol/interaction.js";
 
 import setBackgroundImage from "./lib/setBackgroundImage";
@@ -14,16 +14,41 @@ import {registerProjections} from "./crs";
  * @ignore
  */
 const layerBuilderMap = {
-    wms: wms,
-    geojson: geojson
-};
+        wms: wms,
+        geojson: geojson
+    },
+    originalAddLayer = PluggableMap.prototype.addLayer;
 
 /**
- * last map created by createMap
- * @type {ol.Map}
- * @ignore
+ * Adds a layer to the map by id. This id is looked up within the array of all known services.
+ * @param {string|ol/Layer} layerOrId - if of layer to add to map
+ * @returns {?ol.Layer} added layer
  */
-let map;
+PluggableMap.prototype.addLayer = function addLayer (layerOrId) {
+    var layer, layerBuilder;
+
+    // if parameter is id, create and add layer with masterportalAPI mechanisms
+    if (typeof layerOrId === "string") {
+        const rawLayer = getLayerWhere({id: layerOrId});
+
+        if (!rawLayer) {
+            console.error("Layer with id '" + layerOrId + "' not found. No layer added to map.");
+            return null;
+        }
+        layerBuilder = layerBuilderMap[rawLayer.typ.toLowerCase()];
+        if (!layerBuilder) {
+            console.error("Layer with id '" + layerOrId + "' has unknown type '" + rawLayer.typ + "'. No layer added to map.");
+            return null;
+        }
+
+        layer = layerBuilder.createLayer(rawLayer, {map: this});
+        originalAddLayer.call(this, layer);
+        return layer;
+    }
+
+    // else use original function
+    return originalAddLayer.call(this, layerOrId);
+};
 
 /**
  * Creates an openlayers map according to configuration. Does not set many default values itself, but uses function that do.
@@ -47,34 +72,9 @@ export function createMap (config, {mapParams, callback} = {}) {
     registerProjections(config.namedProjections);
     initializeLayerList(config.layerConf, callback);
     setBackgroundImage(config);
-    map = new Map(Object.assign({
+    return new Map(Object.assign({
         target: config.target || defaults.target,
         interactions: olDefaultInteractions({altShiftDragRotate: false, pinchRotate: false}),
         view: createMapView(config)
     }, mapParams));
-    return map;
-}
-
-/**
- * Adds a layer to the map by id. This id is looked up within the array of all known services.
- * @param {string} id - if of layer to add to map
- * @returns {?ol.Layer} added layer
- */
-export function addLayer (id) {
-    const rawLayer = getLayerWhere({id});
-    var layer, layerBuilder;
-
-    if (!rawLayer) {
-        console.error("Layer with id '" + id + "' not found. No layer added to map.");
-        return null;
-    }
-    layerBuilder = layerBuilderMap[rawLayer.typ.toLowerCase()];
-    if (!layerBuilder) {
-        console.error("Layer with id '" + id + "' has unknown type '" + rawLayer.typ + "'. No layer added to map.");
-        return null;
-    }
-
-    layer = layerBuilder.createLayer(rawLayer, {map});
-    map.addLayer(layer);
-    return layer;
 }

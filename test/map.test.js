@@ -1,6 +1,6 @@
-import {Map} from "ol";
+import {PluggableMap, Map} from "ol";
 import {Tile as TileLayer} from "ol/layer.js";
-import {createMap, addLayer} from "../src/map";
+import {createMap} from "../src/map";
 import {initializeLayerList} from "../src/rawLayerList.js";
 import {registerProjections} from "../src/crs.js";
 import setBackgroundImage from "../src/lib/setBackgroundImage.js";
@@ -54,11 +54,12 @@ describe("map.js", function () {
         });
     });
 
+    // NOTE: loading map.js monkey patches PluggableMap.prototype.addLayer - testing result here
     describe("addLayer", function () {
         it("logs an error for unknown ids", function () {
             console.error = jest.fn();
             const consoleError = console.error,
-                result = addLayer("999999999999999");
+                result = PluggableMap.prototype.addLayer("999999999999999");
 
             expect(console.error).toHaveBeenCalled();
             expect(result).toBeNull();
@@ -68,19 +69,17 @@ describe("map.js", function () {
         it("logs an error for unknown types", function () {
             console.error = jest.fn();
             const consoleError = console.error,
-                result = addLayer("exists");
+                result = PluggableMap.prototype.addLayer("exists");
 
             expect(result).toBeNull();
             expect(console.error).toHaveBeenCalledWith("Layer with id 'exists' has unknown type 'doesntExist'. No layer added to map.");
             console.error = consoleError;
         });
 
-        it("adds existing layers that have a known builder to the map", function () {
-            const map = createMap(defaults),
-                result = addLayer("works");
+        it("creates existing layers that have a known builder", function () {
+            const result = PluggableMap.prototype.addLayer("works");
 
             expect(result).toBeInstanceOf(TileLayer);
-            expect(map.addLayer).toHaveBeenCalledWith(result);
         });
     });
 });

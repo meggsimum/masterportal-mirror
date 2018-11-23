@@ -53,7 +53,7 @@ window.mpapi.map = mpapi.createMap({
     layerConf: services
 });
 ["1001", "2001", "2002"].forEach(id =>
-    window.mpapi.layers.push(mpapi.addLayer(id))
+    window.mpapi.layers.push(window.mpapi.map.addLayer(id))
 );
 //*/
 
@@ -66,7 +66,7 @@ mpapi.rawLayerList.initializeLayerList(
             layerConf: conf
         });
         ["6357", "6074"].forEach(id =>
-            window.mpapi.layers.push(mpapi.addLayer(id))
+            window.mpapi.layers.push(window.mpapi.map.addLayer(id))
         );
     }
 );
@@ -78,7 +78,7 @@ window.mpapi.map = mpapi.createMap(
     {
         callback: () =>
             ["6357", "6074"].forEach(id =>
-                window.mpapi.layers.push(mpapi.addLayer(id))
+                window.mpapi.layers.push(window.mpapi.map.addLayer(id))
             )
     }
 );
