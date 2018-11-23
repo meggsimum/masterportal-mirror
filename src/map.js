@@ -20,11 +20,17 @@ const layerBuilderMap = {
     originalAddLayer = PluggableMap.prototype.addLayer;
 
 /**
- * Adds a layer to the map by id. This id is looked up within the array of all known services.
- * @param {string|ol/Layer} layerOrId - if of layer to add to map
+ * Adds a layer to the map, or adds a layer to the map by id.
+ * This id is looked up within the array of all known services.
+ *
+ * Make sure services have been loaded with a callback on createMap
+ * if you request the services from the internet.
+ *
+ * This function is available on all ol/Map instances.
+ * @param {(string|ol/Layer)} layerOrId - if of layer to add to map
  * @returns {?ol.Layer} added layer
  */
-PluggableMap.prototype.addLayer = function addLayer (layerOrId) {
+function addLayer (layerOrId) {
     var layer, layerBuilder;
 
     // if parameter is id, create and add layer with masterportalAPI mechanisms
@@ -48,7 +54,9 @@ PluggableMap.prototype.addLayer = function addLayer (layerOrId) {
 
     // else use original function
     return originalAddLayer.call(this, layerOrId);
-};
+}
+
+PluggableMap.prototype.addLayer = addLayer;
 
 /**
  * Creates an openlayers map according to configuration. Does not set many default values itself, but uses function that do.
