@@ -15,8 +15,7 @@ const hamburgServicesUrl = "http://geoportal-hamburg.de/lgv-config/services-inte
 //* Add elements to window to play with API in console
 window.mpapi = {
     ...mpapi,
-    map: null,
-    layers: []
+    map: null
 };
 // */
 
@@ -52,8 +51,8 @@ window.mpapi.map = mpapi.createMap({
     ...portalConfig,
     layerConf: services
 });
-["1001", "2001", "2002"].forEach(id =>
-    window.mpapi.layers.push(window.mpapi.map.addLayer(id))
+["2001", "2002"].forEach(id =>
+    window.mpapi.map.addLayer(id)
 );
 //*/
 
@@ -63,10 +62,11 @@ mpapi.rawLayerList.initializeLayerList(
     conf => {
         window.mpapi.map = mpapi.createMap({
             ...portalConfig,
-            layerConf: conf
+            layerConf: conf,
+            layers: null
         });
-        ["6357", "6074"].forEach(id =>
-            window.mpapi.layers.push(window.mpapi.map.addLayer(id))
+        ["6357", "6074"].forEach(
+            id => window.mpapi.map.addLayer(id)
         );
     }
 );
@@ -74,11 +74,14 @@ mpapi.rawLayerList.initializeLayerList(
 
 /* ASYNCHRONOUS EXAMPLE 2: work with createMap callback
 window.mpapi.map = mpapi.createMap(
-    {...portalConfig, layerConf: hamburgServicesUrl},
+    {...portalConfig, layerConf: hamburgServicesUrl, layers: [
+        { id: "6357" },
+        { id: "453", transparency: 50 }
+    ]},
     {
         callback: () =>
-            ["6357", "6074"].forEach(id =>
-                window.mpapi.layers.push(window.mpapi.map.addLayer(id))
+            ["6074"].forEach(
+                id => window.mpapi.map.addLayer(id)
             )
     }
 );

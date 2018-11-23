@@ -2,6 +2,7 @@ import {Map, PluggableMap} from "ol";
 import {defaults as olDefaultInteractions} from "ol/interaction.js";
 
 import setBackgroundImage from "./lib/setBackgroundImage";
+import getInitialLayers from "./lib/getInitialLayers";
 import defaults from "./defaults";
 import * as wms from "./layer/wms";
 import * as geojson from "./layer/geojson";
@@ -28,9 +29,12 @@ const layerBuilderMap = {
  *
  * This function is available on all ol/Map instances.
  * @param {(string|ol/Layer)} layerOrId - if of layer to add to map
+ * @param {object} [params] - optional parameter object
+ * @param {boolean} [params.visibility=true] - whether added layer is initially visible
+ * @param {Number} [params.transparency=0] - how visible the layer is initially
  * @returns {?ol.Layer} added layer
  */
-function addLayer (layerOrId) {
+function addLayer (layerOrId, params = {visibility: true, transparency: 0}) {
     var layer, layerBuilder;
 
     // if parameter is id, create and add layer with masterportalAPI mechanisms
@@ -48,6 +52,8 @@ function addLayer (layerOrId) {
         }
 
         layer = layerBuilder.createLayer(rawLayer, {map: this});
+        layer.setVisible(typeof params.visibility === "boolean" ? params.visibility : true);
+        layer.setOpacity(typeof params.transparency === "number" ? (100 - params.transparency) / 100 : 1);
         originalAddLayer.call(this, layer);
         return layer;
     }
@@ -61,7 +67,7 @@ PluggableMap.prototype.addLayer = addLayer;
 /**
  * Creates an openlayers map according to configuration. Does not set many default values itself, but uses function that do.
  * Check the called functions for default values, or [the defaults file]{@link ./defaults.js}.
- * @param {object} config - configuration object
+ * @param {object} [config] - configuration object - falls back to defaults if none given
  * @param {string} [config.target="map"] - div id to render map to
  * @param {string} [config.backgroundImage] - background image for map; "" to use none
  * @param {string} [config.epsg] - CRS to use
@@ -76,13 +82,26 @@ PluggableMap.prototype.addLayer = addLayer;
  * @param {function} [params.callback] - optional callback for layer list loading
  * @returns {object} map object from ol
  */
-export function createMap (config, {mapParams, callback} = {}) {
+export function createMap (config = defaults, {mapParams, callback} = {}) {
     registerProjections(config.namedProjections);
-    initializeLayerList(config.layerConf, callback);
     setBackgroundImage(config);
-    return new Map(Object.assign({
+    const map = new Map(Object.assign({
         target: config.target || defaults.target,
         interactions: olDefaultInteractions({altShiftDragRotate: false, pinchRotate: false}),
         view: createMapView(config)
     }, mapParams));
+
+    // extend callback to load configured initial layers
+    initializeLayerList(config.layerConf, (param, error) => {
+        getInitialLayers(config)
+            .forEach(layer => map.addLayer(layer.id, layer));
+
+        if (typeof callback === "function") {
+            return callback(param, error);
+        }
+
+        return null;
+    });
+
+    return map;
 }

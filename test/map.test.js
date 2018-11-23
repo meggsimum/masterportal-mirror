@@ -36,7 +36,7 @@ describe("map.js", function () {
             const callback = jest.fn();
 
             createMap(defaults, {callback});
-            expect(initializeLayerList).toHaveBeenCalledWith(defaults.layerConf, callback);
+            expect(initializeLayerList).toHaveBeenCalledWith(defaults.layerConf, expect.any(Function));
             expect(registerProjections).toHaveBeenCalledWith(defaults.namedProjections);
             expect(setBackgroundImage).toHaveBeenCalledWith(defaults);
         });
@@ -80,6 +80,29 @@ describe("map.js", function () {
             const result = PluggableMap.prototype.addLayer("works");
 
             expect(result).toBeInstanceOf(TileLayer);
+        });
+
+        it("sets visibility and transparency", function () {
+            const result1 = PluggableMap.prototype.addLayer("works"),
+                result2 = PluggableMap.prototype.addLayer("works", {}),
+                result3 = PluggableMap.prototype.addLayer("works", {visibility: false}),
+                result4 = PluggableMap.prototype.addLayer("works", {transparency: 50}),
+                result5 = PluggableMap.prototype.addLayer("works", {visibility: false, transparency: 20});
+
+            expect(result1.getOpacity()).toBe(1);
+            expect(result1.getVisible()).toBe(true);
+
+            expect(result2.getOpacity()).toBe(1);
+            expect(result2.getVisible()).toBe(true);
+
+            expect(result3.getOpacity()).toBe(1);
+            expect(result3.getVisible()).toBe(false);
+
+            expect(result4.getOpacity()).toBe(0.5);
+            expect(result4.getVisible()).toBe(true);
+
+            expect(result5.getOpacity()).toBe(0.8);
+            expect(result5.getVisible()).toBe(false);
         });
     });
 });

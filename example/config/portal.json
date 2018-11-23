@@ -25,5 +25,10 @@
   "startResolution": 132.291595229,
   "startCenter": [565874, 5934140],
   "units": "m",
-  "layerConf": ""
+  "layerConf": "",
+  "layers": [
+    {
+      "id": "1001"
+    }
+  ]
 }
