@@ -1,5 +1,4 @@
 import {Tile as TileLayer, Image as ImageLayer} from "ol/layer.js";
-import TileGrid from "ol/tilegrid/TileGrid.js";
 import TileWMS from "ol/source/TileWMS.js";
 import ImageWMS from "ol/source/ImageWMS.js";
 
@@ -33,40 +32,12 @@ export function makeParams (rawLayer) {
 }
 
 /**
- * Creates a TileGrid for a TileLayer.
- * @param {object} rawLayer - layer specification as in services.json
- * @param {(object|Array)} [param] - required for defined resolutions, returns undefined if not given; either ol/map or array of resolutions
- * @returns {(undefined|ol.tilegrid.TileGrid)} TileGrid for WMS
- */
-export function createTileGrid ({tileSize}, param) {
-    if (!param) {
-        return undefined;
-    }
-
-    const resolutions = Array.isArray(param)
-        ? param
-        : param.getView() && param.getView().getResolutions();
-
-    if (!resolutions) {
-        return undefined;
-    }
-
-    return new TileGrid({
-        resolutions,
-        // HH-specific default
-        origin: [442800, 5809000],
-        tileSize: parseInt(tileSize, 10) || 256
-    });
-}
-
-/**
  * Creates an ol/source element for the rawLayer.
  * @param {object} rawLayer - layer specification as in services.json
  * @param {string} [rawLayer.serverType] - optional servertype definition: "geoserver" or "mapserver" or "qgis"
- * @param {object} [map] - optionally give map to create a defined TileGrid
  * @returns {(ol.source.TileWMS|ol.source.ImageWMS)} TileWMS or ImageWMS, depending on whether singleTile is true.
  */
-export function createLayerSource (rawLayer, map) {
+export function createLayerSource (rawLayer) {
     const params = makeParams(rawLayer);
 
     if (rawLayer.singleTile) {
@@ -79,20 +50,17 @@ export function createLayerSource (rawLayer, map) {
     return new TileWMS({
         url: rawLayer.url,
         params,
-        gutter: rawLayer.gutter || 0,
-        tileGrid: createTileGrid(rawLayer, map)
+        gutter: rawLayer.gutter || 0
     });
 }
 
 /**
  * Creates complete ol/Layer from rawLayer containing all required children.
  * @param {*} rawLayer - layer specification as in services.json
- * @param {object} [param={}] - parameter object
- * @param {object} [param.map] - optionally give map to create a defined TileGrid
  * @returns {ol.Layer} Layer that can be added to map.
  */
-export function createLayer (rawLayer, {map} = {}) {
-    const source = createLayerSource(rawLayer, map),
+export function createLayer (rawLayer) {
+    const source = createLayerSource(rawLayer),
         Layer = rawLayer.singleTile ? ImageLayer : TileLayer;
 
     return new Layer({

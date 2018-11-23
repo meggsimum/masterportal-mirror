@@ -2,7 +2,6 @@ import {Map} from "ol";
 import {Tile as TileLayer, Image as ImageLayer} from "ol/layer.js";
 import TileWMS from "ol/source/TileWMS.js";
 import ImageWMS from "ol/source/ImageWMS.js";
-import TileGrid from "ol/tilegrid/TileGrid.js";
 
 import * as wms from "../../src/layer/wms";
 
@@ -56,15 +55,6 @@ describe("wms.js", function () {
             expect(params.LAYERS).toEqual("atlas,things");
             expect(params.VERSION).toEqual("1.1.1");
             expect(params.TRANSPARENT).toBe(true);
-        });
-    });
-
-    describe("createTileGrid", function () {
-        it("creates an instance of ol/TileGrid", function () {
-            const tileGrid = wms.createTileGrid({tilesize: 10}, [256, 128, 56]);
-
-            expect(tileGrid).toBeInstanceOf(TileGrid);
-            // TODO write more tests once createTileGrid TODOs are done
         });
     });
 
