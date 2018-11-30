@@ -21,6 +21,15 @@ describe("rawLayerList.js", function () {
             expect(rll.getDisplayNamesOfFeatureAttributes("1001")).toBe(symbol);
             expect(rll.getDisplayNamesOfFeatureAttributes("2001").fi9449gqgijg9hdg).toEqual("Breitengrad");
         });
+
+        it("resolves a single displayName if featureAttribute is given", function () {
+            expect(rll.getDisplayNamesOfFeatureAttributes("2001", "fi9449gqgijg9hdg")).toEqual("Breitengrad");
+        });
+
+        it("returns null if either layer or featureAttribute not found", function () {
+            expect(rll.getDisplayNamesOfFeatureAttributes("9999")).toBeNull();
+            expect(rll.getDisplayNamesOfFeatureAttributes("2001", "doesntExist")).toBeNull();
+        });
     });
 
     describe("getLayerWhere", function () {
@@ -34,6 +43,6 @@ describe("rawLayerList.js", function () {
 
         it("only returns if all criteria match", function () {
             expect(rll.getLayerWhere({id: "2001", same: "not"})).toBeNull();
-        })
+        });
     });
 });

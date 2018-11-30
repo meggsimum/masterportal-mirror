@@ -62,12 +62,22 @@ export function getLayerList () {
 }
 
 /**
- * Returns display names map for a layer.
+ * Returns display names map for a layer, or display name for a specific attribute.
  * @param {string} layerId - if of layer to fetch display names for
- * @returns {?object} - map of originalName->displayName, or null if layer not found
+ * @param {string} [featureAttribute] - if given, only one entry of map is returned
+ * @returns {?(object|string)} - map of originalName->displayName or name of featureAttribute if specified; if layer or featureAttribute not found, null
  */
-export function getDisplayNamesOfFeatureAttributes (layerId) {
+export function getDisplayNamesOfFeatureAttributes (layerId, featureAttribute) {
     const attributes = getLayerWhere({id: layerId});
 
-    return attributes ? attributes.gfiAttributes : null;
+    if (attributes && typeof featureAttribute === "string") {
+        const displayName = attributes.gfiAttributes && attributes.gfiAttributes[featureAttribute];
+
+        return typeof displayName === "string" ? displayName : null;
+    }
+    else if (attributes) {
+        return attributes.gfiAttributes || null;
+    }
+
+    return null;
 }
