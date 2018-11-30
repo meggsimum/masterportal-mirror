@@ -88,6 +88,7 @@ export function createMap (config = defaults, {mapParams, callback} = {}) {
     const map = new Map(Object.assign({
         target: config.target || defaults.target,
         interactions: olDefaultInteractions({altShiftDragRotate: false, pinchRotate: false}),
+        controls: [],
         view: createMapView(config)
     }, mapParams));
 
