@@ -1,5 +1,4 @@
 import defaults from "./defaults";
-import findWhere from "./lib/findWhere";
 
 /** layerList that contains all known services.
  * @type{Array}
@@ -53,7 +52,7 @@ export function initializeLayerList (layerConf = defaults.layerConf, callback) {
 export function getLayerWhere (searchAttributes) {
     const keys = Object.keys(searchAttributes);
 
-    return findWhere(layerList, entry => keys.every(key => entry[key] === searchAttributes[key]));
+    return layerList.find(entry => keys.every(key => entry[key] === searchAttributes[key])) || null;
 }
 
 /** @returns {object[]} complete layerList as initialized */
