@@ -18,7 +18,7 @@ describe("wms.js", function () {
     });
 
     describe("getLegendURLs", function () {
-        const expectedBaseString = "example.com&SERVICE=WMS&REQUEST=GetLegendGraphic&FORMAT=image/png?VERSION=0.0.1&LAYER=";
+        const expectedBaseString = "example.com?SERVICE=WMS&REQUEST=GetLegendGraphic&FORMAT=image/png&VERSION=0.0.1&LAYER=";
 
         it("returns the defined legendURL if given via services.json", function () {
             const legendURL = lib.getLegendURLs({

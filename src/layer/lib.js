@@ -28,5 +28,5 @@ export function getLegendURLs ({legendURL, layers = "", url, typ, format, versio
     return layers
         .split(",")
         .filter(x => x /* filters empty string since it's falsy */)
-        .map(layerName => `${url}&SERVICE=${typ}&REQUEST=GetLegendGraphic&FORMAT=${format || "image/png"}?VERSION=${version}&LAYER=${layerName}`);
+        .map(layerName => `${url}?SERVICE=${typ}&REQUEST=GetLegendGraphic&FORMAT=${format || "image/png"}&VERSION=${version}&LAYER=${layerName}`);
 }
