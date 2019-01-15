@@ -32,5 +32,6 @@ export default {
             "id": "453",
             "visibility": true
         }
-    ]
+    ],
+    gazetteerUrl: "https://geodienste.hamburg.de/HH_WFS_GAGES"
 };

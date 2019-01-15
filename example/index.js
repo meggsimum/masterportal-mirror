@@ -86,3 +86,22 @@ window.mpapi.map = mpapi.createMap(
     }
 );
 //*/
+
+/* SEARCH FUNCTION EXAMPLE
+// You may e.g. copy this code to the browser's console to run a search.
+
+window.mpapi.search("Eiffe",  {
+    map: window.mpapi.map,
+    zoom: true,
+    zoomToParams: {duration: 1000, maxZoom: 8},
+    searchStreets: true
+}).then(x => console.log(x)).catch(e => console.error(e))
+
+window.mpapi.search("Mümmelmannsberg 72",  {
+    map: window.mpapi.map,
+    zoom: true,
+    zoomToParams: {duration: 1000, maxZoom: 8},
+    searchAddress: true
+}).then(x => console.log(x)).catch(e => console.error(e))
+
+//*/

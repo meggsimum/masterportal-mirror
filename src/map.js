@@ -9,6 +9,7 @@ import * as geojson from "./layer/geojson";
 import {createMapView} from "./mapView";
 import {initializeLayerList, getLayerWhere} from "./rawLayerList";
 import {registerProjections} from "./crs";
+import {setGazetteerUrl} from "./searchAddress";
 
 /**
  * lookup for layer constructors
@@ -77,6 +78,7 @@ PluggableMap.prototype.addLayer = addLayer;
  * @param {number} [config.startResolution] - initial resolution
  * @param {number[]} [config.startCenter] - initial position
  * @param {(string|object)} [config.layerConf] - services registry or URL thereof
+ * @param {string} [config.gazetteerUrl] - url of gazetteer to use in searchAddress
  * @param {object} [params={}] - parameter object
  * @param {object} [params.mapParams] - additional parameter object that is spread into the ol.Map constructor object
  * @param {function} [params.callback] - optional callback for layer list loading
@@ -85,6 +87,7 @@ PluggableMap.prototype.addLayer = addLayer;
 export function createMap (config = defaults, {mapParams, callback} = {}) {
     registerProjections(config.namedProjections);
     setBackgroundImage(config);
+    setGazetteerUrl(config.gazetteerUrl);
     const map = new Map(Object.assign({
         target: config.target || defaults.target,
         interactions: olDefaultInteractions({altShiftDragRotate: false, pinchRotate: false}),
