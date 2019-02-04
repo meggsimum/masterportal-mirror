@@ -7,7 +7,7 @@
     "test": "jest .test.js --config ./jest.config.js --collectCoverage",
     "test:watch": "jest .test.js --config ./jest.config.js --watch",
     "example": "parcel example/index.html",
-    "generate-jsdoc": "jsdoc ./src -r -d ./docs/ -R ./README.md"
+    "generate-jsdoc": "jsdoc ./src -r -d ./docs/ -R ./README.md -c jsdoc.json"
   },
   "author": "Landesbetrieb Geoinformation und Vermessung Hamburg",
   "license": "MIT",
