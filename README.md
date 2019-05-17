@@ -1,5 +1,7 @@
 # masterportalAPI
 
+The masterportalAPI is an API to include and show map-content on your webpage. It's based on OpenLayers and extended with functions to easily use configuration and infrastructure files from the masterportal, a feature-rich mapping app developed by geowerkstatt hamburg. Check masterportal.org for further information.
+
 ## Usage
 
 Install the masterportalAPI in your project with ``npm install git+https://bitbucket.org/lgv-g12/masterportalapi.git``. The project does not have a default export, but various named exports. Generate and check the documentation as described below for details.
