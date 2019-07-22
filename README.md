@@ -4,7 +4,7 @@ The masterportalAPI is an API to include and show map-content on your webpage. I
 
 ## Usage
 
-Install the masterportalAPI in your project with ``npm install git+https://bitbucket.org/lgv-g12/masterportalapi.git``. The project does not have a default export, but various named exports. Generate and check the documentation as described below for details.
+Install the masterportalAPI in your project with ``npm install git+https://bitbucket.org/geowerkstatt-hamburg/masterportalapi.git``. The project does not have a default export, but various named exports. Generate and check the documentation as described below for details.
 
 By importing the project by module name like ``import ... from "masterportalAPI"``, most bundlers and bundler configurations will include the whole masterportalAPI. If you only need a subset of the provided functions and want to keep your build clean, directly import the needed functions like ``import {createMap, addLayer} from "masterportalAPI/src/map.js``.
 
