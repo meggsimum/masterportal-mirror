@@ -1,6 +1,6 @@
 {
   "name": "masterportalAPI",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Grundfunktionen des Masterportals als API",
   "main": "src/index.js",
   "scripts": {
