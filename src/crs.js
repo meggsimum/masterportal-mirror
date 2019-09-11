@@ -40,7 +40,7 @@ export function getProjections () {
  * @param {ol.Map} map - map to get projection of
  * @returns {string} active projection name of map
  */
-function getMapProjection (map) {
+export function getMapProjection (map) {
     return map.getView().getProjection().getCode();
 }
 
