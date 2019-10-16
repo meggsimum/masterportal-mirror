@@ -9,20 +9,20 @@ import defaults from "./defaults";
  * @param {object} [mergedConfig=defaults] - configuration from object merged with default configuration
  * @returns {object} object that contains startZoomLevel and startResolution
  */
-export function chooseZommOrResolution (config = {}, mergedConfig = defaults) {
-    const zommResolution = {
+export function chooseZoomOrResolution (config = {}, mergedConfig = defaults) {
+    const zoomResolution = {
         startZoomLevel: undefined,
         startResolution: undefined
     };
 
     if (config.hasOwnProperty("startZoomLevel") && !config.hasOwnProperty("startResolution")) {
-        zommResolution.startZoomLevel = mergedConfig.startZoomLevel;
+        zoomResolution.startZoomLevel = mergedConfig.startZoomLevel;
     }
     else {
-        zommResolution.startResolution = mergedConfig.startResolution;
+        zoomResolution.startResolution = mergedConfig.startResolution;
     }
 
-    return zommResolution;
+    return zoomResolution;
 }
 
 /**
@@ -37,14 +37,14 @@ export function chooseZommOrResolution (config = {}, mergedConfig = defaults) {
  */
 export function createMapView (config) {
     const mergedConfig = Object.assign({}, defaults, config),
-        zommResolution = chooseZommOrResolution(config, mergedConfig);
+        zoomResolution = chooseZoomOrResolution(config, mergedConfig);
 
     return new View({
         projection: mergedConfig.epsg,
         center: mergedConfig.startCenter,
         extent: mergedConfig.extent,
-        zoom: zommResolution.startZoomLevel,
-        resolution: zommResolution.startResolution,
+        zoom: zoomResolution.startZoomLevel,
+        resolution: zoomResolution.startResolution,
         resolutions: mergedConfig.options.map(entry => entry.resolution)
     });
 }
