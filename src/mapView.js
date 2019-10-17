@@ -2,6 +2,30 @@ import {View} from "ol";
 import defaults from "./defaults";
 
 /**
+ * Sets the startResolution or the startZoomlevel, depending on the configuration.
+ * Where the resolution is preferred.
+ * The value to use is set and the other is undefined.
+ * @param {object} config - configuration object
+ * @param {object} [mergedConfig=defaults] - configuration from object merged with default configuration
+ * @returns {object} object that contains startZoomLevel and startResolution
+ */
+export function chooseZoomOrResolution (config = {}, mergedConfig = defaults) {
+    const zoomResolution = {
+        startZoomLevel: undefined,
+        startResolution: undefined
+    };
+
+    if (config.hasOwnProperty("startZoomLevel") && !config.hasOwnProperty("startResolution")) {
+        zoomResolution.startZoomLevel = mergedConfig.startZoomLevel;
+    }
+    else {
+        zoomResolution.startResolution = mergedConfig.startResolution;
+    }
+
+    return zoomResolution;
+}
+
+/**
  * Creates a View from config.
  * @param {object} config - configuration object
  * @param {string} [config.epsg="EPSG:25832"] - CRS to use
@@ -12,13 +36,15 @@ import defaults from "./defaults";
  * @returns {ol.View} view with start values from config
  */
 export function createMapView (config) {
-    const mergedConfig = Object.assign({}, defaults, config);
+    const mergedConfig = Object.assign({}, defaults, config),
+        zoomResolution = chooseZoomOrResolution(config, mergedConfig);
 
     return new View({
         projection: mergedConfig.epsg,
         center: mergedConfig.startCenter,
         extent: mergedConfig.extent,
-        resolution: mergedConfig.startResolution,
+        zoom: zoomResolution.startZoomLevel,
+        resolution: zoomResolution.startResolution,
         resolutions: mergedConfig.options.map(entry => entry.resolution)
     });
 }
