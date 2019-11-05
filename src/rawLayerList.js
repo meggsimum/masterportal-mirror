@@ -10,7 +10,7 @@ let layerList = [];
  * Initializes the layer list with either an object or an URL. May be used again to override the layer list.
  * createMap will call this for you, but won't notify you of when it's done. Use this function manually with a
  * callback to know when layers can be added programmatically.
- * @param {(string|object)} [layerConf="http://geoportal-hamburg.de/lgv-config/services-internet.json"] - either the URL to fetch the services from, or the object containing the services
+ * @param {(string|object)} [layerConf="https://geoportal-hamburg.de/lgv-config/services-internet.json"] - either the URL to fetch the services from, or the object containing the services
  * @param {function} [callback] - called with services after loaded; called with false and error on error
  * @returns {undefined} nothing, add callback to receive layerList
  */
@@ -28,8 +28,8 @@ export function initializeLayerList (layerConf = defaults.layerConf, callback) {
     // case: parameter is URL
     const Http = new XMLHttpRequest();
 
-    Http.timeout = 10000;
     Http.open("GET", layerConf);
+    Http.timeout = 10000;
     Http.send();
     Http.onload = function () {
         layerList = JSON.parse(Http.responseText);
