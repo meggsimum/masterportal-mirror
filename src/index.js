@@ -1,4 +1,4 @@
-import {createMap} from "./map";
+import {createMap, addLayer} from "./map";
 import {createMapView} from "./mapView";
 import * as crs from "./crs";
 import * as rawLayerList from "./rawLayerList";
@@ -10,6 +10,7 @@ import setBackgroundImage from "./lib/setBackgroundImage";
 
 export {
     createMap,
+    addLayer,
     createMapView,
     wms,
     geojson,

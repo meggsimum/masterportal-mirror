@@ -35,7 +35,7 @@ const layerBuilderMap = {
  * @param {Number} [params.transparency=0] - how visible the layer is initially
  * @returns {?ol.Layer} added layer
  */
-function addLayer (layerOrId, params = {visibility: true, transparency: 0}) {
+export function addLayer (layerOrId, params = {visibility: true, transparency: 0}) {
     var layer, layerBuilder;
 
     // if parameter is id, create and add layer with masterportalAPI mechanisms
@@ -52,7 +52,7 @@ function addLayer (layerOrId, params = {visibility: true, transparency: 0}) {
             return null;
         }
 
-        layer = layerBuilder.createLayer(rawLayer, {map: this});
+        layer = layerBuilder.createLayer(rawLayer, {map: this.map});
         layer.setVisible(typeof params.visibility === "boolean" ? params.visibility : true);
         layer.setOpacity(typeof params.transparency === "number" ? (100 - params.transparency) / 100 : 1);
         originalAddLayer.call(this, layer);
