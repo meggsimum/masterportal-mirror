@@ -13,7 +13,10 @@ import defaults from "./defaults";
 export function registerProjections (namedProjections = defaults.namedProjections) {
     proj4.defs(namedProjections);
     register(proj4);
-    namedProjections.forEach(projection => Proj.addProjection(Proj.get(projection[0])));
+    namedProjections.forEach(projection => {
+        Proj.addProjection(Proj.get(projection[0]));
+        getProjection(projection[0]).masterportal = true;
+    });
 }
 
 /**
@@ -29,10 +32,14 @@ export function getProjection (name) {
  * Returns all known projections.
  * @returns {object[]} array of projection objects with their name added
  */
-export function getProjections () {
-    return Object
+export function getProjections() {
+    const projections = Object
         .keys(proj4.defs)
         .map(name => Object.assign(proj4.defs(name), {name}));
+        //return no duplicates and only the projections which are registred with masterportal=true
+        return projections.filter(function(projection, index, self) {
+            return index == self.indexOf(projection) && projection.masterportal === true;
+        });
 }
 
 /**
