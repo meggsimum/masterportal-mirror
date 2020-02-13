@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: layer/wms.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: layer/wms.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {Tile as TileLayer, Image as ImageLayer} from "ol/layer.js";
+import TileWMS from "ol/source/TileWMS.js";
+import ImageWMS from "ol/source/ImageWMS.js";
+
+import {getLayerWhere} from "../rawLayerList";
+
+/** @returns {number} random session id in range (0, 9999999) */
+export function generateSessionId () {
+    return Math.floor(Math.random() * 9999999);
+}
+
+/**
+ * Creates query parameters for webservice requests from rawLayer.
+ * @param {object} rawLayer - layer specification as in services.json
+ * @param {string} [rawLayer.format="image/png"] - format of images requested
+ * @param {string} layers - comma-separated list of requested layers
+ * @param {version} version - webservice version as string, e.g. "1.1.1"
+ * @param {boolean} transparent - whether tiles from this service should have transparency where no information is available
+ * @param {boolean} singleTile - whether only one tile shall be requested that fills the whole view
+ * @param {(string|number)} tilesize - if singleTile is true, this is the requested tilesize
+ * @returns {object} maps query parameter names to values
+ */
+export function makeParams (rawLayer) {
+    return Object.assign({
+        SESSIONID: generateSessionId(),
+        FORMAT: rawLayer.format || "image/png",
+        LAYERS: rawLayer.layers,
+        VERSION: rawLayer.version,
+        TRANSPARENT: rawLayer.transparent,
+        SINGLETILE: rawLayer.singleTile
+    }, rawLayer.singleTile ? {} : {WIDTH: rawLayer.tilesize, HEIGHT: rawLayer.tilesize});
+}
+
+/**
+ * Creates an ol/source element for the rawLayer.
+ * @param {object} rawLayer - layer specification as in services.json
+ * @param {string} [rawLayer.serverType] - optional servertype definition: "geoserver" or "mapserver" or "qgis"
+ * @returns {(ol.source.TileWMS|ol.source.ImageWMS)} TileWMS or ImageWMS, depending on whether singleTile is true.
+ */
+export function createLayerSource (rawLayer) {
+    const params = makeParams(rawLayer);
+
+    if (rawLayer.singleTile) {
+        return new ImageWMS({
+            url: rawLayer.url,
+            params,
+            serverType: rawLayer.serverType
+        });
+    }
+    return new TileWMS({
+        url: rawLayer.url,
+        params,
+        gutter: rawLayer.gutter || 0
+    });
+}
+
+/**
+ * Creates complete ol/Layer from rawLayer containing all required children.
+ * @param {*} rawLayer - layer specification as in services.json
+ * @returns {ol.Layer} Layer that can be added to map.
+ */
+export function createLayer (rawLayer) {
+    const source = createLayerSource(rawLayer),
+        Layer = rawLayer.singleTile ? ImageLayer : TileLayer;
+
+    return new Layer({
+        source,
+        minResolution: rawLayer.minScale,
+        maxResolution: rawLayer.maxScale,
+        // id passed to help identification in services.json
+        id: rawLayer.id
+    });
+}
+
+/**
+ * Forces an update by giving a layer a new sessionID.
+ * @param {ol.Layer} layer - the layer that is to be updated
+ * @returns {number} the new sessionID
+ */
+export function updateSource (layer) {
+    const oldSessionId = layer.getSource().getParams().SESSIONID;
+    let newSessionId = oldSessionId;
+
+    // to avoid rolling the same ID again; never happens except in your presentation
+    while (oldSessionId === newSessionId) {
+        newSessionId = generateSessionId();
+    }
+
+    layer.getSource().updateParams({SESSIONID: newSessionId});
+    return newSessionId;
+}
+
+/**
+ * Creates the gfiURL from clicked layer, map, and coordinate.
+ * @param {ol.Layer} layer - what to get the gfiURL for
+ * @param {ol.Map} map - needed for resolution/projection
+ * @param {ol.coordinate} coordinate - which point to get the gfiURL for
+ * @returns {(string|undefined)} the gfiURL, or undefined if it could not be constructed
+ */
+export function getGfiURL (layer, map, coordinate) {
+    const rawLayer = getLayerWhere({Id: layer.get("id")}),
+        resolution = map.getView().getResolution(),
+        projection = map.getView().getProjection(),
+        params = Object.assign({
+            INFO_FORMAT: (rawLayer &amp;&amp; rawLayer.infoFormat) || "text/xml"
+        }, rawLayer &amp;&amp; typeof rawLayer.featureCount !== "undefined"
+            ? {FEATURE_COUNT: rawLayer.featureCount}
+            : {});
+
+    return layer.getSource().getGetFeatureInfoUrl(coordinate, resolution, projection, params);
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addLayer">addLayer</a></li><li><a href="global.html#chooseZoomOrResolution">chooseZoomOrResolution</a></li><li><a href="global.html#createLayer">createLayer</a></li><li><a href="global.html#createLayerSource">createLayerSource</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createMapView">createMapView</a></li><li><a href="global.html#generateSessionId">generateSessionId</a></li><li><a href="global.html#getDisplayNamesOfFeatureAttributes">getDisplayNamesOfFeatureAttributes</a></li><li><a href="global.html#getGazetteerUrl">getGazetteerUrl</a></li><li><a href="global.html#getGfiURL">getGfiURL</a></li><li><a href="global.html#getLayerList">getLayerList</a></li><li><a href="global.html#getLayerWhere">getLayerWhere</a></li><li><a href="global.html#getLegendURLs">getLegendURLs</a></li><li><a href="global.html#getMapProjection">getMapProjection</a></li><li><a href="global.html#getProj4Projection">getProj4Projection</a></li><li><a href="global.html#getProjection">getProjection</a></li><li><a href="global.html#getProjections">getProjections</a></li><li><a href="global.html#hideAllFeatures">hideAllFeatures</a></li><li><a href="global.html#initializeLayerList">initializeLayerList</a></li><li><a href="global.html#isLayerVisibleInResolution">isLayerVisibleInResolution</a></li><li><a href="global.html#makeParams">makeParams</a></li><li><a href="global.html#registerProjections">registerProjections</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#setBackgroundImage">setBackgroundImage</a></li><li><a href="global.html#setCustomStyles">setCustomStyles</a></li><li><a href="global.html#setFeatureStyle">setFeatureStyle</a></li><li><a href="global.html#setGazetteerUrl">setGazetteerUrl</a></li><li><a href="global.html#showAllFeatures">showAllFeatures</a></li><li><a href="global.html#showFeaturesById">showFeaturesById</a></li><li><a href="global.html#transform">transform</a></li><li><a href="global.html#transformFromMapProjection">transformFromMapProjection</a></li><li><a href="global.html#transformToMapProjection">transformToMapProjection</a></li><li><a href="global.html#updateSource">updateSource</a></li><li><a href="global.html#zoomToSearchResult">zoomToSearchResult</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Feb 13 2020 10:08:27 GMT+0100 (GMT+01:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
