@@ -32,12 +32,12 @@ export function initializeLayerList (layerConf = defaults.layerConf, callback) {
     Http.timeout = 10000;
     Http.send();
     Http.onload = function () {
-        try{
+        try {
             layerList = JSON.parse(Http.responseText);
         }
-        catch(error){
+        catch (error) {
             console.error("An error occured when parsing the response after loading '" + layerConf + "':", error);
-            callback(false, error);
+            return callback(false, error);
         }
         if (typeof callback === "function") {
             return callback(layerList);
