@@ -107,5 +107,5 @@ export function getGfiURL (layer, map, coordinate) {
             ? {FEATURE_COUNT: rawLayer.featureCount}
             : {});
 
-    return layer.getSource().getGetFeatureInfoUrl(coordinate, resolution, projection, params);
+    return layer.getSource().getFeatureInfoUrl(coordinate, resolution, projection, params);
 }

@@ -1,30 +1,30 @@
 import {View} from "ol";
 import defaults from "../src/defaults";
-import {createMapView, chooseZommOrResolution} from "../src/mapView";
+import {createMapView, chooseZoomOrResolution} from "../src/mapView";
 
 jest.mock("ol");
 
 describe("chooseZommOrResolution", function () {
     it("returns object that contains startZoomLevel by startZommLevel as input", function () {
-        expect(chooseZommOrResolution({startZoomLevel: 5}, {startZoomLevel: 5})).toMatchObject({
+        expect(chooseZoomOrResolution({startZoomLevel: 5}, {startZoomLevel: 5})).toMatchObject({
             startZoomLevel: 5,
             startResolution: undefined
         });
     });
     it("returns object that contains startResolution by startResolution as input", function () {
-        expect(chooseZommOrResolution({startResolution: 10.5}, {startResolution: 10.5})).toMatchObject({
+        expect(chooseZoomOrResolution({startResolution: 10.5}, {startResolution: 10.5})).toMatchObject({
             startZoomLevel: undefined,
             startResolution: 10.5
         });
     });
     it("returns object that contains resolution with default value by empty input", function () {
-        expect(chooseZommOrResolution()).toMatchObject({
+        expect(chooseZoomOrResolution()).toMatchObject({
             startZoomLevel: undefined,
             startResolution: defaults.startResolution
         });
     });
     it("returns object that contains startResolution by startResolution and startZoomLevel as input", function () {
-        expect(chooseZommOrResolution({startResolution: 10.5, startZoomLevel: 5}, {startResolution: 10.5, startZoomLevel: 5})).toMatchObject({
+        expect(chooseZoomOrResolution({startResolution: 10.5, startZoomLevel: 5}, {startResolution: 10.5, startZoomLevel: 5})).toMatchObject({
             startZoomLevel: undefined,
             startResolution: 10.5
         });

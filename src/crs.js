@@ -4,6 +4,15 @@ import {register} from "ol/proj/proj4.js";
 import defaults from "./defaults";
 
 /**
+ * Returns the proj4 projection definition for a registered name.
+ * @param {string} name - projection name as written in [0] position of namedProjections
+ * @returns {(object|undefined)} proj4 projection object or undefined
+ */
+export function getProjection (name) {
+    return proj4.defs(name);
+}
+
+/**
  * The configured named projections and proj4 have to be registered initially.
  * @param {string[]} [namedProjections=[
         ["EPSG:25832", "+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"]
@@ -20,26 +29,18 @@ export function registerProjections (namedProjections = defaults.namedProjection
 }
 
 /**
- * Returns the proj4 projection definition for a registered name.
- * @param {string} name - projection name as written in [0] position of namedProjections
- * @returns {(object|undefined)} proj4 projection object or undefined
- */
-export function getProjection (name) {
-    return proj4.defs(name);
-}
-
-/**
  * Returns all known projections.
  * @returns {object[]} array of projection objects with their name added
  */
-export function getProjections() {
+export function getProjections () {
     const projections = Object
         .keys(proj4.defs)
         .map(name => Object.assign(proj4.defs(name), {name}));
-        //return no duplicates and only the projections which are registred with masterportal=true
-        return projections.filter(function(projection, index, self) {
-            return index == self.indexOf(projection) && projection.masterportal === true;
-        });
+
+    // return no duplicates and only the projections which are registred with masterportal=true
+    return projections.filter(function (projection, index, self) {
+        return index === self.indexOf(projection) && projection.masterportal === true;
+    });
 }
 
 /**
