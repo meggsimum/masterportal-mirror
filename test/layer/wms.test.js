@@ -1,5 +1,6 @@
 import {Map} from "ol";
-import {Tile as TileLayer, Image as ImageLayer} from "ol/layer.js";
+import TileLayer from "ol/layer/Tile";
+import ImageLayer from "ol/layer/Image";
 import TileWMS from "ol/source/TileWMS.js";
 import ImageWMS from "ol/source/ImageWMS.js";
 

@@ -1,5 +1,5 @@
-import {Vector as VectorLayer} from "ol/layer.js";
-import {Vector as VectorSource} from "ol/source.js";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
 import GeoJSON from "ol/format/GeoJSON.js";
 import style, {setCustomStyles} from "./style";
 

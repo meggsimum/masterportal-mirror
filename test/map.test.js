@@ -1,5 +1,5 @@
 import {PluggableMap, Map} from "ol";
-import {Tile as TileLayer} from "ol/layer.js";
+import TileLayer from "ol/layer/Tile";
 import {createMap} from "../src/map";
 import {initializeLayerList} from "../src/rawLayerList.js";
 import {registerProjections} from "../src/crs.js";
