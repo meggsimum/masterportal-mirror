@@ -1,4 +1,22 @@
 # Changelog masterportalAPI
+ All important changes in this project are stored in this file.
+
+ The [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used.
+
+
+## Unreleased - in development
+### Added
+
+### Changed
+- The dependency on the OL package has been updated to version 6
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+---
 
 ## 1.1.0 - 2020-04-14
 ### Added
@@ -11,6 +29,8 @@
 ### Fixed
 - Fixes a timeout problem that occurred when initializing the layerList
 - The projections have delivered duplicates, these are now filtered out
+
+---
 
 ## 1.0.0 - 2019-07-29
 - Initial implementation.
