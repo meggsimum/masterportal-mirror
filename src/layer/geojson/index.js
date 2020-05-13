@@ -1,5 +1,5 @@
-import {Vector as VectorLayer} from "ol/layer.js";
-import {Vector as VectorSource} from "ol/source.js";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
 import GeoJSON from "ol/format/GeoJSON.js";
 import style, {setCustomStyles} from "./style";
 
@@ -62,13 +62,13 @@ export function createLayer (rawLayer, {map, layerStyle} = {}) {
 }
 
 /**
- * GeoJSON layer with an URL will be reloaded. All other layers will be cleared.
+ * GeoJSON layer with an URL will be reloaded. All other layers will be refreshed.
  * @param {ol.layer.Vector} layer - GeoJSON layer to update
  * @returns {undefined}
  */
 export function updateSource (layer) {
-    // openlayers named this "clear", but it also means "reload" if an URL is set
-    layer.getSource().clear();
+    // openlayers named this "refresh", but it also means "reload" if an URL is set
+    layer.getSource().refresh();
 }
 
 /**

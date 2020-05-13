@@ -1,4 +1,5 @@
-import {Tile as TileLayer, Image as ImageLayer} from "ol/layer.js";
+import TileLayer from "ol/layer/Tile";
+import ImageLayer from "ol/layer/Image";
 import TileWMS from "ol/source/TileWMS.js";
 import ImageWMS from "ol/source/ImageWMS.js";
 
@@ -107,5 +108,5 @@ export function getGfiURL (layer, map, coordinate) {
             ? {FEATURE_COUNT: rawLayer.featureCount}
             : {});
 
-    return layer.getSource().getGetFeatureInfoUrl(coordinate, resolution, projection, params);
+    return layer.getSource().getFeatureInfoUrl(coordinate, resolution, projection, params);
 }

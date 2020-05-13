@@ -1,4 +1,4 @@
-import {Vector} from "ol/layer.js";
+import VectorLayer from "ol/layer/Vector";
 import Feature from "ol/Feature";
 
 import {geojson} from "../../../src";
@@ -25,7 +25,7 @@ describe("geojson/index", function () {
         it("creates an ol/layer/Vector", function () {
             const layer = geojson.createLayer({});
 
-            expect(layer).toBeInstanceOf(Vector);
+            expect(layer).toBeInstanceOf(VectorLayer);
         });
 
         it("uses default layer style, unless layerStyle is explicitly given", function () {
