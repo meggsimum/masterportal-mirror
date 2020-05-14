@@ -4,17 +4,9 @@
  The [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used.
 
 
-## Unreleased - in development
-### Added
-
+## 1.2.0 - 2020-05-14
 ### Changed
 - The dependency on the OL package has been updated to version 6
-
-### Deprecated
-
-### Removed
-
-### Fixed
 
 ---
 
