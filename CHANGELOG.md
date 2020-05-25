@@ -3,6 +3,19 @@
 
  The [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used.
 
+ ## Unreleased - in development
+ ### Added
+
+ ### Changed
+
+ ### Deprecated
+ 
+ ### Removed
+ 
+ ### Fixed
+
+---
+
 ## 1.3.0 - 2020-05-25
 ### Added
 - New parameters constrainResolution and constrainOnlyCenter to create the map view
