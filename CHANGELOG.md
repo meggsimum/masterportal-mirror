@@ -5,14 +5,16 @@
 
 ## Unreleased - in development
 ### Added
-
+- New parameters constrainResolution and constrainOnlyCenter to create the map view
 ### Changed
-
+- The function getGetFeatureInfoUrl is changed into getFeatureInfoUrl
+- The function ol/source/Vector#clear() is changed into ol/source/Vector#refresh() to re-render a vector layer 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- Loading layer form separat Layer file in unit test 
 
 ---
 
