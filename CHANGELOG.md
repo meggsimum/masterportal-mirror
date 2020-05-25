@@ -3,24 +3,20 @@
 
  The [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## Unreleased - in development
+## 1.3.0 - 2020-05-25
 ### Added
 - New parameters constrainResolution and constrainOnlyCenter to create the map view
-### Changed
-- The function getGetFeatureInfoUrl is changed into getFeatureInfoUrl
-- The function ol/source/Vector#clear() is changed into ol/source/Vector#refresh() to re-render a vector layer 
-### Deprecated
-
-### Removed
-
-### Fixed
-- Loading layer form separat Layer file in unit test 
 
 ---
 
 ## 1.2.0 - 2020-05-14
 ### Changed
-- The dependency on the OL package has been updated to version 6
+- The dependency on the OL package has been updated to version 6:
+    - The function getGetFeatureInfoUrl is changed into getFeatureInfoUrl
+    - The function ol/source/Vector#clear() is changed into ol/source/Vector#refresh() to re-render a vector layer
+
+### Fixed
+- Loading layer form separat Layer file in unit test 
 
 ---
 
