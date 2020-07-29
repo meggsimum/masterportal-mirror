@@ -26,7 +26,7 @@ export default {
     ],
     startResolution: 15.874991427504629,
     startCenter: [565874, 5934140],
-    layerConf: "http://geoportal-hamburg.de/lgv-config/services-internet.json",
+    layerConf: "https://geodienste.hamburg.de/services-internet.json",
     layers: [
         {
             "id": "453",
