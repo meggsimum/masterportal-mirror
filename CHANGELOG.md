@@ -9,10 +9,15 @@
  ### Changed
 
  ### Deprecated
- 
+
  ### Removed
- 
+
  ### Fixed
+---
+
+## 1.4.0 - 2021-05-27
+### Changed
+- OpenLayers package from 6.3.1 to 6.5.0
 
 ---
 
@@ -29,7 +34,7 @@
     - The function ol/source/Vector#clear() is changed into ol/source/Vector#refresh() to re-render a vector layer
 
 ### Fixed
-- Loading layer form separat Layer file in unit test 
+- Loading layer form separat Layer file in unit test
 
 ---
 
