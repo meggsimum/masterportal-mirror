@@ -18,6 +18,7 @@
 ## 1.4.0 - 2021-05-27
 ### Changed
 - OpenLayers package from 6.3.1 to 6.5.0
+- Default backgroundImage is changed to ""
 
 ---
 

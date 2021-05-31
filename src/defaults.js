@@ -7,7 +7,7 @@
 export default {
     target: "map",
     epsg: "EPSG:25832",
-    backgroundImage: "https://geoportal-hamburg.de/lgv-config/img/backgroundCanvas.jpeg",
+    backgroundImage: "",
     extent: [510000.0, 5850000.0, 625000.4, 6000000.0],
     options: [
         {resolution: 66.14579761460263, scale: 250000, zoomLevel: 0},
