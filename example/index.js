@@ -10,6 +10,7 @@ import abstractAPI from "../abstraction/api.js";
 import services from "./config/services.json";
 import portalConfig from "./config/portal.json";
 import localGeoJSON from "./config/localGeoJSON.js";
+import getInitialControls from "../src/lib/getInitialControls";
 
 const hamburgServicesUrl = "http://geoportal-hamburg.de/lgv-config/services-internet.json";
 
@@ -19,7 +20,6 @@ window.mpapi = {
     map: null
 };
 // */
-
 //* Cleans up map before it is re-rendered (happens on every save during dev mode)
 document.getElementById(portalConfig.target).innerHTML = "";
 // */
@@ -48,34 +48,20 @@ mpapi.geojson.setCustomStyles({
 // */
 
 //* SYNCHRONOUS EXAMPLE: layerConf is known
-
-const map2D = abstractAPI.map.createMap({
+const config ={
     ...portalConfig,
     layerConf: services
-}, "2D"),
-settings3D = {
-    "map2D": map2D,
-    "shadowTime": undefined
 },
-map3D = abstractAPI.map.createMap(settings3D, "3D");
+map2D = abstractAPI.map.createMap(config, "2D");
 
 window.mpapi.map = map2D;
+getInitialControls(config);
 
 ["2001", "2002"].forEach(id =>
     window.mpapi.map.addLayer(id)
 );
 
 
-var setEnabled = function() {
-    if (window.mpapi.map === map3D) {
-        window.mpapi.map.setEnabled(false);
-        window.mpapi.map = map2D;
-    }else{
-        window.mpapi.map = map3D;
-        window.mpapi.map.setEnabled(true);
-    }
-};
-document.getElementById('enable').addEventListener('click', setEnabled);
 
 
 

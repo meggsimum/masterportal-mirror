@@ -33,6 +33,27 @@ html, body {
                 /* map container needs a defined height */
                 height: 100%;
             }
+
+            #controls {
+                right: 10px;
+                top: 160px;
+                padding: 10px;
+                text-align: right;
+                position: absolute;
+                z-index: 50;
+                opacity: 0.9;
+                background-color: transparent;
+
+                input:first-child {
+                    font-size: 17px;
+                    margin-top: 4px;
+                    padding: 6px 6px 6px 6px;
+                    font-family: "MasterPortalFont Bold", "Arial Narrow", Arial, sans-serif;
+                    color: #f3f3f3;
+                    background-color: #E10019;
+                    box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+                }
+            }
         }
     }
 }

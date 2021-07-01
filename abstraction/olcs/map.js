@@ -13,13 +13,13 @@ export default {
      * Creates a 3D-map.
      * @param {Object} settings The settings for the 3D-map.
      * @param {module:ol/PluggableMap~PluggableMap} settings.map2D The 2D-Map.
-     * @param {Cesium.JulianDate} settings.shadowTime The shadow time in julian date format.
+     * @param {Cesium.JulianDate} settings.shadowTime The shadow time in julian date format if undefined olcs default is Cesium.JulianDate.now().
      * @returns {void}
      */
     createMap: function (settings) {
         const map3D = new OLCesium({
             map: settings.map2D,
-            time: settings.shadowTime,
+            time: settings.shadowTime ? settings.shadowTime : undefined,
             sceneOptions: {
                 shadows: false
             },

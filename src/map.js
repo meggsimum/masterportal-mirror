@@ -10,6 +10,7 @@ import {createMapView} from "./mapView";
 import {initializeLayerList, getLayerWhere} from "./rawLayerList";
 import {registerProjections} from "./crs";
 import {setGazetteerUrl} from "./searchAddress";
+import {ZoomSlider} from "ol/control";
 
 
 /**

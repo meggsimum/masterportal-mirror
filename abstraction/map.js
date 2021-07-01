@@ -16,7 +16,6 @@ export default {
                 "3D": map3D.createMap
             },
             map = createMapFunctions[mapMode](settings);
-
         mapCollection.addMap(map);
 
         return map;

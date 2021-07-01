@@ -30,5 +30,8 @@
     {
       "id": "1001"
     }
-  ]
+  ],
+  "controls": {
+    "button3d": true
+  }
 }
