@@ -11,6 +11,7 @@ import {initializeLayerList, getLayerWhere} from "./rawLayerList";
 import {registerProjections} from "./crs";
 import {setGazetteerUrl} from "./searchAddress";
 
+
 /**
  * lookup for layer constructors
  * @ignore
@@ -94,6 +95,7 @@ export function createMap (config = defaults, {mapParams, callback} = {}) {
         controls: [],
         view: createMapView(config)
     }, mapParams));
+
 
     // extend callback to load configured initial layers
     initializeLayerList(config.layerConf, (param, error) => {

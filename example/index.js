@@ -5,6 +5,7 @@ import "ol/ol.css";
 import {Style, Stroke, Fill} from "ol/style.js";
 
 import * as mpapi from "../src";
+import abstractAPI from "../abstraction/api.js";
 
 import services from "./config/services.json";
 import portalConfig from "./config/portal.json";
@@ -47,13 +48,37 @@ mpapi.geojson.setCustomStyles({
 // */
 
 //* SYNCHRONOUS EXAMPLE: layerConf is known
-window.mpapi.map = mpapi.createMap({
+
+const map2D = abstractAPI.map.createMap({
     ...portalConfig,
     layerConf: services
-});
+}, "2D"),
+settings3D = {
+    "map2D": map2D,
+    "shadowTime": undefined
+},
+map3D = abstractAPI.map.createMap(settings3D, "3D");
+
+window.mpapi.map = map2D;
+
 ["2001", "2002"].forEach(id =>
     window.mpapi.map.addLayer(id)
 );
+
+
+var setEnabled = function() {
+    if (window.mpapi.map === map3D) {
+        window.mpapi.map.setEnabled(false);
+        window.mpapi.map = map2D;
+    }else{
+        window.mpapi.map = map3D;
+        window.mpapi.map.setEnabled(true);
+    }
+};
+document.getElementById('enable').addEventListener('click', setEnabled);
+
+
+
 //*/
 
 /* ASYNCHRONOUS EXAMPLE 1: work with layerConf callback
