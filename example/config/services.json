@@ -15,6 +15,20 @@
     "maxScale": 200
   },
   {
+    "id" : "1002",
+    "name" : "Krankenhäuser",
+    "url" : "https://geodienste.hamburg.de/HH_WMS_Krankenhaeuser",
+    "typ" : "WMS",
+    "layers" : "krankenhaeuser",
+    "format" : "image/png",
+    "version" : "1.3.0",
+    "singleTile" : false,
+    "transparent" : true,
+    "transparency" : 0,
+    "urlIsVisible" : true,
+    "tilesize" : 512
+  },
+  {
     "id" : "2001",
     "typ" : "GeoJSON",
     "name" : "Landesgrenze Hamburg",

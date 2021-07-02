@@ -10,7 +10,7 @@ import abstractAPI from "../abstraction/api.js";
 import services from "./config/services.json";
 import portalConfig from "./config/portal.json";
 import localGeoJSON from "./config/localGeoJSON.js";
-import getInitialControls from "../src/lib/getInitialControls";
+import getInitialControls from "../src/lib/setInitialControls";
 
 const hamburgServicesUrl = "http://geoportal-hamburg.de/lgv-config/services-internet.json";
 
@@ -57,7 +57,7 @@ map2D = abstractAPI.map.createMap(config, "2D");
 window.mpapi.map = map2D;
 getInitialControls(config);
 
-["2001", "2002"].forEach(id =>
+["1002"].forEach(id =>
     window.mpapi.map.addLayer(id)
 );
 
