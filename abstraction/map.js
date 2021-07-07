@@ -1,7 +1,6 @@
 import mapCollection from "./mapCollection.js";
 import * as map2D from "../src/map.js";
 import map3D from "./olcs/map.js";
-//import store from "../app-store/index.js";
 
 export default {
     /**
@@ -26,13 +25,17 @@ export default {
         return mapCollection.getMapByMode("2D");
     },
 
+    getMapById: function (id) {
+        return mapCollection.getMapById(id);
+    },
+
     /**
      * Adds an interaction to the map.
      * @param {module:ol/interaction/Interaction} interaction Interaction to be added to map.
-     * @param {Sting} [mapId=store.getters.mapId] Id of the map.
+     * @param {String} Id of the map.
      * @returns {void}
      */
-    addInteraction: function (interaction, mapId = store.getters.mapId) {
+    addInteraction: function (interaction, mapId) {
         const map = mapCollection.getMapById(mapId),
             interactionFunctions = {
                 "2D": () => map.addInteraction(interaction),
@@ -42,7 +45,7 @@ export default {
         interactionFunctions[map?.mapMode || map.get("mapMode")]();
     },
 
-    removeInteraction: function (interaction, mapId = store.getters.mapId) {
+    removeInteraction: function (interaction, mapId) {
         const map = mapCollection.getMapById(mapId),
             interactionFunctions = {
                 "2D": () => map.removeInteraction(interaction),

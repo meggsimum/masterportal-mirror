@@ -1,5 +1,3 @@
-//import store from "../app-store/index.js";
-
 const mapCollection = [];
 
 export default {
@@ -14,10 +12,10 @@ export default {
 
     /**
      * Gets the current map.
-     * @param {Sting} [mapId=store.getters.mapId] Id of the map.
+     * @param {String} Id of the map.
      * @returns {module:ol/PluggableMap~PluggableMap} The current map.
      */
-    getCurrentMap: function (mapId = store.getters.mapId) {
+    getCurrentMap: function (mapId) {
         return this.getMapById(mapId);
     },
 
