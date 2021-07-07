@@ -12,8 +12,6 @@ import portalConfig from "./config/portal.json";
 import localGeoJSON from "./config/localGeoJSON.js";
 import getInitialControls from "../src/lib/setInitialControls";
 
-const hamburgServicesUrl = "http://geoportal-hamburg.de/lgv-config/services-internet.json";
-
 //* Add elements to window to play with API in console
 window.mpapi = {
     ...mpapi,
@@ -25,11 +23,18 @@ document.getElementById(portalConfig.target).innerHTML = "";
 // */
 
 //* Fake service that holds client-side prepared geojson; also nice to test automatic transformation since data is in WGS 84
-const localService = {
-    id: "2002",
-    typ: "GeoJSON",
-    features: localGeoJSON
-};
+const hamburgServicesUrl = "http://geoportal-hamburg.de/lgv-config/services-internet.json",
+    localService = {
+        id: "2002",
+        typ: "GeoJSON",
+        features: localGeoJSON
+    },
+    config = {
+        ...portalConfig,
+        layerConf: services
+    },
+    map2D = abstractAPI.map.createMap(config, "2D");
+
 services.push(localService);
 // */
 
@@ -48,24 +53,13 @@ mpapi.geojson.setCustomStyles({
 // */
 
 //* SYNCHRONOUS EXAMPLE: layerConf is known
-const config ={
-    ...portalConfig,
-    layerConf: services
-},
-map2D = abstractAPI.map.createMap(config, "2D");
-
 window.mpapi.map = map2D;
 getInitialControls(config);
 
-["1002"].forEach(id =>
-    window.mpapi.map.addLayer(id)
-);
+["1002"].forEach(id => window.mpapi.map.addLayer(id));
 
 
-
-
-
-//*/
+//* /
 
 /* ASYNCHRONOUS EXAMPLE 1: work with layerConf callback
 mpapi.rawLayerList.initializeLayerList(

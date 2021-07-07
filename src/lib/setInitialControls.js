@@ -6,15 +6,15 @@ import abstractAPI from "../../abstraction/api.js";
  * @param {Function} callback - the Function to call after loading has completed
  * @returns {undefined}
  */
- var loadScript = function(fileName, callback) {
-    var head = document.getElementsByTagName('head')[0];
-    var script = document.createElement('script');
+ var load3DScript = function(fileName, callback) {
+    let head = document.getElementsByTagName('head')[0];
+    let script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = fileName;
 
     script.onload = callback;
     script.onreadystatechange = function() {
-        if(this.readyState == 'complete') {
+        if (this.readyState == 'complete') {
             callback();
         }
     };
@@ -43,7 +43,7 @@ export default function (config) {
                         switch3D.value = "3D";
                     }
                     else {
-                        loadScript("https://lib.virtualcitymap.de/v3.6.x/lib/Cesium/Cesium.js", function Loaded3DCallback () {
+                        load3DScript("https://lib.virtualcitymap.de/v3.6.x/lib/Cesium/Cesium.js", function Loaded3DCallback () {
                             const map3D = abstractAPI.map.createMap(settings3D, "3D");
 
                             window.mpapi.map = map3D;
