@@ -79,7 +79,6 @@ export function search (searchstring, params) {
                 zoomToParams,
                 searchAddress = false,
                 searchStreets = false,
-                searchHouseNumbers = false,
                 searchDistricts = false,
                 searchParcels = false,
                 searchStreetKey = false,
@@ -87,6 +86,9 @@ export function search (searchstring, params) {
             } = params,
             // promises array
             searches = [];
+        let {
+            searchHouseNumbers = false
+        } = params;
 
         // stop search if search string too short
         if (searchstring.length < minCharacters) {

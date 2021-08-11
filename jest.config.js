@@ -11,5 +11,6 @@ module.exports = {
     /** mapping svg to string representation since jest can't handle svg */
     "moduleNameMapper": {
         "marker.svg": "<rootDir>/public/stringMarker.js"
-    }
+    },
+    "testEnvironment": "jsdom"
 };

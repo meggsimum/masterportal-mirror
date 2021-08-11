@@ -15,7 +15,7 @@ export function chooseZoomOrResolution (config = {}, mergedConfig = defaults) {
         startResolution: undefined
     };
 
-    if (config.hasOwnProperty("startZoomLevel") && !config.hasOwnProperty("startResolution")) {
+    if (Object.prototype.hasOwnProperty.call(config, "startZoomLevel") && !Object.prototype.hasOwnProperty.call(config, "startResolution")) {
         zoomResolution.startZoomLevel = mergedConfig.startZoomLevel;
     }
     else {

@@ -13,7 +13,7 @@ import defaults from "../src/defaults";
  */
 jest.mock("ol");
 jest.mock("../src/rawLayerList.js", () => {
-    const original = require.requireActual("../src/rawLayerList.js");
+    const original = jest.requireActual("../src/rawLayerList.js");
 
     original.getLayerWhere = ({id}) => ({
         exists: {
