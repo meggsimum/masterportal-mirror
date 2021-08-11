@@ -5,9 +5,10 @@
 
  ## Unreleased - in development
  ### Added
+- The engine for npm version ">= 6.13.4" was added in the package.json
 - The package "@babel/preset-env" version 7.15.0 was added.
 - The package "core-js" version 3.16.1 was added.
-- The engine for npm version ">= 6.13.4" was added in the package.json
+- The package "husky" version 7.0.1 was added. In this case a pre-push hook to run unit tests and eslint before every git push.
 
  ### Changed
 - The engine for node was updated to ">= 10.18.0" in the package.json
