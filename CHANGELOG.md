@@ -3,19 +3,6 @@
 
  The [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## Unreleased - in development
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
----
-
  ## 1.5.0 - 2021-08-16
  ### Added
 - The engine for npm version ">= 6.13.4" was added in the package.json
@@ -26,18 +13,18 @@
  ### Changed
 - The engine for node was updated to ">= 10.18.0" in the package.json
 - The follow package were updated and in this case the eslint rules and the babel.config were adjusted:
-    -ol: from 6.5.0 to version 6.6.1
-    -proj4: from 2.5.0 to version 2.7.5
-    -xml2js: from 0.4.19 to version 0.4.23
-    -@babel/core: from 7.1.6 to version 7.15.0
-    -@babel/plugin-transform-modules-commonjs: from 7.1.0 to version 7.15.0
-    -babel-jest: from 23.6.0 to version 27.0.6
-    -canvas: from 2.1.0 to version 2.8.0
-    -eslint: from 5.12.0 to version 7.32.0
-    -jest-canvas-mock: from 1.1.0 to version 2.3.1
-    -jsdoc: from 3.5.5 to version 3.6.7
-    -parcel-bundler: from 1.10.3 to version 1.12.5
-    -sass: from 1.14.3 to version 1.37.5
+  - ol: from 6.5.0 to version 6.6.1
+  - proj4: from 2.5.0 to version 2.7.5
+  - xml2js: from 0.4.19 to version 0.4.23
+  - @babel/core: from 7.1.6 to version 7.15.0
+  - @babel/plugin-transform-modules-commonjs: from 7.1.0 to version 7.15.0
+  - babel-jest: from 23.6.0 to version 27.0.6
+  - canvas: from 2.1.0 to version 2.8.0
+  - eslint: from 5.12.0 to version 7.32.0
+  - jest-canvas-mock: from 1.1.0 to version 2.3.1
+  - jsdoc: from 3.5.5 to version 3.6.7
+  - parcel-bundler: from 1.10.3 to version 1.12.5
+  - sass: from 1.14.3 to version 1.37.5
 
  ### Removed
 - The package "babel-core" was removed.
