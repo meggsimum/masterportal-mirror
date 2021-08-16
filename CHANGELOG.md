@@ -3,7 +3,7 @@
 
  The [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used.
 
- ## Unreleased - in development
+ ## 1.5.0 - 2021-08-16
  ### Added
 - The engine for npm version ">= 6.13.4" was added in the package.json
 - The package "@babel/preset-env" version 7.15.0 was added.
@@ -26,13 +26,9 @@
     -parcel-bundler: from 1.10.3 to version 1.12.5
     -sass: from 1.14.3 to version 1.37.5
 
- ### Deprecated
-
  ### Removed
 - The package "babel-core" was removed.
 - The package "babel-preset-es2015" was removed.
-
- ### Fixed
 
 ---
 
