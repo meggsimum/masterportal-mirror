@@ -25,7 +25,7 @@
 
  ### Changed
 - The engine for node was updated to ">= 10.18.0" in the package.json
-- The follow package were updated and in this case the eslint rules and the babel.config were adjusted:
+- The follow package were updated and in this case the eslint rules and the babel.config were adjusted
     - ol: from 6.5.0 to version 6.6.1
     - proj4: from 2.5.0 to version 2.7.5
     - xml2js: from 0.4.19 to version 0.4.23
