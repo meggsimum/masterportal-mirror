@@ -3,6 +3,19 @@
 
  The [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used.
 
+## Unreleased - in development
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+---
+
  ## 1.5.0 - 2021-08-16
  ### Added
 - The engine for npm version ">= 6.13.4" was added in the package.json
