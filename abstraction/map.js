@@ -1,5 +1,5 @@
 import mapCollection from "./mapCollection.js";
-import * as map2D from "../src/map.js";
+import * as map2D from "./ol/map.js";
 import map3D from "./olcs/map.js";
 
 export default {
@@ -15,7 +15,6 @@ export default {
                 "3D": map3D.createMap
             },
             map = createMapFunctions[mapMode](settings);
-        mapCollection.addMap(map);
 
         return map;
     },

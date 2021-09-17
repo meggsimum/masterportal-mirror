@@ -1,4 +1,3 @@
-import {createMap} from "./map";
 import {createMapView} from "./mapView";
 import * as crs from "./crs";
 import * as rawLayerList from "./rawLayerList";
@@ -9,7 +8,6 @@ import {search, setGazetteerUrl} from "./searchAddress";
 import setBackgroundImage from "./lib/setBackgroundImage";
 
 export {
-    createMap,
     createMapView,
     wms,
     geojson,

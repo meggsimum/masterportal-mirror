@@ -1,15 +1,14 @@
 import {Map, PluggableMap} from "ol";
 import {defaults as olDefaultInteractions} from "ol/interaction.js";
-
-import setBackgroundImage from "./lib/setBackgroundImage";
-import getInitialLayers from "./lib/getInitialLayers";
-import defaults from "./defaults";
-import * as wms from "./layer/wms";
-import * as geojson from "./layer/geojson";
-import {createMapView} from "./mapView";
-import {initializeLayerList, getLayerWhere} from "./rawLayerList";
-import {registerProjections} from "./crs";
-import {setGazetteerUrl} from "./searchAddress";
+import setBackgroundImage from "../../src/lib/setBackgroundImage";
+import getInitialLayers from "../../src/lib/getInitialLayers";
+import defaults from "../../src/defaults";
+import * as wms from "../../src/layer/wms";
+import * as geojson from "../../src/layer/geojson";
+import {createMapView} from "../../src/mapView";
+import {initializeLayerList, getLayerWhere} from "../../src/rawLayerList";
+import {registerProjections} from "../../src/crs";
+import {setGazetteerUrl} from "../../src/searchAddress";
 
 
 /**
