@@ -99,7 +99,10 @@ export function createMap (config = defaults, {mapParams, callback} = {}) {
     // extend callback to load configured initial layers
     initializeLayerList(config.layerConf, (param, error) => {
         getInitialLayers(config)
-            .forEach(layer => map.addLayer(layer.id, layer));
+            .forEach(layer => {
+                // todo wozu ist die Zeile? hier wird die Geobasiskarte noch mal oben drauf geadded
+                // map.addLayer(layer.id, layer);
+            });
 
         if (typeof callback === "function") {
             return callback(param, error);
