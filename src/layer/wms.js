@@ -1,6 +1,7 @@
 import TileLayer from "ol/layer/Tile";
 import ImageLayer from "ol/layer/Image";
 import TileWMS from "ol/source/TileWMS.js";
+import TileGrid from "ol/tilegrid/TileGrid";
 import ImageWMS from "ol/source/ImageWMS.js";
 
 import {getLayerWhere} from "../rawLayerList";
@@ -18,17 +19,20 @@ export function generateSessionId () {
  * @param {version} version - webservice version as string, e.g. "1.1.1"
  * @param {boolean} transparent - whether tiles from this service should have transparency where no information is available
  * @param {boolean} singleTile - whether only one tile shall be requested that fills the whole view
+ * @param {boolean} STYLES - stles of the layer, if available
  * @param {(string|number)} tilesize - if singleTile is true, this is the requested tilesize
  * @returns {object} maps query parameter names to values
  */
 export function makeParams (rawLayer) {
     return Object.assign({
         SESSIONID: generateSessionId(),
+        CACHEID: rawLayer.cacheId,
         FORMAT: rawLayer.format || "image/png",
         LAYERS: rawLayer.layers,
         VERSION: rawLayer.version,
         TRANSPARENT: rawLayer.transparent,
-        SINGLETILE: rawLayer.singleTile
+        SINGLETILE: rawLayer.singleTile,
+        STYLES: rawLayer.STYLES
     }, rawLayer.singleTile ? {} : {WIDTH: rawLayer.tilesize, HEIGHT: rawLayer.tilesize});
 }
 
@@ -36,32 +40,48 @@ export function makeParams (rawLayer) {
  * Creates an ol/source element for the rawLayer.
  * @param {object} rawLayer - layer specification as in services.json
  * @param {string} [rawLayer.serverType] - optional servertype definition: "geoserver" or "mapserver" or "qgis"
+ * @param {object} options - optional resolutions and origin to create the TileGrid
+ * @param {object} [resolutions] - optional resolutions to create the TileGrid
+ * @param {object} [origin] - optional origin to create the TileGrid
  * @returns {(ol.source.TileWMS|ol.source.ImageWMS)} TileWMS or ImageWMS, depending on whether singleTile is true.
  */
-export function createLayerSource (rawLayer) {
+export function createLayerSource (rawLayer, options) {
     const params = makeParams(rawLayer);
+    let tileGrid = null;
 
     if (rawLayer.singleTile) {
         return new ImageWMS({
             url: rawLayer.url,
+            gutter: rawLayer.gutter,
             params,
-            serverType: rawLayer.serverType
+            serverType: rawLayer.serverType,
+            attributions: rawLayer.olAttribution
+        });
+    }
+    if (options && options.resolutions) {
+        tileGrid = new TileGrid({
+            resolutions: options.resolutions,
+            origin: options.origin ? options.origin : undefined,
+            tileSize: parseInt(rawLayer.tilesize, 10)
         });
     }
     return new TileWMS({
         url: rawLayer.url,
         params,
-        gutter: rawLayer.gutter || 0
+        gutter: rawLayer.gutter || 0,
+        tileGrid: tileGrid,
+        attributions: rawLayer.olAttribution
     });
 }
 
 /**
  * Creates complete ol/Layer from rawLayer containing all required children.
  * @param {*} rawLayer - layer specification as in services.json
+ * @param {object} options - optional resolutions and origin to create the TileGrid
  * @returns {ol.Layer} Layer that can be added to map.
  */
-export function createLayer (rawLayer) {
-    const source = createLayerSource(rawLayer),
+export function createLayer (rawLayer, options) {
+    const source = createLayerSource(rawLayer, options),
         Layer = rawLayer.singleTile ? ImageLayer : TileLayer;
 
     return new Layer({
