@@ -3,7 +3,6 @@ import VectorSynchronizer from "olcs/VectorSynchronizer.js";
 import FixedOverlaySynchronizer from "./3dUtils/fixedOverlaySynchronizer.js";
 import WMSRasterSynchronizer from "./3dUtils/wmsRasterSynchronizer.js";
 import {transform, get} from "ol/proj.js";
-//import store from "../../app-store/index.js";
 
 let interactions = [],
     mapIdCounter = 0;
@@ -90,7 +89,7 @@ function reactTo3DClickEvent (map3d, event) {
         cartographicPickedPosition;
 
     if (cartesian) {
-        if (document.querySelector(".nav li")?.classList.contains("open")) {
+        if (document.querySelector(".nav li") && document.querySelector(".nav li").classList.contains("open")) {
             document.querySelector(".nav li").classList.remove("open");
         }
         cartographic = scene.globe.ellipsoid.cartesianToCartographic(cartesian);
