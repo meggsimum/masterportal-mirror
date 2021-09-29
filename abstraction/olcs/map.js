@@ -7,77 +7,18 @@ import {transform, get} from "ol/proj.js";
 let interactions = [],
     mapIdCounter = 0;
 
-export default {
-    /**
-     * Creates a 3D-map.
-     * @param {Object} settings The settings for the 3D-map.
-     * @param {module:ol/PluggableMap~PluggableMap} settings.map2D The 2D-Map.
-     * @param {Cesium.JulianDate} settings.shadowTime The shadow time in julian date format if undefined olcs default is Cesium.JulianDate.now().
-     * @returns {void}
-     */
-    createMap: function (settings) {
-        const map3D = new OLCesium({
-            map: settings.map2D,
-            time: settings.shadowTime ? settings.shadowTime : undefined,
-            sceneOptions: {
-                shadows: false
-            },
-            stopOpenLayersEventsPropagation: true,
-            createSynchronizers: (olMap, scene) => {
-                return [new WMSRasterSynchronizer(olMap, scene), new VectorSynchronizer(olMap, scene), new FixedOverlaySynchronizer(olMap, scene)];
-            }
-        });
-
-        map3D.id = `map3D_${mapIdCounter}`;
-        map3D.mapMode = "3D";
-        mapIdCounter = mapIdCounter + 1;
-        handle3DEvents(map3D);
-
-        return map3D;
-    },
-
-
-    /**
-     * Adds an interaction to list of interactions. The handler of it is executed  after click with the param event.
-     * @param {Object} interaction the interaction to execute
-     * @returns {void}
-     */
-    addInteraction (interaction) {
-        interactions.push(interaction);
-    },
-
-    /**
-     * Removes an interaction from list of interactions.
-     * @param {Object} interactionToRemove to remove
-     * @returns {void}
-     */
-    removeInteraction (interactionToRemove) {
-        interactions = interactions.filter(interaction => interaction !== interactionToRemove);
-    }
-};
 
 /**
-     * Logic to listen to click events in 3d mode.
-     * @param {Object} map3D The 3D map.
-     * @returns {void}
-     */
-function handle3DEvents (map3D) {
-    const eventHandler = new window.Cesium.ScreenSpaceEventHandler(map3D.getCesiumScene().canvas);
-
-    eventHandler.setInputAction(reactTo3DClickEvent.bind(null, map3D), window.Cesium.ScreenSpaceEventType.LEFT_CLICK);
-}
-
-/**
-     * Reacts to 3d click event in cesium scene.
-     * @param {Object} map3d The 3D map.
-     * @param {Event} event The cesium event.
-     * @returns {void}
-     */
-function reactTo3DClickEvent (map3d, event) {
+ * Reacts to 3d click event in cesium scene.
+ * @param {Object} map3d The 3D map.
+ * @param {Object} mapProjection The map projection.
+ * @param {Event} event The cesium event.
+ * @returns {void}
+*/
+function reactTo3DClickEvent (map3d, mapProjection, event) {
     const scene = map3d.getCesiumScene(),
         ray = scene.camera.getPickRay(event.position),
-        cartesian = scene.globe.pick(ray, scene),
-        mapProjection = Radio.request("MapView", "getProjection");
+        cartesian = scene.globe.pick(ray, scene);
     let height,
         coords,
         cartographic,
@@ -121,5 +62,66 @@ function reactTo3DClickEvent (map3d, event) {
         });
     }
 }
+
+/**
+     * Logic to listen to click events in 3d mode.
+     * @param {Object} map3D The 3D map.
+     * @param {Object} mapProjection The map projection.
+     * @returns {void}
+     */
+function handle3DEvents (map3D, mapProjection) {
+    const eventHandler = new window.Cesium.ScreenSpaceEventHandler(map3D.getCesiumScene().canvas);
+
+    eventHandler.setInputAction(reactTo3DClickEvent.bind(null, map3D, mapProjection), window.Cesium.ScreenSpaceEventType.LEFT_CLICK);
+}
+
+export default {
+    /**
+     * Creates a 3D-map.
+     * @param {Object} settings The settings for the 3D-map.
+     * @param {module:ol/PluggableMap~PluggableMap} settings.map2D The 2D-Map.
+     * @param {Cesium.JulianDate} settings.shadowTime The shadow time in julian date format if undefined olcs default is Cesium.JulianDate.now().
+     * @returns {void}
+     */
+    createMap: function (settings) {
+        const map3D = new OLCesium({
+            map: settings.map2D,
+            time: settings.shadowTime ? settings.shadowTime : undefined,
+            sceneOptions: {
+                shadows: false
+            },
+            stopOpenLayersEventsPropagation: true,
+            createSynchronizers: (olMap, scene) => {
+                return [new WMSRasterSynchronizer(olMap, scene), new VectorSynchronizer(olMap, scene), new FixedOverlaySynchronizer(olMap, scene)];
+            }
+        });
+
+        map3D.id = `map3D_${mapIdCounter}`;
+        map3D.mapMode = "3D";
+        mapIdCounter = mapIdCounter + 1;
+        handle3DEvents(map3D, settings.mapProjection);
+
+        return map3D;
+    },
+
+
+    /**
+     * Adds an interaction to list of interactions. The handler of it is executed  after click with the param event.
+     * @param {Object} interaction the interaction to execute
+     * @returns {void}
+     */
+    addInteraction (interaction) {
+        interactions.push(interaction);
+    },
+
+    /**
+     * Removes an interaction from list of interactions.
+     * @param {Object} interactionToRemove to remove
+     * @returns {void}
+     */
+    removeInteraction (interactionToRemove) {
+        interactions = interactions.filter(interaction => interaction !== interactionToRemove);
+    }
+};
 
 

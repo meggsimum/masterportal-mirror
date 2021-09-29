@@ -28,31 +28,4 @@ export default {
     //     return mapCollection.getMapById(id);
     // },
 
-    /**
-     * Adds an interaction to the map.
-     * @param {module:ol/interaction/Interaction} interaction Interaction to be added to map.
-     * @param {String} Id of the map.
-     * @returns {void}
-     */
-    // addInteraction: function (interaction, mapId) {
-    //     const map = mapCollection.getMapById(mapId),
-    //         interactionFunctions = {
-    //             "2D": () => map.addInteraction(interaction),
-    //             "3D": () => map3D.addInteraction(interaction)
-    //         };
-
-    //     interactionFunctions[map?.mapMode || map.get("mapMode")]();
-    // },
-
-    // removeInteraction: function (interaction, mapId) {
-    //     const map = mapCollection.getMapById(mapId),
-    //         interactionFunctions = {
-    //             "2D": () => map.removeInteraction(interaction),
-    //             "3D": () => map3D.removeInteraction(interaction)
-    //         };
-
-    //     interactionFunctions[map?.mapMode || map.get("mapMode")]();
-    // }
-
-
 };
