@@ -8,11 +8,9 @@ export default {
      * @returns {ol/interaction/Pointer} The pointer interaction.
      */
     createPointerInteraction: function (handleMoveEvent, handleDownEvent) {
-        return new PointerInteraction(
-            {
-                handleMoveEvent,
-                handleDownEvent
-            }
-        );
+        return new PointerInteraction({
+            handleMoveEvent,
+            handleDownEvent
+        });
     }
 };

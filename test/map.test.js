@@ -1,6 +1,6 @@
 import {PluggableMap, Map} from "ol";
 import TileLayer from "ol/layer/Tile";
-import {createMap} from "../src/map";
+import map from "../abstraction/map.js";
 import {initializeLayerList} from "../src/rawLayerList.js";
 import {registerProjections} from "../src/crs.js";
 import setBackgroundImage from "../src/lib/setBackgroundImage.js";
@@ -35,19 +35,19 @@ describe("map.js", function () {
         it("calls all initialization functions", function () {
             const callback = jest.fn();
 
-            createMap(defaults, {callback});
+            map.createMap({config: defaults, mapParams: {}, callback}, "2D");
             expect(initializeLayerList).toHaveBeenCalledWith(defaults.layerConf, expect.any(Function));
             expect(registerProjections).toHaveBeenCalledWith(defaults.namedProjections);
             expect(setBackgroundImage).toHaveBeenCalledWith(defaults);
         });
 
         it("creates a MapView", function () {
-            createMap(defaults);
+            map.createMap({config: defaults, mapParams: {}, callback: null}, "2D");
             expect(createMapView).toHaveBeenCalledWith(defaults);
         });
 
         it("creates and returns a Map object from openlayers with optional additional params", function () {
-            const ret = createMap(defaults, {mapParams: {test: 1}});
+            const ret = map.createMap({config: defaults, mapParams: {test: 1}, callback: null}, "2D");
 
             expect(Map.mock.calls[Map.mock.calls.length - 1][0].test).toBe(1);
             expect(ret).toBeInstanceOf(Map);

@@ -6,15 +6,16 @@ import abstractAPI from "../../abstraction/api.js";
  * @param {Function} callback - the Function to call after loading has completed
  * @returns {undefined}
  */
- var load3DScript = function(fileName, callback) {
-    let head = document.getElementsByTagName('head')[0];
-    let script = document.createElement('script');
-    script.type = 'text/javascript';
+var load3DScript = function (fileName, callback) {
+    const head = document.getElementsByTagName("head")[0],
+        script = document.createElement("script");
+
+    script.type = "text/javascript";
     script.src = fileName;
 
     script.onload = callback;
-    script.onreadystatechange = function() {
-        if (this.readyState == 'complete') {
+    script.onreadystatechange = function () {
+        if (this.readyState == "complete") {
             callback();
         }
     };
