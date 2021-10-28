@@ -24,16 +24,20 @@ export function generateSessionId () {
  * @returns {object} maps query parameter names to values
  */
 export function makeParams (rawLayer) {
-    return Object.assign({
+    const params = Object.assign({
         SESSIONID: generateSessionId(),
         CACHEID: rawLayer.cacheId,
         FORMAT: rawLayer.format || "image/png",
         LAYERS: rawLayer.layers,
         VERSION: rawLayer.version,
         TRANSPARENT: rawLayer.transparent,
-        SINGLETILE: rawLayer.singleTile,
-        STYLES: rawLayer.STYLES
+        SINGLETILE: rawLayer.singleTile
     }, rawLayer.singleTile ? {} : {WIDTH: rawLayer.tilesize, HEIGHT: rawLayer.tilesize});
+
+    if (rawLayer.STYLES) {
+        params.STYLES = rawLayer.STYLES;
+    }
+    return params;
 }
 
 /**

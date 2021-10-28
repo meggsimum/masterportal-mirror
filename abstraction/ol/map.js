@@ -68,23 +68,25 @@ PluggableMap.prototype.addLayer = addLayer;
 /**
  * Creates an openlayers map according to configuration. Does not set many default values itself, but uses function that do.
  * Check the called functions for default values, or [the defaults file]{@link ./defaults.js}.
- * @param {object} [params={}] - parameter object
- * @param {object} [params.config] - configuration object - falls back to defaults if none given
- * @param {string} [params.config.target="map"] - div id to render map to
- * @param {string} [params.config.backgroundImage] - background image for map; "" to use none
- * @param {string} [params.config.epsg] - CRS to use
- * @param {number[]} [params.config.extent] - extent to use
+ * @param {object} [config] - configuration object - falls back to defaults if none given
+ * @param {string} [config.target="map"] - div id to render map to
+ * @param {string} [config.namedProjections] - projections to create the map
+ * @param {string} [config.backgroundImage] - background image for map; "" to use none
+ * @param {string} [config.epsg] - CRS to use
+ * @param {number[]} [config.extent] - extent to use
  * @param {Array.<{resolution: number, scale: number, zoomLevel: number}>} [config.options] - zoom level definition
- * @param {Array.<string[]>} [params.config.options] - each sub-array has two values: projection name, and projection description
- * @param {number} [params.config.startResolution] - initial resolution
- * @param {number[]} [params.config.startCenter] - initial position
- * @param {(string|object)} [params.config.layerConf] - services registry or URL thereof
- * @param {string} [params.config.gazetteerUrl] - url of gazetteer to use in searchAddress
- * @param {object} [params.mapParams] - additional parameter object that is spread into the ol.Map constructor object
- * @param {function} [params.callback] - optional callback for layer list loading
+ * @param {Array.<string[]>} [config.options] - each sub-array has two values: projection name, and projection description
+ * @param {number} [config.startResolution] - initial resolution
+ * @param {number[]} [config.startCenter] - initial position
+ * @param {(string|object)} [config.layerConf] - services registry or URL thereof
+ * @param {string} [config.gazetteerUrl] - url of gazetteer to use in searchAddress
+ * @param {object}  [settings={}] - setings object
+ * @param {object} [settings.mapParams] - additional parameter object that is spread into the ol.Map constructor object
+ * @param {function} [settings.callback] - optional callback for layer list loading
+ * @param {String} [mapMode = "2D"] The map mode. '2D' to craete a 2D-map and '3D' to create a 3D-map.
  * @returns {object} map object from ol
  */
-export function createMap ({config = defaults, mapParams, callback} = {}) {
+export function createMap (config = defaults, {mapParams, callback} = {}) {
     registerProjections(config.namedProjections);
     setBackgroundImage(config);
     setGazetteerUrl(config.gazetteerUrl);
@@ -98,8 +100,10 @@ export function createMap ({config = defaults, mapParams, callback} = {}) {
 
     // extend callback to load configured initial layers
     initializeLayerList(config.layerConf, (param, error) => {
-        getInitialLayers(config);
-        // .forEach(layer => map.addLayer(layer.id, layer));
+        getInitialLayers(config)
+            .forEach(layer => {
+                map.addLayer(layer.id, layer);
+            });
 
         if (typeof callback === "function") {
             return callback(param, error);

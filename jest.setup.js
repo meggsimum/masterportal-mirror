@@ -1,3 +1,3 @@
 window.URL.createObjectURL = function () {
-    //empty
+    // empty
 };

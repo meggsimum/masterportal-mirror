@@ -1,6 +1,7 @@
 import {PluggableMap, Map} from "ol";
 import TileLayer from "ol/layer/Tile";
 import map from "../abstraction/map.js";
+import {createMap as create3DMap} from "../abstraction/olcs/map.js";
 import {initializeLayerList} from "../src/rawLayerList.js";
 import {registerProjections} from "../src/crs.js";
 import setBackgroundImage from "../src/lib/setBackgroundImage.js";
@@ -35,19 +36,42 @@ describe("map.js", function () {
         it("calls all initialization functions", function () {
             const callback = jest.fn();
 
-            map.createMap({config: defaults, mapParams: {}, callback}, "2D");
+            map.createMap(defaults, {mapParams: {}, callback: callback}, "2D");
             expect(initializeLayerList).toHaveBeenCalledWith(defaults.layerConf, expect.any(Function));
             expect(registerProjections).toHaveBeenCalledWith(defaults.namedProjections);
             expect(setBackgroundImage).toHaveBeenCalledWith(defaults);
         });
 
-        it("creates a MapView", function () {
-            map.createMap({config: defaults, mapParams: {}, callback: null}, "2D");
+        it("creates a 2D MapView", function () {
+            map.createMap(defaults);
             expect(createMapView).toHaveBeenCalledWith(defaults);
+        });
+        it("creates a MapView", function () {
+            map.createMap(defaults, {}, "2D");
+            expect(createMapView).toHaveBeenCalledWith(defaults);
+        });
+        it.skip("MISSING Cesium! creates a 3D MapView", function () {
+            const settings = {map2D: {
+                getView: () => {
+                    return {
+                        getProjection: () => {
+                            return {getCode: () => "code"};
+                        }
+                    };
+                },
+                getViewport: () => {
+                    return {
+                        appendChild: jest.fn()
+                    };
+                }
+            }};
+
+            map.createMap(settings, {}, "3D");
+            expect(create3DMap).toHaveBeenCalledWith(defaults);
         });
 
         it("creates and returns a Map object from openlayers with optional additional params", function () {
-            const ret = map.createMap({config: defaults, mapParams: {test: 1}, callback: null}, "2D");
+            const ret = map.createMap(defaults, {mapParams: {test: 1}}, "2D");
 
             expect(Map.mock.calls[Map.mock.calls.length - 1][0].test).toBe(1);
             expect(ret).toBeInstanceOf(Map);
