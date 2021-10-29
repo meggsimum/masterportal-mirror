@@ -43,10 +43,14 @@ export function makeParams (rawLayer) {
 /**
  * Creates an ol/source element for the rawLayer.
  * @param {object} rawLayer - layer specification as in services.json
+ * @param {string} [rawLayer.url] - WMS service URL
  * @param {string} [rawLayer.serverType] - optional servertype definition: "geoserver" or "mapserver" or "qgis"
+ * @param {string} [rawLayer.gutter] - optional the size in pixels of the gutter around image tiles to ignore
+ * @param {function} [rawLayer.olAttribution] - optional function that takes a module:ol/PluggableMap~FrameState and returns a string or an array of strings representing source attributions
+ * @param {string|number} [rawLayer.tilesize] - optional needed to create the tileGrid
  * @param {object} options - optional resolutions and origin to create the TileGrid
- * @param {object} [resolutions] - optional resolutions to create the TileGrid
- * @param {object} [origin] - optional origin to create the TileGrid
+ * @param {Array} [options.resolutions] - optional resolutions to create the TileGrid, must be in descending order
+ * @param {Array} [options.origin] - optional origin to create the TileGrid
  * @returns {(ol.source.TileWMS|ol.source.ImageWMS)} TileWMS or ImageWMS, depending on whether singleTile is true.
  */
 export function createLayerSource (rawLayer, options) {
@@ -56,7 +60,6 @@ export function createLayerSource (rawLayer, options) {
     if (rawLayer.singleTile) {
         return new ImageWMS({
             url: rawLayer.url,
-            gutter: rawLayer.gutter,
             params,
             serverType: rawLayer.serverType,
             attributions: rawLayer.olAttribution
@@ -79,22 +82,32 @@ export function createLayerSource (rawLayer, options) {
 }
 
 /**
- * Creates complete ol/Layer from rawLayer containing all required children.
- * @param {*} rawLayer - layer specification as in services.json
+ * Creates complete ol/Layer from rawLayer containing source and all required children.
+ * @param {object} rawLayer - layer specification as in services.json
+ * @param {string} [rawLayer.id] - optional id of the layer, passed to help identification in services.json
+ * @param {string} [rawLayer.url] - WMS service URL
+ * @param {string} [rawLayer.minScale] - optional the minimal resolution
+ * @param {string} [rawLayer.maxScale] - optional the maximal resolution
+ * @param {string} [rawLayer.serverType] - optional servertype definition: "geoserver" or "mapserver" or "qgis"
+ * @param {string} [rawLayer.gutter] - optional the size in pixels of the gutter around image tiles to ignore
+ * @param {function} [rawLayer.olAttribution] - optional function that takes a module:ol/PluggableMap~FrameState and returns a string or an array of strings representing source attributions
+ * @param {string|number} [rawLayer.tilesize] - optional needed to create the tileGrid
+ * @param {object} layerParams - additional layer params
  * @param {object} options - optional resolutions and origin to create the TileGrid
+ * @param {Array} [options.resolutions] - optional resolutions to create the TileGrid, must be in descending order
+ * @param {Array} [options.origin] - optional origin to create the TileGrid
  * @returns {ol.Layer} Layer that can be added to map.
  */
-export function createLayer (rawLayer, options) {
+export function createLayer (rawLayer, layerParams = {}, options) {
     const source = createLayerSource(rawLayer, options),
         Layer = rawLayer.singleTile ? ImageLayer : TileLayer;
 
-    return new Layer({
+    return new Layer(Object.assign({
         source,
         minResolution: rawLayer.minScale,
         maxResolution: rawLayer.maxScale,
-        // id passed to help identification in services.json
         id: rawLayer.id
-    });
+    }, layerParams));
 }
 
 /**

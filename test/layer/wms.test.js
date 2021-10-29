@@ -1,9 +1,9 @@
-import {Map} from "ol";
+import {Map, Attribution} from "ol";
 import TileLayer from "ol/layer/Tile";
 import ImageLayer from "ol/layer/Image";
 import TileWMS from "ol/source/TileWMS.js";
 import ImageWMS from "ol/source/ImageWMS.js";
-
+import TileGrid from "ol/tilegrid/TileGrid";
 import * as wms from "../../src/layer/wms";
 
 describe("wms.js", function () {
@@ -72,6 +72,73 @@ describe("wms.js", function () {
             expect(source).toBeInstanceOf(ImageWMS);
         });
     });
+    describe("createLayerSource with a tileGrid", function () {
+        function attrFunction () {
+            return [new Attribution({
+                html: "&copy; " +
+                "<a href=\"http://www.geo.admin.ch/internet/geoportal/" +
+                "en/home.html\">" +
+                "Pixelmap 1:1000000 / geo.admin.ch</a>"
+            })];
+        }
+        it("creates a TileWMS without tileGrid, options are undefined", function () {
+            const options = undefined,
+                source = wms.createLayerSource({singleTile: false, tilesize: "10"}, options);
+
+            expect(source).toBeInstanceOf(TileWMS);
+            expect(source.getTileGrid()).toEqual(null);
+        });
+        it("creates a TileWMS without tileGrid, options without resolutions", function () {
+            const options = {
+                    origin: [442800, 5809000]
+                },
+                source = wms.createLayerSource({singleTile: false, tilesize: "10"}, options);
+
+            expect(source).toBeInstanceOf(TileWMS);
+            expect(source.getTileGrid()).toEqual(null);
+        });
+        it("creates a TileWMS containing a tileGrid", function () {
+            const options = {
+                    resolutions: [2000, 1000],
+                    origin: [442800, 5809000]
+                },
+                rawLayer = {
+                    singleTile: false,
+                    tilesize: "10",
+                    gutter: "1",
+                    serverType: "geoserver",
+                    url: "https://url.de",
+                    olAttribution: attrFunction
+                },
+                source = wms.createLayerSource(rawLayer, options);
+
+            expect(source).toBeInstanceOf(TileWMS);
+            expect(source.getTileGrid()).toBeInstanceOf(TileGrid);
+            expect(source.getTileGrid().getOrigin()).toEqual(options.origin);
+            expect(source.getTileGrid().getResolutions()).toEqual(options.resolutions);
+            expect(source.getTileGrid().getTileSize()).toEqual(parseInt(rawLayer.tilesize, 10));
+            expect(source.getAttributions()).toBe(attrFunction);
+            expect(source.getUrls()).toEqual([rawLayer.url]);
+            /* eslint-disable no-underscore-dangle */
+            expect(source.gutter_).toEqual(rawLayer.gutter);
+        });
+
+        it("creates an ImageWMS for single tile requests, contains no tileGrid", function () {
+            const rawLayer = {
+                    singleTile: true,
+                    serverType: "geoserver",
+                    url: "https://url.de",
+                    olAttribution: attrFunction
+                },
+                source = wms.createLayerSource(rawLayer);
+
+            expect(source).toBeInstanceOf(ImageWMS);
+            expect(source.getAttributions()).toBe(attrFunction);
+            expect(source.getUrl()).toEqual(rawLayer.url);
+            /* eslint-disable no-underscore-dangle */
+            expect(source.serverType_).toEqual(rawLayer.serverType);
+        });
+    });
 
     describe("createLayer", function () {
         it("creates a TileLayer for multi tile requests", function () {
@@ -84,6 +151,38 @@ describe("wms.js", function () {
             const layer = wms.createLayer({singleTile: true});
 
             expect(layer).toBeInstanceOf(ImageLayer);
+        });
+    });
+    describe("createLayer with additional params and options", function () {
+        it("creates a TileLayer for multi tile requests", function () {
+            const options = {
+                    resolutions: [2000, 1000],
+                    origin: [442800, 5809000]
+                },
+                layerParams = {
+                    name: "name",
+                    layers: "layer1, layer2"
+                },
+                layer = wms.createLayer({singleTile: false, tilesize: "10"}, layerParams, options);
+
+            expect(layer).toBeInstanceOf(TileLayer);
+            expect(layer.get("name")).toEqual("name");
+            expect(layer.get("layers")).toEqual("layer1, layer2");
+            expect(layer.getSource().getTileGrid()).toBeInstanceOf(TileGrid);
+            expect(layer.getSource().getTileGrid().getOrigin()).toEqual(options.origin);
+            expect(layer.getSource().getTileGrid().getResolutions()).toEqual(options.resolutions);
+        });
+
+        it("creates an ImageLayer for single tile requests", function () {
+            const layerParams = {
+                    name: "name",
+                    layers: "layer1, layer2"
+                },
+                layer = wms.createLayer({singleTile: true}, layerParams);
+
+            expect(layer).toBeInstanceOf(ImageLayer);
+            expect(layer.get("name")).toEqual("name");
+            expect(layer.get("layers")).toEqual("layer1, layer2");
         });
     });
 
