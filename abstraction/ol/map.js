@@ -5,6 +5,7 @@ import getInitialLayers from "../../src/lib/getInitialLayers";
 import defaults from "../../src/defaults";
 import * as wms from "../../src/layer/wms";
 import * as geojson from "../../src/layer/geojson";
+import * as wfs from "../../src/layer/wfs";
 import {createMapView} from "../../src/mapView";
 import {initializeLayerList, getLayerWhere} from "../../src/rawLayerList";
 import {registerProjections} from "../../src/crs";
@@ -18,6 +19,7 @@ let mapIdCounter = 0;
  */
 const layerBuilderMap = {
         wms: wms,
+        wfs: wfs,
         geojson: geojson
     },
     originalAddLayer = PluggableMap.prototype.addLayer;
@@ -41,7 +43,8 @@ function addLayer (layerOrId, params = {visibility: true, transparency: 0}) {
 
     // if parameter is id, create and add layer with masterportalAPI mechanisms
     if (typeof layerOrId === "string") {
-        const rawLayer = getLayerWhere({id: layerOrId});
+        const rawLayer = getLayerWhere({id: layerOrId}),
+        options = {};
 
         if (!rawLayer) {
             console.error("Layer with id '" + layerOrId + "' not found. No layer added to map.");
@@ -51,6 +54,9 @@ function addLayer (layerOrId, params = {visibility: true, transparency: 0}) {
         if (!layerBuilder) {
             console.error("Layer with id '" + layerOrId + "' has unknown type '" + rawLayer.typ + "'. No layer added to map.");
             return null;
+        }
+        if(rawLayer.typ === "WFS"){
+            options.projectionCode = this.getView().getProjection().getCode()
         }
 
         layer = layerBuilder.createLayer(rawLayer, {}, {map: this});
@@ -105,6 +111,7 @@ export function createMap (config = defaults, {mapParams, callback} = {}) {
     initializeLayerList(config.layerConf, (param, error) => {
         getInitialLayers(config)
             .forEach(layer => {
+                console.log("2 add layer ", layer);
                 map.addLayer(layer.id, layer);
             });
 

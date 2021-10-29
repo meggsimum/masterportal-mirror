@@ -57,7 +57,7 @@ const hamburgServicesUrl = "http://geoportal-hamburg.de/lgv-config/services-inte
         ...portalConfig,
         layerConf: services
     },
-    map2D = abstractAPI.map.createMap(config, "2D");
+    map2D = abstractAPI.map.createMap(config, {}, "2D");
 
 services.push(localService);
 // */
