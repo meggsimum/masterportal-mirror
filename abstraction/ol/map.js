@@ -52,7 +52,7 @@ function addLayer (layerOrId, params = {visibility: true, transparency: 0}) {
             return null;
         }
 
-        layer = layerBuilder.createLayer(rawLayer, {map: this});
+        layer = layerBuilder.createLayer(rawLayer);
         layer.setVisible(typeof params.visibility === "boolean" ? params.visibility : true);
         layer.setOpacity(typeof params.transparency === "number" ? (100 - params.transparency) / 100 : 1);
         originalAddLayer.call(this, layer);
