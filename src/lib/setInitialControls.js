@@ -16,8 +16,9 @@ function load3DScript (fileName, callback) {
     script.onload = callback;
     script.onreadystatechange = function () {
         if (this.readyState === "complete") {
-            callback();
+            return callback();
         }
+        return null;
     };
     head.appendChild(script);
 }

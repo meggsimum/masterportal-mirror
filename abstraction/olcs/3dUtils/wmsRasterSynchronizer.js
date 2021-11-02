@@ -40,6 +40,7 @@ class WMSRasterSynchronizer extends olcsAbstractSynchronizer {
          * @type {!Cesium.ImageryLayerCollection}
          * @private
          */
+        /* eslint-disable no-undef */
         this.ourLayers = new Cesium.ImageryLayerCollection();
     }
 
@@ -129,7 +130,7 @@ class WMSRasterSynchronizer extends olcsAbstractSynchronizer {
                     options.maximumLevel = minMax[1];
                 }
             }
-
+            /* eslint-disable no-undef */
             provider = new Cesium.WebMapServiceImageryProvider(options);
         }
         else if (source instanceof StaticImageSource) {
@@ -141,7 +142,9 @@ class WMSRasterSynchronizer extends olcsAbstractSynchronizer {
                 bottomLeftCorner = proj4("EPSG:25832", "EPSG:4326", getBottomLeft(extent)),
                 topRightCorner = proj4("EPSG:25832", "EPSG:4326", getTopRight(extent));
 
+            /* eslint-disable no-undef */
             options.rectangle = Cesium.Rectangle.fromDegrees(bottomLeftCorner[0], bottomLeftCorner[1], topRightCorner[0], topRightCorner[1]);
+            /* eslint-disable no-undef */
             provider = new Cesium.SingleTileImageryProvider(options);
 
         }
@@ -154,6 +157,7 @@ class WMSRasterSynchronizer extends olcsAbstractSynchronizer {
         layerOptions = {
             "show": false
         };
+        /* eslint-disable no-undef */
         cesiumLayer = new Cesium.ImageryLayer(provider, layerOptions);
 
         return cesiumLayer ? [cesiumLayer] : null;
@@ -175,6 +179,7 @@ class WMSRasterSynchronizer extends olcsAbstractSynchronizer {
                 getTopLeft(wgs84Extent)
             ];
 
+        /* eslint-disable no-undef */
         return olCoords.map(coord => Cesium.Cartographic.fromDegrees(coord[0], coord[1]));
     }
     /**
@@ -196,6 +201,7 @@ class WMSRasterSynchronizer extends olcsAbstractSynchronizer {
             distanceLocalX = Math.abs(tileCoordsLocal[0][1] - tileCoordsLocal[1][1]),
             distanceLocalY = Math.abs(tileCoordsLocal[0][2] - tileCoordsLocal[3][2]),
             extentCoords = this.getExtentPoints(extent, projection),
+            /* eslint-disable no-undef */
             tilingScheme = new Cesium.GeographicTilingScheme({});
         let minLevel = 0,
             maxLevel = 20;
