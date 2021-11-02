@@ -122,12 +122,20 @@ export function getRequestParamsAndOptions (layer, options) {
         REQUEST: "GetFeature",
         SERVICE: "WFS",
         SRSNAME: options.projectionCode,
-        TYPENAME: layer.getSource().getFormat().getFeatureType(),
         VERSION: options.version || "1.1.0",
         PROPERTYNAME: options.propertyname ? options.propertyname : undefined,
         // loads only the features in the extent of this geometry
         BBOX: options.bbox ? options.bbox: undefined
     };
+    let typeName = null;
+
+    if(layer.getSource() instanceof Cluster){
+        typeName = layer.getSource().getSource().getFormat().getFeatureType();
+    }
+    else{
+        typeName = layer.getSource().getFormat().getFeatureType();
+    }
+    params.TYPENAME = typeName;
 
     return params;
 }
