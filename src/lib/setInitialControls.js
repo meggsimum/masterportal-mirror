@@ -31,7 +31,7 @@ function load3DScript (fileName, callback) {
 export default function (config) {
     // user specified what to do => use that
     if (config.controls && typeof config.controls === "object") {
-        if (Object.prototype.hasOwnProperty.call(config, "button3d") && config.controls.button3d === true) {
+        if (Object.prototype.hasOwnProperty.call(config, "controls") && config.controls.button3d === true) {
             const switch3D = document.createElement("input"),
                 map2D = window.mpapi.map,
                 settings3D = {
@@ -46,7 +46,7 @@ export default function (config) {
                     }
                     else {
                         load3DScript("https://lib.virtualcitymap.de/v3.6.x/lib/Cesium/Cesium.js", function Loaded3DCallback () {
-                            const map3D = abstractAPI.map.createMap(settings3D, "3D");
+                            const map3D = abstractAPI.map.createMap(settings3D, {}, "3D");
 
                             window.mpapi.map = map3D;
                             window.mpapi.map.setEnabled(true);
@@ -59,7 +59,6 @@ export default function (config) {
             switch3D.type = "button";
             switch3D.id = "map-enable";
             document.getElementById("controls").appendChild(switch3D);
-            document.getElementById("enable").addEventListener("click", setEnabled);
             document.getElementById("map-enable").addEventListener("click", setEnabled);
         }
     }

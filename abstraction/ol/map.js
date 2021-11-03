@@ -97,6 +97,8 @@ export function createMap (config = defaults, {mapParams, callback} = {}) {
         view: createMapView(config)
     }, mapParams));
 
+    map.mapMode = "2D";
+
 
     // extend callback to load configured initial layers
     initializeLayerList(config.layerConf, (param, error) => {
