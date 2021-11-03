@@ -7,6 +7,7 @@ import {registerProjections} from "../src/crs.js";
 import setBackgroundImage from "../src/lib/setBackgroundImage.js";
 import {createMapView} from "../src/mapView";
 import defaults from "../src/defaults";
+import {load3DScript} from "../src/lib/load3DScript";
 
 /*
  * This test is mocking a lot to check what functions are called with.
@@ -50,24 +51,31 @@ describe("map.js", function () {
             map.createMap(defaults, {}, "2D");
             expect(createMapView).toHaveBeenCalledWith(defaults);
         });
-        it.skip("MISSING Cesium! creates a 3D MapView", function () {
-            const settings = {map2D: {
-                getView: () => {
-                    return {
-                        getProjection: () => {
-                            return {getCode: () => "code"};
-                        }
-                    };
+        it("creates a 3D Map", function () {
+            const config = {
+                map2D: {
+                    getView: () => {
+                        return {
+                            getProjection: () => {
+                                return {getCode: () => "code"};
+                            }
+                        };
+                    },
+                    getViewport: () => {
+                        return {
+                            appendChild: jest.fn()
+                        };
+                    }
                 },
-                getViewport: () => {
-                    return {
-                        appendChild: jest.fn()
-                    };
-                }
-            }};
+                cesiumLib: "https://lib.virtualcitymap.de/v3.6.x/lib/Cesium/Cesium.js"
+            };
 
-            map.createMap(settings, {}, "3D");
-            expect(create3DMap).toHaveBeenCalledWith(defaults);
+            load3DScript(config.cesiumLib, function Loaded3DCallback () {
+                const map3D = map.createMap(config, {}, "3D");
+
+                expect(create3DMap).toHaveBeenCalledWith(defaults);
+                expect(map3D.mapMode).toBe("3D");
+            });
         });
 
         it("creates and returns a Map object from openlayers with optional additional params", function () {

@@ -10,7 +10,7 @@ import abstractAPI from "../abstraction/api.js";
 import services from "./config/services.json";
 import portalConfig from "./config/portal.json";
 import localGeoJSON from "./config/localGeoJSON.js";
-import getInitialControls from "../src/lib/setInitialControls";
+import {load3DScript} from "../src/lib/load3DScript";
 
 //* Add elements to window to play with API in console
 window.mpapi = {
@@ -20,7 +20,28 @@ window.mpapi = {
 // */
 //* Cleans up map before it is re-rendered (happens on every save during dev mode)
 document.getElementById(portalConfig.target).innerHTML = "";
-// */
+//add a click-listener to button, that creates a 3D-map on click
+document.getElementById("enable").addEventListener("click", function (portalConfig) {
+    const map2D = window.mpapi.map;
+
+    if (window.mpapi.map.mapMode === "3D") {
+        window.mpapi.map.setEnabled(false);
+        window.mpapi.map = map2D;
+    }
+    else {
+        const lib = portalConfig.cesiumLib ? portalConfig.cesiumLib : "https://lib.virtualcitymap.de/v3.6.x/lib/Cesium/Cesium.js";
+        
+        load3DScript(lib, function Loaded3DCallback () {
+            const settings3D = {
+                "map2D": window.mpapi.map
+            },
+            map3D = abstractAPI.map.createMap(settings3D, {}, "3D");
+
+            window.mpapi.map = map3D;
+            window.mpapi.map.setEnabled(true);
+        });
+    }
+});
 
 //* Fake service that holds client-side prepared geojson; also nice to test automatic transformation since data is in WGS 84
 const hamburgServicesUrl = "http://geoportal-hamburg.de/lgv-config/services-internet.json",
@@ -54,18 +75,18 @@ mpapi.geojson.setCustomStyles({
 
 //* SYNCHRONOUS EXAMPLE: layerConf is known
 window.mpapi.map = map2D;
-getInitialControls(config);
 
 ["1002"].forEach(id => window.mpapi.map.addLayer(id));
 
 
-//* /
+// */
 
 /* ASYNCHRONOUS EXAMPLE 1: work with layerConf callback
+document.getElementById("enable").style.display = "none";
 mpapi.rawLayerList.initializeLayerList(
     hamburgServicesUrl,
     conf => {
-        window.mpapi.map = mpapi.createMap({
+        window.mpapi.map = abstractAPI.map.createMap({
             ...portalConfig,
             layerConf: conf,
             layers: null
@@ -73,12 +94,13 @@ mpapi.rawLayerList.initializeLayerList(
         ["6357", "6074"].forEach(
             id => window.mpapi.map.addLayer(id)
         );
-    }
+    }, "2D"
 );
 //*/
 
 /* ASYNCHRONOUS EXAMPLE 2: work with createMap callback
-window.mpapi.map = mpapi.createMap(
+document.getElementById("enable").style.display = "none";
+window.mpapi.map = abstractAPI.map.createMap(
     {...portalConfig, layerConf: hamburgServicesUrl, layers: [
         { id: "6357" },
         { id: "453", transparency: 50 }
@@ -88,7 +110,8 @@ window.mpapi.map = mpapi.createMap(
             ["6074"].forEach(
                 id => window.mpapi.map.addLayer(id)
             )
-    }
+    },
+    "2D"
 );
 //*/
 

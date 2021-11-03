@@ -3,6 +3,7 @@ import VectorSynchronizer from "olcs/VectorSynchronizer.js";
 import FixedOverlaySynchronizer from "./3dUtils/fixedOverlaySynchronizer.js";
 import WMSRasterSynchronizer from "./3dUtils/wmsRasterSynchronizer.js";
 
+let mapIdCounter = 0;
 
 export default {
     /**
@@ -24,7 +25,6 @@ export default {
                 return [new WMSRasterSynchronizer(olMap, scene), new VectorSynchronizer(olMap, scene), new FixedOverlaySynchronizer(olMap, scene)];
             }
         });
-        let mapIdCounter = 0;
 
         map3D.id = `map3D_${mapIdCounter}`;
         map3D.mapMode = "3D";

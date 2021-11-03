@@ -31,7 +31,5 @@
       "id": "1001"
     }
   ],
-  "controls": {
-    "button3d": true
-  }
+  "cesiumLib":"https://lib.virtualcitymap.de/v3.6.x/lib/Cesium/Cesium.js"
 }
