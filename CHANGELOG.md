@@ -5,8 +5,11 @@
 
 ## Unreleased - in development
 ### Added
-
+- The library Cesium is loaded on demand to generate a 3D map. Cesium must be provided by the user of this library.
+- A 3D map can be generated. The generation of 2D and 3D maps is controlled by an abstraction layer.
+- The example also contains an example for creating a 3D map.
 ### Changed
+- The WMS layer has been extended with layerParams and options. The LayerSource now contains a TileGrid if there are resolutions in the options. The source can also contain attributions.
 
 ### Deprecated
 
