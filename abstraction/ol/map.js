@@ -40,6 +40,7 @@ const layerBuilderMap = {
  */
 function addLayer (layerOrId, params = {visibility: true, transparency: 0}) {
     var layer, layerBuilder;
+    console.log("add layer:", layerOrId);
 
     // if parameter is id, create and add layer with masterportalAPI mechanisms
     if (typeof layerOrId === "string") {

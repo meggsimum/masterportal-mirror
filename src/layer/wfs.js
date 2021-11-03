@@ -41,8 +41,8 @@ export function createLayerSource (rawLayer, options) {
 export function createClusterLayerSource (layerSource, clusterDistance, options) {
     let geometryFunction = {};
 
-    if (options && options.geometryFunction) {
-        geometryFunction = options.geometryFunction;
+    if (options && options.clusterGeometryFunction) {
+        geometryFunction = options.clusterGeometryFunction;
     }
     return new Cluster(Object.assign({
         source: layerSource,
@@ -64,7 +64,7 @@ export function createLayer (rawLayer, layerParams = {}, options) {
     }, layerParams));
 
     // if (layerParams.isSelected) {
-        updateSource(layer, options);
+        updateSource(layer, options, layerParams.visibility,layerParams.wfsFilter);
     // }
 
     return layer;
@@ -75,34 +75,87 @@ export function createLayer (rawLayer, layerParams = {}, options) {
  * @param {ol.Layer} layer - the layer that is to be updated
  * @returns {number} the new sessionID
  */
-export function updateSource (layer, options) {
-    const requestParams = getRequestParamsAndOptions(layer, options);
-    let instance = axios;
+export function updateSource (layer,options, visibility = true, wfsFilter=false) {
+    const requestParams = getRequestParamsAndOptions(layer, options),
+    url = layer.getSource().getUrl() ? layer.getSource().getUrl() : layer.getSource().getSource()?.getUrl();
+    let instance = axios,
+    wfsInterceptor = "";
 
     if (requestParams?.xhrParameters !== null) {
-        //todo handling credentials
-        instance = axios.create(requestParams.xhrParameters);
+        instance = axios.create(options.xhrParameters);
     }
-    instance.get(layer.getSource().getUrl(), {params: requestParams})
-                .then(response => {
-                    const features = layer.getSource().getFormat().readFeatures(response.data);
+    wfsInterceptor = instance.interceptors.request.use((config) => {
+        beforeLoading(options, visibility);
+        return config;
+    }, (error) => {
+        return Promise.reject(error);
+    });
+    if(!wfsFilter){
+        instance.get(url, {params: requestParams})
+        .then(response => {
+            handleResponse(response.data, layer, options, visibility);
+        })
+        .catch(error => {
+            handleLoadingError(error, options);
+        })
+        .then(() => {
+            afterLoading(options, visibility);
+        });
+    }
+    else{
+        instance.get(wfsFilter)
+            .then(response => {
+                const payload = response?.data;
 
-                    layer.getSource().addFeatures(features);
-                    if(options.style){
-                        layer.setStyle(options.style);
+                instance.post(url, payload, {
+                    headers: {
+                        "Content-Type": "text/xml"
                     }
-                    // this.handleResponse(response.data);
                 })
-                .catch(error => {
-                    console.error(error);
-                })
-                .then(() => {
-                    //todo
-                    // if (showLoader) {
-                    //     Radio.trigger("Util", "hideLoader");
-                    // }
-                });
+                    .then(response => {
+                        handleResponse(response.data, layer, options, visibility);
+                    });
+            })
+            .catch(error => {
+                handleLoadingError(error, options);
+            })
+            .then(() => {
+                afterLoading(options, visibility);
+            });
+    }
+     // Eject the loader function
+     instance.interceptors.request.eject(wfsInterceptor);
+}
+function handleResponse(data, layer, options, visibility){
+    const reader = layer.getSource().getFormat() ? layer.getSource().getFormat() : layer.getSource().getSource()?.getFormat();
+    let features = reader.readFeatures(data);
 
+    if(options.featuresFilter){
+        features = options.featuresFilter(features);
+    }
+    if(visibility){
+        layer.getSource().clear(true);
+        layer.getSource().addFeatures(features);
+        if(options.style){
+            layer.setStyle(options.style);
+        }
+    }
+}
+function handleLoadingError(error, options){
+    console.error(error);
+            if(options.handleError){
+                options.handleError(error);
+            }
+}
+function afterLoading(options, visibility){
+    if(options.afterLoading){
+        options.afterLoading(visibility);
+    }
+}
+function beforeLoading(options, visibility){
+    if(options.beforeLoading){
+        options.beforeLoading(visibility);
+    }
 }
 
 /**
