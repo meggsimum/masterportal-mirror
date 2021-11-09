@@ -15,6 +15,7 @@ import {load3DScript} from "../src/lib/load3DScript";
 //* Add elements to window to play with API in console
 window.mpapi = {
     ...mpapi,
+    map2D: null,
     map: null
 };
 // */
@@ -22,18 +23,20 @@ window.mpapi = {
 document.getElementById(portalConfig.target).innerHTML = "";
 //add a click-listener to button, that creates a 3D-map on click
 document.getElementById("enable").addEventListener("click", function (portalConfig) {
-    const map2D = window.mpapi.map;
+    if(window.mpapi.map2D === null){
+        window.mpapi.map2D = window.mpapi.map;
+    }
 
     if (window.mpapi.map.mapMode === "3D") {
         window.mpapi.map.setEnabled(false);
-        window.mpapi.map = map2D;
+        window.mpapi.map = window.mpapi.map2D;
     }
     else {
         const lib = portalConfig.cesiumLib ? portalConfig.cesiumLib : "https://geoportal-hamburg.de/mastercode/cesium/1_84/Cesium.js";
         
         load3DScript(lib, function Loaded3DCallback () {
             const settings3D = {
-                "map2D": window.mpapi.map
+                "map2D": window.mpapi.map2D
             },
             map3D = abstractAPI.map.createMap(settings3D, {}, "3D");
 
