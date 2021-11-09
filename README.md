@@ -1,10 +1,12 @@
 # masterportalAPI
 
-The masterportalAPI is an API to include and show map-content on your webpage. It's based on OpenLayers and extended with functions to easily use configuration and infrastructure files from the masterportal, a feature-rich mapping app developed by geowerkstatt hamburg. Check masterportal.org for further information.
+The masterportalAPI is an API to include and show map-content on your webpage. It's based on OpenLayers and extended with functions to easily use configuration and infrastructure files from the masterportal, a feature-rich mapping app developed by geowerkstatt hamburg. It also provides the creation of a 3d map by using olcs and cesium. Check masterportal.org for further information.
 
 ## Usage
 
 Install the masterportalAPI in your project with ``npm install git+https://bitbucket.org/geowerkstatt-hamburg/masterportalapi.git``. The project does not have a default export, but various named exports. Generate and check the documentation as described below for details.
+
+If you want to create a 3d map, you have to provide the peer dependency cesium.
 
 By importing the project by module name like ``import ... from "masterportalAPI"``, most bundlers and bundler configurations will include the whole masterportalAPI. If you only need a subset of the provided functions and want to keep your build clean, directly import the needed functions like ``import {createMap} from "masterportalAPI/src/map.js``.
 

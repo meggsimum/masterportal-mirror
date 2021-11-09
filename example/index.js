@@ -29,7 +29,7 @@ document.getElementById("enable").addEventListener("click", function (portalConf
         window.mpapi.map = map2D;
     }
     else {
-        const lib = portalConfig.cesiumLib ? portalConfig.cesiumLib : "https://lib.virtualcitymap.de/v3.6.x/lib/Cesium/Cesium.js";
+        const lib = portalConfig.cesiumLib ? portalConfig.cesiumLib : "https://geoportal-hamburg.de/mastercode/cesium/1_84/Cesium.js";
         
         load3DScript(lib, function Loaded3DCallback () {
             const settings3D = {

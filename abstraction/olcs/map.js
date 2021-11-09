@@ -8,10 +8,10 @@ let mapIdCounter = 0;
 export default {
     /**
      * Creates a 3D-map.
-     * @param {Object} settings The settings for the 3D-map.
-     * @param {module:ol/PluggableMap~PluggableMap} settings.map2D The 2D-Map.
-     * @param {Cesium.JulianDate} settings.shadowTime The shadow time in julian date format if undefined olcs default is Cesium.JulianDate.now().
-     * @returns {void}
+     * @param @param {object} [settings] The settings for the 3D-map.
+     * @param {module:ol/PluggableMap~PluggableMap} [settings.map2D] The 2D-Map
+     * @param {Cesium.JulianDate} [settings.shadowTime] The shadow time in julian date format if undefined olcs default is Cesium.JulianDate.now().
+     * @returns {module:OLCesium} the 3d-map
      */
     createMap: function (settings) {
         const map3D = new OLCesium({

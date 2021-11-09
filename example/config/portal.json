@@ -31,5 +31,5 @@
       "id": "1001"
     }
   ],
-  "cesiumLib":"https://lib.virtualcitymap.de/v3.6.x/lib/Cesium/Cesium.js"
+  "cesiumLib":"https://geoportal-hamburg.de/mastercode/cesium/1_84/Cesium.js"
 }

@@ -45,7 +45,9 @@
     "sass": "^1.37.5",
     "husky": "^7.0.1"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "cesium": "^1.87.0"
+  },
   "engines": {
     "node": ">= 10.18.0",
     "npm": ">= 6.13.4"

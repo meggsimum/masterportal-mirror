@@ -149,7 +149,7 @@ class WMSRasterSynchronizer extends olcsAbstractSynchronizer {
 
         }
         else {
-        // sources other than TileImage are currently not supported
+            console.warn("Sources other than TileImage are currently not supported.");
             return null;
         }
 
