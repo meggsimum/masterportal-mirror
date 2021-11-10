@@ -3,18 +3,6 @@
 
  The [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## Unreleased - in development
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
----
 ## 1.6.0 - 2021-11-10
 ### Added
 - The library Cesium is loaded on demand to generate a 3D map. Cesium must be provided by the user of this library.
