@@ -13,7 +13,7 @@ export default {
             },
             "geometry":{
                 "type":"Point",
-                "coordinates":[9.984227, 53.541270]
+                "coordinates":[9.8436, 53.4800]
             }
         },
         {

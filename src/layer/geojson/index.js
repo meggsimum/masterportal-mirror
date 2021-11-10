@@ -48,17 +48,18 @@ export function createLayerSource ({features, url}, map) {
 /**
  * Creates a layer for GeoJSON.
  * @param {object} rawLayer - rawLayer as specified in services.json
- * @param {object} [param={}] - parameter object
- * @param {ol.Map} [param.map] - map the geojson is to be projected on
- * @param {ol.Style} [param.layerStyle] - optional style; if not given, default styling (modifiable by setCustomStyles) is used
+ * @param {object} [layerParams={}] - extra params of the layer
+ * @param {object} [options={}] - parameter object
+ * @param {ol.Map} [options.map] - map the geojson is to be projected on
+ * @param {ol.Style} [options.layerStyle] - optional style; if not given, default styling (modifiable by setCustomStyles) is used
  * @returns {ol.layer.Vector} Layer with id and source specified in rawLayer
  */
-export function createLayer (rawLayer, {map, layerStyle} = {}) {
-    return new VectorLayer({
+export function createLayer (rawLayer, layerParams = {}, options) {
+    return new VectorLayer(Object.assign({
         id: rawLayer.id,
-        source: createLayerSource(rawLayer, map),
-        style: layerStyle || style
-    });
+        source: createLayerSource(rawLayer, options.map),
+        style: options.layerStyle || style
+    }, layerParams));
 }
 
 /**
