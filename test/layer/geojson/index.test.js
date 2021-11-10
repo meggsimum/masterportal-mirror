@@ -33,7 +33,7 @@ describe("geojson/index", function () {
                 return null;
             }
             const defaultLayer = geojson.createLayer({}),
-                styledLayer = geojson.createLayer({}, {layerStyle: styleFunction});
+                styledLayer = geojson.createLayer({}, {}, {layerStyle: styleFunction});
 
             expect(defaultLayer.getStyle()).toBe(style);
             expect(styledLayer.getStyle()).toBe(styleFunction);

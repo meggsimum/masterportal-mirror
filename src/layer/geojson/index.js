@@ -54,7 +54,7 @@ export function createLayerSource ({features, url}, map) {
  * @param {ol.Style} [options.layerStyle] - optional style; if not given, default styling (modifiable by setCustomStyles) is used
  * @returns {ol.layer.Vector} Layer with id and source specified in rawLayer
  */
-export function createLayer (rawLayer, layerParams = {}, options) {
+export function createLayer (rawLayer, layerParams = {}, options = {}) {
     return new VectorLayer(Object.assign({
         id: rawLayer.id,
         source: createLayerSource(rawLayer, options.map),
