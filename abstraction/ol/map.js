@@ -40,12 +40,10 @@ const layerBuilderMap = {
  */
 function addLayer (layerOrId, params = {visibility: true, transparency: 0}) {
     var layer, layerBuilder;
-    console.log("add layer:", layerOrId);
 
     // if parameter is id, create and add layer with masterportalAPI mechanisms
     if (typeof layerOrId === "string") {
-        const rawLayer = getLayerWhere({id: layerOrId}),
-        options = {};
+        const rawLayer = getLayerWhere({id: layerOrId});
 
         if (!rawLayer) {
             console.error("Layer with id '" + layerOrId + "' not found. No layer added to map.");
@@ -56,10 +54,6 @@ function addLayer (layerOrId, params = {visibility: true, transparency: 0}) {
             console.error("Layer with id '" + layerOrId + "' has unknown type '" + rawLayer.typ + "'. No layer added to map.");
             return null;
         }
-        if(rawLayer.typ === "WFS"){
-            options.projectionCode = this.getView().getProjection().getCode()
-        }
-
         layer = layerBuilder.createLayer(rawLayer, {}, {map: this});
         layer.setVisible(typeof params.visibility === "boolean" ? params.visibility : true);
         layer.setOpacity(typeof params.transparency === "number" ? (100 - params.transparency) / 100 : 1);
@@ -112,7 +106,6 @@ export function createMap (config = defaults, {mapParams, callback} = {}) {
     initializeLayerList(config.layerConf, (param, error) => {
         getInitialLayers(config)
             .forEach(layer => {
-                console.log("2 add layer ", layer);
                 map.addLayer(layer.id, layer);
             });
 

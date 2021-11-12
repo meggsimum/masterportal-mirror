@@ -79,7 +79,7 @@ mpapi.geojson.setCustomStyles({
 //* SYNCHRONOUS EXAMPLE: layerConf is known
 window.mpapi.map = map2D;
 
-["2001","2002", "1002"].forEach(id => window.mpapi.map.addLayer(id));
+["2001","2002", "1002", "3001"].forEach(id => window.mpapi.map.addLayer(id));
 
 
 // */
