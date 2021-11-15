@@ -26,9 +26,8 @@ export default {
             }
         });
 
-        map3D.id = `map3D_${mapIdCounter}`;
+        map3D.id = `map3D_${mapIdCounter++}`;
         map3D.mapMode = "3D";
-        mapIdCounter = mapIdCounter + 1;
 
         return map3D;
     }

@@ -10,6 +10,7 @@ import {initializeLayerList, getLayerWhere} from "../../src/rawLayerList";
 import {registerProjections} from "../../src/crs";
 import {setGazetteerUrl} from "../../src/searchAddress";
 
+let mapIdCounter = 0;
 
 /**
  * lookup for layer constructors
@@ -97,8 +98,8 @@ export function createMap (config = defaults, {mapParams, callback} = {}) {
         view: createMapView(config)
     }, mapParams));
 
-    map.mapMode = "2D";
-
+    map.set("mapMode", "2D");
+    map.set("id", `map2D_${mapIdCounter++}`);
 
     // extend callback to load configured initial layers
     initializeLayerList(config.layerConf, (param, error) => {

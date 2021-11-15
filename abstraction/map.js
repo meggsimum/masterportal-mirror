@@ -1,5 +1,5 @@
-import * as map2D from "./ol/map.js";
-import map3D from "./olcs/map.js";
+import * as map2D from "./ol/olMap.js";
+import map3D from "./olcs/olcsMap.js";
 
 export default {
     /**
