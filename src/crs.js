@@ -3,6 +3,20 @@ import * as Proj from "ol/proj.js";
 import {register} from "ol/proj/proj4.js";
 import defaults from "./defaults";
 
+
+/**
+ * Creates an alias for the srsName.
+ * This is necessary for WFS from geoserver.org.
+ * @param {string} epsgCode used epsg code in the mapView
+ * @returns {void}
+ */
+function addAliasForWFSFromGeoserver (epsgCode) {
+    const epsgCodeNumber = epsgCode.split(":")[1];
+
+    proj4.defs("http://www.opengis.net/gml/srs/epsg.xml#" + epsgCodeNumber, proj4.defs(epsgCode));
+    register(proj4);
+}
+
 /**
  * Returns the proj4 projection definition for a registered name.
  * @param {string} name - projection name as written in [0] position of namedProjections
@@ -24,8 +38,10 @@ export function registerProjections (namedProjections = defaults.namedProjection
     register(proj4);
     namedProjections.forEach(projection => {
         Proj.addProjection(Proj.get(projection[0]));
+        addAliasForWFSFromGeoserver(projection[0]);
         getProjection(projection[0]).masterportal = true;
     });
+
 }
 
 /**

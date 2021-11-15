@@ -41,7 +41,7 @@ describe("crs.js", function () {
             // proj4 may come with default projections, hence >=
             expect(projectionNames.length >= knownProjectionNames.length).toBe(true);
             projections.forEach(projection => expect(typeof projection).toBe("object"));
-            knownProjectionNames.forEach(name => expect(projectionNames).toContain(name));
+            knownProjectionNames.forEach(name => expect(projectionNames).toContain(name.replace("EPSG:", "http://www.opengis.net/gml/srs/epsg.xml#")));
         });
     });
 
