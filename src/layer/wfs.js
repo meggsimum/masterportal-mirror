@@ -46,14 +46,14 @@ function loadWFSFilter (filter, url, source, options, onError, success) {
                 })
                 .then(responseString => source.getFormat().readFeatures(responseString))
                 .then(features => {
-                    let featuresToAdd = features;
+                    let filteredFeatures = features;
 
                     if (options.featuresFilter) {
-                        featuresToAdd = options.featuresFilter(featuresToAdd);
+                        filteredFeatures = options.featuresFilter(features);
                     }
-                    source.addFeatures(featuresToAdd);
+                    source.addFeatures(filteredFeatures);
                     // The 'featuresloadend' and 'featuresloaderror' events will only fire if the success and failure callbacks are used.
-                    success(featuresToAdd);
+                    success(filteredFeatures);
                     if (options.afterLoading) {
                         options.afterLoading();
                     }
@@ -97,14 +97,14 @@ function loadWFS (url, source, options, onError, success) {
         })
         .then(responseString => source.getFormat().readFeatures(responseString))
         .then(features => {
-            let featuresToAdd = features;
+            let filteredFeatures = features;
 
             if (options.featuresFilter) {
-                featuresToAdd = options.featuresFilter(featuresToAdd);
+                filteredFeatures = options.featuresFilter(features);
             }
-            source.addFeatures(featuresToAdd);
+            source.addFeatures(filteredFeatures);
             // The 'featuresloadend' and 'featuresloaderror' events will only fire if the success and failure callbacks are used.
-            success(featuresToAdd);
+            success(filteredFeatures);
             if (options.afterLoading) {
                 options.afterLoading();
             }
@@ -134,10 +134,10 @@ function loadWFS (url, source, options, onError, success) {
  * @param {function} [options.featuresFilter] - function called after loading to filter features, gets parameter features
  * @param {string} [options.wfsFilter] - xml resource as wfs filter, the content of the filter file will be sent to the wfs server as POST request
  * @param {function} [options.clusterGeometryFunction] - used in cluster source. Returns the geometry of the cluster, gets parameter feature
- * @param {object} loadingOptions - optional loading options, added as params to url
+ * @param {object} loadingParams - optional params, added as params to url
  * @returns {(ol.source.VectorSource|ol.source.Cluster)} VectorSource or Cluster, depending on whether clusterDistance is set.
  */
-export function createLayerSource (rawLayer, options, loadingOptions) {
+export function createLayerSource (rawLayer, options, loadingParams) {
     if (!options.loadingStrategy) {
         options.loadingStrategy = bbox;
     }
@@ -165,8 +165,8 @@ export function createLayerSource (rawLayer, options, loadingOptions) {
         }
         if (!options.wfsFilter) {
             url = `${rawLayer.url}?service=WFS&version=${version}&request=GetFeature&typename=${rawLayer.featureType}&srsname=${projection.getCode()}${bboxParam}`;
-            for (const key in loadingOptions) {
-                const option = Array.isArray(options[key]) ? options[key].join(",") : options[key];
+            for (const key in loadingParams) {
+                const option = Array.isArray(loadingParams[key]) ? loadingParams[key].join(",") : loadingParams[key];
 
                 if (option !== undefined) {
                     url += `&${key}=${option}`;
@@ -191,7 +191,7 @@ export function createLayerSource (rawLayer, options, loadingOptions) {
  * Creates complete ol/Layer from rawLayer containing all required children.
  * @param {object} rawLayer - layer specification as in services.json
  * @param {object} [rawLayer.id] - id of the layer
-* @param {string} [rawLayer.url] - url to load features from
+ * @param {string} [rawLayer.url] - url to load features from
  * @param {string} [rawLayer.featureType] - type of features
  * @param {string} [rawLayer.featureNS] -namespace of features
  * @param {number} [rawLayer.clusterDistance] - Pixel radius, within this radius, all features are "clustered" into one feature. If available, a cluster source is created.
@@ -206,11 +206,11 @@ export function createLayerSource (rawLayer, options, loadingOptions) {
  * @param {string} [options.wfsFilter] - xml resource as wfs filter, the content of the filter file will be sent to the wfs server as POST request
  * @param {function} [options.clusterGeometryFunction] - used in cluster source. Returns the geometry of the cluster, gets parameter feature
  * @param {function} [options.style] - style function to style the layer
- * @param {object} loadingOptions - optional loading options, added as params to url
+ * @param {object} loadingParams - optional params, added as params to url
  * @returns {ol.Layer} Layer that can be added to map.
  */
-export function createLayer (rawLayer, layerParams = {}, options, loadingOptions) {
-    const source = createLayerSource(rawLayer, options, loadingOptions),
+export function createLayer (rawLayer, layerParams = {}, options, loadingParams) {
+    const source = createLayerSource(rawLayer, options, loadingParams),
         layer = new VectorLayer(Object.assign({
             source,
             id: rawLayer.id
