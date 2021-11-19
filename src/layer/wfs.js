@@ -3,8 +3,29 @@ import {bbox} from "ol/loadingstrategy.js";
 import {WFS} from "ol/format.js";
 
 import {createVectorSource, createClusterVectorSource} from "./vector";
-import {getLayerWhere} from "../rawLayerList";
 
+/**
+ * Called after features are loaded. Calls options.featuresFilter, success-callback and options.afterLoading.
+ * Features are added to source.
+ * @param {ol.source.VectorSource} source the vector source
+ * @param {Array.<module:ol/Feature~Feature>} features loaded features
+ * @param {object} options - optional additional options
+ * @param {function} success  callback: 'featuresloadend' event will be fired
+ * @returns {void}
+ */
+function onLoad (source, features, options, success) {
+    let filteredFeatures = features;
+
+    if (options.featuresFilter) {
+        filteredFeatures = options.featuresFilter(features);
+    }
+    source.addFeatures(filteredFeatures);
+    if (options.afterLoading) {
+        options.afterLoading(filteredFeatures);
+    }
+    // The 'featuresloadend' and 'featuresloaderror' events will only fire if the success and failure callbacks are used.
+    success(filteredFeatures);
+}
 /**
  * Loads the WFS filter. The content of the filter file will be sent to the wfs server as POST request.
  * Filters the features after load, if options.featuresFilter is given.
@@ -46,17 +67,7 @@ function loadWFSFilter (filter, url, source, options, onError, success) {
                 })
                 .then(responseString => source.getFormat().readFeatures(responseString))
                 .then(features => {
-                    let filteredFeatures = features;
-
-                    if (options.featuresFilter) {
-                        filteredFeatures = options.featuresFilter(features);
-                    }
-                    source.addFeatures(filteredFeatures);
-                    // The 'featuresloadend' and 'featuresloaderror' events will only fire if the success and failure callbacks are used.
-                    success(filteredFeatures);
-                    if (options.afterLoading) {
-                        options.afterLoading();
-                    }
+                    onLoad(source, features, options, success);
                 }).catch((error) => {
                 // Only network error comes here
                     console.error(error);
@@ -80,7 +91,7 @@ function loadWFSFilter (filter, url, source, options, onError, success) {
  * @param {ol.source.VectorSource} source the vector source
  * @param {object} options - optional additional options
  * @param {function} [options.onLoadingError] - function called on loading error, gets parameter error
- * @param {function} [options.afterLoading] - function called after loading
+ * @param {function} [options.afterLoading] - function called after loading, gets parameter features
  * @param {function} [options.featuresFilter] - function called after loading to filter features, gets parameter features
  * @param {function} onError  Calls options.onLoadingError and 'featuresloaderror' event will be fired by using failure callback.
  * @param {function} success  callback: 'featuresloadend' event will be fired
@@ -97,26 +108,16 @@ function loadWFS (url, source, options, onError, success) {
         })
         .then(responseString => source.getFormat().readFeatures(responseString))
         .then(features => {
-            let filteredFeatures = features;
-
-            if (options.featuresFilter) {
-                filteredFeatures = options.featuresFilter(features);
-            }
-            source.addFeatures(filteredFeatures);
-            // The 'featuresloadend' and 'featuresloaderror' events will only fire if the success and failure callbacks are used.
-            success(filteredFeatures);
-            if (options.afterLoading) {
-                options.afterLoading();
-            }
+            onLoad(source, features, options, success);
         }).catch((error) => {
         // Only network error comes here
             console.error(error);
             if (options.onLoadingError) {
                 options.onLoadingError(error);
             }
+            onError(error);
         });
 }
-
 /**
  * Creates an ol/source element for the rawLayer by using a loader.
  * The 'featuresloadend' and 'featuresloaderror' events will be fired.
@@ -137,7 +138,7 @@ function loadWFS (url, source, options, onError, success) {
  * @param {object} loadingParams - optional params, added as params to url
  * @returns {(ol.source.VectorSource|ol.source.Cluster)} VectorSource or Cluster, depending on whether clusterDistance is set.
  */
-export function createLayerSource (rawLayer, options, loadingParams) {
+export function createLayerSource (rawLayer, options = {}, loadingParams) {
     if (!options.loadingStrategy) {
         options.loadingStrategy = bbox;
     }
@@ -193,7 +194,8 @@ export function createLayerSource (rawLayer, options, loadingParams) {
  * @param {object} [rawLayer.id] - id of the layer
  * @param {string} [rawLayer.url] - url to load features from
  * @param {string} [rawLayer.featureType] - type of features
- * @param {string} [rawLayer.featureNS] -namespace of features
+ * @param {string} [rawLayer.featureNS] - namespace of features
+ * @param {function} [rawLayer.style] - style function to style the layer if options.style is not set
  * @param {number} [rawLayer.clusterDistance] - Pixel radius, within this radius, all features are "clustered" into one feature. If available, a cluster source is created.
  * @param {object} layerParams - additional layer params
  * @param {object} options - optional additional options
@@ -209,7 +211,7 @@ export function createLayerSource (rawLayer, options, loadingParams) {
  * @param {object} loadingParams - optional params, added as params to url
  * @returns {ol.Layer} Layer that can be added to map.
  */
-export function createLayer (rawLayer, layerParams = {}, options, loadingParams) {
+export function createLayer (rawLayer, layerParams = {}, options = {}, loadingParams) {
     const source = createLayerSource(rawLayer, options, loadingParams),
         layer = new VectorLayer(Object.assign({
             source,
@@ -218,6 +220,9 @@ export function createLayer (rawLayer, layerParams = {}, options, loadingParams)
 
     if (options.style) {
         layer.setStyle(options.style);
+    }
+    else if (rawLayer.style) {
+        layer.setStyle(rawLayer.style);
     }
     return layer;
 }
@@ -229,24 +234,4 @@ export function createLayer (rawLayer, layerParams = {}, options, loadingParams)
  */
 export function updateSource (layer) {
     layer.getSource().refresh();
-}
-
-/**
- * Creates the gfiURL from clicked layer, map, and coordinate.
- * @param {ol.Layer} layer - what to get the gfiURL for
- * @param {ol.Map} map - needed for resolution/projection
- * @param {ol.coordinate} coordinate - which point to get the gfiURL for
- * @returns {(string|undefined)} the gfiURL, or undefined if it could not be constructed
- */
-export function getGfiURL (layer, map, coordinate) {
-    const rawLayer = getLayerWhere({Id: layer.get("id")}),
-        resolution = map.getView().getResolution(),
-        projection = map.getView().getProjection(),
-        params = Object.assign({
-            INFO_FORMAT: (rawLayer && rawLayer.infoFormat) || "text/xml"
-        }, rawLayer && typeof rawLayer.featureCount !== "undefined"
-            ? {FEATURE_COUNT: rawLayer.featureCount}
-            : {});
-
-    return layer.getSource().getFeatureInfoUrl(coordinate, resolution, projection, params);
 }

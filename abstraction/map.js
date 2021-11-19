@@ -16,13 +16,13 @@ export default {
     * @param {number[]} [config.startCenter] - initial position
     * @param {(string|object)} [config.layerConf] - services registry or URL thereof
     * @param {string} [config.gazetteerUrl] - url of gazetteer to use in searchAddress
-    * @param {object}  [settings={}] - setings object
+    * @param {String} [mapMode = "2D"] The map mode. '2D' to create a 2D-map and '3D' to create a 3D-map.
+    * @param {object}  [settings={}] - settings object
     * @param {object} [settings.mapParams] - additional parameter object that is spread into the ol.Map constructor object
     * @param {function} [settings.callback] - optional callback for layer list loading
-     * @param {String} [mapMode = "2D"] The map mode. '2D' to craete a 2D-map and '3D' to create a 3D-map.
-     * @returns {module:ol/PluggableMap~PluggableMap} The map.
-     */
-    createMap: function (config, settings = {}, mapMode = "2D") {
+    * @returns {module:ol/PluggableMap~PluggableMap} The map.
+    */
+    createMap: function (config, mapMode = "2D", settings = {}) {
         const createMapFunctions = {
                 "2D": map2D.createMap,
                 "3D": map3D.createMap

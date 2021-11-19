@@ -2,7 +2,7 @@ import VectorSource from "ol/source/Vector.js";
 import Cluster from "ol/source/Cluster.js";
 
 /**
- * Creates a VectorSource.
+ * Creates a VectorSource. If loader and url are given loader is used. To use the url do not provide a loader.
  * @param {string} url to load the features from
  * @param {function} loader loader-function to load the features
  * @param {module:ol/source/Vector~LoadingStrategy} loadingStrategy The loading strategy to use.

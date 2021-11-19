@@ -42,6 +42,7 @@
     "jest-canvas-mock": "^2.3.1",
     "jsdoc": "^3.6.7",
     "parcel-bundler": "^1.12.5",
+    "regenerator-runtime": "^0.13.9",
     "sass": "^1.37.5",
     "husky": "^7.0.1"
   },

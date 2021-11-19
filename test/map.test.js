@@ -37,7 +37,7 @@ describe("map.js", function () {
         it("calls all initialization functions", function () {
             const callback = jest.fn();
 
-            map.createMap(defaults, {mapParams: {}, callback: callback}, "2D");
+            map.createMap(defaults, "2D", {mapParams: {}, callback: callback});
             expect(initializeLayerList).toHaveBeenCalledWith(defaults.layerConf, expect.any(Function));
             expect(registerProjections).toHaveBeenCalledWith(defaults.namedProjections);
             expect(setBackgroundImage).toHaveBeenCalledWith(defaults);
@@ -48,7 +48,7 @@ describe("map.js", function () {
             expect(createMapView).toHaveBeenCalledWith(defaults);
         });
         it("creates a MapView", function () {
-            map.createMap(defaults, {}, "2D");
+            map.createMap(defaults, "2D");
             expect(createMapView).toHaveBeenCalledWith(defaults);
         });
         it("creates a 3D Map", function () {
@@ -71,7 +71,7 @@ describe("map.js", function () {
             };
 
             load3DScript(config.cesiumLib, function Loaded3DCallback () {
-                const map3D = map.createMap(config, {}, "3D");
+                const map3D = map.createMap(config, "3D");
 
                 expect(create3DMap).toHaveBeenCalledWith(defaults);
                 expect(map3D.mapMode).toBe("3D");
@@ -79,7 +79,7 @@ describe("map.js", function () {
         });
 
         it("creates and returns a Map object from openlayers with optional additional params", function () {
-            const ret = map.createMap(defaults, {mapParams: {test: 1}}, "2D");
+            const ret = map.createMap(defaults, "2D", {mapParams: {test: 1}});
 
             expect(Map.mock.calls[Map.mock.calls.length - 1][0].test).toBe(1);
             expect(ret).toBeInstanceOf(Map);
