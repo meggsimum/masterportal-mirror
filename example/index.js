@@ -21,9 +21,9 @@ window.mpapi = {
 // */
 //* Cleans up map before it is re-rendered (happens on every save during dev mode)
 document.getElementById(portalConfig.target).innerHTML = "";
-//add a click-listener to button, that creates a 3D-map on click
+// add a click-listener to button, that creates a 3D-map on click
 document.getElementById("enable").addEventListener("click", function (portalConfig) {
-    if(window.mpapi.map2D === null){
+    if (window.mpapi.map2D === null) {
         window.mpapi.map2D = window.mpapi.map;
     }
 
@@ -33,12 +33,12 @@ document.getElementById("enable").addEventListener("click", function (portalConf
     }
     else {
         const lib = portalConfig.cesiumLib ? portalConfig.cesiumLib : "https://geoportal-hamburg.de/mastercode/cesium/1_84/Cesium.js";
-        
+
         load3DScript(lib, function Loaded3DCallback () {
             const settings3D = {
-                "map2D": window.mpapi.map2D
-            },
-            map3D = abstractAPI.map.createMap(settings3D, {}, "3D");
+                    "map2D": window.mpapi.map2D
+                },
+                map3D = abstractAPI.map.createMap(settings3D, {}, "3D");
 
             window.mpapi.map = map3D;
             window.mpapi.map.setEnabled(true);
@@ -79,7 +79,7 @@ mpapi.geojson.setCustomStyles({
 //* SYNCHRONOUS EXAMPLE: layerConf is known
 window.mpapi.map = map2D;
 
-["2001","2002", "1002"].forEach(id => window.mpapi.map.addLayer(id));
+["2001", "2002", "1002"].forEach(id => window.mpapi.map.addLayer(id));
 
 
 // */

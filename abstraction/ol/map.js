@@ -5,6 +5,7 @@ import getInitialLayers from "../../src/lib/getInitialLayers";
 import defaults from "../../src/defaults";
 import * as wms from "../../src/layer/wms";
 import * as geojson from "../../src/layer/geojson";
+import * as vectorBase from "../../src/layer/vectorBase";
 import {createMapView} from "../../src/mapView";
 import {initializeLayerList, getLayerWhere} from "../../src/rawLayerList";
 import {registerProjections} from "../../src/crs";
@@ -17,7 +18,8 @@ import {setGazetteerUrl} from "../../src/searchAddress";
  */
 const layerBuilderMap = {
         wms: wms,
-        geojson: geojson
+        geojson: geojson,
+        vectorBase: vectorBase
     },
     originalAddLayer = PluggableMap.prototype.addLayer;
 
