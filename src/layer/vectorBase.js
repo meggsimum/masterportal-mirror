@@ -28,9 +28,6 @@ export function updateSource (layer) {
 export function createLayer (attrs) {
     const source = this.createLayerSource();
 
-    if (attrs.isSelected) {
-        this.updateSource();
-    }
     return new VectorLayer({
         source: source,
         name: attrs.name,
