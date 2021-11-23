@@ -7,6 +7,7 @@
 ## Unreleased - in development
 ### Added
 - An alias is added to the coordinate system. This is required by GeoServer services.
+- Added possibility to add any rawLayer attribute to wms layer request.
 
 ### Changed
 

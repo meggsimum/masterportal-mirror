@@ -31,7 +31,8 @@ export function makeParams (rawLayer) {
         LAYERS: rawLayer.layers,
         VERSION: rawLayer.version,
         TRANSPARENT: rawLayer.transparent,
-        SINGLETILE: rawLayer.singleTile
+        SINGLETILE: rawLayer.singleTile,
+        ...rawLayer
     }, rawLayer.singleTile ? {} : {WIDTH: rawLayer.tilesize, HEIGHT: rawLayer.tilesize});
 
     if (rawLayer.STYLES) {
