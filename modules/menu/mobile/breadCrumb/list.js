@@ -1,5 +1,5 @@
 import BreadCrumbItem from "./model";
-import "bootstrap/js/collapse";
+import "bootstrap/js/dist/collapse";
 
 const BreadCrumbList = Backbone.Collection.extend({
     model: BreadCrumbItem,
