@@ -96,7 +96,7 @@ export default {
                         class="glyphicon glyphicon-remove"
                         tabindex="0"
                         aria-hidden="true"
-                        data-dismiss="modal"
+                        data-bs-dismiss="modal"
                         :title="$t('button.close')"
                         @click="closeIconTriggered($event)"
                         @keydown="closeIconTriggered($event)"

@@ -86,7 +86,7 @@ async function PopulationRequestTests ({builder, url, resolution, capability}) {
                 /*
                 <div class="dropdown"><div><div class="graphical-select"><div class="dropdown-container">
                     <div class="btn-group bootstrap-select" style="width: 100%;">
-                        <button type="button" class="btn dropdown-toggle btn-default" data-toggle="dropdown" role="button" title="Rechteck aufziehen">
+                        <button type="button" class="btn dropdown-toggle btn-default" data-bs-toggle="dropdown" role="button" title="Rechteck aufziehen">
                             <span class="filter-option pull-left">Rechteck aufziehen</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span>
                         </button>
                         <div class="dropdown-menu open" role="combobox">
@@ -114,8 +114,8 @@ async function PopulationRequestTests ({builder, url, resolution, capability}) {
                     <div class="checkbox"><div class="checkbox-container"><div class="form-inline">
                         <div class="title-checkbox pull-left">
                             <label>Raster Layer anzeigen (ab 1: 100.000)</label>
-                            <div class="toggle btn btn-default off btn-sm" data-toggle="toggle" style="width: 63.9167px; height: 31px;">
-                                <input type="checkbox" title="Filter ausschalten" data-toggle="toggle"><div class="toggle-group">
+                            <div class="toggle btn btn-default off btn-sm" data-bs-toggle="toggle" style="width: 63.9167px; height: 31px;">
+                                <input type="checkbox" title="Filter ausschalten" data-bs-toggle="toggle"><div class="toggle-group">
                                 <label class="btn btn-primary btn-sm toggle-on">An</label><label class="btn btn-default btn-sm active toggle-off">Aus</label>
                                 <span class="toggle-handle btn btn-default btn-sm"></span></div></div>
                         </div>
@@ -123,8 +123,8 @@ async function PopulationRequestTests ({builder, url, resolution, capability}) {
                     </div><div class="checkbox-container"><div class="form-inline">
                         <div class="title-checkbox pull-left">
                             <label>ALKIS Adressen anzeigen (ab 1: 20.000)</label>
-                            <div class="toggle btn btn-default off btn-sm" data-toggle="toggle" style="width: 63.9167px; height: 31px;">
-                                <input type="checkbox" title="Filter ausschalten" data-toggle="toggle"><div class="toggle-group">
+                            <div class="toggle btn btn-default off btn-sm" data-bs-toggle="toggle" style="width: 63.9167px; height: 31px;">
+                                <input type="checkbox" title="Filter ausschalten" data-bs-toggle="toggle"><div class="toggle-group">
                                 <label class="btn btn-primary btn-sm toggle-on">An</label><label class="btn btn-default btn-sm active toggle-off">Aus</label>
                                 <span class="toggle-handle btn btn-default btn-sm"></span></div></div>
                         </div>
@@ -241,7 +241,7 @@ async function PopulationRequestTests ({builder, url, resolution, capability}) {
             /*
                 <div id="messages" class="top-center">
                     <div id="813" class="alert alert-info alert-dismissable" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                     <p>

@@ -82,7 +82,7 @@ export default {
             aria-label="checkbox"
             type="checkbox"
             :title="title"
-            data-toggle="toggle"
+            data-bs-toggle="toggle"
             :checked="isActive"
             @click="toggle($event)"
             @keydown="toggle($event)"

@@ -15,12 +15,12 @@
     <% if (id === "Baselayer") { %>
         <span class="catalog_buttons">
             <% if (this.model.get("quickHelp") === true) { %>
-                <span class="glyphicon glyphicon-question-sign tabable" tabindex="0" data-toggle="tooltip" data-placement="bottom" title="<%= topicsHelpText%>"></span>
+                <span class="glyphicon glyphicon-question-sign tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= topicsHelpText%>"></span>
             <% } %>
             <% if (backgroundImage) { %>
-                <span class="glyphicon glyphicon-adjust rotate-adjust-back tabable" tabindex="0" data-toggle="tooltip" data-placement="bottom" title="<%= mapBackgroundText%>"></span>
+                <span class="glyphicon glyphicon-adjust rotate-adjust-back tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= mapBackgroundText%>"></span>
             <% } %>
-            <span class="glyphicon glyphicon-pushpin rotate-pin-back tabable" tabindex="0" data-toggle="tooltip" data-placement="bottom" title="<%= pinTopicsTreeText%>"></span>
+            <span class="glyphicon glyphicon-pushpin rotate-pin-back tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= pinTopicsTreeText%>"></span>
         <span>
     <% } %>
     <% if (id === "Overlayer" && treeType === "default") { %>
