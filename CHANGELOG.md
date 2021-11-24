@@ -5,6 +5,9 @@
 
 ## Unreleased - in development
 ### Added
+- An alias is added to the coordinate system. This is required by GeoServer services.
+- Added possibility to add any rawLayer attribute to wms layer request.
+- Added VectorBaseLayer to layers
 
 ### Changed
 
@@ -13,23 +16,12 @@
 ### Removed
 
 ### Fixed
+
+---
 
 ## 1.7.1 - 2022-01-11
 ### Fixed
 - WFS-Layer: the WFS version is taken into account when generating the WFS format.
-
----
-
-## Unreleased - in development
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
 
 ---
 
