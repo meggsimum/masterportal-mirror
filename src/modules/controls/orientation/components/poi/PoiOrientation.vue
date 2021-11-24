@@ -317,7 +317,7 @@ export default {
                         class="glyphicon glyphicon-remove"
                         tabindex="0"
                         aria-hidden="true"
-                        data-dismiss="modal"
+                        data-bs-dismiss="modal"
                         :title="$t('button.close')"
                         @click="closeIconTriggered($event)"
                         @keydown="closeIconTriggered($event)"
@@ -342,7 +342,7 @@ export default {
                                 :href="'#' + feature.category"
                                 :aria-controls="feature.category"
                                 role="button"
-                                data-toggle="pill"
+                                data-bs-toggle="pill"
                             >{{ feature.category + 'm' }}
                                 <span
                                     class="badge"

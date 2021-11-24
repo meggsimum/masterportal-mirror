@@ -3,7 +3,7 @@
     <% if (this.model.has("label")) { %>
         <label><%= label %></label>
     <% } %>
-        <input type="checkbox" title="Filter ausschalten" data-toggle="toggle" <% if (valuesCollection.at(0).get("isSelected")) {print("checked");} %>>
+        <input type="checkbox" title="Filter ausschalten" data-bs-toggle="toggle" <% if (valuesCollection.at(0).get("isSelected")) {print("checked");} %>>
     </div>
 <% if (typeof infoText !== "undefined") { %>
     <div class="info-icon">
