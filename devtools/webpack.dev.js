@@ -51,7 +51,7 @@ module.exports = function () {
                     loader: "file-loader",
                     options: {
                         name: "[name].[ext]",
-                        publicPath: "../../node_modules/bootstrap/fonts"
+                        publicPath: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap"
                     }
                 },
                 // alle anderen Schriftarten
