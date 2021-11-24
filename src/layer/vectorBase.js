@@ -22,7 +22,6 @@ export function updateSource (layer) {
 
 /**
  * Triggered by Layer to create a ol/layer/Vector
- * added this to force an update cause it's the wrong thing on masterportalAPI
  * @param {Object} attrs  attributes of the layer
  * @returns {Object} layer
  */
