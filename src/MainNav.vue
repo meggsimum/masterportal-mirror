@@ -32,8 +32,8 @@ export default {
                         <button
                             type="button"
                             class="navbar-toggle"
-                            data-toggle="collapse"
-                            data-target=".navbar-collapse"
+                            data-bs-toggle="collapse"
+                            data-bs-target=".navbar-collapse"
                         >
                             <span class="sr-only">Navigation ein-/ausblenden</span>
                             <span class="icon-bar" />

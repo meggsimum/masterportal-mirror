@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <% recommendedList.forEach(function (hit, index) { %>
-    <li id="<%= hit.id %>" class="list-group-item hit" data-toggle="tooltip" data-placement="bottom" title="<%= hit.metaName === undefined ? hit.name: hit.metaName %>">
+    <li id="<%= hit.id %>" class="list-group-item hit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= hit.metaName === undefined ? hit.name: hit.metaName %>">
         <p id="searchInputLi">
             <% if (hit.glyphicon !== undefined) { %>
                 <span class="glyphicon <%= hit.glyphicon %>"></span>
