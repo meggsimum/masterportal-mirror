@@ -110,8 +110,8 @@ export default {
         <a
             :href="link"
             target="_blank"
-            :data-toggle="title"
-            data-placement="bottom"
+            :data-bs-toggle="title"
+            data-bs-placement="bottom"
             :title="toolTip"
             class="tabable"
         >
