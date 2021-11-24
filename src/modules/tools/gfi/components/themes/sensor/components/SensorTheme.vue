@@ -256,7 +256,7 @@ export default {
                     }"
                 >
                     <a
-                        data-toggle="tab"
+                        data-bs-toggle="tab"
                         href="#data"
                         @click="setActiveTab"
                     >
@@ -273,7 +273,7 @@ export default {
                     }"
                 >
                     <a
-                        :data-toggle="processedHistoricalDataByWeekday.length === 0 ? 'buttons' : 'tab'"
+                        :data-bs-toggle="processedHistoricalDataByWeekday.length === 0 ? 'buttons' : 'tab'"
                         :href="processedHistoricalDataByWeekday.length === 0 ? '' : createHref(key)"
                         @click="setActiveTab"
                     >

@@ -2,17 +2,17 @@
 <div class="layer-settings" >
     <span class="transparency">
         <span class="text"><%=transparencyText%>:</span>
-        <span class="glyphicon glyphicon-plus-sign tabable" tabindex="0" data-toggle="tooltip" data-placement="bottom" title="<%=increaseTransparencyText%>"></span>
+        <span class="glyphicon glyphicon-plus-sign tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%=increaseTransparencyText%>"></span>
         <span class="badge"> <%= transparency + '%' %></span>
-        <span class="glyphicon glyphicon-minus-sign tabable" tabindex="0" data-toggle="tooltip" data-placement="bottom" title="<%=reduceTransparencyText%>"></span>
+        <span class="glyphicon glyphicon-minus-sign tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%=reduceTransparencyText%>"></span>
     </span>
     <% if (isRemovable === true) { %>
         <span class="remove-layer tabable" tabindex="0">
-            <span class="text" data-toggle="tooltip" data-placement="bottom"><%=removeLayerText%></span>
+            <span class="text" data-bs-toggle="tooltip" data-bs-placement="bottom"><%=removeLayerText%></span>
         </span>
     <% } %>
     <span class="arrows pull-right">
-        <span class="glyphicon glyphicon-arrow-up tabable" tabindex="0" data-toggle="tooltip" data-placement="bottom" title="<%=levelUpText%>"></span>
-        <span class="glyphicon glyphicon-arrow-down tabable" tabindex="0" data-toggle="tooltip" data-placement="bottom" title="<%=levelDownText%>"></span>
+        <span class="glyphicon glyphicon-arrow-up tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%=levelUpText%>"></span>
+        <span class="glyphicon glyphicon-arrow-down tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%=levelDownText%>"></span>
     </span>
 </div>

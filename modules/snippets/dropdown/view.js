@@ -1,6 +1,9 @@
 import Template from "text-loader!./template.html";
 import TemplateGroups from "text-loader!./templateGroups.html";
 import "bootstrap-select";
+// const bootstrap = window.bootstrap = require("bootstrap"); // without this bootstrap-select crashes with `undefined bootstrap`
+// require("bootstrap-select/js/bootstrap-select"); // we have to manually require the working js file
+
 /**
  * @member Template
  * @description Template for Dropdown Snippet

@@ -773,8 +773,8 @@ export default {
                 >
                     <div
                         class="layer-title panel-heading"
-                        data-toggle="collapse"
-                        :data-target="'#' + generateId(legendObj.name)"
+                        data-bs-toggle="collapse"
+                        :data-bs-target="'#' + generateId(legendObj.name)"
                     >
                         <span>{{ legendObj.name }}</span>
                     </div>
