@@ -6,8 +6,8 @@ import StaticLinkView from "./staticlink/view";
 import BreadCrumbListView from "./breadCrumb/listView";
 import "jquery-ui/ui/effects/effect-slide";
 import "jquery-ui/ui/effect";
-import "bootstrap/js/dropdown";
-import "bootstrap/js/collapse";
+import "bootstrap/js/dist/dropdown";
+import "bootstrap/js/dist/collapse";
 import store from "../../../src/app-store";
 
 

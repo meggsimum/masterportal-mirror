@@ -4,7 +4,7 @@ import CatalogFolderView from "./folder/viewCatalog";
 import DesktopStaticLinkView from "./staticlink/view";
 import DesktopViewpointView from "./viewPoint/view";
 
-import "bootstrap";
+// import "bootstrap";
 
 const ListViewMain = Backbone.View.extend(/** @lends ListViewMain.prototype */{
     /**
