@@ -6,6 +6,7 @@
  
 ## Unreleased - in development
 ### Added
+- Added VectorBaseLayer to layers
 
 ### Changed
 
