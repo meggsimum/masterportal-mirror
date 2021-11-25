@@ -13,7 +13,7 @@
 - The package ""regenerator-runtime" version 0.13.9 was added to provide async tests.
 
 ### Changed
-- The constructor of createMap in the abstraction layer changed.
+- The constructor of createMap in the abstraction layer changed. The order of the parameters (config, settings = {}, mapMode = "2D") changes to (config, mapMode = "2D", settings = {}).
 
 ### Deprecated
 

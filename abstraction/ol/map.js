@@ -18,9 +18,9 @@ let mapIdCounter = 0;
  * @ignore
  */
 const layerBuilderMap = {
-        wms: wms,
-        wfs: wfs,
-        geojson: geojson
+        wms,
+        wfs,
+        geojson
     },
     originalAddLayer = PluggableMap.prototype.addLayer;
 

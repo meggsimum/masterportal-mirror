@@ -86,11 +86,7 @@ const styleWfs = function (feature, resolution) {
     
     return [icon];
 };
-services.forEach(entry => {
-    if (entry.typ === "WFS") {
-        entry["style"] = styleWfs;
-    }
-});
+services.find(({id}) => id === "3001").style = styleWfs;
 // */
 
 //* SYNCHRONOUS EXAMPLE: layerConf is known

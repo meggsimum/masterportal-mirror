@@ -2,33 +2,39 @@ import VectorSource from "ol/source/Vector.js";
 import Cluster from "ol/source/Cluster.js";
 
 /**
- * Creates a VectorSource. If loader and url are given loader is used. To use the url do not provide a loader.
- * @param {string} url to load the features from
- * @param {function} loader loader-function to load the features
- * @param {module:ol/source/Vector~LoadingStrategy} loadingStrategy The loading strategy to use.
+ * Creates a VectorSource.
+ * @param {function|string} urlOrLoader loader-function to load the features or an url to load them
+ * @param {module:ol.source.Vector~LoadingStrategy} strategy The loading strategy to use.
  * @param {module:ol.Format} format to parse the response with
  * @returns {(module:ol.source.VectorSource|module:ol.source.Cluster)} the VectorSource
  */
-export function createVectorSource (url, loader, loadingStrategy, format) {
-    const source = new VectorSource({
-        loader: loader,
-        url: url,
-        strategy: loadingStrategy,
-        format: format
-    });
+export function createVectorSource (urlOrLoader, strategy, format) {
+    let loader = null,
+        url = null;
 
-    return source;
+    if (typeof urlOrLoader === "string") {
+        url = urlOrLoader;
+    }
+    else if (typeof urlOrLoader === "function") {
+        loader = urlOrLoader;
+    }
+    return new VectorSource({
+        loader,
+        url,
+        strategy,
+        format
+    });
 }
 /**
  * Creates a Cluster.
- * @param {module:ol.source.VectorSource} layerSource the source of the layer
- * @param {number} clusterDistance - Pixel radius, within this radius, all features are "clustered" into one feature. If available, a cluster source is created.
- * @param {function} clusterGeometryFunction - returns the geometry of the cluster, gets parameter feature
+ * @param {module:ol.source.VectorSource} source the source of the layer
+ * @param {number} distance - Pixel radius, within this radius, all features are "clustered" into one feature. If available, a cluster source is created.
+ * @param {function | undefined} geometryFunction - returns the geometry of the cluster, gets parameter feature. When a feature should not be considered for clustering, the function should return null.
  * @returns {module:ol.source.Cluster} the Cluster
  */
-export function createClusterVectorSource (layerSource, clusterDistance, clusterGeometryFunction) {
-    return new Cluster(Object.assign({
-        source: layerSource,
-        distance: clusterDistance
-    }, clusterGeometryFunction || {}));
+export function createClusterVectorSource (source, distance, geometryFunction) {
+    return new Cluster({
+        source,
+        distance,
+        geometryFunction});
 }

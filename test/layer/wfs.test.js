@@ -6,11 +6,17 @@ import map from "../../abstraction/map.js";
 import defaults from "../../src/defaults";
 import {WFS} from "ol/format.js";
 import * as wfs from "../../src/layer/wfs";
-import {featureCollection} from "./resources/wfs_features";
-import {wfsFilterQuery} from "./resources/wfs_features";
+import {featureCollection} from "./resources/wfsFeatures";
+import {wfsFilterQuery} from "./resources/wfsFeatures";
 
 describe("wfs.js", function () {
     describe("createLayer", function () {
+        it("creates a VectorLayer without id", function () {
+            const layer = wfs.createLayer();
+
+            expect(layer).toBeInstanceOf(VectorLayer);
+            expect(layer.getSource()).toBeInstanceOf(VectorSource);
+        });
         it("creates a VectorLayer with source", function () {
             const layer = wfs.createLayer({id: "id"});
 
@@ -30,8 +36,11 @@ describe("wfs.js", function () {
 
                 return [icon];
             }
-            const layer = wfs.createLayer({id: "id", style: styleFunction}, {});
+            const layer = wfs.createLayer({id: "id", style: styleFunction});
 
+            expect(layer).toBeInstanceOf(VectorLayer);
+            expect(layer.get("id")).toEqual("id");
+            expect(layer.getSource()).toBeInstanceOf(VectorSource);
             expect(layer.getStyleFunction()).toBeDefined();
             expect(layer.getStyleFunction()).toEqual(styleFunction);
 
@@ -43,9 +52,11 @@ describe("wfs.js", function () {
                     name: "name",
                     layers: "layer1, layer2"
                 },
-                layer = wfs.createLayer({id: "id"}, layerParams);
+                layer = wfs.createLayer({id: "id"}, {layerParams});
 
             expect(layer).toBeInstanceOf(VectorLayer);
+            expect(layer.get("id")).toEqual("id");
+            expect(layer.getSource()).toBeInstanceOf(VectorSource);
             expect(layer.get("name")).toEqual("name");
             expect(layer.get("layers")).toEqual("layer1, layer2");
         });
@@ -68,8 +79,11 @@ describe("wfs.js", function () {
                     name: "name",
                     layers: "layer1, layer2"
                 },
-                layer = wfs.createLayer({id: "id"}, layerParams, options);
+                layer = wfs.createLayer({id: "id"}, {layerParams, options});
 
+            expect(layer).toBeInstanceOf(VectorLayer);
+            expect(layer.get("id")).toEqual("id");
+            expect(layer.getSource()).toBeInstanceOf(VectorSource);
             expect(layer.getStyleFunction()).toBeDefined();
             expect(layer.getStyleFunction()).toEqual(styleFunction);
             expect(layer.get("name")).toEqual("name");
@@ -88,7 +102,7 @@ describe("wfs.js", function () {
         afterEach(() => {
             console.error = consoleError;
         });
-        it("creates a VectorSource and beforeLoading, afterLoading and featuresFilter are called", async function () {
+        it("creates a VectorSource and beforeLoading, afterLoading and featuresFilter are called", function () {
             global.fetch = jest.fn().mockImplementationOnce(() => {
                 return new Promise((resolve) => {
                     resolve({
@@ -118,12 +132,14 @@ describe("wfs.js", function () {
                     afterLoading: afterLoadingMock,
                     featuresFilter: featuresFilterMock
                 },
-                layer = wfs.createLayer(rawLayer, {}, options);
+                layer = wfs.createLayer(rawLayer, {options});
 
             layer.getSource().loadFeatures([-10000, -10000, 10000, 10000],
                 1,
                 map2D.getView().getProjection());
 
+            expect(layer).toBeInstanceOf(VectorLayer);
+            expect(layer.get("id")).toEqual("id");
             expect(layer.getSource()).toBeInstanceOf(VectorSource);
             expect(layer.getSource().getFormat()).toBeInstanceOf(WFS);
             // eslint-disable-next-line no-underscore-dangle
@@ -135,7 +151,7 @@ describe("wfs.js", function () {
                 expect(afterLoadingMock.mock.calls.length).toBe(1);
             });
         });
-        it("creates a VectorSource with wfsFilter", async function () {
+        it("creates a VectorSource with wfsFilter", function () {
             let secondFetchCalled = false;
 
             global.fetch = jest.fn().mockImplementationOnce(() => {
@@ -178,11 +194,14 @@ describe("wfs.js", function () {
                     afterLoading: afterLoadingMock,
                     featuresFilter: featuresFilterMock
                 },
-                layer = wfs.createLayer(rawLayer, {}, options);
+                layer = wfs.createLayer(rawLayer, {options});
 
             layer.getSource().loadFeatures([-10000, -10000, 10000, 10000],
                 1,
                 map2D.getView().getProjection());
+
+            expect(layer).toBeInstanceOf(VectorLayer);
+            expect(layer.get("id")).toEqual("id");
 
             expect(layer.getSource()).toBeInstanceOf(VectorSource);
             expect(layer.getSource().getFormat()).toBeInstanceOf(WFS);
@@ -195,7 +214,7 @@ describe("wfs.js", function () {
                 expect(afterLoadingMock.mock.calls.length).toBe(1);
             });
         });
-        it("creates a VectorSource and onLoadingError is called", async function () {
+        it("creates a VectorSource and onLoadingError is called", function () {
             global.fetch = jest.fn().mockImplementationOnce(() => {
                 return new Promise((_g, reject) => {
                     reject({
@@ -222,12 +241,14 @@ describe("wfs.js", function () {
                 options = {
                     onLoadingError: onLoadingErrorMock
                 },
-                layer = wfs.createLayer(rawLayer, {}, options);
+                layer = wfs.createLayer(rawLayer, {options});
 
             layer.getSource().loadFeatures([-10000, -10000, 10000, 10000],
                 1,
                 map2D.getView().getProjection());
 
+            expect(layer).toBeInstanceOf(VectorLayer);
+            expect(layer.get("id")).toEqual("id");
             expect(layer.getSource()).toBeInstanceOf(VectorSource);
             expect(layer.getSource().getFormat()).toBeInstanceOf(WFS);
             // eslint-disable-next-line no-underscore-dangle
@@ -236,7 +257,7 @@ describe("wfs.js", function () {
                 expect(onLoadingErrorMock.mock.calls.length).toBe(2);
             });
         });
-        it("creates a clustered VectorSource and beforeLoading, afterLoading and featuresFilter are called", async function () {
+        it("creates a clustered VectorSource and beforeLoading, afterLoading and featuresFilter are called", function () {
             global.fetch = jest.fn().mockImplementationOnce(() => {
                 return new Promise((resolve) => {
                     resolve({
@@ -268,12 +289,14 @@ describe("wfs.js", function () {
                     featuresFilter: featuresFilterMock,
                     clusterGeometryFunction: clusterGeometryFunctionMock
                 },
-                layer = wfs.createLayer(rawLayer, {}, options);
+                layer = wfs.createLayer(rawLayer, {options});
 
             layer.getSource().loadFeatures([-10000, -10000, 10000, 10000],
                 1,
                 map2D.getView().getProjection());
 
+            expect(layer).toBeInstanceOf(VectorLayer);
+            expect(layer.get("id")).toEqual("id");
             expect(layer.getSource()).toBeInstanceOf(Cluster);
             expect(layer.getSource().getDistance()).toEqual(60);
             expect(layer.getSource().getSource().getFormat()).toBeInstanceOf(WFS);
@@ -287,14 +310,5 @@ describe("wfs.js", function () {
             });
         });
     });
-
-    describe("updateSource", function () {
-        it("updateSource will fetch layer again", function () {
-            const layer = wfs.createLayer({id: "id"});
-
-            layer.getSource().refresh = jest.fn();
-            wfs.updateSource(layer);
-            expect(layer.getSource().refresh.mock.calls.length).toBe(1);
-        });
-    });
 });
+
