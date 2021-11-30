@@ -1,1 +1,1 @@
-export {default as map} from "./olcsMap";
+export {default as map} from "./map";

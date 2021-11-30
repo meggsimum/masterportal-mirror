@@ -1,7 +1,7 @@
 import {PluggableMap, Map} from "ol";
 import TileLayer from "ol/layer/Tile";
 import map from "../abstraction/map.js";
-import {createMap as create3DMap} from "../abstraction/olcs/olcsMap.js";
+import {createMap as create3DMap} from "../abstraction/olcs/map.js";
 import {initializeLayerList} from "../src/rawLayerList.js";
 import {registerProjections} from "../src/crs.js";
 import setBackgroundImage from "../src/lib/setBackgroundImage.js";
