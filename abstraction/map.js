@@ -1,5 +1,5 @@
-import * as map2D from "./ol/map.js";
-import map3D from "./olcs/map.js";
+import * as olMap from "./ol/olMap.js";
+import olcsMap from "./olcs/olcsMap.js";
 
 export default {
     /**
@@ -24,8 +24,8 @@ export default {
     */
     createMap: function (config, mapMode = "2D", settings = {}) {
         const createMapFunctions = {
-                "2D": map2D.createMap,
-                "3D": map3D.createMap
+                "2D": olMap.createMap,
+                "3D": olcsMap.createMap
             },
             map = createMapFunctions[mapMode](config, settings);
 

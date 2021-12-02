@@ -14,6 +14,7 @@
 
 ### Changed
 - The constructor of createMap in the abstraction layer changed. The order of the parameters (config, settings = {}, mapMode = "2D") changes to (config, mapMode = "2D", settings = {}).
+- abstraction\ol\map.js was renamed to abstraction\ol\olMap.js and abstraction\olcs\map.js was renamed to abstraction\olcs\olcsMap.js
 
 ### Deprecated
 

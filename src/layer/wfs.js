@@ -13,6 +13,8 @@ import {createVectorSource, createClusterVectorSource} from "./vector";
  * @property {string} featureNS - the namespace URI used for features
  * @property {number} clusterDistance - pixel radius, within this radius, all features are "clustered" into one feature - if available, a cluster source is created.
  * @property {function} style - style function to style the layer if options.style is not set
+ */
+
 /**
  * Additional options used to create and load the layer source.
  * @typedef {Object} options
@@ -28,9 +30,17 @@ import {createVectorSource, createClusterVectorSource} from "./vector";
  * @property {object} loadingParams - added as params to url
  */
 
-function handleErrors (response, onError) {
+/**
+  * Returns the 'onError' function if response is not ok
+  * @param {object} response of the request
+  * @param {function} onErrorFn Calls options.onLoadingError and 'featuresloaderror' event will be fired by using failure callback.
+  * @param {options} [options] additional options
+  * @param {function} failure failure callback to ol.VectorLayer, fires 'featuresloaderror' event
+  * @returns {void}
+  */
+function handleErrors (response, onErrorFn, options, failure) {
     if (!response.ok) {
-        return onError(`Request to wfs-filter failed. Response status is ${response.statusText}`);
+        return onErrorFn(`Request to wfs-filter failed. Response status is ${response.statusText}`, options, failure);
     }
     return response;
 }
@@ -39,12 +49,13 @@ function handleErrors (response, onError) {
  * Features are added to source.
  * @param {ol.source.VectorSource} source the vector source
  * @param {Array.<module:ol/Feature~Feature>} features loaded features
- * @param {options} [options] additional options
- * @param {function} onError  Calls options.onLoadingError and 'featuresloaderror' event will be fired by using failure callback.
+ * @param {function} onErrorFn  Calls options.onLoadingError and 'featuresloaderror' event will be fired by using failure callback.
  * @param {function} success  callback: 'featuresloadend' event will be fired
+ * @param {function} failure failure callback to ol.VectorLayer, fires 'featuresloaderror' event
+ * @param {options} [options] additional options
  * @returns {void}
  */
-function onLoad (source, features, options, onError, success) {
+function onLoad (source, features, onErrorFn, success, failure, options = {}) {
     let filteredFeatures = features;
 
     try {
@@ -59,7 +70,7 @@ function onLoad (source, features, options, onError, success) {
         success(filteredFeatures);
     }
     catch (error) {
-        onError(error);
+        onErrorFn(error, options, failure);
     }
 }
 /**
@@ -83,20 +94,21 @@ function getFilterRequestParams (payload) {
  * @param {string} url url to load features from
  * @param {object} params extra loading parameters
  * @param {ol.source.VectorSource} source the vector source
+ * @param {object} errorAndSuccessFns functions to handle error and success
+ * @param {function} errorAndSuccessFns.onErrorFn  Calls options.onLoadingError and 'featuresloaderror' event will be fired by using failure callback.
+ * @param {function} errorAndSuccessFns.success  callback: 'featuresloadend' event will be fired
+ * @param {function} errorAndSuccessFns.failure failure callback to ol.VectorLayer, fires 'featuresloaderror' event
  * @param {options} [options] optional additional options
- * @param {function} onError  Calls options.onLoadingError and 'featuresloaderror' event will be fired by using failure callback.
- * @param {function} success  callback: 'featuresloadend' event will be fired
  * @returns {void}
  */
-function loadWFS (url, params, source, options, onError, success) {
+function loadWFS (url, params, source, {onErrorFn, success, failure}, options) {
     fetch(url, params)
-        .then((response) => handleErrors(response, onError))
+        .then((response) => handleErrors(response, onErrorFn, options, failure))
         .then((response) => response.text())
         .then(responseString => source.getFormat().readFeatures(responseString))
-        .then(features => onLoad(source, features, options, onError, success))
+        .then(features => onLoad(source, features, onErrorFn, success, failure, options))
         .catch((error) => {
-            // Only network error comes here
-            onError(error);
+            onErrorFn(error, options, failure);
         });
 }
 /**
@@ -106,27 +118,45 @@ function loadWFS (url, params, source, options, onError, success) {
  * @param {string} filter xml resource as wfs filter
  * @param {string} url url to load features from
  * @param {ol.source.VectorSource} source the vector source
+* @param {object} errorAndSuccessFns functions to handle error and success
+ * @param {function} errorAndSuccessFns.onErrorFn  Calls options.onLoadingError and 'featuresloaderror' event will be fired by using failure callback.
+ * @param {function} errorAndSuccessFns.success  callback: 'featuresloadend' event will be fired
+ * @param {function} errorAndSuccessFns.failure failure callback to ol.VectorLayer, fires 'featuresloaderror' event
  * @param {options} [options] optional additional options
- * @param {function} onError  Calls options.onLoadingError and 'featuresloaderror' event will be fired by using failure callback.
- * @param {function} success  callback: 'featuresloadend' event will be fired
  * @returns {void}
  */
-function loadWFSFilter (filter, url, source, options, onError, success) {
+function loadWFSFilter (filter, url, source, {onErrorFn, success, failure}, options) {
     fetch(filter)
-        .then((response) => handleErrors(response, onError))
+        .then((response) => handleErrors(response, onErrorFn, options, failure))
         .then((response) => response.text())
-        .then((payload) => loadWFS(url, getFilterRequestParams(payload), source, options, onError, success))
+        .then((payload) => loadWFS(url, getFilterRequestParams(payload), source, {onErrorFn, success, failure}, options))
         .catch((error) => {
-            // Only network error comes here
-            onError(error);
+            onErrorFn(error, options, failure);
         });
+}
+/**
+ * Logs and throws an Error.
+ * @param {string} error error message
+ * @param {object} [options] additional options
+ * @param {function} [options.onLoadingError] additional option, called with param error
+ * @param {function} failure failure callback to ol.VectorLayer, fires 'featuresloaderror' event
+ * {@link https://openlayers.org/en/latest/apidoc/module-ol_source_Vector-VectorSource.html failure: see}
+ * @returns {void}
+ */
+function onError (error, options = {}, failure) {
+    console.error(error);
+    if (options.onLoadingError) {
+        options.onLoadingError(error);
+    }
+    failure(error);
+    throw Error(error);
 }
 /**
  * Creates an ol/source element for the rawLayer by using a loader.
  * The 'featuresloadend' and 'featuresloaderror' events will be fired by using success and failure callbacks of the loader.
- * See https://openlayers.org/en/latest/apidoc/module-ol_source_Vector-VectorSource.html
  * @param {rawLayer} rawLayer layer specification as in services.json
  * @param {options} [options] additional options
+ * {@link https://openlayers.org/en/latest/apidoc/module-ol_source_Vector-VectorSource.html failure/success see}
  * @returns {(ol.source.VectorSource|ol.source.Cluster)} VectorSource or Cluster, depending on whether clusterDistance is set.
  */
 export function createLayerSource (rawLayer, options = {}) {
@@ -140,21 +170,11 @@ export function createLayerSource (rawLayer, options = {}) {
     let source = null;
 
     function loader (extent, resolution, projection, success, failure) {
-        function onError (error) {
-            console.error(error);
-            if (options.onLoadingError) {
-                options.onLoadingError(error);
-            }
-            // failure: see https://openlayers.org/en/latest/apidoc/module-ol_source_Vector-VectorSource.html
-            failure(error);
-            throw Error(error);
-        }
-
         if (options.beforeLoading) {
             options.beforeLoading();
         }
         if (options.wfsFilter) {
-            loadWFSFilter(options.wfsFilter, rawLayer.url, source, options, onError, success);
+            loadWFSFilter(options.wfsFilter, rawLayer.url, source, {onErrorFn: onError, success, failure}, options);
         }
         else {
             const bboxParam = options.loadingStrategy === bbox ? `&bbox=${extent.join(",")},${projection.getCode()}` : "",
@@ -170,7 +190,7 @@ export function createLayerSource (rawLayer, options = {}) {
                     }
                 }
             }
-            loadWFS(url, {}, source, options, onError, success);
+            loadWFS(url, {}, source, {onErrorFn: onError, success, failure}, options);
         }
     }
 
