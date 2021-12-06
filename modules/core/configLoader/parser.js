@@ -323,7 +323,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
                     setter("name", i18next.t(i18nKey));
                 }
             } : null,
-            glyphicon: "glyphicon-plus-sign",
+            icon: "bi-plus-circle-fill",
             id: id,
             parentId: parentId,
             isExpanded: isExpanded ? isExpanded : false,
@@ -690,7 +690,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
             type: "folder",
             name: baseLayersName ? baseLayersName : i18next.t(baseLayersDefaultKey),
             i18nextTranslate: baseLayers.i18nextTranslate ? baseLayers.i18nextTranslate : baseLayerI18nextTranslate,
-            glyphicon: "glyphicon-plus-sign",
+            icon: "bi-plus-circle-fill",
             id: "Baselayer",
             parentId: "tree",
             isInThemen: true,
@@ -704,7 +704,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
             type: "folder",
             name: overLayersName ? overLayersName : i18next.t(overLayersDefaultKey),
             i18nextTranslate: overLayers.i18nextTranslate ? overLayers.i18nextTranslate : overLayerI18nextTranslate,
-            glyphicon: "glyphicon-plus-sign",
+            icon: "bi-plus-circle-fill",
             id: "Overlayer",
             parentId: "tree",
             isInThemen: true,
@@ -725,7 +725,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
                     setter("name", i18next.t("common:tree.selectedTopics"));
                 }
             },
-            glyphicon: "glyphicon-plus-sign",
+            icon: "bi-plus-circle-fill",
             id: "SelectedLayer",
             parentId: "tree",
             isInThemen: true,

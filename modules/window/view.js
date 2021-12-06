@@ -16,18 +16,18 @@ import "jquery-ui/ui/widgets/draggable";
 
 const WindowView = Backbone.View.extend(/** @lends WindowView.prototype */{
     events: {
-        "click .glyphicon-minus": "minimize",
-        "keydown .glyphicon-minus": "minimize",
+        "click .minimize-icon": "minimize",
+        "keydown .minimize-icon": "minimize",
         "click .header-min": "maximize",
         "keydown .header-min": "maximize",
-        "click .glyphicon-remove": "hide",
-        "keydown .glyphicon-remove": "hide",
-        "touchend .glyphicon-remove": "hide",
+        "click .x-icon": "hide",
+        "keydown .x-icon": "hide",
+        "touchend .x-icon": "hide",
         "touchend .header-min": "maximize",
         "touchmove .title": "touchMoveWindow",
         "touchstart .title": "touchStartWindow",
         "touchend .title": "touchMoveEnd",
-        "pointerdown .glyphicon-triangle-right": "resizeWindowStart"
+        "pointerdown .resize-icon": "resizeWindowStart"
     },
 
     /**
@@ -186,7 +186,7 @@ const WindowView = Backbone.View.extend(/** @lends WindowView.prototype */{
                 this.model.set("maxPosLeft", this.$el.css("left"));
             }
             this.$(".win-body").hide();
-            this.$(".glyphicon-minus").hide();
+            this.$(".bi-dash-lg").parent(".bootstrap-icon").hide();
             this.$el.css({"top": "auto", "bottom": "0", "left": "0", "margin-bottom": "75px"});
             this.$(".header").addClass("header-min");
             this.$el.draggable("disable");
@@ -204,7 +204,7 @@ const WindowView = Backbone.View.extend(/** @lends WindowView.prototype */{
             if (this.$(".win-body").css("display") === "none") {
                 this.model.setCollapse(false);
                 this.$(".win-body").show();
-                this.$(".glyphicon-minus").show();
+                this.$(".bi-dash-lg").parent(".bootstrap-icon").show();
                 this.$el.css({"top": this.model.get("maxPosTop"), "bottom": "", "left": this.model.get("maxPosLeft"), "margin-bottom": "30px"});
                 this.$(".header").removeClass("header-min");
                 this.$el.draggable("enable");
@@ -414,7 +414,7 @@ const WindowView = Backbone.View.extend(/** @lends WindowView.prototype */{
     },
 
     /**
-     * Triggered onpointerdown .glyphicon-triangle-right.
+     * Triggered onpointerdown .bi-caret-right-fill.
      * Sets dragging prop true, all pointer movements trigger resizeWindowMove until released.
      * @returns {void}
      */

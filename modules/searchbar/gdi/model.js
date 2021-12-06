@@ -92,12 +92,12 @@ const GdiModel = Backbone.Model.extend(/** @lends GdiModel.prototype */{
                 source: "_source"
             },
             hitType = i18next.t("common:modules.searchbar.type.subject"),
-            hitGlyphicon = "glyphicon-list",
+            hitIcon = "bi-list-ul",
             hitList = this.get("sortByName") ? "hitList" : "originalOrderHitList";
 
         if (responseData.length > 0) {
             responseData.forEach(result => {
-                const hit = this.createHit(result, hitMap, hitType, hitGlyphicon, triggerEvent);
+                const hit = this.createHit(result, hitMap, hitType, hitIcon, triggerEvent);
 
                 Radio.trigger("Searchbar", "pushHits", hitList, hit);
             });
@@ -113,18 +113,18 @@ const GdiModel = Backbone.Model.extend(/** @lends GdiModel.prototype */{
      * @param {Object} result Result object from elastcisearch request.
      * @param {Object} hitMap Mapping object. Used to map results attributes to neccessary hit attributes.
      * @param {String} hitType Type of hit.
-     * @param {String} hitGlyphicon Glyphicon class to show in reccomendedList
+     * @param {String} hitIcon Icon class to show in reccomendedList
      * @param {Object} triggerEvent Object defining channel and event. used to fire event on mouseover and click in recommendedList.
      * @returns {Object} - hit.
      */
-    createHit: function (result, hitMap, hitType, hitGlyphicon, triggerEvent) {
+    createHit: function (result, hitMap, hitType, hitIcon, triggerEvent) {
         let hit = {};
 
         Object.keys(hitMap).forEach(key => {
             hit[key] = this.findAttributeByPath(result, hitMap[key]);
         });
         hit.type = hitType;
-        hit.glyphicon = hitGlyphicon;
+        hit.icon = hitIcon;
         if (Object.keys(triggerEvent).length > 0) {
             hit = Object.assign(hit, {triggerEvent: triggerEvent});
         }

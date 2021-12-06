@@ -11,7 +11,7 @@ $font_family_1: "MasterPortalFont","Arial Narrow",Arial,sans-serif;
         padding-left: 6px;
         vertical-align: text-bottom;
     }
-    span.glyphicon {
+    span.bootstrap-icon {
         font-size: 18px;
         padding: 5px;
     }
@@ -44,12 +44,12 @@ $font_family_1: "MasterPortalFont","Arial Narrow",Arial,sans-serif;
         }
     }
     >.layer-info-item {
-        >.glyphicon {
+        >.bootstrap-icon {
             padding: 5px;
         }
     }
     >.layer-sort-item {
-        >.glyphicon {
+        >.bootstrap-icon {
             padding: 5px;
         }
         margin-right: 20px;

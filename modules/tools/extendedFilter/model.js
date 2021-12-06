@@ -16,7 +16,7 @@ const ExtendedFilter = Tool.extend({
         ignoredKeys: [],
         filterCounter: 1,
         renderToWindow: true,
-        glyphicon: "glyphicon-filter"
+        icon: "bi-funnel-fill"
     }),
     initialize: function () {
         this.superInitialize();

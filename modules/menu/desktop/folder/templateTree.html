@@ -7,25 +7,25 @@
     <% } %>
 
         <% if (this.model.get("isExpanded")) { %>
-        <span class="glyphicon glyphicon-minus-sign"> </span>
+        <span class="bootstrap-icon minimize-icon"><i class="bi-dash-circle-fill"></i></span>
         <% } else { %>
-        <span class="glyphicon glyphicon-plus-sign"> </span>
+        <span class="bootstrap-icon maximize-icon"><i class="bi-plus-circle-fill"></i></span>
         <% } %> 
         <% if(isFolderSelectable) { %> <% if(isSelected) { %>
         <span
-            class="glyphicon glyphicon-check selectall"
+            class="bootstrap-icon selectall"
             title="<%= hideAllTopicsText %>"
-        ></span>
+        ><i class="bi-check2-square"></i></span>
         <%} else {%>
         <span
-            class="glyphicon glyphicon-unchecked selectall"
+            class="bootstrap-icon selectall"
             title="<%= showAllTopicsText %>"
-        ></span>
+        ><i class="bi-square"></i></span>
         <%}%> <%}%> <% if (isSecured) { %>
         <span
-            class="glyphicon glyphicon-lock"
+            class="bootstrap-icon lock-icon"
             title="<%=securedAllTopicsText%>"
-        ></span>
+        ><i class="bi-lock-fill"></i></span>
         <% } %>
         <span class="title"><%= name %></span>
     </a>

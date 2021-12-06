@@ -2,7 +2,7 @@
 
 ## Description
 
-All tools appearing in the menu "tools" are located in this folder. Entries are maintained in a list. Each list entry has a title, a glyphicon, and an active state (default: `false`). All attributes are optional and controlled in the `config.json` file. The order of tools in the configuration file determines the order of tools in the portal UI.
+All tools appearing in the menu "tools" are located in this folder. Entries are maintained in a list. Each list entry has a title, a icon, and an active state (default: `false`). All attributes are optional and controlled in the `config.json` file. The order of tools in the configuration file determines the order of tools in the portal UI.
 
 ### A selection of available tools
 
@@ -23,11 +23,11 @@ For a complete list, please see chapter *Portalconfig.menu.tools.children* in th
     "tools": {
         "parcelSearch": {
             "title": "Parcel search",
-            "glyphicon": "glyphicon-search"
+            "icon": "bi-search"
         },
         "gfi": {
             "title": "Request information",
-            "glyphicon": "glyphicon-info-sign",
+            "icon": "bi-info-circle-fill",
             "active": true
         },
         "supplyCoord": {},
