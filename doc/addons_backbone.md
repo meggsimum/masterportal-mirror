@@ -108,7 +108,7 @@ import Tool from "../../modules/core/modelList/tool/model";
 
 const exampleAddon = Tool.extend({
     defaults: Object.assign({}, Tool.prototype.defaults, {
-        glyphicon: "glyphicon-example",
+        icon: "bi-example",
         renderToWindow: true,
         id: "exampleAddon",
         name: "Example Tool"
@@ -179,7 +179,7 @@ const Config = {
 ...
     "tools": {
         "name": "Werkzeuge",
-        "glyphicon": "glyphicon-wrench",
+        "icon": "bi-wrench",
         "children": {
           "exampleAddon": {
             "name": "Beispiel Addon"
