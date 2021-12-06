@@ -126,14 +126,14 @@ Damit es keine Probleme mit scss Regeln anderer Module/Tools gibt, wird über ei
 ```
 
 ### Model erstellen und zurückgeben
-Datei *modules/tools/scale/model.js* öffnen und Model definieren. Das Model erbt vom der Elternklasse *Tool* das im Core *moduels/core/modelList/tool/model.js* definiert ist. Über den Aufruf der Funktion *superInitialize* wird der Listener, der die Aktivierung der Tools regelt, von der Elternklasse übernommen. Dem Parameter defaults werden alle Attribute mit einem Default-Wert eingetragen, die in diesem Model konfiguriert werden können (z.B. ein Glyphicon). Dort wird auch das Attribute "renderToWindow" auf true gestezt, damit sich der Scale-Switcher im vererbten Fenster zeichnet.
+Datei *modules/tools/scale/model.js* öffnen und Model definieren. Das Model erbt vom der Elternklasse *Tool* das im Core *moduels/core/modelList/tool/model.js* definiert ist. Über den Aufruf der Funktion *superInitialize* wird der Listener, der die Aktivierung der Tools regelt, von der Elternklasse übernommen. Dem Parameter defaults werden alle Attribute mit einem Default-Wert eingetragen, die in diesem Model konfiguriert werden können (z.B. ein Bootstrap Icon). Dort wird auch das Attribute "renderToWindow" auf true gestezt, damit sich der Scale-Switcher im vererbten Fenster zeichnet.
 ```js
 
 import Tool from "../../core/modelList/tool/model";
 
 const ScaleModel = Tool.extend({
     defaults: _.extend({}, Tool.prototype.defaults, {
-        glyphicon: "glyphicon-resize-full",
+        icon: "bi-arrows-angle-expand",
         renderToWindow: true
     }),
     // wird aufgerufen wenn das Model erstellt wird
@@ -168,7 +168,7 @@ Dazu werden Default-Werte eingetragen.
 
 const ScaleModel = Tool.extend({
     defaults: _.extend({}, Tool.prototype.defaults, {
-        glyphicon: "glyphicon-resize-full",
+        icon: "bi-arrows-angle-expand",
         renderToWindow: true,
         scales: "",
         currentScale: ""
@@ -372,12 +372,12 @@ Um das Tool in einem Portal zu verwenden, muss dies in der config.json konfiguri
       "tools":
       {
         "name": "Werkzeuge",
-        "glyphicon": "glyphicon-wrench",
+        "icon": "bi-wrench",
         "children": {
           "scale":
           {
             "name": "Scale Switcher",
-            "glyphicon": "glyphicon-resize-full"
+            "icon": "bi-arrows-angle-expand"
           },
           ... // weitere Tools
         }

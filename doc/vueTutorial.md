@@ -99,7 +99,7 @@ const state = {
     id: "scaleSwitcher",
     // mandatory defaults for config.json parameters
     name: "common:menu.tools.scaleSwitcher",
-    glyphicon: "glyphicon-resize-full",
+    icon: "bi-arrows-angle-expand",
     renderToWindow: true,
     resizableWindow: true,
     isVisibleInMenu: true,
@@ -301,7 +301,7 @@ In `modules/tools/scaleSwitcher/components/ScaleSwitcher.vue`, the template is y
 <template lang="html">
     <ToolTemplate
         :title="$t(name)"
-        :icon="glyphicon"
+        :icon="icon"
         :active="active"
         :render-to-window="renderToWindow"
         :resizable-window="resizableWindow"
@@ -412,11 +412,11 @@ To make the tool usable within a portal, it has to be configured in the portal's
 {
     "tools": {
         "name": "Tools",
-        "glyphicon": "glyphicon-wrench",
+        "icon": "bi-wrench",
         "children": {
             "scaleSwitcher": {
                 "name": "translate#common:menu.tools.scaleSwitcher",
-                "glyphicon": "glyphicon-resize-small",
+                "icon": "bi-arrows-angle-contract",
                 "renderToWindow": true
             }
         }
