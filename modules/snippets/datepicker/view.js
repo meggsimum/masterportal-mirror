@@ -72,8 +72,8 @@ const DatepickerView = Backbone.View.extend(/** @lends DatepickerView.prototype 
             orientation: date.get("orientation"),
             beforeShowDay: date.get("beforeShowDay"),
             templates: {
-                leftArrow: "<i class=\"glyphicon glyphicon-triangle-left\"></i>",
-                rightArrow: "<i class=\"glyphicon glyphicon-triangle-right\"></i>"
+                leftArrow: "<i class=\"bi-caret-left-fill\"></i>",
+                rightArrow: "<i class=\"bi-caret-right-fill\"></i>"
             }
         });
 

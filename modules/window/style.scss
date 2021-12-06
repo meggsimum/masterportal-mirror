@@ -48,7 +48,7 @@ $background_color_4: #646262;
             color: $color_1;
             font-size: 14px;
             margin: 0;
-            >.glyphicon-minus {
+            >.bootstrap-icon > .bi-dash-lg {
                 top: 3px;
             }
             >span {
@@ -95,7 +95,7 @@ $background_color_4: #646262;
     border-top: 1px solid rgb(229, 229, 229);
     text-align: right;
     padding: 5px 5px 0 0;
-    >.glyphicon-triangle-right {
+    >.bootstrap-icon .bi-caret-right-fill {
         transform: rotate(45deg);
         opacity: 0.6;
         &:hover {

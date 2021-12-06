@@ -1,6 +1,6 @@
 #### Beschreibung
 Hier tauchen alle Funktionen auf, die sich unter dem Menüpunkt "Werkzeuge" befinden.
-Die Einträge werden in einer Liste verwaltet. Jeder Eintrag hat einen Titel, ein Glyphicon
+Die Einträge werden in einer Liste verwaltet. Jeder Eintrag hat einen Titel, ein Icon
 und "Aktivierungs-Attribut" (default = false). Alle Attribute sind optional und werden über
 die config.json gesteuert. Die Konfiguration gibt die Reihenfolge der Tools in der Werkzeuge-Liste
 im Portal wieder.
@@ -22,11 +22,11 @@ Alle Tools sind in der config.json unter “Portalconfig.menu.tools.children” 
     "tools": {
         "parcelSearch": {
             "title": "Flurstückssuche",
-            "glyphicon": "glyphicon-search"
+            "icon": "bi-search"
         },
         "gfi": {
             "title": "Informationen abfragen",
-            "glyphicon": "glyphicon-info-sign",
+            "icon": "bi-info-circle-fill",
             "active": true
         },
         "coordToolkit": {},

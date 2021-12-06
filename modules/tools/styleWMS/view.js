@@ -29,7 +29,7 @@ const StyleWmsView = Backbone.View.extend(/** @lends StyleWmsView.prototype */{
         // Anwenden Button
         "click .submit": "createSLD",
         "click .reset": "reset",
-        "click .glyphicon-remove": "hide"
+        "click .x-icon": "hide"
     },
 
     /**

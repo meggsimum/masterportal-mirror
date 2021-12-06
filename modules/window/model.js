@@ -122,13 +122,13 @@ const Window = Backbone.Model.extend(/** @lends Window.prototype */{
 
     /**
      * Sets the parameters for the Window
-     * @param {Object} value Object containing name, glyphicon and id
+     * @param {Object} value Object containing name, icon and id
      *  @return {void}
      */
     setParams: function (value) {
         this.set("currentValue", value);
         this.set("name", value.get("name"));
-        this.set("icon", value.get("glyphicon"));
+        this.set("icon", value.get("icon"));
         this.set("winType", value.get("id"));
         this.set("resizable", value.get("resizableWindow"));
     },

@@ -14,32 +14,32 @@ const LayerView = LayerBaseView.extend(/** @lends LayerView.prototype */{
                 this.setFocus();
             }
         },
-        "click .glyphicon-info-sign": "toggleLayerInformation",
-        "keydown .glyphicon-info-sign": function (event) {
+        "click .info-icon": "toggleLayerInformation",
+        "keydown .info-icon": function (event) {
             this.handleKeyboardTriggeredAction(event, "toggleLayerInformation");
         },
-        "click .glyphicon-cog": "toggleIsSettingVisible",
-        "keydown .glyphicon-cog": function (event) {
+        "click .settings-icon": "toggleIsSettingVisible",
+        "keydown .settings-icon": function (event) {
             this.handleKeyboardTriggeredAction(event, "toggleIsSettingVisible");
         },
-        "click .arrows > .glyphicon-arrow-up": "moveModelUp",
-        "keydown .arrows > .glyphicon-arrow-up": function (event) {
+        "click .arrows > .up-icon": "moveModelUp",
+        "keydown .arrows > .up-icon": function (event) {
             this.handleKeyboardTriggeredAction(event, "moveModelUp");
         },
-        "click .arrows > .glyphicon-arrow-down": "moveModelDown",
-        "keydown .arrows > .glyphicon-arrow-down": function (event) {
+        "click .arrows > .down-icon": "moveModelDown",
+        "keydown .arrows > .down-icon": function (event) {
             this.handleKeyboardTriggeredAction(event, "moveModelDown");
         },
-        "click .glyphicon-plus-sign": "incTransparency",
-        "keydown .glyphicon-plus-sign": function (event) {
+        "click .increase-icon": "incTransparency",
+        "keydown .increase-icon": function (event) {
             if (this.handleKeyboardTriggeredAction(event, "incTransparency")) {
-                this.setFocus(".glyphicon-plus-sign");
+                this.setFocus(".increase-icon");
             }
         },
-        "click .glyphicon-minus-sign": "decTransparency",
-        "keydown .glyphicon-minus-sign": function (event) {
+        "click .decrease-icon": "decTransparency",
+        "keydown .decrease-icon": function (event) {
             if (this.handleKeyboardTriggeredAction(event, "decTransparency")) {
-                this.setFocus(".glyphicon-minus-sign");
+                this.setFocus(".decrease-icon");
             }
         },
         "click .styleWMS": "openStyleWMS",

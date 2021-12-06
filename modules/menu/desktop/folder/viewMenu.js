@@ -48,8 +48,8 @@ const FolderViewMenu = Backbone.View.extend(/** @lends FolderViewMenu.prototype 
         else {
             this.$el.removeClass("open");
             $(".dropdown-menu.fixed").removeClass("fixed");
-            $(".glyphicon-pushpin").removeClass("rotate-pin");
-            $(".glyphicon-pushpin").addClass("rotate-pin-back");
+            $(".bi-pin-angle-fill").removeClass("rotate-pin");
+            $(".bi-pin-angle-fill").addClass("rotate-pin-back");
         }
 
         this.clearFixedTree();
@@ -85,8 +85,8 @@ const FolderViewMenu = Backbone.View.extend(/** @lends FolderViewMenu.prototype 
                     $(this).addClass("open");
                 }
                 $(this).find("ul#tree").removeClass("fixed");
-                $(".glyphicon-pushpin").removeClass("rotate-pin");
-                $(".glyphicon-pushpin").addClass("rotate-pin-back");
+                $(".bi-pin-angle-fill").removeClass("rotate-pin");
+                $(".bi-pin-angle-fill").addClass("rotate-pin-back");
             }
         });
     }

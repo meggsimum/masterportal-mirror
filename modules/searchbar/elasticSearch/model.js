@@ -18,7 +18,7 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
             coordinate: "coordinate"
         },
         hitType: "common:modules.searchbar.type.subject",
-        hitGlyphicon: "glyphicon-road",
+        hitIcon: "bi-signpost-2",
         async: false,
         useProxy: false
     },
@@ -39,7 +39,7 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
      * @property {String} triggerEvent.event = "" Event of radio event.
      * @property {Object} hitMap = {name: "", id: "id", coordinate: "coordinate"} Mapping object of the response hit to fit the structure of the searchbars hits.
      * @property {String} hitType = "Elastic" Type of the hit to be appended in the recommended list.
-     * @property {String} hitGlyphicon = "glyphicon-road" Css class of the glyphicon to be prepended in the recommended list.
+     * @property {String} hitIcon = "bi-signpost-2" Css class of the icon to be prepended in the recommended list.
      * @property {Boolean} async = false Flag if request should be asynchronous.
      * @property {Boolean} useProxy = false Flag if request should be proxied.
      * @fires Core#RadioRequestParametricURLGetInitString
@@ -119,11 +119,11 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
         const triggerEvent = this.get("triggerEvent"),
             hitMap = this.get("hitMap"),
             hitType = i18next.t(this.get("hitType")),
-            hitGlyphicon = this.get("hitGlyphicon");
+            hitIcon = this.get("hitIcon");
 
         if (responseData.length > 0) {
             responseData.forEach(result => {
-                const hit = this.createHit(result, hitMap, hitType, hitGlyphicon, triggerEvent);
+                const hit = this.createHit(result, hitMap, hitType, hitIcon, triggerEvent);
 
                 Radio.trigger("Searchbar", "pushHits", "hitList", hit);
             });
@@ -139,11 +139,11 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
      * @param {Object} result Result object from elastcisearch request.
      * @param {Object} hitMap Mapping object. Used to map results attributes to neccessary hit attributes.
      * @param {String} hitType Type of hit.
-     * @param {String} hitGlyphicon Glyphicon class to show in reccomendedList
+     * @param {String} hitIcon Icon class to show in reccomendedList
      * @param {Object} triggerEvent Object defining channel and event. used to fire event on mouseover and click in recommendedList.
      * @returns {Object} - hit.
      */
-    createHit: function (result, hitMap, hitType, hitGlyphicon, triggerEvent) {
+    createHit: function (result, hitMap, hitType, hitIcon, triggerEvent) {
         let hit = {};
 
         hit.type = hitType;
@@ -152,6 +152,8 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
         Object.keys(hitMap).forEach(key => {
             hit[key] = this.findAttributeByPath(result, hitMap[key]);
         });
+        hit.type = hitType;
+        hit.icon = hitIcon;
         if (Object.keys(triggerEvent).length > 0) {
             hit = Object.assign(hit, {triggerEvent: triggerEvent});
         }

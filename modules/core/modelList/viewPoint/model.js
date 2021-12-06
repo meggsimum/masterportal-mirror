@@ -10,8 +10,8 @@ const Viewpoint = Item.extend({
         type: "",
         // die ID der Parent-Node
         parentId: "",
-        // Bootstrap Glyphicon Class
-        glyphicon: "",
+        // Bootstrap Icon Class
+        icon: "",
         // Email Adresse
         email: undefined,
         // Name (Überschrift) der Funktion

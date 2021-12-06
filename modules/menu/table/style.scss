@@ -363,7 +363,7 @@ a {
         margin-top: 25px;
         margin-left: -3px;
         font-size: 14px;
-        .glyphicon {
+        .bootstrap-icon {
             font-size: x-large;
             color: $secondary_icon_button;
             top: 8px;
@@ -383,14 +383,14 @@ a {
             cursor: pointer;
         }
     }
-    .glyphicon-info-sign {
+    .bi-info-circle-fill {
         position: absolute;
         font-size: 18px;
         color: $secondary_icon_button;
         top: 14px;
         right: 50px;
     }
-    .glyphicon-cog {
+    .bi-gear {
         font-size: 18px;
         color: $secondary_icon_button;
         top: 4px;

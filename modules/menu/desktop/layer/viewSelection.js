@@ -11,46 +11,46 @@ const LayerView = LayerBaseView.extend(/** @lends LayerView.prototype */{
                 this.setFocus();
             }
         },
-        "click .glyphicon-info-sign": "toggleLayerInformation",
-        "keydown .glyphicon-info-sign": function (event) {
+        "click .info-icon": "toggleLayerInformation",
+        "keydown .info-icon": function (event) {
             this.handleKeyboardTriggeredAction(event, "toggleLayerInformation");
         },
-        "click .glyphicon-remove-circle": "removeFromSelection",
-        "keydown .glyphicon-remove-circle": function (event) {
+        "click .x-icon": "removeFromSelection",
+        "keydown .x-icon": function (event) {
             if (this.handleKeyboardTriggeredAction(event, "removeFromSelection")) {
-                this.setFocus(".glyphicon-remove-circle");
+                this.setFocus(".x-icon");
             }
         },
-        "click .glyphicon-cog": "toggleIsSettingVisible",
-        "keydown .glyphicon-cog": function (event) {
+        "click .settings-icon": "toggleIsSettingVisible",
+        "keydown .settings-icon": function (event) {
             this.handleKeyboardTriggeredAction(event, "toggleIsSettingVisible");
         },
-        "click .arrows > .glyphicon-arrow-up": "moveModelUp",
-        "keydown .arrows > .glyphicon-arrow-up": function (event) {
+        "click .arrows > .up-icon": "moveModelUp",
+        "keydown .arrows > .up-icon": function (event) {
             if (this.handleKeyboardTriggeredAction(event, "moveModelUp")) {
-                this.setFocus(".arrows > .glyphicon-arrow-up");
+                this.setFocus(".arrows .up-icon");
             }
         },
-        "click .arrows > .glyphicon-arrow-down": "moveModelDown",
-        "keydown .arrows > .glyphicon-arrow-down": function (event) {
+        "click .arrows > .down-icon": "moveModelDown",
+        "keydown .arrows > .down-icon": function (event) {
             if (this.handleKeyboardTriggeredAction(event, "moveModelDown")) {
-                this.setFocus(".arrows > .glyphicon-arrow-down");
+                this.setFocus(".arrows .down-icon");
             }
         },
-        "click .glyphicon-plus-sign": "incTransparency",
-        "keydown .glyphicon-plus-sign": function (event) {
+        "click .increase-icon": "incTransparency",
+        "keydown .increase-icon": function (event) {
             if (this.handleKeyboardTriggeredAction(event, "incTransparency")) {
-                this.setFocus(".transparency .glyphicon-plus-sign");
+                this.setFocus(".transparency .increase-icon");
             }
         },
-        "click .glyphicon-minus-sign": "decTransparency",
-        "keydown .glyphicon-minus-sign": function (event) {
+        "click .decrease-icon": "decTransparency",
+        "keydown .decrease-icon": function (event) {
             if (this.handleKeyboardTriggeredAction(event, "decTransparency")) {
-                this.setFocus(".transparency .glyphicon-minus-sign");
+                this.setFocus(".transparency .decrease-icon");
             }
         },
-        "click .glyphicon-tint": "openStyleWMS",
-        "keydown .glyphicon-tint": function (event) {
+        "click .style-icon": "openStyleWMS",
+        "keydown .style-icon": function (event) {
             if (this.handleKeyboardTriggeredAction(event, "openStyleWMS")) {
                 this.setFocus(".styleWMS");
             }
