@@ -45,13 +45,13 @@ module.exports = function () {
         },
         module: {
             rules: [
-                // Glyphicons werden von bootstrap gelesen
+                // Bootstrap Icons werden von bootstrap gelesen
                 {
-                    test: /glyphicons-halflings-regular\.(eot|svg|ttf|woff|woff2)$/,
+                    test: /bootstrap-icons\.(eot|svg|ttf|woff|woff2)$/,
                     loader: "file-loader",
                     options: {
                         name: "[name].[ext]",
-                        publicPath: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap"
+                        publicPath: "../../node_modules/bootstrap-icons/font/fonts"
                     }
                 },
                 // alle anderen Schriftarten
