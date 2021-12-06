@@ -39,14 +39,14 @@ describe("src/modules/tools/mutationsTools.js", () => {
                         children: {
                             scaleSwitcher: {
                                 "name": "scaleSwitcher",
-                                "glyphicon": "glyphicon-resize-full",
+                                "icon": "bi-arrows-angle-expand",
                                 "renderToWindow": true
                             }
                         }
                     },
                     supplyCoord: {
                         "name": "supplyCoord",
-                        "glyphicon": "glyphicon-screenshot",
+                        "icon": "bi-bullseye",
                         "renderToWindow": true
                     }
                 };

@@ -8,7 +8,7 @@ import {ResultType} from "./enums";
  * @property {Boolean} active if true, BufferAnalysis will rendered
  * @property {String} id id of the BufferAnalysis component
  * @property {String} name displayed as title (config-param)
- * @property {String} glyphicon icon next to title (config-param)
+ * @property {String} icon icon next to title (config-param)
  * @property {Boolean} renderToWindow if true, tool is rendered in a window, else in sidebar (config-param)
  * @property {Boolean} resizableWindow if true, window is resizable (config-param)
  * @property {Boolean} isVisibleInMenu if true, tool is selectable in menu (config-param)
@@ -33,7 +33,7 @@ const state = {
     active: false,
     id: "bufferAnalysis",
     name: "common:menu.tools.bufferAnalysis",
-    glyphicon: "glyphicon-resize-full",
+    icon: "bi-arrows-angle-expand",
     renderToWindow: true,
     resizableWindow: true,
     isVisibleInMenu: true,

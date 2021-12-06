@@ -10,7 +10,7 @@ const {
     active,
     id,
     name,
-    glyphicon,
+    icon,
     renderToWindow,
     resizableWindow,
     isVisibleInMenu,
@@ -43,8 +43,8 @@ describe("src/modules/tools/bufferAnalysis/store/gettersBufferAnalysis.js", () =
         it("returns the name default value from state", () => {
             expect(name(stateBufferAnalysis)).to.be.equals("common:menu.tools.bufferAnalysis");
         });
-        it("returns the glyphicon default value from state", () => {
-            expect(glyphicon(stateBufferAnalysis)).to.equals("glyphicon-resize-full");
+        it("returns the icon default value from state", () => {
+            expect(icon(stateBufferAnalysis)).to.equals("bi-arrows-angle-expand");
         });
         it("returns the renderToWindow default value from state", () => {
             expect(renderToWindow(stateBufferAnalysis)).to.be.true;

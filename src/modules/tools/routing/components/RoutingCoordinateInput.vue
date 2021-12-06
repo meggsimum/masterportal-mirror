@@ -179,38 +179,46 @@ export default {
                 >
                 <span
                     v-if="search.length > 0 && search !== waypointDisplayName"
-                    class="glyphicon glyphicon-remove form-control-feedback pointer"
+                    class="bootstrap-icon form-control-feedback pointer"
                     @click="resetInput()"
                     @keydown.enter="resetInput()"
-                />
+                >
+                    <i class="bi-x-lg" />
+                </span>
             </label>
             <div class="d-flex">
                 <div class="d-flex flex-column justify-content-between">
                     <div class="h-50">
                         <span
                             v-show="waypoint.index !== 0"
-                            class="pointer glyphicon glyphicon-chevron-up"
+                            class="pointer bootstrap-icon"
                             :title="$t('common:modules.tools.routing.moveWaypointUp')"
                             @click="$emit('moveWaypointUp')"
                             @keydown.enter="$emit('moveWaypointUp')"
-                        />
+                        >
+                            <i class="bi-chevron-up" />
+                        </span>
                     </div>
                     <div class="h-50">
                         <span
                             v-show="waypoint.index !== countWaypoints - 1"
-                            class="pointer glyphicon glyphicon-chevron-down"
+                            class="pointer bootstrap-icon"
                             :title="$t('common:modules.tools.routing.moveWaypointDown')"
                             @click="$emit('moveWaypointDown')"
                             @keydown.enter="$emit('moveWaypointDown')"
-                        />
+                        >
+                            <i class="bi-chevron-down" />
+                        </span>
                     </div>
                 </div>
                 <span
-                    class="selfAlignCenter pointer glyphicon glyphicon-remove ml-4"
+                    class="selfAlignCenter pointer bootstrap-icon ml-4"
                     :title="$t('common:modules.tools.routing.deleteWaypoint')"
                     @click="$emit('removeWaypoint')"
                     @keydown.enter="$emit('removeWaypoint')"
-                />
+                >
+                    <i class="bi-x-lg" />
+                </span>
             </div>
         </div>
 
@@ -284,7 +292,7 @@ label {
 .mb-4 {
     margin-bottom: 1rem;
 }
-.glyphicon-remove.form-control-feedback {
+.bootstrap-icon.form-control-feedback {
     color: #777;
     pointer-events: all;
 }

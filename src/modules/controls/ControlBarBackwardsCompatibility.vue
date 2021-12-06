@@ -30,8 +30,8 @@ export default {
 
     /* using this classname to scope css effects; can not use scoped scss here since controls are not within scope, but added by jQuery */
     .backwards-compatibility-controls {
-        /* use old styling way for glyphicons for old controls */
-        .glyphicon {
+        /* use old styling way for icons for old controls */
+        .bootstrap-icon {
             color: $color_1;
             background-color: $background_color_1;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);

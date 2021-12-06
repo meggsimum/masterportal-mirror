@@ -316,17 +316,21 @@ export default {
 
                 <div class="d-flex">
                     <span
-                        class="glyphicon glyphicon-trash pointer ml-4"
+                        class="bootstrap-icon pointer ml-4"
                         :title="$t('common:modules.tools.routing.resetSettings')"
                         @click="reset()"
                         @keydown.enter="reset()"
-                    />
+                    >
+                        <i class="bi-trash" />
+                    </span>
                     <span
-                        class="glyphicon glyphicon-plus pointer ml-4"
+                        class="bootstrap-icon pointer ml-4"
                         :title="$t('common:modules.tools.routing.addWaypoint')"
                         @click="addWaypoint({index: waypoints.length -1})"
                         @keydown.enter="addWaypoint({index: waypoints.length -1})"
-                    />
+                    >
+                        <i class="bi-plus-lg" />
+                    </span>
                 </div>
             </div>
         </template>
@@ -400,12 +404,16 @@ export default {
                             <b>
                                 <span
                                     v-if="segment.displayDetails"
-                                    class="pointer glyphicon glyphicon-chevron-down"
-                                />
+                                    class="pointer bootstrap-icon"
+                                >
+                                    <i class="bi-chevron-down" />
+                                </span>
                                 <span
                                     v-else
-                                    class="pointer glyphicon glyphicon-chevron-right"
-                                />
+                                    class="pointer bootstrap-icon"
+                                >
+                                    <i class="bi-chevron-right" />
+                                </span>
                             </b>
                         </div>
 

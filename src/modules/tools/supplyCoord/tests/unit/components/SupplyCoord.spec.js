@@ -42,7 +42,7 @@ describe("src/modules/tools/supplyCoord/components/SupplyCoord.vue", () => {
                             coord:
                             {
                                 "name": "translate#common:menu.tools.supplyCoord",
-                                "glyphicon": "glyphicon-screenshot"
+                                "icon": "bi-bullseye"
                             }
                         }
                     }

@@ -83,10 +83,12 @@ export default {
                 <span
                     ref="close-icon"
                     tabindex="0"
-                    class="glyphicon glyphicon-remove"
+                    class="bootstrap-icon"
                     @click="close($event)"
                     @keydown="close($event)"
-                />
+                >
+                    <i class="bi-x-lg" />
+                </span>
             </div>
         </div>
 
@@ -152,7 +154,7 @@ export default {
                 flex-grow:99;
                 overflow: hidden;
             }
-            .glyphicon {
+            .bootstrap-icon {
                 padding: 5px;
                 &:focus {
                     @include primary_action_focus;
@@ -163,7 +165,7 @@ export default {
             }
 
             > span {
-                &.glyphicon-minus { top: 3px; }
+                > .bi-dash-lg { top: 3px; }
                 &:hover {
                     &:not(.win-icon) {
                         @include primary_action_hover;

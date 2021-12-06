@@ -103,8 +103,8 @@ describe("src/modules/tools/supplyCoord/store/gettersSupplyCoord.js", () => {
         it("returns the name default value from state", () => {
             expect(getters.name(stateSupplyCoord)).to.be.equals("common:menu.tools.supplyCoord");
         });
-        it("returns the glyphicon default value from state", () => {
-            expect(getters.glyphicon(stateSupplyCoord)).to.equals("glyphicon-screenshot");
+        it("returns the icon default value from state", () => {
+            expect(getters.icon(stateSupplyCoord)).to.equals("bi-bullseye");
         });
         it("returns the renderToWindow default value from state", () => {
             expect(getters.renderToWindow(stateSupplyCoord)).to.be.true;

@@ -22,7 +22,7 @@ describe("src/modules/tools/bufferAnalysis/components/BufferAnalysis.vue", () =>
                         bufferAnalysis:
                             {
                                 "name": "translate#common:menu.tools.bufferAnalysis",
-                                "glyphicon": "glyphicon-random"
+                                "icon": "bi-shuffle"
                             }
                     }
                 }

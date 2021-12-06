@@ -7,7 +7,7 @@ const {
     active,
     id,
     name,
-    glyphicon,
+    icon,
     renderToWindow,
     resizableWindow,
     isVisibleInMenu,
@@ -27,8 +27,8 @@ describe("src/modules/tools/scaleSwitcher/store/gettersScaleSwitcher.js", () => 
         it("returns the name default value from state", () => {
             expect(name(stateScaleSwitcher)).to.be.equals("common:menu.tools.scaleSwitcher");
         });
-        it("returns the glyphicon default value from state", () => {
-            expect(glyphicon(stateScaleSwitcher)).to.equals("glyphicon-resize-small");
+        it("returns the icon default value from state", () => {
+            expect(icon(stateScaleSwitcher)).to.equals("bi-arrows-angle-contract");
         });
         it("returns the renderToWindow default value from state", () => {
             expect(renderToWindow(stateScaleSwitcher)).to.be.true;

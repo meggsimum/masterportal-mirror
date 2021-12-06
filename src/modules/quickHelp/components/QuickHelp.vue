@@ -147,10 +147,12 @@ export default {
             <div class="heading-element">
                 <span
                     tabindex="0"
-                    class="glyphicon glyphicon-print"
+                    class="bootstrap-icon"
                     @click="print"
                     @keydown.enter="print"
-                />
+                >
+                    <i class="bi-printer-fill" />
+                </span>
             </div>
         </template>
         <template #body>
@@ -215,7 +217,7 @@ export default {
     z-index: 2000;
 }
 
-.glyphicon-print {
+.bi-printer-fill {
     cursor: pointer;
     font-size: 16px;
 }

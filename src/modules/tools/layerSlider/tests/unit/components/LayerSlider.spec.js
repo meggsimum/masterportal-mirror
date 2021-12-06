@@ -18,7 +18,7 @@ describe("src/modules/tools/layerSlider/components/LayerSlider.vue", () => {
                         children: {
                             layerSlider: {
                                 "name": "translate#common:menu.tools.layerSlider",
-                                "glyphicon": "glyphicon-film"
+                                "icon": "bi-film"
                             }
                         }
                     }

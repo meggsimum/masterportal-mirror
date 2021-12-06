@@ -66,7 +66,7 @@ export default {
          * @returns {void}
          */
         toogleFeatureToCompareList: function (event) {
-            if (event?.target?.classList?.contains("glyphicon-star-empty")) {
+            if (event?.target?.classList?.contains("bi-star")) {
                 this.isFeatureOnCompareList(this.gfiFeature);
             }
             else {
@@ -80,12 +80,14 @@ export default {
 <template>
     <span
         v-if="componentExists('compareFeatures') && mapMode === '2D'"
-        :class="['glyphicon', featureIsOnCompareList ? 'glyphicon-star' : 'glyphicon-star-empty']"
+        :class="'bootstrap-icon'"
         :title="titleCompareList"
         tabindex="0"
         @click="toogleFeatureToCompareList"
         @keydown.enter="toogleFeatureToCompareList"
-    />
+    >
+        <i :class="[featureIsOnCompareList ? 'bi-star-fill' : 'bi-star']" />
+    </span>
 </template>
 
 <style lang="scss" scoped>
@@ -93,7 +95,7 @@ export default {
 
 $color: #fec44f;
 
-span.glyphicon {
+span.bootstrap-icon {
     &:focus {
         @include primary_action_focus;
     }
@@ -102,7 +104,7 @@ span.glyphicon {
     }
 }
 
-.glyphicon-star {
+.bi-star-fill {
     color: $color;
 }
 </style>

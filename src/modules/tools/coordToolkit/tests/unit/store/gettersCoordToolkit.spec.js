@@ -96,8 +96,8 @@ describe("src/modules/tools/coordToolkit/store/gettersCoordToolkit.js", () => {
         it("returns the name default value from state", () => {
             expect(getters.name(stateCoord)).to.be.equals("common:menu.tools.coordToolkit");
         });
-        it("returns the glyphicon default value from state", () => {
-            expect(getters.glyphicon(stateCoord)).to.equals("glyphicon-globe");
+        it("returns the icon default value from state", () => {
+            expect(getters.icon(stateCoord)).to.equals("bi-globe");
         });
         it("returns the renderToWindow default value from state", () => {
             expect(getters.renderToWindow(stateCoord)).to.be.true;

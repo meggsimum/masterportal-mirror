@@ -19,7 +19,7 @@ describe("src/modules/tools/addWMS/components/AddWMS.vue", () => {
                             addWMS:
                                 {
                                     "name": "translate#common:menu.tools.addWms",
-                                    "glyphicon": "glyphicon-plus",
+                                    "icon": ".bi-plus-lg",
                                     "renderToWindow": true
                                 }
                         }
