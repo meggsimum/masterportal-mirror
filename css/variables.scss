@@ -16,6 +16,9 @@ $badge-border-radius: 10px;
 $font-family-sans-serif: MasterPortalFont, Arial, sans-serif;
 $icon-font-path: "fonts/";
 
+$bootstrap-icons-font-src: url("../node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2?a74547b2f0863226942ff8ded57db345") format("woff2"),
+url("../node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2?a74547b2f0863226942ff8ded57db345") format("woff") !default;
+
 /* PRIMARY: Map Interaction
  * Used for control elements placed directly on the map.
  * Elements: Buttons and button-like elements.
