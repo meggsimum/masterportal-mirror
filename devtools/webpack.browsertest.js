@@ -38,13 +38,13 @@ module.exports = function (env, args) {
         },
         module: {
             rules: [
-                // Glyphicons loaded by bootstrap
+                // Bootstrap Icons loaded by bootstrap
                 {
-                    test: /glyphicons-halflings-regular\.(eot|svg|ttf|woff|woff2)$/,
+                    test: /bootstrap-icons\.(eot|svg|ttf|woff|woff2)$/,
                     loader: "file-loader",
                     options: {
                         name: "[name].[ext]",
-                        publicPath: "../../node_modules/bootstrap/fonts"
+                        publicPath: "../../node_modules/bootstrap-icons/font/fonts"
                     }
                 },
                 // all other fonts
