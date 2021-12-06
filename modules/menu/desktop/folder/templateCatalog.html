@@ -2,11 +2,11 @@
  <% if (isExpanded === true) { %>
 <div class="menu-row header <%= id %>" >
     <a class="<%= id %> dropdown-item tabable" tabindex="0">
-        <span class="glyphicon glyphicon-minus-sign"></span>
+        <span class="bootstrap-icon minimize-icon"><i class="bi-dash-circle-fill"></i></span>
  <% } else {%>
 <div class="menu-row header <%= id %> closed" >
     <a class="<%= id %> dropdown-item tabable" tabindex="0">
-        <span class="glyphicon glyphicon-plus-sign"></span>
+        <span class="bootstrap-icon maximize-icon"><i class="bi-plus-circle-fill"></i></span>
 <% } %>
         <span class="control-label"><%= name %></span>
     </a>
@@ -15,12 +15,12 @@
     <% if (id === "Baselayer") { %>
         <span class="catalog_buttons">
             <% if (this.model.get("quickHelp") === true) { %>
-                <span class="glyphicon glyphicon-question-sign tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= topicsHelpText%>"></span>
+                <span class="bootstrap-icon question-icon tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= topicsHelpText%>"><i class="bi-question-circle-fill"></i></span>
             <% } %>
             <% if (backgroundImage) { %>
-                <span class="glyphicon glyphicon-adjust rotate-adjust-back tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= mapBackgroundText%>"></span>
+                <span class="bootstrap-icon background-icon rotate-adjust-back tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= mapBackgroundText%>"><i class="bi-circle-half"></i></span>
             <% } %>
-            <span class="glyphicon glyphicon-pushpin rotate-pin-back tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= pinTopicsTreeText%>"></span>
+            <span class="bootstrap-icon rotate-pin-back tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= pinTopicsTreeText%>"><i class="bi-pin-angle-fill"></i></span>
         <span>
     <% } %>
     <% if (id === "Overlayer" && treeType === "default") { %>
@@ -41,7 +41,7 @@
     <% if (id === "SelectedLayer" && this.model.collection.has({id:"saveSelection"})) { %>
         <div class="layer-selection-save tabable" tabindex="0">
             <span><%= saveSelectionText %></span>
-            <span class="glyphicon glyphicon-share"></span>
+            <span class="bootstrap-icon"><i class="bi-box-arrow-up-right"></i></span>
         </div>
     <% } %>
     </div>

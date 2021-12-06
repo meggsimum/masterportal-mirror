@@ -6,8 +6,8 @@ const StaticLink = Item.extend({
         type: "",
         // die ID der Parent-Node
         parentId: "",
-        // Bootstrap Glyphicon Class
-        glyphicon: "glyphicon-globe",
+        // Bootstrap Icon Class
+        icon: "bi-globe",
         // Name (Überschrift) der Funktion
         name: "",
         // URL des Links

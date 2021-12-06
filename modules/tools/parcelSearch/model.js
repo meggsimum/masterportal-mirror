@@ -24,7 +24,7 @@ const ParcelSearch = Tool.extend(/** @lends ParcelSearch.prototype */{
         parcelDenominatorNumber: "0", // default Flurstücksnenner,
         createReport: false, // soll Berichts-Funktionalität gestartet werden? Aus Config.json
         parcelFound: false, // flag für den Bericht. Bericht wird nur abgefragt wenn Flurstück existiert
-        glyphicon: "glyphicon-search",
+        icon: "bi-search",
         // translations
         searchText: "",
         generateReportText: "",
@@ -67,7 +67,7 @@ const ParcelSearch = Tool.extend(/** @lends ParcelSearch.prototype */{
      * @property {String} parcelDenominatorNumber="0" todo
      * @property {Boolean} createReport=false todo
      * @property {Boolean} parcelFound=false todo
-     * @property {String} glyphicon="glyphicon-search" todo
+     * @property {String} icon="bi-search" todo
      * @property {String} searchText="", filled with "Suchen"- translated
      * @property {String} generateReportText="", filled with "Bericht erzeugen"- translated
      * @property {String} parcelNumberText="", filled with "Flurstücksnummer"- translated

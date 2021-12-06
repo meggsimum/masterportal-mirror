@@ -2,8 +2,8 @@
 <% recommendedList.forEach(function (hit, index) { %>
     <li id="<%= hit.id %>" class="list-group-item hit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= hit.metaName === undefined ? hit.name: hit.metaName %>">
         <p id="searchInputLi">
-            <% if (hit.glyphicon !== undefined) { %>
-                <span class="glyphicon <%= hit.glyphicon %>"></span>
+            <% if (hit.icon !== undefined) { %>
+                <span class="bootstrap-icon"><i class="<%= hit.icon %>"></i></span>
             <% } else { %>
                 <img src="<%= hit.imageSrc %>">
             <% } %>
@@ -15,7 +15,7 @@
 <% if (uiStyle === "TABLE") { %>
 
     <% if (finalHitList.length >= recommendedListLength && finalHitList.length !== 0) { %>
-        <li class="list-group-item results"><div><span><%= showAllResultsText %></span><span class="glyphicon glyphicon-play-circle"></span></div></li>
+        <li class="list-group-item results"><div><span><%= showAllResultsText %></span><span class="bootstrap-icon"><i class="bi-play-circle"></i></span></div></li>
 
         <div class="search-funnel"></div>
 
@@ -31,6 +31,6 @@
 <% } else { %>
     <% if (finalHitList.length >= recommendedListLength) { %>
 
-         <li class="list-group-item results"><div><span><%= showAllResultsText %></span><span class="glyphicon glyphicon-play-circle"></span></div></li>
+         <li class="list-group-item results"><div><span><%= showAllResultsText %></span><span class="bootstrap-icon"><i class="bi-play-circle"></i></span></div></li>
     <% } %>
 <% } %>

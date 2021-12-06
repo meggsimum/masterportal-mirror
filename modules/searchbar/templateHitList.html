@@ -4,8 +4,8 @@
         <% typeListObj.list.forEach(function (hit) { %>
             <li id="<%= hit.id %>" class="list-group-item hit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= hit.metaName %>">
                 <p id="searchInputLi">
-                    <% if (hit.hasOwnProperty("glyphicon")) { %>
-                        <span class="glyphicon <%= hit.glyphicon %>"></span>
+                    <% if (hit.hasOwnProperty("icon")) { %>
+                        <span class="bootstrap-icon"><i class="<%= hit.icon %>"></i></span>
                     <% } else { %>
                         <img src="<%= hit.imageSrc %>">
                     <% } %>

@@ -18,7 +18,7 @@ const ShadowView = Backbone.View.extend(/** @lends ShadowView.prototype */{
      */
 
     events: {
-        "click .glyphicon-remove": "destroy"
+        "click .x-icon": "destroy"
     },
 
     /**
@@ -47,7 +47,7 @@ const ShadowView = Backbone.View.extend(/** @lends ShadowView.prototype */{
     },
 
     template: _.template(ShadowTemplate),
-    tabletemplate: _.template("<div id='shadow-tool' class='table-tool'><a href='#'><span class='glyphicon <%= glyphicon %>'></span><span id='shadow-tool_title'><%= name %></span></a> </div>"),
+    tabletemplate: _.template("<div id='shadow-tool' class='table-tool'><a href='#'><span class='bootstrap-icon'><i class='<%= icon %>'></i></span><span id='shadow-tool_title'><%= name %></span></a> </div>"),
 
     /**
      * render method
@@ -69,7 +69,7 @@ const ShadowView = Backbone.View.extend(/** @lends ShadowView.prototype */{
         else {
             this.undelegateEvents();
         }
-        $("#window .win-heading span.glyphicon-remove").trigger("focus");
+        $("#window .win-heading span.bootstrap-icon.x-icon").trigger("focus");
         return this;
     },
 
@@ -88,7 +88,7 @@ const ShadowView = Backbone.View.extend(/** @lends ShadowView.prototype */{
             document.getElementsByClassName("title-values")[0].children[0].children[0].innerText = String(this.model.get("time"));
             document.getElementsByClassName("title-values")[1].children[0].children[0].innerText = String(this.model.get("date"));
             this.delegateEvents();
-            $("#window .win-heading span.glyphicon-remove").trigger("focus");
+            $("#window .win-heading span.bootstrap-icon.x-icon").trigger("focus");
         }
         return this;
     },

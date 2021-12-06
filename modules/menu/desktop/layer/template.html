@@ -2,13 +2,13 @@
 <div class="menu-row">
     <% if (isSelected) { %>
         <a href="#" id="<%= domId %>" class="dropdown-item layer-item tabable checked" tabindex="0">
-        <span class="glyphicon glyphicon-check" title="<%=removeTopicText%>"></span>
+        <span class="bootstrap-icon" title="<%=removeTopicText%>"><i class="bi-check2-square"></i></span>
     <% } else { %>
         <a href="#" id="<%= domId %>" class="dropdown-item layer-item tabable" tabindex="0">
-        <span class="glyphicon glyphicon-unchecked" title="<%=showTopicText%>"></span>
+        <span class="bootstrap-icon" title="<%=showTopicText%>"><i class="bi-square"></i></span>
     <% } %>
         <% if (isSecured) { %>
-            <span class="glyphicon glyphicon-lock" title="<%=securedTopicText%>"></span>
+            <span class="bootstrap-icon" title="<%=securedTopicText%>"><i class="bi-lock-fill"></i></span>
         <% } %>
         <span class="title" title="<%= name %>"><%= name %></span>
     </a>
@@ -16,15 +16,15 @@
     <% if (typeof treeType === "undefined") { %>
         <div class="layer-info-item last-item">
         <% if (typeof datasets !== "undefined" && datasets !== false) { %>
-            <span class="glyphicon glyphicon-info-sign tabable" tabindex="0" title="<%=infosAndLegendText%>"></span>
+            <span class="bootstrap-icon info-icon tabable" tabindex="0" title="<%=infosAndLegendText%>"><i class="bi-info-circle-fill"></i></span>
         <% } %>
         <% if (showSettings === true) { %>
-            <span class="glyphicon glyphicon-cog rotate tabable" tabindex="0" title="<%=settingsText%>"></span>
+            <span class="bootstrap-icon settings-icon rotate tabable" tabindex="0" title="<%=settingsText%>"><i class="bi-gear"></i></span>
         <% } %>
         </div>
     <% } else { %>
-        <div class="layer-info-item last-item">
-        <span class="glyphicon glyphicon-cog rotate tabable" tabindex="0"></span>
+        <div class="layer-info-item settings-icon last-item">
+        <span class="bootstrap-icon rotate tabable" tabindex="0"><i class="bi-gear"></i></span>
         </div>
     <% } %>
 </div>

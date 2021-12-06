@@ -5,7 +5,7 @@ const Tool = Item.extend(/** @lends Tool.prototype */{
         isVisibleInMenu: true,
         isRoot: false,
         parentId: "",
-        glyphicon: "",
+        icon: "",
         name: "",
         isActive: false,
         deactivateGFI: false,
@@ -27,7 +27,7 @@ const Tool = Item.extend(/** @lends Tool.prototype */{
      * @property {Boolean} isVisibleInMenu=true Flag of Tool is visible in menu
      * @property {Boolean} is isRoot=false Flag if Tool button is shown on first level in menu
      * @property {String} parentId="" Id of Parent Object
-     * @property {String} glyphicon="" default glyphicon. Icon gets shown before tool name
+     * @property {String} icon="" default icon. Icon gets shown before tool name
      * @property {String} name="" default name
      * @property {Boolean} isActive=false Flag if tool is active
      * @property {Boolean} deactivateGFI=false Flag if tool should deactivate gfi

@@ -209,7 +209,7 @@ const KomootModel = Backbone.Model.extend(/** @lends KomootModel.prototype */{
                 metaName: metaName,
                 type: "Komoot",
                 komoot: true,
-                glyphicon: "glyphicon-road",
+                icon: "bi-signpost-2",
                 id: Radio.request("Util", "uniqueId", "komootSuggest"),
                 marker: hit.class === "building",
                 coordinate: center
