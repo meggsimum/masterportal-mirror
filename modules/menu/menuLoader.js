@@ -78,7 +78,7 @@ const MenuLoader = Backbone.Model.extend(/** @lends MenuLoader.prototype */{
      * @return {Void}  -
      */
     reloadMenu: function () {
-        if ($(".glyphicon-pushpin") && $(".glyphicon-pushpin").hasClass("rotate-pin")) {
+        if ($(".bi-pin-angle-fill") && $(".bi-pin-angle-fill").hasClass("rotate-pin")) {
             // tree is pinned
             if ($(".dropdown.dropdown-folder").hasClass("open")) {
                 // menu is open

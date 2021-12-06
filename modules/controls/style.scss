@@ -19,7 +19,7 @@
 .controls-view {
     display: none; /* better prototype visibility */
     top: 0;
-    .glyphicon {
+    .bootstrap-icon {
         color: $secondary;
         background-color: $primary;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
@@ -34,40 +34,43 @@
     }
 }
 .toggleButton {
-    >.glyphicon {
+    >.bootstrap-icon {
         font-size: 22px;
-    }
-    >.glyphicon-chevron-up {
-        padding: 5px 4px 6px 7px;
-    }
-    >.glyphicon-chevron-down {
-        padding: 7px 4px 4px 7px;
+
+        >.bi-chevron-up {
+            padding: 5px 4px 6px 7px;
+        }
+        >.bi-chevron-down {
+            padding: 7px 4px 4px 7px;
+        }
     }
 }
 .zoomButtons {
     margin-top: 20px;
-    >.glyphicon {
+    >.bootstrap-icon {
         font-size: 22px;
         margin-top: 4px;
-    }
-    >.glyphicon-plus {
-        padding: 5px 5px 6px 7px;
-    }
-    >.glyphicon-minus {
-        padding: 5px 7px 6px 5px;
+
+        >.bi-plus-lg {
+            padding: 5px 5px 6px 7px;
+        }
+        >.bi-dash-lg {
+            padding: 5px 7px 6px 5px;
+        }
     }
 }
 .orientationButtons {
     margin-top: 20px;
-    >.glyphicon {
+    >.bootstrap-icon {
         font-size: 22px;
         margin-top: 4px;
-    }
-    >.glyphicon-map-marker {
-        padding: 5px 7px 6px 6px;
-    }
-    >.glyphicon-record {
-        padding: 5px 6px 6px 6px;
+
+        >.bi-geo-alt-fill {
+            padding: 5px 7px 6px 6px;
+        }
+        >.bi-record-circle {
+            padding: 5px 6px 6px 6px;
+        }
     }
 }
 .geolocation_marker {
@@ -269,7 +272,7 @@
     margin-top: 20px;
 }
 
-.button3D > .glyphicon {
+.button3D > .bootstrap-icon {
     font-size: 17px;
     margin-top: 4px;
     padding: 10px 6px 6px 6px;
@@ -285,10 +288,10 @@
 .buttonOblique {
     margin-top: 20px;
 }
-.buttonOblique > .glyphicon {
+.buttonOblique > .bootstrap-icon {
     font-size: 22px;
     margin-top: 4px;
-    padding: 5px 5px 7px 8px;
+    padding: 6px 7px 3px 7px;
     border: 0;
     &:focus {
         background-color: $primary_focus;

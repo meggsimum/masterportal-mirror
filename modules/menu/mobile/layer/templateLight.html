@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <div class="layer-info-item pull-right">
-    <span class="glyphicon glyphicon-switch glyphicon-plus rotate"></span>
+    <span class="bootstrap-icon switch-icon rotate"><i class="bi-plus-lg"></i></span>
 </div>
 
 <div class="layer-item pull-left">
     <% if (isSelected === true) { %>
-        <span class="glyphicon glyphicon-check"></span>
+        <span class="boostrap-icon"><i class="bi-check2-square"></i></span>
     <% } else { %>
-        <span class="glyphicon glyphicon-unchecked"></span>
+        <span class="boostrap-icon"><i class="bi-square"></i></span>
     <% } %>
     <% if (isSecured) { %>
-        <span class="glyphicon glyphicon-lock"></span>
+        <span class="boostrap-icon lock-icon"><i class="bi-lock-fill"></i></span>
     <% } %>
     <span class="title"><%= name %></span>
 </div>

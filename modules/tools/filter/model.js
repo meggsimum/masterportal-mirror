@@ -20,7 +20,7 @@ const FilterModel = Tool.extend({
         sendToRemote: false,
         renderToSidebar: true,
         renderToWindow: false,
-        glyphicon: "glyphicon-filter",
+        icon: "bi-funnel-fill",
         uiStyle: "DEFAULT",
         saveToUrl: true
     }),

@@ -26,8 +26,8 @@ const QueryValuesView = Backbone.View.extend({
                 html = this.model.get("attr") + "<span class='remove'>&#x274C;</span>";
             }
             else {
-                // html = "<span class='line-through'>" + this.model.get("attr") + "</span><span class='glyphicon glyphicon-remove'></span>";
-                // html = "<span class='line-through'><span class='value-text'>" + this.model.get("attr") + "</span></span></span><span class='glyphicon glyphicon-remove'></span>";
+                // html = "<span class='line-through'>" + this.model.get("attr") + "</span><span class='bootstrap-icon x-icon'><i class='bi-x-lg'></i></span>";
+                // html = "<span class='line-through'><span class='value-text'>" + this.model.get("attr") + "</span></span></span><span class='bootstrap-icon x-icon'><i class='bi-x-lg'></i></span>";
                 html = "<span class='strikethrough'>" + this.model.get("attr") + "</span><span class='remove'>&#x274C;</span>";
             }
         }

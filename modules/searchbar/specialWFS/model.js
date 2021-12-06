@@ -4,7 +4,7 @@ import store from "../../../src/app-store";
 const SpecialWFSModel = Backbone.Model.extend({
     defaults: {
         minChars: 3,
-        glyphicon: "glyphicon-home",
+        icon: "bi-house-door-fill",
         geometryName: "app:geom",
         maxFeatures: 20,
         timeout: 6000,
@@ -26,7 +26,7 @@ const SpecialWFSModel = Backbone.Model.extend({
      * @param {string} config.definitions[].definition.typeName - Layername des WFS Dienstes
      * @param {string} [config.definitions[].definition.geometryName="app:geom"] - Name des Attributs mit Geometrie
      * @param {integer} [config.definitions[].definition.maxFeatures="20"] - Anzahl der vom Dienst maximal zurückgegebenen Features
-     * @param {string_} [config.definitions[].definition.glyphicon="glyphicon-home"] - Name des Glyphicon für Vorschlagssuche
+     * @param {string_} [config.definitions[].definition.icon="bi-house-door-fill"] - Name des Icon für Vorschlagssuche
      * @param {strings[]} config.definitions[].definition.propertyNames - Name der Attribute die zur Suche ausgewertet werden
      * @returns {void}
      */
@@ -240,7 +240,7 @@ const SpecialWFSModel = Backbone.Model.extend({
             typeName = definition.typeName,
             propertyNames = definition.propertyNames,
             geometryName = definition.geometryName ? definition.geometryName : this.get("geometryName"),
-            glyphicon = definition.glyphicon ? definition.glyphicon : this.get("glyphicon"),
+            icon = definition.icon ? definition.icon : this.get("icon"),
             elements = data.getElementsByTagNameNS("*", typeName.split(":")[1]),
             multiGeometries = ["MULTIPOLYGON"];
 
@@ -266,7 +266,7 @@ const SpecialWFSModel = Backbone.Model.extend({
 
                             geometry = geometryString.trim().split(" ");
                         }
-                        this.pushHitListObjects(type, identifier, firstChildNameUpperCase, geometry, glyphicon);
+                        this.pushHitListObjects(type, identifier, firstChildNameUpperCase, geometry, icon);
                     }
                 }
                 else {
@@ -285,17 +285,17 @@ const SpecialWFSModel = Backbone.Model.extend({
     * @param {string} identifier - Name frmom target result.
     * @param {string} firstChildNameUpperCase - Geometrie type.
     * @param {string[]} geometry - The coordinates from exterior geometry.
-    * @param {string} glyphicon - The glyphicon for hit.
+    * @param {string} icon - The icon for hit.
     * @returns {void}
     */
-    pushHitListObjects: function (type, identifier, firstChildNameUpperCase, geometry, glyphicon) {
+    pushHitListObjects: function (type, identifier, firstChildNameUpperCase, geometry, icon) {
         Radio.trigger("Searchbar", "pushHits", "hitList", {
             id: Radio.request("Util", "uniqueId", type.toString()),
             name: identifier.trim(),
             geometryType: firstChildNameUpperCase,
             type: type,
             coordinate: geometry,
-            glyphicon: glyphicon
+            icon: icon
         });
     },
 

@@ -10,7 +10,7 @@ const Item = Backbone.Model.extend(/** @lends Item.prototype */{
      * @property {String} parentId="" Parent id of item
      * @property {String} type="" Type of item: folder/layer/tool/staticlink
      * @property {String} title="no title defined" Title of item to be displayed
-     * @property {String} glyphicon="" Bootstrap glyphicon class of item
+     * @property {String} icon="" Bootstrap icon class of item
      * @property {Boolean} isInThemen=false Flag if item is in layer tree
      * @property {Number} level=0 Level of selected layer
      * @property {Boolean} isVisibleInTree=false Flag if item is initially visible in layer tree
@@ -21,7 +21,7 @@ const Item = Backbone.Model.extend(/** @lends Item.prototype */{
         parentId: "",
         type: "",
         title: "no title defined",
-        glyphicon: "",
+        icon: "",
         isInThemen: false,
         level: 0,
         isVisibleInTree: false
@@ -62,12 +62,12 @@ const Item = Backbone.Model.extend(/** @lends Item.prototype */{
     },
 
     /**
-     * Setter for glyphicon
-     * @param {String} value Glyphicon
+     * Setter for icon
+     * @param {String} value Icon
      * @returns {void}
      */
-    setGlyphicon: function (value) {
-        return this.set("glyphicon", value);
+    setIcon: function (value) {
+        return this.set("icon", value);
     },
 
     /**

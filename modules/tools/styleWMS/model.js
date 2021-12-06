@@ -5,7 +5,7 @@ const StyleWmsModel = Tool.extend(/** @lends StyleWmsModel.prototype */{
     defaults: Object.assign({}, Tool.prototype.defaults, {
         isCurrentWin: false,
         isCollapsed: false,
-        glyphicon: "glyphicon-tint",
+        icon: "bi-droplet-fill",
         name: "Style WMS",
         id: "styleWMS",
         modelId: "",
@@ -49,7 +49,7 @@ const StyleWmsModel = Tool.extend(/** @lends StyleWmsModel.prototype */{
      * @constructs
      * @property {Boolean} isCurrentWin=false Flag if this tool is shown in the toolwindow and thus is active
      * @property {Boolean} isCollapsed=false Flag if this tool window is collapsed
-     * @property {String} glyphicon="glyphicon-tint" Icon that is shown before the tool name
+     * @property {String} icon="bi-droplet-fill" Icon that is shown before the tool name
      * @property {String} name="Style WMS" Name of the Tool
      * @property {String} id="StyleWMS" id of Tool
      * @property {String} modelId="" Id of layer model to be styled

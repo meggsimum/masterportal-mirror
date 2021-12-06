@@ -3,9 +3,9 @@
     <span class="">
         <span class="transparency">
             <span class="text"><%= transparencyText %>:</span>
-            <span class="glyphicon glyphicon-plus-sign" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= increaseTransparencyText %>"></span>
+            <span class="bootstrap-icon increase-icon" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= increaseTransparencyText %>"><i class="bi-plus-circle-fill"></i></span>
             <span class="badge"> <%= transparency + '%' %></span>
-            <span class="glyphicon glyphicon-minus-sign" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= reduceTransparencyText %>"></span>
+            <span class="bootstrap-icon decrease-icon" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= reduceTransparencyText %>"><i class="bi-dash-circle-fill"></i></span>
         </span>
        <% if (isRemovable === true) { %>
             <span class="remove-layer">
@@ -13,8 +13,8 @@
             </span>
         <% } %>
         <span class="arrows pull-right">
-            <span class="glyphicon glyphicon-arrow-up" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= levelUpText %>"></span>
-            <span class="glyphicon glyphicon-arrow-down" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= levelDownText %>"></span>
+            <span class="bootstrap-icon up-icon" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= levelUpText %>"><i class="bi-arrow-up"></i></span>
+            <span class="bootstrap-icon down-icon" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= levelDownText %>"><i class="bi-arrow-down"></i></span>
         </span>
     </span>
 </div>
