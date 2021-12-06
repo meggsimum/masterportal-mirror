@@ -375,7 +375,7 @@ export default {
 .favorite-icon-container {
     display: flex;
     justify-content: center;
-    .glyphicon {
+    .bootstrap-icon {
         font-size: 28px;
         padding: 0 2px;
     }

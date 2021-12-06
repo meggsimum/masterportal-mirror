@@ -50,7 +50,7 @@ async function ContactTests ({builder, url, browsername, resolution, capability}
 
 
             it("clicking menu entry opens contact form", async function () {
-                navBarIcon = await driver.findElement(By.css("div#navbarRow li.dropdown span.glyphicon-envelope"));
+                navBarIcon = await driver.findElement(By.css("div#navbarRow li.dropdown span.bootstrap-icon > .bi-envelope-fill"));
                 await navBarIcon.click();
 
                 toolWindow = await driver.wait(until.elementLocated(By.css(".tool-window-vue")), 5000);

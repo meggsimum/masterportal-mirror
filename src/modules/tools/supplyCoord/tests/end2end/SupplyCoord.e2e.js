@@ -27,7 +27,7 @@ async function CoordTests ({builder, url, resolution, config, capability}) {
         describe("SupplyCoord", function () {
             const selectors = {
                 tools: By.xpath("//ul[@id='tools']/.."),
-                toolCoord: By.css("ul#tools span.glyphicon-screenshot"),
+                toolCoord: By.css("ul#tools span.bootstrap-icon > .bi-bullseye"),
                 modal: By.css(".tool-window-vue"),
                 header: By.css(".tool-window-vue p.title span"),
                 coordSystemLabel: By.xpath("//label[@for='coordSystemField']"),

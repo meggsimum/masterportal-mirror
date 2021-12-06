@@ -5,7 +5,7 @@
  * @property {boolean} active if true, WfsSearch will be rendered.
  * @property {string} id id of the WfsSearch component.
  * @property {string} name Displayed as the title. (config-param)
- * @property {string} glyphicon Icon next to the title. (config-param)
+ * @property {string} icon Icon next to the title. (config-param)
  * @property {boolean} renderToWindow If true, tool is rendered in a window, else in the sidebar. (config-param)
  * @property {boolean} resizableWindow If true, window is resizable. (config-param)
  * @property {boolean} isVisibleInMenu If true, tool is selectable in menu. (config-param)
@@ -30,7 +30,7 @@ const state = {
     id: "wfsSearch",
     // defaults for config.json tool parameters
     name: "common:menu.tools.wfsSearch",
-    glyphicon: "glyphicon-search",
+    icon: "bi-search",
     renderToWindow: false,
     resizableWindow: true,
     isVisibleInMenu: true,

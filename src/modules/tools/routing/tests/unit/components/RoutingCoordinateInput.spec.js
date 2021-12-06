@@ -26,7 +26,7 @@ describe("src/modules/tools/routing/components/RoutingCoordinateInput.vue", () =
                         routing:
                             {
                                 "name": "translate#common:menu.tools.routing",
-                                "glyphicon": "glyphicon-road",
+                                "icon": "bi-signpost-2",
                                 "renderToWindow": true
                             }
                     }
@@ -129,7 +129,7 @@ describe("src/modules/tools/routing/components/RoutingCoordinateInput.vue", () =
             localVue,
             propsData: props
         });
-        const input = wrapper.find(".glyphicon-chevron-up");
+        const input = wrapper.find(".bi-chevron-up");
 
         input.element.click();
         await wrapper.vm.$nextTick();
@@ -142,7 +142,7 @@ describe("src/modules/tools/routing/components/RoutingCoordinateInput.vue", () =
             localVue,
             propsData: props
         });
-        const input = wrapper.find(".glyphicon-chevron-down");
+        const input = wrapper.find(".bi-chevron-down");
 
         input.element.click();
         await wrapper.vm.$nextTick();
@@ -155,7 +155,7 @@ describe("src/modules/tools/routing/components/RoutingCoordinateInput.vue", () =
             localVue,
             propsData: props
         });
-        const input = wrapper.find(".selfAlignCenter.pointer.glyphicon.glyphicon-remove.ml-4");
+        const input = wrapper.find(".selfAlignCenter.pointer.bootstrap-icon.ml-4 > .bi-x-lg");
 
         input.element.click();
         await wrapper.vm.$nextTick();
@@ -170,7 +170,7 @@ describe("src/modules/tools/routing/components/RoutingCoordinateInput.vue", () =
         });
         wrapper.setData({search: "testsearch"});
         await wrapper.vm.$nextTick();
-        expect(wrapper.find(".glyphicon.glyphicon-remove.form-control-feedback.pointer").exists()).to.be.true;
+        expect(wrapper.find(".bootstrap-icon.form-control-feedback.pointer > .bi-x-lg").exists()).to.be.true;
     });
 
     it("renders searchResults", async () => {

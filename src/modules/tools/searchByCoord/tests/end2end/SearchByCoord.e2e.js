@@ -18,7 +18,7 @@ async function SearchByCoordTests ({builder, url, resolution, capability}) {
         describe("SearchByCoord", function () {
             const selectors = {
                     tools: By.xpath("//ul[@id='tools']/.."),
-                    toolSearchByCoord: By.xpath("//ul[@id='tools']//span[contains(@class,'glyphicon-record')]"),
+                    toolSearchByCoord: By.xpath("//ul[@id='tools']//span//i[contains(@class,'bi-record-circle')]"),
                     modal: By.css("div .tool-window-vue"),
                     coordSystemSelect: By.xpath("//select[@id='coordSystemField']"),
                     coordinatesNorthingField: By.xpath("//input[@id='coordinatesNorthingField']"),

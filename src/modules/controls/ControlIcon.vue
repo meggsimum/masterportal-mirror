@@ -6,7 +6,7 @@
 export default {
     name: "ControlIcon",
     props: {
-        /** Name of the glyphicon, with or without prefix 'glyphicon-' */
+        /** Name of the bootstrap icon, with or without prefix 'bi-' */
         iconName: {
             type: String,
             required: true
@@ -34,10 +34,10 @@ export default {
     },
     computed: {
         /**
-         * @returns {String} glyphicon name with added prefix 'glyphicon-' if it was missing
+         * @returns {String} icon name with added prefix 'bi-' if it was missing
          */
-        glyphiconClass () {
-            return this.iconName.startsWith("glyphicon-") ? this.iconName : `glyphicon-${this.iconName}`;
+        iconClass () {
+            return this.iconName.startsWith("bi-") ? this.iconName : `bi-${this.iconName}`;
         }
     }
 };
@@ -47,13 +47,16 @@ export default {
     <button
         type="button"
         :tabindex="disabled ? '-1' : '0'"
-        :class="['control-icon', 'glyphicon', glyphiconClass, inline ? 'inline' : 'standalone']"
+        :class="['control-icon', 'bootstrap-icon', inline ? 'inline' : 'standalone']"
         :title="title"
         :disabled="disabled"
         @click.stop="onClick"
         @keyup.space.stop.prevent="onClick"
     >
         <!-- children should usually be placed absolutely in relation to ControlIcon -->
+        <i
+            :class="iconClass"
+        />
         <slot />
     </button>
 </template>
@@ -93,11 +96,13 @@ export default {
         border: 0;
 
         /* position icon in center of button */
-        &::before {
+        > i {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            // adjust line-height to use same height as ::before Element
+            line-height: 0;
         }
 
         /* pseudo-class state effects */
@@ -118,22 +123,5 @@ export default {
             cursor: default;
         }
     }
-
-    /* corrections for glyphicons that don't exactly center */
-    .glyphicon-plus::before {
-        margin-top: -1px;
-        margin-left: 1px;
-    }
-    .glyphicon-minus::before {
-        margin-left: -1px;
-        margin-top: -1px;
-    }
-    .glyphicon-forward::before {
-        margin-left: 2px;
-        margin-top: -1px;
-    }
-    .glyphicon-fast-backward::before {
-        margin-top: -1px;
-    }
-    /* TODO: Since every glyphicon is supported via config, rules for every glyphicon should exist here */
+    /* TODO: Since every bootstrap-icon is supported via config, rules for every bootstrap-icon should exist here */
 </style>

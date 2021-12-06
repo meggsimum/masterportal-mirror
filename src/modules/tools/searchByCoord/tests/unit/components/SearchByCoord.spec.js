@@ -19,7 +19,7 @@ describe("src/modules/tools/searchByCoord/components/SearchByCoord.vue", () => {
                         searchByCoord:
                             {
                                 "name": "translate#common:menu.tools.searchByCoord",
-                                "glyphicon": "glyphicon-record",
+                                "icon": "bi-record-circle",
                                 "renderToWindow": true
                             }
                     }

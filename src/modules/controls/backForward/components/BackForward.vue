@@ -12,15 +12,15 @@ export default {
         ControlIcon
     },
     props: {
-        /** glyphicon name of the forward button */
-        glyphiconFor: {
+        /** icon name of the forward button */
+        iconFor: {
             type: String,
-            default: "glyphicon-step-forward"
+            default: "skip-end-fill"
         },
-        /** glyphicon name of the backward button */
-        glyphiconBack: {
+        /** icon name of the backward button */
+        iconBack: {
             type: String,
-            default: "glyphicon-step-backward"
+            default: "skip-start-fill"
         }
     },
     computed: {
@@ -57,14 +57,14 @@ export default {
             class="forward"
             :title="$t(`common:modules.controls.backForward.stepForward`)"
             :disabled="!forthAvailable"
-            :icon-name="glyphiconFor"
+            :icon-name="iconFor"
             :on-click="moveForward"
         />
         <ControlIcon
             class="backward"
             :title="$t(`common:modules.controls.backForward.stepBackward`)"
             :disabled="!backAvailable"
-            :icon-name="glyphiconBack"
+            :icon-name="iconBack"
             :on-click="moveBackward"
         />
     </div>

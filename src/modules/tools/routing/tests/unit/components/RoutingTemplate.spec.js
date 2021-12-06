@@ -25,7 +25,7 @@ describe("src/modules/tools/routing/components/RoutingTemplate.vue", () => {
                         routing:
                             {
                                 "name": "translate#common:menu.tools.routing",
-                                "glyphicon": "glyphicon-road",
+                                "icon": "bi-signpost-2",
                                 "renderToWindow": true
                             }
                     }

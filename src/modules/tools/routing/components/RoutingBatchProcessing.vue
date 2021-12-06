@@ -123,11 +123,13 @@ export default {
                     class="col-xs-3"
                 >{{ progress }} %</span>
                 <span
-                    class="col-xs-1 glyphicon glyphicon-remove pointer"
+                    class="col-xs-1 bootstrap-icon pointer"
                     :title="$t('common:modules.tools.routing.batchProcessing.cancel')"
                     @click="$emit('cancelProcess')"
                     @keydown.enter="$emit('cancelProcess')"
-                />
+                >
+                    <i class="bi-x-lg" />
+                </span>
             </div>
         </div>
 

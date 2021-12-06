@@ -7,7 +7,7 @@ const {
     active,
     id,
     name,
-    glyphicon,
+    icon,
     renderToWindow,
     resizableWindow,
     isVisibleInMenu,
@@ -25,8 +25,8 @@ describe("src/modules/tools/selectFeatures/store/gettersSelectFeatures", functio
         it("returns the name default value from state", function () {
             expect(name(stateSelectFeatures)).to.be.equals("common:menu.tools.selectFeatures");
         });
-        it("returns the glyphicon default value from state", function () {
-            expect(glyphicon(stateSelectFeatures)).to.equals("glyphicon-list-alt");
+        it("returns the icon default value from state", function () {
+            expect(icon(stateSelectFeatures)).to.equals("bi-card-list");
         });
         it("returns the renderToWindow default value from state", function () {
             expect(renderToWindow(stateSelectFeatures)).to.be.true;

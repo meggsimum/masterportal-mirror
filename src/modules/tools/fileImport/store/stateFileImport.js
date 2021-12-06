@@ -3,7 +3,7 @@
  * @typedef {Object} FileImportState
  * @property {Boolean}  active - if true, component is rendered
  * @property {Boolean}  deactivateGFI - if true, component activation deactivates gfi component
- * @property {String}   glyphicon - icon next to title
+ * @property {String}   icon - icon next to title
  * @property {String}   id - internal id of component
  * @property {String}   name - Module name
  * @property {Boolean}  renderToWindow - if true, component is rendered in a window pane instead of sidebar
@@ -16,7 +16,7 @@
 export default {
     active: false,
     deactivateGFI: false,
-    glyphicon: "glyphicon-import",
+    icon: "bi-cloud-download",
     id: "fileImport",
     name: "common:menu.tools.fileImport",
     onlyDesktop: true,

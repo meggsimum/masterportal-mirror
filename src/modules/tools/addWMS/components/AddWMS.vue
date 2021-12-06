@@ -338,7 +338,7 @@ export default {
 <template>
     <ToolTemplate
         :title="$t(name)"
-        :icon="glyphicon"
+        :icon="icon"
         :active="active"
         :render-to-window="renderToWindow"
         :resizable-window="resizableWindow"
@@ -376,9 +376,11 @@ export default {
                         aria-hidden="true"
                     >{{ textLoadLayer }}</span>
                     <span
-                        class="glyphicon glyphicon-ok"
+                        class="bootstrap-icon"
                         aria-hidden="true"
-                    />
+                    >
+                        <i class="bi-check-lg" />
+                    </span>
                 </button>
             </div>
         </template>
