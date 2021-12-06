@@ -29,18 +29,18 @@
         "menu": {
             "tree": {
                 "name": "translate#common:menu.topics",
-                "glyphicon": "glyphicon-list",
+                "icon": "bi-list-ul",
                 "isAlwaysExpanded": [
                     "SelectedLayer"
                 ]
             },
             "tools": {
                 "name": "translate#common:menu.tools.name",
-                "glyphicon": "glyphicon-wrench",
+                "icon": "bi-wrench",
                 "children": {
                     "parcelSearch": {
                         "name": "translate#common:menu.tools.parcelSearch",
-                        "glyphicon": "glyphicon-search",
+                        "icon": "bi-search",
                         "serviceId": "6",
                         "storedQueryID": "Flurstueck",
                         "configJSON": "https://geodienste.hamburg.de/lgv-config/gemarkungen_hh.json",
@@ -48,20 +48,20 @@
                     },
                     "addWMS":{
                         "name": "translate#common:menu.tools.addWms",
-                        "glyphicon":"glyphicon-plus"
+                        "icon":"bi-plus-lg"
                      },
                     "measure": {
                         "name": "translate#common:menu.tools.measure",
-                        "glyphicon": "glyphicon-resize-full"
+                        "icon": "bi-arrows-angle-expand"
                     },
                     "gfi": {
                         "name": "translate#common:menu.tools.getInfos",
-                        "glyphicon": "glyphicon-info-sign",
+                        "icon": "bi-info-circle-fill",
                         "active": true
                     },
                     "print": {
                         "name": "translate#common:menu.tools.print",
-                        "glyphicon": "glyphicon-print",
+                        "icon": "bi-printer-fill",
                         "mapfishServiceId": "mapfish",
                         "printAppId": "master",
                         "filename": "Ausdruck",
@@ -69,15 +69,15 @@
                     },
                     "supplyCoord": {
                         "name": "translate#common:menu.tools.supplyCoord",
-                        "glyphicon": "glyphicon-screenshot"
+                        "icon": "bi-bullseye"
                     },
                     "searchByCoord": {
                         "name": "translate#common:menu.tools.searchByCoord",
-                        "glyphicon": "glyphicon-record"
+                        "icon": "bi-record-circle"
                     },
                     "coordToolkit": {
                         "name": "translate#common:menu.tools.coordToolkit",
-                        "glyphicon": "glyphicon-globe",
+                        "icon": "bi-globe",
                         "heightLayerId" : "19173",
                         "heightElementName": "value_0",
                         "heightValueWater": "-20",
@@ -85,11 +85,11 @@
                     },
                     "fileImport": {
                         "name": "translate#common:menu.tools.fileImport",
-                        "glyphicon": "glyphicon-import"
+                        "icon": "bi-box-arrow-in-down-right"
                     },
                     "draw": {
                       "name": "translate#common:menu.tools.draw",
-                      "glyphicon": "glyphicon-pencil",
+                      "icon": "bi-pencil-fill",
                       "renderToWindow": false,
                       "iconList": [
                         {
@@ -114,24 +114,24 @@
                     "saveSelection": {
                         "name": "translate#common:menu.tools.saveSelection",
                         "simpleMap": true,
-                        "glyphicon": "glyphicon-share"
+                        "icon": "bi-box-arrow-up-right"
                     },
                     "shadow":
                     {
                       "name": "Schatten",
-                      "glyphicon": "glyphicon-lamp",
+                      "icon": "bi-lamp-fill",
                       "isShadowEnabled": true
                     }
                 }
             },
             "legend": {
               "name": "translate#common:modules.legend.name",
-              "glyphicon": "glyphicon-book",
+              "icon": "bi-journal",
               "showCollapseAllButton": true
             },
             "contact": {
                 "name": "translate#common:menu.contact",
-                "glyphicon": "glyphicon-envelope",
+                "icon": "bi-envelope-fill",
                 "serviceId": "80002",
                 "from": [
                     {
