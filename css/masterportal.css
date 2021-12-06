@@ -24,12 +24,12 @@ label {
     position: relative;
 }
 
-.glyphicon-check, .glyphicon-unchecked, .glyphicon-download, .glyphicon-upload, .glyphicon-chevron-down, .glyphicon-plus-sign, .glyphicon-minus-sign, .glyphicon-refresh, .glyphicon-folder-close, .glyphicon-folder-open, .glyphicon-question-sign {
+.bi-check2-square, .bi-square, .bi-arrow-down-circle, .bi-arrow-up-circle, .bi-chevron-down, .bi-plus-circle-fill, .bi-dash-circle-fill, .bi-arrow-repeat, .bi-folder2, .bi-folder2-open, .bi-question-circle-fill {
     cursor: pointer;
 }
 
 @media (max-width: 767px) {
-    .btn-glyphicon, .glyphicon-plus-sign, .glyphicon-minus-sign, .glyphicon-info-sign, .glyphicon-check, .glyphicon-unchecked, .glyphicon-envelope, .glyphicon-book {
+    .bi-plus-circle-fill, .bi-dash-circle-fill, .bi-info-circle-fill, .bi-check2-square, .bi-square, .bi-envelope-fill, .bi-journal {
         font-size: 18px !important;
     }
     html, body {
