@@ -63,15 +63,15 @@ async function PopulationRequestTests ({builder, url, resolution, capability}) {
                 await driver.wait(until.elementIsVisible(await driver.findElement(selectors.modal)));
 
                 // TODO add checks for expected elements
-                // wrench-glyphicon, Text “Einwohneranzahl abfragen”, minus and remove glyphicons
+                // wrench-icon, Text “Einwohneranzahl abfragen”, minus and remove icons
                 /*
                     <div id="window" class="tool-window ui-widget-content ui-draggable" style="position: relative; max-height: 843px; display: block; overflow: auto;">
                         <div class="win-heading header">
                             <p class="buttons pull-right">
-                                <span class="glyphicon glyphicon-minus" title="Minimieren"></span>
-                                <span class="glyphicon glyphicon-remove" title="Schließen"></span>
+                                <span class="bootstrap-icon" title="Minimieren"><i class="bi-dash-lg"></i></span>
+                                <span class="bootstrap-icon" title="Schließen"><i class="bi-x-lg"></i></span>
                             <p class="buttons pull-left move">
-                                <span class="glyphicon glyphicon-wrench win-icon"></span>
+                                <span class="bootstrap-icon win-icon"><i class="bi-wrench"></i></span>
                             <p class="title move">
                                 <span>Einwohneranzahl abfragen</span>
                 */
@@ -92,13 +92,13 @@ async function PopulationRequestTests ({builder, url, resolution, capability}) {
                         <div class="dropdown-menu open" role="combobox">
                             <ul class="dropdown-menu inner" role="listbox" aria-expanded="false">
                                 <li data-original-index="1" class="selected"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="true">
-                                    <span class="text">Rechteck aufziehen</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                    <span class="text">Rechteck aufziehen</span><span class="bootstrap-icon check-mark"><i class="bi-check-lg"></i></span></a>
                                 </li>
                                 <li data-original-index="2"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false">
-                                    <span class="text">Kreis aufziehen</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                    <span class="text">Kreis aufziehen</span><span class="bootstrap-icon check-mark"><i class="bi-check-lg"></i></span></a>
                                 </li>
                                 <li data-original-index="3"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false">
-                                    <span class="text">Fläche zeichnen</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                    <span class="text">Fläche zeichnen</span><span class="bootstrap-icon check-mark"><i class="bi-check-lg"></i></span></a>
                                 </li>
                             </ul>
                         </div>
