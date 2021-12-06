@@ -418,7 +418,7 @@ Here is an example of the correct use of interpolation in a QuickHelp paragraph:
                                     "text": "additional:addons.myAddon.quickHelp.info",
                                     "type": "text/html",
                                     "interpolation": {
-                                        "iconCls": "glyphicon glyphicon-info-sign"
+                                        "iconCls": "bi-info-circle-fill"
                                     }
                                 }
                             ]

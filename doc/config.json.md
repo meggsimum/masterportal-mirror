@@ -218,7 +218,7 @@ Definition of classes to be taken into account for results.
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |name|yes|String||Class name|false|
-|icon|no|String|"glyphicon-road"|Class visualization by a glyphicon|false|
+|icon|no|String|"bi-signpost-2"|Class visualization by a icon|false|
 |zoom|no|String|"center"|Defines how to zoom to a hit on selection. If `center` is chosen, the center coordinate (`cx`, `cy`) is zoomed to and a marker is placed. If `bbox` is chosen, the LocationFinder's given BoundingBox (`xmin`, `ymin`, `xmax`, `ymax`) is zoomed to, and no marker is shown.|false|
 |zoomLevel|no|Integer||Zoom level which is applied to the result view|false|
 
@@ -231,11 +231,11 @@ Definition of classes to be taken into account for results.
         "classes": [
             {
                 "name": "busstop",
-                "icon": "glyphicon-record"
+                "icon": "bi-record-circle"
             },
             {
                 "name": "address",
-                "icon": "glyphicon-home",
+                "icon": "bi-house-door-fill",
                 "zoomLevel": 5
             },
             {
@@ -355,7 +355,7 @@ Elasticsearch service configuration.
 |triggerEvent|no|**[triggerEvent](#markdown-header-portalconfigsearchbarelasticsearchtriggerevent)**|{}|Radio event triggered on mouse hover and click.|false|
 |hitMap|no|**[hitMap](#markdown-header-portalconfigsearchbarelasticsearchhitmap)**||Object mapping result object attributes to keys.|true|
 |hitType|no|String|"common:modules.searchbar.type.subject"|Search result type shown in the result list after the result name. Set to the translation key.|false|
-|hitGlyphicon|no|String|"glyphicon-road"|CSS glyphicon class of search results, shown before the result name.|false|
+|hitIcon|no|String|"bi-signpost-2"|CSS icon class of search results, shown before the result name.|false|
 |useProxy|no|Boolean|false|Defines whether the URL should be proxied.|false|
 
 As an additional property, you may add `payload`. It is not required, and matches the **[CustomObject](#markdown-header-datatypescustomobject)** description. By default, it is set to the empty object `{}`. The object describes the payload to be sent as part of the request. It must provide the searchString attribute. For more info on usable attributes, see **[Elasticsearch Guide](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html)**. This object can not be handled in the Admintool, since **[CustomObject](#markdown-header-datatypescustomobject)** is not yet supported.
@@ -386,7 +386,7 @@ As an additional property, you may add `payload`. It is not required, and matche
             "source": "_source"
         },
         "hitType": "common:modules.searchbar.type.subject",
-        "hitGlyphicon": "glyphicon-list"
+        "hitIcon": "bi-list-ul"
     }
 }
 ```
@@ -446,7 +446,7 @@ The WFS 2.0 query is dynamically created by the Masterportal. No stored query co
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |minChars|no|Integer|3|Minimum amount of characters required to start a search.|false|
-|glyphicon|no|String|"glyhicon-home"|Default glyphicon used in the suggestion list. Overwritable by a **[definition](#markdown-header-portalconfigsearchbarspecialwfsdefinition)**.|false|
+|icon|no|String|"glyhicon-home"|Default icon used in the suggestion list. Overwritable by a **[definition](#markdown-header-portalconfigsearchbarspecialwfsdefinition)**.|false|
 |maxFeatures|no|Integer|20|Maximum amount of features returned. Overwritable by a **[definition](#markdown-header-portalconfigsearchbarspecialwfsdefinition)**.|false|
 |timeout|no|Integer|6000|Service request timeout in ms.|false|
 |definitions|no|**[definition](#markdown-header-portalconfigsearchbarspecialwfsdefinition)**[]||Special WFS search definitions.|false|
@@ -489,7 +489,7 @@ SpecialWFS search definition configuration.
 |----|--------|----|-------|-----------|------|
 |url|no|String||WFS URL. Depending on your proxy configuration, the relative URL from the portal server must be given.|false|
 |name|no|String||Category name displayed in the suggestion list.|false|
-|glyphicon|no|String|"glyhicon-home"|CSS glyphicon class of search results, shown before the result name.|false|
+|icon|no|String|"glyhicon-home"|CSS icon class of search results, shown before the result name.|false|
 |typeName|no|String||The name of the WFS layer to be requested.|false|
 |propertyNames|no|String[]||Array of attribute names to be searched.|false|
 |geometryName|no|String|"app:geom"|Geometry attribute name required for zoom functionality.|false|
@@ -698,16 +698,16 @@ The attribute totalView may be of type boolean or object. If of type boolean, it
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|glyphicon|no|String|"glyphicon-fast-backward"|Allows changing the button's glyphicon.|false|
-|tableGlyphicon|no|String|"glyphicon-home"|Allows changing the list item's glyphicon in `TABLE` style.|false|
+|icon|no|String|"bi-skip-backward-fill"|Allows changing the button's icon.|false|
+|tableIcon|no|String|"bi-house-door-fill"|Allows changing the list item's icon in `TABLE` style.|false|
 
 **Example using type object totalView**
 
 ```json
 {
     "totalView" : {
-        "glyphicon": "glyphicon-step-forward",
-        "tableGlyphicon": "glyphicon-step-forward"
+        "icon": "bi-skip-forward-fill",
+        "tableIcon": "bi-skip-forward-fill"
     }
 }
 ```
@@ -728,16 +728,16 @@ The attribute backForward may be of type boolean or object. If of type boolean, 
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|glyphiconFor|no|String||Allows changing the glyphicon on the forward button.|false|
-|glyphiconBack|no|String||Allows changing the glyphicon on the backwards button.|false|
+|iconFor|no|String||Allows changing the icon on the forward button.|false|
+|iconBack|no|String||Allows changing the icon on the backwards button.|false|
 
 **Example using type object backForward**
 
 ```json
 {
     "backForward" : {
-        "glyphiconFor": "glyphicon-fast-forward",
-        "glyphiconBack": "glyphicon-fast-backward"
+        "iconFor": "bi-skip-forward-fill",
+        "iconBack": "bi-skip-backward-fill"
     }
 }
 ```
@@ -1279,7 +1279,7 @@ Legend configuration options.
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |name|yes|String||Legend name.|false|
-|glyphicon|no|String|"glyphicon-book"|Legend glyphicon.|false|
+|icon|no|String|"bi-journal"|Legend icon.|false|
 |showCollapseAllButton|no|Boolean|false|Option to en-/disable all legends.|false|
 |showLegend|no|Boolean|false|Option to display the legend when starting the portal|false|
 
@@ -1315,7 +1315,7 @@ Hier können die Menüeinträge und deren Anordnung konfiguriert werden. Die Rei
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |name|yes|String||Name des Themenbaumes.|false|
-|glyphicon|no|String||CSS Klasse des glyphicons.|false|
+|icon|no|String||CSS Klasse des icons.|false|
 |isInitOpen|no|Boolean|false|Gibt an ob der Themenbaum initial geöffnet ist.|false|
 |quickHelp|no|Boolean|false|Deprecated in the next major-release. Defines whether the QuickHelp feature is offered for the search bar.|false|
 
@@ -1326,12 +1326,12 @@ Hier können die Menüeinträge und deren Anordnung konfiguriert werden. Die Rei
 [type:tool]: # (Portalconfig.menu.tool)
 [type:staticlinks]: # (Portalconfig.menu.staticlinks)
 
-A folder object defined by a name, glyphicon, and its children.
+A folder object defined by a name, icon, and its children.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |name|yes|String||Folder's menu name.|false|
-|glyphicon|yes|String|"glyphicon-folder-open"|CSS glyphicon class shown in front of the folder name.|false|
+|icon|yes|String|"bi-folder2-open"|CSS icon class shown in front of the folder name.|false|
 |children|no|**[tool](#markdown-header-portalconfigmenutool)**/**[staticlinks](#markdown-header-portalconfigmenustaticlinks)**||Folder child elements.|false|
 
 **Example**
@@ -1340,11 +1340,11 @@ A folder object defined by a name, glyphicon, and its children.
 {
     "tools":{
         "name": "Werkzeuge",
-        "glyphicon": "glyphicon-wrench",
+        "icon": "bi-wrench",
         "children": {
             "legend": {
                 "name": "Legende",
-                "glyphicon": "glyphicon-book"
+                "icon": "bi-journal"
             }
         }
     }
@@ -1440,7 +1440,7 @@ A tool's attribute key defines which tool is loaded. Each tool provides at least
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |active|no|Boolean|false|Whether the tool is open initially.|false|
-|glyphicon|no|String||CSS glyphicon class. Glyphicon is shown before the tool name.|false|
+|icon|no|String||CSS icon class. Icon is shown before the tool name.|false|
 |isVisibleInMenu|no|Boolean|true|If true, the tool is listed in the menu.|false|
 |keepOpen|no|Boolean|false|Whether the tool remains open parallel to other tools.|false|
 |name|yes|String||Name displayed in the menu.|false|
@@ -1454,7 +1454,7 @@ A tool's attribute key defines which tool is loaded. Each tool provides at least
 {
     "legend":{
         "name": "Legende",
-        "glyphicon": "glyphicon-book"
+        "icon": "bi-journal"
     }
 }
 ```
@@ -1471,7 +1471,7 @@ Displays information to a clicked feature by firing a *GetFeatureInfo* or *GetFe
 |----|--------|----|-------|-----------|------|
 |name|yes|String||Name displayed in the menu.|false|
 |centerMapToClickPoint|no|Boolean|false|If true, centers any clicked feature on the map. Only relevant if the `desktopType` attribute is "detached".|false|
-|glyphicon|no|String|"glyphicon-info-sign"|CSS glyphicon class. Glyphicon is shown before the tool name.|false|
+|icon|no|String|"bi-info-circle-fill"|CSS icon class. Icon is shown before the tool name.|false|
 |active|no|Boolean|true|Whether GFI is active initially.|false|
 |desktopType|no|String|"detached"|Used to choose a GFI template in desktop mode. If using "attached", the GFI will be positioned next to the feature. Using "detached" will place a marker on the feature and create the GFI window to the right of the map.|false|
 |centerMapMarkerPolygon|no|Boolean|false|Specification of whether the clicked feature is used to get the center coordinate or the actually clicked coordinate is used.|false|
@@ -1483,7 +1483,7 @@ Displays information to a clicked feature by firing a *GetFeatureInfo* or *GetFe
 {
     "gfi":{
         "name": "Request information",
-        "glyphicon": "glyphicon-info-sign",
+        "icon": "bi-info-circle-fill",
         "active": true,
         "centerMapMarkerPolygon": true,
         "highlightVectorRules": {
@@ -1508,7 +1508,7 @@ Displays information to a clicked feature by firing a *GetFeatureInfo* or *GetFe
 {
     "gfi": {
         "name": "Request information",
-        "glyphicon": "glyphicon-info-sign",
+        "icon": "bi-info-circle-fill",
         "active": true,
         "centerMapMarkerPolygon": true
     }
@@ -1608,7 +1608,7 @@ This example uses Hamburg's school and hospital layers, hence a lot of German te
 {
     "filter":{
         "name": "Filter",
-        "glyphicon": "glyphicon-filter",
+        "icon": "bi-funnel-fill",
         "deactivateGFI": false,
         "isGeneric": false,
         "isInitOpen": false,
@@ -2113,7 +2113,7 @@ This tool allows comparing vector features.
 {
     "compareFeatures": {
         "name": "Vergleichsliste",
-        "glyphicon": "glyphicon-th-list",
+        "icon": "bi-list-ul",
         "numberOfFeaturesToShow": 5,
         "numberOfAttributesToShow": 10
     }
@@ -2151,7 +2151,7 @@ Example request: **https://geodienste.hamburg.de/HH_WFS_DOG?service=WFS&request=
 {
     "parcelSearch": {
         "name": "Flurstückssuche",
-        "glyphicon": "glyphicon-search",
+        "icon": "bi-search",
         "serviceId": "6",
         "storedQueryID": "Flurstueck",
         "configJSON": "https://geodienste.hamburg.de/lgv-config/gemarkungen_hh.json",
@@ -2203,7 +2203,7 @@ Coordinate search.
 {
     "searchByCoord": {
         "name": "Flurstückssuche",
-        "glyphicon": "glyphicon-record",
+        "icon": "bi-record-circle",
         "zoomLevel": 7
     }
 }
@@ -2245,7 +2245,7 @@ Print module, configurable for 2 print services: *High Resolution PlotService* a
 {
     "print": {
         "name": "Karte drucken",
-        "glyphicon": "glyphicon-print",
+        "icon": "bi-printer-fill",
         "mapfishServiceId": "123456",
         "filename": "Print",
         "title": "My Title",
@@ -2262,7 +2262,7 @@ Print module, configurable for 2 print services: *High Resolution PlotService* a
 {
     "print": {
         "name": "Karte drucken",
-        "glyphicon": "glyphicon-print",
+        "icon": "bi-printer-fill",
         "mapfishServiceId": "mapfish_printservice_id",
         "printAppId": "mrh",
         "filename": "Print",
@@ -2317,7 +2317,7 @@ Module used to draw features on the map. This includes points, which may also be
 {
     "draw": {
         "name": "Draw / Write",
-        "glyphicon": "glyphicon-pencil",
+        "icon": "bi-pencil-fill",
         "iconList": [
             {
                 "id": "iconPoint",
@@ -2624,7 +2624,7 @@ A hover event controls highlighting hovered features in the map. By clicking a f
 {
     "featureLister": {
         "name": "List",
-        "glyphicon": "glyphicon-menu-hamburger",
+        "icon": "bi-list",
         "maxFeatures": 10,
         "highlightVectorRulesPolygon": {
         "fill": {
@@ -2774,7 +2774,7 @@ The contact form allows users to send messages to a configured mail address.
 {
     "contact": {
         "name": "common:menu.contact",
-        "glyphicon": "glyphicon-envelope",
+        "icon": "bi-envelope-fill",
         "serviceId": "123",
         "from": [
             {
@@ -2847,7 +2847,7 @@ The layer cluster toggler tool allows to activate and deactivate cluster layers 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |name|yes|String|"additional:addons.menu.tools.layerClusterToggler.name"|Name displayed in the tool.|false|
-|glyphicon|yes|String|"glyphicon-education"|glyphicon displayed in the tool menu|false|
+|icon|yes|String|"bi-easel3"|icon displayed in the tool menu|false|
 |clusterList|yes|**[clusterList](#markdown-header-portalconfigmenutoollayerClusterTogglerclusterList)**[]|[]|Array of layer id objects or layer id string.|false|
 
 **Example**
@@ -2856,7 +2856,7 @@ The layer cluster toggler tool allows to activate and deactivate cluster layers 
 {
     "layerClusterToggler": {
         "name": "translate#additional:addons.menu.tools.layerClusterToggler.name",
-        "glyphicon": "glyphicon-education",
+        "icon": "bi-easel3",
         "clusterList": ["8712", "21067"]
     }
 }
@@ -2881,7 +2881,7 @@ Defines a cluster of layer
 {
     "layerClusterToggler": {
         "name": "translate#additional:addons.menu.tools.layerClusterToggler.name",
-        "glyphicon": "glyphicon-education",
+        "icon": "bi-easel3",
         "clusterList": [
             "8712",
             "8713",
@@ -2927,7 +2927,7 @@ The layer slider tool allows showing multiple layers in a row. This may e.g. be 
 {
     "layerSlider": {
         "name": "Timeline",
-        "glyphicon": "glyphicon-film",
+        "icon": "bi-film",
         "title": "Example WMS simulation",
         "sliderType": "player",
         "timeInterval": 2000,
@@ -3545,7 +3545,7 @@ WFS-T module to visualize (*GetFeature*), create (*insert*), update (*update*), 
 {
     "wfst": {
         "name": "WFS-T Tool",
-        "glyphicon": "glyphicon-globe",
+        "icon": "bi-globe",
         "layerIds": ["1234", "5678"],
         "toggleLayer": true,
         "layerSelect": "TestLayer",
@@ -3667,7 +3667,7 @@ Coordinates tool. To display the height above sea level in addition to the 2 dim
 #!json
  "coordToolkit": {
             "name": "translate#common:menu.tools.coordToolkit",
-            "glyphicon": "glyphicon-globe",
+            "icon": "bi-globe",
             "zoomLevel": 5,
             "heightLayerId" : "19173",
             "heightElementName": "value_0",
@@ -3703,7 +3703,7 @@ Routing-tool. Enables user to plan routes between multiple points with multiple 
 {
     "routing": {
         "name": "translate#common:menu.tools.routing",
-        "glyphicon": "glyphicon-road",
+        "icon": "bi-signpost-2",
         "activeRoutingToolOption": "DIRECTIONS",
         "routingToolOptions": ["DIRECTIONS", "ISOCHRONES"],
         "download": {
@@ -4219,7 +4219,7 @@ The staticlinks array contains objects either describing links to other web reso
     "staticlinks": [
         {
             "name": "Alert",
-            "glyphicon": "glyphicon-globe",
+            "icon": "bi-globe",
             "onClickTrigger": [
                 {
                     "channel": "Alert",
@@ -4240,7 +4240,7 @@ Ein Staticlink-Objekt enthält folgende Attribute.
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |name|yes|String||Menu name of the link.|false|
-|glyphicon|no|String|"glyphicon-globe"|CSS glyphicon class of link, shown before its name.|false|
+|icon|no|String|"bi-globe"|CSS icon class of link, shown before its name.|false|
 |url|no|String||URL to open in a new tab.|false|
 |onClickTrigger|no|**[onClickTrigger](#markdown-header-portalconfigmenustaticlinksstaticlinkonclicktrigger)**[]||Array of onClickTrigger events.|false|
 
@@ -4249,7 +4249,7 @@ Ein Staticlink-Objekt enthält folgende Attribute.
 ```json
 {
     "name": "Hamburg",
-    "glyphicon": "glyphicon-globe",
+    "icon": "bi-globe",
     "url": "http://www.hamburg.de"
 }
 ```
@@ -4258,7 +4258,7 @@ Ein Staticlink-Objekt enthält folgende Attribute.
 ```json
 {
     "name": "Alert",
-    "glyphicon": "glyphicon-globe",
+    "icon": "bi-globe",
     "onClickTrigger": [
         {
             "channel": "Alert",
