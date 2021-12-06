@@ -24,14 +24,14 @@ async function ParcelSearchTests ({builder, url, resolution, capability}) {
         describe("ParcelSearch", function () {
             const selectors = {
                 tools: By.css("ul#root li.dropdown:nth-child(4) a"),
-                toolParcelSearch: By.css("ul#tools li.dropdown a span.glyphicon-search"),
+                toolParcelSearch: By.css("ul#tools li.dropdown a span.bootstrap-icon > .bi-search"),
                 modal: By.css("div#window"),
                 districtLabel: By.css("label[for=\"districtField\"]"),
                 districtField: By.css("select#districtField"),
                 parcelLabel: By.css("label[for=\"parcelField\"]"),
                 parcelField: By.css("input#parcelField"),
                 submitButton: By.css("button#submitbutton"),
-                minimize: By.css("#window .glyphicon-minus"),
+                minimize: By.css("#window .bi-dash-lg"),
                 maximize: By.css("#window p.title")
             };
             let driver, districtField, parcelField, submitButton;

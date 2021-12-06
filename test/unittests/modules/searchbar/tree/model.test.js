@@ -223,14 +223,14 @@ describe("modules/searchbar/tree", function () {
                     name: "aa",
                     metaName: "aa",
                     type: i18next.t("common:modules.searchbar.type.topic"),
-                    glyphicon: "glyphicon-list",
+                    icon: "bi-list-ul",
                     id: 1
                 },
                 {
                     name: "bb",
                     metaName: "bb",
                     type: i18next.t("common:modules.searchbar.type.topic"),
-                    glyphicon: "glyphicon-list",
+                    icon: "bi-list-ul",
                     id: 2
                 }
             );
