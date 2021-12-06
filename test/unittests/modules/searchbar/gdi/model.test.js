@@ -107,20 +107,20 @@ describe("modules/searchbar/gdi", function () {
                     key: "deeperKey.key"
                 },
                 hitType = "type",
-                hitGlyphicon = "glyphicon-abc",
+                hitIcon = "bi-abc",
                 triggerEvent = {
                     channel: "MyChannel",
                     event: "MyEvent"
                 };
 
-            expect(model.createHit(result, hitMap, hitType, hitGlyphicon, triggerEvent)).to.deep.equal(
+            expect(model.createHit(result, hitMap, hitType, hitIcon, triggerEvent)).to.deep.equal(
                 {
                     id: "0815",
                     name: "name",
                     coordinate: [123456, 456789],
                     key: "value",
                     type: "type",
-                    glyphicon: "glyphicon-abc",
+                    icon: "bi-abc",
                     triggerEvent: {
                         channel: "MyChannel",
                         event: "MyEvent"
@@ -146,18 +146,18 @@ describe("modules/searchbar/gdi", function () {
                     key: "deeperKey.key"
                 },
                 hitType = "type",
-                hitGlyphicon = "glyphicon-abc",
+                hitIcon = "bi-abc",
                 triggerEvent = {
                 };
 
-            expect(model.createHit(result, hitMap, hitType, hitGlyphicon, triggerEvent)).to.deep.equal(
+            expect(model.createHit(result, hitMap, hitType, hitIcon, triggerEvent)).to.deep.equal(
                 {
                     id: "0815",
                     name: "name",
                     coordinate: [123456, 456789],
                     key: "value",
                     type: "type",
-                    glyphicon: "glyphicon-abc"
+                    icon: "bi-abc"
                 }
             );
         });
