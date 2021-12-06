@@ -16,7 +16,7 @@ module.exports = function () {
         },
         module: {
             rules: [
-                // alle Schriftarten (auch die Glyphicons) kommen in lokalen Ordner
+                // alle Schriftarten (auch die Bootstrap Icons) kommen in lokalen Ordner
                 {
                     test: /\.(eot|svg|ttf|woff|woff2)$/,
                     loader: "file-loader",
