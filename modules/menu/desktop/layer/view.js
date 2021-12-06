@@ -14,28 +14,28 @@ const LayerView = LayerBaseView.extend(/** @lends LayerView.prototype */{
                 this.setFocus();
             }
         },
-        "click .layer-info-item > .glyphicon-info-sign": "toggleLayerInformation",
+        "click .layer-info-item > .info-icon": "toggleLayerInformation",
         "keydown .layer-info-item": function (event) {
             this.handleKeyboardTriggeredAction(event, "toggleLayerInformation");
         },
-        "click .layer-info-item > .glyphicon-cog": "toggleIsSettingVisible",
-        "keydown .layer-info-item > .glyphicon-cog": function (event) {
+        "click .layer-info-item > .settings-icon": "toggleIsSettingVisible",
+        "keydown .layer-info-item > .settings-icon": function (event) {
             this.handleKeyboardTriggeredAction(event, "toggleIsSettingVisible");
         },
-        "click .layer-sort-item > .glyphicon-triangle-top": "moveModelUp",
-        "keydown .layer-sort-item > .glyphicon-triangle-top": function (event) {
+        "click .layer-sort-item > .up-icon": "moveModelUp",
+        "keydown .layer-sort-item > .up-icon": function (event) {
             this.handleKeyboardTriggeredAction(event, "moveModelUp");
         },
-        "click .glyphicon-plus-sign": "incTransparency",
-        "keydown .glyphicon-plus-sign": function (event) {
+        "click .increase-icon": "incTransparency",
+        "keydown .increase-icon": function (event) {
             if (this.handleKeyboardTriggeredAction(event, "incTransparency")) {
-                this.setFocus(".glyphicon-plus-sign");
+                this.setFocus(".increase-icon");
             }
         },
-        "click .glyphicon-minus-sign": "decTransparency",
-        "keydown .glyphicon-minus-sign": function (event) {
+        "click .decrease-icon": "decTransparency",
+        "keydown .decrease-icon": function (event) {
             if (this.handleKeyboardTriggeredAction(event, "decTransparency")) {
-                this.setFocus(".glyphicon-minus-sign");
+                this.setFocus(".decrease-icon");
             }
         }
     },

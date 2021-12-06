@@ -9,14 +9,14 @@ const ShadowModel = Tool.extend(/** @lends ShadowModel.prototype */{
      * @class ShadowModel
      * @extends Tool
      * @memberof Tools.Shadow
-     * @property {String} [glyphicon="glyphicon-screenshot"] Glyphicon that is shown before the tool name
+     * @property {String} [icon="bi-bullseye"] Icon that is shown before the tool name
      * @property {Boolean} [isShadowEnabled=false] Flag to enable shadows on immidiately
      * @constructs
      * @fires Core#RadioTriggerMapSetShadowTime
 -    * @fires Core#RadioRequestGetMap3d
      */
     defaults: Object.assign({}, Tool.prototype.defaults, {
-        glyphicon: "glyphicon-screenshot",
+        icon: "bi-bullseye",
         timeslider: null,
         dateslider: null,
         toggleButton: null,

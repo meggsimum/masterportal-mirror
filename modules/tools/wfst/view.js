@@ -17,8 +17,8 @@ const WfstView = Backbone.View.extend(/** @lends WfstView.prototype */{
         "keyup .input-sm": "validate",
         "change .input-sm": "validate",
         "click .form-check-input": "validate",
-        "click .glyphicon-info-sign": "toggleInfoText",
-        "keydown .glyphicon-info-sign": "toggleInfoText"
+        "click .info-icon": "toggleInfoText",
+        "keydown .info-icon": "toggleInfoText"
     },
 
     /**
@@ -600,7 +600,7 @@ const WfstView = Backbone.View.extend(/** @lends WfstView.prototype */{
                     });
                 }
             }, this);
-            this.putGlyphToCursor("glyphicon glyphicon-trash");
+            this.putGlyphToCursor("bi-trash");
         }
     },
 
@@ -721,24 +721,24 @@ const WfstView = Backbone.View.extend(/** @lends WfstView.prototype */{
     },
 
     /**
-     * Adds a listener for the mouse pointer glyphicon to the map
+     * Adds a listener for the mouse pointer icon to the map
      * @param {String} button - Name of the clicked button
      * @fires Core#RadioTriggerMapRegisterListener
      * @returns {void}
      */
     registerListener: function (button) {
-        const glyphicon = button.getAttribute("glyphicon");
+        const icon = button.getAttribute("icon");
 
-        $("#map").after("<span id='cursorGlyph' class= 'glyphicon " + glyphicon + "' ></span>");
-        this.listener = Radio.request("Map", "registerListener", "pointermove", this.renderGlyphicon.bind(this));
+        $("#map").after("<span id='cursorGlyph' class='bootstrap-icon'><i class='" + icon + "'></i></span>");
+        this.listener = Radio.request("Map", "registerListener", "pointermove", this.renderIcon.bind(this));
     },
 
     /**
-     * Renders the glyphicon at the mouse pointer
+     * Renders the icon at the mouse pointer
      * @param {Object} event - MapBrowserPointerEvent
      * @returns {void}
      */
-    renderGlyphicon: function (event) {
+    renderIcon: function (event) {
         const element = $("#cursorGlyph")[0];
 
         $(element).css("left", event.originalEvent.offsetX + 5);
@@ -746,7 +746,7 @@ const WfstView = Backbone.View.extend(/** @lends WfstView.prototype */{
     },
 
     /**
-     * Unregisters the listeners for the mouse pointer glyphicon from the map
+     * Unregisters the listeners for the mouse pointer icon from the map
      * @returns {void}
      */
     unregisterCursorGlyph: function () {
@@ -759,17 +759,17 @@ const WfstView = Backbone.View.extend(/** @lends WfstView.prototype */{
     /**
      * Creates an HTML element,
      * puts the glyph icon there and sticks it to the cursor
-     * @param {string} glyphicon - of the mouse
+     * @param {string} icon - of the mouse
      * @returns {void}
      */
-    putGlyphToCursor: function (glyphicon) {
-        if (glyphicon.indexOf("trash") !== -1) {
+    putGlyphToCursor: function (icon) {
+        if (icon.indexOf("trash") !== -1) {
             $("#map").removeClass("no-cursor");
             $("#map").addClass("cursor-default");
         }
 
         $("#cursorGlyph").removeClass();
-        $("#cursorGlyph").addClass(glyphicon);
+        $("#cursorGlyph").addClass(icon);
     },
 
     /**

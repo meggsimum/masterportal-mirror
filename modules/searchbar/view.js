@@ -262,10 +262,10 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
      */
     toggleBtnQuestionColor: function () {
         if (store.getters["QuickHelp/active"]) {
-            this.$("span.glyphicon-question-sign").addClass("quickhelp-is-shown");
+            this.$("span.bootstrap-icon.question-icon").addClass("quickhelp-is-shown");
         }
         else {
-            this.$("span.glyphicon-question-sign").removeClass("quickhelp-is-shown");
+            this.$("span.bootstrap-icon.question-icon").removeClass("quickhelp-is-shown");
         }
     },
 
