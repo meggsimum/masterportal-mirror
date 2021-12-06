@@ -65,7 +65,7 @@ async function ElasticSearch ({builder, url, resolution, capability}) {
         if (isMaster(url)) {
             const treeSelector = By.xpath("//ul[@id='tree']"),
                 listEntrySelector = By.xpath(`//li[@id='${layerId}']`),
-                checkboxSelector = By.xpath(`//ul[@id='tree']//li//span[text()='${layerName}'][..//span[contains(@class,'glyphicon-check')]]`);
+                checkboxSelector = By.xpath(`//ul[@id='tree']//li//span[text()='${layerName}'][..//span//i[contains(@class,'bi-check2-square')]]`);
 
             it("renders the chosen layer", async function () {
                 do {
@@ -85,8 +85,8 @@ async function ElasticSearch ({builder, url, resolution, capability}) {
         if (isCustom(url)) {
             const listEntrySelector = By.xpath(`//li[@id='${layerId}']`),
                 treeSelector = By.xpath("//ul[@id='tree']"),
-                checkboxSelector = By.xpath(`//ul[@id='tree']//ul[@id='ExternalLayer']/li//span[contains(text(),'${layerName}')][..//span[contains(@class,'glyphicon-check')]]`),
-                selectedLayerGlyphSelector = By.css(".SelectedLayer .glyphicon-plus-sign"),
+                checkboxSelector = By.xpath(`//ul[@id='tree']//ul[@id='ExternalLayer']/li//span[contains(text(),'${layerName}')][..//span//i[contains(@class,'bi-check2-square')]]`),
+                selectedLayerGlyphSelector = By.css(".SelectedLayer .bi-plus-circle-fill"),
                 selectedLayerFirstEntrySelector = By.css("#SelectedLayer .layer-item:nth-child(1) .layer-item .title");
 
             it("renders the chosen layer", async function () {

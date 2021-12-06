@@ -113,7 +113,7 @@ describe("modules/searchbar/locationFinder", function () {
                             case "Feuerbacher Heide":
                                 expect(value).to.deep.include({
                                     type: "Straßenname",
-                                    glyphicon: "glyphicon-road",
+                                    icon: "bi-signpost-2",
                                     coordinate: [511208.97, 5403930.32]
                                 });
                                 numberOfPushedItems++;
@@ -121,7 +121,7 @@ describe("modules/searchbar/locationFinder", function () {
                             case "Feuerbacher Heide 53B":
                                 expect(value).to.deep.include({
                                     type: "Adresse",
-                                    glyphicon: "glyphicon-road",
+                                    icon: "bi-signpost-2",
                                     coordinate: [511429.4, 5404212.63]
                                 });
                                 numberOfPushedItems++;
@@ -209,7 +209,7 @@ describe("modules/searchbar/locationFinder", function () {
                             case "Feuerbacher Heide":
                                 expect(value).to.deep.include({
                                     type: "Straßenname",
-                                    glyphicon: "glyphicon-road",
+                                    icon: "bi-signpost-2",
                                     coordinate: [511168.58, 5403876.51, 511480.12, 5403876.51, 511480.12, 5404253.75, 511168.58, 5404253.75, 511168.58, 5403876.51]
                                 });
                                 numberOfPushedItems++;
@@ -217,7 +217,7 @@ describe("modules/searchbar/locationFinder", function () {
                             case "Feuerbacher Heide 53B":
                                 expect(value).to.deep.include({
                                     type: "Adresse",
-                                    glyphicon: "glyphicon-home",
+                                    icon: "bi-house-door-fill",
                                     coordinate: [511429.4, 5404212.63]
                                 });
                                 numberOfPushedItems++;
@@ -237,7 +237,7 @@ describe("modules/searchbar/locationFinder", function () {
             model.set("classes", [
                 {
                     "name": "Adresse",
-                    "icon": "glyphicon-home"
+                    "icon": "bi-house-door-fill"
                 },
                 {
                     "name": "Straßenname",

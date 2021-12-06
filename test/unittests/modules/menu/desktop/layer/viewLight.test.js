@@ -111,11 +111,11 @@ describe("menu/desktop/layer/viewLight", function () {
 
             const layerView = new CustomLayerView({model: fakeModel});
 
-            expect(layerView.$el.find(".glyphicon-tint").length).to.be.equal(1);
+            expect(layerView.$el.find(".bi-droplet-fill").length).to.be.equal(1);
 
             layerView.rerender();
 
-            expect(layerView.$el.find(".glyphicon-tint").length).to.be.equal(1);
+            expect(layerView.$el.find(".bi-droplet-fill").length).to.be.equal(1);
         });
         it("should be hidden for other not styleable layers", function () {
 
@@ -124,11 +124,11 @@ describe("menu/desktop/layer/viewLight", function () {
 
             const layerView = new CustomLayerView({model: fakeModel});
 
-            expect(layerView.$el.find(".glyphicon-tint").length).to.be.equal(0);
+            expect(layerView.$el.find(".bi-droplet-fill").length).to.be.equal(0);
 
             layerView.rerender();
 
-            expect(layerView.$el.find(".glyphicon-tint").length).to.be.equal(0);
+            expect(layerView.$el.find(".bi-droplet-fill").length).to.be.equal(0);
         });
     });
     describe("the layer checkbox", function () {
@@ -137,13 +137,13 @@ describe("menu/desktop/layer/viewLight", function () {
             const layerView = new CustomLayerView({model: fakeModel}),
                 keyEvent = new $.Event("keydown", {which: 13});
 
-            expect(layerView.$el.find("span.glyphicon-check").length).to.be.equal(0);
+            expect(layerView.$el.find("span.bootstrap-icon > .bi-check2-square").length).to.be.equal(0);
 
             layerView.$el.find("a.layer-item").trigger(keyEvent);
 
             layerView.rerender();
 
-            expect(layerView.$el.find("span.glyphicon-check").length).to.be.equal(1);
+            expect(layerView.$el.find("span.bootstrap-icon > .bi-check2-square").length).to.be.equal(1);
         });
     });
 });

@@ -89,7 +89,7 @@ async function MainNavTests ({builder, url, resolution, capability}) {
 
                 const attribs = await driver.switchTo().activeElement().getAttribute("class");
 
-                expect(attribs.includes("glyphicon-fullscreen")).to.be.true;
+                expect(attribs.includes("bi-arrows-angle-expand")).to.be.true;
             });
         }
     });

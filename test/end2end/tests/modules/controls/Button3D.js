@@ -50,10 +50,10 @@ function Button3DTests ({builder, url, resolution, mode, capability}) {
 
                 if (isDefault(url)) {
                     await (await driver.findElement(By.xpath("//span[contains(.,'Themen')]"))).click();
-                    await (await driver.findElement(By.css(".Overlayer > .glyphicon"))).click();
-                    await (await driver.findElement(By.xpath("//*[contains(@id,'Gesundheit')]/*[contains(@class,'glyphicon')]"))).click();
-                    await (await driver.findElement(By.css("li.layer .glyphicon-unchecked"))).click();
-                    await (await driver.findElement(By.css(".Overlayer > .glyphicon"))).click();
+                    await (await driver.findElement(By.css(".Overlayer > .bootstrap-icon"))).click();
+                    await (await driver.findElement(By.xpath("//*[contains(@id,'Gesundheit')]/*[contains(@class,'bootstrap-icon')]"))).click();
+                    await (await driver.findElement(By.css("li.layer .bi-square"))).click();
+                    await (await driver.findElement(By.css(".Overlayer > .bootstrap-icon"))).click();
                     await (await driver.findElement(By.xpath("//span[contains(.,'Themen')]"))).click();
                 }
             }
@@ -191,9 +191,9 @@ function Button3DTests ({builder, url, resolution, mode, capability}) {
                 await (await driver.findElement(By.xpath("//span[contains(.,'Themen')]"))).click();
                 // previously selected layer stays open
                 if (isDefault(url) || isCustom(url)) {
-                    await driver.findElement(By.xpath("//div[contains(@class, 'SelectedLayer')]//span[contains(@class, 'glyphicon-plus-sign')]")).click();
+                    await driver.findElement(By.xpath("//div[contains(@class, 'SelectedLayer')]//span//i[contains(@class, 'bi-plus-circle-fill')]")).click();
                     await driver.findElement(By.xpath("//ul[@id='SelectedLayer']//span[contains(.,'Krankenhäuser')]"));
-                    await driver.findElement(By.xpath("//div[contains(@class, 'SelectedLayer')]//span[contains(@class, 'glyphicon-minus-sign')]")).click();
+                    await driver.findElement(By.xpath("//div[contains(@class, 'SelectedLayer')]//span//i[contains(@class, 'bi-dash-circle-fill')]")).click();
                     // await (await driver.findElement(By.xpath("//ul[@id='tree']/li[2]/div/span"))).click();
                 }
                 else {
@@ -244,7 +244,7 @@ function Button3DTests ({builder, url, resolution, mode, capability}) {
                 expect(await driver.findElement(By.xpath("//div[contains(@class, 'gfi')]//span[contains(.,'Gebäude')]"))).to.exist;
                 expect(await driver.findElement(By.xpath("//div[contains(@class, 'gfi')]//td[contains(.,'Bahnhofsgebäude')]"))).to.exist;
                 expect(await driver.findElement(By.xpath("//div[contains(@class, 'gfi')]//td[contains(.,'Flachdach')]"))).to.exist;
-                await (await driver.findElement(By.xpath("//div[contains(@class, 'gfi')]//span[contains(@class, 'glyphicon-remove')]"))).click();
+                await (await driver.findElement(By.xpath("//div[contains(@class, 'gfi')]//span//i[contains(@class, 'bi-x-lg')]"))).click();
             });
 
             // it("in 3D mode, 2D layer features still show gfi on click", async function () {
@@ -255,7 +255,7 @@ function Button3DTests ({builder, url, resolution, mode, capability}) {
             //     await driver.wait(until.elementLocated(By.css("div.gfi")), 5000);
             //     await driver.wait(until.elementIsVisible(await driver.findElement(By.css("div.gfi"))));
             //     expect(await driver.findElement(By.xpath("//div[contains(@class, 'gfi')]//td[contains(.,'Krankenhaus Tabea')]"))).to.exist;
-            //     await (await driver.findElement(By.xpath("//div[contains(@class, 'gfi')]//span[contains(@class, 'glyphicon-remove')]"))).click();
+            //     await (await driver.findElement(By.xpath("//div[contains(@class, 'gfi')]//span//i[contains(@class, 'bi-x-lg')]"))).click();
             //     await driver.wait(until.elementIsNotVisible(await driver.findElement(By.css("div.gfi"))));
             // });
 
@@ -266,9 +266,9 @@ function Button3DTests ({builder, url, resolution, mode, capability}) {
                     await (await driver.findElement(By.xpath("//span[contains(.,'Themen')]"))).click();
                     // previously selected layer stays open
                     if (isDefault(url) || isCustom(url)) {
-                        await driver.findElement(By.xpath("//div[contains(@class, 'SelectedLayer')]//span[contains(@class, 'glyphicon-plus-sign')]")).click();
+                        await driver.findElement(By.xpath("//div[contains(@class, 'SelectedLayer')]//span//i[contains(@class, 'bi-plus-circle-fill')]")).click();
                         await driver.findElement(By.xpath("//ul[@id='SelectedLayer']//span[contains(.,'Krankenhäuser')]"));
-                        await driver.findElement(By.xpath("//div[contains(@class, 'SelectedLayer')]//span[contains(@class, 'glyphicon-minus-sign')]")).click();
+                        await driver.findElement(By.xpath("//div[contains(@class, 'SelectedLayer')]//span//i[contains(@class, 'bi-dash-circle-fill')]")).click();
                         await driver.wait(until.elementIsNotVisible(await driver.findElement(By.xpath("//ul[@id='tree']/li[2]"))));
                     }
                     else {
