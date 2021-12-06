@@ -87,9 +87,9 @@ export default {
                         aria-label="Close"
                         @click="close"
                     >
-                        <span
-                            class="glyphicon glyphicon-remove"
-                        />
+                        <span class="bootstrap-icon">
+                            <i class="bi-x-lg" />
+                        </span>
                     </button>
                     <h5 class="modal-title">
                         {{ $t(title) }}

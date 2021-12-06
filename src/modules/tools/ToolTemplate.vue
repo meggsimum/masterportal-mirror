@@ -194,10 +194,9 @@ export default {
 
         <div class="win-heading">
             <div class="heading-element">
-                <span
-                    class="glyphicon win-icon"
-                    :class="icon"
-                />
+                <span class="bootstrap-icon win-icon">
+                    <i :class="icon" />
+                </span>
             </div>
 
             <div
@@ -226,29 +225,35 @@ export default {
             >
                 <span
                     v-if="!isMinified"
-                    class="glyphicon glyphicon-minus"
+                    class="bootstrap-icon"
                     tabindex="0"
                     title="Minimieren"
                     @click="minifyTool($event)"
                     @keydown="minifyTool($event)"
-                />
+                >
+                    <i class="bi-dash-lg" />
+                </span>
                 <span
                     v-else
-                    class="glyphicon glyphicon-plus"
+                    class="bootstrap-icon"
                     tabindex="0"
                     title="Maximieren"
                     @click="maximizeTool($event)"
                     @keydown="maximizeTool($event)"
-                />
+                >
+                    <i class="bi-plus-lg" />
+                </span>
             </div>
             <div class="heading-element">
                 <span
                     ref="close-icon"
-                    class="glyphicon glyphicon-remove"
+                    class="bootstrap-icon"
                     tabindex="0"
                     @click="close($event)"
                     @keydown="close($event)"
-                />
+                >
+                    <i class="bi-x-lg" />
+                </span>
             </div>
         </div>
 
@@ -315,7 +320,7 @@ export default {
                 padding-top: 10px;
             }
 
-            > .glyphicon {
+            > .bootstrap-icon {
                 padding: 8px 8px 8px 8px;
                 &:focus {
                     @include primary_action_focus;
@@ -323,7 +328,7 @@ export default {
             }
 
             > span {
-                &.glyphicon-minus { top: 3px; }
+                > .bi-dash-lg { top: 3px; }
                 &:hover {
                     &:not(.win-icon) {
                         @include primary_action_hover;
@@ -374,7 +379,7 @@ export default {
             #vue-tool-content-body { display:none; }
             .win-heading{
                 background-color:$background_color_2;
-                .glyphicon, .title {
+                .bootstrap-icon, .title {
                     color: $color;
                 }
                 border-bottom:none;
@@ -406,7 +411,7 @@ export default {
                     font-size: 14px;
                 }
                 > .buttons { color: $color; }
-                > .glyphicon { color: $color; }
+                > .bootstrap-icon { color: $color; }
             }
         }
         .win-body-vue {

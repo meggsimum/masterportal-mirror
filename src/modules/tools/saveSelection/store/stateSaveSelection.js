@@ -4,7 +4,7 @@
  * @property {Boolean} active if true, SaveSelection will be rendered.
  * @property {String} id id of the SaveSelection component.
  * @property {String} name Displayed as the title. (config-param)
- * @property {String} glyphicon Icon next to the title. (config-param)
+ * @property {String} icon Icon next to the title. (config-param)
  * @property {Boolean} renderToWindow If true, tool is rendered in a window, else in the sidebar. (config-param)
  * @property {Boolean} resizableWindow If true, window is resizable. (config-param)
  * @property {Boolean} isVisibleInMenu If true, tool is selectable in menu. (config-param)
@@ -20,7 +20,7 @@ const state = {
     id: "saveSelection",
     // defaults for config.json tool parameters
     name: "common:menu.tools.saveSelection",
-    glyphicon: "glyphicon-share",
+    icon: "bi-box-arrow-up-right",
     renderToWindow: true,
     resizableWindow: true,
     isVisibleInMenu: true,

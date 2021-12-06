@@ -18,7 +18,7 @@ describe("src/modules/tools/routing/components/RoutingBatchProcessing.vue", () =
                         routing:
                             {
                                 "name": "translate#common:menu.tools.routing",
-                                "glyphicon": "glyphicon-road",
+                                "icon": "bi-signpost-2",
                                 "renderToWindow": true
                             }
                     }
@@ -91,7 +91,7 @@ describe("src/modules/tools/routing/components/RoutingBatchProcessing.vue", () =
             localVue,
             propsData: props
         });
-        const input = wrapper.find(".glyphicon-remove");
+        const input = wrapper.find(".bi-x-lg");
 
         input.trigger("click");
         await wrapper.vm.$nextTick();

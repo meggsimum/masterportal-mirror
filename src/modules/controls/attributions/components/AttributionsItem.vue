@@ -77,7 +77,7 @@ export default {
             class="attributions-button"
             :disabled="!openable"
             :title="$t(`common:modules.controls.attributions.${open ? 'hideAttributions' : 'showAttributions'}`)"
-            :icon-name="open ? 'forward' : 'info-sign'"
+            :icon-name="open ? 'forward-fill' : 'info-circle-fill'"
             :on-click="toggleAttributionsFlyout"
         />
         <div

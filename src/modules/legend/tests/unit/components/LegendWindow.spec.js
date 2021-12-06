@@ -15,7 +15,7 @@ describe("LegendWindow.vue", () => {
                 menu: {
                     legend: {
                         name: "common:modules.legend.name",
-                        glyphicon: "glyphicon-book",
+                        icon: "bi-journal",
                         showCollapseAllButton: true
                     }
                 }
@@ -84,12 +84,12 @@ describe("LegendWindow.vue", () => {
         describe("showCollapseAllButton", () => {
             it("renders the legend window with the collapseAllButton based on the config", () => {
                 wrapper = shallowMount(LegendWindowComponent, {store, localVue});
-                expect(wrapper.find("span.glyphicon-arrow-up").exists()).to.be.true;
+                expect(wrapper.find("span.bootstrap-icon > .bi-arrow-up").exists()).to.be.true;
             });
             it("renders the legend window without the collapseAllButton based on the config", () => {
                 store.state.Legend.showCollapseAllButton = false;
                 wrapper = shallowMount(LegendWindowComponent, {store, localVue});
-                expect(wrapper.find("span.glyphicon-arrow-up").exists()).to.be.false;
+                expect(wrapper.find("span.bootstrap-icon > .bi-arrow-up").exists()).to.be.false;
             });
         });
     });

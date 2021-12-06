@@ -57,9 +57,9 @@ export default {
                     @click="toggleLanguageWindow"
                     @keydown.enter="toggleLanguageWindow"
                 >
-                    <span
-                        class="glyphicon glyphicon-remove"
-                    />
+                    <span class="bootstrap-icon">
+                        <i class="bi-x-lg" />
+                    </span>
                     <span class="screenreader">$t("modules.language.toggleWindow"</span>
                 </a>
             </div>

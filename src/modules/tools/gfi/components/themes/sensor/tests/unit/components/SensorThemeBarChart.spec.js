@@ -69,9 +69,9 @@ describe("src/modules/tools/gfi/components/themes/senor/components/SensorThemeBa
     it("should render a two buttons with two span for left and right side if show is true", () => {
         expect(wrapper.findAll("button").wrappers.length).equals(2);
         expect(wrapper.findAll("button").wrappers[0].classes()).includes("leftButton", "kat", "btn");
-        expect(wrapper.findAll("button > span").wrappers[0].classes().includes("glyphicon", "glyphicon-chevron-left"));
+        expect(wrapper.findAll("button > span > i").wrappers[0].classes().includes("bi-chevron-left"));
         expect(wrapper.findAll("button").wrappers[1].classes()).includes("rightButton", "kat", "btn");
-        expect(wrapper.findAll("button > span").wrappers[1].classes().includes("glyphicon", "glyphicon-chevron-right"));
+        expect(wrapper.findAll("button > span > i").wrappers[1].classes().includes("bi-chevron-right"));
     });
 
     it("should returns an object with data for the charts ", () => {

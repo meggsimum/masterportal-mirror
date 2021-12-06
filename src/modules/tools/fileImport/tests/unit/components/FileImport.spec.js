@@ -20,7 +20,7 @@ describe("src/modules/tools/fileImport/components/FileImport.vue", () => {
                             fileImport:
                             {
                                 "name": "translate#common:menu.tools.fileImport",
-                                "glyphicon": "glyphicon-resize-full",
+                                "icon": "bi-arrows-angle-expand",
                                 "renderToWindow": true
                             }
                         }

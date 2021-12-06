@@ -407,7 +407,7 @@ export default {
         border-bottom: 1px solid rgb(229, 229, 229);
         cursor: move;
     }
-    .glyphicon-remove {
+    .bi-x-lg {
         &:hover {
             opacity: 0.7;
             cursor: pointer;

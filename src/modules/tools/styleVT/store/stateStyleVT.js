@@ -1,7 +1,7 @@
 /**
  * @property {Boolean} active Current status of the Tool.
  * @property {Boolean} deactivateGFI If set to true, the activation of this Tool deactivates the GFI Tool.
- * @property {String} glyphicon Glyphicon used in the header of the window.
+ * @property {String} icon Icon used in the header of the window.
  * @property {String} id Internal identifier for the Tool.
  * @property {?VTLayer} layerModel Currently selected model of a Vector Tile Layer to style.
  * @property {String} name Title displayed at the top of the window of the Tool; can be configured through the config.json.
@@ -13,7 +13,7 @@
 const state = {
     active: false,
     deactivateGFI: true,
-    glyphicon: "glyphicon-tint",
+    icon: "bi-droplet-fill",
     id: "styleVT",
     layerModel: null,
     name: "common:menu.tools.styleVt",

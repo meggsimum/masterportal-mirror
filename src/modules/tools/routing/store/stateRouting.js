@@ -4,7 +4,7 @@ const state = {
     id: "routing",
     // mandatory defaults for config.json parameters
     name: "common:menu.tools.routing",
-    glyphicon: "glyphicon-road",
+    icon: "bi-signpost-2",
     renderToWindow: false,
     resizableWindow: true,
     isVisibleInMenu: true,

@@ -57,13 +57,13 @@ export default {
         class="zoom-buttons"
     >
         <ControlIcon
-            icon-name="plus"
+            icon-name="plus-lg"
             :title="$t(`common:modules.controls.zoom.zoomIn`)"
             :disabled="maximumZoomLevelActive"
             :on-click="increaseZoomLevel"
         />
         <ControlIcon
-            icon-name="minus"
+            icon-name="dash-lg"
             :title="$t(`common:modules.controls.zoom.zoomOut`)"
             :disabled="minimumZoomLevelActive"
             :on-click="decreaseZoomLevel"

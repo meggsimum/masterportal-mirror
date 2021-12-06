@@ -200,7 +200,9 @@ export default {
                         @click="decreasePagerIndex"
                         @keydown.enter="decreasePagerIndex"
                     >
-                        <span class="glyphicon glyphicon-chevron-left" />
+                        <span class="boostrap-icon">
+                            <i class="bi-chevron-left" />
+                        </span>
                     </div>
                     <div
                         tabindex="0"
@@ -208,7 +210,9 @@ export default {
                         @click="increasePagerIndex"
                         @keydown.enter="increasePagerIndex"
                     >
-                        <span class="glyphicon glyphicon-chevron-right" />
+                        <span class="boostrap-icon">
+                            <i class="bi-chevron-right" />
+                        </span>
                     </div>
                 </div>
             </template>

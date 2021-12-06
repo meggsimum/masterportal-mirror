@@ -99,7 +99,7 @@ export default {
 <template>
     <ToolTemplate
         :title="$t(name)"
-        :icon="glyphicon"
+        :icon="icon"
         :active="active"
         :render-to-window="renderToWindow"
         :resizable-window="resizableWindow"
@@ -126,7 +126,9 @@ export default {
                         @click="changeActiveRoutingToolOption(routingToolOption.id)"
                         @keydown.enter="changeActiveRoutingToolOption(routingToolOption.id)"
                     >
-                        <span class="glyphicon glyphicon-option-vertical" />
+                        <span class="bootstrap-icon">
+                            <i class="bi-three-dots-vertical" />
+                        </span>
                         <span>{{ $t("common:modules.tools.routing.tabs." + routingToolOption.id) }}</span>
                         <RoutingLoadingSpinner
                             v-if="(routingToolOption.id === 'DIRECTIONS' && isLoadingDirections) || (routingToolOption.id === 'ISOCHRONES' && isLoadingIsochrones)"
@@ -140,7 +142,9 @@ export default {
                         @click="toggleHelp()"
                         @keydown.enter="toggleHelp()"
                     >
-                        <span class="glyphicon glyphicon-question-sign" />
+                        <span class="bootstrap-icon">
+                            <i class="bi-question-circle-fill" />
+                        </span>
                     </div>
                 </div>
 
@@ -177,7 +181,7 @@ export default {
 .routingtooltab.active {
   background: #dbdbdb;
 }
-.glyphicon-question-sign {
+.bi-question-circle-fill {
     font-size: 20px;
 }
 </style>
