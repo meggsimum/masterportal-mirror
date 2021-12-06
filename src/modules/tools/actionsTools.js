@@ -137,17 +137,17 @@ const actions = {
     },
 
     /**
-     * Adds the name and glyphicon of a tool to the ModelList, because they are used by the menu.
+     * Adds the name and icon of a tool to the ModelList, because they are used by the menu.
      * @param {String} activeTool The tool to set name.
      * @returns {void}
      */
-    addToolNameAndGlyphiconToModelList ({state}, activeTool) {
+    addToolNameAndIconToModelList ({state}, activeTool) {
         const activeToolState = state[activeTool],
             model = getComponent(activeToolState?.id);
 
         if (model) {
             model.set("name", i18next.t(activeToolState?.name));
-            model.set("glyphicon", activeToolState?.glyphicon);
+            model.set("icon", activeToolState?.ico);
         }
     }
 };

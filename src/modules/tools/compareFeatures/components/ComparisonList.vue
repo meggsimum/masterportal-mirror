@@ -75,9 +75,9 @@ export default {
                                 :title="titleRemoveButton"
                                 @click="removeFeatureFromPreparedList({features: listOfFeatures, featureId: key})"
                             >
-                                <span
-                                    class="glyphicon glyphicon-remove remove-feature"
-                                />
+                                <span class="bootstrap-icon remove-feature">
+                                    <i class="bi-x-lg" />
+                                </span>
                             </button>
                             <p v-if="isWebLink(value)">
                                 <a
@@ -129,8 +129,10 @@ export default {
                             >
                                 <span
                                     v-if="index === 0 && key !== 'col-1'"
-                                    class="glyphicon glyphicon-remove remove-feature"
-                                />
+                                    class="bootstrap-icon remove-feature"
+                                >
+                                    <i class="bi-x-lg" />
+                                </span>
                             </button>
                             <p v-if="isWebLink(value)">
                                 <a
@@ -193,8 +195,10 @@ export default {
                             >
                                 <span
                                     v-if="index === 0 && key !== 'col-1'"
-                                    class="glyphicon glyphicon-remove remove-feature"
-                                />
+                                    class="bootstrap-icon remove-feature"
+                                >
+                                    <i class="bi-x-lg" />
+                                </span>
                             </button>
                             <p v-if="isWebLink(value)">
                                 <a
@@ -248,8 +252,10 @@ export default {
                             >
                                 <span
                                     v-if="index === 0 && key !== 'col-1'"
-                                    class="glyphicon glyphicon-remove remove-feature"
-                                />
+                                    class="bootstrap-icon remove-feature"
+                                >
+                                    <i class="bi-x-lg" />
+                                </span>
                             </button>
                             <p v-if="isWebLink(value)">
                                 <a

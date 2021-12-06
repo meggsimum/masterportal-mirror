@@ -3,7 +3,7 @@
  * @typedef {Object} GfiState
  * @property {String} id Id of the gfi component.
  * @property {String} name Displayed as title (config-param).
- * @property {String} glyphicon Icon next to title (config-param).
+ * @property {String} icon Icon next to title (config-param).
  * @property {Boolean} active True if the gfi is active.
  * @property {Object} currentFeature The current feature that is displayed.
  * @property {String} desktopType Specifies which template is used in desktop mode.
@@ -15,7 +15,7 @@
 const state = {
     id: "gfi",
     name: "common:menu.tools.getInfos",
-    glyphicon: "glyphicon-info-sign",
+    icon: "bi-info-circle-fill",
     active: false,
     currentFeature: null,
     desktopType: "",

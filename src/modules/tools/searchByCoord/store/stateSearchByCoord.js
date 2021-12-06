@@ -19,7 +19,7 @@ const state = {
     zoomLevel: 7,
     // mandatory defaults for config.json parameters
     name: "Koordinatensuche",
-    glyphicon: "glyphicon-record",
+    icon: "bi-record-circle",
     renderToWindow: true,
     resizableWindow: true,
     isVisibleInMenu: true,

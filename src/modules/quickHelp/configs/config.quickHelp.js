@@ -92,7 +92,7 @@ const configQuickHelp = {
                     {
                         text: "common:modules.quickHelp.topicTree.topicsHelp3",
                         type: "text/html",
-                        interpolation: {iconCls: "glyphicon glyphicon-info-sign"}
+                        interpolation: {iconCls: "bi-info-circle-fill"}
                     },
                     "themen_2.png",
                     {
@@ -107,7 +107,7 @@ const configQuickHelp = {
                     {
                         text: "common:modules.quickHelp.topicTree.topicsHelp3",
                         type: "text/html",
-                        interpolation: {iconCls: "glyphicon glyphicon-cog rotate"}
+                        interpolation: {iconCls: "bi-gear rotate"}
                     }
                 ]
             },

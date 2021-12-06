@@ -72,12 +72,16 @@ export default {
         >
             <span
                 v-if="showAvoidFeatures"
-                class="pointer glyphicon glyphicon-chevron-down"
-            />
+                class="pointer bootstrap-icon"
+            >
+                <i class="bi-chevron-down" />
+            </span>
             <span
                 v-else
-                class="pointer glyphicon glyphicon-chevron-right"
-            />
+                class="pointer bootstrap-icon"
+            >
+                <i class="bi-chevron-right" />
+            </span>
             {{ $t('common:modules.tools.routing.avoidOptions.header') }}
         </b>
         <div

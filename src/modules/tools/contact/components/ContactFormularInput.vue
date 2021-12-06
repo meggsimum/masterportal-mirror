@@ -100,13 +100,14 @@ export default {
         <span
             v-if="validInput"
             :class="[
-                'glyphicon',
-                'glyphicon-ok',
+                'bootstrap-icon',
                 'form-control-feedback',
                 htmlElement === 'textarea' ? 'lift-tick' : ''
             ]"
             aria-hidden="true"
-        />
+        >
+            <i class="bi-check-lg" />
+        </span>
         <span
             v-else
             :id="`tool-contact-${inputName}-help`"

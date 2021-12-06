@@ -93,16 +93,20 @@ export default {
                 <div class="modal-header">
                     <span
                         ref="close-icon"
-                        class="glyphicon glyphicon-remove"
+                        class="bootstrap-icon"
                         tabindex="0"
                         aria-hidden="true"
                         data-bs-dismiss="modal"
                         :title="$t('button.close')"
                         @click="closeIconTriggered($event)"
                         @keydown="closeIconTriggered($event)"
-                    />
+                    >
+                        <i class="bi-x-lg" />
+                    </span>
                     <h4 class="modal-title">
-                        <span class="control-icon glyphicon glyphicon-record standalone" />
+                        <span class="control-icon bootstrap-icon standalone">
+                            <i class="bi-record-circle" />
+                        </span>
                         {{ $t("common:modules.controls.orientation.titleGeolocatePOI") }}
                     </h4>
                 </div>
@@ -162,27 +166,26 @@ export default {
         font-size: 14px;
         .modal-header {
             padding: 0;
+            > .bootstrap-icon {
+                font-size: 16px;
+                float: right;
+                padding: 12px;
+                cursor: pointer;
+                &:focus {
+                    @include primary_action_focus;
+                }
+                &:hover {
+                    @include primary_action_hover;
+                }
+            }
         }
         .modal-title {
             padding: 8px;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-            .glyphicon {
-                top: 3px;
+            .bootstrap-icon {
                 margin-right: 5px;
-            }
-        }
-        .glyphicon-remove {
-            font-size: 16px;
-            float: right;
-            padding: 12px;
-            cursor: pointer;
-            &:focus {
-                @include primary_action_focus;
-            }
-            &:hover {
-                @include primary_action_hover;
             }
         }
         .modal-dialog {

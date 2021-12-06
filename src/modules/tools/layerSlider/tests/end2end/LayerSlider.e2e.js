@@ -47,7 +47,7 @@ async function LayerSliderTests ({builder, url, resolution, capability}) {
                 do {
                     expect(counter++).to.be.below(10);
                     await (await driver.findElement(By.xpath("//ul[@id='tools']//.."))).click();
-                    await (await driver.findElement(By.css("#tools .glyphicon-film"))).click();
+                    await (await driver.findElement(By.css("#tools .bi-film"))).click();
                     await driver.wait(new Promise(r => setTimeout(r, 100)));
                 } while ((await driver.findElements(By.id("tool-layer-slider"))).length === 0);
 
@@ -93,7 +93,7 @@ async function LayerSliderTests ({builder, url, resolution, capability}) {
                 do {
                     expect(counter++).to.be.below(10);
                     await (await driver.findElement(By.xpath("//ul[@id='tools']//.."))).click();
-                    await (await driver.findElement(By.css("#tools .glyphicon-film"))).click();
+                    await (await driver.findElement(By.css("#tools .bi-film"))).click();
                     await driver.wait(new Promise(r => setTimeout(r, 100)));
                 } while ((await driver.findElements(By.id("tool-layer-slider"))).length === 0);
 

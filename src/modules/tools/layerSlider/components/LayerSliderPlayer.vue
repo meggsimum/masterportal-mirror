@@ -106,9 +106,11 @@ export default {
                     @click="startInterval"
                 >
                     <span
-                        class="glyphicon glyphicon-play"
+                        class="bootstrap-icon"
                         aria-hidden="true"
-                    />
+                    >
+                        <i class="bi-play-fill" />
+                    </span>
                 </button>
                 <button
                     v-else
@@ -118,9 +120,11 @@ export default {
                     @click="stopInterval"
                 >
                     <span
-                        class="glyphicon glyphicon-pause"
+                        class="bootstrap-icon"
                         aria-hidden="true"
-                    />
+                    >
+                        <i class="bi-pause" />
+                    </span>
                 </button>
                 <button
                     id="stop"
@@ -129,9 +133,11 @@ export default {
                     @click="reset"
                 >
                     <span
-                        class="glyphicon glyphicon-stop"
+                        class="bootstrap-icon"
                         aria-hidden="true"
-                    />
+                    >
+                        <i class="bi-stop-fill" />
+                    </span>
                 </button>
                 <button
                     id="backward"
@@ -140,9 +146,11 @@ export default {
                     @click="backwardLayer"
                 >
                     <span
-                        class="glyphicon glyphicon-backward"
+                        class="bootstrap-icon"
                         aria-hidden="true"
-                    />
+                    >
+                        <i class="bi-skip-backward-fill" />
+                    </span>
                 </button>
                 <button
                     id="forward"
@@ -151,9 +159,11 @@ export default {
                     @click="forwardLayer"
                 >
                     <span
-                        class="glyphicon glyphicon-forward"
+                        class="bootstrap-icon"
                         aria-hidden="true"
-                    />
+                    >
+                        <i class="bi-skip-forward-fill" />
+                    </span>
                 </button>
             </span>
             <label for="title" />
