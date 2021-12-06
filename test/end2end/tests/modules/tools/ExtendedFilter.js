@@ -56,7 +56,7 @@ async function ExtendedFilterTests ({builder, url, resolution, capability}) {
 
             it("tool opens with select box for filter creation", async function () {
                 await (await driver.findElement(By.xpath("//ul[@id='tools']//.."))).click();
-                await (await driver.findElement(By.css("#tools .glyphicon-filter"))).click();
+                await (await driver.findElement(By.css("#tools .bi-funnel-fill"))).click();
 
                 await driver.wait(
                     until.elementIsVisible(await driver.findElement(By.css("#window"))),
