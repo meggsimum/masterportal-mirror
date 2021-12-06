@@ -39,7 +39,7 @@ $border_color_1: inherit;
         }
     }
     .toggleIsActive {
-        .glyphicon-remove {                
+        .bi-x-lg {                
             &:focus {
                 @include primary_action_focus;
             }  
@@ -64,7 +64,7 @@ $border_color_1: inherit;
             padding: 3px 6px;
             font-size: 12px;
         }
-        .glyphicon-remove {
+        .bi-x-lg {
             font-size: 9px;
             padding-top: 2px;
         }

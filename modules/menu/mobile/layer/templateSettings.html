@@ -2,18 +2,18 @@
 <div class="item-settings">
   <div class="layer-info-item pull-right">
     <% if (typeof datasets !== "undefined" && datasets !== false) { %>
-      <span class="glyphicon glyphicon-info-sign"></span>
+      <span class="boostrap-icon info-icon"><i class="bi-info-circle-fill"></i></span>
     <% } %>
   </div>
   <% if (typeof treeType === "undefined") { %>
   <div class="layer-sort-item pull-right">
-    <span class="glyphicon glyphicon-triangle-top"></span>
-    <span class="glyphicon glyphicon-triangle-bottom"></span>
+    <span class="boostrap-icon up-icon"><i class="bi-caret-up-fill"></i></span>
+    <span class="boostrap-icon down-icon"><i class="bi-caret-down-fill"></i></span>
   </div>  
   <% } %>
   <% if (styleable === true) { %> 
   <div class="pull-right">
-    <span class="glyphicon glyphicon-tint"></span>
+    <span class="boostrap-icon style-icon"><i class="bi-droplet-fill"></i></span>
   </div>
   <% } %>
   <form class="form-inline pull-left" role="form">
@@ -35,7 +35,7 @@
  </form>
  <% if (isRemovable === true) { %>
  <div class="remove-layer pull-right">
-  <span class="glyphicon glyphicon-trash"></span>
+  <span class="boostrap-icon trash-icon"><i class="bi-trash"></i></span>
 </div>
 <% } %>
 </div>

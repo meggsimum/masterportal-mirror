@@ -6,7 +6,7 @@ $background_color_1: rgba(0, 0, 0,.5);
 
 /*SimpleView*/
 .filter {
-    .glyphicon-remove {
+    .bi-x-lg {
         padding: 5px;
         &:focus {
             @include primary_action_focus;

@@ -4,7 +4,7 @@ const WfsFeatureFilter = Tool.extend({
     defaults: Object.assign({}, Tool.prototype.defaults, {
         wfsList: [],
         renderToWindow: true,
-        glyphicon: "glyphicon-filter"
+        icon: "bi-funnel-fill"
     }),
     initialize: function () {
         this.listenTo(Radio.channel("ModelList"), {

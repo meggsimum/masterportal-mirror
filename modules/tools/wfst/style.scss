@@ -28,7 +28,7 @@ $fontSizeSmall: 12px;
 
     }
 
-    .record-button > .glyphicon {
+    .record-button > .bootstrap-icon {
         font-size: 15px;
     }
 
@@ -44,7 +44,7 @@ $fontSizeSmall: 12px;
         border-color: #204d74;
     }
 
-    .record-button > .glyphicon-play, .record-button > .glyphicon-minus {
+    .record-button > .bootstrap-icon > .bi-play-fill, .record-button > .bootstrap-icon > .bi-dash-lg {
         transform: rotate(45deg);
     }
 
@@ -106,7 +106,7 @@ $fontSizeSmall: 12px;
         color: red;
     }
 
-    .glyphicon-info-sign.info-sign {
+    .info-sign > .bi-info-circle-fill {
         opacity: 0.8;
         font-size: 16px;
         padding: 5px;

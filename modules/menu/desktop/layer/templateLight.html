@@ -2,28 +2,28 @@
 <div class="menu-row">
     <% if (isVisibleInMap === true) { %>
         <a href="#" id="<%= domId %>" class="dropdown-item layer-item tabable checked" tabindex="0">
-            <span class="glyphicon glyphicon-check" title="<%=removeTopicText%>"></span>
+            <span class="bootstrap-icon" title="<%=removeTopicText%>"><i class="bi-check2-square"></i></span>
     <% } else { %>
         <a href="#" id="<%= domId %>" class="dropdown-item layer-item tabable" tabindex="0">
-            <span class="glyphicon glyphicon-unchecked" title="<%=showTopicText%>"></span>
+            <span class="bootstrap-icon" title="<%=showTopicText%>"><i class="bi-square"></i></span>
     <% } %>
         <% if (isSecured) { %>
-            <span class="glyphicon glyphicon-lock" title="<%=securedTopicText%>"></span>
+            <span class="bootstrap-icon" title="<%=securedTopicText%>"><i class="bi-lock"></i></span>
         <% } %>
         <span class="title" title="<%= name %>"><%= name.substr(0,35)%><%if(name.length >= 35) {%>... <% }  %></span>
     </a>
     <span class="last-item">
         <% if (styleable === true) { %>
-            <span class="glyphicon glyphicon-tint styleWMS tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%=changeClassDivisionText%>"></span>
+            <span class="bootstrap-icon style-icon styleWMS tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%=changeClassDivisionText%>"><i class="bi-droplet-fill"></i></span>
         <% } %>
         <% if (typeof typ !== "undefined" && typ === "VectorTile" && vtStyles && vtStyles.length > 1) { %>
-            <span class="glyphicon glyphicon-tint styleVT tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Style für Layer auswählen"></span>
+            <span class="bootstrap-icon style-icon styleVT tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Style für Layer auswählen"><i class="bi-droplet-fill"></i></span>
         <% } %>
         <% if (typeof datasets !== "undefined" && datasets !== false) { %>
-            <span class="glyphicon glyphicon-info-sign tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%=infosAndLegendText%>"></span>
+            <span class="bootstrap-icon info-icon tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%=infosAndLegendText%>"><i class="bi-info-circle-fill"></i></span>
         <% } %>
         <% if (showSettings === true) { %>
-            <span class="glyphicon glyphicon-cog rotate settings tabable" tabindex="0" title="<%=settingsText%>"></span>
+            <span class="bootstrap-icon settings-icon rotate settings tabable" tabindex="0" title="<%=settingsText%>"><i class="bi-gear"></i></span>
         <% } %>
     </span>
 </div>

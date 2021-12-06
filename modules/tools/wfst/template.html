@@ -14,7 +14,7 @@
                         </select>
                     </div>
                     <div class="col-sm-1">
-                        <span tabindex="0" class="glyphicon glyphicon-info-sign info-sign" aria-hidden="true"></span>
+                        <span tabindex="0" class="bootstrap-icon info-icon info-sign" aria-hidden="true"><i class="bi-info-circle-fill"></i></span>
                     </div>
                 </div>
                 <div id="wfst-module-infoText">Es können nur WFS-T Layer ausgewählt werden, welche im Themenbaum aktiv sind.</div>
@@ -24,8 +24,8 @@
     <tr>
         <% if (buttonConfig[0]) { %>
             <td>
-                <button id="wfst-module-recordButton-point" class="btn btn-sm btn-lgv-grey record-button inactive" glyphicon="glyphicon-pencil">
-                    <span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+                <button id="wfst-module-recordButton-point" class="btn btn-sm btn-lgv-grey record-button inactive" icon="bi-pencil-fill">
+                    <span class="bootstrap-icon" aria-hidden="true"><i class="bi-record-circle"></i></span>
                     <br>
                     <span class="record-label"> <%= buttonTitleConfig[0] %></span>
                 </button>
@@ -34,8 +34,8 @@
         <% } %>
         <% if (buttonConfig[1]) { %>
             <td>
-                <button id="wfst-module-recordButton-line" class="btn btn-sm btn-lgv-grey record-button" glyphicon="glyphicon-pencil">
-                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                <button id="wfst-module-recordButton-line" class="btn btn-sm btn-lgv-grey record-button" icon="icon-pencil-fill">
+                    <span class="bootstrap-icon" aria-hidden="true"><i class="bi-dash-lg"></i></span>
                     <br>
                     <span class="record-label"><%= buttonTitleConfig[1] %></span>
                 </button>
@@ -43,8 +43,8 @@
         <% } %>
         <% if (buttonConfig[2]) { %>
             <td>
-                <button id="wfst-module-recordButton-area" class="btn btn-sm btn-lgv-grey record-button" glyphicon="glyphicon-pencil">
-                    <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                <button id="wfst-module-recordButton-area" class="btn btn-sm btn-lgv-grey record-button" icon="icon-pencil-fill">
+                    <span class="bootstrap-icon" aria-hidden="true"><i class="bi-play-fill"></i></span>
                     <br>
                     <span class="record-label"><%= buttonTitleConfig[2] %></span>
                 </button>
@@ -52,8 +52,8 @@
         <% } %>
         <% if (editButton) { %>
         <td>
-            <button id="wfst-module-recordButton-edit" class="btn btn-sm btn-lgv-grey record-button" glyphicon="glyphicon-wrench">
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            <button id="wfst-module-recordButton-edit" class="btn btn-sm btn-lgv-grey record-button" icon="bi-wrench">
+                <span class="bootstrap-icon" aria-hidden="true"><i class="bi-pencil-square"></i></span>
                 <br>
                 <span class="record-label"><%= editButtonTitle %></span>
             </button>
@@ -61,8 +61,8 @@
         <% } %>
         <% if (deleteButton) { %>
         <td>
-            <button id="wfst-module-recordButton-delete" class="btn btn-sm btn-lgv-grey record-button" glyphicon="glyphicon-trash">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <button id="wfst-module-recordButton-delete" class="btn btn-sm btn-lgv-grey record-button" icon="bi-trash">
+                <span class="bootstrap-icon" aria-hidden="true"><i class="bi-trash"></i></span>
                 <br>
                 <span class="record-label"> <%= deleteButtonTitle %></span>
             </button>
@@ -73,7 +73,7 @@
     <tr>
         <td>
             <button id="wfst-module-recordButton-save" class="btn btn-sm btn-lgv-grey record-button" title="Änderung der Attribute Speichern">
-                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                <span class="bootstrap-icon" aria-hidden="true"><i class="bi-save-fill"></i></span>
                 <br>
                 <span class="record-label">Speichern</span>
             </button>
@@ -103,7 +103,7 @@
                         else if (field.type && field.inputFieldType === "date") { %> 
                             <div class="input-group">
                                 <div class="input-group-addon input-sm">
-                                    <i class="glyphicon glyphicon-calendar"></i>
+                                    <span class="bootstrap-icon"><i class="bi-calendar3"></i></span>
                                 </div>
                                 <div class="testDate">
                                     <input data-provide="datepicker" class="form-control input-sm <%= field.type%> <%= mandatory %> datepicker" data-date-format="yyyy-mm-dd" data-date-language="de" data-date-autoclose=true data-date-today-highlight=true id="<%= field.field %>" autocomplete="off" placeholder="yyyy-mm-dd" type="text" value="<%= fieldValue %>"/>
@@ -123,7 +123,7 @@
     <tr>
         <td>
             <button id="wfst-module-recordButton-discard" class="btn btn-lgv-grey record-button" title="Änderungen der Attribute verwerfen">
-                <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                <span class="bootstrap-icon x-icon" aria-hidden="true"><i class="bi-x-circle"></i></span>
                 <br>
                 <span class="record-label">Verwerfen</span>
             </button>

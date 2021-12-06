@@ -183,10 +183,10 @@ const LocationFinderModel = Backbone.Model.extend(/** @lends LocationFinderModel
                     }
 
                     if (typeof classDefinition.icon === "string") {
-                        hit.glyphicon = classDefinition.icon;
+                        hit.icon = classDefinition.icon;
                     }
                     else {
-                        hit.glyphicon = "glyphicon-road";
+                        hit.icon = "bi-signpost-2";
                     }
 
                     if (classDefinition.zoomLevel) {
@@ -206,7 +206,7 @@ const LocationFinderModel = Backbone.Model.extend(/** @lends LocationFinderModel
                     }
                 }
                 else {
-                    hit.glyphicon = "glyphicon-road";
+                    hit.icon = "bi-signpost-2";
                     hit.coordinate = this.transformToMapProjection(Radio.request("Map", "getMap"), crs, [parseFloat(locationFinderResult.cx), parseFloat(locationFinderResult.cy)]);
                 }
 
