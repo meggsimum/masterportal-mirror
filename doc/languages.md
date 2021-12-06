@@ -97,7 +97,7 @@ To translate a config.json value, the value itself must be formatted correctly. 
         "menu": {
             "example": {
                 "name": "translate#common:foo.bar.exampleMenuTitle",
-                "glyphicon": "glyphicon-list",
+                "icon": "bi-list-ul",
                 "isInitOpen": false
             }
         }
@@ -157,11 +157,11 @@ Tools (de: "Werkzeuge") can be translated similarly to tools. This includes the 
 {
     "tools": {
         "name": "Tools",
-        "glyphicon": "glyphicon-wrench",
+        "icon": "bi-wrench",
         "children": {
             "draw": {
                 "name": "translate#common:foo.bar.exampleMenuTitle",
-                "glyphicon": "glyphicon-pencil"
+                "icon": "bi-pencil-fill"
             },
         }
     }
@@ -312,7 +312,7 @@ ExampleTemplate
 <template lang="html">
     <Tool
         :title="$t(name)"
-        :icon="glyphicon"
+        :icon="icon"
     >
 </template>
 ```
