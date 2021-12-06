@@ -47,7 +47,7 @@ function ZoomTests ({builder, url, resolution, capability}) {
 
 
             it("should have a plus button", async function () {
-                plus = await driver.wait(until.elementLocated(By.css("button.control-icon.glyphicon-plus")), 5000);
+                plus = await driver.wait(until.elementLocated(By.css("button.control-icon > .bi-plus-lg")), 5000);
                 expect(plus).to.exist;
             });
 
@@ -59,7 +59,7 @@ function ZoomTests ({builder, url, resolution, capability}) {
             });
 
             it("should have a minus button", async function () {
-                minus = await driver.findElement(By.css("button.control-icon.glyphicon-minus"));
+                minus = await driver.findElement(By.css("button.control-icon > .bi-dash-lg"));
                 expect(minus).to.exist;
             });
 

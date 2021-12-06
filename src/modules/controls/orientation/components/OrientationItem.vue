@@ -269,10 +269,10 @@ export default {
          */
         toggleBackground () {
             if (this.isGeolocationDenied) {
-                this.$el.querySelector(".glyphicon-map-marker").style.background = "rgb(221, 221, 221)";
+                this.$el.querySelector(".bi-geo-alt-fill").parent(".bootstrap-icon").style.background = "rgb(221, 221, 221)";
             }
             else {
-                this.$el.querySelector(".glyphicon-map-marker").style.background = "#E10019";
+                this.$el.querySelector(".bi-geo-alt-fill").parent(".bootstrap-icon").style.background = "#E10019";
             }
         },
 
@@ -460,18 +460,20 @@ export default {
     <div class="orientationButtons">
         <span
             id="geolocation_marker"
-            class="glyphicon glyphicon-map-marker geolocation_marker"
-        />
+            class="bootstrap-icon geolocation_marker"
+        >
+            <i class="bi-geo-alt-fill" />
+        </span>
         <ControlIcon
             id="geolocate"
             :title="$t('common:modules.controls.orientation.titleGeolocate')"
-            :icon-name="'map-marker'"
+            :icon-name="'geo-alt-fill'"
             :on-click="getOrientation"
         />
         <ControlIcon
             v-if="showPoiIcon"
             id="geolocatePOI"
-            :icon-name="'record'"
+            :icon-name="'record-circle'"
             :title="$t('common:modules.controls.orientation.titleGeolocatePOI')"
             :on-click="getPOI"
         />
@@ -494,16 +496,6 @@ export default {
 
     .orientationButtons {
         margin-top: 20px;
-        >.glyphicon {
-            font-size: 22px;
-            margin-top: 4px;
-        }
-        >.glyphicon-map-marker {
-            padding: 5px 7px 6px 6px;
-        }
-        >.glyphicon-record {
-            padding: 5px 6px 6px 6px;
-        }
         >.toggleButtonPressed {
             background-color: rgb(8,88,158);
         }

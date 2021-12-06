@@ -230,9 +230,9 @@ export default {
                     :disabled="isDisabled"
                     @click="downloadResult()"
                 >
-                    <span
-                        class="glyphicon glyphicon-floppy-disk pointer"
-                    />
+                    <span class="bootstrap-icon pointer">
+                        <i class="bi-save-fill" />
+                    </span>
                     {{ $t('common:modules.tools.routing.download.saveResult') }}
                 </button>
             </div>

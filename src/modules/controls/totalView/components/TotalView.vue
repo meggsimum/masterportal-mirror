@@ -10,15 +10,15 @@ import TableStyleControl from "../../TableStyleControl.vue";
 export default {
     name: "TotalView",
     props: {
-        /** glyphicon name for the control icon */
-        glyphicon: {
+        /** icon name for the control icon */
+        icon: {
             type: String,
-            default: "fast-backward"
+            default: "skip-backward-fill"
         },
-        /** glyphicon name for the control icon in style table */
-        tableGlyphicon: {
+        /** icon name for the control icon in style table */
+        tableIcon: {
             type: String,
-            default: "home"
+            default: "house-door-fill"
         }
     },
     computed: {
@@ -27,8 +27,8 @@ export default {
         component () {
             return Radio.request("Util", "getUiStyle") === "TABLE" ? TableStyleControl : ControlIcon;
         },
-        glyphiconToUse () {
-            return Radio.request("Util", "getUiStyle") === "TABLE" ? this.tableGlyphicon : this.glyphicon;
+        iconToUse () {
+            return Radio.request("Util", "getUiStyle") === "TABLE" ? this.tableIcon : this.icon;
         },
 
         /**
@@ -62,7 +62,7 @@ export default {
             class="total-view-button"
             :title="$t('common:modules.controls.totalView.titleButton')"
             :disabled="!mapMoved"
-            :icon-name="glyphiconToUse"
+            :icon-name="iconToUse"
             :on-click="startResetView"
         />
     </div>

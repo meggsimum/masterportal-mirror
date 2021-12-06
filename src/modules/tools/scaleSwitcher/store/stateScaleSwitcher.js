@@ -5,7 +5,7 @@
  * @property {String} id id of the ScaleSwitcher component
  * @property {String} currentScale scale selected in ScaleSwitcher
  * @property {String} name displayed as title (config-param)
- * @property {String} glyphicon icon next to title (config-param)
+ * @property {String} icon icon next to title (config-param)
  * @property {Boolean} renderToWindow if true, tool is rendered in a window, else in sidebar (config-param)
  * @property {Boolean} resizableWindow if true, window is resizable (config-param)
  * @property {Boolean} isVisibleInMenu if true, tool is selectable in menu (config-param)
@@ -16,7 +16,7 @@ const state = {
     id: "scaleSwitcher",
     // defaults for config.json parameters
     name: "common:menu.tools.scaleSwitcher",
-    glyphicon: "glyphicon-resize-small",
+    icon: "bi-arrows-angle-contract",
     renderToWindow: true,
     resizableWindow: true,
     isVisibleInMenu: true,

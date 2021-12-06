@@ -18,7 +18,7 @@ describe("src/modules/tools/compareFeatures/components/CompareFeatures.vue", () 
                         compareFeatures:
                             {
                                 "name": "translate#common:menu.tools.compareFeatures",
-                                "glyphicon": "glyphicon-record",
+                                "icon": "bi-record-circle",
                                 "renderToWindow": true
                             }
                     }

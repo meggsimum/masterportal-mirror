@@ -4,7 +4,7 @@
  * @property {Boolean} active If true, LayerSlider will rendered.
  * @property {String} id Id of the LayerSlider component.
  * @property {String} name "Name of the LayerSlider.
- * @property {String} glyphicon "glyphicon-film" Glyphicon.
+ * @property {String} icon "bi-film" Icon.
  * @property {Boolean} renderToWindow if true, tool is rendered in a window, else in sidebar (config-param).
  * @property {Boolean} resizableWindow if true, window is resizable (config-param).
  * @property {Boolean} isVisibleInMenu if true, tool is selectable in menu (config-param).
@@ -25,7 +25,7 @@ const state = {
     active: false,
     id: "layerSlider",
     name: "common:menu.tools.layerSlider",
-    glyphicon: "glyphicon-film",
+    icon: "bi-film",
     renderToWindow: true,
     resizableWindow: true,
     isVisibleInMenu: true,

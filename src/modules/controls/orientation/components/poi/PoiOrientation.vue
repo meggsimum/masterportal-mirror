@@ -314,14 +314,16 @@ export default {
                 <div class="modal-header">
                     <span
                         ref="close-icon"
-                        class="glyphicon glyphicon-remove"
+                        class="bootstrap-icon"
                         tabindex="0"
                         aria-hidden="true"
                         data-bs-dismiss="modal"
                         :title="$t('button.close')"
                         @click="closeIconTriggered($event)"
                         @keydown="closeIconTriggered($event)"
-                    />
+                    >
+                        <i class="bi-x-lg" />
+                    </span>
                     <h4 class="modal-title">
                         {{ $t("common:modules.controls.orientation.titleGeolocatePOI") }}
                     </h4>
@@ -424,7 +426,7 @@ export default {
             text-overflow: ellipsis;
             overflow: hidden;
         }
-        .glyphicon-remove {
+        .bi-x-lg {
             font-size: 16px;
             float: right;
             padding: 12px;

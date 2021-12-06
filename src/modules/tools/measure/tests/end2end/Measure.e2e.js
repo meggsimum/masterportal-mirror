@@ -48,7 +48,7 @@ async function MeasureTests ({builder, url, resolution, mode, capability}) {
 
                     it("opens a widget with distance/meters preconfigured for geometry/unit", async function () {
                         await reclickUntilNotStale(driver, By.xpath("//ul[@id='tools']//.."));
-                        await (await driver.findElement(By.css("#tools .glyphicon-resize-full"))).click();
+                        await (await driver.findElement(By.css("#tools .bi-arrows-angle-expand"))).click();
 
                         selectGeometry = await driver.findElement(By.id("measure-tool-geometry-select"), 5000);
                         selectUnit = await driver.findElement(By.id("measure-tool-unit-select"), 5000);

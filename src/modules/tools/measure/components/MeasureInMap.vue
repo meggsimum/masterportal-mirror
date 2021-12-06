@@ -113,7 +113,7 @@ export default {
 <template lang="html">
     <ToolTemplate
         :title="name"
-        :icon="glyphicon"
+        :icon="icon"
         :active="active"
         :render-to-window="renderToWindow"
         :resizable-window="resizableWindow"

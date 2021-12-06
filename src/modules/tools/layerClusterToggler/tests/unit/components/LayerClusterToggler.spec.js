@@ -19,7 +19,7 @@ describe("src/modules/tools/layerClusterToggler/components/LayerClusterToggler.v
                             layerClusterToggler:
                                 {
                                     "name": "translate#common:menu.tools.layerClusterToggler",
-                                    "glyphicon": "glyphicon-education",
+                                    "icon": "bi-easel3",
                                     "renderToWindow": true
                                 }
                         }
