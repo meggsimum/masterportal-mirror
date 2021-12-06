@@ -46,7 +46,7 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
                             coordToolkit:
                             {
                                 "name": "translate#common:menu.tools.coordToolkit",
-                                "glyphicon": "glyphicon-globe",
+                                "icon": "bi-globe",
                                 "showCopyButtons": true
                             }
                         }

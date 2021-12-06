@@ -24,7 +24,7 @@ const symbol = {
      * @property {String[]} filterList.drawTypes The drawTypes to be filtered.
      * @property {String} filterList.name The name of the corresponding filter.
      * @property {Boolean} freeHand Distinction between a freeHand line drawing or a static one.
-     * @property {String} glyphicon Glyphicon used in the header of the window.
+     * @property {String} icon Icon used in the header of the window.
      * @property {Object[]} iconList List of icons used for the point draw interaction.
      * @property {String} id Internal Identifier for the Tool.
      * @property {Integer} idCounter Amount of features drawn.
@@ -116,7 +116,7 @@ const symbol = {
         fId: 0,
         filterList: null,
         freeHand: false,
-        glyphicon: "glyphicon-pencil",
+        icon: "bi-pencil-fill",
         iconList: [
             symbol,
             {

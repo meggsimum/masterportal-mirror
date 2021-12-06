@@ -89,7 +89,9 @@ export default {
                             type="button"
                             @click="fileDownloaded"
                         >
-                            <span class="glyphicon glyphicon-floppy-disk" />
+                            <span class="bootstrap-icon">
+                                <i class="bi-save-fill" />
+                            </span>
                             {{ $t("common:modules.tools.draw.button.saveDrawing") }}
                         </button>
                     </a>

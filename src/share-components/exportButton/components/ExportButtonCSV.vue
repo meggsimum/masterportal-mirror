@@ -267,9 +267,11 @@ export default {
         @click="download()"
     >
         <span
-            id="glyphicon"
-            class="glyphicon glyphicon-download"
-        />
+            id="bootstrap-icon"
+            class="bootstrap-icon"
+        >
+            <i class="bi-cloud-arrow-down-fill" />
+        </span>
         {{ $t(title) }}
     </button>
     <button
@@ -279,9 +281,11 @@ export default {
         disabled
     >
         <span
-            id="glyphicon"
-            class="glyphicon glyphicon-download spin-animation"
-        />
+            id="bootstrap-icon"
+            class="bootstrap-icon spin-animation"
+        >
+            <i class="bi-cloud-arrow-down-fill" />
+        </span>
         {{ $t(title) }}
     </button>
 </template>
@@ -302,7 +306,7 @@ export default {
     .exportButton > .spin-animation {
         animation: exportButtonLoaderSpinAnimation 1s 0.1s ease-in-out infinite both;
     }
-    .exportButton > .glyphicon-download {
+    .exportButton > .bi-cloud-arrow-down-fill {
         margin-right: 5px;
     }
 </style>

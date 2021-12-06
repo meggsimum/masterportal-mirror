@@ -87,7 +87,7 @@ const state = {
     optimalScale: null,
     DOTS_PER_INCH: 72,
     INCHES_PER_METER: 39.37,
-    glyphicon: "glyphicon-print",
+    icon: "bi-printer-fill",
     eventListener: undefined,
     dpiForPdf: 200,
     layoutNameList: [],

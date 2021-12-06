@@ -25,7 +25,7 @@ async function CoordToolkitTests ({builder, url, resolution, config, capability}
     describe("CoordToolkit", function () {
         const selectors = {
                 tools: By.xpath("//ul[@id='tools']/.."),
-                toolCoordToolkit: By.css("ul#tools span.glyphicon-globe"),
+                toolCoordToolkit: By.css("ul#tools span.bootstrap-icon > .bi-globe"),
                 modal: By.css(".tool-window-vue"),
                 header: By.css(".tool-window-vue p.title span"),
                 supplyCoordRadio: By.css("input#supplyCoordRadio"),

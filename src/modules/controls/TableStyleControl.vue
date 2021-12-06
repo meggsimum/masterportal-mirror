@@ -13,7 +13,7 @@
 export default {
     name: "TableStyleControl",
     props: {
-        /** Name of the glyphicon, with or without prefix "glyphicon-". */
+        /** Name of the bootstrap, with or without prefix "bi-". */
         iconName: {
             type: String,
             required: true
@@ -38,10 +38,10 @@ export default {
     },
     computed: {
         /**
-         * @returns {String} string with prefixed "glyphicon-" if it was missing
+         * @returns {String} string with prefixed "bi-" if it was missing
          */
-        glyphiconClass () {
-            return this.iconName.startsWith("glyphicon-") ? this.iconName : `glyphicon-${this.iconName}`;
+        iconClass () {
+            return this.iconName.startsWith("bi-") ? this.iconName : `bi-${this.iconName}`;
         }
     },
     mounted () {
@@ -68,7 +68,9 @@ export default {
             href="#"
             :tabindex="disabled ? '-1' : '0'"
         >
-            <span :class="['glyphicon', glyphiconClass]" />
+            <span class="bootstrap-icon">
+                <i :class="iconClass" />
+            </span>
             {{ title }}
         </a>
     </button>

@@ -67,7 +67,7 @@ describe("src/modules/quickHelp/components/QuickHelp.vue", () => {
             const localWrapper = shallowMount(QuickHelpComponent, {store, localVue, propsData: {
                     quickHelpConfigJsObject: true
                 }}),
-                button = localWrapper.find(".glyphicon-remove");
+                button = localWrapper.find(".bi-x-lg");
 
             expect(button).to.exist;
         });

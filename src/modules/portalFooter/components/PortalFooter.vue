@@ -103,8 +103,10 @@ export default {
                     </a>
                     <span
                         v-if="index < Object.keys(urls).length - 1 || showVersion"
-                        class="glyphicon glyphicon-option-vertical hidden-xs"
-                    />
+                        class="bootstrap-icon hidden-xs"
+                    >
+                        <i class="bi-three-dots-vertical" />
+                    </span>
                 </span>
             </template>
             <template v-if="showVersion">
@@ -158,7 +160,7 @@ export default {
             flex-grow: 1;
         }
 
-        .glyphicon-option-vertical {
+        .bootstrap-icon {
             padding: 0 8px;
         }
 

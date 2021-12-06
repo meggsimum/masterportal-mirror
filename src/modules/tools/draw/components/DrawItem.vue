@@ -376,7 +376,7 @@ export default {
 <template lang="html">
     <ToolTemplate
         :title="$t(name)"
-        :icon="glyphicon"
+        :icon="icon"
         :active="active && !withoutGUI"
         :render-to-window="renderToWindow"
         :resizable-window="resizableWindow"
@@ -843,7 +843,9 @@ export default {
                             :disabled="currentInteraction === 'draw'"
                             @click="toggleInteraction('draw'); setCanvasCursorByInteraction('draw')"
                         >
-                            <span class="glyphicon glyphicon-pencil" />
+                            <span class="bootstrap-icon">
+                                <i class="bi-pencil-fill" />
+                            </span>
                             {{ $t("common:modules.tools.draw.button.draw") }}
                         </button>
                     </div>
@@ -855,7 +857,9 @@ export default {
                             class="btn btn-sm btn-block btn-lgv-grey"
                             @click="undoLastStep"
                         >
-                            <span class="glyphicon glyphicon-repeat" />
+                            <span class="bootstrap-icon">
+                                <i class="bi-arrow-counterclockwise" />
+                            </span>
                             {{ $t("common:modules.tools.draw.button.undo") }}
                         </button>
                     </div>
@@ -867,7 +871,9 @@ export default {
                             class="btn btn-sm btn-block btn-lgv-grey"
                             @click="redoLastStep"
                         >
-                            <span class="glyphicon glyphicon-repeat" />
+                            <span class="bootstrap-icon">
+                                <i class="bi-arrow-clockwise" />
+                            </span>
                             {{ $t("common:modules.tools.draw.button.redo") }}
                         </button>
                     </div>
@@ -881,7 +887,9 @@ export default {
                             :disabled="currentInteraction === 'modify'"
                             @click="toggleInteraction('modify'); setCanvasCursorByInteraction('modify')"
                         >
-                            <span class="glyphicon glyphicon-wrench" />
+                            <span class="bootstrap-icon">
+                                <i class="bi-wrench" />
+                            </span>
                             {{ $t("common:modules.tools.draw.button.edit") }}
                         </button>
                     </div>
@@ -895,7 +903,9 @@ export default {
                             :disabled="currentInteraction === 'delete'"
                             @click="toggleInteraction('delete'); setCanvasCursorByInteraction('delete')"
                         >
-                            <span class="glyphicon glyphicon-trash" />
+                            <span class="bootstrap-icon">
+                                <i class="bi-trash" />
+                            </span>
                             {{ $t("common:modules.tools.draw.button.delete") }}
                         </button>
                     </div>
@@ -907,7 +917,9 @@ export default {
                             class="btn btn-sm btn-block btn-lgv-grey"
                             @click="clearLayer"
                         >
-                            <span class="glyphicon glyphicon-trash" />
+                            <span class="bootstrap-icon">
+                                <i class="bi-trash" />
+                            </span>
                             {{ $t("common:modules.tools.draw.button.deleteAll") }}
                         </button>
                     </div>

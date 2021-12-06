@@ -681,18 +681,19 @@ export default {
         toggleCollapseAll (evt) {
             if (evt.type === "click" || evt.which === 32 || evt.which === 13) {
 
-                const element = evt.target,
-                    hasArrowUp = element.className.includes("glyphicon-arrow-up");
+                const element = evt.currentTarget,
+                    iconElement = element.querySelector("i"),
+                    hasArrowUp = iconElement.className.includes("bi-arrow-up");
 
                 if (hasArrowUp) {
                     this.collapseAllLegends();
-                    element.classList.remove("glyphicon-arrow-up");
-                    element.classList.add("glyphicon-arrow-down");
+                    iconElement.classList.remove("bi-arrow-up");
+                    iconElement.classList.add("bi-arrow-down");
                 }
                 else {
                     this.expandAllLegends();
-                    element.classList.remove("glyphicon-arrow-down");
-                    element.classList.add("glyphicon-arrow-up");
+                    iconElement.classList.remove("bi-arrow-down");
+                    iconElement.classList.add("bi-arrow-up");
                 }
             }
         },
@@ -741,28 +742,31 @@ export default {
             :class="mobile ? 'legend-window-mobile' : (uiStyle === 'TABLE' ? 'legend-window-table': 'legend-window')"
         >
             <div :class="uiStyle === 'TABLE' ? 'legend-title-table': 'legend-title'">
-                <span
-                    :class="glyphicon"
-                    class="glyphicon hidden-sm"
-                />
+                <span class="bootstrap-icon hidden-sm">
+                    <i :class="icon" />
+                </span>
                 <span>{{ $t(name) }}</span>
                 <div class="float-right">
                     <span
                         v-if="showCollapseAllButton"
                         ref="collapse-all-icon"
                         tabindex="0"
-                        class="glyphicon glyphicon-arrow-up toggle-collapse-all legend"
+                        class="bootstrap-icon toggle-collapse-all legend"
                         :title="$t('common:modules.legend.toggleCollapseAll')"
                         @click="toggleCollapseAll($event)"
                         @keydown="toggleCollapseAll($event)"
-                    />
+                    >
+                        <i class="bi-arrow-up" />
+                    </span>
                     <span
                         ref="close-icon"
-                        class="glyphicon glyphicon-remove close-legend"
+                        class="bootstrap-icon close-legend"
                         tabindex="0"
                         @click="closeLegend($event)"
                         @keydown="closeLegend($event)"
-                    />
+                    >
+                        <i class="bi-x-lg" />
+                    </span>
                 </div>
             </div>
             <div class="legend-content">

@@ -4,7 +4,7 @@
  * @property {Boolean} active If true, SaveSelection will be rendered.
  * @property {String} id Id of the Contact component.
  * @property {String} name Displayed as the title. (config-param)
- * @property {String} glyphicon Icon next to the title. (config-param)
+ * @property {String} icon Icon next to the title. (config-param)
  * @property {Boolean} renderToWindow If true, tool is rendered in a window, else in the sidebar. (config-param)
  * @property {Boolean} resizableWindow If true, window is resizable. (config-param)
  * @property {Boolean} isVisibleInMenu If true, tool is selectable in menu. (config-param)
@@ -33,7 +33,7 @@ const state = {
     id: "contact",
     // defaults for config.json tool parameters
     name: "common:menu.contact",
-    glyphicon: "glyphicon-envelope",
+    icon: "bi-envelope-fill",
     renderToWindow: true,
     resizableWindow: true,
     isVisibleInMenu: true,
