@@ -10,7 +10,6 @@
 - Added WFS Layer that creates a VectorLayer and a VectorSource. Layer-params and loading-params can be passed as function parameters, options may contain functions to filter and style features. Clustering and WFS-filter are supported.
 - Added possibility to add any rawLayer attribute to wms layer request.
 - Examples were extended by WFS-Layer.
-- The package ""regenerator-runtime" version 0.13.9 was added to provide async tests.
 
 ### Changed
 - The constructor of createMap in the abstraction layer changed. The order of the parameters (config, settings = {}, mapMode = "2D") changes to (config, mapMode = "2D", settings = {}).
