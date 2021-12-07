@@ -18,6 +18,11 @@
 ### Fixed
 
 ---
+ ## 1.6.1 - 2021-12-07
+### Changed
+- SessionID from the WMS layer was removed and replaced by the CacheID in order to deal with deegree services.
+
+---
 ## 1.6.0 - 2021-11-10
 ### Added
 - The library Cesium is loaded on demand to generate a 3D map. Cesium must be provided by the user of this library.
