@@ -41,7 +41,7 @@ describe("wms.js", function () {
         it("sets a session id", function () {
             const params = wms.makeParams({});
 
-            expect(typeof params.SESSIONID).toEqual("number");
+            expect(typeof params.CACHEID).toEqual("number");
         });
 
         it("copies the query parameters correctly", function () {
