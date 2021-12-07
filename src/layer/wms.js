@@ -25,8 +25,7 @@ export function generateSessionId () {
  */
 export function makeParams (rawLayer) {
     const params = Object.assign({
-        SESSIONID: generateSessionId(),
-        CACHEID: rawLayer.cacheId,
+        CACHEID: generateSessionId(),
         FORMAT: rawLayer.format || "image/png",
         LAYERS: rawLayer.layers,
         VERSION: rawLayer.version,
