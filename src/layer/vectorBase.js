@@ -10,7 +10,6 @@ export function createLayerSource () {
     return new VectorSource();
 }
 
-
 /**
  * Forces an update by giving a layer a new sessionID.
  * @param {ol.Layer} layer - the layer that is to be updated
