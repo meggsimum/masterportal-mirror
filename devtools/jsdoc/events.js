@@ -3,7 +3,7 @@
 /**
  * @event StyleWMS#RadioTriggerStyleWMSOpenStyleWMS
  * @param {Object} model Layer model to be styled
- * @description Opens the Tool and sets the layer model. Event is triggered by clicking on the glyphicon in the layer tree.
+ * @description Opens the Tool and sets the layer model. Event is triggered by clicking on the icon in the layer tree.
  * @example Radio.trigger("StyleWMS", "openStyleWMS", model)
  */
 
@@ -42,7 +42,7 @@
 /**
  * @event StyleVT#RadioTriggerStyleVTOpenStyleVT
  * @param {Object} model Layer model to be styled
- * @description Opens the Tool and sets the layer model. Event is triggered by clicking on the glyphicon in the layer tree.
+ * @description Opens the Tool and sets the layer model. Event is triggered by clicking on the icon in the layer tree.
  * @example Radio.trigger("StyleVT", "open", model)
  */
 
@@ -847,7 +847,7 @@
  * @event Searchbar#RadioTriggerSearchbarPushHits
  * @description trigger transfer of search hits as a list
  * @param {String} sListname Name of list
- * @param {Object[]} aHitListArray an array of object{id, name, type} with optional values: coordinate, glyphicon, geom, adress, locationFinder, metaName, osm, marker, geometryType
+ * @param {Object[]} aHitListArray an array of object{id, name, type} with optional values: coordinate, icon, geom, adress, locationFinder, metaName, osm, marker, geometryType
  * @example Radio.trigger("Searchbar", "pushHits", "hitList", aHitListArray);
  */
 
