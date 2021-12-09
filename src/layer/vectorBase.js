@@ -20,7 +20,7 @@ export function updateSource (layer) {
 }
 
 /**
- * Triggered by Layer to create a ol/layer/Vector
+ * Triggered by Layer to create an ol/layer/Vector
  * @param {Object} attrs  attributes of the layer
  * @returns {Object} layer
  */
