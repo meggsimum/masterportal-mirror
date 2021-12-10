@@ -16,7 +16,8 @@ export function createLayerSource () {
  * @returns {void}
  */
 export function updateSource (layer) {
-    layer.getSource().refresh();
+    layer.getSource().clear(true);
+    layer.getSource().addFeatures(layer.getFeatures());
 }
 
 /**
