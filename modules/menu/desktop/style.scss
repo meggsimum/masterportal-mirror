@@ -97,10 +97,10 @@ ul#tree {
         cursor: pointer;
         font-size: 15px;
         padding: 2px 2px 1px 2px;
-        color: $secondary_icon_button;
     }
     .bi-info-circle-fill, .bi-gear, .bi-droplet-fill, .bi-x-circle {
         font-size: 18px;
+        color: $secondary_icon_button;
     }
     .highlightLayerInformationIcon {
         color: $secondary_hover;
