@@ -83,7 +83,7 @@ export default {
 
         &.closed {
             /* using translateX to prevent multiline flicker on width transformation */
-            transform: translateX(calc(-100% + $icon_length_small));
+            transform: translateX(calc(-100% + #{$icon_length_small}));
         }
 
         .mouse-position-span {
