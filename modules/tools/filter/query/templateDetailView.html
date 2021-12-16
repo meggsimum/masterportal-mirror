@@ -2,15 +2,15 @@
 <% if (isLayerVisible) { %>
 <div class="detailview-head">
     <% if (sendToRemote) { %>
-        <label class="col-xs-6"><%= name %><%= filter %></label>
-        <button class="zoom-btn btn btn-default btn-sm col-xs-5 col-md-5 col-sm-5" title="<%= zoomOnResults %>">
+        <label class="col-6"><%= name %><%= filter %></label>
+        <button class="zoom-btn btn btn-default btn-sm col-5 col-md-5" title="<%= zoomOnResults %>">
             <span class="bootstrap-icon search-icon"><i class="bi-search"></i></span>
             <span class="feature-count"><%= featureIds.length %> <%= result %></span>
         </button>
     <% }
     else { %>
-        <label class="col-xs-8"><%= name %><%= filter %></label>
-        <label class="col-xs-4 feature-count"><%= featureIds.length %> <%= results %></label>
+        <label class="col-8"><%= name %><%= filter %></label>
+        <label class="col-4 feature-count"><%= featureIds.length %> <%= results %></label>
     <% } %>
     <% if (this.model.has("info")) { %>
         <div class="filter-info"><%= info %></div>

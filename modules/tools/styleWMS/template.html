@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <div class="form-horizontal" role="form">
     <div class="form-group form-group-sm">
-        <div class="col-md-12 col-sm-12">
+        <div class="col-md-12">
             <label class="range-label"><%=theme%></label>
             <select class="form-control input-sm" id="layerField">
                 <option class="pull-left" value="" selected="true"><%=chooseTheme%></option>
@@ -13,7 +13,7 @@
     </div>
     <% if ( model !== null && model!== undefined) { %>
         <div class="form-group form-group-sm">
-            <div class="col-md-12 col-sm-12">
+            <div class="col-md-12">
                 <label class="range-label"><%=attribute%></label>
                 <select class="form-control input-sm" id="attributField">
                     <option class="pull-left" value="default" <% if (attributeName === "default") { print ("SELECTED")} %>><%=chooseAttribute%></option>
@@ -25,7 +25,7 @@
         </div>
         <% if (attributeName !== "default") { %>
             <div class="form-group form-group-sm">
-                <div class="col-md-12 col-sm-12">
+                <div class="col-md-12">
                     <label class="range-label"><%=countOfClasses%></label>
                     <select class="form-control input-sm" id="numberField">
                         <option class="pull-left" value="default" <% if (numberOfClasses === "default") { print ("SELECTED")} %>><%=chooseNumberOfClasses%></option>
@@ -39,15 +39,15 @@
         <% if (numberOfClasses !== "default") { %>
             <% for (let i = 0; i < numberOfClasses; i++) { %>
                 <div class="form-group">
-                    <div class="col-md-5 col-sm-5">
+                    <div class="col-md-5">
                         <label class="range-label"><%=rangeOfValues%> <%= i + 1 %></label>
                         <input class="form-control input-sm <%= 'start-range' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].startRange)} %>" placeholder=<%=from%>>
                     </div>
-                    <div class="col-md-5 col-sm-5">
+                    <div class="col-md-5">
                         <label class="range-label">&nbsp;</label>
                         <input class="form-control input-sm <%= 'stop-range' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].stopRange)} %>" placeholder=<%=to%>>
                     </div>
-                    <div class="col-md-2 col-sm-2">
+                    <div class="col-md-2">
                         <label class="range-label">&nbsp;</label>
                         <div id="style-wms-colorpicker" tabindex="0" class="input-group colorpicker-component">
                             <input class="form-control input-sm <%= 'selected-color' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].color)} else { print ('#337ab7')} %>">
@@ -58,9 +58,9 @@
             <% } %>
             <div class="form-group form-group-sm">
                 <% if (typeof errors !== "undefined") { %>
-                    <span id="yearError" class="col-xs-7 col-xs-offset-5 treeFilterError"><%= errors.range %></span>
+                    <span id="yearError" class="col-7 offset-5 treeFilterError"><%= errors.range %></span>
                 <% } %>
-                <div class="col-md-12 col-sm-12 col-xs-12 stylewms-panel">
+                <div class="col-12 stylewms-panel">
                     <button class="btn btn-lgv-grey reset float-left"><%=reset%></button>
                     <button class="btn btn-primary submit float-right"><%=apply%></button>
                 </div>
@@ -68,7 +68,7 @@
         <% } %>
         <% if (model !== null && numberOfClasses === "default") { %>
             <div class="form-group form-group-sm">
-                <div class="col-md-12 col-sm-12 col-xs-12 stylewms-panel">
+                <div class="col-12 stylewms-panel">
                     <button class="btn btn-lgv-grey reset float-left"><%=reset%></button>
                 </div>
             </div>

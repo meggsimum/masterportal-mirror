@@ -139,12 +139,12 @@ export default {
                     >
                         <label
                             id="tool-wfsSearch-instances-select-label"
-                            class="col-md-5 col-sm-5 control-label"
+                            class="col-md-5 control-label"
                             for="tool-wfsSearch-instances-select"
                         >
                             {{ $t("common:modules.tools.wfsSearch.instancesSelectLabel") }}
                         </label>
-                        <div class="col-md-7 col-sm-7">
+                        <div class="col-md-7">
                             <select
                                 id="tool-wfsSearch-instances-select"
                                 class="form-control input-sm"
@@ -168,11 +168,11 @@ export default {
                     >
                         <i
                             id="tool-wfsSearch-userHelp-icon"
-                            class="col-md-1 col-sm-1 bi-info-circle-fill"
+                            class="col-md-1 bi-info-circle-fill"
                         />
                         <span
                             id="tool-wfsSearch-userHelp-text"
-                            class="col-md-11 col-sm-11"
+                            class="col-md-11"
                             :aria-label="$t('common:modules.tools.wfsSearch.userHelp.label')"
                             v-html="$t('common:modules.tools.wfsSearch.userHelp.text', {userHelp})"
                         />
@@ -186,32 +186,32 @@ export default {
                         <hr :key="'tool-wfsSearch-clause-divider' + i">
                     </template>
                     <div class="form-group form-group-sm">
-                        <div class="col-md-6 col-sm-6">
+                        <div class="col-md-6">
                             <button
                                 id="tool-wfsSearch-button-resetUI"
                                 type="button"
-                                class="btn btn-lgv-grey col-md-12 col-sm-12"
+                                class="btn btn-lgv-grey col-md-12"
                                 @click="resetUI"
                             >
                                 {{ $t("common:modules.tools.wfsSearch.resetButton") }}
                             </button>
                         </div>
-                        <div class="col-md-6 col-sm-6">
+                        <div class="col-md-6">
                             <input
                                 id="tool-wfsSearch-button-search"
                                 type="submit"
-                                class="btn btn-lgv-grey col-md-12 col-sm-12"
+                                class="btn btn-lgv-grey col-md-12"
                                 :disabled="requiredFields"
                                 :value="$t('common:modules.tools.wfsSearch.searchButton')"
                             >
                         </div>
                         <div
                             v-if="searched"
-                            class="col-md-12 col-sm-12"
+                            class="col-md-12"
                         >
                             <button
                                 id="tool-wfsSearch-button-showResults"
-                                class="btn btn-lgv-grey col-md-12 col-sm-12"
+                                class="btn btn-lgv-grey col-md-12"
                                 :disabled="results.length === 0 || !headers"
                                 @click="setShowResultList(true)"
                             >

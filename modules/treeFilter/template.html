@@ -1,8 +1,8 @@
 <!DOCTYPE html>
     <form class="form-horizontal" role="form">
         <div class="form-group form-group-sm">
-            <label class="treefilter-label control-label col-xs-4">Gattung</label>
-            <div class="col-xs-8">
+            <label class="treefilter-label control-label col-4">Gattung</label>
+            <div class="col-8">
                 <div class="input-group input-group-sm">
                     <input id="categoryInput" class="form-control" type="text" placeholder="Keine Auswahl" value="<%= treeCategory %>" title="<%= treeCategory %>">
                     <div id="categoryToggle" class="input-group-btn">
@@ -19,12 +19,12 @@
             </div>
             <br>
             <% if (errors.category !== undefined) { %>
-                <span class="col-xs-7 col-xs-offset-5 treeFilterError"><%= errors.category %></span>
+                <span class="col-7 offset-5 treeFilterError"><%= errors.category %></span>
             <% } %>
         </div>
         <div class="form-group form-group-sm">
-            <label class="treefilter-label control-label col-xs-4">Baumart</label>
-            <div class="col-xs-8">
+            <label class="treefilter-label control-label col-4">Baumart</label>
+            <div class="col-8">
                 <div class="input-group input-group-sm">
                     <input id="typeInput" class="form-control" type="text" title="<%= treeType %>" value="<% if (treeCategory === "") {print ('""')} else{ print (treeType)} %>" placeholder="Alle Arten" <% if (treeCategory === "") print ('disabled') %>>
                     <div id="typeToggle" class="input-group-btn">
@@ -45,57 +45,57 @@
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label class="treefilter-label control-label col-xs-4">Pflanzjahr</label>
-            <div id="yearMin" class="col-xs-3 <% if (errors.yearError !== undefined) print('has-error') %>">
+            <label class="treefilter-label control-label col-4">Pflanzjahr</label>
+            <div id="yearMin" class="col-3 <% if (errors.yearError !== undefined) print('has-error') %>">
                 <input type="text" class="form-control input-sm" value=<%= yearMin %>>
             </div>
-            <div class="col-xs-1">
+            <div class="col-1">
                 <span class="bootstrap-icon" style="vertical-align: bottom;"><i class="bi-dash-lg"></i></span>
             </div>
-            <div id="yearMax" class="col-xs-3 <% if (errors.yearError !== undefined) print('has-error') %>">
+            <div id="yearMax" class="col-3 <% if (errors.yearError !== undefined) print('has-error') %>">
                 <input type="text" class="form-control input-sm" value=<%= yearMax %>>
             </div>
             <br>
             <% if (errors.yearError !== undefined) { %>
-                <span id="yearError" class="col-xs-7 col-xs-offset-5 treeFilterError"><%= errors.yearError %></span>
+                <span id="yearError" class="col-7 offset-5 treeFilterError"><%= errors.yearError %></span>
             <% } %>
         </div>
         <div class="form-group form-group-sm">
-            <label class="treefilter-label control-label col-xs-4">Kronendurchmesser[m]</label>
-            <div id="diameterMin" class="col-xs-3">
+            <label class="treefilter-label control-label col-4">Kronendurchmesser[m]</label>
+            <div id="diameterMin" class="col-3">
                 <input type="text" class="form-control input-sm" value=<%= diameterMin %>>
             </div>
-            <div class="col-xs-1">
+            <div class="col-1">
                 <span class="bootstrap-icon" style="vertical-align: bottom;"><i class="bi-dash-lg"></i></span>
             </div>
-            <div id="diameterMax" class="col-xs-3">
+            <div id="diameterMax" class="col-3">
                 <input type="text" class="form-control input-sm" value=<%= diameterMax %>>
             </div>
             <br>
             <% if (errors.diamterError !== undefined) { %>
-                <span id="diamterError" class="col-xs-7 col-xs-offset-5 treeFilterError"><%= errors.diamterError %></span>
+                <span id="diamterError" class="col-7 offset-5 treeFilterError"><%= errors.diamterError %></span>
             <% } %>
         </div>
         <div class="form-group form-group-sm">
-            <label class="treefilter-label control-label col-xs-4">Stammumfang[cm]</label>
-            <div id="perimeterMin" class="col-xs-3">
+            <label class="treefilter-label control-label col-4">Stammumfang[cm]</label>
+            <div id="perimeterMin" class="col-3">
                 <input type="text" class="form-control input-sm" value=<%= perimeterMin %>>
             </div>
-            <div class="col-xs-1">
+            <div class="col-1">
                 <span class="bootstrap-icon" style="vertical-align: bottom;"><i class="bi-dash-lg"></i></span>
             </div>
-            <div id="perimeterMax" class="col-xs-3">
+            <div id="perimeterMax" class="col-3">
                 <input type="text" class="form-control input-sm" value=<%= perimeterMax %>>
             </div>
             <br>
             <% if (errors.perimeterError !== undefined) { %>
-                <span id="perimeterError" class="col-xs-7 col-xs-offset-5 treeFilterError"><%= errors.perimeterError %></span>
+                <span id="perimeterError" class="col-7 offset-5 treeFilterError"><%= errors.perimeterError %></span>
             <% } %>
         </div>
         <div class="form-group form-group-sm">
-            <div class="col-xs-12">
-                <button id="filterRemoveButton" class="btn btn-lgv-grey col-xs-5" type="button">Aufheben</button>
-                <button id="filterbutton" class="btn btn-lgv-grey col-xs-5 col-xs-offset-2" type="button">Filtern</button>
+            <div class="col-12">
+                <button id="filterRemoveButton" class="btn btn-lgv-grey col-5" type="button">Aufheben</button>
+                <button id="filterbutton" class="btn btn-lgv-grey col-5 offset-2" type="button">Filtern</button>
             </div>
         </div>
     </form>

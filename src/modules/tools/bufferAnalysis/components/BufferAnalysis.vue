@@ -192,9 +192,9 @@ export default {
             >
                 <label
                     for="tool-bufferAnalysis-selectSourceInput"
-                    class="col-md-5 col-sm-5 control-label"
+                    class="col-md-5 control-label"
                 >{{ $t("modules.tools.bufferAnalysis.sourceSelectLabel") }}</label>
-                <div class="col-md-7 col-sm-7 form-group form-group-sm">
+                <div class="col-md-7 form-group form-group-sm">
                     <select
                         id="tool-bufferAnalysis-selectSourceInput"
                         ref="tool-bufferAnalysis-selectSourceInput"
@@ -212,10 +212,10 @@ export default {
                 </div>
                 <label
                     for="tool-bufferAnalysis-radiusTextInput"
-                    class="col-md-5 col-sm-5 control-label"
+                    class="col-md-5 control-label"
                 >{{ $t("modules.tools.bufferAnalysis.rangeLabel") }}</label>
 
-                <div class="col-md-7 col-sm-7 form-group form-group-sm">
+                <div class="col-md-7 form-group form-group-sm">
                     <input
                         id="tool-bufferAnalysis-radiusTextInput"
                         v-model="inputBufferRadius"
@@ -240,10 +240,10 @@ export default {
 
                 <label
                     for="tool-bufferAnalysis-resultTypeInput"
-                    class="col-md-5 col-sm-5 control-label"
+                    class="col-md-5 control-label"
                 >{{ $t("modules.tools.bufferAnalysis.resultTypeLabel") }}</label>
 
-                <div class="col-md-7 col-sm-7 form-group form-group-sm">
+                <div class="col-md-7 form-group form-group-sm">
                     <select
                         id="tool-bufferAnalysis-resultTypeInput"
                         v-model="resultType"
@@ -265,10 +265,10 @@ export default {
 
                 <label
                     for="tool-bufferAnalysis-selectTargetInput"
-                    class="col-md-5 col-sm-5 control-label"
+                    class="col-md-5 control-label"
                 >{{ $t("modules.tools.bufferAnalysis.targetSelectLabel") }}</label>
 
-                <div class="col-md-7 col-sm-7 form-group form-group-sm">
+                <div class="col-md-7 form-group form-group-sm">
                     <select
                         id="tool-bufferAnalysis-selectTargetInput"
                         v-model="selectedTargetLayer"
@@ -285,7 +285,7 @@ export default {
                     </select>
                 </div>
 
-                <div class="col-md-12 col-sm-12 form-group form-group-sm">
+                <div class="col-md-12 form-group form-group-sm">
                     <button
                         id="tool-bufferAnalysis-resetButton"
                         class="pull-right btn btn-block btn-lgv-grey"
@@ -296,7 +296,7 @@ export default {
                     </button>
                 </div>
 
-                <div class="col-md-12 col-sm-12 form-group form-group-sm">
+                <div class="col-md-12 form-group form-group-sm">
                     <button
                         id="tool-bufferAnalysis-saveButton"
                         class="pull-right btn btn-block btn-primary"
@@ -306,11 +306,11 @@ export default {
                         {{ $t("modules.tools.bufferAnalysis.saveButton") }}
                     </button>
                 </div>
-                <div class="col-md-12 col-sm-12 form-group form-group-sm">
+                <div class="col-md-12 form-group form-group-sm">
                     <input
                         id="tool-bufferAnalysis-savedUrlText"
                         v-model="savedUrl"
-                        class="col-md-12 col-sm-12 form-group form-group-sm input-sm"
+                        class="col-md-12 form-group form-group-sm input-sm"
                         readonly
                         :hidden="!savedUrl"
                         type="text"
