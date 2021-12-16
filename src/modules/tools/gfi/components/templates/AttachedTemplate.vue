@@ -5,7 +5,7 @@ import {mapGetters} from "vuex";
 import getTheme from "../../utils/getTheme";
 import Overlay from "ol/Overlay.js";
 import "bootstrap/js/dist/tooltip";
-import "bootstrap/js/dist/popover";
+import Popover from "bootstrap/js/dist/popover";
 
 export default {
     name: "AttachedTemplate",
@@ -53,7 +53,10 @@ export default {
         feature () {
             this.$nextTick(() => {
                 this.overlay.setPosition(this.clickCoord);
-                $(this.overlay.getElement()).popover("show");
+                // Upgrade to BT5
+                const popover = Popover.getInstance(this.overlay.getElement());
+
+                popover.show();
             });
         }
     },
@@ -93,20 +96,19 @@ export default {
          * @returns {void}
          */
         createPopover () {
-            $(this.overlay.getElement()).popover({
+            // Upgrade to BT5
+            const popover = new Popover(this.overlay.getElement(), {
                 content: this.$el,
                 html: true,
-                viewport: ".ol-viewport",
-                placement: function () {
-                    if (this.getPosition().top > document.getElementById("map").offsetHeight / 2) {
-                        return "top";
-                    }
-
-                    return "bottom";
-
-                }
+                boundary: ".ol-viewport",
+                selector: "#gfipopup",
+                // place popup next to overlay element, necessary for correct popover removal
+                container: this.overlay.getElement().parentElement,
+                placement: "top",
+                fallbackPlacements: ["bottom"]
             });
-            $(this.overlay.getElement()).popover("show");
+
+            popover.show();
         },
 
         /**
@@ -216,16 +218,11 @@ export default {
 </style>
 
 <style lang="scss">
-    .ol-viewport {
-        .popover {
-            padding: 0;
-            width: max-content;
-            max-width: 40vw;
-            border: 0;
-            z-index: 1;
-        }
-        .popover-content {
-            padding: 0;
-        }
+    .popover {
+        padding: 0 !important;
+        width: max-content;
+        max-width: 40vw !important;
+        border: 0 !important;
+        z-index: 1 !important;
     }
 </style>
