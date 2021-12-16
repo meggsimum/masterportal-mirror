@@ -120,7 +120,7 @@ const ToolView = Backbone.View.extend(/** @lends ToolView.prototype */{
     setCssClass: function () {
         if (this.model.get("parentId") === "root") {
             this.$el.addClass("menu-style");
-            this.$el.find("span").addClass("d-sm-none d-md-block");
+            this.$el.find("span").addClass("d-md-none d-lg-block");
             this.$el.attr("title", this.model.get("name"));
         }
         else {

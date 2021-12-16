@@ -742,7 +742,7 @@ export default {
             :class="mobile ? 'legend-window-mobile' : (uiStyle === 'TABLE' ? 'legend-window-table': 'legend-window')"
         >
             <div :class="uiStyle === 'TABLE' ? 'legend-title-table': 'legend-title'">
-                <span class="bootstrap-icon d-sm-none d-md-block">
+                <span class="bootstrap-icon d-md-none d-lg-block">
                     <i :class="icon" />
                 </span>
                 <span>{{ $t(name) }}</span>
