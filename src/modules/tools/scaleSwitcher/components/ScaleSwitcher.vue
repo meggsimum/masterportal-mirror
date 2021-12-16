@@ -94,9 +94,9 @@ export default {
             >
                 <label
                     for="scale-switcher-select"
-                    class="col-md-5 col-sm-5 control-label"
+                    class="col-md-5 control-label"
                 >{{ $t("modules.tools.scaleSwitcher.label") }}</label>
-                <div class="col-md-7 col-sm-7">
+                <div class="col-md-7">
                     <select
                         id="scale-switcher-select"
                         ref="scale-switcher-select"

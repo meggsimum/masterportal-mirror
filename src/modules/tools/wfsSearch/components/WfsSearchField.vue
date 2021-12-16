@@ -214,7 +214,7 @@ export default {
     <div class="form-group form-group-sm">
         <div
             v-if="Array.isArray(inputLabel)"
-            class="col-md-5 col-sm-5"
+            class="col-md-5"
         >
             <select
                 :id="`tool-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-fieldSelection`"
@@ -233,12 +233,12 @@ export default {
         </div>
         <label
             v-else
-            class="col-md-5 col-sm-5 control-label"
+            class="col-md-5 control-label"
             :for="`tool-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-input`"
         >
             {{ inputLabel }}
         </label>
-        <div class="col-md-7 col-sm-7">
+        <div class="col-md-7">
             <component
                 :is="htmlElement"
                 :id="`tool-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-input`"
