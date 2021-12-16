@@ -183,10 +183,10 @@ export default {
         <div class="d-flex mb-2">
             <label
                 for="routing-DownloadFormatOptions"
-                class="col-md-4 col-sm-4 control-label d-flex align-self-center"
+                class="col-md-4 control-label d-flex align-self-center"
             >{{ $t('common:modules.tools.routing.download.format') }}</label>
 
-            <div class="col-md-8 col-sm-8">
+            <div class="col-md-8">
                 <select
                     id="routing-DownloadFormatOptions"
                     class="form-control input-sm mt-4"
@@ -208,10 +208,10 @@ export default {
         <div class="d-flex mb-2">
             <label
                 for="routing-download-filename"
-                class="col-md-4 col-sm-4 control-label d-flex align-self-center"
+                class="col-md-4 control-label d-flex align-self-center"
             >{{ $t('common:modules.tools.routing.download.filename') }}</label>
 
-            <div class="col-md-8 col-sm-8">
+            <div class="col-md-8">
                 <input
                     id="routing-download-filename"
                     v-model="download.fileName"
@@ -223,7 +223,7 @@ export default {
         </div>
 
         <div class="form-group form-group-sm">
-            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-12">
                 <button
                     class="btn btn-sm btn-block"
                     type="button"

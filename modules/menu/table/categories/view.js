@@ -37,7 +37,7 @@ const CategoryView = Backbone.View.extend({
         return this;
     },
     id: "table-category-list",
-    className: "table-category-list table-nav col-md-2",
+    className: "table-category-list table-nav col-lg-2",
     template: _.template(Template),
     toggleCategoryMenu: function () {
         if (this.$(".table-nav-cat-panel").hasClass("in")) {
