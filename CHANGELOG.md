@@ -233,6 +233,7 @@
 - The following NPM packages are added:
     - dependencies:
         - "bootstrap-sass"
+        - "bootstrap-icons"
 - Extended CSW processing for download links in layerInformation by CSW 2.0.2 standard.
 - The tool "featureLister" has been extended and now also highlights lines and polygons on mouse-over over the feature name.
 - Added the possibility to use the High Resolution Plot Service
@@ -258,6 +259,8 @@
 - CoordToolkit:
     - Added Buttons to copy one coordinate or both of them with a configurable delimiter. The visibility of the buttons is also configurable.
     - Removed copy of coordinates if click in input-field.
+    - selenium-webdriver: 4.0.0 to version 4.1.0
+- Switched Icon Library from Glyphicon to Bootstrap Icons. Edited Webpack Config. Updated icon usage in vue components to use scss. Updated icon usage in backbone modules. Edited docs & tests accordingly.
 
 ### Deprecated
 - Parametric URL: all deprecation-warnings are removed, besides STARTUPMODUL and BEZIRK.
