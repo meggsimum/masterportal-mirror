@@ -183,11 +183,11 @@ export default {
                 <div
                     v-if="showMoreLayers"
                     class="dropdown mb-2"
-                    :class="{ open: openDropdown }"
                 >
                     <button
                         id="changeLayerInfo"
                         class="btn btn-default dropdown-toggle"
+                        :class="{ show: openDropdown }"
                         type="button"
                         @click="onClickDropdown"
                     >
@@ -196,6 +196,7 @@ export default {
                     </button>
                     <ul
                         class="dropdown-menu"
+                        :class="{ show: openDropdown }"
                     >
                         <li
                             v-for="name in layerInfo.layerNames"

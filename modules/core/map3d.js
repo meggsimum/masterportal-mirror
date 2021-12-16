@@ -3,6 +3,7 @@ import {transform, get} from "ol/proj.js";
 import store from "../../src/app-store";
 import mapCollection from "../../src/core/dataStorage/mapCollection.js";
 import api from "@masterportal/masterportalapi/src/maps/api";
+import Dropdown from "bootstrap/js/dist/dropdown";
 
 const Map3dModel = Backbone.Model.extend(/** @lends Map3dModel.prototype*/{
     defaults: {
@@ -173,8 +174,11 @@ const Map3dModel = Backbone.Model.extend(/** @lends Map3dModel.prototype*/{
             cartographicPickedPosition;
 
         if (cartesian) {
-            if (document.querySelector(".nav li")?.classList.contains("open")) {
-                document.querySelector(".nav li").classList.remove("open");
+            // Upgrade to BT5, use JS method instead of class removal
+            if (document.querySelector(".nav li > .dropdown-toggle")?.classList.contains("show")) {
+                const dropdown = Dropdown.getInstance(document.querySelector(".nav li > .dropdown-toggle"));
+
+                dropdown.hide();
             }
             cartographic = scene.globe.ellipsoid.cartesianToCartographic(cartesian);
             coords = [window.Cesium.Math.toDegrees(cartographic.longitude), window.Cesium.Math.toDegrees(cartographic.latitude)];

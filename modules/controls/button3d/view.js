@@ -2,6 +2,7 @@ import Button3dTemplate from "text-loader!./template.html";
 import Button3dTemplateTable from "text-loader!./templateTable.html";
 import Button3dModel from "./model";
 import store from "../../../src/app-store";
+import Dropdown from "bootstrap/js/dist/dropdown";
 /**
  * @member Button3dTemplate
  * @description Template used for the 3D Button
@@ -202,7 +203,10 @@ const Button3dView = Backbone.View.extend(/** @lends Button3dView.prototype */{
         });
 
         if (document.getElementById("root").hasChildNodes()) {
-            document.getElementById("root").firstChild.classList.remove("open");
+            // Upgrade to BT5, use JS method instead of class removal
+            const dropdown = Dropdown.getInstance(document.getElementById("root").firstChild.querySelector(".dropdown-toggle"));
+
+            dropdown.hide();
         }
     },
 
