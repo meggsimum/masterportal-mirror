@@ -6,6 +6,11 @@
  * and css rules in this file would result in a copy of all of the rules per import.
  */
 
+// Wait til 5.2.0 to get better map overrides
+// https://github.com/twbs/bootstrap/pull/34942
+// https://github.com/twbs/bootstrap-rubygem/issues/141
+@import "../node_modules/bootstrap/scss/functions";
+
 /*
  * Masterportal Default Style (Override of Bootstrap)
  */
@@ -112,9 +117,8 @@ $tool_box_shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
 // Padding used for the Tool windows
 $padding: 20px;
 
-
 /*
  * Imports from Bootstrap
  */
- @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
- @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+ @import "../node_modules/bootstrap/scss/variables";
+ @import "../node_modules/bootstrap/scss/mixins";

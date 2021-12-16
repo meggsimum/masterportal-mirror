@@ -59,6 +59,11 @@ export default {
         .row {
             margin-right: 0;
             margin-left: 0;
+
+            > * {
+                padding-right: 0;
+                padding-left: 0;
+            }
         }
         > div {
             padding: 5px;
