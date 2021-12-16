@@ -28,7 +28,9 @@ const Orientation3DView = Backbone.View.extend({
         });
 
         this.render();
-        this.$el.hide();
+        // Update to BT5 Display classes, do not use jQuery hide/show
+        // this.$el.hide();
+        this.$el.removeClass("d-md-block");
         this.mapChange(Radio.request("Map", "getMapMode"));
         channel.on({
             "change": this.mapChange
@@ -67,7 +69,11 @@ const Orientation3DView = Backbone.View.extend({
         this.$el.find(".control-box-container").removeClass("oblique");
         this.$el.find(".compass-pointer").css({transform: "rotate(0rad)"});
         this.is3d = false;
-        this.$el.hide();
+        // Update to BT5 Display classes, do not use jQuery hide/show
+        // this.$el.hide();
+        this.$el.removeClass("d-md-block");
+        
+        this.$el.removeClass("d-md-block");
     },
     showOblique: function () {
         if (this.unlisten) {
@@ -77,7 +83,9 @@ const Orientation3DView = Backbone.View.extend({
         this.is3d = false;
         this.$el.find(".compass").addClass("oblique");
         this.$el.find(".control-box-container").addClass("oblique");
-        this.$el.show();
+        // Update to BT5 Display classes, do not use jQuery hide/show
+        // this.$el.show();
+        this.$el.addClass("d-md-block");
     },
     show3d: function () {
         const scene = Radio.request("Map", "getMap3d").getCesiumScene(),
@@ -94,7 +102,9 @@ const Orientation3DView = Backbone.View.extend({
         this.unlisten = scene.postRender.addEventListener(function () {
             this.$el.find("#north-pointer").css({transform: "rotate(" + camera.heading + "rad)"});
         }.bind(this));
-        this.$el.show();
+        // Update to BT5 Display classes, do not use jQuery hide/show
+        // this.$el.show();
+        this.$el.addClass("d-md-block");
     },
     buttonClicked: function (event) {
         const command = event.target.id;

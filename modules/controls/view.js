@@ -69,7 +69,7 @@ const ControlsView = Backbone.View.extend(/** @lends ControlsView.prototype */{
             fallback.append("<div class='row controls-row-right' id='" + id + "'></div>");
         }
         else {
-            fallback.append("<div class='row controls-row-right d-none d-sm-block' id='" + id + "'></div>");
+            fallback.append("<div class='row controls-row-right d-none d-md-block' id='" + id + "'></div>");
         }
         return fallback.children().last();
     },
@@ -90,7 +90,7 @@ const ControlsView = Backbone.View.extend(/** @lends ControlsView.prototype */{
             fallback.append("<div class='row controls-row-right' id='" + id + "'></div>");
         }
         else {
-            fallback.append("<div class='row controls-row-right d-none d-sm-block' id='" + id + "'></div>");
+            fallback.append("<div class='row controls-row-right d-none d-md-block' id='" + id + "'></div>");
         }
 
         return fallback.children().last();
