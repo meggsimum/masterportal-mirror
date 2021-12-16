@@ -421,12 +421,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-circleMethod"
                     >
                         {{ $t("common:modules.tools.draw.method") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="tool-draw-circleMethod"
                             class="form-control input-sm"
@@ -453,12 +453,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-circleRadius"
                     >
                         {{ innerRadiusLabelComputed }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <input
                             id="tool-draw-circleRadius"
                             v-model="circleRadiusComputed"
@@ -477,12 +477,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-circleOuterRadius"
                     >
                         {{ $t("common:modules.tools.draw.outerRadius") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <input
                             id="tool-draw-circleOuterRadius"
                             v-model="circleOuterRadiusComputed"
@@ -500,12 +500,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-circleUnit"
                     >
                         {{ $t("common:modules.tools.draw.unit") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="tool-draw-circleUnit"
                             class="form-control input-sm"
@@ -528,12 +528,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-text"
                     >
                         {{ $t("common:modules.tools.draw.text") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <input
                             id="tool-draw-text"
                             class="form-control"
@@ -550,12 +550,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-fontSize"
                     >
                         {{ $t("common:modules.tools.draw.fontSize") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="tool-draw-fontSize"
                             class="form-control input-sm"
@@ -578,12 +578,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-font"
                     >
                         {{ $t("common:modules.tools.draw.fontName") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="tool-draw-font"
                             class="form-control input-sm"
@@ -606,12 +606,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-symbol"
                     >
                         {{ $t("common:modules.tools.draw.symbol") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="tool-draw-symbol"
                             class="form-control input-sm"
@@ -635,12 +635,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-strokeWidth"
                     >
                         {{ $t("common:modules.tools.draw.lineWidth") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="tool-draw-strokeWidth"
                             class="form-control input-sm"
@@ -663,12 +663,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-opacity"
                     >
                         {{ $t("common:modules.tools.draw.transparency") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="tool-draw-opacity"
                             :key="`tool-draw-opacity-select`"
@@ -692,12 +692,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-opacityContour"
                     >
                         {{ $t("common:modules.tools.draw.transparencyOutline") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="tool-draw-opacityContour"
                             :key="`tool-draw-opacityContour-select`"
@@ -721,12 +721,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-colorContour"
                     >
                         {{ colorContourLabelComputed }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="tool-draw-colorContour"
                             class="form-control input-sm"
@@ -749,12 +749,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-outerColorContour"
                     >
                         {{ $t("common:modules.tools.draw.outerColorContour") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="tool-draw-outerColorContour"
                             class="form-control input-sm"
@@ -777,12 +777,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-pointColor"
                     >
                         {{ $t("common:modules.tools.draw.color") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="tool-draw-pointColor"
                             class="form-control input-sm"
@@ -805,12 +805,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="tool-draw-pointColor"
                     >
                         {{ $t("common:modules.tools.draw.color") }}
                     </label>
-                    <div class="col-md-7 col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="tool-draw-pointColor"
                             class="form-control input-sm"
@@ -835,7 +835,7 @@ export default {
                 role="form"
             >
                 <div class="form-group form-group-sm">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-12">
                         <button
                             id="tool-draw-drawInteraction"
                             class="btn btn-sm btn-block"
@@ -851,7 +851,7 @@ export default {
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-12">
                         <button
                             id="tool-draw-undoInteraction"
                             class="btn btn-sm btn-block btn-lgv-grey"
@@ -865,7 +865,7 @@ export default {
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-12">
                         <button
                             id="tool-draw-redoInteraction"
                             class="btn btn-sm btn-block btn-lgv-grey"
@@ -879,7 +879,7 @@ export default {
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-12">
                         <button
                             id="tool-draw-editInteraction"
                             class="btn btn-sm btn-block"
@@ -895,7 +895,7 @@ export default {
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-12">
                         <button
                             id="tool-draw-deleteInteraction"
                             class="btn btn-sm btn-block"
@@ -911,7 +911,7 @@ export default {
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-12">
                         <button
                             id="tool-draw-deleteAllInteraction"
                             class="btn btn-sm btn-block btn-lgv-grey"

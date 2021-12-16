@@ -139,7 +139,7 @@ export default {
                     <template v-if="key === geometryName">
                         <button
                             type="button"
-                            class="btn btn-lgv-grey col-md-12 col-sm-12"
+                            class="btn btn-lgv-grey col-md-12"
                         >
                             {{ $t("common:share-components.list.zoomToResult") }}
                         </button>

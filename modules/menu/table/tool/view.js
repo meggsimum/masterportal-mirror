@@ -22,7 +22,7 @@ const ToolView = Backbone.View.extend({
         this.updateTitle();
     },
     id: "table-tools",
-    className: "table-nav table-tools col-md-2",
+    className: "table-nav table-tools col-lg-2",
     template: _.template(MenuTemplate),
     updateTitle: function () {
         const toolsName = this.model.toJSON().toolsName;

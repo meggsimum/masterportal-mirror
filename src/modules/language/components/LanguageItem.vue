@@ -67,7 +67,7 @@ export default {
                 <div
                     v-for="(value, key) in $i18n.i18next.options.getLanguages()"
                     :key="key"
-                    class="col-lg-6 col-md-6 col-sm-6 col-xs-12"
+                    class="col-12 col-md-6"
                 >
                     <button
                         class="lng btn"
