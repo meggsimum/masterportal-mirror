@@ -12,37 +12,60 @@ export function generateSessionId () {
 }
 
 /**
- * Creates query parameters for webservice requests from rawLayer.
+ * Adds optional wms parameters to the given parameters.
+ * @param {object} params - the mandatory params of wms request url
  * @param {object} rawLayer - layer specification as in services.json
- * @param {string} [rawLayer.format="image/png"] - format of images requested
- * @param {string} layers - comma-separated list of requested layers
- * @param {version} version - webservice version as string, e.g. "1.1.1"
- * @param {boolean} transparent - whether tiles from this service should have transparency where no information is available
- * @param {boolean} singleTile - whether only one tile shall be requested that fills the whole view
- * @param {boolean} STYLES - stles of the layer, if available
- * @param {(string|number)} tilesize - if singleTile is true, this is the requested tilesize
- * @returns {object} maps query parameter names to values
+ * @param {boolean} [rawLayer.STYLES] - styles of the layer, if available
+ * @param {boolean} [rawLayer.TIME] - time attribute, if available
+ * @returns {object} maps query extended parameter names to values
  */
-export function makeParams (rawLayer) {
-    const rawLayerParams = {};
-    let params = {};
+export function addOptionalParams (params, rawLayer) {
+    const extendedParams = {...params},
+        rawLayerParams = {},
+        optionalParams = [
+            "STYLES",
+            "TIME"
+        ];
 
     Object.keys(rawLayer).forEach(key => {
         rawLayerParams[key.toUpperCase()] = rawLayer[key];
     });
+
+    optionalParams.forEach(optionalParam => {
+        if (rawLayer[optionalParam]) {
+            extendedParams[optionalParam] = rawLayer[optionalParam];
+        }
+    });
+
+    return extendedParams;
+}
+
+/**
+ * Creates query parameters for webservice requests from rawLayer.
+ * @param {object} rawLayer - layer specification as in services.json
+ * @param {string} [rawLayer.format="image/png"] - format of images requested
+ * @param {string} rawLayer.layers - comma-separated list of requested layers
+ * @param {version} rawLayer.version - webservice version as string, e.g. "1.1.1"
+ * @param {boolean} rawLayer.transparent - whether tiles from this service should have transparency where no information is available
+ * @param {boolean} rawLayer.singleTile - whether only one tile shall be requested that fills the whole view
+ * @param {boolean} rawLayer.STYLES - styles of the layer, if available
+ * @param {(string|number)} rawLayer.tilesize - if singleTile is true, this is the requested tilesize
+ * @returns {object} maps query parameter names to values
+ */
+export function makeParams (rawLayer) {
+    let params = {};
+
     params = Object.assign({
         CACHEID: generateSessionId(),
         FORMAT: rawLayer.format || "image/png",
         LAYERS: rawLayer.layers,
         VERSION: rawLayer.version,
         TRANSPARENT: rawLayer.transparent,
-        SINGLETILE: rawLayer.singleTile,
-        ...rawLayerParams
+        SINGLETILE: rawLayer.singleTile
     }, rawLayer.singleTile ? {} : {WIDTH: rawLayer.tilesize, HEIGHT: rawLayer.tilesize});
 
-    if (rawLayer.STYLES) {
-        params.STYLES = rawLayer.STYLES;
-    }
+    params = addOptionalParams(params, rawLayer);
+
     return params;
 }
 

@@ -8,7 +8,7 @@
 ### Added
 - An alias is added to the coordinate system. This is required by GeoServer services.
 - Added WFS Layer that creates a VectorLayer and a VectorSource. Layer-params and loading-params can be passed as function parameters, options may contain functions to filter and style features. Clustering and WFS-filter are supported.
-- Added possibility to add any rawLayer attribute to wms layer request.
+- Added possibility to add the parameter TIME to the wms layer request.
 - Examples were extended by WFS-Layer.
 
 ### Changed

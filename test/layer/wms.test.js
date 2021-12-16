@@ -15,6 +15,46 @@ describe("wms.js", function () {
         });
     });
 
+    describe("addOptionalParams", () => {
+        let params;
+
+        beforeEach(() => {
+            params = {
+                CACHEID: "yeah",
+                FORMAT: "a",
+                LAYERS: "b",
+                VERSION: "c",
+                TRANSPARENT: "d",
+                SINGLETILE: "e"
+            };
+        });
+
+        it("adds the parameter TIME", () => {
+            const extendedParams = wms.addOptionalParams(params, {TIME: "The time"});
+
+            expect(extendedParams.CACHEID).toEqual("yeah");
+            expect(extendedParams.FORMAT).toEqual("a");
+            expect(extendedParams.LAYERS).toEqual("b");
+            expect(extendedParams.VERSION).toEqual("c");
+            expect(extendedParams.TRANSPARENT).toEqual("d");
+            expect(extendedParams.SINGLETILE).toEqual("e");
+            expect(extendedParams.TIME).toEqual("The time");
+            expect(extendedParams.STYLES).not.toBeDefined();
+        });
+        it("adds the parameter STYLES", () => {
+            const extendedParams = wms.addOptionalParams(params, {STYLES: "The style"});
+
+            expect(extendedParams.CACHEID).toEqual("yeah");
+            expect(extendedParams.FORMAT).toEqual("a");
+            expect(extendedParams.LAYERS).toEqual("b");
+            expect(extendedParams.VERSION).toEqual("c");
+            expect(extendedParams.TRANSPARENT).toEqual("d");
+            expect(extendedParams.SINGLETILE).toEqual("e");
+            expect(extendedParams.STYLES).toEqual("The style");
+            expect(extendedParams.TIME).not.toBeDefined();
+        });
+    });
+
     describe("makeParams", function () {
         it("does not set tile height/width for singleTile parameter object", function () {
             const singleTileParams = wms.makeParams({singleTile: true, tilesize: 256});
