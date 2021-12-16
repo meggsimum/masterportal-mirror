@@ -180,18 +180,18 @@ export default {
                     >
                         <p
                             v-if="subSection.type === 'text/plain'"
-                            class="col-md-12"
+                            class="col-lg-12"
                         >
                             {{ translate(subSection.text, subSection.interpolation) }}
                         </p>
                         <p
                             v-else-if="subSection.type === 'text/html'"
-                            class="col-md-12"
+                            class="col-lg-12"
                             v-html="translate(subSection.text, subSection.interpolation)"
                         />
                         <p
                             v-else-if="subSection.imgName"
-                            class="col-md-12 quick-help-img"
+                            class="col-lg-12 quick-help-img"
                         >
                             <img
                                 class="img-responsive img-thumbnail"

@@ -272,7 +272,7 @@ export default {
             <hr>
 
             <div class="d-flex flex-column">
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-12">
                     <button
                         class="btn btn-primary btn-block"
                         type="button"

@@ -4,8 +4,8 @@
         <td colspan="5">
             <div class = "form-group form-group-sm layerSelect">
                 <div class="row">
-                    <label for="wfstSelectLayer" class="col-sm-5 control-label"> <%= buttonTitleConfig[3] + ":"%> </label>
-                    <div class="col-sm-5">
+                    <label for="wfstSelectLayer" class="col-md-5 control-label"> <%= buttonTitleConfig[3] + ":"%> </label>
+                    <div class="col-md-5">
                         <select class="form-control input-sm" id="wfstSelectLayer">
                             <% for (let key in activeLayers) {
                                 if (activeLayers.hasOwnProperty(key)) { %>
@@ -13,7 +13,7 @@
                             <% }} %>
                         </select>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-md-1">
                         <span tabindex="0" class="bootstrap-icon info-icon info-sign" aria-hidden="true"><i class="bi-info-circle-fill"></i></span>
                     </div>
                 </div>
@@ -95,8 +95,8 @@
                     else if (featureProperties !== undefined || featureProperties[field.field] !== "") {
                         fieldValue = featureProperties[field.field];
                     } %>
-                    <label for="<%= field.field %>" class="col-sm-5 control-label <%= mandatoryLabel %>" style="text-align: left;"><%= field.caption %></label>
-                    <div class="col-sm-7">
+                    <label for="<%= field.field %>" class="col-md-5 control-label <%= mandatoryLabel %>" style="text-align: left;"><%= field.caption %></label>
+                    <div class="col-md-7">
                         <% if (field.type && field.inputFieldType === "checkbox") { %>
                             <input type="checkbox" class="form-check-input input-xs input <%= mandatory %>" id="<%= field.field %>" <% if (fieldValue === "true") { %> checked <% } %>>
                         <% } 
@@ -114,7 +114,7 @@
                             <input type="<%= field.inputFieldType %>" class="form-control input-sm input <%= field.type%> <%= mandatory %>" id="<%= field.field %>" autocomplete="off" value="<%= fieldValue %>">
                         <% } %>
                     </div>
-                    <div id="warning-text <%= field.field %>" class="col-sm-offset-5 col-sm-7 warning-text"></div>
+                    <div id="warning-text <%= field.field %>" class="offset-md-5 col-md-7 warning-text"></div>
                 </div>
                 <% }); %>
             </form>
@@ -132,7 +132,7 @@
     <% } else if (showCancel === true) { %>
         <tr>
             <td colspan="5">
-                <div class="col-sm-5">
+                <div class="col-md-5">
                     <button id="wfst-module-recordButton-cancel" class="btn btn-danger record-button" title="Aktion Abbrechen">
                         <span class="record-label">Abbrechen</span>
                     </button>
