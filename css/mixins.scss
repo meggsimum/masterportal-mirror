@@ -17,7 +17,7 @@
 /* hover styling for actions like menu-entries, buttons, icons, etc */
 @mixin primary_action_hover {
     opacity: 1;
-    &.btn-select, &:active, &.active, &:checked, &::selection, &.open, &[aria-expanded="true"] {
+    &.btn-select, &:active, &.active, &:checked, &::selection, &.show, &[aria-expanded="true"] {
         background-color: darken($accent_hover, 10%);
     }
     background-color: $accent_hover;

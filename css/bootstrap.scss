@@ -81,3 +81,9 @@
     color: white !important;
     font-weight: normal !important;
 }
+
+
+// Temporarily override Bootstrap SCSS
+.fade.show {
+    opacity: 1;
+}
