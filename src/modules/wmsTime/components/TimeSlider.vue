@@ -164,7 +164,7 @@ export default {
 
 .timeSlider-wrapper {
     $base-margin: 0.25em;
-    $bigger-margin: calc($base-margin * 3);
+    $bigger-margin: calc(#{$base-margin} * 3);
 
     position: absolute;
     bottom: 6em;

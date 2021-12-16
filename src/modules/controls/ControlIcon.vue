@@ -70,7 +70,7 @@ export default {
         top: auto;
         margin: 5px;
 
-        font-size: calc($icon_length - 0.35 * $icon_length);
+        font-size: calc(#{$icon_length} - 0.35 * #{$icon_length});
         height: $icon_length;
         width: $icon_length;
 
@@ -82,7 +82,7 @@ export default {
         text-align: center;
         top: auto;
 
-        font-size: calc($icon_length_small - 0.35 * $icon_length_small);
+        font-size: calc(#{$icon_length_small} - 0.35 * #{$icon_length_small});
         width: $icon_length_small;
         height: $icon_length_small;
     }
