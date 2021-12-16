@@ -91,7 +91,7 @@ export default {
                     class="form-horizontal"
                     role="form"
                 >
-                    <div class="form-group form-group-sm col-md-12 col-sm-12">
+                    <div class="form-group form-group-sm col-md-12">
                         <label
                             for="tool-styleVT-selectedLayerField"
                             class="range-label"
@@ -124,7 +124,7 @@ export default {
                     </div>
                     <div
                         v-if="layerModel"
-                        class="form-group form-group-sm col-md-12 col-sm-12"
+                        class="form-group form-group-sm col-md-12"
                     >
                         <label
                             for="tool-styleVT-selectedStyleField"

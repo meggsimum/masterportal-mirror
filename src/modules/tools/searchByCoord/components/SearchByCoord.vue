@@ -111,10 +111,10 @@ export default {
                 >
                     <div class="form-group form-group-sm">
                         <label
-                            class="col-md-5 col-sm-5 control-label"
+                            class="col-md-5 control-label"
                             for="coordSystemField"
                         >{{ $t("modules.tools.searchByCoord.coordinateSystem") }}</label>
-                        <div class="col-md-7 col-sm-7">
+                        <div class="col-md-7">
                             <select
                                 id="coordSystemField"
                                 ref="coordSystemField"
@@ -136,9 +136,9 @@ export default {
                         <label
                             id="coordinatesEastingLabel"
                             for="coordinatesEastingField"
-                            class="col-md-5 col-sm-5 control-label"
+                            class="col-md-5 control-label"
                         >{{ $t(getLabel("eastingLabel")) }}</label>
-                        <div class="col-md-7 col-sm-7">
+                        <div class="col-md-7">
                             <input
                                 id="coordinatesEastingField"
                                 v-model="coordinatesEasting.value"
@@ -165,9 +165,9 @@ export default {
                         <label
                             id="coordinatesNorthingLabel"
                             for="coordinatesNorthingField"
-                            class="col-md-5 col-sm-5 control-label"
+                            class="col-md-5 control-label"
                         >{{ $t(getLabel("northingLabel")) }}</label>
-                        <div class="col-md-7 col-sm-7">
+                        <div class="col-md-7">
                             <input
                                 id="coordinatesNorthingField"
                                 v-model="coordinatesNorthing.value"
@@ -191,7 +191,7 @@ export default {
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-12">
                             <button
                                 class="btn btn-primary btn-block"
                                 :disabled="getEastingError || getNorthingError || !coordinatesEasting.value || !coordinatesNorthing.value"

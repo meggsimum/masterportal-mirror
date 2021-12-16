@@ -158,10 +158,10 @@ export default {
                 <hr>
                 <label
                     id="tool-compareFeatures-select-label"
-                    class="col-xs-3"
+                    class="col-3"
                     for="tool-compareFeatures-select"
                 >{{ $t("common:modules.tools.compareFeatures.topicsSelection") }}</label>
-                <div class="col-xs-3">
+                <div class="col-3">
                     <select
                         id="tool-compareFeatures-select"
                         v-model="selected"
@@ -232,7 +232,7 @@ export default {
                 </button>
                 <div
                     v-if="printStarted"
-                    class="form-group col-md-12 col-xs-12 pt-20"
+                    class="form-group col-12 pt-20"
                 >
                     <div class="progress">
                         <div

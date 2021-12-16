@@ -33,12 +33,12 @@ export default {
         >
             <div class="form-group form-group-sm">
                 <label
-                    class="col-md-5 col-sm-5 control-label"
+                    class="col-md-5 control-label"
                     for="tool-draw-download-format"
                 >
                     {{ $t("common:modules.tools.draw.download.format") }}
                 </label>
-                <div class="col-md-7 col-sm-7">
+                <div class="col-md-7">
                     <select
                         id="tool-draw-download-format"
                         class="form-control"
@@ -60,12 +60,12 @@ export default {
             </div>
             <div class="form-group form-group-sm">
                 <label
-                    class="col-md-5 col-sm-5 control-label"
+                    class="col-md-5 control-label"
                     for="tool-draw-download-filename"
                 >
                     {{ $t("common:modules.tools.draw.download.filename") }}
                 </label>
-                <div class="col-md-7 col-sm-7">
+                <div class="col-md-7">
                     <input
                         id="tool-draw-download-filename"
                         type="text"
@@ -76,10 +76,10 @@ export default {
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-12">
                     <a
                         id="tool-draw-download-file"
-                        class="col-xs-12 downloadFile"
+                        class="col-12 downloadFile"
                         :href="download.fileUrl"
                         :download="download.file"
                     >

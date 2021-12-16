@@ -296,7 +296,7 @@ export default {
                         :show="isActiveTab('LayerInfoDataDownload')"
                         :type="String('LayerInfoDataDownload')"
                     >
-                        <div class="col-md-7">
+                        <div class="col-lg-7">
                             <ul
                                 v-if="showDownloadLinks"
                                 class="pt-5"
@@ -317,7 +317,7 @@ export default {
                         </div>
                         <div
                             v-if="(showAttachFile)"
-                            class="col-md-5 pt-5"
+                            class="col-lg-5 pt-5"
                         >
                             <span class="download-note">{{ $t(("common:modules.layerInformation.attachFileMessage")) }}</span>
                         </div>

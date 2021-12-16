@@ -178,9 +178,9 @@ export default {
                     <div class="form-group form-group-sm">
                         <label
                             for="coordSystemField"
-                            class="col-md-5 col-sm-5 control-label"
+                            class="col-md-5 control-label"
                         >{{ $t("modules.tools.supplyCoord.coordSystemField") }}</label>
-                        <div class="col-md-7 col-sm-7">
+                        <div class="col-md-7">
                             <select
                                 id="coordSystemField"
                                 ref="coordSystemField"
@@ -203,9 +203,9 @@ export default {
                         <label
                             id="coordinatesEastingLabel"
                             for="coordinatesEastingField"
-                            class="col-md-5 col-sm-5 control-label"
+                            class="col-md-5 control-label"
                         >{{ $t(label("eastingLabel")) }}</label>
-                        <div class="col-md-7 col-sm-7">
+                        <div class="col-md-7">
                             <input
                                 id="coordinatesEastingField"
                                 v-model="coordinatesEastingField"
@@ -221,9 +221,9 @@ export default {
                         <label
                             id="coordinatesNorthingLabel"
                             for="coordinatesNorthingField"
-                            class="col-md-5 col-sm-5 control-label"
+                            class="col-md-5 control-label"
                         >{{ $t(label("northingLabel")) }}</label>
-                        <div class="col-md-7 col-sm-7">
+                        <div class="col-md-7">
                             <input
                                 id="coordinatesNorthingField"
                                 v-model="coordinatesNorthingField"

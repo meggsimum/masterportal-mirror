@@ -347,10 +347,10 @@ export default {
             >
                 <div class="form-group form-group-sm">
                     <label
-                        class="col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="docTitle"
                     >{{ $t("common:modules.tools.print.titleLabel") }}</label>
-                    <div class="col-sm-7">
+                    <div class="col-md-7">
                         <input
                             id="docTitle"
                             v-model="documentTitle"
@@ -362,10 +362,10 @@ export default {
                 </div>
                 <div class="form-group form-group-sm">
                     <label
-                        class="col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="printLayout"
                     >{{ $t("common:modules.tools.print.layoutLabel") }}</label>
-                    <div class="col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="printLayout"
                             class="form-control input-sm"
@@ -384,12 +384,12 @@ export default {
                 </div>
                 <div class="form-group form-group-sm">
                     <label
-                        class="col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="printFormat"
                     >
                         {{ $t("common:modules.tools.print.formatLabel") }}
                     </label>
-                    <div class="col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="printFormat"
                             class="form-control input-sm"
@@ -408,10 +408,10 @@ export default {
                 </div>
                 <div class="form-group form-group-sm scale">
                     <label
-                        class="col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="printScale"
                     >{{ $t("common:modules.tools.print.scaleLabel") }}</label>
-                    <div class="col-sm-7">
+                    <div class="col-md-7">
                         <select
                             id="printScale"
                             v-model="currentScale"
@@ -454,7 +454,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="autoAdjustScale"
                     >
                         {{ $t("common:modules.tools.print.autoAdjustScale") }}
@@ -475,12 +475,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="printLegend"
                     >
                         {{ $t("common:modules.tools.print.withLegendLabel") }}
                     </label>
-                    <div class="col-sm-7">
+                    <div class="col-md-7">
                         <div class="checkbox">
                             <input
                                 id="printLegend"
@@ -496,12 +496,12 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-sm-5 control-label"
+                        class="col-md-5 control-label"
                         for="printGfi"
                     >
                         {{ $t("common:modules.tools.print.withInfoLabel") }}
                     </label>
-                    <div class="col-sm-7">
+                    <div class="col-md-7">
                         <div class="checkbox">
                             <input
                                 id="printGfi"
@@ -514,7 +514,7 @@ export default {
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <div class="col-sm-12">
+                    <div class="col-md-12">
                         <button
                             type="button"
                             class="btn btn-primary btn-block"
@@ -532,14 +532,14 @@ export default {
                     :key="file.index"
                     class="row"
                 >
-                    <div class="col-sm-4 tool-print-download-title-container">
+                    <div class="col-md-4 tool-print-download-title-container">
                         <span
                             id="tool-print-download-title"
                         >
                             {{ file.title }}
                         </span>
                     </div>
-                    <div class="col-sm-2 tool-print-download-icon-container">
+                    <div class="col-md-2 tool-print-download-icon-container">
                         <div
                             v-if="!file.finishState"
                             id="tool-print-download-loader"
@@ -552,7 +552,7 @@ export default {
                             <i class="bi-check-lg" />
                         </div>
                     </div>
-                    <div class="col-sm-6 tool-print-download-button-container">
+                    <div class="col-md-6 tool-print-download-button-container">
                         <button
                             v-if="file.finishState"
                             id="tool-print-download-button-active"

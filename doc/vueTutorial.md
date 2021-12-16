@@ -311,11 +311,11 @@ In `modules/tools/scaleSwitcher/components/ScaleSwitcher.vue`, the template is y
             <div id="scale-switcher" v-if="active">
                 <label
                     for="scale-switcher-select"
-                    class="col-md-5 col-sm-5 control-label"
+                    class="col-md-5 control-label"
                 >
                     Scale
                 </label>
-                <div class="col-md-7 col-sm-7">
+                <div class="col-md-7">
                     <select
                         id="scale-switcher-select"
                         v-model="scale"
@@ -398,7 +398,7 @@ The value can be accessed directly in the template by using the globally availab
 ```html
 <label
     for="scale-switcher-select"
-    class="col-md-5 col-sm-5 control-label"
+    class="col-md-5 control-label"
 >
     {{ $t("modules.tools.scaleSwitcher.label") }}
 </label>
