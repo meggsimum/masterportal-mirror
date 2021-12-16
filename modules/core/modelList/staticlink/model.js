@@ -41,7 +41,7 @@ const StaticLink = Item.extend({
         let classes = "dropdown";
 
         if (this.get("parentId") === "root") {
-            classes += " menu-style d-sm-none d-md-block";
+            classes += " menu-style d-md-none d-lg-block";
         }
         else {
             classes += " submenu-style";

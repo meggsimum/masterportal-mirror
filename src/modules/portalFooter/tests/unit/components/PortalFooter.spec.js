@@ -103,7 +103,7 @@ describe("src/modules/portalFooter/components/PortalFooter.vue", () => {
             localVue
         });
 
-        expect(wrapper.find(".d-none.d-sm-block").exists()).to.be.true;
+        expect(wrapper.find(".d-none.d-md-block").exists()).to.be.true;
     });
 
     it("renders the urls in footer", async () => {
