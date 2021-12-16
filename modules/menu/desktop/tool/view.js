@@ -1,5 +1,6 @@
 import ItemTemplate from "text-loader!./template.html";
 import store from "../../../../src/app-store/index";
+import Dropdown from "bootstrap/js/dist/dropdown";
 /**
  * @member ToolTemplate
  * @description Template for a Tool
@@ -181,7 +182,10 @@ const ToolView = Backbone.View.extend(/** @lends ToolView.prototype */{
 
             // menu navigation is closed
             $("div.collapse.navbar-collapse").removeClass("in");
-            $("li.dropdown-folder.open").removeClass("open");
+            // Upgrade to BT5, use JS method instead of class removal
+            const dropdown = Dropdown.getInstance("li.dropdown-folder > .dropdown-toggle.show");
+
+            dropdown.hide();
             $(".dropdown-menu.fixed").removeClass("fixed");
             $(".bi-pin-angle-fill").removeClass("rotate-pin");
             $(".bi-pin-angle-fill").addClass("rotate-pin-back");

@@ -18,6 +18,7 @@ import Folder from "./folder/model";
 import Tool from "./tool/model";
 import StaticLink from "./staticlink/model";
 import Filter from "../../tools/filter/model";
+import Dropdown from "bootstrap/js/dist/dropdown";
 
 /**
  * WfsFeatureFilter
@@ -944,11 +945,13 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
      */
     showModelInTree: function (modelId) {
         const mode = Radio.request("Map", "getMapMode"),
-            lightModel = Radio.request("Parser", "getItemByAttributes", {id: modelId});
+            lightModel = Radio.request("Parser", "getItemByAttributes", {id: modelId}),
+            dropdown = Dropdown.getInstance("#root li:first-child > .dropdown-toggle");
 
         this.closeAllExpandedFolder();
         // open the layerTree
-        $("#root li:first-child").addClass("open");
+        // Upgrade to BT5, use JS method instead of class addition
+        dropdown.show();
         // Parent and possible siblings are added
         this.addAndExpandModelsRecursive(lightModel.parentId);
         if (this.get(modelId).get("supported").indexOf(mode) >= 0) {

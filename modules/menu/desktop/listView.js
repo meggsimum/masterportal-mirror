@@ -4,6 +4,7 @@ import CatalogFolderView from "./folder/viewCatalog";
 import DesktopLayerView from "./layer/view";
 import SelectionView from "./layer/viewSelection";
 import store from "../../../src/app-store/index";
+import Dropdown from "bootstrap/js/dist/dropdown";
 
 const ListView = ListViewMain.extend(/** @lends ListView.prototype */{
 
@@ -266,7 +267,10 @@ const ListView = ListViewMain.extend(/** @lends ListView.prototype */{
             store.dispatch("Tools/setToolActive", {id: modul.id, active: true});
         }
         else {
-            $("#" + modulId).parent().addClass("open");
+            // Upgrade to BT5, use JS method instead of class addition
+            const dropdown = Dropdown.getOrCreateInstance($("#" + modulId).parent().children(".dropdown-toggle").get(0));
+
+            dropdown.show();
         }
     }
 });
