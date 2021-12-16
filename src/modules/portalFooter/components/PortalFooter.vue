@@ -103,14 +103,14 @@ export default {
                     </a>
                     <span
                         v-if="index < Object.keys(urls).length - 1 || showVersion"
-                        class="bootstrap-icon hidden-xs"
+                        class="bootstrap-icon d-none d-sm-block"
                     >
                         <i class="bi-three-dots-vertical" />
                     </span>
                 </span>
             </template>
             <template v-if="showVersion">
-                <span class="hidden-xs">
+                <span class="d-none d-sm-block">
                     {{ $t("masterPortalVersion", {masterPortalVersionNumber}) }}
                 </span>
             </template>
