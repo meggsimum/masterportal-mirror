@@ -1,5 +1,6 @@
 import listViewMain from "./listViewMain";
 import DesktopLayerViewLight from "./layer/viewLight";
+import Dropdown from "bootstrap/js/dist/dropdown";
 
 
 const LightMenu = listViewMain.extend(/** @lends LightMenu.prototype */{
@@ -65,7 +66,10 @@ const LightMenu = listViewMain.extend(/** @lends LightMenu.prototype */{
             modul.setIsActive(true);
         }
         else {
-            $("#" + modulId).parent().addClass("open");
+            // Upgrade to BT5, use JS method instead of class addition
+            const dropdown = Dropdown.getOrCreateInstance($("#" + modulId).parent().children(".dropdown-toggle").get(0));
+
+            dropdown.show();
         }
     }
 });

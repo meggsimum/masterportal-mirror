@@ -1,5 +1,6 @@
 import CatalogTemplate from "text-loader!./templateCatalog.html";
 import store from "../../../../src/app-store";
+import Dropdown from "bootstrap/js/dist/dropdown";
 
 /**
  * @member CatalogTemplate
@@ -179,7 +180,10 @@ const FolderCatalogView = Backbone.View.extend(/** @lends FolderCatalogView.prot
         this.model.collection.get("saveSelection").setIsActive(true);
         store.dispatch("Tools/setToolActive", {id: "saveSelection", active: true});
         // closes the menu tree
-        $(".nav li:first-child").removeClass("open");
+        // Upgrade to BT5, use JS method instead of class removal
+        const dropdown = Dropdown.getInstance(".nav li:first-child > .dropdown-toggle");
+
+        dropdown.hide();
         $(".dropdown-menu.fixed").removeClass("fixed");
         $(".bi-pin-angle-fill").removeClass("rotate-pin");
         $(".bi-pin-angle-fill").addClass("rotate-pin-back");

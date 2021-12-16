@@ -6,7 +6,7 @@ import StaticLinkView from "./staticlink/view";
 import BreadCrumbListView from "./breadCrumb/listView";
 import "jquery-ui/ui/effects/effect-slide";
 import "jquery-ui/ui/effect";
-import "bootstrap/js/dist/dropdown";
+import Dropdown from "bootstrap/js/dist/dropdown";
 import "bootstrap/js/dist/collapse";
 import store from "../../../src/app-store";
 
@@ -247,7 +247,10 @@ const MobileMenu = Backbone.View.extend({
             modul.setIsActive(true);
         }
         else {
-            $("#" + modulId).parent().addClass("open");
+            // Upgrade to BT5, use JS method instead of class addition
+            const dropdown = Dropdown.getOrCreateInstance($("#" + modulId).parent().children(".dropdown-toggle").get(0));
+
+            dropdown.show();
         }
     }
 });
