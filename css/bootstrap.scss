@@ -1,17 +1,21 @@
 /*!
- * Bootstrap v3.3.7 (http://getbootstrap.com)
- * Copyright 2011-2016 Twitter, Inc.
+ * Bootstrap v5.1.3 (https://getbootstrap.com/)
+ * Copyright 2011-2021 The Bootstrap Authors
+ * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * Adapted to Masterportal Requirements (https://www.hamburg.de/geowerkstatt)
  */
 
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+// @import "~bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
 // Variable file; see details there
 @import "./mixins.scss";
 
-// Reset and dependencies
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/normalize";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/print";
-@import '~bootstrap-icons/font/bootstrap-icons';
+// 3. Include remainder of required Bootstrap stylesheets
+@import "~bootstrap/scss/utilities";
+@import "~bootstrap-icons/font/bootstrap-icons";
 
 .bootstrap-icon {
     position: relative;
@@ -20,49 +24,47 @@
     vertical-align: middle;
 }
 
-// Core CSS
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/type";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/code";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/grid";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/tables";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/forms";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/buttons";
+// 4. Include any optional Bootstrap CSS as needed
+// Layout & components
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/containers";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/transitions";
+@import "~bootstrap/scss/dropdown";
+@import "~bootstrap/scss/button-group";
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/navbar";
+@import "~bootstrap/scss/card";
+@import "~bootstrap/scss/accordion";
+@import "~bootstrap/scss/breadcrumb";
+@import "~bootstrap/scss/pagination";
+@import "~bootstrap/scss/badge";
+@import "~bootstrap/scss/alert";
+@import "~bootstrap/scss/progress";
+@import "~bootstrap/scss/list-group";
+@import "~bootstrap/scss/close";
+@import "~bootstrap/scss/toasts";
+@import "~bootstrap/scss/modal";
+@import "~bootstrap/scss/tooltip";
+@import "~bootstrap/scss/popover";
+@import "~bootstrap/scss/carousel";
+@import "~bootstrap/scss/spinners";
+@import "~bootstrap/scss/offcanvas";
+@import "~bootstrap/scss/placeholders";
 
-// Components
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/dropdowns";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/input-groups";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/navs";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/navbar";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/breadcrumbs";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/pagination";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/pager";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/labels";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/badges";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/jumbotron";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/thumbnails";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/alerts";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/progress-bars";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/media";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/list-group";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/panels";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/responsive-embed";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/wells";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/close";
+// Helpers
+@import "~bootstrap/scss/helpers";
 
-// Components w/ JavaScript
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/modals";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/tooltip";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/popovers";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/carousel";
+// 5. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "~bootstrap/scss/utilities/api";
 
-// Utility classes
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/utilities";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
-
-
+// 6. Add additional custom code here
 // we need to overwrite the bootstrap nav styles to be conform with accessibility (contrast ratio)
 .navtabs > li > a {
     color: darken($secondary_focus, 10%) !important;
@@ -80,10 +82,4 @@
 .nav-pills > li.active > a {
     color: white !important;
     font-weight: normal !important;
-}
-
-
-// Temporarily override Bootstrap SCSS
-.fade.show {
-    opacity: 1;
 }
