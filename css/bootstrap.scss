@@ -83,3 +83,7 @@
     color: white !important;
     font-weight: normal !important;
 }
+// Overwrite default color to mimic old bootstrap style
+.btn-outline-default {
+    color: #333;
+}

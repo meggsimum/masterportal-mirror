@@ -101,7 +101,7 @@ export default {
                 v-if="windowsInterval === null"
                 id="play"
                 type="button"
-                class="btn btn-default active-button"
+                class="btn btn-outline-default active-button"
                 @click="startInterval"
             >
                 <span
@@ -115,7 +115,7 @@ export default {
                 v-else
                 id="pause"
                 type="button"
-                class="btn btn-default active-button"
+                class="btn btn-outline-default active-button"
                 @click="stopInterval"
             >
                 <span
@@ -128,7 +128,7 @@ export default {
             <button
                 id="stop"
                 type="button"
-                class="btn btn-default active-button"
+                class="btn btn-outline-default active-button"
                 @click="reset"
             >
                 <span
@@ -141,7 +141,7 @@ export default {
             <button
                 id="backward"
                 type="button"
-                class="btn btn-default active-button"
+                class="btn btn-outline-default active-button"
                 @click="backwardLayer"
             >
                 <span
@@ -154,7 +154,7 @@ export default {
             <button
                 id="forward"
                 type="button"
-                class="btn btn-default active-button"
+                class="btn btn-outline-default active-button"
                 @click="forwardLayer"
             >
                 <span
