@@ -44,9 +44,11 @@ export function createMapView (config) {
         center: mergedConfig.startCenter,
         extent: mergedConfig.extent,
         zoom: zoomResolution.startZoomLevel,
+        options: mergedConfig.options,
         resolution: zoomResolution.startResolution,
         resolutions: mergedConfig.options.map(entry => entry.resolution),
         constrainResolution: true,
-        constrainOnlyCenter: true
+        constrainOnlyCenter: true,
+        backgroundImage: mergedConfig.backgroundImage
     });
 }
