@@ -38,7 +38,7 @@ ul#tree {
         display: block;
     }
     .menu-row {
-        line-height: 180%;
+        // line-height: 180%;
         flex-basis: 100%;
         display: flex;
         margin: 0;
@@ -55,6 +55,8 @@ ul#tree {
     }
     .last-item {
         margin-left: auto;
+        display: flex;
+        gap: 3px;
     }
     ul {
         list-style: none;
@@ -100,7 +102,10 @@ ul#tree {
     }
     .bi-info-circle-fill, .bi-gear, .bi-droplet-fill, .bi-x-circle {
         font-size: 18px;
-        color: $secondary_icon_button;
+
+        &:not(:hover) {
+            color: $secondary_icon_button;
+        }
     }
     .highlightLayerInformationIcon {
         color: $secondary_hover;
@@ -174,7 +179,7 @@ ul#tree.light {
     font-size: 12px;
     color: $color_1;
     li {
-        padding: 5px 5px 0px 5px;
+        padding: 5px;
         display: flex;
         flex-wrap: wrap;
         > div > a {
