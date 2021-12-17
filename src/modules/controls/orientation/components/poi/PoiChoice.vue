@@ -137,7 +137,7 @@ export default {
                         {{ $t("common:modules.controls.orientation.poiChoiceConfirmation") }}
                     </button>
                     <button
-                        class="stop btn btn-default"
+                        class="stop btn btn-outline-default"
                         @click="stopPoi"
                     >
                         {{ $t("common:modules.controls.orientation.poiChoiceStop") }}
