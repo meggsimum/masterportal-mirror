@@ -185,7 +185,7 @@ export default {
                                 id="coordSystemField"
                                 ref="coordSystemField"
                                 v-model="currentSelection"
-                                class="font-arial form-control input-sm pull-left"
+                                class="font-arial form-control input-sm float-start"
                                 @change="selectionChanged($event)"
                             >
                                 <option
