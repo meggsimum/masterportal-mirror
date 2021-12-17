@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<div class="item-settings">
-  <div class="layer-info-item float-end">
+<div class="item-settings order-last flex-fill d-flex flex-row-reverse">
+  <div class="layer-info-item">
     <% if (typeof datasets !== "undefined" && datasets !== false) { %>
-      <span class="boostrap-icon info-icon"><i class="bi-info-circle-fill"></i></span>
+      <span class="bootstrap-icon info-icon"><i class="bi-info-circle-fill"></i></span>
     <% } %>
   </div>
   <% if (typeof treeType === "undefined") { %>
-  <div class="layer-sort-item float-end">
-    <span class="boostrap-icon up-icon"><i class="bi-caret-up-fill"></i></span>
-    <span class="boostrap-icon down-icon"><i class="bi-caret-down-fill"></i></span>
+  <div class="layer-sort-item d-flex">
+    <span class="bootstrap-icon up-icon"><i class="bi-caret-up-fill"></i></span>
+    <span class="bootstrap-icon down-icon"><i class="bi-caret-down-fill"></i></span>
   </div>  
   <% } %>
   <% if (styleable === true) { %> 
-  <div class="float-end">
-    <span class="boostrap-icon style-icon"><i class="bi-droplet-fill"></i></span>
+  <div class="">
+    <span class="bootstrap-icon style-icon"><i class="bi-droplet-fill"></i></span>
   </div>
   <% } %>
-  <form class="form-inline float-start" role="form">
+  <form class="form-inline me-auto" role="form">
     <div class="form-group">
       <label>Transparenz:</label>
-      <select class="form-control input-sm">
+      <select class="form-select form-select-sm">
        <option value="0" <% if (transparency === 0) print ("SELECTED") %> >0%</option>
        <option value="10" <% if (transparency === 10) print ("SELECTED") %> >10%</option>
        <option value="20" <% if (transparency === 20) print ("SELECTED") %> >20%</option>
@@ -34,8 +34,8 @@
    </div>
  </form>
  <% if (isRemovable === true) { %>
- <div class="remove-layer float-end">
-  <span class="boostrap-icon trash-icon"><i class="bi-trash"></i></span>
+ <div class="remove-layer">
+  <span class="bootstrap-icon trash-icon"><i class="bi-trash"></i></span>
 </div>
 <% } %>
 </div>
