@@ -21,7 +21,7 @@ $background_color_1: rgba(0, 0, 0,.5);
         padding: 10px;
     }
     .simple-views-container {
-        .btn-default {
+        .btn-outline-default {
             &:focus {
                 outline: none;
             }
@@ -36,7 +36,7 @@ $background_color_1: rgba(0, 0, 0,.5);
         font-size: 16px;
     }
     .simple-view {
-        .btn-default {
+        .btn-outline-default {
             margin: 4px;
             &:focus {
                 @include primary_action_focus;

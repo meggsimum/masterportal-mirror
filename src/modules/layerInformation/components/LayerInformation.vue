@@ -186,7 +186,7 @@ export default {
                 >
                     <button
                         id="changeLayerInfo"
-                        class="btn btn-default dropdown-toggle"
+                        class="btn btn-outline-default dropdown-toggle"
                         :class="{ show: openDropdown }"
                         type="button"
                         @click="onClickDropdown"

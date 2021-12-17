@@ -122,3 +122,10 @@ $padding: 20px;
  */
  @import "../node_modules/bootstrap/scss/variables";
  @import "../node_modules/bootstrap/scss/mixins";
+
+// Add old default theme color to color map
+$custom-colors: (
+  "default": $gray-400
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
