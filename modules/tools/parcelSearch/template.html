@@ -35,7 +35,7 @@
              <div class="input-group" style="width:100%">
                 <input <% if (districtNumber === "0" || (cadastralDistrictField === true && cadastralDistrictNumber === "0")) {print ("disabled ");} %>id="parcelField" class="form-control" type="text" pattern="[0-9]+" required value="<%= parcelNumber %>" placeholder="<%=parcelNumberPlaceholderText%>" maxlength="<%= maxParcelNumberLength %>"/>
                 <% if (parcelDenominatorField === true) { %>
-                <span class="input-group-addon">/</span>
+                <span class="input-group-text">/</span>
                 <input <% if (districtNumber === "0" || (cadastralDistrictField === true && cadastralDistrictNumber === "0")) {print ("disabled ");} %>id="parcelFieldDenominator" class="form-control" type="text" pattern="[0-9]+" required value="<%= parcelDenominatorNumber %>" placeholder="<%=parcelNumberPlaceholderText%>" maxlength="<%= maxParcelNumberLength %>"/>
                 <% } %>
             </div>
