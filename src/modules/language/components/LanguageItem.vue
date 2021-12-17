@@ -52,7 +52,7 @@ export default {
                 </div>
                 <a
                     role="button"
-                    class="buttons pull-right"
+                    class="buttons float-end"
                     tabindex="0"
                     @click="toggleLanguageWindow"
                     @keydown.enter="toggleLanguageWindow"

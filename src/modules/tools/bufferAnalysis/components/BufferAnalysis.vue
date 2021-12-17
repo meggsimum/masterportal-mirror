@@ -199,7 +199,7 @@ export default {
                         id="tool-bufferAnalysis-selectSourceInput"
                         ref="tool-bufferAnalysis-selectSourceInput"
                         v-model="selectedSourceLayer"
-                        class="font-arial form-control input-sm pull-left"
+                        class="font-arial form-control input-sm float-start"
                     >
                         <option
                             v-for="layer in selectOptions"
@@ -223,7 +223,7 @@ export default {
                         min="0"
                         max="3000"
                         step="10"
-                        class="font-arial form-control input-sm pull-left"
+                        class="font-arial form-control input-sm float-start"
                         type="number"
                     >
                     <input
@@ -233,7 +233,7 @@ export default {
                         min="0"
                         max="3000"
                         step="10"
-                        class="font-arial form-control input-sm pull-left"
+                        class="font-arial form-control input-sm float-start"
                         type="range"
                     >
                 </div>
@@ -247,7 +247,7 @@ export default {
                     <select
                         id="tool-bufferAnalysis-resultTypeInput"
                         v-model="resultType"
-                        class="font-arial form-control input-sm pull-left"
+                        class="font-arial form-control input-sm float-start"
                         :disabled="!selectedSourceLayer || !bufferRadius || selectedTargetLayer"
                     >
                         <option
@@ -272,7 +272,7 @@ export default {
                     <select
                         id="tool-bufferAnalysis-selectTargetInput"
                         v-model="selectedTargetLayer"
-                        class="font-arial form-control input-sm pull-left"
+                        class="font-arial form-control input-sm float-start"
                         :disabled="!selectedSourceLayer || !bufferRadius || selectedTargetLayer"
                     >
                         <option
@@ -288,7 +288,7 @@ export default {
                 <div class="col-md-12 form-group form-group-sm">
                     <button
                         id="tool-bufferAnalysis-resetButton"
-                        class="pull-right btn btn-block btn-lgv-grey"
+                        class="float-end btn btn-block btn-lgv-grey"
                         :disabled="!selectedSourceLayer"
                         @click="resetModule"
                     >
@@ -299,7 +299,7 @@ export default {
                 <div class="col-md-12 form-group form-group-sm">
                     <button
                         id="tool-bufferAnalysis-saveButton"
-                        class="pull-right btn btn-block btn-primary"
+                        class="float-end btn btn-block btn-primary"
                         :disabled="!selectedSourceLayer || !selectedTargetLayer || !bufferRadius"
                         @click="buildUrlFromToolState"
                     >

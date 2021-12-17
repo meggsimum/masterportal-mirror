@@ -215,7 +215,7 @@ const LayerBaseView = Backbone.View.extend(/** @lends LayerBaseView.prototype */
         this.$el.find("*").css("cursor", "not-allowed");
         this.$el.find("*").css("pointer-events", "none");
         if (statusCheckbox === 0) {
-            this.$el.find("span.pull-left").css({"pointer-events": "auto", "cursor": "pointer"});
+            this.$el.find("span.float-start").css({"pointer-events": "auto", "cursor": "pointer"});
         }
         this.$el.attr("title", text);
 

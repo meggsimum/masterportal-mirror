@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <form class="form-inline">
-    <div class= "title-values pull-left">
+    <div class= "title-values float-start">
         <% if (withLabel === true && displayName) { %>
         <div class="form-group form-group-sm">
             <label><%= displayName %></label>
         </div>
         <% } %>
-        <div class="form-group form-group-sm pull-right">
+        <div class="form-group form-group-sm float-end">
             <% if (editableValueBox===true) { %>
                 <input type="text" class="form-control form-minimum valueBox" placeholder="<%= valuesCollection.at(0).get('value') %>">
             <% } else if (withLabel === true) { %>
