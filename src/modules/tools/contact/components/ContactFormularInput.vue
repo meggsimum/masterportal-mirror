@@ -78,7 +78,7 @@ export default {
             <label
                 :class="[
                     'control-label',
-                    'input-group-addon',
+                    'input-group-text',
                     htmlElement === 'textarea' ? 'force-border' : ''
                 ]"
                 :for="`tool-contact-${inputName}-input`"
@@ -122,15 +122,15 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.input-group-addon:first-child.force-border {
+.input-group-text:first-child.force-border {
     border-right: 1px solid #ccc;
 }
 
-.has-error .input-group-addon:first-child.force-border {
+.has-error .input-group-text:first-child.force-border {
     border-right: 1px solid #a94442;
 }
 
-.has-success .input-group-addon:first-child.force-border {
+.has-success .input-group-text:first-child.force-border {
     border-right: 1px solid #3c763d;
 }
 
