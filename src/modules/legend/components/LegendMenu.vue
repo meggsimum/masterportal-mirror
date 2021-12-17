@@ -88,7 +88,7 @@ export default {
                     tabindex="0"
                     :title="$t(name)"
                 >
-                    <span class="bootstrap-icon d-md-none d-lg-block">
+                    <span class="bootstrap-icon d-md-none d-lg-inline-block">
                         <i :class="icon" />
                     </span>
                     <span class="menuitem">{{ $t(name) }}</span>
@@ -108,7 +108,7 @@ export default {
                 @keydown.enter="toggleLegend"
             >
                 <div>
-                    <span class="bootstrap-icon d-md-none d-lg-block">
+                    <span class="bootstrap-icon d-md-none d-lg-inline-block">
                         <i :class="icon" />
                     </span>
                     <span class="title">{{ $t(name) }}</span>
@@ -121,7 +121,7 @@ export default {
             class="dropdown-toggle"
             @click="toggleLegend"
         >
-            <span class="bootstrap-icon d-md-none d-lg-block">
+            <span class="bootstrap-icon d-md-none d-lg-inline-block">
                 <i :class="icon" />
             </span>
             <span class="menuitem">{{ $t(name) }}</span>
