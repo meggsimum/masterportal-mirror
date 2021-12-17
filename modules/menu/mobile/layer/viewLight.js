@@ -84,7 +84,7 @@ const LayerView = Backbone.View.extend(/** @lends LayerView.prototype */{
                 this.$el.addClass("disabled");
                 this.$el.find("*").css("pointer-events", "none");
                 if (statusCheckbox === 0) {
-                    this.$el.find("div.pull-left").css("pointer-events", "auto");
+                    this.$el.find("div.float-start").css("pointer-events", "auto");
                 }
             }
             else {

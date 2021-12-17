@@ -4,9 +4,9 @@
         <div class="col-md-12">
             <label class="range-label"><%=theme%></label>
             <select class="form-control input-sm" id="layerField">
-                <option class="pull-left" value="" selected="true"><%=chooseTheme%></option>
+                <option class="float-start" value="" selected="true"><%=chooseTheme%></option>
                 <% styleableLayerList.forEach(function (styleableLayer) { %>
-                    <option class ="pull-left" value="<%= styleableLayer.id %>"><%= styleableLayer.name %></option>
+                    <option class ="float-start" value="<%= styleableLayer.id %>"><%= styleableLayer.name %></option>
                 <% })%>
             </select>
         </div>
@@ -16,9 +16,9 @@
             <div class="col-md-12">
                 <label class="range-label"><%=attribute%></label>
                 <select class="form-control input-sm" id="attributField">
-                    <option class="pull-left" value="default" <% if (attributeName === "default") { print ("SELECTED")} %>><%=chooseAttribute%></option>
+                    <option class="float-start" value="default" <% if (attributeName === "default") { print ("SELECTED")} %>><%=chooseAttribute%></option>
                     <% model.get("attributesToStyle").forEach(function (attribute) { %>
-                        <option class="pull-left" value=<%= attribute %> <% if (attribute === attributeName) { print ("SELECTED")} %>><%= attribute %></option>
+                        <option class="float-start" value=<%= attribute %> <% if (attribute === attributeName) { print ("SELECTED")} %>><%= attribute %></option>
                     <% }); %>
                 </select>
             </div>
@@ -28,9 +28,9 @@
                 <div class="col-md-12">
                     <label class="range-label"><%=countOfClasses%></label>
                     <select class="form-control input-sm" id="numberField">
-                        <option class="pull-left" value="default" <% if (numberOfClasses === "default") { print ("SELECTED")} %>><%=chooseNumberOfClasses%></option>
+                        <option class="float-start" value="default" <% if (numberOfClasses === "default") { print ("SELECTED")} %>><%=chooseNumberOfClasses%></option>
                         <% numberOfClassesList.forEach(function (number) { %>
-                            <option class="pull-left" value=<%= number %> <% if (number === numberOfClasses) { print ("SELECTED")} %>><%= number %></option>
+                            <option class="float-start" value=<%= number %> <% if (number === numberOfClasses) { print ("SELECTED")} %>><%= number %></option>
                         <% }); %>
                     </select>
                 </div>

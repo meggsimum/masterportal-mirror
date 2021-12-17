@@ -67,10 +67,10 @@ async function PopulationRequestTests ({builder, url, resolution, capability}) {
                 /*
                     <div id="window" class="tool-window ui-widget-content ui-draggable" style="position: relative; max-height: 843px; display: block; overflow: auto;">
                         <div class="win-heading header">
-                            <p class="buttons pull-right">
+                            <p class="buttons float-end">
                                 <span class="bootstrap-icon" title="Minimieren"><i class="bi-dash-lg"></i></span>
                                 <span class="bootstrap-icon" title="Schließen"><i class="bi-x-lg"></i></span>
-                            <p class="buttons pull-left move">
+                            <p class="buttons float-start move">
                                 <span class="bootstrap-icon win-icon"><i class="bi-wrench"></i></span>
                             <p class="title move">
                                 <span>Einwohneranzahl abfragen</span>
@@ -87,7 +87,7 @@ async function PopulationRequestTests ({builder, url, resolution, capability}) {
                 <div class="dropdown"><div><div class="graphical-select"><div class="dropdown-container">
                     <div class="btn-group bootstrap-select" style="width: 100%;">
                         <button type="button" class="btn dropdown-toggle btn-default" data-bs-toggle="dropdown" role="button" title="Rechteck aufziehen">
-                            <span class="filter-option pull-left">Rechteck aufziehen</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span>
+                            <span class="filter-option float-start">Rechteck aufziehen</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span>
                         </button>
                         <div class="dropdown-menu open" role="combobox">
                             <ul class="dropdown-menu inner" role="listbox" aria-expanded="false">
@@ -112,7 +112,7 @@ async function PopulationRequestTests ({builder, url, resolution, capability}) {
                 // Text “ALKIS Adressen anzeigen (ab 1: 20.000)”, & checkbox to the right “Aus”.
                 /*
                     <div class="checkbox"><div class="checkbox-container"><div class="form-inline">
-                        <div class="title-checkbox pull-left">
+                        <div class="title-checkbox float-start">
                             <label>Raster Layer anzeigen (ab 1: 100.000)</label>
                             <div class="toggle btn btn-default off btn-sm" data-bs-toggle="toggle" style="width: 63.9167px; height: 31px;">
                                 <input type="checkbox" title="Filter ausschalten" data-bs-toggle="toggle"><div class="toggle-group">
@@ -121,7 +121,7 @@ async function PopulationRequestTests ({builder, url, resolution, capability}) {
                         </div>
                     </div>
                     </div><div class="checkbox-container"><div class="form-inline">
-                        <div class="title-checkbox pull-left">
+                        <div class="title-checkbox float-start">
                             <label>ALKIS Adressen anzeigen (ab 1: 20.000)</label>
                             <div class="toggle btn btn-default off btn-sm" data-bs-toggle="toggle" style="width: 63.9167px; height: 31px;">
                                 <input type="checkbox" title="Filter ausschalten" data-bs-toggle="toggle"><div class="toggle-group">

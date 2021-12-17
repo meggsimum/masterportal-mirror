@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <form class="form-inline">
-    <div class= "title-values pull-left">
+    <div class= "title-values float-start">
         <div class="form-group form-group-sm">
             <label><%= displayName %></label>
         </div>
-        <div class="form-group form-group-sm pull-right">
+        <div class="form-group form-group-sm float-end">
             <% if (editableValueBox===true) { %>
             <input type="number" class="form-control form-minimum" placeholder="<%= valuesCollection.at(0).get('value') %>">
             <span>-</span>

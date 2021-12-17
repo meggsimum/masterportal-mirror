@@ -319,7 +319,7 @@ In `modules/tools/scaleSwitcher/components/ScaleSwitcher.vue`, the template is y
                     <select
                         id="scale-switcher-select"
                         v-model="scale"
-                        class="font-arial form-control input-sm pull-left"
+                        class="font-arial form-control input-sm float-start"
                     >
                         <option
                             v-for="(scaleValue, i) in scales"
@@ -361,7 +361,7 @@ Within the `modules/tools/scaleSwitcher/components/ScaleSwitcher.vue` template, 
 ```html
 <select
     id="scale-switcher-select"
-    class="font-arial form-control input-sm pull-left"
+    class="font-arial form-control input-sm float-start"
     @change="setResolutionByIndex($event.target.selectedIndex)"
 >
 ```
