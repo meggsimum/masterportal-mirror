@@ -200,7 +200,7 @@ export default {
                         @click="decreasePagerIndex"
                         @keydown.enter="decreasePagerIndex"
                     >
-                        <span class="boostrap-icon">
+                        <span class="bootstrap-icon">
                             <i class="bi-chevron-left" />
                         </span>
                     </div>
@@ -210,7 +210,7 @@ export default {
                         @click="increasePagerIndex"
                         @keydown.enter="increasePagerIndex"
                     >
-                        <span class="boostrap-icon">
+                        <span class="bootstrap-icon">
                             <i class="bi-chevron-right" />
                         </span>
                     </div>
