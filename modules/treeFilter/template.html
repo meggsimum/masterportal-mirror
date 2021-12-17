@@ -6,7 +6,7 @@
                 <div class="input-group input-group-sm">
                     <input id="categoryInput" class="form-control" type="text" placeholder="Keine Auswahl" value="<%= treeCategory %>" title="<%= treeCategory %>">
                     <div id="categoryToggle">
-                        <button class="btn btn-default dropdown-toggle-category" data-bs-toggle="dropdown">
+                        <button class="btn btn-outline-default dropdown-toggle-category" data-bs-toggle="dropdown">
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right treeList" role="menu">
@@ -28,7 +28,7 @@
                 <div class="input-group input-group-sm">
                     <input id="typeInput" class="form-control" type="text" title="<%= treeType %>" value="<% if (treeCategory === "") {print ('""')} else{ print (treeType)} %>" placeholder="Alle Arten" <% if (treeCategory === "") print ('disabled') %>>
                     <div id="typeToggle">
-                        <button class="btn btn-default dropdown-toggle-type" data-bs-toggle="dropdown" <% if (treeCategory === "") print ('disabled') %>>
+                        <button class="btn btn-outline-default dropdown-toggle-type" data-bs-toggle="dropdown" <% if (treeCategory === "") print ('disabled') %>>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right treeTypeList" role="menu">

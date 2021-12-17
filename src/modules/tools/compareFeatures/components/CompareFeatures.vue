@@ -131,7 +131,7 @@ export default {
                 </div>
                 <div id="tool-compareFeatures-buttons">
                     <button
-                        class="btn btn-default btn-infos"
+                        class="btn btn-outline-default btn-infos"
                         :title="$t('common:button.back')"
                         @click="setShowAlert(false)"
                     >
@@ -216,7 +216,7 @@ export default {
                 <hr>
 
                 <button
-                    class="btn btn-default btn-infos"
+                    class="btn btn-outline-default btn-infos"
                     :title="!showMoreInfo ? $t('common:modules.tools.compareFeatures.moreInfo') : $t('common:modules.tools.compareFeatures.lessInfo')"
                     :disabled="!showMoreInfoButton"
                     @click="moreInfo()"
@@ -289,7 +289,7 @@ export default {
         margin: 10px;
         padding-right: 10px;
 
-        .btn, .btn-default, .btn-primary {
+        .btn, .btn-outline-default, .btn-primary {
             margin-right: 20px;
             margin-left: 20px;
             &:focus {
