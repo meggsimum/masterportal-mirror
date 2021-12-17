@@ -81,7 +81,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
             this.render();
         }
 
-        this.className = "navbar-form col-xs-9";
+        this.className = "d-flex col-9 col-md-auto";
 
         this.listenTo(this.model, {
             "renderRecommendedList": this.renderRecommendedList,
@@ -163,7 +163,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         $(window).on("resize", this.onresizeCallback.bind(this));
     },
     id: "searchbar", // is ignored, with renderToDOM
-    className: "navbar-form col-xs-9", // is ignored, with renderToDOM
+    className: "d-flex col-9 col-md-auto", // is ignored, with renderToDOM
     searchbarKeyNavSelector: "#searchInputUL",
     template: _.template(SearchbarTemplate),
     templateTable: _.template(TemplateTable),
@@ -180,7 +180,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         if (menuStyle !== "TABLE") {
             this.$el.html(this.template(attr));
             if (window.innerWidth < 768) {
-                $(".navbar-toggle").before(this.$el); // prior of toggleButton
+                $(".navbar-toggler").before(this.$el); // prior of toggleButton
             }
             else {
                 $(".navbar-collapse").append(this.$el); // right in the menubar

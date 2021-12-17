@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <div class="menu-row">
     <% if (isSelected) { %>
-        <a href="#" id="<%= domId %>" class="dropdown-item layer-item tabable checked" tabindex="0">
+        <a href="#" id="<%= domId %>" class="layer-item tabable checked" tabindex="0">
         <span class="bootstrap-icon" title="<%=removeTopicText%>"><i class="bi-check2-square"></i></span>
     <% } else { %>
-        <a href="#" id="<%= domId %>" class="dropdown-item layer-item tabable" tabindex="0">
+        <a href="#" id="<%= domId %>" class="layer-item tabable" tabindex="0">
         <span class="bootstrap-icon" title="<%=showTopicText%>"><i class="bi-square"></i></span>
     <% } %>
         <% if (isSecured) { %>

@@ -23,25 +23,31 @@ export default {
     <header>
         <nav
             id="main-nav"
-            class="navbar navbar-default"
+            class="navbar navbar-expand-md navbar-light"
             role="navigation"
         >
             <div class="container-fluid">
-                <div id="navbarRow">
-                    <div class="navbar-header">
+                <div
+                    id="navbarRow"
+                    class="w-100"
+                >
+                    <div class="navbar-header d-flex justify-content-between">
                         <button
                             type="button"
-                            class="navbar-toggle"
+                            class="navbar-toggler"
                             data-bs-toggle="collapse"
                             data-bs-target=".navbar-collapse"
+                            aria-controls="navbarMenu"
+                            aria-expanded="false"
+                            aria-label="Navigation ein-/ausblenden"
                         >
-                            <span class="sr-only">Navigation ein-/ausblenden</span>
-                            <span class="icon-bar" />
-                            <span class="icon-bar" />
-                            <span class="icon-bar" />
+                            <span class="navbar-toggler-icon" />
                         </button>
                     </div>
-                    <div class="collapse navbar-collapse">
+                    <div
+                        id="navbarMenu"
+                        class="collapse navbar-collapse"
+                    >
                         <ul
                             id="root"
                             class="nav-menu"
@@ -58,5 +64,14 @@ export default {
 <style lang="scss" scoped>
     #main-nav{
         flex-grow:0;
+    }
+
+    .navbar-toggler {
+        margin: 8px 15px 8px 0;
+    }
+
+    .navbar-toggler-icon {
+        width: 1.125em;
+        height: 1.125em;
     }
 </style>

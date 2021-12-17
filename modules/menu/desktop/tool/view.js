@@ -40,7 +40,7 @@ const ToolView = Backbone.View.extend(/** @lends ToolView.prototype */{
         this.toggleIsActiveClass();
     },
     tagName: "li",
-    className: "dropdown",
+    className: "nav-item dropdown",
     template: _.template(ItemTemplate),
     /**
      * @todo Write the documentation.
@@ -124,7 +124,7 @@ const ToolView = Backbone.View.extend(/** @lends ToolView.prototype */{
             this.$el.attr("title", this.model.get("name"));
         }
         else {
-            this.$el.addClass("submenu-style");
+            this.$el.addClass("submenu-style").removeClass("nav-item");
         }
     },
     /**
