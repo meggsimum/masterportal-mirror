@@ -29,7 +29,7 @@ const FolderViewMenu = Backbone.View.extend(/** @lends FolderViewMenu.prototype 
         this.render();
     },
     tagName: "li",
-    className: "dropdown dropdown-folder",
+    className: "nav-item dropdown dropdown-folder",
     template: _.template(Template),
 
     /**

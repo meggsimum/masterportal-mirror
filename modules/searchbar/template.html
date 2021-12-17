@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<div id="searchForm" class="form-group" role="search">
-    <div class="input-group has-feedback">
+<div id="searchForm" class="form-group col" role="search">
+    <div class="input-group has-feedback flex-nowrap">
         <input id="searchInput" class="form-control" type="text" name="text" placeholder="<%= placeholder %>" value="<%= searchString %>" autocomplete="off">
         <span class="bootstrap-icon x-icon form-control-feedback">
             <i class="bi-x-lg"></i>
         </span>
-        <button class="btn btn-default btn-search" type="button" title="<%= buttonSearchTitle %>">
+        <button class="btn btn-outline-default btn-search" type="button" title="<%= buttonSearchTitle %>">
             <i class="bi-search"></i>
         </button>
         <ul id="searchInputUL" class="dropdown-menu-search dropdown-menu-right">
@@ -13,7 +13,7 @@
     </div>
 </div>
 <% if (quickHelp === true) { %>
-<button class="btn btn-search-question d-none d-md-block" type="button" title="<%= buttonOpenHelpTitle %>">
+<button class="btn btn-search-question col-auto d-none d-md-block" type="button" title="<%= buttonOpenHelpTitle %>">
     <span class="bootstrap-icon question-icon">
         <i class="bi-question-circle-fill"></i>
     </span>
