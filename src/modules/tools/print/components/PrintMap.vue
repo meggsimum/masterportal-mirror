@@ -556,7 +556,7 @@ export default {
                         <button
                             v-else
                             id="tool-print-download-button-disabled"
-                            class="btn btn-default btn-sm btn-block"
+                            class="btn btn-outline-default btn-sm btn-block"
                             disabled
                         >
                             {{ $t("common:modules.tools.print.createDownloadFile") }}
