@@ -97,75 +97,73 @@ export default {
             </div>
         </div>
         <div class="input-group">
-            <span class="input-group-btn">
-                <button
-                    v-if="windowsInterval === null"
-                    id="play"
-                    type="button"
-                    class="btn btn-default active-button"
-                    @click="startInterval"
+            <button
+                v-if="windowsInterval === null"
+                id="play"
+                type="button"
+                class="btn btn-default active-button"
+                @click="startInterval"
+            >
+                <span
+                    class="bootstrap-icon"
+                    aria-hidden="true"
                 >
-                    <span
-                        class="bootstrap-icon"
-                        aria-hidden="true"
-                    >
-                        <i class="bi-play-fill" />
-                    </span>
-                </button>
-                <button
-                    v-else
-                    id="pause"
-                    type="button"
-                    class="btn btn-default active-button"
-                    @click="stopInterval"
+                    <i class="bi-play-fill" />
+                </span>
+            </button>
+            <button
+                v-else
+                id="pause"
+                type="button"
+                class="btn btn-default active-button"
+                @click="stopInterval"
+            >
+                <span
+                    class="bootstrap-icon"
+                    aria-hidden="true"
                 >
-                    <span
-                        class="bootstrap-icon"
-                        aria-hidden="true"
-                    >
-                        <i class="bi-pause" />
-                    </span>
-                </button>
-                <button
-                    id="stop"
-                    type="button"
-                    class="btn btn-default active-button"
-                    @click="reset"
+                    <i class="bi-pause" />
+                </span>
+            </button>
+            <button
+                id="stop"
+                type="button"
+                class="btn btn-default active-button"
+                @click="reset"
+            >
+                <span
+                    class="bootstrap-icon"
+                    aria-hidden="true"
                 >
-                    <span
-                        class="bootstrap-icon"
-                        aria-hidden="true"
-                    >
-                        <i class="bi-stop-fill" />
-                    </span>
-                </button>
-                <button
-                    id="backward"
-                    type="button"
-                    class="btn btn-default active-button"
-                    @click="backwardLayer"
+                    <i class="bi-stop-fill" />
+                </span>
+            </button>
+            <button
+                id="backward"
+                type="button"
+                class="btn btn-default active-button"
+                @click="backwardLayer"
+            >
+                <span
+                    class="bootstrap-icon"
+                    aria-hidden="true"
                 >
-                    <span
-                        class="bootstrap-icon"
-                        aria-hidden="true"
-                    >
-                        <i class="bi-skip-backward-fill" />
-                    </span>
-                </button>
-                <button
-                    id="forward"
-                    type="button"
-                    class="btn btn-default active-button"
-                    @click="forwardLayer"
+                    <i class="bi-skip-backward-fill" />
+                </span>
+            </button>
+            <button
+                id="forward"
+                type="button"
+                class="btn btn-default active-button"
+                @click="forwardLayer"
+            >
+                <span
+                    class="bootstrap-icon"
+                    aria-hidden="true"
                 >
-                    <span
-                        class="bootstrap-icon"
-                        aria-hidden="true"
-                    >
-                        <i class="bi-skip-forward-fill" />
-                    </span>
-                </button>
-            </span>
+                    <i class="bi-skip-forward-fill" />
+                </span>
+            </button>
             <label for="title" />
             <input
                 id="title"
