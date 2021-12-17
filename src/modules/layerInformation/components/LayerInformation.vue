@@ -219,7 +219,7 @@ export default {
                     <p
                         v-for="url in metaURLs"
                         :key="url"
-                        class="pull-right"
+                        class="float-end"
                     >
                         <a
                             :href="url"
