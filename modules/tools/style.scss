@@ -27,7 +27,7 @@ $background_color_1: rgb(8, 88, 158);
         }
     }
     >.active {
-        >a {
+        >a.nav-link {
             background-color: $accent_active;
             color: $color_1;
             &:hover {

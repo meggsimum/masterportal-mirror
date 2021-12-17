@@ -14,6 +14,40 @@
 /*
  * Masterportal Default Style (Override of Bootstrap)
  */
+
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+
+$enable-caret:                false;
+$enable-rounded:              false;
+$enable-shadows:              true;
+
+// Navs
+
+$nav-link-padding-y: 0.9375rem;
+
+// Navbar
+
+$navbar-padding-y: 0;
+
+$navbar-nav-link-padding-x: 0.9375rem;
+
+$navbar-toggler-padding-x: .625rem;
+$navbar-toggler-focus-width: 0;
+
+$navbar-light-color: #333333;
+
+// Dropdowns
+//
+// Dropdown menu container and contents.
+
+$dropdown-spacer: 0;
+
+// $dropdown-item-padding-y: 0;
+// $dropdown-item-padding-x: 0;
+
+
 $border-radius-base: 0;
 $border-radius-large: 0;
 $border-radius-small: 0;
