@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<div class="layer-info-item float-end">
-    <span class="boostrap-icon settings-icon rotate"><i class="bi-gear"></span>
+<div class="layer-info-item ms-auto order-last align-self-start">
+    <span class="bootstrap-icon settings-icon rotate"><i class="bi-gear"></i></span>
 </div>
-<div class="selected-layer-item">
-    <span class="boostrap-icon x-icon float-start"><i class="bi-x-lg"></span>
-    <div class="float-start">
+
+<div class="selected-layer-item d-flex">
+    <span class="bootstrap-icon x-icon"><i class="bi-x-lg"></i></span>
+    <div class="d-flex align-items-center">
         <% if (isVisibleInMap === true) { %>
-            <span class="boostrap-icon float-start"><i class="bi-check2-square"></span>
+            <span class="bootstrap-icon"><i class="bi-check2-square"></i></span>
         <% } else { %>
-            <span class="boostrap-icon float-start"><i class="bi-square"></span>
+            <span class="bootstrap-icon"><i class="bi-square"></i></span>
         <% } %>
         <% if (isSecured) { %>
-            <span class="boostrap-icon lock-icon"><i class="bi-lock-fill"></span>
+            <span class="bootstrap-icon lock-icon"><i class="bi-lock-fill"></i></span>
         <% } %>
         <span class="title"><%= name %></span>
     </div>
