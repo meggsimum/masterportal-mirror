@@ -27,7 +27,7 @@ const ItemView = Backbone.View.extend({
     setCssClass: function () {
         if (this.model.get("parentId") === "root") {
             this.$el.addClass("viewpoint-style");
-            this.$el.find("span").addClass("d-md-none d-lg-block");
+            this.$el.find("span").addClass("d-md-none d-lg-inline-block");
         }
         else {
             this.$el.addClass("viewpoint-style");
