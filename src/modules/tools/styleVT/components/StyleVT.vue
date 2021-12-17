@@ -105,7 +105,7 @@ export default {
                             @change="setLayerModelById($event.target.value)"
                         >
                             <option
-                                class="pull-left"
+                                class="float-start"
                                 value=""
                                 selected
                             >
@@ -114,7 +114,7 @@ export default {
                             <option
                                 v-for="vectorTileLayer in vectorTileLayerList"
                                 :key="vectorTileLayer.id"
-                                class="pull-left"
+                                class="float-start"
                                 :value="vectorTileLayer.id"
                                 :selected="selectedLayerId(vectorTileLayer.id)"
                             >
@@ -140,7 +140,7 @@ export default {
                             <option
                                 v-for="vtStyle in layerModel.get('vtStyles')"
                                 :key="vtStyle.id"
-                                class="pull-left"
+                                class="float-start"
                                 :value="vtStyle.id"
                                 :selected="selectedStyle(vtStyle.id)"
                             >

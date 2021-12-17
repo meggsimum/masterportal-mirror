@@ -3,10 +3,10 @@
     <div class="form-group form-group-sm">
         <label for="districtField" class="col-md-5 control-label"><%=districtText%></label>
         <div class="col-md-7">
-            <select class="form-control input-sm pull-left" id="districtField">
-                <option <% if (districtNumber === "0") {print ("selected ");} %>disabled class="pull-left" value="0"><%=chooseText%></option>
+            <select class="form-control input-sm float-start" id="districtField">
+                <option <% if (districtNumber === "0") {print ("selected ");} %>disabled class="float-start" value="0"><%=chooseText%></option>
                     <% Object.keys(districts).forEach(function(key) { %>
-                    <option <% if (districtNumber === districts[key]) {print ("selected ");} %>class="pull-left" value=<%= districts[key] %>><%= key + " (" + districts[key] + ")" %></option>
+                    <option <% if (districtNumber === districts[key]) {print ("selected ");} %>class="float-start" value=<%= districts[key] %>><%= key + " (" + districts[key] + ")" %></option>
                 <% }); %>
             </select>
         </div>
@@ -16,11 +16,11 @@
         <label for="districtField" class="col-md-5 control-label"><%=plotText%></label>
         <div class="col-md-7">
             <fieldset <% if (districtNumber === "0") {print ("disabled ");} %>id="cadastralDistrictFieldSet">
-                <select class="form-control input-sm pull-left" id="cadastralDistrictField">
-                    <option <% if (cadastralDistrictNumber === "0") {print ("selected ");} %>disabled class="pull-left" value="0"><%=chooseText%></option>
+                <select class="form-control input-sm float-start" id="cadastralDistrictField">
+                    <option <% if (cadastralDistrictNumber === "0") {print ("selected ");} %>disabled class="float-start" value="0"><%=chooseText%></option>
                     <% if(cadastralDistricts[districtNumber]){%>
                         <% cadastralDistricts[districtNumber].forEach(function (cadastralDistrict) { %>
-                            <option <% if (cadastralDistrictNumber === cadastralDistrict) {print ("selected ");} %>class="pull-left" value=<%= cadastralDistrict %>><%= cadastralDistrict %></option>
+                            <option <% if (cadastralDistrictNumber === cadastralDistrict) {print ("selected ");} %>class="float-start" value=<%= cadastralDistrict %>><%= cadastralDistrict %></option>
                         <% });%>
                     <% } %>
                 </select>

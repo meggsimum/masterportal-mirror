@@ -117,7 +117,7 @@ export default {
                 <button
                     id="tool-contact-send-message"
                     type="submit"
-                    class="btn btn-primary pull-right"
+                    class="btn btn-primary float-end"
                     :disabled="!validForm"
                 >
                     {{ $t("common:modules.tools.contact.sendButton") }}
