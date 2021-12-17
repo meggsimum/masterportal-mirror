@@ -409,6 +409,10 @@ input#searchInput.form-control {
         position: absolute;
         right: 0;
         top: 0;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        padding-left: 15px;
+        padding-right: 15px;
     }
     #searchInput {
         max-width: 350px;

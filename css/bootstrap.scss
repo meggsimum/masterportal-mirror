@@ -83,6 +83,11 @@
     color: white !important;
     font-weight: normal !important;
 }
+
+.navbar-nav li:not(.nav-item) .nav-link {
+    padding: 3px 20px;
+}
+
 // Overwrite default color to mimic old bootstrap style
 .btn-outline-default {
     color: #333;
