@@ -139,7 +139,7 @@ export default {
                     >
                         <label
                             id="tool-wfsSearch-instances-select-label"
-                            class="col-md-5 control-label"
+                            class="col-md-5 form-label"
                             for="tool-wfsSearch-instances-select"
                         >
                             {{ $t("common:modules.tools.wfsSearch.instancesSelectLabel") }}
