@@ -4,7 +4,7 @@
         <td colspan="5">
             <div class = "form-group form-group-sm layerSelect">
                 <div class="row">
-                    <label for="wfstSelectLayer" class="col-md-5 control-label"> <%= buttonTitleConfig[3] + ":"%> </label>
+                    <label for="wfstSelectLayer" class="col-md-5 form-label"> <%= buttonTitleConfig[3] + ":"%> </label>
                     <div class="col-md-5">
                         <select class="form-control input-sm" id="wfstSelectLayer">
                             <% for (let key in activeLayers) {
@@ -95,7 +95,7 @@
                     else if (featureProperties !== undefined || featureProperties[field.field] !== "") {
                         fieldValue = featureProperties[field.field];
                     } %>
-                    <label for="<%= field.field %>" class="col-md-5 control-label <%= mandatoryLabel %>" style="text-align: left;"><%= field.caption %></label>
+                    <label for="<%= field.field %>" class="col-md-5 form-label <%= mandatoryLabel %>" style="text-align: left;"><%= field.caption %></label>
                     <div class="col-md-7">
                         <% if (field.type && field.inputFieldType === "checkbox") { %>
                             <input type="checkbox" class="form-check-input input-xs input <%= mandatory %>" id="<%= field.field %>" <% if (fieldValue === "true") { %> checked <% } %>>

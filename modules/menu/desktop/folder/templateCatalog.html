@@ -8,7 +8,7 @@
     <a class="<%= id %> dropdown-item tabable" tabindex="0">
         <span class="bootstrap-icon maximize-icon"><i class="bi-plus-circle-fill"></i></span>
 <% } %>
-        <span class="control-label"><%= name %></span>
+        <span class="form-label"><%= name %></span>
     </a>
 
     <div class="last-item">
@@ -26,7 +26,7 @@
     <% if (id === "Overlayer" && treeType === "default") { %>
             <form class="form-inline">
                 <div class="form-group catalog-selection">
-                    <span class="control-label"><%= categoryText %></span>
+                    <span class="form-label"><%= categoryText %></span>
                     <select class="form-control tabable" tabindex="0">
                         <% categories.forEach(function (cat) { %>
                             <% if (cat === category) { %>

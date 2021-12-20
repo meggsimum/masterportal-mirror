@@ -233,7 +233,7 @@ export default {
         </div>
         <label
             v-else
-            class="col-md-5 control-label"
+            class="col-md-5 form-label"
             :for="`tool-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-input`"
         >
             {{ inputLabel }}
