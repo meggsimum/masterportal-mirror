@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <% typeList.forEach(function(typeListObj) { %>
-    <li class="list-group-item type"><span class="badge"><%= typeListObj.list.length %></span><%= typeListObj.type %></li><div style="max-height: 220px; overflow-y: auto; overflow-x: hidden; display: none;">
+    <li class="list-group-item type d-flex justify-content-between align-items-center"><%= typeListObj.type %><span class="badge"><%= typeListObj.list.length %></span></li><div style="max-height: 220px; overflow-y: auto; overflow-x: hidden; display: none;">
         <% typeListObj.list.forEach(function (hit) { %>
             <li id="<%= hit.id %>" class="list-group-item hit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= hit.metaName %>">
                 <p id="searchInputLi">
