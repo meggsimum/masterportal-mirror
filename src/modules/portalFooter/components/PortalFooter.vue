@@ -103,7 +103,7 @@ export default {
                     </a>
                     <span
                         v-if="index < Object.keys(urls).length - 1 || showVersion"
-                        class="bootstrap-icon d-none d-md-block"
+                        class="bootstrap-icon d-none d-md-inline-block"
                     >
                         <i class="bi-three-dots-vertical" />
                     </span>

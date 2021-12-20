@@ -22,6 +22,21 @@
 $enable-caret:                false;
 $enable-rounded:              false;
 $enable-shadows:              true;
+// Typography
+//
+// Font, line-height, and color for body text, headings, and more.
+
+$font-size-base: 1rem; // Assumes the browser default, typically `16px`
+
+// Buttons + Forms
+//
+// Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
+
+$input-btn-font-size: $font-size-base * 0.875;
+
+// Forms
+
+// $input-font-size: $input-btn-font-size;
 
 // Navs
 
