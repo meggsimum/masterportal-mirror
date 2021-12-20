@@ -144,4 +144,12 @@ export default {
 .input-group-text {
     min-width: 65px;
 }
+
+.help-block {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #737373;
+}
+
 </style>
