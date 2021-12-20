@@ -120,7 +120,7 @@ async function SearchCategories ({builder, browsername, url, resolution, capabil
                 await driver.wait(until.elementLocated(searchInputSelector));
                 searchInput = await driver.findElement(searchInputSelector);
                 searchList = await driver.findElement(By.css("#searchInputUL"));
-                clear = await driver.findElement(By.css("#searchbar span.form-control-feedback"));
+                clear = await driver.findElement(By.css("#searchbar span.x-icon"));
                 initialCenter = await driver.executeScript(getCenter);
                 initialResolution = await driver.executeScript(getResolution);
             }
