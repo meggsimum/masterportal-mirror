@@ -14,7 +14,7 @@ const FolderCatalogView = Backbone.View.extend(/** @lends FolderCatalogView.prot
         "keydown .form-control": function (event) {
             event.stopPropagation();
         },
-        "click .header > a > .bootstrap-icon, .header > a > .control-label": "toggleIsExpanded",
+        "click .header > a > .bootstrap-icon, .header > a > .form-label": "toggleIsExpanded",
         "keydown .header > a": "keyAction",
 
         "click .Baselayer .catalog_buttons .question-icon": function () {

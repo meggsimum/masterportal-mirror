@@ -774,7 +774,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                         await closeSingleAlert(driver);
                     }
 
-                    expect(await driver.findElement(By.css("ul#tree .layer-catalog .header .control-label"))).to.exist;
+                    expect(await driver.findElement(By.css("ul#tree .layer-catalog .header .form-label"))).to.exist;
                 });
 
                 it("?configJson= allows selecting a config", async function () {
@@ -794,7 +794,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     // test by redirecting master to custom
                     await loadUrl(driver, `${url}?configJson=../masterCustom${urlAffix}/config.json`, mode);
 
-                    expect(await driver.findElement(By.css("ul#tree .layer-catalog .header .control-label"))).to.exist;
+                    expect(await driver.findElement(By.css("ul#tree .layer-catalog .header .form-label"))).to.exist;
                 });
             }
 

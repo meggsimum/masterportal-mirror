@@ -192,7 +192,7 @@ export default {
             >
                 <label
                     for="tool-bufferAnalysis-selectSourceInput"
-                    class="col-md-5 control-label"
+                    class="col-md-5 form-label"
                 >{{ $t("modules.tools.bufferAnalysis.sourceSelectLabel") }}</label>
                 <div class="col-md-7 form-group form-group-sm">
                     <select
@@ -212,7 +212,7 @@ export default {
                 </div>
                 <label
                     for="tool-bufferAnalysis-radiusTextInput"
-                    class="col-md-5 control-label"
+                    class="col-md-5 form-label"
                 >{{ $t("modules.tools.bufferAnalysis.rangeLabel") }}</label>
 
                 <div class="col-md-7 form-group form-group-sm">
@@ -240,7 +240,7 @@ export default {
 
                 <label
                     for="tool-bufferAnalysis-resultTypeInput"
-                    class="col-md-5 control-label"
+                    class="col-md-5 form-label"
                 >{{ $t("modules.tools.bufferAnalysis.resultTypeLabel") }}</label>
 
                 <div class="col-md-7 form-group form-group-sm">
@@ -265,7 +265,7 @@ export default {
 
                 <label
                     for="tool-bufferAnalysis-selectTargetInput"
-                    class="col-md-5 control-label"
+                    class="col-md-5 form-label"
                 >{{ $t("modules.tools.bufferAnalysis.targetSelectLabel") }}</label>
 
                 <div class="col-md-7 form-group form-group-sm">
