@@ -43,7 +43,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         "input input": "controlEvent",
         "focusin input": "toggleStyleForRemoveIcon",
         "focusout input": "toggleStyleForRemoveIcon",
-        "click .form-control-feedback": "deleteSearchString",
+        "click .x-icon": "deleteSearchString",
         "click .btn-search": "searchAll",
         "click .list-group-item.hit": "hitSelected",
         "click .list-group-item.results": "renderHitList",
@@ -371,7 +371,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         if (this.model.get("finalHitList").length === 1 && this.model.get("initSearchString") === this.model.get("finalHitList")[0].name) {
             this.hitSelected();
         }
-        this.$("#searchInput + span").css("display", "inline-block");
+        this.$("#searchInput + span").css("display", "inline-flex");
     },
 
     /**
@@ -902,7 +902,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
 
             // the "x-button" in the searchbar
             if (evt.target.value.length > 0) {
-                this.$("#searchInput + span").css("display", "inline-block");
+                this.$("#searchInput + span").css("display", "inline-flex");
             }
             else {
                 this.$("#searchInput + span").hide();
