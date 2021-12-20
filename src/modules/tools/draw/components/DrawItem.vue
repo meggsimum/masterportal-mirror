@@ -421,7 +421,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-circleMethod"
                     >
                         {{ $t("common:modules.tools.draw.method") }}
@@ -453,7 +453,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-circleRadius"
                     >
                         {{ innerRadiusLabelComputed }}
@@ -477,7 +477,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-circleOuterRadius"
                     >
                         {{ $t("common:modules.tools.draw.outerRadius") }}
@@ -500,7 +500,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-circleUnit"
                     >
                         {{ $t("common:modules.tools.draw.unit") }}
@@ -528,7 +528,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-text"
                     >
                         {{ $t("common:modules.tools.draw.text") }}
@@ -550,7 +550,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-fontSize"
                     >
                         {{ $t("common:modules.tools.draw.fontSize") }}
@@ -578,7 +578,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-font"
                     >
                         {{ $t("common:modules.tools.draw.fontName") }}
@@ -606,7 +606,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-symbol"
                     >
                         {{ $t("common:modules.tools.draw.symbol") }}
@@ -635,7 +635,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-strokeWidth"
                     >
                         {{ $t("common:modules.tools.draw.lineWidth") }}
@@ -663,7 +663,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-opacity"
                     >
                         {{ $t("common:modules.tools.draw.transparency") }}
@@ -692,7 +692,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-opacityContour"
                     >
                         {{ $t("common:modules.tools.draw.transparencyOutline") }}
@@ -721,7 +721,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-colorContour"
                     >
                         {{ colorContourLabelComputed }}
@@ -749,7 +749,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-outerColorContour"
                     >
                         {{ $t("common:modules.tools.draw.outerColorContour") }}
@@ -777,7 +777,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-pointColor"
                     >
                         {{ $t("common:modules.tools.draw.color") }}
@@ -805,7 +805,7 @@ export default {
                     class="form-group form-group-sm"
                 >
                     <label
-                        class="col-md-5 control-label"
+                        class="col-md-5 form-label"
                         for="tool-draw-pointColor"
                     >
                         {{ $t("common:modules.tools.draw.color") }}

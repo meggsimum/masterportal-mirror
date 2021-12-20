@@ -132,7 +132,7 @@ export default {
                     <div class="form-group form-group-sm">
                         <label
                             for="measure-tool-geometry-select"
-                            class="col-md-5 control-label"
+                            class="col-md-5 form-label"
                         >
                             {{ $t("modules.tools.measure.geometry") }}
                         </label>
@@ -162,7 +162,7 @@ export default {
                     <div class="form-group form-group-sm">
                         <label
                             for="measure-tool-unit-select"
-                            class="col-md-5 control-label"
+                            class="col-md-5 form-label"
                         >
                             {{ $t("modules.tools.measure.measure") }}
                         </label>

@@ -9,7 +9,7 @@
     </div>
 <% wfslayer.filterOptions.forEach(function (filter) { if (filter.filterType === 'combo') { %>
     <div class="panel-body <%= wfslayer.id %>_wfs_panel">
-        <label for="" class="control-label"><%=filter.filterName%></label>
+        <label for="" class="form-label"><%=filter.filterName%></label>
         <select class="form-control input-sm" id="<%=wfslayer.id %>_<%=filter.fieldName %>">
 <% filter.filterString.forEach(function (value) { if (value === '*') { %>
             <option title="keine Filterung der Elemente auf dieses Attribut">*</option>
@@ -18,7 +18,7 @@
 <% } }); %>
         </select>
 <% } else { %>
-        <label for="" class="control-label">Unbekannter Filtertyp.</label>
+        <label for="" class="form-label">Unbekannter Filtertyp.</label>
 <% } %>
    </div>
 <% }); }); %>

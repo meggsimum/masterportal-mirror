@@ -1,7 +1,7 @@
 <!DOCTYPE html>
     <form class="form-horizontal" role="form">
         <div class="form-group form-group-sm">
-            <label class="treefilter-label control-label col-4">Gattung</label>
+            <label class="treefilter-label form-label col-4">Gattung</label>
             <div class="col-8">
                 <div class="input-group input-group-sm">
                     <input id="categoryInput" class="form-control" type="text" placeholder="Keine Auswahl" value="<%= treeCategory %>" title="<%= treeCategory %>">
@@ -23,7 +23,7 @@
             <% } %>
         </div>
         <div class="form-group form-group-sm">
-            <label class="treefilter-label control-label col-4">Baumart</label>
+            <label class="treefilter-label form-label col-4">Baumart</label>
             <div class="col-8">
                 <div class="input-group input-group-sm">
                     <input id="typeInput" class="form-control" type="text" title="<%= treeType %>" value="<% if (treeCategory === "") {print ('""')} else{ print (treeType)} %>" placeholder="Alle Arten" <% if (treeCategory === "") print ('disabled') %>>
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label class="treefilter-label control-label col-4">Pflanzjahr</label>
+            <label class="treefilter-label form-label col-4">Pflanzjahr</label>
             <div id="yearMin" class="col-3 <% if (errors.yearError !== undefined) print('has-error') %>">
                 <input type="text" class="form-control input-sm" value=<%= yearMin %>>
             </div>
@@ -61,7 +61,7 @@
             <% } %>
         </div>
         <div class="form-group form-group-sm">
-            <label class="treefilter-label control-label col-4">Kronendurchmesser[m]</label>
+            <label class="treefilter-label form-label col-4">Kronendurchmesser[m]</label>
             <div id="diameterMin" class="col-3">
                 <input type="text" class="form-control input-sm" value=<%= diameterMin %>>
             </div>
@@ -77,7 +77,7 @@
             <% } %>
         </div>
         <div class="form-group form-group-sm">
-            <label class="treefilter-label control-label col-4">Stammumfang[cm]</label>
+            <label class="treefilter-label form-label col-4">Stammumfang[cm]</label>
             <div id="perimeterMin" class="col-3">
                 <input type="text" class="form-control input-sm" value=<%= perimeterMin %>>
             </div>

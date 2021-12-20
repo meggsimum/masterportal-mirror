@@ -33,7 +33,7 @@ export default {
         >
             <div class="form-group form-group-sm">
                 <label
-                    class="col-md-5 control-label"
+                    class="col-md-5 form-label"
                     for="tool-draw-download-format"
                 >
                     {{ $t("common:modules.tools.draw.download.format") }}
@@ -60,7 +60,7 @@ export default {
             </div>
             <div class="form-group form-group-sm">
                 <label
-                    class="col-md-5 control-label"
+                    class="col-md-5 form-label"
                     for="tool-draw-download-filename"
                 >
                     {{ $t("common:modules.tools.draw.download.filename") }}
