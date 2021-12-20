@@ -12,6 +12,7 @@
     outline: 3px solid $accent_focus;
     outline: 3px auto  Highlight;
     outline: 3px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
 }
 
 /* hover styling for actions like menu-entries, buttons, icons, etc */
