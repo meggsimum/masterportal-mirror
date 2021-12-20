@@ -35,10 +35,14 @@ $border_color_3: #003063;
         display: none;
     }
     &+span {
-        right: 38px;
+        position: absolute;
+        right: 50px;
+        top: 0;
+        bottom: 0;
         z-index: 3;
         color: $color_2;
         display: none;
+        align-items: center; // necessary after display: inline-flex is set dynamically
         pointer-events: all;
         cursor: pointer;
     }
@@ -209,6 +213,12 @@ li.results {
             }
             p {
                 padding-top: 10px;
+            }
+
+            > .badge {
+                background-color: #686868;
+                border-radius: 10px;
+                font-size: 12px;
             }
 
         }
