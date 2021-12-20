@@ -437,7 +437,7 @@ export default {
                             <label
                                 for="supplyCoordRadio"
                                 :title="isSupplyCoordDisabled()? $t('modules.tools.coordToolkit.disabledTooltip'): ''"
-                                :class="{ 'control-label': true, 'enabled': isEnabled('supply') }"
+                                :class="{ 'form-label': true, 'enabled': isEnabled('supply') }"
                                 @click="changeMode('supply')"
                                 @keydown.enter="changeMode('supply')"
                             >{{ $t("modules.tools.coordToolkit.supply") }}</label>
@@ -452,7 +452,7 @@ export default {
                             >
                             <label
                                 for="searchByCoordRadio"
-                                :class="{'control-label': true, 'enabled': isEnabled('search') }"
+                                :class="{'form-label': true, 'enabled': isEnabled('search') }"
                                 @click="changeMode('search')"
                                 @keydown.enter="changeMode('search')"
                             >{{ $t("modules.tools.coordToolkit.search") }}</label>
@@ -473,7 +473,7 @@ export default {
                     <div class="form-group form-group-sm">
                         <label
                             for="coordSystemField"
-                            class="col-md-5 control-label"
+                            class="col-md-5 form-label"
                         >{{ $t("modules.tools.coordToolkit.coordSystemField") }}</label>
                         <div class="col-md-7">
                             <select
@@ -499,7 +499,7 @@ export default {
                         <label
                             id="coordinatesEastingLabel"
                             for="coordinatesEastingField"
-                            class="col-md-5 control-label"
+                            class="col-md-5 form-label"
                         >{{ $t(getLabel("eastingLabel")) }}</label>
                         <div class="col-md-7">
                             <input
@@ -567,7 +567,7 @@ export default {
                         <label
                             id="coordinatesNorthingLabel"
                             for="coordinatesNorthingField"
-                            class="col-md-5 control-label"
+                            class="col-md-5 form-label"
                         >{{ $t(getLabel("northingLabel")) }}</label>
                         <div class="col-md-7">
                             <input
@@ -619,7 +619,7 @@ export default {
                         <label
                             id="coordinatesHeightLabel"
                             for="coordinatesHeightField"
-                            class="col-md-5 control-label"
+                            class="col-md-5 form-label"
                         >{{ $t("modules.tools.coordToolkit.heightLabel") }}</label>
                         <div class="col-md-7">
                             <input

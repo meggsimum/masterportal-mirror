@@ -77,7 +77,6 @@ export default {
         <div :class="htmlElement === 'input' ? 'input-group' : ''">
             <label
                 :class="[
-                    'control-label',
                     'input-group-text',
                     htmlElement === 'textarea' ? 'force-border' : ''
                 ]"
@@ -142,7 +141,7 @@ export default {
     resize: none;
 }
 
-.control-label {
+.input-group-text {
     min-width: 65px;
 }
 </style>
