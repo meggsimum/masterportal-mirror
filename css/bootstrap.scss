@@ -72,14 +72,14 @@
         @include primary_action_hover;
     }
 }
-.nav > li.active > a {
+.nav > li > a.active {
     color: black !important;
     font-weight: bolder !important;
 }
 .nav > li.disabled > a {
     color: $secondary_contrast !important;
 }
-.nav-pills > li.active > a {
+.nav-pills > li > a.active {
     color: white !important;
     font-weight: normal !important;
 }
