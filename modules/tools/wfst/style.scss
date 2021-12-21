@@ -101,7 +101,7 @@ $fontSizeSmall: 12px;
         border: 1px solid red;
     }
 
-    .form-label.mandatory::after {
+    .col-form-label.mandatory::after {
         content: " *";
         color: red;
     }
