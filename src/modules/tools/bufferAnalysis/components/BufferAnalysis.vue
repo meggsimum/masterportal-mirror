@@ -285,10 +285,10 @@ export default {
                     </select>
                 </div>
 
-                <div class="col-md-12 form-group form-group-sm">
+                <div class="col-md-12 form-group form-group-sm d-grid gap-2">
                     <button
                         id="tool-bufferAnalysis-resetButton"
-                        class="float-end btn btn-block btn-lgv-grey"
+                        class="float-end btn btn-lgv-grey"
                         :disabled="!selectedSourceLayer"
                         @click="resetModule"
                     >
@@ -296,10 +296,10 @@ export default {
                     </button>
                 </div>
 
-                <div class="col-md-12 form-group form-group-sm">
+                <div class="col-md-12 form-group form-group-sm d-grid gap-2">
                     <button
                         id="tool-bufferAnalysis-saveButton"
-                        class="float-end btn btn-block btn-primary"
+                        class="float-end btn btn-primary"
                         :disabled="!selectedSourceLayer || !selectedTargetLayer || !bufferRadius"
                         @click="buildUrlFromToolState"
                     >
