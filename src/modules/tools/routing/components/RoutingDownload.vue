@@ -183,7 +183,7 @@ export default {
         <div class="d-flex mb-2">
             <label
                 for="routing-DownloadFormatOptions"
-                class="col-md-4 form-label d-flex align-self-center"
+                class="col-md-4 col-form-label d-flex align-self-center"
             >{{ $t('common:modules.tools.routing.download.format') }}</label>
 
             <div class="col-md-8">
@@ -208,7 +208,7 @@ export default {
         <div class="d-flex mb-2">
             <label
                 for="routing-download-filename"
-                class="col-md-4 form-label d-flex align-self-center"
+                class="col-md-4 col-form-label d-flex align-self-center"
             >{{ $t('common:modules.tools.routing.download.filename') }}</label>
 
             <div class="col-md-8">

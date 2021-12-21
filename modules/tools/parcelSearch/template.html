@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <div class="form-horizontal" role="form">
     <div class="form-group form-group-sm row">
-        <label for="districtField" class="col-md-5 form-label"><%=districtText%></label>
+        <label for="districtField" class="col-md-5 col-form-label"><%=districtText%></label>
         <div class="col-md-7">
             <select class="form-select form-select-sm float-start" id="districtField">
                 <option <% if (districtNumber === "0") {print ("selected ");} %>disabled class="float-start" value="0"><%=chooseText%></option>
@@ -13,7 +13,7 @@
     </div>
     <% if (cadastralDistrictField === true) { %>
     <div class="form-group form-group-sm row">
-        <label for="districtField" class="col-md-5 form-label"><%=plotText%></label>
+        <label for="districtField" class="col-md-5 col-form-label"><%=plotText%></label>
         <div class="col-md-7">
             <fieldset <% if (districtNumber === "0") {print ("disabled ");} %>id="cadastralDistrictFieldSet">
                 <select class="form-select form-select-sm float-start" id="cadastralDistrictField">
@@ -30,7 +30,7 @@
     <% } %>
 
     <div class="form-group form-group-sm row">
-        <label for="parcelField" class="col-md-5 form-label"><%=parcelNumberText%></label>
+        <label for="parcelField" class="col-md-5 col-form-label"><%=parcelNumberText%></label>
         <div class="col-md-7">
              <div class="input-group" style="width:100%">
                 <input <% if (districtNumber === "0" || (cadastralDistrictField === true && cadastralDistrictNumber === "0")) {print ("disabled ");} %>id="parcelField" class="form-control form-control-sm" type="text" pattern="[0-9]+" required value="<%= parcelNumber %>" placeholder="<%=parcelNumberPlaceholderText%>" maxlength="<%= maxParcelNumberLength %>"/>
