@@ -254,8 +254,6 @@ const FolderCatalogView = Backbone.View.extend(/** @lends FolderCatalogView.prot
      * @return {void}
      */
     fixTree: function () {
-        // eslint-disable-next-line
-        console.log('XXX');
         $("body").on("click", "#map", this.helpForFixing);
         $("body").on("click", "#searchbar", this.helpForFixing);
         this.$el.parent().addClass("fixed");
