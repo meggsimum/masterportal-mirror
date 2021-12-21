@@ -1,11 +1,11 @@
 <!DOCTYPE html>
  <% if (isExpanded === true) { %>
 <div class="menu-row header <%= id %>" >
-    <a class="<%= id %> dropdown-item tabable" tabindex="0">
+    <a class="<%= id %> tabable" tabindex="0">
         <span class="bootstrap-icon minimize-icon"><i class="bi-dash-circle-fill"></i></span>
  <% } else {%>
 <div class="menu-row header <%= id %> closed" >
-    <a class="<%= id %> dropdown-item tabable" tabindex="0">
+    <a class="<%= id %> tabable" tabindex="0">
         <span class="bootstrap-icon maximize-icon"><i class="bi-plus-circle-fill"></i></span>
 <% } %>
         <span class="form-label"><%= name %></span>
@@ -13,7 +13,7 @@
 
     <div class="last-item">
     <% if (id === "Baselayer") { %>
-        <span class="catalog_buttons">
+        <span class="catalog_buttons d-flex gap-1">
             <% if (this.model.get("quickHelp") === true) { %>
                 <span class="bootstrap-icon question-icon tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= topicsHelpText%>"><i class="bi-question-circle-fill"></i></span>
             <% } %>
@@ -38,9 +38,9 @@
                 </div>
             </form>
     <% } %>
-    <% if (id === "SelectedLayer" && this.model.collection.has({id:"saveSelection"})) { %>
-        <div class="layer-selection-save tabable" tabindex="0">
-            <span><%= saveSelectionText %></span>
+    <% if (id === "SelectedLayer" && this.model.collection.has("saveSelection")) { %>
+        <div class="layer-selection-save d-flex gap-1 tabable" tabindex="0">
+            <span class="text-nowrap"><%= saveSelectionText %></span>
             <span class="bootstrap-icon"><i class="bi-box-arrow-up-right"></i></span>
         </div>
     <% } %>
