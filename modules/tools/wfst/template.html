@@ -98,7 +98,9 @@
                     <label for="<%= field.field %>" class="col-md-5 col-form-label <%= mandatoryLabel %>" style="text-align: left;"><%= field.caption %></label>
                     <div class="col-md-7">
                         <% if (field.type && field.inputFieldType === "checkbox") { %>
-                            <input type="checkbox" class="form-check-input input-xs input <%= mandatory %>" id="<%= field.field %>" <% if (fieldValue === "true") { %> checked <% } %>>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input input-xs input <%= mandatory %>" id="<%= field.field %>" <% if (fieldValue === "true") { %> checked <% } %>>
+                            </div>
                         <% } 
                         else if (field.type && field.inputFieldType === "date") { %> 
                             <div class="input-group input-group-sm">
