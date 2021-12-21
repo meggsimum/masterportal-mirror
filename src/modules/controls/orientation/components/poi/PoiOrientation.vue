@@ -336,11 +336,13 @@ export default {
                         <li
                             v-for="(feature, index) in poiFeatures"
                             :key="index"
-                            :class="feature.category === activeCategory ? 'active' : ''"
+                            class="nav-item"
                             @click="changedCategory"
                             @keydown.enter="changedCategory"
                         >
                             <a
+                                class="nav-link"
+                                :class="feature.category === activeCategory ? 'active' : ''"
                                 :href="'#' + feature.category"
                                 :aria-controls="feature.category"
                                 role="button"
@@ -359,7 +361,7 @@ export default {
                             :id="feature.category"
                             :key="'list' + index"
                             role="tabpanel"
-                            :class="['tab-pane fade in', feature.category === activeCategory ? 'active' : '']"
+                            :class="['tab-pane fade show', feature.category === activeCategory ? 'active' : '']"
                         >
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover">
@@ -399,7 +401,7 @@ export default {
         </div>
         <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events -->
         <div
-            class="modal-backdrop fade in"
+            class="modal-backdrop fade show"
             @click="hidePoi"
         />
         <!--

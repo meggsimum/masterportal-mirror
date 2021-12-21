@@ -135,7 +135,7 @@ export default {
          * @returns {String} classNames of the tab
          */
         getTabPaneClasses (tab) {
-            return {active: this.isActiveTab(tab), in: this.isActiveTab(tab), "tab-pane": true, fade: true};
+            return {active: this.isActiveTab(tab), show: this.isActiveTab(tab), "tab-pane": true, fade: true};
         },
         /**
          * stops the click event from closing the menu tree
@@ -244,12 +244,14 @@ export default {
                     <li
                         v-if="legendURL !== 'ignore'"
                         value="layerinfo-legend"
-                        :class="{active: isActiveTab('layerinfo-legend') }"
+                        class="nav-item"
                         @click="onClick"
                         @keydown.enter="onClick"
                     >
                         <a
                             href="#layerinfo-legend"
+                            class="nav-link"
+                            :class="{active: isActiveTab('layerinfo-legend') }"
                             @click="setActiveTab"
                         >{{ $t("common:modules.layerInformation.legend") }}
                         </a>
@@ -257,12 +259,14 @@ export default {
                     <li
                         v-if="showDownloadLinks"
                         value="LayerInfoDataDownload"
-                        :class="{active: isActiveTab('LayerInfoDataDownload') }"
+                        class="nav-item"
                         @click="onClick"
                         @keydown.enter="onClick"
                     >
                         <a
                             href="#LayerInfoDataDownload"
+                            class="nav-link"
+                            :class="{active: isActiveTab('LayerInfoDataDownload') }"
                             @click="setActiveTab"
                         >{{ $t("common:modules.layerInformation.downloadDataset") }}
                         </a>
@@ -270,12 +274,14 @@ export default {
                     <li
                         v-if="showUrl"
                         value="url"
-                        :class="{active: isActiveTab('url') }"
+                        class="nav-item"
                         @click="onClick"
                         @keydown.enter="onClick"
                     >
                         <a
                             href="#url"
+                            class="nav-link"
+                            :class="{active: isActiveTab('url') }"
                             @click="setActiveTab"
                         >{{ $t(layerInfo.typ) }} - {{ $t("common:modules.layerInformation.addressSuffix") }}
                         </a>
@@ -422,7 +428,6 @@ export default {
             >a {
                 text-overflow: ellipsis;
                 overflow: hidden;
-                height: 100%;
             }
         }
     }
