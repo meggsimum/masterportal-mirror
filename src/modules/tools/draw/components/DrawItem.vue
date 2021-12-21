@@ -835,10 +835,10 @@ export default {
                 role="form"
             >
                 <div class="form-group form-group-sm row">
-                    <div class="col-12">
+                    <div class="col-12 d-grid gap-2">
                         <button
                             id="tool-draw-drawInteraction"
-                            class="btn btn-sm btn-block"
+                            class="btn btn-sm"
                             :class="currentInteraction === 'draw' ? 'btn-primary' : 'btn-lgv-grey'"
                             :disabled="currentInteraction === 'draw'"
                             @click="toggleInteraction('draw'); setCanvasCursorByInteraction('draw')"
@@ -851,10 +851,10 @@ export default {
                     </div>
                 </div>
                 <div class="form-group form-group-sm row">
-                    <div class="col-12">
+                    <div class="col-12 d-grid gap-2">
                         <button
                             id="tool-draw-undoInteraction"
-                            class="btn btn-sm btn-block btn-lgv-grey"
+                            class="btn btn-sm btn-lgv-grey"
                             @click="undoLastStep"
                         >
                             <span class="bootstrap-icon">
@@ -865,10 +865,10 @@ export default {
                     </div>
                 </div>
                 <div class="form-group form-group-sm row">
-                    <div class="col-12">
+                    <div class="col-12 d-grid gap-2">
                         <button
                             id="tool-draw-redoInteraction"
-                            class="btn btn-sm btn-block btn-lgv-grey"
+                            class="btn btn-sm btn-lgv-grey"
                             @click="redoLastStep"
                         >
                             <span class="bootstrap-icon">
@@ -879,10 +879,10 @@ export default {
                     </div>
                 </div>
                 <div class="form-group form-group-sm row">
-                    <div class="col-12">
+                    <div class="col-12 d-grid gap-2">
                         <button
                             id="tool-draw-editInteraction"
-                            class="btn btn-sm btn-block"
+                            class="btn btn-sm"
                             :class="currentInteraction === 'modify' ? 'btn-primary' : 'btn-lgv-grey'"
                             :disabled="currentInteraction === 'modify'"
                             @click="toggleInteraction('modify'); setCanvasCursorByInteraction('modify')"
@@ -895,10 +895,10 @@ export default {
                     </div>
                 </div>
                 <div class="form-group form-group-sm row">
-                    <div class="col-12">
+                    <div class="col-12 d-grid gap-2">
                         <button
                             id="tool-draw-deleteInteraction"
-                            class="btn btn-sm btn-block"
+                            class="btn btn-sm"
                             :class="currentInteraction === 'delete' ? 'btn-primary' : 'btn-lgv-grey'"
                             :disabled="currentInteraction === 'delete'"
                             @click="toggleInteraction('delete'); setCanvasCursorByInteraction('delete')"
@@ -911,10 +911,10 @@ export default {
                     </div>
                 </div>
                 <div class="form-group form-group-sm row">
-                    <div class="col-12">
+                    <div class="col-12 d-grid gap-2">
                         <button
                             id="tool-draw-deleteAllInteraction"
-                            class="btn btn-sm btn-block btn-lgv-grey"
+                            class="btn btn-sm btn-lgv-grey"
                             @click="clearLayer"
                         >
                             <span class="bootstrap-icon">
