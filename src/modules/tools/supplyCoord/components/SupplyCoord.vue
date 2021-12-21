@@ -185,7 +185,7 @@ export default {
                                 id="coordSystemField"
                                 ref="coordSystemField"
                                 v-model="currentSelection"
-                                class="font-arial form-control input-sm float-start"
+                                class="font-arial form-select form-select-sm float-start"
                                 @change="selectionChanged($event)"
                             >
                                 <option
@@ -210,7 +210,7 @@ export default {
                                 id="coordinatesEastingField"
                                 v-model="coordinatesEastingField"
                                 type="text"
-                                class="form-control"
+                                class="form-control form-control-sm"
                                 readonly
                                 contenteditable="false"
                                 @click="copyToClipboard($event.currentTarget)"
@@ -228,7 +228,7 @@ export default {
                                 id="coordinatesNorthingField"
                                 v-model="coordinatesNorthingField"
                                 type="text"
-                                class="form-control"
+                                class="form-control form-control-sm"
                                 readonly
                                 contenteditable="false"
                                 @click="copyToClipboard($event.currentTarget)"

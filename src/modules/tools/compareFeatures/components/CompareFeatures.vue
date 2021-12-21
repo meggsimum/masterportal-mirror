@@ -165,7 +165,7 @@ export default {
                     <select
                         id="tool-compareFeatures-select"
                         v-model="selected"
-                        class="form-control"
+                        class="form-select"
                     >
                         <option
                             v-for="layer in selectableLayers"

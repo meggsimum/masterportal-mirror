@@ -388,7 +388,7 @@ export default {
             <select
                 id="tool-draw-drawType"
                 ref="tool-draw-drawType"
-                class="form-control input-sm"
+                class="form-select form-select-sm"
                 :disabled="drawHTMLElements"
                 @change="setDrawType"
             >
@@ -429,7 +429,7 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="tool-draw-circleMethod"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setCircleMethod"
                         >
@@ -462,7 +462,7 @@ export default {
                         <input
                             id="tool-draw-circleRadius"
                             v-model="circleRadiusComputed"
-                            class="form-control"
+                            class="form-control form-control-sm"
                             :style="{borderColor: innerBorderColor}"
                             type="number"
                             step="1"
@@ -486,7 +486,7 @@ export default {
                         <input
                             id="tool-draw-circleOuterRadius"
                             v-model="circleOuterRadiusComputed"
-                            class="form-control"
+                            class="form-control form-control-sm"
                             :style="{borderColor: outerBorderColor}"
                             type="number"
                             :placeholder="$t('common:modules.tools.draw.doubleCirclePlaceholder')"
@@ -508,7 +508,7 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="tool-draw-circleUnit"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setUnit"
                         >
@@ -536,7 +536,7 @@ export default {
                     <div class="col-md-7">
                         <input
                             id="tool-draw-text"
-                            class="form-control"
+                            class="form-control form-control-sm"
                             type="text"
                             :placeholder="$t('common:modules.tools.draw.clickToPlaceText')"
                             :disabled="drawHTMLElementsModifyFeature"
@@ -558,7 +558,7 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="tool-draw-fontSize"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setFontSize"
                         >
@@ -586,7 +586,7 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="tool-draw-font"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setFont"
                         >
@@ -614,7 +614,7 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="tool-draw-symbol"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setSymbol"
                         >
@@ -643,7 +643,7 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="tool-draw-strokeWidth"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setStrokeWidth"
                         >
@@ -672,7 +672,7 @@ export default {
                         <select
                             id="tool-draw-opacity"
                             :key="`tool-draw-opacity-select`"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setOpacity"
                         >
@@ -701,7 +701,7 @@ export default {
                         <select
                             id="tool-draw-opacityContour"
                             :key="`tool-draw-opacityContour-select`"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setOpacityContour"
                         >
@@ -729,7 +729,7 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="tool-draw-colorContour"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setColorContour"
                         >
@@ -757,7 +757,7 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="tool-draw-outerColorContour"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setOuterColorContour"
                         >
@@ -785,7 +785,7 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="tool-draw-pointColor"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setColor"
                         >
@@ -813,7 +813,7 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="tool-draw-pointColor"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             :disabled="drawHTMLElementsModifyFeature"
                             @change="setColor"
                         >
