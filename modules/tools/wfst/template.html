@@ -82,7 +82,7 @@
             <form class="form-horizontal record-form">
                 <% wfstFields.forEach(function (field, index) { %>
                     <% let fieldValue, mandatory, mandatoryLabel; %>
-                <div class="form-group form-group-sm">
+                <div class="form-group form-group-sm row">
                     <% if (field.mandatory === true) {
                         mandatoryLabel = "mandatory";
                         if (featureProperties === undefined || featureProperties[field.field] === "") {

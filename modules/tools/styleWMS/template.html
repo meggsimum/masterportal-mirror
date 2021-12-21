@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <div class="form-horizontal" role="form">
-    <div class="form-group form-group-sm">
+    <div class="form-group form-group-sm row">
         <div class="col-md-12">
             <label class="range-label"><%=theme%></label>
             <select class="form-control input-sm" id="layerField">
@@ -12,7 +12,7 @@
         </div>
     </div>
     <% if ( model !== null && model!== undefined) { %>
-        <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm row">
             <div class="col-md-12">
                 <label class="range-label"><%=attribute%></label>
                 <select class="form-control input-sm" id="attributField">
@@ -24,7 +24,7 @@
             </div>
         </div>
         <% if (attributeName !== "default") { %>
-            <div class="form-group form-group-sm">
+            <div class="form-group form-group-sm row">
                 <div class="col-md-12">
                     <label class="range-label"><%=countOfClasses%></label>
                     <select class="form-control input-sm" id="numberField">
@@ -38,7 +38,7 @@
         <% } %>
         <% if (numberOfClasses !== "default") { %>
             <% for (let i = 0; i < numberOfClasses; i++) { %>
-                <div class="form-group">
+                <div class="form-group row">
                     <div class="col-md-5">
                         <label class="range-label"><%=rangeOfValues%> <%= i + 1 %></label>
                         <input class="form-control input-sm <%= 'start-range' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].startRange)} %>" placeholder=<%=from%>>
@@ -56,7 +56,7 @@
                     </div>
                 </div>
             <% } %>
-            <div class="form-group form-group-sm">
+            <div class="form-group form-group-sm row">
                 <% if (typeof errors !== "undefined") { %>
                     <span id="yearError" class="col-7 offset-5 treeFilterError"><%= errors.range %></span>
                 <% } %>
@@ -67,7 +67,7 @@
             </div>
         <% } %>
         <% if (model !== null && numberOfClasses === "default") { %>
-            <div class="form-group form-group-sm">
+            <div class="form-group form-group-sm row">
                 <div class="col-12 stylewms-panel">
                     <button class="btn btn-lgv-grey reset float-left"><%=reset%></button>
                 </div>

@@ -129,7 +129,7 @@ export default {
                     class="form-horizontal"
                     role="form"
                 >
-                    <div class="form-group form-group-sm">
+                    <div class="form-group form-group-sm row">
                         <label
                             for="measure-tool-geometry-select"
                             class="col-md-5 form-label"
@@ -159,7 +159,7 @@ export default {
                             </select>
                         </div>
                     </div>
-                    <div class="form-group form-group-sm">
+                    <div class="form-group form-group-sm row">
                         <label
                             for="measure-tool-unit-select"
                             class="col-md-5 form-label"
@@ -186,7 +186,7 @@ export default {
                     </div>
                     <div
                         v-if="isDefaultStyle()"
-                        class="form-group form-group-sm"
+                        class="form-group form-group-sm row"
                     >
                         <div class="col-md-12 inaccuracy-list">
                             {{ $t("modules.tools.measure.influenceFactors") }}
@@ -199,7 +199,7 @@ export default {
                             </ul>
                         </div>
                     </div>
-                    <div class="form-group form-group-sm">
+                    <div class="form-group form-group-sm row">
                         <div class="col-md-12">
                             <button
                                 id="measure-delete"
