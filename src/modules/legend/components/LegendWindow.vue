@@ -773,10 +773,10 @@ export default {
                 <div
                     v-for="legendObj in legends"
                     :key="legendObj.name"
-                    class="layer panel panel-default"
+                    class="layer card"
                 >
                     <div
-                        class="layer-title panel-heading"
+                        class="layer-title card-header"
                         data-bs-toggle="collapse"
                         :data-bs-target="'#' + generateId(legendObj.name)"
                     >
@@ -910,7 +910,7 @@ export default {
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 12px;
             background-color: $background_color_3;
-            .panel {
+            .card {
                 background-color: $background_color_3;
             }
             .layer-title {

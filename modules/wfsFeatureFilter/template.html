@@ -1,14 +1,14 @@
 <% if (wfsList.length > 0) { %>
-<div class="panel panel-default" style="margin: 0px;">
+<div class="card" style="margin: 0px;">
 <% wfsList.forEach(function (wfslayer) { %>
-    <div id="<%= wfslayer.id %>" class="panel-heading">
+    <div id="<%= wfslayer.id %>" class="card-header">
         <p class="buttons float-end">
             <span id="wfsfeaturefilter_resizemarker" class="bootstrap-icon" title="Ein- und ausklappen"><i class="bi-arrows-angle-expand"></i></span>
         </p>
         <span style="font-size: 14px; "><%=wfslayer.name %></span>
     </div>
 <% wfslayer.filterOptions.forEach(function (filter) { if (filter.filterType === 'combo') { %>
-    <div class="panel-body <%= wfslayer.id %>_wfs_panel">
+    <div class="card-body <%= wfslayer.id %>_wfs_panel">
         <label for="" class="form-label"><%=filter.filterName%></label>
         <select class="form-select form-select-sm" id="<%=wfslayer.id %>_<%=filter.fieldName %>">
 <% filter.filterString.forEach(function (value) { if (value === '*') { %>
@@ -22,7 +22,7 @@
 <% } %>
    </div>
 <% }); }); %>
-    <div class="panel-footer">
+    <div class="card-footer">
         <button id="filterbutton" title="Nur Elemente mit diesen Filtereinstellungen anzeigen." class="btn btn-lgv-grey" type="button">Filter anwenden</button>
     </div>
 </div>
