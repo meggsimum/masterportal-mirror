@@ -473,7 +473,7 @@ export default {
                     <div class="form-group form-group-sm row">
                         <label
                             for="coordSystemField"
-                            class="col-md-5 form-label"
+                            class="col-md-5 col-form-label"
                         >{{ $t("modules.tools.coordToolkit.coordSystemField") }}</label>
                         <div class="col-md-7">
                             <select
@@ -499,7 +499,7 @@ export default {
                         <label
                             id="coordinatesEastingLabel"
                             for="coordinatesEastingField"
-                            class="col-md-5 form-label"
+                            class="col-md-5 col-form-label"
                         >{{ $t(getLabel("eastingLabel")) }}</label>
                         <div class="col-md-7">
                             <input
@@ -567,7 +567,7 @@ export default {
                         <label
                             id="coordinatesNorthingLabel"
                             for="coordinatesNorthingField"
-                            class="col-md-5 form-label"
+                            class="col-md-5 col-form-label"
                         >{{ $t(getLabel("northingLabel")) }}</label>
                         <div class="col-md-7">
                             <input
@@ -619,7 +619,7 @@ export default {
                         <label
                             id="coordinatesHeightLabel"
                             for="coordinatesHeightField"
-                            class="col-md-5 form-label"
+                            class="col-md-5 col-form-label"
                         >{{ $t("modules.tools.coordToolkit.heightLabel") }}</label>
                         <div class="col-md-7">
                             <input
