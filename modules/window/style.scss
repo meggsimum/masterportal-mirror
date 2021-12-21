@@ -29,6 +29,7 @@ $background_color_4: #646262;
         padding-left: 10px;
         border-bottom: 1px solid rgb(229, 229, 229);
         font-family: $font_family_1;
+        display: flex;
         >.move {
             cursor: move;
         }
@@ -41,8 +42,6 @@ $background_color_4: #646262;
             color: $color_1;
             width: calc(100% - 50px);
             margin: 0;
-            height: 34px;
-            line-height:24px;
         }
         >.buttons {
             color: $color_1;
