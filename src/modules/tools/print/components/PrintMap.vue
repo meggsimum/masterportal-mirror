@@ -514,10 +514,10 @@ export default {
                     </div>
                 </div>
                 <div class="form-group form-group-sm row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 d-grid gap-2">
                         <button
                             type="button"
-                            class="btn btn-primary btn-block"
+                            class="btn btn-primary"
                             @click="print"
                         >
                             {{ $t("common:modules.tools.print.printLabel") }}
@@ -552,11 +552,11 @@ export default {
                             <i class="bi-check-lg" />
                         </div>
                     </div>
-                    <div class="col-md-6 tool-print-download-button-container">
+                    <div class="col-md-6 d-grid gap-2 tool-print-download-button-container">
                         <button
                             v-if="file.finishState"
                             id="tool-print-download-button-active"
-                            class="btn btn-primary btn-sm btn-block"
+                            class="btn btn-primary btn-sm"
                             @click="download($event.target, file.downloadUrl, file.filename)"
                         >
                             {{ $t("common:modules.tools.print.downloadFile") }}
@@ -564,7 +564,7 @@ export default {
                         <button
                             v-else
                             id="tool-print-download-button-disabled"
-                            class="btn btn-outline-default btn-sm btn-block"
+                            class="btn btn-outline-default btn-sm"
                             disabled
                         >
                             {{ $t("common:modules.tools.print.createDownloadFile") }}

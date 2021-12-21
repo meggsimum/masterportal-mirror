@@ -191,9 +191,9 @@ export default {
                         </div>
                     </div>
                     <div class="form-group form-group-sm row">
-                        <div class="col-12">
+                        <div class="col-12 d-grid gap-2">
                             <button
-                                class="btn btn-primary btn-block"
+                                class="btn btn-primary"
                                 :disabled="getEastingError || getNorthingError || !coordinatesEasting.value || !coordinatesNorthing.value"
                                 type="button"
                                 @click="searchCoordinate(coordinatesEasting, coordinatesNorthing)"

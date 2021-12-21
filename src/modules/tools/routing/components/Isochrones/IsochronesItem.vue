@@ -272,9 +272,9 @@ export default {
             <hr>
 
             <div class="d-flex flex-column">
-                <div class="col-12">
+                <div class="col-12 d-grid gap-2">
                     <button
-                        class="btn btn-primary btn-block"
+                        class="btn btn-primary"
                         type="button"
                         :disabled="waypoint.getCoordinates().length === 0 || isInputDisabled"
                         @click="findIsochrones()"
