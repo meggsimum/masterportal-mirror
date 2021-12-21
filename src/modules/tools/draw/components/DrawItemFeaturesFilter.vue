@@ -90,14 +90,20 @@ export default {
             <div
                 v-if="value.length > 0"
                 :key="index"
-                class="checkbox"
+                class="form-check"
             >
-                <label>
-                    <input
-                        type="checkbox"
-                        :checked="hasVisibleFeatures(value)"
-                        @change="setFeaturesVisibility(value, $event.target.checked)"
-                    > {{ key }}
+                <input
+                    :id="'draw-filter-check-' + index"
+                    type="checkbox"
+                    class="form-check-input"
+                    :checked="hasVisibleFeatures(value)"
+                    @change="setFeaturesVisibility(value, $event.target.checked)"
+                >
+                <label
+                    class="form-check-label"
+                    :for="'draw-filter-check-' + index"
+                >
+                    {{ key }}
                 </label>
             </div>
         </template>
