@@ -175,7 +175,7 @@ export default {
                     class="form-horizontal"
                     role="form"
                 >
-                    <div class="form-group form-group-sm">
+                    <div class="form-group form-group-sm row">
                         <label
                             for="coordSystemField"
                             class="col-md-5 form-label"
@@ -199,7 +199,7 @@ export default {
                             </select>
                         </div>
                     </div>
-                    <div class="form-group form-group-sm">
+                    <div class="form-group form-group-sm row">
                         <label
                             id="coordinatesEastingLabel"
                             for="coordinatesEastingField"
@@ -217,7 +217,7 @@ export default {
                             >
                         </div>
                     </div>
-                    <div class="form-group form-group-sm">
+                    <div class="form-group form-group-sm row">
                         <label
                             id="coordinatesNorthingLabel"
                             for="coordinatesNorthingField"
