@@ -189,6 +189,7 @@ export default {
             <div
                 v-if="active"
                 id="tool-bufferAnalysis"
+                class="row"
             >
                 <label
                     for="tool-bufferAnalysis-selectSourceInput"
