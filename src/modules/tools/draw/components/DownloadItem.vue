@@ -79,12 +79,12 @@ export default {
                 <div class="col-12">
                     <a
                         id="tool-draw-download-file"
-                        class="col-12 downloadFile"
+                        class="col-12 d-grid gap-2 downloadFile"
                         :href="download.fileUrl"
                         :download="download.file"
                     >
                         <button
-                            class="btn btn-sm btn-block btn-lgv-grey"
+                            class="btn btn-sm btn-lgv-grey"
                             :disabled="disableFileDownload"
                             type="button"
                             @click="fileDownloaded"

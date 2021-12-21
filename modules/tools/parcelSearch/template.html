@@ -43,14 +43,14 @@
     </div>
     <div class="form-group form-group-sm row">
         <% if (createReport === true) { %>
-            <div class="col-6">
-                <button id="reportbutton" class="btn btn-primary btn-md btn-block" <% if (districtNumber === "0" || (cadastralDistrictField === true && cadastralDistrictNumber === "0") || parcelNumber === "" || (parcelDenominatorField === true && parcelDenominatorNumber ==="")) {print ("disabled ");} %>><%=generateReportText%></button>
+            <div class="col-6 d-grid gap-2">
+                <button id="reportbutton" class="btn btn-primary btn-md" <% if (districtNumber === "0" || (cadastralDistrictField === true && cadastralDistrictNumber === "0") || parcelNumber === "" || (parcelDenominatorField === true && parcelDenominatorNumber ==="")) {print ("disabled ");} %>><%=generateReportText%></button>
             </div>
             <div class="col-6">
         <% } else { %>
-            <div class="col-12">
+            <div class="col-12 d-grid gap-2">
         <% } %>
-            <button id="submitbutton" class="btn btn-primary btn-md btn-block" <% if (districtNumber === "0" || (cadastralDistrictField === true && cadastralDistrictNumber === "0") || parcelNumber === "" || (parcelDenominatorField === true && parcelDenominatorNumber ==="")) {print ("disabled ");} %>><%=searchText%></button>
+            <button id="submitbutton" class="btn btn-primary btn-md" <% if (districtNumber === "0" || (cadastralDistrictField === true && cadastralDistrictNumber === "0") || parcelNumber === "" || (parcelDenominatorField === true && parcelDenominatorNumber ==="")) {print ("disabled ");} %>><%=searchText%></button>
             </div>
     </div>
 </div>
