@@ -3,7 +3,7 @@
     <div class="form-group form-group-sm row">
         <label for="districtField" class="col-md-5 form-label"><%=districtText%></label>
         <div class="col-md-7">
-            <select class="form-control input-sm float-start" id="districtField">
+            <select class="form-select form-select-sm float-start" id="districtField">
                 <option <% if (districtNumber === "0") {print ("selected ");} %>disabled class="float-start" value="0"><%=chooseText%></option>
                     <% Object.keys(districts).forEach(function(key) { %>
                     <option <% if (districtNumber === districts[key]) {print ("selected ");} %>class="float-start" value=<%= districts[key] %>><%= key + " (" + districts[key] + ")" %></option>
@@ -16,7 +16,7 @@
         <label for="districtField" class="col-md-5 form-label"><%=plotText%></label>
         <div class="col-md-7">
             <fieldset <% if (districtNumber === "0") {print ("disabled ");} %>id="cadastralDistrictFieldSet">
-                <select class="form-control input-sm float-start" id="cadastralDistrictField">
+                <select class="form-select form-select-sm float-start" id="cadastralDistrictField">
                     <option <% if (cadastralDistrictNumber === "0") {print ("selected ");} %>disabled class="float-start" value="0"><%=chooseText%></option>
                     <% if(cadastralDistricts[districtNumber]){%>
                         <% cadastralDistricts[districtNumber].forEach(function (cadastralDistrict) { %>
@@ -33,10 +33,10 @@
         <label for="parcelField" class="col-md-5 form-label"><%=parcelNumberText%></label>
         <div class="col-md-7">
              <div class="input-group" style="width:100%">
-                <input <% if (districtNumber === "0" || (cadastralDistrictField === true && cadastralDistrictNumber === "0")) {print ("disabled ");} %>id="parcelField" class="form-control" type="text" pattern="[0-9]+" required value="<%= parcelNumber %>" placeholder="<%=parcelNumberPlaceholderText%>" maxlength="<%= maxParcelNumberLength %>"/>
+                <input <% if (districtNumber === "0" || (cadastralDistrictField === true && cadastralDistrictNumber === "0")) {print ("disabled ");} %>id="parcelField" class="form-control form-control-sm" type="text" pattern="[0-9]+" required value="<%= parcelNumber %>" placeholder="<%=parcelNumberPlaceholderText%>" maxlength="<%= maxParcelNumberLength %>"/>
                 <% if (parcelDenominatorField === true) { %>
                 <span class="input-group-text">/</span>
-                <input <% if (districtNumber === "0" || (cadastralDistrictField === true && cadastralDistrictNumber === "0")) {print ("disabled ");} %>id="parcelFieldDenominator" class="form-control" type="text" pattern="[0-9]+" required value="<%= parcelDenominatorNumber %>" placeholder="<%=parcelNumberPlaceholderText%>" maxlength="<%= maxParcelNumberLength %>"/>
+                <input <% if (districtNumber === "0" || (cadastralDistrictField === true && cadastralDistrictNumber === "0")) {print ("disabled ");} %>id="parcelFieldDenominator" class="form-control form-control-sm" type="text" pattern="[0-9]+" required value="<%= parcelDenominatorNumber %>" placeholder="<%=parcelNumberPlaceholderText%>" maxlength="<%= maxParcelNumberLength %>"/>
                 <% } %>
             </div>
         </div>

@@ -349,7 +349,7 @@ export default {
                             id="docTitle"
                             v-model="documentTitle"
                             type="text"
-                            class="form-control"
+                            class="form-control form-control-sm"
                             maxLength="45"
                         >
                     </div>
@@ -362,7 +362,7 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="printLayout"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             @change="layoutChanged($event.target.value)"
                         >
                             <option
@@ -386,7 +386,7 @@ export default {
                     <div class="col-md-7">
                         <select
                             id="printFormat"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             @change="setCurrentFormat($event.target.value)"
                         >
                             <option
@@ -409,7 +409,7 @@ export default {
                         <select
                             id="printScale"
                             v-model="currentScale"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             @change="scaleChanged($event)"
                         >
                             <option

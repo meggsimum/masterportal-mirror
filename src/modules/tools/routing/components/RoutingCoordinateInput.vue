@@ -171,7 +171,7 @@ export default {
                     :id="'routingCoordinateInput_' + waypoint.index"
                     v-model="search"
                     type="text"
-                    class="col-md-11 form-control"
+                    class="col-md-11 form-control form-control-sm"
                     :placeholder="getPlaceholder()"
                     autocomplete="off"
                     @focus="isFocused = true"

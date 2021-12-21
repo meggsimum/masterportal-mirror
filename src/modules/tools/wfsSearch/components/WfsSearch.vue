@@ -147,7 +147,7 @@ export default {
                         <div class="col-md-7">
                             <select
                                 id="tool-wfsSearch-instances-select"
-                                class="form-select input-sm"
+                                class="form-select form-select-sm"
                                 @change="instanceChanged($event.currentTarget.value)"
                             >
                                 <option

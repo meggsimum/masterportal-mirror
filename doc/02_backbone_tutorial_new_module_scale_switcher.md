@@ -56,7 +56,7 @@ import ScaleView from "../modules/tools/scale/view";
 Datei *modules/tools/scale/template.html* öffnen, Template coden und mit Bootstrap Klassen versehen
 ```html
 <!DOCTYPE html>
-<select class="form-control input-sm">
+<select class="form-select form-select-sm">
   <option>1</option>
   <option>2</option>
   <option>3</option>
@@ -263,7 +263,7 @@ Im Tag "select" wird die Klasse "scale-switcher" definiert.
 
 ```html
 <!DOCTYPE html>
-<select class="form-control input-sm scale-switcher">
+<select class="form-select form-select-sm scale-switcher">
   <% _.each(scales, function (scale) { %>
     <% if (scale === currentScale) { %>
         <option selected><%= scale %></option>
@@ -283,7 +283,7 @@ const ScaleView = Backbone.View.extend({
     ...,
     events: {
         // DOM Change Event führt this.setCurrentScale aus
-        "change .form-control": "setCurrentScale"
+        "change .form-select": "setCurrentScale"
     },
     initialize: function () {...},
     template: _.template(ScaleTemplate),

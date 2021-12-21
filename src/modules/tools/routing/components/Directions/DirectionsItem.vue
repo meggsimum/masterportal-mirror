@@ -339,7 +339,7 @@ export default {
 
         <select
             id="routing-directions-preference"
-            class="form-control input-sm"
+            class="form-select form-select-sm"
             @change="changePreference($event.target.value)"
         >
             <option

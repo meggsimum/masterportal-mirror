@@ -189,7 +189,7 @@ export default {
             <div class="col-md-8">
                 <select
                     id="routing-DownloadFormatOptions"
-                    class="form-control input-sm mt-4"
+                    class="form-select form-select-sm mt-4"
                     @change="download.format = $event.target.value"
                 >
                     <option

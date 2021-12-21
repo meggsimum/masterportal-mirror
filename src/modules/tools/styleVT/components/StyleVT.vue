@@ -101,7 +101,7 @@ export default {
                         <select
                             id="tool-styleVT-selectedLayerField"
                             ref="tool-styleVT-selectedLayerField"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             @change="setLayerModelById($event.target.value)"
                         >
                             <option
@@ -134,7 +134,7 @@ export default {
                         </label>
                         <select
                             id="tool-styleVT-selectedStyleField"
-                            class="form-control input-sm"
+                            class="form-select form-select-sm"
                             @change="triggerStyleUpdate($event.target.value)"
                         >
                             <option
