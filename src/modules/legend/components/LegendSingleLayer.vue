@@ -41,7 +41,7 @@ export default {
 <template>
     <div
         :id="id"
-        class="layer-legend collapse in"
+        class="card-body layer-legend collapse show"
     >
         <template
             v-if="legendObj !== undefined"
