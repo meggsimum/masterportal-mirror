@@ -31,7 +31,7 @@ export default {
             class="form-horizontal"
             role="form"
         >
-            <div class="form-group form-group-sm">
+            <div class="form-group form-group-sm row">
                 <label
                     class="col-md-5 form-label"
                     for="tool-draw-download-format"
@@ -58,7 +58,7 @@ export default {
                     </select>
                 </div>
             </div>
-            <div class="form-group form-group-sm">
+            <div class="form-group form-group-sm row">
                 <label
                     class="col-md-5 form-label"
                     for="tool-draw-download-filename"
@@ -75,7 +75,7 @@ export default {
                     >
                 </div>
             </div>
-            <div class="form-group form-group-sm">
+            <div class="form-group form-group-sm row">
                 <div class="col-12">
                     <a
                         id="tool-draw-download-file"

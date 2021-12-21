@@ -79,6 +79,10 @@ label {
     margin-bottom: 0px !important;
 }
 
+.form-group {
+    margin-bottom: 15px;
+}
+
 .form-group:last-child {
     margin-bottom: 0px;
 }
@@ -273,7 +277,7 @@ label {
 
 
 /* only for firefox */
-@-moz-document url-prefix() { 
+/* @-moz-document url-prefix() { 
     .form-group-sm .form-control{
         padding-right: 0;
         padding-top: 0;
@@ -284,6 +288,6 @@ label {
         padding-top: 0;
         padding-bottom: 0;
       }
-}
+} */
 
 
