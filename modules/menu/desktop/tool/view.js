@@ -187,8 +187,8 @@ const ToolView = Backbone.View.extend(/** @lends ToolView.prototype */{
 
             dropdown.hide();
             $(".dropdown-menu.fixed").removeClass("fixed");
-            $(".bi-pin-angle-fill").removeClass("rotate-pin");
-            $(".bi-pin-angle-fill").addClass("rotate-pin-back");
+            $(".bi-pin-angle-fill").parent(".bootstrap-icon").removeClass("rotate-pin");
+            $(".bi-pin-angle-fill").parent(".bootstrap-icon").addClass("rotate-pin-back");
         }
     }
 });
