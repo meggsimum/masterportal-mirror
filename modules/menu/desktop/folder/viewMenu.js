@@ -55,8 +55,8 @@ const FolderViewMenu = Backbone.View.extend(/** @lends FolderViewMenu.prototype 
             // Upgrade to BT5, use JS method instead of class removal
             dropdown.hide();
             $(".dropdown-menu.fixed").removeClass("fixed");
-            $(".bi-pin-angle-fill").removeClass("rotate-pin");
-            $(".bi-pin-angle-fill").addClass("rotate-pin-back");
+            $(".bi-pin-angle-fill").parent(".bootstrap-icon").removeClass("rotate-pin");
+            $(".bi-pin-angle-fill").parent(".bootstrap-icon").addClass("rotate-pin-back");
         }
 
         this.clearFixedTree();
@@ -95,8 +95,8 @@ const FolderViewMenu = Backbone.View.extend(/** @lends FolderViewMenu.prototype 
                     dropdown.show();
                 }
                 $(this).find("ul#tree").removeClass("fixed");
-                $(".bi-pin-angle-fill").removeClass("rotate-pin");
-                $(".bi-pin-angle-fill").addClass("rotate-pin-back");
+                $(".bi-pin-angle-fill").parent(".bootstrap-icon").removeClass("rotate-pin");
+                $(".bi-pin-angle-fill").parent(".bootstrap-icon").addClass("rotate-pin-back");
             }
         });
     }
