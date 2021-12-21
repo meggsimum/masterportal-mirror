@@ -84,7 +84,7 @@ export default {
 
 <template lang="html">
     <div id="tool-layer-slider-player">
-        <div class="progress">
+        <div class="progress mb-3">
             <div
                 class="progress-bar"
                 role="progressbar"
