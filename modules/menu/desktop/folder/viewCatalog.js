@@ -185,8 +185,8 @@ const FolderCatalogView = Backbone.View.extend(/** @lends FolderCatalogView.prot
 
         dropdown.hide();
         $(".dropdown-menu.fixed").removeClass("fixed");
-        $(".bi-pin-angle-fill").removeClass("rotate-pin");
-        $(".bi-pin-angle-fill").addClass("rotate-pin-back");
+        $(".bi-pin-angle-fill").parent(".bootstrap-icon").removeClass("rotate-pin");
+        $(".bi-pin-angle-fill").parent(".bootstrap-icon").addClass("rotate-pin-back");
         // closes the mobile menu
         $(".navbar-collapse").removeClass("in");
         // selects the url
@@ -254,11 +254,13 @@ const FolderCatalogView = Backbone.View.extend(/** @lends FolderCatalogView.prot
      * @return {void}
      */
     fixTree: function () {
+        // eslint-disable-next-line
+        console.log('XXX');
         $("body").on("click", "#map", this.helpForFixing);
         $("body").on("click", "#searchbar", this.helpForFixing);
         this.$el.parent().addClass("fixed");
-        $(".bi-pin-angle-fill").addClass("rotate-pin");
-        $(".bi-pin-angle-fill").removeClass("rotate-pin-back");
+        $(".bi-pin-angle-fill").parent(".bootstrap-icon").addClass("rotate-pin");
+        $(".bi-pin-angle-fill").parent(".bootstrap-icon").removeClass("rotate-pin-back");
         this.model.setIsPinned(true);
     },
 
@@ -270,8 +272,8 @@ const FolderCatalogView = Backbone.View.extend(/** @lends FolderCatalogView.prot
         $("body").off("click", "#map", this.helpForFixing);
         $("body").off("click", "#searchbar", this.helpForFixing);
         this.$el.parent().removeClass("fixed");
-        $(".bi-pin-angle-fill").removeClass("rotate-pin");
-        $(".bi-pin-angle-fill").addClass("rotate-pin-back");
+        $(".bi-pin-angle-fill").parent(".bootstrap-icon").removeClass("rotate-pin");
+        $(".bi-pin-angle-fill").parent(".bootstrap-icon").addClass("rotate-pin-back");
         this.model.setIsPinned(false);
     },
 
