@@ -8,7 +8,7 @@
         <% } %>
         <div class="form-group form-group-sm float-end">
             <% if (editableValueBox===true) { %>
-                <input type="text" class="form-control form-minimum valueBox" placeholder="<%= valuesCollection.at(0).get('value') %>">
+                <input type="text" class="form-control form-control-sm form-minimum valueBox" placeholder="<%= valuesCollection.at(0).get('value') %>">
             <% } else if (withLabel === true) { %>
                 <label class="valueBox"><% print (this.model.getValueText(valuesCollection.at(0).get("value"))); %></label>
             <% } %>

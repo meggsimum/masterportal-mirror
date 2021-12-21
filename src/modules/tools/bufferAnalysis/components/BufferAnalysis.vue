@@ -199,7 +199,7 @@ export default {
                         id="tool-bufferAnalysis-selectSourceInput"
                         ref="tool-bufferAnalysis-selectSourceInput"
                         v-model="selectedSourceLayer"
-                        class="font-arial form-control input-sm float-start"
+                        class="font-arial form-select form-select-sm float-start"
                     >
                         <option
                             v-for="layer in selectOptions"
@@ -223,7 +223,7 @@ export default {
                         min="0"
                         max="3000"
                         step="10"
-                        class="font-arial form-control input-sm float-start"
+                        class="font-arial form-control form-control-sm float-start"
                         type="number"
                     >
                     <input
@@ -233,7 +233,7 @@ export default {
                         min="0"
                         max="3000"
                         step="10"
-                        class="font-arial form-control input-sm float-start"
+                        class="font-arial form-control form-control-sm float-start"
                         type="range"
                     >
                 </div>
@@ -247,7 +247,7 @@ export default {
                     <select
                         id="tool-bufferAnalysis-resultTypeInput"
                         v-model="resultType"
-                        class="font-arial form-control input-sm float-start"
+                        class="font-arial form-select form-select-sm float-start"
                         :disabled="!selectedSourceLayer || !bufferRadius || selectedTargetLayer"
                     >
                         <option
@@ -272,7 +272,7 @@ export default {
                     <select
                         id="tool-bufferAnalysis-selectTargetInput"
                         v-model="selectedTargetLayer"
-                        class="font-arial form-control input-sm float-start"
+                        class="font-arial form-select form-select-sm float-start"
                         :disabled="!selectedSourceLayer || !bufferRadius || selectedTargetLayer"
                     >
                         <option
@@ -310,7 +310,7 @@ export default {
                     <input
                         id="tool-bufferAnalysis-savedUrlText"
                         v-model="savedUrl"
-                        class="col-md-12 form-group form-group-sm input-sm"
+                        class="col-md-12 form-control form-control-sm"
                         readonly
                         :hidden="!savedUrl"
                         type="text"

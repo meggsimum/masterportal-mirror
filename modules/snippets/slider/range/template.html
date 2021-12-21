@@ -6,9 +6,9 @@
         </div>
         <div class="form-group form-group-sm float-end">
             <% if (editableValueBox===true) { %>
-            <input type="number" class="form-control form-minimum" placeholder="<%= valuesCollection.at(0).get('value') %>">
+            <input type="number" class="form-control form-control-sm form-minimum" placeholder="<%= valuesCollection.at(0).get('value') %>">
             <span>-</span>
-            <input type="number" class="form-control form-maximum" placeholder="<%= valuesCollection.at(1).get('value') %>">
+            <input type="number" class="form-control form-control-sm form-maximum" placeholder="<%= valuesCollection.at(1).get('value') %>">
             <% } else { %>
             <label class="valueBox"><% print (this.model.getValueText(valuesCollection.at(0).get("value"), format)); %></label>
             <span>-</span>

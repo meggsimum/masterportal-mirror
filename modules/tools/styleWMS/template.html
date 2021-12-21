@@ -3,7 +3,7 @@
     <div class="form-group form-group-sm row">
         <div class="col-md-12">
             <label class="range-label"><%=theme%></label>
-            <select class="form-control input-sm" id="layerField">
+            <select class="form-select form-select-sm" id="layerField">
                 <option class="float-start" value="" selected="true"><%=chooseTheme%></option>
                 <% styleableLayerList.forEach(function (styleableLayer) { %>
                     <option class ="float-start" value="<%= styleableLayer.id %>"><%= styleableLayer.name %></option>
@@ -15,7 +15,7 @@
         <div class="form-group form-group-sm row">
             <div class="col-md-12">
                 <label class="range-label"><%=attribute%></label>
-                <select class="form-control input-sm" id="attributField">
+                <select class="form-select form-select-sm" id="attributField">
                     <option class="float-start" value="default" <% if (attributeName === "default") { print ("SELECTED")} %>><%=chooseAttribute%></option>
                     <% model.get("attributesToStyle").forEach(function (attribute) { %>
                         <option class="float-start" value=<%= attribute %> <% if (attribute === attributeName) { print ("SELECTED")} %>><%= attribute %></option>
@@ -27,7 +27,7 @@
             <div class="form-group form-group-sm row">
                 <div class="col-md-12">
                     <label class="range-label"><%=countOfClasses%></label>
-                    <select class="form-control input-sm" id="numberField">
+                    <select class="form-select form-select-sm" id="numberField">
                         <option class="float-start" value="default" <% if (numberOfClasses === "default") { print ("SELECTED")} %>><%=chooseNumberOfClasses%></option>
                         <% numberOfClassesList.forEach(function (number) { %>
                             <option class="float-start" value=<%= number %> <% if (number === numberOfClasses) { print ("SELECTED")} %>><%= number %></option>
@@ -41,16 +41,16 @@
                 <div class="form-group row">
                     <div class="col-md-5">
                         <label class="range-label"><%=rangeOfValues%> <%= i + 1 %></label>
-                        <input class="form-control input-sm <%= 'start-range' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].startRange)} %>" placeholder=<%=from%>>
+                        <input class="form-control form-control-sm <%= 'start-range' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].startRange)} %>" placeholder=<%=from%>>
                     </div>
                     <div class="col-md-5">
                         <label class="range-label">&nbsp;</label>
-                        <input class="form-control input-sm <%= 'stop-range' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].stopRange)} %>" placeholder=<%=to%>>
+                        <input class="form-control form-control-sm <%= 'stop-range' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].stopRange)} %>" placeholder=<%=to%>>
                     </div>
                     <div class="col-md-2">
                         <label class="range-label">&nbsp;</label>
                         <div id="style-wms-colorpicker" tabindex="0" class="input-group colorpicker-component">
-                            <input class="form-control input-sm <%= 'selected-color' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].color)} else { print ('#337ab7')} %>">
+                            <input class="form-control form-control-sm <%= 'selected-color' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].color)} else { print ('#337ab7')} %>">
                             <span class="input-group-text"><i></i></span>
                         </div>
                     </div>

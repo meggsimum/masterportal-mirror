@@ -41,7 +41,7 @@ export default {
                 <div class="col-md-7">
                     <select
                         id="tool-draw-download-format"
-                        class="form-control"
+                        class="form-select"
                         @change="setDownloadSelectedFormat($event.target.value)"
                     >
                         <option value="none">
@@ -69,7 +69,7 @@ export default {
                     <input
                         id="tool-draw-download-filename"
                         type="text"
-                        class="form-control"
+                        class="form-control form-control-sm"
                         :placeholder="$t('common:modules.tools.draw.download.enterFilename')"
                         @keyup="setDownloadFileName"
                     >

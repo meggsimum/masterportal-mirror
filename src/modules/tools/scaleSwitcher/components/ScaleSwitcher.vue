@@ -101,7 +101,7 @@ export default {
                         id="scale-switcher-select"
                         ref="scale-switcher-select"
                         v-model="scale"
-                        class="font-arial form-control input-sm float-start"
+                        class="font-arial form-select form-select-sm float-start"
                         @change="setResolutionByIndex($event.target.selectedIndex)"
                     >
                         <option

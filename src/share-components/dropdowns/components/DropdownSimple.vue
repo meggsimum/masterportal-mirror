@@ -54,7 +54,7 @@ export default {
     <select
         ref="select-option"
         v-model="selectedOption"
-        class="form-control"
+        class="form-select"
         @input="changedValue"
     >
         <option
