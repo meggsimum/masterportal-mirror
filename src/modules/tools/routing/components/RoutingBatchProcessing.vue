@@ -173,8 +173,8 @@ export default {
             </div>
 
             <button
-                class="btn btn-block"
-                type="button"
+                class="btn"
+                type="button flex-grow-1"
                 @click="startFileInput()"
             >
                 {{ $t('common:modules.tools.routing.batchProcessing.uploadFile') }}

@@ -648,10 +648,10 @@ export default {
                         v-if="isEnabled('search')"
                         class="form-group form-group-sm row"
                     >
-                        <div class="col-12">
+                        <div class="col-12 d-grid gap-2">
                             <button
                                 id="searchByCoordBtn"
-                                class="btn btn-primary btn-block"
+                                class="btn btn-primary"
                                 :disabled="getEastingError || getNorthingError || !coordinatesEasting.value || !coordinatesNorthing.value"
                                 type="button"
                                 @click="searchCoordinate(coordinatesEasting, coordinatesNorthing)"

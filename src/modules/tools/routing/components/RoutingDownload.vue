@@ -223,9 +223,9 @@ export default {
         </div>
 
         <div class="form-group form-group-sm">
-            <div class="col-12">
+            <div class="col-12 d-grid gap-2">
                 <button
-                    class="btn btn-sm btn-block"
+                    class="btn btn-sm"
                     type="button"
                     :disabled="isDisabled"
                     @click="downloadResult()"
