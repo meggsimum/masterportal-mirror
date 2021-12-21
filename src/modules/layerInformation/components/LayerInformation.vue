@@ -204,7 +204,7 @@ export default {
                         >
                             <a
                                 href="#"
-                                class="abstractChange"
+                                class="dropdown-item abstractChange"
                                 :class="{ active: name === currentLayerName }"
                                 @click="changeLayerAbstract"
                             >{{ $t(name) }}</a>
