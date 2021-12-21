@@ -19,9 +19,9 @@ $border_color_1: inherit;
             color: $color_1;
             padding-top: 4px;
         }
-        padding: 8px 0;
+        padding: 8px calc($grid-gutter-width / 2);
         width: 100%;
-        display: inline-block;
+        display: inline-flex;
         .filter-info {
             clear: both;
             padding: 10px 15px;
