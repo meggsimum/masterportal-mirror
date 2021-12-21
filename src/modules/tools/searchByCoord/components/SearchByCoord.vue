@@ -111,7 +111,7 @@ export default {
                 >
                     <div class="form-group form-group-sm row">
                         <label
-                            class="col-md-5 form-label"
+                            class="col-md-5 col-form-label"
                             for="coordSystemField"
                         >{{ $t("modules.tools.searchByCoord.coordinateSystem") }}</label>
                         <div class="col-md-7">
@@ -136,7 +136,7 @@ export default {
                         <label
                             id="coordinatesEastingLabel"
                             for="coordinatesEastingField"
-                            class="col-md-5 form-label"
+                            class="col-md-5 col-form-label"
                         >{{ $t(getLabel("eastingLabel")) }}</label>
                         <div class="col-md-7">
                             <input
@@ -165,7 +165,7 @@ export default {
                         <label
                             id="coordinatesNorthingLabel"
                             for="coordinatesNorthingField"
-                            class="col-md-5 form-label"
+                            class="col-md-5 col-form-label"
                         >{{ $t(getLabel("northingLabel")) }}</label>
                         <div class="col-md-7">
                             <input
