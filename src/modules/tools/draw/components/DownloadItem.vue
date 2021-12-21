@@ -41,7 +41,7 @@ export default {
                 <div class="col-md-7">
                     <select
                         id="tool-draw-download-format"
-                        class="form-select"
+                        class="form-select form-select-sm"
                         @change="setDownloadSelectedFormat($event.target.value)"
                     >
                         <option value="none">
