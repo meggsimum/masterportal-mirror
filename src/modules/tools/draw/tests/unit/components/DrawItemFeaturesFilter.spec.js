@@ -81,14 +81,14 @@ describe("src/tools/draw/components/DrawItemFeaturesFilter.vue", () => {
         it("should have a form element with no checkboxes", () => {
             const wrapper = factory.getShallowMount();
 
-            expect(wrapper.findAll(".checkbox")).to.have.lengthOf(0);
+            expect(wrapper.findAll(".form-check")).to.have.lengthOf(0);
         });
 
         it("should have a form element with two checkboxes", () => {
             const props = {filterList: filterListConfig, features: testFeatures},
                 wrapper = factory.getShallowMount(props);
 
-            expect(wrapper.findAll(".checkbox")).to.have.lengthOf(2);
+            expect(wrapper.findAll(".form-check")).to.have.lengthOf(2);
         });
 
         it("should have the right labels for the checkboxes", () => {

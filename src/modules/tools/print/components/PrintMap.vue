@@ -474,10 +474,11 @@ export default {
                         {{ $t("common:modules.tools.print.withLegendLabel") }}
                     </label>
                     <div class="col-md-7">
-                        <div class="checkbox">
+                        <div class="form-check">
                             <input
                                 id="printLegend"
                                 type="checkbox"
+                                class="form-check-input"
                                 :checked="isLegendSelected"
                                 @change="setIsLegendSelected($event.target.checked)"
                             >
@@ -488,16 +489,17 @@ export default {
                     class="form-group form-group-sm row"
                 >
                     <label
-                        class="col-md-5 col-form-label"
+                        class="col-md-5 col-form-label pt-0"
                         for="printGfi"
                     >
                         {{ $t("common:modules.tools.print.withInfoLabel") }}
                     </label>
                     <div class="col-md-7">
-                        <div class="checkbox">
+                        <div class="form-check">
                             <input
                                 id="printGfi"
                                 type="checkbox"
+                                class="form-check-input"
                                 :disabled="currentFeature === null"
                                 :checked="isGfiSelected"
                                 @change="setIsGfiSelected($event.target.checked)"
@@ -571,10 +573,6 @@ export default {
 <style lang="scss" scoped>
     @import "~variables";
 
-    input[type="checkbox"] {
-        margin-top: 2px;
-        margin-left: 0;
-    }
     .form-group {
         &.scale{
             position: relative;
