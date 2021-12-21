@@ -186,7 +186,7 @@ describe("src/modules/tools/gfi/components/themes/senor/components/SensorTheme.v
 
     it("should render the data tab in menulist with class active by start", () => {
         expect(wrapper.find("div > div > ul > li").exists()).to.be.true;
-        expect(wrapper.find("div > div > ul > li").classes("active")).to.be.true;
+        expect(wrapper.find("div > div > ul > li > a").classes("active")).to.be.true;
         expect(wrapper.find("div > div > ul > li > a").text()).equals("common:modules.tools.gfi.themes.sensor.sensor.dataName");
     });
 
@@ -265,26 +265,26 @@ describe("src/modules/tools/gfi/components/themes/senor/components/SensorTheme.v
     });
 
     it("should only data tab is active and the other tabs disabled by default", () => {
-        expect(wrapper.findAll("div > div > ul > li").wrappers[0].classes("active")).to.be.true;
+        expect(wrapper.findAll("div > div > ul > li").wrappers[0].find("a").classes("active")).to.be.true;
         expect(wrapper.findAll("div > div > ul > li").wrappers[0].classes("disabled")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[1].classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li").wrappers[1].find("a").classes("active")).to.be.false;
         expect(wrapper.findAll("div > div > ul > li").wrappers[1].classes("disabled")).to.be.true;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[2].classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li").wrappers[2].find("a").classes("active")).to.be.false;
         expect(wrapper.findAll("div > div > ul > li").wrappers[2].classes("disabled")).to.be.true;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[3].classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li").wrappers[3].find("a").classes("active")).to.be.false;
         expect(wrapper.findAll("div > div > ul > li").wrappers[3].classes("disabled")).to.be.true;
     });
 
     it("should only data tab is active and the other tabs are not disabled if processedHistoricalDataByWeekday is not empty", async () => {
         await wrapper.setData({processedHistoricalDataByWeekday: [1, 2, 3]});
 
-        expect(wrapper.findAll("div > div > ul > li").wrappers[0].classes("active")).to.be.true;
+        expect(wrapper.findAll("div > div > ul > li").wrappers[0].find("a").classes("active")).to.be.true;
         expect(wrapper.findAll("div > div > ul > li").wrappers[0].classes("disabled")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[1].classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li").wrappers[1].find("a").classes("active")).to.be.false;
         expect(wrapper.findAll("div > div > ul > li").wrappers[1].classes("disabled")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[2].classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li").wrappers[2].find("a").classes("active")).to.be.false;
         expect(wrapper.findAll("div > div > ul > li").wrappers[2].classes("disabled")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[3].classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li").wrappers[3].find("a").classes("active")).to.be.false;
         expect(wrapper.findAll("div > div > ul > li").wrappers[3].classes("disabled")).to.be.false;
     });
 
@@ -292,9 +292,9 @@ describe("src/modules/tools/gfi/components/themes/senor/components/SensorTheme.v
         await wrapper.setData({processedHistoricalDataByWeekday: [1, 2, 3]});
         await wrapper.findAll("div > div > ul > li > a").wrappers[2].trigger("click");
 
-        expect(wrapper.findAll("div > div > ul > li").wrappers[0].classes("active")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[1].classes("active")).to.be.false;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[2].classes("active")).to.be.true;
-        expect(wrapper.findAll("div > div > ul > li").wrappers[3].classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li").wrappers[0].find("a").classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li").wrappers[1].find("a").classes("active")).to.be.false;
+        expect(wrapper.findAll("div > div > ul > li").wrappers[2].find("a").classes("active")).to.be.true;
+        expect(wrapper.findAll("div > div > ul > li").wrappers[3].find("a").classes("active")).to.be.false;
     });
 });
