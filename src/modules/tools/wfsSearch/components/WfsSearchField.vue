@@ -218,7 +218,7 @@ export default {
         >
             <select
                 :id="`tool-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-fieldSelection`"
-                class="form-control input-sm"
+                class="form-select form-select-sm"
                 :aria-label="$t('common:modules.tools.wfsSearch.fieldSelectionLabel')"
                 @change="parameterIndex = $event.currentTarget.value"
             >
@@ -233,7 +233,7 @@ export default {
         </div>
         <label
             v-else
-            class="col-md-5 form-label"
+            class="col-md-5 col-form-label"
             :for="`tool-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-input`"
         >
             {{ inputLabel }}
@@ -243,8 +243,10 @@ export default {
                 :is="htmlElement"
                 :id="`tool-wfsSearch-${selectableParameters.fieldName}-${selectableParameters.fieldId}-input`"
                 :class="{
-                    'form-control': true,
-                    'input-sm': htmlElement === 'select',
+                    'form-control': htmlElement !== 'select',
+                    'form-select': htmlElement === 'select',
+                    'form-control-sm': htmlElement !== 'select',
+                    'form-select-sm': htmlElement === 'select',
                     'tool-wfsSearch-field-input': htmlElement === 'input'
                 }"
                 :placeholder="htmlElement === 'input' ? selectableParameters.inputPlaceholder : ''"

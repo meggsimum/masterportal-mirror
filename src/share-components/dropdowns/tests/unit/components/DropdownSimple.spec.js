@@ -28,13 +28,13 @@ describe("src/share-components/dropdowns/components/DropdownSimple.vue", () => {
         expect(wrapper.find("select").exists()).to.be.true;
     });
 
-    it("should have the bootstrap css class 'form-control'", () => {
+    it("should have the bootstrap css class 'form-select'", () => {
         const wrapper = shallowMount(Dropdown, {
             propsData: props,
             localVue
         });
 
-        expect(wrapper.classes("form-control")).to.be.true;
+        expect(wrapper.classes("form-select")).to.be.true;
     });
 
     it("should have four option elements", () => {
@@ -134,7 +134,7 @@ describe("src/share-components/dropdowns/components/DropdownSimple.vue", () => {
         });
 
         await wrapper.vm.$nextTick();
-        expect(wrapper.find(".form-control").element).to.equal(document.activeElement);
+        expect(wrapper.find(".form-select").element).to.equal(document.activeElement);
     });
 
 });

@@ -140,7 +140,7 @@ export default {
                             <select
                                 id="measure-tool-geometry-select"
                                 ref="measure-tool-geometry-select"
-                                class="font-arial form-control input-sm float-start"
+                                class="font-arial form-select form-select-sm float-start"
                                 :disabled="is3d"
                                 :value="selectedGeometry"
                                 @change="setSelectedGeometry($event.target.value)"
@@ -170,7 +170,7 @@ export default {
                             <select
                                 id="measure-tool-unit-select"
                                 ref="measure-tool-unit-select"
-                                class="font-arial form-control input-sm float-start"
+                                class="font-arial form-select form-select-sm float-start"
                                 :value="selectedUnit"
                                 @change="setSelectedUnit($event.target.value)"
                             >

@@ -27,7 +27,7 @@
             <form class="form-inline">
                 <div class="form-group catalog-selection">
                     <span class="form-label"><%= categoryText %></span>
-                    <select class="form-control tabable" tabindex="0">
+                    <select class="form-select tabable" tabindex="0">
                         <% categories.forEach(function (cat) { %>
                             <% if (cat === category) { %>
                                 <option <% print ("SELECTED") %>><%= cat %></option>

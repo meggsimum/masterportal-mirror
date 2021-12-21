@@ -11,7 +11,7 @@ import Dropdown from "bootstrap/js/dist/dropdown";
 const FolderCatalogView = Backbone.View.extend(/** @lends FolderCatalogView.prototype */{
     events: {
         "change select": "setSelection",
-        "keydown .form-control": function (event) {
+        "keydown .form-select": function (event) {
             event.stopPropagation();
         },
         "click .header > a > .bootstrap-icon, .header > a > .form-label": "toggleIsExpanded",
