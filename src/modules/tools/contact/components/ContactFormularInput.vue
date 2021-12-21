@@ -89,7 +89,7 @@ export default {
                 :value="inputValue"
                 :autocomplete="autocomplete"
                 :type="htmlElement === 'input' ? inputType : ''"
-                class="htmlElement === 'select' ? 'form-select' : 'form-control'"
+                :class="htmlElement === 'select' ? 'form-select' : 'form-control'"
                 :aria-describedby="`tool-contact-${inputName}-help`"
                 :placeholder="$t(`common:modules.tools.contact.placeholder.${inputName}`)"
                 :rows="htmlElement === 'textarea' ? rows : ''"
