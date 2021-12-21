@@ -270,14 +270,16 @@ export default {
                     :key="key"
                     value="value?.title || value"
                     class="nav-item"
+                    :class="{
+                        disabled: processedHistoricalDataByWeekday.length === 0
+                    }"
                 >
                     <a
                         class="nav-link"
                         :data-bs-toggle="processedHistoricalDataByWeekday.length === 0 ? 'buttons' : 'tab'"
                         :href="processedHistoricalDataByWeekday.length === 0 ? '' : createHref(key)"
                         :class="{
-                            active: isActiveTab(key),
-                            disabled: processedHistoricalDataByWeekday.length === 0
+                            active: isActiveTab(key)
                         }"
                         @click="setActiveTab"
                     >

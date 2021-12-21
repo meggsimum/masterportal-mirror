@@ -64,9 +64,9 @@ describe("src/share-components/graphicalSelect/components/GraphicalSelect.vue", 
             expect(formElement.exists()).to.be.true;
         });
 
-        it("the form element has a select element of class form-seelct", () => {
+        it("the form element has a select element of class form-select", () => {
             const wrapper = shallowMount(GraphicalSelectComponent, {store, localVue, parentComponent: Parent, stubs: {"Dropdown": Dropdown}}),
-                formElement = wrapper.find("select.form-seelct");
+                formElement = wrapper.find("select.form-select");
 
             expect(formElement.exists()).to.be.true;
         });
