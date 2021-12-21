@@ -3,7 +3,7 @@ import WfsFeatureFilterTemplate from "text-loader!./template.html";
 const WfsFeatureFilterView = Backbone.View.extend({
     events: {
         "click #filterbutton": "getFilterInfos",
-        "click .panel-heading": "toggleHeading"
+        "click .card-header": "toggleHeading"
     },
     initialize: function () {
         this.listenTo(Radio.channel("ModelList"), {

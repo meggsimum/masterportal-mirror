@@ -1,44 +1,46 @@
-<div class="panel panel-default" style="margin: 10px;border: none;">
-    <%if (currentContent.step > 1){%>
-        <label><%=currentFilterType %></label>
-        <br>
-    <%}else{%>
-        <label>Filteroption</label>
-        <br>
-    <%}%>
+<div class="card" style="margin: 10px;border: none;">
+    <div class="card-body">
+        <%if (currentContent.step > 1){%>
+            <label><%=currentFilterType %></label>
+            <br>
+        <%}else{%>
+            <label>Filteroption</label>
+            <br>
+        <%}%>
 
-    <%if (currentContent.layername !== undefined){%>
-        <label>Für den Layer: <%="<b>"+currentContent.layername+"</b>" %></label>
-        <br>
-    <%}%>
-    <%if (currentContent.attribute !== undefined){%>
-        <label>Auf das Attribut: <%="<b>"+currentContent.attribute+"</b>" %></label>
-        <br>
-    <%}%>
+        <%if (currentContent.layername !== undefined){%>
+            <label>Für den Layer: <%="<b>"+currentContent.layername+"</b>" %></label>
+            <br>
+        <%}%>
+        <%if (currentContent.attribute !== undefined){%>
+            <label>Auf das Attribut: <%="<b>"+currentContent.attribute+"</b>" %></label>
+            <br>
+        <%}%>
 
-    <select class="form-select input" id="dropdown">
-         <option title="<%=currentContent.name %>"><%=currentContent.name %></option>
-        <% currentContent.options.forEach(function (option,i) {%>
-            <option title="<%=option %>"><%=option %></option>
-        <% });%>
-    </select>
+        <select class="form-select input" id="dropdown">
+            <option title="<%=currentContent.name %>"><%=currentContent.name %></option>
+            <% currentContent.options.forEach(function (option,i) {%>
+                <option title="<%=option %>"><%=option %></option>
+            <% });%>
+        </select>
 
-    <%if (currentContent.step > 1){%>
-        <button id="btn_back" title="Einen Schritt zurück" class="btn btn-lgv-grey " type="button">Zurück</button>
-    <%};%>
+        <%if (currentContent.step > 1){%>
+            <button id="btn_back" title="Einen Schritt zurück" class="btn btn-lgv-grey " type="button">Zurück</button>
+        <%};%>
 
-    <%if (currentFilters.length > 0){%>
-        <%currentFilters.forEach(function(filter){%>
-            <div>
-                <label><%=filter.layername%></%></label>
-                <%filter.attributes.forEach(function(attr){%>
-                    <button id="<%=filter.layername+'__'+attr.attribute+'__'+attr.value %>" title="<%=attr.value %>" class="btn btn-lgv-grey btn_remove" type="button"><%=attr.attribute %>
-                        <span class ="bootstrap-icon x-icon"><i class="bi-x-lg"></i></span>
-                    </button>
+        <%if (currentFilters.length > 0){%>
+            <%currentFilters.forEach(function(filter){%>
+                <div>
+                    <label><%=filter.layername%></%></label>
+                    <%filter.attributes.forEach(function(attr){%>
+                        <button id="<%=filter.layername+'__'+attr.attribute+'__'+attr.value %>" title="<%=attr.value %>" class="btn btn-lgv-grey btn_remove" type="button"><%=attr.attribute %>
+                            <span class ="bootstrap-icon x-icon"><i class="bi-x-lg"></i></span>
+                        </button>
 
-                <%});%>
-            </div>
-        <%});%>
+                    <%});%>
+                </div>
+            <%});%>
 
-    <%};%>
+        <%};%>
+    </div>
 </div>
