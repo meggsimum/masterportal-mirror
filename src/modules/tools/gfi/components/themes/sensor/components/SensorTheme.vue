@@ -218,7 +218,7 @@ export default {
          * @returns {String} The classNames of the tab.
          */
         getTabPaneClasses (tab) {
-            return {active: this.isActiveTab(tab), in: this.isActiveTab(tab), "tab-pane": true, fade: true};
+            return {active: this.isActiveTab(tab), show: this.isActiveTab(tab), "tab-pane": true, fade: true};
         },
 
         /**
@@ -250,14 +250,16 @@ export default {
         <div>
             <ul class="nav nav-pills">
                 <li
+                    class="nav-item"
                     :value="dataName"
-                    :class="{
-                        active: isActiveTab('data')
-                    }"
                 >
                     <a
                         data-bs-toggle="tab"
                         href="#data"
+                        class="nav-link"
+                        :class="{
+                            active: isActiveTab('data')
+                        }"
                         @click="setActiveTab"
                     >
                         {{ dataName }}
@@ -267,14 +269,16 @@ export default {
                     v-for="(value, key) in chartvalues"
                     :key="key"
                     value="value?.title || value"
-                    :class="{
-                        active: isActiveTab(key),
-                        disabled: processedHistoricalDataByWeekday.length === 0
-                    }"
+                    class="nav-item"
                 >
                     <a
+                        class="nav-link"
                         :data-bs-toggle="processedHistoricalDataByWeekday.length === 0 ? 'buttons' : 'tab'"
                         :href="processedHistoricalDataByWeekday.length === 0 ? '' : createHref(key)"
+                        :class="{
+                            active: isActiveTab(key),
+                            disabled: processedHistoricalDataByWeekday.length === 0
+                        }"
                         @click="setActiveTab"
                     >
                         {{ $t(value.title || value) }}
