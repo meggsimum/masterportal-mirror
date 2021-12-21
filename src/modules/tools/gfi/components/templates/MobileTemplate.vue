@@ -155,6 +155,8 @@ export default {
         cursor: pointer;
         width: 50%;
         margin: 0;
+        text-align: center;
+        list-style: none;
     }
 
     .pager-left {
