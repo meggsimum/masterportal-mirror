@@ -758,7 +758,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                         await closeSingleAlert(driver);
                     }
 
-                    expect(await driver.findElement(By.css("ul#tree .layer-catalog .header .form-inline .catalog-selection .form-control"))).to.exist;
+                    expect(await driver.findElement(By.css("ul#tree .layer-catalog .header .form-inline .catalog-selection .form-select"))).to.exist;
 
                     // test by redirecting master to default with layers
                     // await loadUrl(driver, `${url}?layerIDs=19969,4915&visibility=true,true&transparency=0,0&config=../masterDefault${urlAffix}/config.json`, mode);
@@ -789,7 +789,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     // test by redirecting master to default
                     await loadUrl(driver, `${url}?configJson=../masterDefault${urlAffix}/config.json`, mode);
 
-                    expect(await driver.findElement(By.css("ul#tree .layer-catalog .header .form-inline .catalog-selection .form-control"))).to.exist;
+                    expect(await driver.findElement(By.css("ul#tree .layer-catalog .header .form-inline .catalog-selection .form-select"))).to.exist;
 
                     // test by redirecting master to custom
                     await loadUrl(driver, `${url}?configJson=../masterCustom${urlAffix}/config.json`, mode);

@@ -479,7 +479,7 @@ export default {
                             <select
                                 id="coordSystemField"
                                 ref="coordSystemField"
-                                class="font-arial form-control input-sm float-start"
+                                class="font-arial form-select form-select-sm float-start"
                                 @change="selectionChanged($event)"
                             >
                                 <option

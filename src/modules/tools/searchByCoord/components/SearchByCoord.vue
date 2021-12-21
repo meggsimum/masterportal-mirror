@@ -118,7 +118,7 @@ export default {
                             <select
                                 id="coordSystemField"
                                 ref="coordSystemField"
-                                class="font-arial form-control input-sm float-start"
+                                class="font-arial form-select form-select-sm float-start"
                                 :value="currentSelection"
                                 @change="selectionChanged"
                             >
@@ -144,7 +144,7 @@ export default {
                                 v-model="coordinatesEasting.value"
                                 :class="{ inputError: getEastingError }"
                                 type="text"
-                                class="form-control"
+                                class="form-control form-control-sm"
                                 :placeholder="$t('modules.tools.searchByCoord.exampleAcronym') + coordinatesEastingExample"
                                 @input="validateInput(coordinatesEasting)"
                             ><p
@@ -173,7 +173,7 @@ export default {
                                 v-model="coordinatesNorthing.value"
                                 :class="{ inputError: getNorthingError }"
                                 type="text"
-                                class="form-control"
+                                class="form-control form-control-sm"
                                 :placeholder="$t('modules.tools.searchByCoord.exampleAcronym') + coordinatesNorthingExample"
                                 @input="validateInput(coordinatesNorthing)"
                             ><p

@@ -6,7 +6,7 @@
                 <div class="row">
                     <label for="wfstSelectLayer" class="col-md-5 form-label"> <%= buttonTitleConfig[3] + ":"%> </label>
                     <div class="col-md-5">
-                        <select class="form-control input-sm" id="wfstSelectLayer">
+                        <select class="form-select form-select-sm" id="wfstSelectLayer">
                             <% for (let key in activeLayers) {
                                 if (activeLayers.hasOwnProperty(key)) { %>
                                     <option value="<%= key %>" <% if (key==currentLayerId){ %> selected <%}%>><%= activeLayers[key] %></option>
@@ -101,17 +101,17 @@
                             <input type="checkbox" class="form-check-input input-xs input <%= mandatory %>" id="<%= field.field %>" <% if (fieldValue === "true") { %> checked <% } %>>
                         <% } 
                         else if (field.type && field.inputFieldType === "date") { %> 
-                            <div class="input-group">
-                                <div class="input-group-text input-sm">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-text">
                                     <span class="bootstrap-icon"><i class="bi-calendar3"></i></span>
                                 </div>
                                 <div class="testDate">
-                                    <input data-provide="datepicker" class="form-control input-sm <%= field.type%> <%= mandatory %> datepicker" data-date-format="yyyy-mm-dd" data-date-language="de" data-date-autoclose=true data-date-today-highlight=true id="<%= field.field %>" autocomplete="off" placeholder="yyyy-mm-dd" type="text" value="<%= fieldValue %>"/>
+                                    <input data-provide="datepicker" class="form-control form-control-sm <%= field.type%> <%= mandatory %> datepicker" data-date-format="yyyy-mm-dd" data-date-language="de" data-date-autoclose=true data-date-today-highlight=true id="<%= field.field %>" autocomplete="off" placeholder="yyyy-mm-dd" type="text" value="<%= fieldValue %>"/>
                                 </div>
                             </div>
                         <% }
                         else if (field.type && field.inputFieldType) { %>
-                            <input type="<%= field.inputFieldType %>" class="form-control input-sm input <%= field.type%> <%= mandatory %>" id="<%= field.field %>" autocomplete="off" value="<%= fieldValue %>">
+                            <input type="<%= field.inputFieldType %>" class="form-control form-control-sm input <%= field.type%> <%= mandatory %>" id="<%= field.field %>" autocomplete="off" value="<%= fieldValue %>">
                         <% } %>
                     </div>
                     <div id="warning-text <%= field.field %>" class="offset-md-5 col-md-7 warning-text"></div>
