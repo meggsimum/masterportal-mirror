@@ -1,6 +1,6 @@
 <!DOCTYPE html>
     <form class="form-horizontal" role="form">
-        <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm row">
             <label class="treefilter-label form-label col-4">Gattung</label>
             <div class="col-8">
                 <div class="input-group input-group-sm">
@@ -22,7 +22,7 @@
                 <span class="col-7 offset-5 treeFilterError"><%= errors.category %></span>
             <% } %>
         </div>
-        <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm row">
             <label class="treefilter-label form-label col-4">Baumart</label>
             <div class="col-8">
                 <div class="input-group input-group-sm">
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm row">
             <label class="treefilter-label form-label col-4">Pflanzjahr</label>
             <div id="yearMin" class="col-3 <% if (errors.yearError !== undefined) print('has-error') %>">
                 <input type="text" class="form-control input-sm" value=<%= yearMin %>>
@@ -60,7 +60,7 @@
                 <span id="yearError" class="col-7 offset-5 treeFilterError"><%= errors.yearError %></span>
             <% } %>
         </div>
-        <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm row">
             <label class="treefilter-label form-label col-4">Kronendurchmesser[m]</label>
             <div id="diameterMin" class="col-3">
                 <input type="text" class="form-control input-sm" value=<%= diameterMin %>>
@@ -76,7 +76,7 @@
                 <span id="diamterError" class="col-7 offset-5 treeFilterError"><%= errors.diamterError %></span>
             <% } %>
         </div>
-        <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm row">
             <label class="treefilter-label form-label col-4">Stammumfang[cm]</label>
             <div id="perimeterMin" class="col-3">
                 <input type="text" class="form-control input-sm" value=<%= perimeterMin %>>
@@ -92,7 +92,7 @@
                 <span id="perimeterError" class="col-7 offset-5 treeFilterError"><%= errors.perimeterError %></span>
             <% } %>
         </div>
-        <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm row">
             <div class="col-12">
                 <button id="filterRemoveButton" class="btn btn-lgv-grey col-5" type="button">Aufheben</button>
                 <button id="filterbutton" class="btn btn-lgv-grey col-5 offset-2" type="button">Filtern</button>

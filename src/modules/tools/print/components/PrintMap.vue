@@ -339,7 +339,7 @@ export default {
                 id="printToolNew"
                 class="form-horizontal"
             >
-                <div class="form-group form-group-sm">
+                <div class="form-group form-group-sm row">
                     <label
                         class="col-md-5 form-label"
                         for="docTitle"
@@ -354,7 +354,7 @@ export default {
                         >
                     </div>
                 </div>
-                <div class="form-group form-group-sm">
+                <div class="form-group form-group-sm row">
                     <label
                         class="col-md-5 form-label"
                         for="printLayout"
@@ -376,7 +376,7 @@ export default {
                         </select>
                     </div>
                 </div>
-                <div class="form-group form-group-sm">
+                <div class="form-group form-group-sm row">
                     <label
                         class="col-md-5 form-label"
                         for="printFormat"
@@ -400,7 +400,7 @@ export default {
                         </select>
                     </div>
                 </div>
-                <div class="form-group form-group-sm scale">
+                <div class="form-group form-group-sm row scale">
                     <label
                         class="col-md-5 form-label"
                         for="printScale"
@@ -445,7 +445,7 @@ export default {
                     </div>
                 </div>
                 <div
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 control-label"
@@ -485,7 +485,7 @@ export default {
                     </div>
                 </div>
                 <div
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -505,7 +505,7 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="form-group form-group-sm">
+                <div class="form-group form-group-sm row">
                     <div class="col-md-12">
                         <button
                             type="button"

@@ -418,7 +418,7 @@ export default {
             >
                 <div
                     v-if="drawType.id === 'drawCircle' && currentInteraction !== 'modify'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -450,7 +450,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id === 'drawCircle' || drawType.id === 'drawDoubleCircle'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -474,7 +474,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id === 'drawDoubleCircle'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -497,7 +497,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id === 'drawCircle' || drawType.id === 'drawDoubleCircle'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -525,7 +525,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id === 'writeText'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -547,7 +547,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id === 'writeText'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -575,7 +575,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id === 'writeText'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -603,7 +603,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id === 'drawSymbol'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -632,7 +632,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id !== 'drawSymbol' && drawType.id !== 'writeText'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -660,7 +660,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id !== 'drawLine' && drawType.id !== 'drawCurve'&& drawType.id !== 'drawSymbol'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -689,7 +689,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id === 'drawLine' || drawType.id === 'drawCurve'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -718,7 +718,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id !== 'drawSymbol' && drawType.id !== 'writeText'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -746,7 +746,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id === 'drawDoubleCircle'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -774,7 +774,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id === 'drawSymbol' && symbol.id === 'iconPoint'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -802,7 +802,7 @@ export default {
                 </div>
                 <div
                     v-if="drawType.id !== 'drawLine' && drawType.id !== 'drawCurve' && drawType.id !== 'drawSymbol'"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 form-label"
@@ -834,7 +834,7 @@ export default {
                 class="form-horizontal"
                 role="form"
             >
-                <div class="form-group form-group-sm">
+                <div class="form-group form-group-sm row">
                     <div class="col-12">
                         <button
                             id="tool-draw-drawInteraction"
@@ -850,7 +850,7 @@ export default {
                         </button>
                     </div>
                 </div>
-                <div class="form-group form-group-sm">
+                <div class="form-group form-group-sm row">
                     <div class="col-12">
                         <button
                             id="tool-draw-undoInteraction"
@@ -864,7 +864,7 @@ export default {
                         </button>
                     </div>
                 </div>
-                <div class="form-group form-group-sm">
+                <div class="form-group form-group-sm row">
                     <div class="col-12">
                         <button
                             id="tool-draw-redoInteraction"
@@ -878,7 +878,7 @@ export default {
                         </button>
                     </div>
                 </div>
-                <div class="form-group form-group-sm">
+                <div class="form-group form-group-sm row">
                     <div class="col-12">
                         <button
                             id="tool-draw-editInteraction"
@@ -894,7 +894,7 @@ export default {
                         </button>
                     </div>
                 </div>
-                <div class="form-group form-group-sm">
+                <div class="form-group form-group-sm row">
                     <div class="col-12">
                         <button
                             id="tool-draw-deleteInteraction"
@@ -910,7 +910,7 @@ export default {
                         </button>
                     </div>
                 </div>
-                <div class="form-group form-group-sm">
+                <div class="form-group form-group-sm row">
                     <div class="col-12">
                         <button
                             id="tool-draw-deleteAllInteraction"

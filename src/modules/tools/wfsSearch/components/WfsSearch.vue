@@ -147,7 +147,7 @@ export default {
                         <div class="col-md-7">
                             <select
                                 id="tool-wfsSearch-instances-select"
-                                class="form-control input-sm"
+                                class="form-select input-sm"
                                 @change="instanceChanged($event.currentTarget.value)"
                             >
                                 <option
@@ -164,7 +164,7 @@ export default {
                     <div
                         v-if="userHelp !== 'hide'"
                         id="tool-wfsSearch-userHelp"
-                        class="form-group form-group-sm"
+                        class="form-group form-group-sm row"
                     >
                         <i
                             id="tool-wfsSearch-userHelp-icon"
@@ -185,7 +185,7 @@ export default {
                         />
                         <hr :key="'tool-wfsSearch-clause-divider' + i">
                     </template>
-                    <div class="form-group form-group-sm">
+                    <div class="form-group form-group-sm row">
                         <div class="col-md-6">
                             <button
                                 id="tool-wfsSearch-button-resetUI"
