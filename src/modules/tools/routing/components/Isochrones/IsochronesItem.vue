@@ -208,7 +208,7 @@ export default {
 
         <select
             id="routing-isochrones-methodoption"
-            class="form-control input-sm"
+            class="form-select form-select-sm"
             @change="changeMethodOption($event.target.value)"
         >
             <option

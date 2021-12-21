@@ -56,7 +56,7 @@ $fontSizeSmall: 12px;
         min-width: 310px;
     }
 
-    .input-sm {
+    .form-control-sm, .form-select-sm {
         height: 25px !important;
         margin-top: 0px !important;
     }
@@ -75,7 +75,7 @@ $fontSizeSmall: 12px;
         width: 400px;
     }
 
-    .form-control.input-sm.input {
+    .form-control.form-control-sm.input {
         padding: 2px 5px;
         height: 23px !important;
     }
@@ -131,7 +131,7 @@ $fontSizeSmall: 12px;
     }
 
 
-    .input-group-text.input-sm {
+    .input-group-text.form-control-sm {
         font-size: 11px; 
     }
 

@@ -4,7 +4,7 @@
             <label class="treefilter-label form-label col-4">Gattung</label>
             <div class="col-8">
                 <div class="input-group input-group-sm">
-                    <input id="categoryInput" class="form-control" type="text" placeholder="Keine Auswahl" value="<%= treeCategory %>" title="<%= treeCategory %>">
+                    <input id="categoryInput" class="form-control form-control-sm" type="text" placeholder="Keine Auswahl" value="<%= treeCategory %>" title="<%= treeCategory %>">
                     <div id="categoryToggle">
                         <button class="btn btn-outline-default dropdown-toggle-category" data-bs-toggle="dropdown">
                             <span class="caret"></span>
@@ -26,7 +26,7 @@
             <label class="treefilter-label form-label col-4">Baumart</label>
             <div class="col-8">
                 <div class="input-group input-group-sm">
-                    <input id="typeInput" class="form-control" type="text" title="<%= treeType %>" value="<% if (treeCategory === "") {print ('""')} else{ print (treeType)} %>" placeholder="Alle Arten" <% if (treeCategory === "") print ('disabled') %>>
+                    <input id="typeInput" class="form-control form-control-sm" type="text" title="<%= treeType %>" value="<% if (treeCategory === "") {print ('""')} else{ print (treeType)} %>" placeholder="Alle Arten" <% if (treeCategory === "") print ('disabled') %>>
                     <div id="typeToggle">
                         <button class="btn btn-outline-default dropdown-toggle-type" data-bs-toggle="dropdown" <% if (treeCategory === "") print ('disabled') %>>
                             <span class="caret"></span>
@@ -47,13 +47,13 @@
         <div class="form-group form-group-sm row">
             <label class="treefilter-label form-label col-4">Pflanzjahr</label>
             <div id="yearMin" class="col-3 <% if (errors.yearError !== undefined) print('has-error') %>">
-                <input type="text" class="form-control input-sm" value=<%= yearMin %>>
+                <input type="text" class="form-control form-control-sm value=<%= yearMin %>>
             </div>
             <div class="col-1">
                 <span class="bootstrap-icon" style="vertical-align: bottom;"><i class="bi-dash-lg"></i></span>
             </div>
             <div id="yearMax" class="col-3 <% if (errors.yearError !== undefined) print('has-error') %>">
-                <input type="text" class="form-control input-sm" value=<%= yearMax %>>
+                <input type="text" class="form-control form-control-sm value=<%= yearMax %>>
             </div>
             <br>
             <% if (errors.yearError !== undefined) { %>
@@ -63,13 +63,13 @@
         <div class="form-group form-group-sm row">
             <label class="treefilter-label form-label col-4">Kronendurchmesser[m]</label>
             <div id="diameterMin" class="col-3">
-                <input type="text" class="form-control input-sm" value=<%= diameterMin %>>
+                <input type="text" class="form-control form-control-sm value=<%= diameterMin %>>
             </div>
             <div class="col-1">
                 <span class="bootstrap-icon" style="vertical-align: bottom;"><i class="bi-dash-lg"></i></span>
             </div>
             <div id="diameterMax" class="col-3">
-                <input type="text" class="form-control input-sm" value=<%= diameterMax %>>
+                <input type="text" class="form-control form-control-sm value=<%= diameterMax %>>
             </div>
             <br>
             <% if (errors.diamterError !== undefined) { %>
@@ -79,13 +79,13 @@
         <div class="form-group form-group-sm row">
             <label class="treefilter-label form-label col-4">Stammumfang[cm]</label>
             <div id="perimeterMin" class="col-3">
-                <input type="text" class="form-control input-sm" value=<%= perimeterMin %>>
+                <input type="text" class="form-control form-control-sm" value=<%= perimeterMin %>>
             </div>
             <div class="col-1">
                 <span class="bootstrap-icon" style="vertical-align: bottom;"><i class="bi-dash-lg"></i></span>
             </div>
             <div id="perimeterMax" class="col-3">
-                <input type="text" class="form-control input-sm" value=<%= perimeterMax %>>
+                <input type="text" class="form-control form-control-sm" value=<%= perimeterMax %>>
             </div>
             <br>
             <% if (errors.perimeterError !== undefined) { %>

@@ -14,8 +14,8 @@ const WfstView = Backbone.View.extend(/** @lends WfstView.prototype */{
     events: {
         "click .record-button": "handleActiveButton",
         "change #wfstSelectLayer": "setCurrentLayer",
-        "keyup .input-sm": "validate",
-        "change .input-sm": "validate",
+        "keyup .form-control-sm": "validate",
+        "change .form-control-sm": "validate",
         "click .form-check-input": "validate",
         "click .info-icon": "toggleInfoText",
         "keydown .info-icon": "toggleInfoText"
@@ -232,7 +232,7 @@ const WfstView = Backbone.View.extend(/** @lends WfstView.prototype */{
                 selectParent.removeChild(select);
                 // create new select
                 newSelect = document.createElement("select");
-                newSelect.classList.add("form-control", "input-sm");
+                newSelect.classList.add("form-control", "form-control-sm");
                 newSelect.setAttribute("id", "wfstSelectLayer");
 
                 // add options to select
