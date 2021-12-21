@@ -211,7 +211,7 @@ export default {
 </script>
 
 <template>
-    <div class="form-group form-group-sm">
+    <div class="form-group form-group-sm row">
         <div
             v-if="Array.isArray(inputLabel)"
             class="col-md-5"
