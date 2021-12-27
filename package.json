@@ -45,7 +45,7 @@
     "husky": "^7.0.1"
   },
   "peerDependencies": {
-    "cesium": "^1.87.0"
+    "cesium": "^1.88.0"
   },
   "engines": {
     "node": ">= 10.18.0",
