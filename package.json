@@ -5,7 +5,7 @@
     "email": "info@masterportal.org",
     "url": "https://www.masterportal.org"
   },
-  "version": "1.6.1",
+  "version": "1.7.0",
   "license": "MIT",
   "description": "Grundfunktionen des Masterportals als API",
   "repository": {
