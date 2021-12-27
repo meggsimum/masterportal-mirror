@@ -4,6 +4,19 @@
  The [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used.
 
 
+## Unreleased - in development
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+---
+
 ## 1.7.0 - 2021-12-27
 ### Added
 - An alias is added to the coordinate system. This is required by GeoServer services.
