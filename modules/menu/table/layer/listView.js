@@ -1,5 +1,6 @@
 import ListTemplate from "text-loader!./templates/template.html";
 import SingleLayerView from "./singleLayerView";
+import Collapse from "bootstrap/js/dist/collapse";
 
 const LayerView = Backbone.View.extend({
     initialize: function () {
@@ -30,13 +31,19 @@ const LayerView = Backbone.View.extend({
     className: "table-layer-list table-nav",
     template: _.template(ListTemplate),
     hideMenu: function () {
-        $("#table-nav-layers-panel").collapse("hide");
+        // Upgrade to BT5
+        const collapse = Collapse.getInstance($("#table-nav-layers-panel").get(0));
+
+        collapse.hide();
         Radio.trigger("TableMenu", "deactivateCloseClickFrame");
     },
     render: function () {
         this.$el.html(this.template());
         if (Radio.request("TableMenu", "getActiveElement") === "Layer") {
-            $("#table-nav-layers-panel").collapse("show");
+            // Upgrade to BT5
+            const collapse = Collapse.getInstance($("#table-nav-layers-panel").get(0));
+
+            collapse.show();
         }
         this.renderList();
         return this;

@@ -16,6 +16,7 @@ import Searchbar from "./model";
 import "./RadioBridge.js";
 import store from "../../src/app-store/index";
 import {getWKTGeom} from "../../src/utils/getWKTGeom";
+import Collapse from "bootstrap/js/dist/collapse";
 
 /**
  * @member SearchbarTemplate
@@ -353,8 +354,11 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         attr.uiStyle = Radio.request("Util", "getUiStyle");
 
         // If the topic tree is open on the table, it should be closed when the search is initialized.
-        if ($("#table-nav-layers-panel").length > 0) {
-            $("#table-nav-layers-panel").collapse("hide");
+        if ($("#table-nav-layers-panel").length > 0 && $("#table-nav-layers-panel").hasClass("show")) {
+            // Upgrade to BT5
+            const collapse = Collapse.getInstance($("#table-nav-layers-panel").get(0));
+
+            collapse.hide();
             Radio.trigger("TableMenu", "deactivateCloseClickFrame");
         }
         // sz, does not want to work in a local environment, so first use the template as variable
