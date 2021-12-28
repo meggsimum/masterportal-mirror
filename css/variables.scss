@@ -22,6 +22,14 @@
 $enable-caret:                false;
 $enable-rounded:              false;
 $enable-shadows:              true;
+
+// Links
+//
+// Style anchor elements.
+
+$link-color: #337ab7;
+$link-decoration: none;
+
 // Typography
 //
 // Font, line-height, and color for body text, headings, and more.
@@ -59,8 +67,10 @@ $navbar-light-color: #333333;
 
 $dropdown-spacer: 0;
 
-// $dropdown-item-padding-y: 0;
-// $dropdown-item-padding-x: 0;
+
+// List group
+
+$list-group-disabled-bg:  #eeeeee;
 
 
 $border-radius-base: 0;
