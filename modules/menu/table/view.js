@@ -22,7 +22,7 @@ const Menu = Backbone.View.extend({
     },
     model: new TableNavModel(),
     id: "table-navigation",
-    className: "table-nav-0deg container-fluid",
+    className: "table-nav-0deg",
     template: _.template(MainTemplate),
     render: function () {
 

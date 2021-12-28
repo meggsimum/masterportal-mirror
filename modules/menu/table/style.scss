@@ -56,7 +56,7 @@ $background_color_6: #D8D8D8;
     width: 20px;
     height: 40px;
     position: relative;
-    left: -5px;
+    order: -1;
 }
 #table-nav-drag:before{
     left:0;
@@ -65,8 +65,9 @@ $background_color_6: #D8D8D8;
     position: relative;
     width: 40px;
     background-color: $background_color_2;
-    left: 20px;
-    top: -45px;
+    order: -1;
+    left: 8px;
+    top: -5px;
 }
 #table-category-list {
     .icon-categories {
@@ -76,6 +77,7 @@ $background_color_6: #D8D8D8;
     width: 40px;
     background-color: $secondary_table_style;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+    position: relative;
 }
 #table-category-list.table-category-active {
     background-color: $background_color_3;
@@ -111,6 +113,7 @@ a {
     width: 40px;
     height: 40px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+    position: relative;
     cursor: pointer;
     >p {
         font-size: 26px;
@@ -201,10 +204,9 @@ a {
     margin-bottom: 75px;
     position: absolute;
     margin-top: -88px;
-    margin-left: -28px;
+    margin-left: -38px;
     width: 480px;
-    bottom: -20px;
-    display: none;
+    bottom: -100%;
 }
 .table-nav-cat-panel {
     font-size: 17px;
@@ -220,7 +222,6 @@ a {
     margin-top: -88px;
     width: 320px;
     bottom: -20px;
-    display: none;
     margin-left: -243px;
     div > div.detailview-head {
         display: none;
@@ -320,6 +321,7 @@ a {
         .layer-item {
             font-family: $font_family_2;
             font-size: 17px;
+            flex-
             .title{
                 display: block;
                 min-width: 385px;
@@ -366,7 +368,6 @@ a {
         .bootstrap-icon {
             font-size: x-large;
             color: $secondary_icon_button;
-            top: 8px;
         }
         .badge {
             font-size: 14px;
@@ -379,21 +380,17 @@ a {
             background-color: #808080;
             border-radius: 10px;
             padding: 6px 4px 4px 4px;
-            margin-left: 85px;
+            margin-left: auto;
             cursor: pointer;
         }
     }
     .bi-info-circle-fill {
-        position: absolute;
         font-size: 18px;
         color: $secondary_icon_button;
-        top: 14px;
-        right: 50px;
     }
     .bi-gear {
         font-size: 18px;
         color: $secondary_icon_button;
-        top: 4px;
     }
     .layer-settings-activated {
         background-color: $background_color_6;
@@ -412,7 +409,7 @@ a {
     width: 10px;
     height: 10px;
     background-image: radial-gradient(circle at 0 100%, transparent 10px, #F2F2F2 10px);
-    margin-left: 24px;
+    margin-left: 34px;
 }
 #middle-funnel {
     display: block;
