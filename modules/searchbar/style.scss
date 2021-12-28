@@ -89,6 +89,8 @@ $border_color_3: #003063;
     max-width: 480px;
     position: absolute;
     top: 100%;
+    right: 0;
+    left: auto;
     z-index: 1001;
     padding: 0;
     .bootstrap-icon {
@@ -226,6 +228,7 @@ li.results {
 }
 #table-searchForm {
     button.btn.btn-outline-default.btn-table-search {
+        background-color: $background_color_1;
         border-radius: 12px;
         border-color: $border_color_2;
         height: 40px;
@@ -361,7 +364,6 @@ li.results {
     input#searchInput.form-control {
         font-family: $font_family_3;
         font-size: 22px;
-        width: 350px;
     }
     input#searchInput {
         &::placeholder {
@@ -380,7 +382,9 @@ li.results {
     #searchbar {
         position: relative;
         top: -9px;
-        left: 55px;
+        padding-right: 0;
+        flex-grow: 1;
+        display: block !important;
     }
 }
 input#searchInput.form-control {

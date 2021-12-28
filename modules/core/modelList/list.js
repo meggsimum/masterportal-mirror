@@ -19,6 +19,7 @@ import Tool from "./tool/model";
 import StaticLink from "./staticlink/model";
 import Filter from "../../tools/filter/model";
 import Dropdown from "bootstrap/js/dist/dropdown";
+import Collapse from "bootstrap/js/dist/collapse";
 
 /**
  * WfsFeatureFilter
@@ -965,7 +966,10 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
         // für DIPAS Table Ansicht
         if (Radio.request("Util", "getUiStyle") === "TABLE") {
             Radio.request("ModelList", "getModelByAttributes", {id: modelId}).setIsJustAdded(true);
-            $("#table-nav-layers-panel").collapse("show");
+            // Upgrade to BT5
+            const collapse = Collapse.getInstance($("#table-nav-layers-panel").get(0));
+
+            collapse.show();
 
         }
     },
