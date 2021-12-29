@@ -181,7 +181,7 @@ const ToolView = Backbone.View.extend(/** @lends ToolView.prototype */{
             }
 
             // menu navigation is closed
-            $("div.collapse.navbar-collapse").removeClass("in");
+            $("div.collapse.navbar-collapse").removeClass("show");
             // Upgrade to BT5, use JS method instead of class removal
             const dropdown = Dropdown.getInstance("li.dropdown-folder > .dropdown-toggle.show");
 
