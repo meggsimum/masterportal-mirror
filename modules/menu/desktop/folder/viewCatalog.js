@@ -188,7 +188,7 @@ const FolderCatalogView = Backbone.View.extend(/** @lends FolderCatalogView.prot
         $(".bi-pin-angle-fill").parent(".bootstrap-icon").removeClass("rotate-pin");
         $(".bi-pin-angle-fill").parent(".bootstrap-icon").addClass("rotate-pin-back");
         // closes the mobile menu
-        $(".navbar-collapse").removeClass("in");
+        $(".navbar-collapse").removeClass("show");
         // selects the url
         $(".input-save-url").select();
     },

@@ -234,7 +234,7 @@ const LayerView = Backbone.View.extend(/** @lends LayerView.prototype */{
     showLayerInformation: function () {
         this.model.showLayerInformation();
         // Navigation wird geschlossen
-        this.$("div.collapse.navbar-collapse").removeClass("in");
+        this.$("div.collapse.navbar-collapse").removeClass("show");
     },
 
     /**
@@ -287,7 +287,7 @@ const LayerView = Backbone.View.extend(/** @lends LayerView.prototype */{
      */
     openStyleWMS: function () {
         Radio.trigger("StyleWMS", "openStyleWMS", this.model);
-        this.$(".navbar-collapse").removeClass("in");
+        this.$(".navbar-collapse").removeClass("show");
     },
 
     /**
