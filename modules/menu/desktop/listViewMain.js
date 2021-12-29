@@ -25,7 +25,7 @@ const ListViewMain = Backbone.View.extend(/** @lends ListViewMain.prototype */{
     renderMain: function () {
         $("div.collapse.navbar-collapse ul.nav-menu").addClass("nav navbar-nav desktop");
         $("div.collapse.navbar-collapse ul.nav-menu").removeClass("list-group mobile");
-        $("div.collapse.navbar-collapse").removeClass("in");
+        $("div.collapse.navbar-collapse").removeClass("show");
 
         this.renderTopMenu();
     },
