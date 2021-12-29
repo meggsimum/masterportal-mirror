@@ -60,7 +60,7 @@ const ItemView = Backbone.View.extend({
         }
 
         // Navigation is closed
-        $("div.collapse.navbar-collapse").removeClass("in");
+        $("div.collapse.navbar-collapse").removeClass("show");
     },
     removeIfNotVisible: function () {
         if (!this.model.get("isVisibleInTree")) {

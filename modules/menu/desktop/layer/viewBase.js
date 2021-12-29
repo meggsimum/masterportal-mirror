@@ -90,7 +90,7 @@ const LayerBaseView = Backbone.View.extend(/** @lends LayerBaseView.prototype */
             this.model.showLayerInformation();
             this.highlightLayerInformationIcon();
             // close navigation
-            this.$("div.collapse.navbar-collapse").removeClass("in");
+            this.$("div.collapse.navbar-collapse").removeClass("show");
         }
     },
 

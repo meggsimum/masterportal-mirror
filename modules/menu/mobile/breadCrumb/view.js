@@ -10,6 +10,7 @@ const BreadCrumbView = Backbone.View.extend({
         });
     },
     tagName: "li",
+    className: "breadcrumb-item",
     template: _.template(Template),
 
     /**
