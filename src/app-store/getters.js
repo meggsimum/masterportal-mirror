@@ -20,6 +20,7 @@ export default {
     portalTitle: state => state?.configJson?.Portalconfig?.portalTitle?.title || null,
     controlsConfig: state => state?.configJson?.Portalconfig?.controls || null,
     legendConfig: state => state?.configJson?.Portalconfig?.menu.legend || null,
+    searchBarConfig: state => state?.configJson?.Portalconfig?.searchBar || null,
     menuConfig: state => state?.configJson?.Portalconfig?.menu || null,
     portalConfig: state => state?.configJson?.Portalconfig || null,
     imagePath: state => state?.configJs.wfsImgPath || null,

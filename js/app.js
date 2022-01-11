@@ -255,7 +255,9 @@ async function loadApp () {
     sbconfig = Object.assign({}, {quickHelp: store.getters.portalConfig?.quickHelp} || {});
     sbconfig = Object.assign(sbconfig, searchbarAttributes);
 
-    if (searchbarAttributes !== undefined && sbconfig) {
+    // The param "dev" is only used for development of the search bar vue-version
+    // Will be removed again after finalization of the search bar
+    if (searchbarAttributes !== undefined && sbconfig && searchbarAttributes?.dev !== true) {
         new SearchbarView(sbconfig);
     }
 

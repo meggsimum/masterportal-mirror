@@ -11,8 +11,9 @@ import Legend from "../modules/legend/store/indexLegend";
 import Maps from "../core/maps/store/indexMap";
 import MapMarker from "../modules/mapMarker/store/indexMapMarker";
 import MouseHover from "../modules/mouseHover/store/indexMouseHover";
-import QuickHelp from "../modules/quickHelp/store/indexQuickHelp";
 import PortalTitle from "../modules/portalTitle/store/indexPortalTitle";
+import QuickHelp from "../modules/quickHelp/store/indexQuickHelp";
+import SearchBar from "../modules/searchBar/store/indexSearchBar";
 import WmsTime from "../modules/wmsTime/store/indexWmsTime";
 
 import getters from "./getters";
@@ -41,8 +42,9 @@ const store = new Vuex.Store({
         Maps,
         MapMarker,
         MouseHover,
-        QuickHelp,
         PortalTitle,
+        QuickHelp,
+        SearchBar,
         WmsTime,
         controls: {
             ...controlsModule

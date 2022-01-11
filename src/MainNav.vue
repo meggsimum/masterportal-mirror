@@ -1,20 +1,26 @@
 <script>
 // TODO this is just the HTML copied in - functions/CSS are still to be migrated
-import PortalTitle from "./modules/portalTitle/components/PortalTitle.vue";
-import LegendMenu from "./modules/legend/components/LegendMenu.vue";
 import {mapState, mapGetters} from "vuex";
+import LegendMenu from "./modules/legend/components/LegendMenu.vue";
+import PortalTitle from "./modules/portalTitle/components/PortalTitle.vue";
+import SearchBar from "./modules/searchBar/components/SearchBar.vue";
+
 export default {
     name: "MainNav",
     components: {
+        LegendMenu,
         PortalTitle,
-        LegendMenu
+        SearchBar
     },
     computed: {
         ...mapState([
             // listen to configJson changes for mounting the tools
             "configJson"
         ]),
-        ...mapGetters(["legendConfig"])
+        ...mapGetters([
+            "legendConfig",
+            "searchBarConfig"
+        ])
     }
 };
 </script>
@@ -52,6 +58,14 @@ export default {
                             id="root"
                             class="nav-menu"
                         />
+                        <!-- The param "dev" is only used for development of the search bar vue-version -->
+                        <!-- Will be removed again after finalization of the search bar -->
+                        <ul
+                            v-if="searchBarConfig && searchBarConfig.dev === true"
+                            class="navbar-form navbar-right"
+                        >
+                            <SearchBar v-if="searchBarConfig" />
+                        </ul>
                     </div>
                     <LegendMenu v-if="legendConfig" />
                     <PortalTitle />
