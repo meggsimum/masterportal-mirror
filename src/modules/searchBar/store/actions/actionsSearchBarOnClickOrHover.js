@@ -97,16 +97,3 @@ export default {
         */
     }
 };
-
-
-/* config
-
-zoomLevel bei onClick oder onHover
-
-*/
-
-/* Zu beachten
-gazetter -> soll aus der MP-API benutzt werden
-osm -> es darf nur maximal 1 request pro Sekunde abgefragt werden
-
-*/
