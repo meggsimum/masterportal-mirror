@@ -163,10 +163,12 @@ export function createLayerSource (rawLayer, options = {}) {
     if (!options.loadingStrategy) {
         options.loadingStrategy = bbox;
     }
-    const format = new WFS({
-        featureNS: rawLayer.featureNS,
-        featureType: rawLayer.featureType
-    });
+    const version = options.version || "1.1.0",
+        format = new WFS({
+            featureNS: rawLayer.featureNS,
+            featureType: rawLayer.featureType,
+            version: version
+        });
     let source = null;
 
     function loader (extent, resolution, projection, success, failure) {
@@ -177,8 +179,7 @@ export function createLayerSource (rawLayer, options = {}) {
             loadWFSFilter(options.wfsFilter, rawLayer.url, source, {onErrorFn: onError, success, failure}, options);
         }
         else {
-            const bboxParam = options.loadingStrategy === bbox ? `&bbox=${extent.join(",")},${projection.getCode()}` : "",
-                version = options.version || "1.1.0";
+            const bboxParam = options.loadingStrategy === bbox ? `&bbox=${extent.join(",")},${projection.getCode()}` : "";
             let url = `${rawLayer.url}?service=WFS&version=${version}&request=GetFeature&typeName=${rawLayer.featureType}&srsName=${projection.getCode()}${bboxParam}`;
 
             if (options.loadingParams) {

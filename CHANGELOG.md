@@ -3,6 +3,11 @@
 
  The [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used.
 
+## 1.7.1 - 2022-01-11
+### Fixed
+- WFS-Layer: the WFS version is taken into account when generating the WFS format.
+
+---
 
 ## Unreleased - in development
 ### Added
