@@ -14,10 +14,9 @@ import SearchInterface from "./searchInterface";
  * @param {String[]} [onHover=["setMarker"]] Actions that are fired when hovering on the search result.
  * @param {Number} [score=0.6] Score defining the minimum quality of search results.
  * @param {Number} [suggestCount=20] Suggestion amount.
- * @param {Number} [zoomLevel=7] Defines the zoom level to use on zooming to a result.
  * @returns {void}
  */
-export default function SearchInterfaceBkg ({geosearchServiceId, suggestServiceId, epsg, extent, filter, onClick, onHover, score, suggestCount, zoomLevel} = {}) {
+export default function SearchInterfaceBkg ({geosearchServiceId, suggestServiceId, epsg, extent, filter, onClick, onHover, score, suggestCount} = {}) {
     SearchInterface.call(this, onClick || ["setMarker", "zoomToFeature"], onHover || ["setMarker"]);
 
     this.geosearchServiceId = geosearchServiceId;
@@ -28,7 +27,6 @@ export default function SearchInterfaceBkg ({geosearchServiceId, suggestServiceI
     this.filter = filter || "filter=(typ:*)";
     this.score = score || 0.6;
     this.suggestServiceId = suggestServiceId;
-    this.zoomLevel = zoomLevel || 7;
 }
 
 SearchInterfaceBkg.prototype = Object.create(SearchInterface.prototype);
