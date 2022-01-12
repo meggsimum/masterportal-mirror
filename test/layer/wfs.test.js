@@ -9,6 +9,14 @@ import * as wfs from "../../src/layer/wfs";
 import {featureCollection} from "./resources/wfsFeatures";
 import {wfsFilterQuery} from "./resources/wfsFeatures";
 
+jest.mock("../../src/rawLayerList.js", () => {
+    const original = jest.requireActual("../../src/rawLayerList.js");
+
+    original.initializeLayerList = jest.fn();
+    return original;
+});
+
+
 describe("wfs.js", function () {
     describe("createLayer", function () {
         it("creates a VectorLayer without id", function () {

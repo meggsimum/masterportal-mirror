@@ -2,5 +2,5 @@
 /dist
 /docs
 /coverage
-/.cache
 package-lock.json
+/.parcel-cache

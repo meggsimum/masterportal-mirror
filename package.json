@@ -30,17 +30,17 @@
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.15.0",
-    "@babel/preset-env": "^7.15.0",
+    "@babel/core": "^7.16.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.16.8",
+    "@parcel/transformer-sass": "^2.0.0-beta.2",
     "babel-polyfill": "6.26.0",
-    "babel-jest": "^27.0.6",
     "canvas": "^2.8.0",
     "eslint": "^7.32.0",
-    "jest": "^27.0.6",
+    "jest": "^27.4.0",
     "jest-canvas-mock": "^2.3.1",
     "jsdoc": "^3.6.7",
-    "parcel-bundler": "^1.12.5",
+    "parcel": "^2.0.1",
+    "regenerator-runtime": "0.13.9",
     "sass": "^1.37.5",
     "husky": "^7.0.1"
   },
