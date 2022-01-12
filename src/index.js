@@ -12,6 +12,10 @@ import setBackgroundImage from "./lib/setBackgroundImage";
 export {
     createMapView,
     wms,
+    wfs,
+    geojson,
+    layerLib,
+    vectorBase,
     setBackgroundImage,
     setGazetteerUrl,
     rawLayerList,
