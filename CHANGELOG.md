@@ -20,6 +20,28 @@
 ---
 
 ## 1.7.1 - 2022-01-11
+## Unreleased - in development
+### Added
+- The follow package were updated 
+    - @parcel/transformer-sass version 2.0.0-beta.2
+    - parcel version 2.0.1
+    - regenerator-runtime 0.13.9
+
+### Changed
+- The follow package were updated 
+    - ol: from 6.9.0 to version 6.11.0
+    - @babel/core: from 7.15.0 to version 7.16.7
+    - @babel/plugin-transform-modules-commonjs: from 7.15.0 to version 7.16.8
+    - jest: from 27.0.6 to version 27.4.0
+- babel.config.js was replaced by babel.config.json. Now it can be watched for changes, and Babel transformations can be cached.
+
+### Removed
+- The follow package were removed 
+    - @babel/preset-env: because Parcel includes transpilation by default
+    - babel-jest
+    - parcel-bundler: replaced by parcel
+
+
 ### Fixed
 - WFS-Layer: the WFS version is taken into account when generating the WFS format.
 
