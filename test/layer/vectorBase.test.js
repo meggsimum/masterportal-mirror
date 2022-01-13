@@ -46,11 +46,17 @@ describe("wms.js", function () {
 
     describe("updateSource", function () {
         it("updateSource will fetch layer again", function () {
-            const layer = vectorBase.createLayer({id: "id"});
+            const layer = vectorBase.createLayer({id: "id"}),
+                layerGetSourceMock = jest.fn(() => {
+                    return {
+                        clear: () => this,
+                        addFeatures: () => this
+                    };
+                });
 
-            layer.getSource().refresh = jest.fn();
+            layer.getSource = layerGetSourceMock;
             vectorBase.updateSource(layer);
-            expect(layer.getSource().refresh.mock.calls.length).toBe(1);
+            expect(layerGetSourceMock.mock.calls.length).toBe(2);
         });
     });
 
