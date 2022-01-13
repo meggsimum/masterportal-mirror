@@ -12,12 +12,13 @@ export function createLayerSource () {
 
 /**
  * Forces an update by giving a layer a new sessionID.
- * @param {ol.Layer} layer - the layer that is to be updated
+ * @param {module:ol/layer/Base~BaseLayer} layer The vector base layer that is to be updated.
+ * @param {module:ol/Feature~Feature[]} features The ol features.
  * @returns {void}
  */
-export function updateSource (layer) {
+export function updateSource (layer, features) {
     layer.getSource().clear(true);
-    layer.getSource().addFeatures(layer.getFeatures());
+    layer.getSource().addFeatures(features);
 }
 
 /**
