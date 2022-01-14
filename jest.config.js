@@ -13,5 +13,6 @@ module.exports = {
         "marker.svg": "<rootDir>/public/stringMarker.js"
     },
     "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": ["./jest.setup.js"]
+    "setupFilesAfterEnv": ["./jest.setup.js"],
+    "verbose": true
 };

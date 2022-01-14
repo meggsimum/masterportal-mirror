@@ -5,7 +5,7 @@
     "email": "info@masterportal.org",
     "url": "https://www.masterportal.org"
   },
-  "version": "1.6.1",
+  "version": "1.7.1",
   "license": "MIT",
   "description": "Grundfunktionen des Masterportals als API",
   "repository": {
@@ -15,6 +15,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest .test.js --config ./jest.config.js --collectCoverage",
+    "test:trace": "node --trace-warnings node_modules/jest/bin/jest.js ./test/layer/wfs.test.js --config ./jest.config.js",
     "test:watch": "jest .test.js --config ./jest.config.js --watch",
     "example": "parcel example/index.html",
     "generate-jsdoc": "jsdoc ./src -r -d ./docs/ -R ./README.md -c jsdoc.json",
@@ -44,7 +45,7 @@
     "husky": "^7.0.1"
   },
   "peerDependencies": {
-    "cesium": "^1.87.0"
+    "cesium": "^1.88.0"
   },
   "engines": {
     "node": ">= 10.18.0",

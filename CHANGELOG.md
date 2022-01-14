@@ -3,7 +3,6 @@
 
  The [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-
 ## Unreleased - in development
 ### Added
 - An alias is added to the coordinate system. This is required by GeoServer services.
@@ -19,11 +18,32 @@
 ### Fixed
 
 ---
- ## 1.6.1 - 2021-12-07
+
+## 1.7.1 - 2022-01-11
+### Fixed
+- WFS-Layer: the WFS version is taken into account when generating the WFS format.
+
+---
+
+## 1.7.0 - 2021-12-27
+### Added
+- An alias is added to the coordinate system. This is required by GeoServer services.
+- Added WFS Layer that creates a VectorLayer and a VectorSource. Layer-params and loading-params can be passed as function parameters, options may contain functions to filter and style features. Clustering and WFS-filter are supported.
+- Added possibility to add the parameter TIME to the wms layer request.
+- Examples were extended by WFS-Layer.
+
+### Changed
+- The constructor of createMap in the abstraction layer changed. The order of the parameters (config, settings = {}, mapMode = "2D") changes to (config, mapMode = "2D", settings = {}).
+- abstraction\ol\map.js was renamed to abstraction\ol\olMap.js and abstraction\olcs\map.js was renamed to abstraction\olcs\olcsMap.js
+
+---
+
+## 1.6.1 - 2021-12-07
 ### Changed
 - SessionID from the WMS layer was removed and replaced by the CacheID in order to deal with deegree services.
 
 ---
+
 ## 1.6.0 - 2021-11-10
 ### Added
 - The library Cesium is loaded on demand to generate a 3D map. Cesium must be provided by the user of this library.
@@ -34,6 +54,7 @@
 - The WMS layer has been extended with layerParams and options. The LayerSource now contains a TileGrid if there are resolutions in the options. The source can also contain attributions.
 
 ---
+
 ## 1.5.0 - 2021-08-16
 ### Added
 - The engine for npm version ">= 6.13.4" was added in the package.json

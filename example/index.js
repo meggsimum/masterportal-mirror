@@ -2,7 +2,7 @@
 import "babel-polyfill";
 import "ol/ol.css";
 
-import {Style, Stroke, Fill} from "ol/style.js";
+import {Style, Stroke, Fill, Icon} from "ol/style.js";
 
 import * as mpapi from "../src";
 import abstractAPI from "../abstraction/api.js";
@@ -22,7 +22,7 @@ window.mpapi = {
 //* Cleans up map before it is re-rendered (happens on every save during dev mode)
 document.getElementById(portalConfig.target).innerHTML = "";
 // add a click-listener to button, that creates a 3D-map on click
-document.getElementById("enable").addEventListener("click", function (portalConfig) {
+document.getElementById("enable").addEventListener("click", function () {
     if (window.mpapi.map2D === null) {
         window.mpapi.map2D = window.mpapi.map;
     }
@@ -32,13 +32,13 @@ document.getElementById("enable").addEventListener("click", function (portalConf
         window.mpapi.map = window.mpapi.map2D;
     }
     else {
-        const lib = portalConfig.cesiumLib ? portalConfig.cesiumLib : "https://geoportal-hamburg.de/mastercode/cesium/1_84/Cesium.js";
+        const lib = portalConfig.cesiumLib ? portalConfig.cesiumLib : "https://geoportal-hamburg.de/mastercode/cesium/1_88/Cesium.js";
 
         load3DScript(lib, function Loaded3DCallback () {
             const settings3D = {
                     "map2D": window.mpapi.map2D
                 },
-                map3D = abstractAPI.map.createMap(settings3D, {}, "3D");
+                map3D = abstractAPI.map.createMap(settings3D, "3D");
 
             window.mpapi.map = map3D;
             window.mpapi.map.setEnabled(true);
@@ -47,6 +47,7 @@ document.getElementById("enable").addEventListener("click", function (portalConf
 });
 
 //* Fake service that holds client-side prepared geojson; also nice to test automatic transformation since data is in WGS 84
+// eslint-disable-next-line no-unused-vars
 const hamburgServicesUrl = "http://geoportal-hamburg.de/lgv-config/services-internet.json",
     localService = {
         id: "2002",
@@ -62,7 +63,7 @@ const hamburgServicesUrl = "http://geoportal-hamburg.de/lgv-config/services-inte
 services.push(localService);
 // */
 
-//* geojson styling function call to override default styling
+//* geojson styling function call to override default styling and special wfs styling
 mpapi.geojson.setCustomStyles({
     MultiPolygon: new Style({
         stroke: new Stroke({
@@ -74,12 +75,27 @@ mpapi.geojson.setCustomStyles({
         })
     })
 });
+
+// eslint-disable-next-line
+const styleWfs = function (feature, resolution) {
+    const icon = new Style({
+        image: new Icon({
+            src: "https://img.icons8.com/windows/50/000000/building.png",
+            scale: 0.5,
+            opacity: 1
+        })
+    });
+
+    return [icon];
+};
+
+services.find(({id}) => id === "3001").style = styleWfs;
 // */
 
 //* SYNCHRONOUS EXAMPLE: layerConf is known
 window.mpapi.map = map2D;
 
-["2001", "2002", "1002"].forEach(id => window.mpapi.map.addLayer(id));
+["2001", "2002", "1002", "3001"].forEach(id => window.mpapi.map.addLayer(id));
 
 
 // */
@@ -93,11 +109,11 @@ mpapi.rawLayerList.initializeLayerList(
             ...portalConfig,
             layerConf: conf,
             layers: null
-        });
+        }, "2D");
         ["6357", "6074"].forEach(
             id => window.mpapi.map.addLayer(id)
         );
-    }, "2D"
+    }
 );
 //*/
 
@@ -107,14 +123,13 @@ window.mpapi.map = abstractAPI.map.createMap(
     {...portalConfig, layerConf: hamburgServicesUrl, layers: [
         { id: "6357" },
         { id: "453", transparency: 50 }
-    ]},
+    ]}, "2D",
     {
         callback: () =>
             ["6074"].forEach(
                 id => window.mpapi.map.addLayer(id)
             )
-    },
-    "2D"
+    }
 );
 //*/
 

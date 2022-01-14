@@ -5,6 +5,7 @@ import getInitialLayers from "../../src/lib/getInitialLayers";
 import defaults from "../../src/defaults";
 import * as wms from "../../src/layer/wms";
 import * as geojson from "../../src/layer/geojson";
+import * as wfs from "../../src/layer/wfs";
 import * as vectorBase from "../../src/layer/vectorBase";
 import {createMapView} from "../../src/mapView";
 import {initializeLayerList, getLayerWhere} from "../../src/rawLayerList";
@@ -18,9 +19,10 @@ let mapIdCounter = 0;
  * @ignore
  */
 const layerBuilderMap = {
-        wms: wms,
-        geojson: geojson,
-        vectorBase: vectorBase
+        wms,
+        wfs,
+        geojson,
+        vectorBase
     },
     originalAddLayer = PluggableMap.prototype.addLayer;
 
@@ -54,7 +56,6 @@ function addLayer (layerOrId, params = {visibility: true, transparency: 0}) {
             console.error("Layer with id '" + layerOrId + "' has unknown type '" + rawLayer.typ + "'. No layer added to map.");
             return null;
         }
-
         layer = layerBuilder.createLayer(rawLayer, {}, {map: this});
         layer.setVisible(typeof params.visibility === "boolean" ? params.visibility : true);
         layer.setOpacity(typeof params.transparency === "number" ? (100 - params.transparency) / 100 : 1);
