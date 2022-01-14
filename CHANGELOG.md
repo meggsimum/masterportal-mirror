@@ -36,7 +36,6 @@
 ---
 
 ## 1.7.1 - 2022-01-11
-## Unreleased - in development
 ### Added
 
 ### Changed
