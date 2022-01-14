@@ -2,7 +2,7 @@ import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector.js";
 import * as vectorBase from "../../src/layer/vectorBase";
 
-describe("wms.js", function () {
+describe("vectorBase.js", function () {
 
     describe("createLayerSource", function () {
         it("creates a layerSource", function () {
@@ -13,34 +13,19 @@ describe("wms.js", function () {
     });
 
     describe("createLayer", function () {
-        it("creates a TileLayer for multi tile requests", function () {
+        it("creates a vector Base Layer", function () {
             const attr = {
-                    altitudeMode: "clampToGround",
-                    cache: false,
-                    datasets: {},
-                    features: {},
-                    gfiAttributes: "ignore",
-                    id: "imported_31",
-                    isBaseLayer: false,
-                    isClustered: false,
-                    isSelected: true,
-                    isVisibleInTree: true,
-                    layerAttribution: "nicht vorhanden",
-                    legendURL: "",
-                    maxScale: "350000",
-                    minScale: "0",
-                    name: "ShapeWoBauProE2021geo",
-                    parentId: "importedData",
-                    supported: ["2D", "3D"],
-                    transparent: true,
+                    name: "Albus Percival Wulfric Brian Dumbledore",
                     typ: "VectorBase",
-                    type: "layer",
-                    urlIsVisible: false,
-                    useProxy: false
+                    gfiAttributes: "ignore",
+                    id: "Rawenclaw_01"
                 },
                 layer = vectorBase.createLayer(attr);
 
             expect(layer).toBeInstanceOf(VectorLayer);
+            expect(layer.get("name")).toEqual("Albus Percival Wulfric Brian Dumbledore");
+            expect(layer.get("typ")).toEqual("VectorBase");
+            expect(layer.get("id")).toEqual("Rawenclaw_01");
         });
     });
 

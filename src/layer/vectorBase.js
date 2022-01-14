@@ -3,7 +3,7 @@ import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
 
 /**
- * Triggered by Layer to create a layerSource respectively a clusterLayerSource
+ * Triggered by Layer to create a layerSource
  * @returns {void}
  */
 export function createLayerSource () {
@@ -11,7 +11,7 @@ export function createLayerSource () {
 }
 
 /**
- * Forces an update by giving a layer a new sessionID.
+ * updates the source
  * @param {module:ol/layer/Base~BaseLayer} layer The vector base layer that is to be updated.
  * @param {module:ol/Feature~Feature[]} features The ol features.
  * @returns {void}
@@ -22,7 +22,7 @@ export function updateSource (layer, features) {
 }
 
 /**
- * Triggered by Layer to create an ol/layer/Vector
+ * creates an vector Base
  * @param {Object} attrs  attributes of the layer
  * @returns {Object} layer
  */
