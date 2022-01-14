@@ -22,9 +22,9 @@
 ## 1.7.1 - 2022-01-11
 ## Unreleased - in development
 ### Added
-- The follow package were updated 
-    - @parcel/transformer-sass version 2.0.0-beta.2
-    - parcel version 2.0.1
+- The follow package were added 
+    - @parcel/transformer-sass version 2.2.0
+    - parcel version 2.2.0
     - regenerator-runtime 0.13.9
 
 ### Changed
@@ -34,11 +34,13 @@
     - @babel/plugin-transform-modules-commonjs: from 7.15.0 to version 7.16.8
     - jest: from 27.0.6 to version 27.4.0
 - babel.config.js was replaced by babel.config.json. Now it can be watched for changes, and Babel transformations can be cached.
+- The overall script tag needs the attribute type="module" to enable module usage. Look at the index.html in example-folder.
 
 ### Removed
 - The follow package were removed 
     - @babel/preset-env: because Parcel includes transpilation by default
     - babel-jest
+    - babel-polyfill
     - parcel-bundler: replaced by parcel
 
 

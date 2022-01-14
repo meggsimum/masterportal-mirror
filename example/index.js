@@ -1,5 +1,3 @@
-// needed for dev mode since parcel babels async/await
-import "babel-polyfill";
 import "ol/ol.css";
 
 import {Style, Stroke, Fill, Icon} from "ol/style.js";
