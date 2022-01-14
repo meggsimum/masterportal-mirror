@@ -40,6 +40,15 @@ describe("src/modules/tools/gfi/components/templates/AttachedTemplate.vue", () =
             wrapper.destroy();
         }
     });
+    /**
+         * Is needed to run the tests.
+         * Check if its fixed with vue 3
+         * @see https://github.com/vuejs/vue-test-utils-next/issues/293
+         * @returns {void}
+         */
+    before(() => {
+        global.ShadowRoot = () => "";
+    });
 
     it("should have a title", () => {
         wrapper = shallowMount(AttachedTemplate, {
