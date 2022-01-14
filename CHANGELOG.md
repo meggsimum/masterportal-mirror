@@ -3,7 +3,7 @@
 
  The [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## 1.7.2 - 2022-01-14
+## 1.8.0 - 2022-01-14
 ### Added
 - An alias is added to the coordinate system. This is required by GeoServer services.
 - Added possibility to add any rawLayer attribute to wms layer request.
