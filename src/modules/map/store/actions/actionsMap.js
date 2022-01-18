@@ -39,6 +39,7 @@ const actions = {
      * @returns {void}
      */
     setMapAttributes ({commit, dispatch, rootState}, {map}) {
+        console.log("setMapAttributes");
         // discard old listeners
         if (unsubscribes.length) {
             unsubscribes.forEach(unsubscribe => unsubscribe());
@@ -50,6 +51,7 @@ const actions = {
 
         // listen to featuresLoaded event to be able to determine if all features of a layer are completely loaded
         channel.on({"featuresLoaded": id => {
+            console.log("featuresLoaded");
             commit("addLoadedLayerId", id);
             if (rootState.urlParams["Map/highlightFeature"]) {
                 dispatch("highlightFeature", {type: "viaLayerIdAndFeatureId", layerIdAndFeatureId: rootState.urlParams["Map/highlightFeature"]});
