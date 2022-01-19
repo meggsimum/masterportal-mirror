@@ -1,6 +1,6 @@
 import normalizeLayers from "./normalizeLayers";
 import * as highlightFeature from "./highlightFeature";
-import * as highlightFeaturesByAttribute from "./highlightFeaturesByAttribute";
+import highlightFeaturesByAttribute from "./highlightFeaturesByAttribute";
 import * as removeHighlightFeature from "./removeHighlighting";
 import {getWmsFeaturesByMimeType} from "../../../../api/gfi/getWmsFeaturesByMimeType";
 import getProxyUrl from "../../../../utils/getProxyUrl";
@@ -57,7 +57,8 @@ const actions = {
                 dispatch("highlightFeature", {type: "viaLayerIdAndFeatureId", layerIdAndFeatureId: rootState.urlParams["Map/highlightFeature"]});
             }
             if (rootState.urlParams["Map/highlightFeaturesByAttribute"]) {
-                dispatch("highlightFeaturesByAttribute", {});
+                highlightFeaturesByAttribute.highlightFeaturesByAttribute();
+                //dispatch("highlightFeaturesByAttribute", {});
             }
         }});
         commit("setMapId", map.id);
