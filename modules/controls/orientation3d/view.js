@@ -72,8 +72,6 @@ const Orientation3DView = Backbone.View.extend({
         // Update to BT5 Display classes, do not use jQuery hide/show
         // this.$el.hide();
         this.$el.removeClass("d-md-block");
-        
-        this.$el.removeClass("d-md-block");
     },
     showOblique: function () {
         if (this.unlisten) {
