@@ -402,14 +402,14 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
             wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
             wrapper.vm.selectionChanged(eventProj25832);
             await wrapper.vm.$nextTick();
-            expect(wrapper.vm.getClassForEasting()).to.be.equals(" form-group form-group-sm");
+            expect(wrapper.vm.getClassForEasting()).to.be.equals(" form-group form-group-sm row");
         });
         it("getClassForEasting no error", async () => {
             store.commit("Tools/CoordToolkit/setActive", true);
             wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
             wrapper.vm.selectionChanged(eventProj4326);
             await wrapper.vm.$nextTick();
-            expect(wrapper.vm.getClassForEasting()).to.be.equals("eastingToBottomNoError form-group form-group-sm");
+            expect(wrapper.vm.getClassForEasting()).to.be.equals("eastingToBottomNoError form-group form-group-sm row");
         });
         it("getClassForEasting eastingError", async () => {
             store.commit("Tools/CoordToolkit/setActive", true);
@@ -417,7 +417,7 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
             wrapper.vm.selectionChanged(eventProj4326);
             await wrapper.vm.$nextTick();
             store.commit("Tools/CoordToolkit/setEastingNoCoord", true);
-            expect(wrapper.vm.getClassForEasting()).to.be.equals("eastingToBottomNoError form-group form-group-sm");
+            expect(wrapper.vm.getClassForEasting()).to.be.equals("eastingToBottomNoError form-group form-group-sm row");
         });
         it("getClassForEasting northingError", async () => {
             store.commit("Tools/CoordToolkit/setActive", true);
@@ -426,7 +426,7 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
             await wrapper.vm.$nextTick();
             store.commit("Tools/CoordToolkit/setEastingNoCoord", false);
             store.commit("Tools/CoordToolkit/setNorthingNoCoord", true);
-            expect(wrapper.vm.getClassForEasting()).to.be.equals("eastingToBottomOneError form-group form-group-sm");
+            expect(wrapper.vm.getClassForEasting()).to.be.equals("eastingToBottomOneError form-group form-group-sm row");
         });
         it("getClassForEasting northingError and eastingError", async () => {
             store.commit("Tools/CoordToolkit/setActive", true);
@@ -435,14 +435,14 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
             await wrapper.vm.$nextTick();
             store.commit("Tools/CoordToolkit/setNorthingNoCoord", true);
             store.commit("Tools/CoordToolkit/setEastingNoCoord", true);
-            expect(wrapper.vm.getClassForEasting()).to.be.equals("eastingToBottomTwoErrors form-group form-group-sm");
+            expect(wrapper.vm.getClassForEasting()).to.be.equals("eastingToBottomTwoErrors form-group form-group-sm row");
         });
         it("getClassForNorthing no longlat-projection", async () => {
             store.commit("Tools/CoordToolkit/setActive", true);
             wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
             wrapper.vm.selectionChanged(eventProj25832);
             await wrapper.vm.$nextTick();
-            expect(wrapper.vm.getClassForNorthing()).to.be.equals(" form-group form-group-sm");
+            expect(wrapper.vm.getClassForNorthing()).to.be.equals(" form-group form-group-sm row");
         });
         it("getClassForNorthing no error", async () => {
             store.commit("Tools/CoordToolkit/setActive", true);
@@ -451,7 +451,7 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
             await wrapper.vm.$nextTick();
             store.commit("Tools/CoordToolkit/setNorthingNoCoord", false);
             store.commit("Tools/CoordToolkit/setEastingNoCoord", false);
-            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopNoError form-group form-group-sm");
+            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopNoError form-group form-group-sm row");
         });
         it("getClassForNorthing eastingError", async () => {
             store.commit("Tools/CoordToolkit/setActive", true);
@@ -459,7 +459,7 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
             wrapper.vm.selectionChanged(eventProj4326);
             await wrapper.vm.$nextTick();
             store.commit("Tools/CoordToolkit/setEastingNoCoord", true);
-            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopEastingError form-group form-group-sm");
+            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopEastingError form-group form-group-sm row");
         });
         it("getClassForNorthing northingError", async () => {
             store.commit("Tools/CoordToolkit/setActive", true);
@@ -468,7 +468,7 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
             await wrapper.vm.$nextTick();
             store.commit("Tools/CoordToolkit/setEastingNoCoord", false);
             store.commit("Tools/CoordToolkit/setNorthingNoCoord", true);
-            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopNoError form-group form-group-sm");
+            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopNoError form-group form-group-sm row");
         });
         it("getClassForNorthing northingError and eastingError", async () => {
             store.commit("Tools/CoordToolkit/setActive", true);
@@ -477,9 +477,9 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
             await wrapper.vm.$nextTick();
             store.commit("Tools/CoordToolkit/setNorthingNoCoord", true);
             store.commit("Tools/CoordToolkit/setEastingNoMatch", true);
-            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopTwoErrors form-group form-group-sm");
+            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopTwoErrors form-group form-group-sm row");
             store.commit("Tools/CoordToolkit/setEastingNoCoord", true);
-            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopTwoErrorsEastNoValue form-group form-group-sm");
+            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopTwoErrorsEastNoValue form-group form-group-sm row");
         });
     });
     describe("CoordToolkit.vue watcher", () => {
