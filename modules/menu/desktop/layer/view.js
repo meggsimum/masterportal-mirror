@@ -156,7 +156,7 @@ const LayerView = LayerBaseView.extend(/** @lends LayerView.prototype */{
 
         // Animation cog
         if (layerId === attr.id) {
-            this.$(".glyphicon-cog").toggleClass("rotate rotate-back");
+            this.$(".bi-gear").parent(".bootstrap-icon").toggleClass("rotate rotate-back");
         }
 
         // Slide-Animation templateSetting

@@ -177,6 +177,15 @@ export default {
                 class="snippetCheckboxLabel"
             >{{ titleText }}</label>
         </div>
+        <div class="right">
+            <div class="info-icon">
+                <span
+                    :class="['bootstrap-icon', showInfo ? 'opened' : '']"
+                    @click="toggleInfo()"
+                    @keydown.enter="toggleInfo()"
+                ><i class="bi-info-circle-fill" /></span>
+            </div>
+        </div>
         <div
             v-if="info"
             class="right"
@@ -193,6 +202,28 @@ export default {
     @import "~/css/mixins.scss";
     .snippetCheckboxContainer {
         height: auto;
+    }
+    .snippetCheckboxContainer .info-icon {
+        float: right;
+        font-size: 16px;
+        color: #ddd;
+    }
+    .snippetCheckboxContainer .info-icon .opened {
+        color: #000;
+    }
+    .snippetCheckboxContainer .info-icon:hover {
+        cursor: pointer;
+        color: #a5a09e;
+    }
+    .snippetCheckboxContainer .info-text {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 10px;
+        padding: 15px 10px;
+    }
+    .snippetCheckboxContainer .bottom {
+        clear: left;
+        width: 100%;
     }
     .snippetCheckboxContainer .left {
         input[type=radio], input[type=checkbox] {
