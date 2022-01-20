@@ -137,27 +137,29 @@ export default {
                     <template
                         v-if="instances.length > 1"
                     >
-                        <label
-                            id="tool-wfsSearch-instances-select-label"
-                            class="col-md-5 col-form-label"
-                            for="tool-wfsSearch-instances-select"
-                        >
-                            {{ $t("common:modules.tools.wfsSearch.instancesSelectLabel") }}
-                        </label>
-                        <div class="col-md-7">
-                            <select
-                                id="tool-wfsSearch-instances-select"
-                                class="form-select form-select-sm"
-                                @change="instanceChanged($event.currentTarget.value)"
+                        <div class="form-group form-group-sm row">
+                            <label
+                                id="tool-wfsSearch-instances-select-label"
+                                class="col-md-5 col-form-label"
+                                for="tool-wfsSearch-instances-select"
                             >
-                                <option
-                                    v-for="({title}, i) of instances"
-                                    :key="title + i"
-                                    :value="i"
+                                {{ $t("common:modules.tools.wfsSearch.instancesSelectLabel") }}
+                            </label>
+                            <div class="col-md-7">
+                                <select
+                                    id="tool-wfsSearch-instances-select"
+                                    class="form-select form-select-sm"
+                                    @change="instanceChanged($event.currentTarget.value)"
                                 >
-                                    {{ title }}
-                                </option>
-                            </select>
+                                    <option
+                                        v-for="({title}, i) of instances"
+                                        :key="title + i"
+                                        :value="i"
+                                    >
+                                        {{ title }}
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                         <hr>
                     </template>
