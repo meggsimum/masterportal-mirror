@@ -540,9 +540,11 @@ export default {
                                 @click="copyCoords(['coordinatesEastingField'])"
                             >
                                 <span
-                                    class="glyphicon glyphicon-copy"
+                                    class="bootstrap-icon"
                                     aria-hidden="true"
-                                />
+                                >
+                                    <i class="bi-clipboard-plus" />
+                                </span>
                             </button>
                         </div>
                         <div
@@ -557,9 +559,11 @@ export default {
                                 @click="copyCoords(['coordinatesEastingField', 'coordinatesNorthingField'])"
                             >
                                 <span
-                                    class="glyphicon glyphicon-copy"
+                                    class="bootstrap-icon"
                                     aria-hidden="true"
-                                />
+                                >
+                                    <i class="bi-clipboard-plus" />
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -608,9 +612,11 @@ export default {
                                 @click="copyCoords(['coordinatesNorthingField'])"
                             >
                                 <span
-                                    class="glyphicon glyphicon-copy"
+                                    class="bootstrap-icon"
                                     aria-hidden="true"
-                                />
+                                >
+                                    <i class="bi-clipboard-plus" />
+                                </span>
                             </button>
                         </div>
                     </div>
