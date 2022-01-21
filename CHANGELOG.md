@@ -40,6 +40,7 @@
 - Issue #689: `layerSlider` in Handle mode, the layer is now also displayed at the end of the bar.
 - A few translation errors were adjusted in config.json.md and config.json.en.md.
 - Tool Routing: Exported routes now inherit the style from route view.
+- Issue #680, #683: transparency setting has no visible effect in treeType custom
 
 ---
 
