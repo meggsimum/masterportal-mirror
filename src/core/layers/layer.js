@@ -71,8 +71,8 @@ Layer.prototype.initialize = function (attrs) {
         this.set("singleBaselayer", store.state.configJson?.Portalconfig.singleBaselayer);
     }
 
+    this.updateLayerTransparency();
     if (attrs.isSelected === true || store.getters.treeType === "light") {
-        this.updateLayerTransparency();
         this.setIsVisibleInMap(attrs.isSelected);
         this.set("isRemovable", store.state.configJson?.Portalconfig.layersRemovable);
     }
