@@ -1,6 +1,6 @@
 import normalizeLayers from "./normalizeLayers";
 import * as highlightFeature from "./highlightFeature";
-import highlightFeaturesByAttribute from "./highlightFeaturesByAttribute";
+import * as highlightFeaturesByAttribute from "./highlightFeaturesByAttribute";
 import * as removeHighlightFeature from "./removeHighlighting";
 import {getWmsFeaturesByMimeType} from "../../../../api/gfi/getWmsFeaturesByMimeType";
 import getProxyUrl from "../../../../utils/getProxyUrl";
@@ -47,7 +47,19 @@ const actions = {
         }
 
         const mapView = map.getView(),
-            channel = Radio.channel("VectorLayer");
+            channel = Radio.channel("VectorLayer"),
+            parametricUrlChannel = Radio.channel("ParametricURL");
+        
+        parametricUrlChannel.on({"ready": id => {
+            console.log("URL ready");
+            if (rootState.urlParams["Map/highlightFeaturesByAttribute"]) {
+                const propName = rootState.urlParams["attributeName"];
+                const propValue = rootState.urlParams["attributeValue"];
+                const queryType = rootState.urlParams["query"];
+                dispatch("highlightFeaturesByAttribute", {propName: propName, propValue: propValue, queryType: queryType});
+                //dispatch("highlightFeaturesByAttribute", {});
+            }
+        }});
 
         // listen to featuresLoaded event to be able to determine if all features of a layer are completely loaded
         channel.on({"featuresLoaded": id => {
@@ -55,10 +67,6 @@ const actions = {
             commit("addLoadedLayerId", id);
             if (rootState.urlParams["Map/highlightFeature"]) {
                 dispatch("highlightFeature", {type: "viaLayerIdAndFeatureId", layerIdAndFeatureId: rootState.urlParams["Map/highlightFeature"]});
-            }
-            if (rootState.urlParams["Map/highlightFeaturesByAttribute"]) {
-                highlightFeaturesByAttribute.highlightFeaturesByAttribute();
-                //dispatch("highlightFeaturesByAttribute", {});
             }
         }});
         commit("setMapId", map.id);
