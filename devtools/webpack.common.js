@@ -127,6 +127,38 @@ module.exports = function () {
                     }
                 },
                 {
+                    test: /\.s(c|a)ss$/,
+                    use: [
+                        // "vue-style-loader",
+                        {
+                            loader: MiniCssExtractPlugin.loader,
+                            options: {}
+                        },
+                        "css-loader",
+                        "sass-loader"
+                        // {
+                        //     loader: "sass-loader",
+                        //     options: {
+                        //         implementation: require("sass")
+                        //         // sassOptions: {
+                        //         //     indentedSyntax: true // optional
+                        //         // }
+                        //     }
+                        // }
+                    ]
+                },
+                // {
+                //     test: /\.scss$/,
+                //     use: [
+                //         {
+                //             loader: MiniCssExtractPlugin.loader,
+                //             options: {}
+                //         },
+                //         "css-loader",
+                //         "sass-loader"
+                //     ]
+                // },
+                {
                     test: /\.less$/,
                     use: [
                         {
@@ -160,22 +192,6 @@ module.exports = function () {
                     use: [
                         {
                             loader: "file-loader"
-                        }
-                    ]
-                },
-                {
-                    test: /\.s(c|a)ss$/,
-                    use: [
-                        "vue-style-loader",
-                        "css-loader",
-                        {
-                            loader: "sass-loader",
-                            options: {
-                                implementation: require("sass"),
-                                sassOptions: {
-                                    indentedSyntax: true // optional
-                                }
-                            }
                         }
                     ]
                 },
