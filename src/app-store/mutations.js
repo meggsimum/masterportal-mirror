@@ -1,4 +1,4 @@
-import actions from "../app-store/actions"; // https://stackoverflow.com/questions/40487627/can-i-call-commit-from-one-of-mutations-in-vuex-store
+import actions from "./actions"; // https://stackoverflow.com/questions/40487627/can-i-call-commit-from-one-of-mutations-in-vuex-store
 import {setValuesToState} from "../utils/parametricUrl/stateModifier";
 
 // The objects deprecatedParamsConfigJson and deprecatedParamsConfigJs store the current respectively new parameters and the related deprecated parameters.
