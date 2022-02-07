@@ -4,7 +4,7 @@ import {fromCircle} from "ol/geom/Polygon.js";
 import Feature from "ol/Feature.js";
 import {GeoJSON} from "ol/format.js";
 import {Group, Image, Tile, Vector} from "ol/layer.js";
-import store from "../../../../app-store/index";
+import store from "../../../../app-store";
 import isObject from "../../../../utils/isObject";
 import differenceJS from "../../../../utils/differenceJS";
 import sortBy from "../../../../utils/sortBy";

@@ -6,7 +6,7 @@ import actions from "../store/actionsRouting";
 import mutations from "../store/mutationsRouting";
 import * as constantsRouting from "../store/constantsRouting";
 import RoutingLoadingSpinner from "./RoutingLoadingSpinner.vue";
-import store from "../../../../app-store/index";
+import store from "../../../../app-store";
 
 export default {
     name: "RoutingTemplate",

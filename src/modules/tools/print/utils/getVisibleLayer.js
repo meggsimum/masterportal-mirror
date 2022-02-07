@@ -1,6 +1,6 @@
 import differenceJS from "../../../../utils/differenceJS";
 import sortBy from "../../../../utils/sortBy";
-import store from "../../../../app-store/index";
+import store from "../../../../app-store";
 /**
  * sets the visible layers and set into variable
  * @param {Object} param.dispatch the dispatch

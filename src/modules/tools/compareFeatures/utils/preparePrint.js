@@ -1,5 +1,5 @@
 import state from "../store/stateCompareFeatures";
-import store from "../../../../app-store/index";
+import store from "../../../../app-store";
 import SpecModel from "./../../print/utils/buildSpec";
 
 /**

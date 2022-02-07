@@ -5,7 +5,7 @@ import mutations from "../store/mutationsPortalFooter";
 import ScaleLine from "../../scaleLine/components/ScaleLine.vue";
 import LanguageItem from "../../language/components/LanguageItem.vue";
 import MousePosition from "../../controls/mousePosition/components/MousePosition.vue";
-import store from "../../../app-store/index";
+import store from "../../../app-store";
 import getComponent from "../../../utils/getComponent";
 
 /**
