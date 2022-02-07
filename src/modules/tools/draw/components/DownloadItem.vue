@@ -30,6 +30,7 @@ export default {
             id="tool-draw-download"
             class="form-horizontal"
             role="form"
+            @submit.prevent=""
         >
             <div class="form-group form-group-sm">
                 <label
