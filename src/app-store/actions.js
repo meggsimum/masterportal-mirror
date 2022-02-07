@@ -2,7 +2,7 @@ import {getByArraySyntax} from "../utils/fetchFirstModuleConfig";
 
 export default {
     /**
-     * Copies the the content of the given element to the clipboard if the browser accepts the command.
+     * Copies the content of the given element to the clipboard if the browser accepts the command.
      * Solution for the weird behaviour on iOS from:
      * https://stackoverflow.com/questions/34045777/copy-to-clipboard-using-javascript-in-ios
      *
