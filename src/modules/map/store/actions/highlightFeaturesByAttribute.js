@@ -7,18 +7,12 @@ import axios from "axios";
  * @param {integer} status - request status
  * @returns {void}
  */
-function handleGetFeatureResponse (dispatch, response) {
-    console.log(response);
+function handleGetFeatureResponse (dispatch, response, wfsId) {
     if (response.status === 200) {
         const features = new WFS({version: "1.1.0"}).readFeatures(response.data);
 
         console.log(features);
-        features.forEach(feature => 
-            dispatch("Map/highlightFeature", {type: "highlightPolygon", feature: feature}, {root: true})
-        );
-        //features.forEach(feature => 
-        //    dispatch("MapMarker/placingPolygonMarker", {type: "highlightPlygon", feature}, {root: true})
-        //);
+        dispatch("Map/highlightFeatures", {type: "highlightPolygons", features: features, layerId: wfsId}, {root: true});
     }
     else {
         Radio.trigger("Alert", "alert", "Datenabfrage fehlgeschlagen. (Technische Details: " + status);
@@ -34,6 +28,7 @@ function highlightFeaturesByAttribute ({dispatch}, queryObject) {
     console.log(queryObject.propName);
     console.log(queryObject.propValue);
     console.log(queryObject.queryType);
+    console.log(queryObject.wfsId);
     const querySnippetLike = `<ogc:PropertyIsLike matchCase='false' wildCard='%' singleChar='#' escapeChar='!'>
             <ogc:PropertyName>app:${queryObject.propName}</ogc:PropertyName>
             <ogc:Literal>%${queryObject.propValue}%</ogc:Literal>
@@ -73,7 +68,6 @@ function highlightFeaturesByAttribute ({dispatch}, queryObject) {
     </wfs:Query>
     </wfs:GetFeature>`;
     
-    console.log(reqData);
     axios({
         method: "post",
         //url: "https://bsu-srv-arcgis.fhhnet.stadt.hamburg.de/security-proxy/services/wfs_ak19g?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetFeature&TYPENAME=app:P_TIERARTEN_INVASIV",
@@ -83,7 +77,7 @@ function highlightFeaturesByAttribute ({dispatch}, queryObject) {
         headers: { 'content-type': 'raw' },
         timeout: 5000
     }).then(response => {
-        return handleGetFeatureResponse(dispatch, response);
+        return handleGetFeatureResponse(dispatch, response, queryObject.wfsId);
     }).catch(function (error) {
         if (error.response) {
             // Request made and server responded
