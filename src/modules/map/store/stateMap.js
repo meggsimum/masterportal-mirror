@@ -64,6 +64,8 @@ const state = {
     mapId: "ol",
     highlightedFeature: null,
     highlightedFeatureStyle: null,
+    highlightedFeatures: null,
+    highlightedFeaturesStyle: null,
     vectorFeaturesLoaded: false,
     loadedLayers: [],
     featuresLoaded: {}
