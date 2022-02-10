@@ -152,3 +152,23 @@ export function fieldValueChanged (id, value, stateLiterals, requiredValues, par
 
     return requiredValues;
 }
+
+/**
+ * Resets all the values of the literals of the current searchInstance.
+ *
+ * @param {Object[]} instanceLiterals The literals of the current searchInstance.
+ * @param {?(Object[])} [literals = null] As the structure is recursively traversed, this value is an inner array of the instanceLiterals.
+ * @returns {void}
+ */
+export function resetFieldValues (instanceLiterals, literals = null) {
+    const arr = literals || instanceLiterals;
+
+    arr.forEach(literal => {
+        if (literal.clause) {
+            resetFieldValues(instanceLiterals, literal.clause.literals);
+        }
+        else if (literal.field) {
+            literal.field.value = "";
+        }
+    });
+}

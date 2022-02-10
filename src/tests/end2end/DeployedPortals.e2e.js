@@ -1,6 +1,6 @@
 const {expect} = require("chai"),
     {logTestingCloudUrlToTest} = require("../../../test/end2end/library/utils"),
-    {initDriver} = require("../../../test/end2end/library/driver");
+    {initDriver, getDriver, quitDriver} = require("../../../test/end2end/library/driver");
 
 /**
  * Tests a portal only for running.
@@ -20,7 +20,7 @@ async function DeployedPortalsTest ({builder, url, resolution, capability}) {
                 capability.name = this.currentTest.fullTitle();
                 builder.withCapabilities(capability);
             }
-            driver = await initDriver(builder, url, resolution);
+            driver = await getDriver(builder, url, resolution);
         });
 
         after(async function () {
@@ -29,13 +29,12 @@ async function DeployedPortalsTest ({builder, url, resolution, capability}) {
                     logTestingCloudUrlToTest(sessionData.id_);
                 });
             }
-            await driver.quit();
         });
 
         afterEach(async function () {
             if (this.currentTest._currentRetry === this.currentTest._retries - 1) {
                 console.warn("      FAILED! Retrying test \"" + this.currentTest.title + "\"  after reloading url");
-                await driver.quit();
+                await quitDriver();
                 driver = await initDriver(builder, url, resolution);
             }
         });

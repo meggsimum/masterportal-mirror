@@ -1,5 +1,6 @@
 import StyleModel from "./style.js";
 import {Circle as CircleStyle, Fill, Stroke, Style, Icon} from "ol/style.js";
+import {prepareValue, isObjectPath} from "../../src/utils/attributeMapper.js";
 
 const PointStyleModel = StyleModel.extend(/** @lends PointStyleModel.prototype */{
     /**
@@ -67,7 +68,8 @@ const PointStyleModel = StyleModel.extend(/** @lends PointStyleModel.prototype *
         "circleBarCircleStrokeColor": [0, 0, 0, 1],
         "circleBarCircleStrokeWidth": 1,
         "circleBarLineStrokeColor": [0, 0, 0, 1],
-        "scalingAttribute": ""
+        "scalingAttribute": "",
+        "rotation": 0
     },
 
     initialize: function (feature, styles, isClustered) {
@@ -167,6 +169,25 @@ const PointStyleModel = StyleModel.extend(/** @lends PointStyleModel.prototype *
     },
 
     /**
+    * Returns the rotation value and its corresponding value according to style.json.
+    * @param {Object} rotation - The rotation object from the style.json
+    * @returns {number} - The rotation value in degrees or radiants.
+    */
+    getRotationValue: function (rotation) {
+        if (typeof rotation === "object") {
+            const {value, isDegree} = rotation;
+
+            if (isObjectPath(value) && this.attributes.values_ !== undefined) {
+                const rotationValueFromService = parseInt(prepareValue(this.attributes.values_, value), 10);
+
+                return isDegree ? rotationValueFromService * Math.PI / 180 : rotationValueFromService;
+            }
+            return isDegree ? parseInt(value, 10) * Math.PI / 180 : parseInt(value, 10);
+        }
+        return 0;
+    },
+
+    /**
     * Creates pointStyle as icon.
     * all features get same image.
     * @returns {ol/style} - The created style.
@@ -179,7 +200,8 @@ const PointStyleModel = StyleModel.extend(/** @lends PointStyleModel.prototype *
             scale = parseFloat(this.get("imageScale")),
             offset = [parseFloat(this.get("imageOffsetX")), parseFloat(this.get("imageOffsetY"))],
             offsetXUnit = this.get("imageOffsetXUnit"),
-            offsetYUnit = this.get("imageOffsetYUnit");
+            offsetYUnit = this.get("imageOffsetYUnit"),
+            rotation = this.getRotationValue(this.get("rotation"));
 
         return new Style({
             image: new Icon({
@@ -190,7 +212,8 @@ const PointStyleModel = StyleModel.extend(/** @lends PointStyleModel.prototype *
                 anchor: offset,
                 anchorXUnits: offsetXUnit,
                 anchorYUnits: offsetYUnit,
-                imgSize: isSVG ? [width, height] : ""
+                imgSize: isSVG ? [width, height] : "",
+                rotation
             })
         });
     },

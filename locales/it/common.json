@@ -51,7 +51,7 @@
             "wfsTransaction": "Strumento WFS-T",
             "scaleSwitcher": "Cambia scala",
             "selectFeatures": "Seleziona",
-            "styleVt": "Style VT",
+            "styleVt": "Style Vector Tile Layers",
             "wfsSearch": "Ricerca WFS"
         },
         "contact": "Contatti",
@@ -223,7 +223,6 @@
                 "errorMessage": "Il servizio specificato non ha potuto essere caricato. Si prega di assicurarsi che l'URL sia stato specificato correttamente.<br><br>Se il problema si verifica ancora, si prega di contattare il gestore del servizio con la seguente nota:<br><strong>CORS-Header deve essere obbligatoriamente impostata per il servizio. Questo è raccomandato nel capitolo 4.7.1. da <a target='_blank' href='https://www.gdi-de.org/SharedDocs/Downloads/DE/GDI-DE/Dokumente/Architektur_GDI-DE_Bereitstellung_Darstellungsdienste.pdf?__blob=publicationFile'>GDI-DE</a></strong>",
                 "errorHttpsMessage": "Il WMS che avete richiesto utilizza HTTP. Il Masterportal può integrare WMS solo utilizzando HTTPS (SSL).",
                 "placeholder": "Inserire qui l'URL del WMS.",
-                "textExample": "Esempio: https://geodienste.hamburg.de/HH_WMS_Fahrradrouten",
                 "textLoadLayer": "Carica",
                 "ifInExtent": "I geodati forniti tramite il WMS sono al di fuori dell'area visualizzabile. WMS non aggiunto.",
                 "checkVersion": "Aggiungere WMS è possibile solo se la versione del WMS esterno è uguale o superiore a 1.3.0."
@@ -445,8 +444,8 @@
                 "searchBtn": "Cerca",
                 "coordSystemField": "Sistema di riferimento",
                 "hdms": {
-                    "eastingLabel": "Longitudine",
-                    "northingLabel": "Latitudine"
+                    "eastingLabel": "Latitudine",
+                    "northingLabel": "Longitudine"
                 },
                 "cartesian": {
                     "eastingLabel": "Longitudine",
@@ -700,7 +699,8 @@
                 "address": "indirizzo",
                 "location": "comune",
                 "subject": "dati specialistici",
-                "topic": "oggetto"
+                "topic": "oggetto",
+                "general": "oggetto"
             },
             "specialWFS": {
                 "ongoing": "in corso",

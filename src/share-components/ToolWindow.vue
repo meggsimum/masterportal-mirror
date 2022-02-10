@@ -106,15 +106,15 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
-    @import "~/css/mixins.less";
+<style lang="scss" scoped>
+    @import "~/css/mixins.scss";
 
-    @color_1: rgb(85, 85, 85);
-    @font_family_1: "MasterPortalFont Bold","Arial Narrow",Arial,sans-serif;
-    @background_color_1: rgb(255, 255, 255);
+    $color_1: rgb(85, 85, 85);
+    $font_family_1: "MasterPortalFont Bold","Arial Narrow",Arial,sans-serif;
+    $background_color_1: rgb(255, 255, 255);
 
     .tool-window-vue {
-        background-color: @background_color_1;
+        background-color: $background_color_1;
         display: block;
         position: absolute;
         padding:0;
@@ -138,13 +138,13 @@ export default {
     .tool-window-heading{
         padding: 5px 5px 5px 5px;
         border-bottom: 1px solid rgb(229, 229, 229);
-        font-family: @font_family_1;
+        font-family: $font_family_1;
         display:flex;
         flex-direction:row;
         width:100%;
         .heading-element {
             white-space: nowrap;
-            color: @color_1;
+            color: $color_1;
             font-size: 14px;
             padding: 6px;
 
@@ -155,10 +155,10 @@ export default {
             .glyphicon {
                 padding: 5px;
                 &:focus {
-                    .primary_action_focus();
+                    @include primary_action_focus;
                 }
                 &:hover {
-                    .primary_action_hover();
+                    @include primary_action_hover;
                 }
             }
 
@@ -166,7 +166,7 @@ export default {
                 &.glyphicon-minus { top: 3px; }
                 &:hover {
                     &:not(.win-icon) {
-                        .primary_action_hover();
+                        @include primary_action_hover;
                     }
                 }
             }
@@ -186,7 +186,7 @@ export default {
         width: 100%;
         max-height:72vh;
         -webkit-overflow-scrolling: touch;
-        background-color: @background_color_1;
+        background-color: $background_color_1;
         overflow: auto;
     }
 </style>

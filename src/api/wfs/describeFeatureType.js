@@ -7,10 +7,10 @@ import {errorHandling} from "../utils/errorHandling";
  * To return a list of feature types, the GET request would be as follows. This request will return the list of feature types, sorted by namespace:
  * @param {String} url - The url of the WFS.
  * @param {String} [version="1.1.0"] - The version of the WFS.
- * @param {String[]} [featureTypes] - A comma-separated list of feature types. If no value is specified, that is interpreted as all feature types.
+ * @param {String[]} [featureTypes=undefined] - A comma-separated list of feature types. If no value is specified, that is interpreted as all feature types.
  * @returns {Promise<Object|undefined>} Promise object represents the DescribeFeatureType request.
  */
-export function describeFeatureType (url, version = "1.1.0", featureTypes) {
+export function describeFeatureType (url, version = "1.1.0", featureTypes = undefined) {
     if (typeof url !== "string") {
         console.error(`api/wfs/describeFeatureType: Url is ${url}. Url has to be defined and a string.`);
         return undefined;

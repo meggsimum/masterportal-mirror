@@ -25,7 +25,7 @@ function buildFilter (values) {
                 else {
                     const currentFilter = literals.join("");
 
-                    filters.push(val.clause.type === "and" ? `<And>${currentFilter}</And>` : `<Or>${currentFilter}</Or>`);
+                    filters.push(val.clause.type === "and" ? `<ogc:And>${currentFilter}</ogc:And>` : `<ogc:Or>${currentFilter}</ogc:Or>`);
                 }
             }
         }
@@ -76,7 +76,7 @@ function buildXmlFilter (field) {
         fieldType = multipleValuesInField ? type[parameterIndex] : type,
         currentFieldName = multipleValuesInField ? fieldName[parameterIndex] : fieldName,
         likeFilter = fieldType === "like",
-        property = `<PropertyName>${currentFieldName}</PropertyName><Literal>${value}${likeFilter ? likeFilterProperties.wildCard : ""}</Literal>`;
+        property = `<ogc:PropertyName>${currentFieldName}</ogc:PropertyName><ogc:Literal>${value}${likeFilter ? likeFilterProperties.wildCard : ""}</ogc:Literal>`;
     let likeFilterValues = "";
 
     if (likeFilter) {
@@ -86,8 +86,8 @@ function buildXmlFilter (field) {
     }
 
     return likeFilter
-        ? `<PropertyIsLike matchCase="false" ${likeFilterValues.slice(0, -1)}>${property}</PropertyIsLike>`
-        : `<PropertyIsEqualTo matchCase="false">${property}</PropertyIsEqualTo>`;
+        ? `<ogc:PropertyIsLike matchCase="false" ${likeFilterValues.slice(0, -1)}>${property}</ogc:PropertyIsLike>`
+        : `<ogc:PropertyIsEqualTo matchCase="false">${property}</ogc:PropertyIsEqualTo>`;
 }
 
 /**

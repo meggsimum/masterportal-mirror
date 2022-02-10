@@ -3,7 +3,7 @@ import Vuex from "vuex";
 
 import Alerting from "../modules/alerting/store/indexAlerting";
 import ConfirmAction from "../modules/confirmAction/store/indexConfirmAction";
-import Footer from "../modules/footer/store/indexFooter";
+import PortalFooter from "../modules/portalFooter/store/indexPortalFooter";
 import GraphicalSelect from "../share-components/graphicalSelect/store/indexGraphicalSelect";
 import Language from "../modules/language/store/indexLanguage";
 import LayerInformation from "../modules/layerInformation/store/indexLayerInformation";
@@ -11,7 +11,7 @@ import Legend from "../modules/legend/store/indexLegend";
 import Map from "../modules/map/store/indexMap";
 import MapMarker from "../modules/mapMarker/store/indexMapMarker";
 import QuickHelp from "../modules/quickHelp/store/indexQuickHelp";
-import Title from "../modules/title/store/indexTitle";
+import PortalTitle from "../modules/portalTitle/store/indexPortalTitle";
 import WmsTime from "../modules/wmsTime/store/indexWmsTime";
 
 import getters from "./getters";
@@ -30,7 +30,7 @@ const store = new Vuex.Store({
     modules: {
         Alerting,
         ConfirmAction,
-        Footer,
+        PortalFooter,
         GraphicalSelect,
         Language,
         LayerInformation,
@@ -38,7 +38,7 @@ const store = new Vuex.Store({
         Map,
         MapMarker,
         QuickHelp,
-        Title,
+        PortalTitle,
         WmsTime,
         controls: {
             ...controlsModule

@@ -2,17 +2,17 @@ import Vuex from "vuex";
 import {shallowMount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
 import ChartJs from "chart.js";
-import Linechart from "../../../components/Linechart.vue";
+import LinechartItem from "../../../components/LinechartItem.vue";
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
-describe("src/share-components/charts/components/Linechart.vue", () => {
+describe("src/share-components/charts/components/LinechartItem.vue", () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = shallowMount(Linechart, {
+        wrapper = shallowMount(LinechartItem, {
             propsData: {
                 data: {
                     labels: [],

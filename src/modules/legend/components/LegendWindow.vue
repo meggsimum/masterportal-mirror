@@ -107,23 +107,25 @@ export default {
                 isValidLegend = null,
                 legend = null;
 
-            if (layerForLayerInfo.get("typ") === "GROUP") {
-                legend = this.prepareLegendForGroupLayer(layerForLayerInfo.get("layerSource"));
-            }
-            else {
-                legend = this.prepareLegend(layerForLayerInfo.get("legend"));
-            }
+            if (layerForLayerInfo) {
+                if (layerForLayerInfo.get("typ") === "GROUP") {
+                    legend = this.prepareLegendForGroupLayer(layerForLayerInfo.get("layerSource"));
+                }
+                else {
+                    legend = this.prepareLegend(layerForLayerInfo.get("legend"));
+                }
 
-            legendObj = {
-                id: layerForLayerInfo.get("id"),
-                name: layerForLayerInfo.get("name"),
-                legend,
-                position: layerForLayerInfo.get("selectionIDX")
-            };
+                legendObj = {
+                    id: layerForLayerInfo.get("id"),
+                    name: layerForLayerInfo.get("name"),
+                    legend,
+                    position: layerForLayerInfo.get("selectionIDX")
+                };
 
-            isValidLegend = this.isValidLegendObj(legendObj);
-            if (isValidLegend) {
-                this.setLegendForLayerInfo(legendObj);
+                isValidLegend = this.isValidLegendObj(legendObj);
+                if (isValidLegend) {
+                    this.setLegendForLayerInfo(legendObj);
+                }
             }
         },
 
@@ -791,14 +793,14 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
-    @import "~/css/mixins.less";
+<style lang="scss" scoped>
+    @import "~/css/mixins.scss";
 
-    @color_1: #000000;
-    @color_2: rgb(255, 255, 255);
-    @font_family_2: "MasterPortalFont", sans-serif;
-    @background_color_3: #f2f2f2;
-    @background_color_4: #646262;
+    $color_1: #000000;
+    $color_2: rgb(255, 255, 255);
+    $font_family_2: "MasterPortalFont", sans-serif;
+    $background_color_3: #f2f2f2;
+    $background_color_4: #646262;
 
     #legend.legend-mobile {
         width: 100%;
@@ -829,20 +831,20 @@ export default {
                 padding: 5px;
                 cursor: pointer;
                 &:focus {
-                    .primary_action_focus();
+                    @include primary_action_focus;
                 }
                 &:hover {
-                    .primary_action_hover();
+                    @include primary_action_hover;
                 }
             }
             .toggle-collapse-all {
                 padding: 5px;
                 cursor: pointer;
                 &:focus {
-                    .primary_action_focus();
+                    @include primary_action_focus;
                 }
                 &:hover {
-                    .primary_action_hover();
+                    @include primary_action_hover;
                 }
             }
         }
@@ -869,48 +871,48 @@ export default {
     .legend-window-table {
         position: absolute;
         right: 0;
-        font-family: @font_family_2;
+        font-family: $font_family_2;
         border-radius: 12px;
-        background-color: @background_color_4;
+        background-color: $background_color_4;
         width: 300px;
         margin: 10px 10px 30px 10px;
         z-index: 9999;
         .legend-title-table {
-            font-family: @font_family_2;
+            font-family: $font_family_2;
             font-size: 14px;
-            color: @color_2;
+            color: $color_2;
             padding: 10px;
             cursor: move;
             .close-legend {
                 cursor: pointer;
                 &:focus {
-                    .primary_action_focus();
+                    @include primary_action_focus;
                 }
                 &:hover {
-                    .primary_action_hover();
+                    @include primary_action_hover;
                 }
             }
             .toggle-collapse-all {
                 cursor: pointer;
                 &:focus {
-                    .primary_action_focus();
+                    @include primary_action_focus;
                 }
                 &:hover {
-                    .primary_action_hover();
+                    @include primary_action_hover;
                 }
             }
         }
         .legend-content {
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 12px;
-            background-color: @background_color_3;
+            background-color: $background_color_3;
             .panel {
-                background-color: @background_color_3;
+                background-color: $background_color_3;
             }
             .layer-title {
                 border-radius: 12px;
                 padding: 5px;
-                color: @color_1;
+                color: $color_1;
                 font-weight: bold;
                 background-color: #e7e7e7;
                 span {

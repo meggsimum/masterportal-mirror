@@ -211,5 +211,6 @@ function prependPrefix (value, prefix) {
 
 export {
     mapAttributes,
-    isObjectPath
+    isObjectPath,
+    prepareValue
 };

@@ -59,8 +59,8 @@ export function parseDocumentString (documentString, mimeType, parseFromStringOp
     if (parsererror instanceof HTMLCollection && parsererror.length > 0) {
         for (errObj of parsererror) {
             console.warn("requestGfi, parseDocumentString: parsererror", errObj);
-            throw Error("requestGfi, parseDocumentString: the parsererror has reported a problem");
         }
+        throw Error("requestGfi, parseDocumentString: the parsererror has reported a problem");
     }
 
     return doc;

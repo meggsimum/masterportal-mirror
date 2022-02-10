@@ -7,9 +7,10 @@ const path = require("path"),
 module.exports = function getMastercodeVersionFolderName () {
     let folderName = stableVersionNumber;
     const tag = gitRevSync.tag().replace(/\./g, "_").slice(1),
-        tagFirstParent = gitRevSync.tagFirstParent().replace(/\./g, "_").slice(1);
+        branch = gitRevSync.branch(),
+        long = gitRevSync.long();
 
-    if (stableVersionNumber !== tag || stableVersionNumber !== tagFirstParent) {
+    if (stableVersionNumber !== tag || !branch.includes(long)) {
         // gitRevSync.date() = the date of the current commit
         const date = moment(gitRevSync.date()).format("YYYY-MM-DD__HH-mm-ss");
 

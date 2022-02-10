@@ -1,0 +1,150 @@
+@import "../../css/mixins.scss";
+
+$color_1: rgb(85, 85, 85);
+$color_2: rgb(255, 255, 255);
+$font_family_1: "MasterPortalFont Bold","Arial Narrow",Arial,sans-serif;
+$font_family_2: "MasterPortalFont",sans-serif;
+$background_color_1: rgb(255, 255, 255);
+$background_color_2: #E10019;
+$background_color_4: #646262;
+
+@media (max-width: 766px) {
+    .tool-window {
+        right:0;
+    }
+}
+
+.tool-window {
+    background-color: $background_color_1;
+    margin: 10px 10px 30px 10px;
+    display: none;
+    position: absolute !important;
+    top:10px;
+    left:10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
+    z-index: 999;
+    max-width: 500px;
+    min-width: 240px;
+    >.header {
+        padding-left: 10px;
+        border-bottom: 1px solid rgb(229, 229, 229);
+        font-family: $font_family_1;
+        >.move {
+            cursor: move;
+        }
+        >.title {
+            white-space: nowrap;
+            min-width: 250px;
+            font-size: 14px;
+            padding-top: 8px;
+            padding-bottom: 5px;
+            color: $color_1;
+            width: calc(100% - 50px);
+            margin: 0;
+            height: 34px;
+            line-height:24px;
+        }
+        >.buttons {
+            color: $color_1;
+            font-size: 14px;
+            margin: 0;
+            >.glyphicon-minus {
+                top: 3px;
+            }
+            >span {
+                padding: 8px 8px 8px 8px;
+                &:hover {
+                    &:not(.win-icon) {
+                        @include primary_action_hover;
+                    }
+                }
+                &:focus {
+                    @include primary_action_focus;
+                }
+            }
+        }
+    }
+    >.header-min {
+        cursor: pointer;
+        background-color: $background_color_2;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
+        >.move {
+            cursor: pointer;
+        }
+        >.title {
+            color: $color_2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 120px;
+            min-width: 0;
+        }
+        >.buttons {
+            color: $color_2;
+        }
+    }
+}
+.win-body {
+    overflow-y: auto;
+    padding: 20px;
+    -webkit-overflow-scrolling:touch;
+    background-color: $background_color_1;
+    max-height: 72vh
+}
+.win-footer {
+    border-top: 1px solid rgb(229, 229, 229);
+    text-align: right;
+    padding: 5px 5px 0 0;
+    >.glyphicon-triangle-right {
+        transform: rotate(45deg);
+        opacity: 0.6;
+        &:hover {
+            opacity: 0.9;
+            cursor: grab;
+        }
+    }
+    &.dragging {
+        cursor:grabbing;
+    }
+}
+.table-tool-win-all{
+    font-family: $font_family_2;
+    border-radius: 12px;
+    background-color: $background_color_4;
+    margin-bottom: 30px;
+    .header {
+        font-family: $font_family_2;
+        >.title {
+            color: $color_2;
+        }
+        >.buttons {
+            color: $color_2;
+        }
+    }
+    .win-body {
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        background-color: $secondary_table_style;
+        * {
+            border-radius: 12px;
+        }
+    }
+}
+.table-tool-window {
+    transform: rotate(0deg);
+}
+.table-tool-window-90deg {
+    left: 20px;
+    transform: rotate(90deg);
+}
+.table-tool-window-180deg {
+    top: 20px;
+    left: 20px;
+    margin-bottom: 30px;
+    transform: rotate(180deg);
+}
+.table-tool-window-270deg {
+    top: 40px;
+    margin-bottom: 30px;
+    transform: rotate(270deg);
+}

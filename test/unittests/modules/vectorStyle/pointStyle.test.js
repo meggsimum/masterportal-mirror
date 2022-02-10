@@ -33,12 +33,13 @@ describe("textStyleModel", function () {
                 }
             ]
         },
-        utilModel = new Util(),
-        styleModel = new Model();
+        utilModel = new Util();
     let jsonObjects,
+        styleModel,
         features;
 
-    before(function () {
+    beforeEach(function () {
+        styleModel = new Model();
         jsonObjects = geojsonReader.readFeatures(jsonFeatures);
         features = utilModel.createTestFeatures("resources/testFeatures.xml");
         styleModel.set("feature", jsonObjects[0], {silent: true});
@@ -64,6 +65,19 @@ describe("textStyleModel", function () {
             expect(styleModel.createCircleClusterStyle()).to.be.an.instanceof(Style);
             expect(styleModel.createCircleClusterStyle().getImage()).to.be.an.instanceof(Circle);
             expect(styleModel.createCircleClusterStyle().getImage().getRadius()).to.equal(15);
+        });
+    });
+
+    describe("getRotationValue", function () {
+        it("should return correct rotation value", function () {
+            expect(styleModel.getRotationValue({isDegree: true, value: "90"})).to.equal(1.5707963267948966);
+            expect(styleModel.getRotationValue({isDegree: false, value: "10"})).to.equal(10);
+            expect(styleModel.getRotationValue()).to.equal(0);
+        });
+        it("should return correct rotation value from an object path", function () {
+            styleModel.attributes.values_ = {...styleModel.attributes.values_, angle: 20};
+
+            expect(styleModel.getRotationValue({isDegree: false, value: "@angle"})).to.equal(20);
         });
     });
 

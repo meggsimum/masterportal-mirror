@@ -3,7 +3,7 @@ import {config, mount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
 import sinon from "sinon";
 
-import Literal from "../../../components/Literal.vue";
+import WfsSearchLiteral from "../../../components/WfsSearchLiteral.vue";
 import WfsSearch from "../../../components/WfsSearch.vue";
 import WfsSearchModule from "../../../store/indexWfsSearch";
 
@@ -44,7 +44,7 @@ describe("src/modules/tools/wfsSearch/components/WfsSearch.vue", () => {
             store
         });
 
-        expect(wrapper.findComponent(Literal).exists()).to.be.true;
+        expect(wrapper.findComponent(WfsSearchLiteral).exists()).to.be.true;
     });
     it("renders multiple literals if configured", () => {
         instances[0].literals.push({}, {});
@@ -54,7 +54,7 @@ describe("src/modules/tools/wfsSearch/components/WfsSearch.vue", () => {
             store
         });
 
-        expect(wrapper.findAllComponents(Literal).length).to.equal(3);
+        expect(wrapper.findAllComponents(WfsSearchLiteral).length).to.equal(3);
     });
     it("renders a select field to select the searchInstance if configured", () => {
         instances.push({

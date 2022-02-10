@@ -47,6 +47,25 @@ In some scenarios different URLs are required, depending on whether requests are
   }
 ]
 ```
+## Print services
+
+|Name|Required|Type|Default|Description|Example|
+|----|--------|----|-------|-----------|-------|
+|id|yes|String||Unique `rest-services.json` entry ID|`"1"`|
+|name|yes|String||Service name|`"MapFishPrintService"`|
+|typ|yes|String||Service type|`"Print"`|
+|url|yes|String||Service URL|`"https://printbase.de/printfolder/"` or `"https://printbase.de/printfolder/print/"`|
+
+
+```json
+{
+    "id" : "mapfish_internet",
+    "name" : "MapFishPrintService",
+    "typ": "Print",
+    "url": "https://printbase.de/printfolder/"
+
+}
+```
 
 ## virtualcityPLANNER Service
 

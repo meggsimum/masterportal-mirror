@@ -40,6 +40,7 @@ All layer information the portal needs to use the services is stored here. Confi
 |version|yes|String||Service version used for *GetMap* requests.|`"1.3.0"`|
 |isSecured|no|Boolean|false|Displays whether the layer belongs to a secured service. (**[see below](#markdown-header-wms-layerissecured)**)|false|
 |authenticationUrl|no|String||Additional url called to trigger basic authentication in the browser.|"https://geodienste.hamburg.de/HH_WMS_DOP10?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetCapabilities"|
+|layerSequence|no|Number||Number to determine the sequence of selected layers in treeType 'custom'. A Layer with sequence number 1 is always the top layer, etc. By default, Baselayer get a sequence number > 1000 and Fachdaten layer get a sequence number < 1000.|`1`|
 
 **WMS example:**
 
@@ -67,6 +68,7 @@ All layer information the portal needs to use the services is stored here. Confi
       "featureCount" : "1",
       "isSecured": true,
       "authenticationUrl": "https://geodienste.hamburg.de/HH_WMS_DOP10?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetCapabilities",
+      "layerSequence": 1,
       "datasets" : [
          {
             "md_id" : "25DB0242-D6A3-48E2-BAE4-359FB28491BA",
@@ -419,6 +421,9 @@ Please note the [VTL specification](https://docs.mapbox.com/vector-tiles/specifi
 
 |Name|Required|Type|Default|Description|Example|
 |----|--------|----|-------|-----------|-------|
+|minZoom|no|Number||The minimum zoom level|4|
+|maxZoom|no|Number||The maximum zoom level|15|
+|zDirection|no|Number|1|Specifies, if the resolutions of the service and the portal are different, in which direction the resolution should be used.|-1|
 |datasets|no|**[datasets](#markdown-header-wms_wfs_datasets)**/Boolean||Metadata specification. All metadata of the layer data is referenced here. By clicking the "i" button in the layer tree, the information is retrieved by the CSW interface and shown to the user. For this, the **[rest-services.json](rest-services.json.md)** has to provide the URL of the metadata catalog resp. its CSW interface. The values *kategorie_opendata*, *kategorie_inspire*, and *kategorie_organisation* are used for layer categorization if the **[config.json](config.json.md)** has `treeType` set to `"default"`. To remove the "i" button altogether, explicitly set `"datasets": false`.||
 |gfiAttributes|yes|String/**[gfiAttributes](#markdown-header-gfi_attributes)**||GFI attributes to be shown.|`"ignore"`|
 |epsg|no|String|The portal's default EPSG code.|EPSG string used for checking the coordinate reference system. If the value does not match the VTL, a warning is shown. Vector tile services should offer the data in the target CRS for performance reasons. If `"EPSG:3857"` is set with neither `"extend"`, nor `"origin"`, `"resolutions"`, or `"tileSize"`, no *GridSet* is created. The OL default will be used instead.|`"EPSG:3857"`|

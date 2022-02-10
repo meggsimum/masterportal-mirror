@@ -1,7 +1,7 @@
 import axios from "axios";
 import handleAxiosResponse from "../../../../utils/handleAxiosResponse";
 import {setLikeFilterProperties} from "../utils/buildFilter";
-import {createUserHelp, prepareLiterals} from "../utils/literalFunctions";
+import {createUserHelp, prepareLiterals, resetFieldValues} from "../utils/literalFunctions";
 
 const actions = {
     /**
@@ -24,7 +24,7 @@ const actions = {
         dispatch("resetModule", false);
 
         const {currentInstance} = getters,
-            {requestConfig: {layerId, likeFilter, restLayerId, storedQueryId}} = currentInstance,
+            {requestConfig: {layerId, likeFilter, restLayerId, storedQueryId}, title} = currentInstance,
             wfs = restLayerId
                 ? Radio.request("RestReader", "getServiceById", restLayerId)
                 : Radio.request("ModelList", "getModelByAttributes", {id: layerId});
@@ -50,7 +50,7 @@ const actions = {
         }
         else {
             dispatch("resetModule", true);
-            dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.wfsSearch.wrongConfig", {name: this.name}), {root: true});
+            dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.wfsSearch.wrongConfig", {id: restLayerId ? restLayerId : layerId, title}), {root: true});
         }
     },
     /**
@@ -90,12 +90,13 @@ const actions = {
      * Also removes the map marker.
      * @returns {void}
      */
-    resetResult ({commit, dispatch, state}) {
+    resetResult ({commit, dispatch, getters, state}) {
         commit("setValuesReset", true);
         commit("setSearched", false);
         commit("setResults", []);
         commit("setSelectedOptions", {});
         dispatch("MapMarker/removePointMarker", null, {root: true});
+        resetFieldValues(getters.currentInstance.literals);
 
         // Reset dropdowns
         if (state.requiredValues !== null) {

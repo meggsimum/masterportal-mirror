@@ -24,13 +24,12 @@ const mutations = {
 
     /**
      * Setter for the progressbar width.
-     * Note: Minimum width of the ProgressBar is 10%.
      * @param {Object} state Context state object.
      * @param {Object[]} layerIds The configuration of the layers from config.json.
      * @returns {void}
      */
     setProgressBarWidth (state, layerIds) {
-        state.progressBarWidth = layerIds.length <= 10 ? Math.round(100 / layerIds.length) : 10;
+        state.progressBarWidth = 100 / layerIds.length;
     },
 
     /**

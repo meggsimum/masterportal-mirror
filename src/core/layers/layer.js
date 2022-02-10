@@ -21,7 +21,7 @@ export default function Layer (attrs, layer, initialize = true) {
         layerInfoClicked: false,
         singleBaselayer: false,
         legend: true,
-        maxScale: "1000000",
+        maxScale: "1000000000",
         minScale: "0",
         selectionIDX: 0,
         showSettings: true,
@@ -57,6 +57,9 @@ export default function Layer (attrs, layer, initialize = true) {
     this.setMinMaxResolutions();
     this.checkForScale({scale: store.getters["Map/scale"]});
     this.registerInteractionMapViewListeners();
+    bridge.onMapModeChanged(this);
+    bridge.onLanguageChanged(this);
+    this.changeLang();
 }
 /**
  * Initalizes the layer. Sets property singleBaselayer and sets the layer visible, if selected in attributes or treetype light.
@@ -123,11 +126,14 @@ Layer.prototype.setMinResolution = function (value) {
  * @returns {void}
  */
 Layer.prototype.removeLayer = function () {
-    const map = mapCollection.getMap(store.state.Map.mapId, store.state.Map.mapMode);
+    let map = mapCollection.getMap(store.state.Map.mapId, store.state.Map.mapMode);
 
+    if (!map) { // is the case, if starting by urlParam in mode 3D
+        map = mapCollection.getMap("ol", "2D");
+    }
     this.setIsVisibleInMap(false);
     bridge.removeLayerByIdFromModelList(this.get("id"));
-    map.removeLayer(this.layer);
+    map?.removeLayer(this.layer);
 };
 /**
  * Toggles the attribute isSelected. Calls Function setIsSelected.
@@ -170,25 +176,7 @@ Layer.prototype.checkForScale = function (options) {
 Layer.prototype.setIsOutOfRange = function (value) {
     this.set("isOutOfRange", value);
 };
-/**
- * If a single WMS-T is shown: Remove the TimeSlider.
- * If two WMS-T are shown: Remove the LayerSwiper; depending if the original layer was closed, update the layer with a new time value.
- * @returns {void}
- */
-Layer.prototype.removeTimeLayer = function () {
-    const id = this.get("id");
 
-    // If the swiper is active, two WMS-T are currently active
-    if (store.getters["WmsTime/layerSwiper"].active) {
-        if (!id.endsWith(store.getters["WmsTime/layerAppendix"])) {
-            this.setIsSelected(true);
-        }
-        store.dispatch("WmsTime/toggleSwiper", id);
-    }
-    else {
-        store.commit("WmsTime/setTimeSliderActive", {active: false, currentLayerId: ""});
-    }
-};
 /**
  * Setter for isVisibleInMap and setter for layer.setVisible
  * @param {Boolean} newValue Flag if layer is visible in map
@@ -308,7 +296,7 @@ Layer.prototype.toggleIsSettingVisible = function () {
 
     layers.setIsSettingVisible(false);
     this.setIsSettingVisible(!oldValue);
-    bridge.renderMenuSettings();
+    bridge.renderMenuSettings(this.get("id"));
 };
 /**
  * Sets the attribute isSelected and sets the layers visibility. If newValue is false, the layer is removed from map.
@@ -323,9 +311,6 @@ Layer.prototype.setIsSelected = function (newValue) {
     // do not use this.set("isSelected", value), because of neverending recursion
     this.attributes.isSelected = newValue;
     this.setIsVisibleInMap(newValue);
-    if (treeType !== "light") {
-        this.resetSelectionIDX();
-    }
 
     if (newValue) {
         bridge.addLayerToIndex(this.layer, this.get("selectionIDX"));
@@ -336,6 +321,10 @@ Layer.prototype.setIsSelected = function (newValue) {
     if (treeType !== "light" || store.state.mobile) {
         bridge.updateLayerView(this);
         bridge.renderMenu();
+    }
+    if (this.get("typ") === "WFS") {
+        // data will be loaded at first selection
+        this.updateSource();
     }
 };
 /**
@@ -385,6 +374,7 @@ Layer.prototype.changeLang = function () {
     this.attributes.levelUpText = i18next.t("common:tree.levelUp");
     this.attributes.levelDownText = i18next.t("common:tree.levelDown");
     this.attributes.transparencyText = i18next.t("common:tree.transparency");
+    bridge.renderMenu();
 };
 /**
  * Calls Collection function moveModelDown
@@ -424,7 +414,7 @@ function handleSingleBaseLayer (isSelected, layer, map) {
                     if (aLayer.get("layer") !== undefined) {
                         aLayer.get("layer").setVisible(false);
                     }
-                    map.removeLayer(aLayer.get("layer"));
+                    map?.removeLayer(aLayer.get("layer"));
                     // This makes sure that the Oblique Layer, if present in the layerList, is not selectable if switching between baseLayers
                     aLayer.checkForScale({scale: store.getters["Map/scale"]});
                 }
@@ -436,7 +426,7 @@ function handleSingleBaseLayer (isSelected, layer, map) {
         }
     }
     else if (timeLayer) {
-        this.removeTimeLayer();
+        layer.removeLayer(layer.get("id"));
     }
 }
 
@@ -448,7 +438,74 @@ function handleSingleBaseLayer (isSelected, layer, map) {
 Layer.prototype.setIsJustAdded = function (value) {
     this.set("isJustAdded", value);
 };
+/**
+ * Prepares the given features and sets or/and overwrites the coordinates based on the configuration of "altitude" and "altitudeOffset".
+ * @param {ol/Feature[]} features The olFeatures.
+ * @returns {void}
+ */
+Layer.prototype.prepareFeaturesFor3D = function (features) {
+    features.forEach(feature => {
+        let geometry = feature.getGeometry();
 
+        geometry = this.setAltitudeOnGeometry(geometry);
+        feature.setGeometry(geometry);
+    });
+};
+/**
+ * Sets the altitude and AltitudeOffset as z coordinate.
+ * @param {ol/geom} geometry Geometry of feature.
+ * @returns {ol/geom} - The geometry with newly set coordinates.
+ */
+Layer.prototype.setAltitudeOnGeometry = function (geometry) {
+    const type = geometry.getType(),
+        coords = geometry.getCoordinates();
+
+    if (type === "Point") {
+        geometry.setCoordinates(this.getPointCoordinatesWithAltitude(coords));
+    }
+    else if (type === "MultiPoint") {
+        geometry.setCoordinates(this.getMultiPointCoordinatesWithAltitude(coords));
+    }
+    else {
+        console.error("Type: " + type + " is not supported yet for function \"setAltitudeOnGeometry\"!");
+    }
+    return geometry;
+};
+/**
+ * Sets the altitude on multipoint coordinates.
+ * @param {Number[]} coords Coordinates.
+ * @returns {Number[]} - newly set cooordinates.
+ */
+Layer.prototype.getMultiPointCoordinatesWithAltitude = function (coords) {
+    return coords.map(coord => this.getPointCoordinatesWithAltitude(coord));
+};
+/**
+ * Sets the altitude on point coordinates.
+ * @param {Number[]} coord Coordinates.
+ * @returns {Number[]} - newly set cooordinates.
+ */
+Layer.prototype.getPointCoordinatesWithAltitude = function (coord) {
+    const altitude = this.get("altitude"),
+        altitudeOffset = this.get("altitudeOffset");
+
+    if (typeof altitude === "number") {
+        if (coord.length === 2) {
+            coord.push(parseFloat(altitude));
+        }
+        else if (coord.length === 3) {
+            coord[2] = parseFloat(altitude);
+        }
+    }
+    if (typeof altitudeOffset === "number") {
+        if (coord.length === 2) {
+            coord.push(parseFloat(altitudeOffset));
+        }
+        else if (coord.length === 3) {
+            coord[2] = coord[2] + parseFloat(altitudeOffset);
+        }
+    }
+    return coord;
+};
 
 /**
  * Initiates the presentation of layer information.
@@ -491,6 +548,7 @@ Layer.prototype.showLayerInformation = function () {
     }
     this.setLayerInfoChecked(true);
 };
+
 /**
  * Setter for legend, commits the legend to vue store using "Legend/setLegendOnChanged"
  * @param {String} value legend
@@ -505,14 +563,24 @@ Layer.prototype.setLegend = function (value) {
  * @returns {void}
  */
 Layer.prototype.setMinMaxResolutions = function () {
-    const resoByMaxScale = bridge.getResoByScale(this.get("maxScale"), "max"),
-        resoByMinScale = bridge.getResoByScale(this.get("minScale"), "min");
+    const resoByMaxScale = bridge.getResolutionByScale(this.get("maxScale"), "max"),
+        resoByMinScale = bridge.getResolutionByScale(this.get("minScale"), "min");
 
     this.get("layer").setMaxResolution(resoByMaxScale + (resoByMaxScale / 100));
     this.get("layer").setMinResolution(resoByMinScale);
 };
-
-// backbone-relevant functions (may be removed if all layers are no longer backbone models):
+/**
+ * Triggers event if vector features are loaded
+ * @param {String} layerId id of the layer
+ * @param {ol.Feature[]} features Loaded vector features
+ * @fires Layer#RadioTriggerVectorLayerFeaturesLoaded
+ * @return {void}
+ */
+Layer.prototype.featuresLoaded = function (layerId, features) {
+    bridge.featuresLoaded(layerId, features);
+};
+// NOTICE: backbone-relevant functions, may be removed if all layers are no longer backbone models.
+// But set, get and has may stay, because they are convenient:)
 Layer.prototype.set = function (arg1, arg2) {
     if (typeof arg1 === "object") {
         Object.keys(arg1).forEach(key => {
@@ -536,6 +604,7 @@ Layer.prototype.set = function (arg1, arg2) {
         }
     }
 };
+
 Layer.prototype.get = function (key) {
     if (key === "layer") {
         return this.layer;
@@ -548,6 +617,7 @@ Layer.prototype.get = function (key) {
     }
     return this.attributes[key];
 };
+
 Layer.prototype.has = function (key) {
     if (key === "layer") {
         return this.layer !== undefined;
@@ -560,16 +630,21 @@ Layer.prototype.has = function (key) {
     }
     return this.attributes[key] !== undefined;
 };
+
 Layer.prototype.getLayerStatesArray = function () {
     return this.layer.getLayerStatesArray();
 };
+
 Layer.prototype.toJSON = function () {
     const atts = {...this.attributes};
 
     delete atts.layerSource;
     delete atts.layers;
+    delete atts.collection;
+
     return deepCopy(atts);
 };
+
 Layer.prototype.on = function () {
     // do nothing
 };

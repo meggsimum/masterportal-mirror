@@ -1019,7 +1019,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
             hitName = isEvent ? hit.name : "undefined";
 
         // with gdi-search no action on mousehover or on GFI onClick
-        if (hit && hit?.triggerEvent && hit.type !== i18next.t("common:modules.searchbar.type.subject") && hit.triggerEvent.event !== "gfiOnClick") {
+        if (hit && hit?.triggerEvent && hit.type !== i18next.t("common:modules.searchbar.type.subject") && hit.type !== i18next.t("common:modules.searchbar.type.general") && hit.triggerEvent.event !== "gfiOnClick") {
             Radio.trigger(hit.triggerEvent.channel, hit.triggerEvent.event, hit, true, evt.handleObj.type);
             return;
         }
@@ -1036,7 +1036,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
             }
             return;
         }
-        else if (hit && hit?.type && (hit.type === i18next.t("common:modules.searchbar.type.topic") || hit.type === i18next.t("common:modules.searchbar.type.subject"))) {
+        else if (hit && hit?.type && (hit.type === i18next.t("common:modules.searchbar.type.topic") || hit.type === i18next.t("common:modules.searchbar.type.subject") || hit.type === i18next.t("common:modules.searchbar.type.general"))) {
             return;
         }
 
@@ -1058,7 +1058,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         }
 
         if (hit && Object.prototype.hasOwnProperty.call(hit, "triggerEvent")) {
-            if (hit.type !== i18next.t("common:modules.searchbar.type.subject") && hit.triggerEvent.event !== "gfiOnClick" && !this.model.get("hitIsClick")) {
+            if (hit.type !== i18next.t("common:modules.searchbar.type.subject") && hit.type !== i18next.t("common:modules.searchbar.type.general") && hit.triggerEvent.event !== "gfiOnClick" && !this.model.get("hitIsClick")) {
                 Radio.trigger(hit.triggerEvent.channel, hit.triggerEvent.event, hit, false);
             }
         }

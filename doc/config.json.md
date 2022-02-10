@@ -266,6 +266,7 @@ Gazetteer search service configuration.
 |searchStreetKey|no|Boolean|false|Defines whether streets should be searched for by key.|false|
 |searchStreet|no|Boolean|false|Defines whether street search is active. Precondition to set `searchHouseNumbers` to `true`.|false|
 |serviceID|yes|String||Search service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
+|namespace|no|String|"http://www.adv-online.de/namespaces/adv/dog"|Namespace used for WFS-G properties.|false|
 
 **Example**
 
@@ -656,13 +657,15 @@ The entry `attributions` may be of type boolean or object. If of type boolean, t
 
 #### Portalconfig.controls.overviewMap
 
+[type:LayerId]: # (Datatypes.LayerId)
+
 The attribute overviewMap may be of type boolean or object. If of type boolean, an overview map is shown with a default configuration. When of type object, the following attributes may be set:
 
 |Name|Required|Type|Default|Description|
 |----|--------|----|-------|-----------|
 |resolution|no|Integer||_Deprecated in 3.0.0._ Defines the overview map resolution. If not set, the map section displayed is changed on zoom automatically.|
-|baselayer|no|String||_Deprecated in 3.0.0. Please use `layerId` instead._ Allows using a different layer for the overview map element. The value must be an id from the `services.json` used in the portal's `config.js` parameter `layerConf`.|
-|layerId|no|String||Allows using a different layer for the overview map element. The value must be an id from the `services.json` used in the portal's `config.js` parameter `layerConf`.|
+|baselayer|no|LayerId||_Deprecated in 3.0.0. Please use `layerId` instead._ Allows using a different layer for the overview map element. The value must be an id from the `services.json` used in the portal's `config.js` parameter `layerConf`.|
+|layerId|no|LayerId||Allows using a different layer for the overview map element. The value must be an id from the `services.json` used in the portal's `config.js` parameter `layerConf`.|
 |isInitOpen|no|Boolean|true|Defines whether the overview map is initially closed or opened.|
 
 **Example using type object overviewMap**
@@ -1340,7 +1343,7 @@ List of all configurable tools. Each tool inherits the properties of **[tool](#m
 |coordToolkit|no|**[tool](#markdown-header-portalconfigmenutool)**||Coordinate query: Tool to read coordinates on mouse click. When clicking once, the coordinates in the view are frozen and can be copied on clicking the displaying input elements to the clipboard, i.e. you can use them in another document/chat/mail/... with `Strg+V`. Coordinate search:search for coordinates with switchable coordinate reference system. The tool will zoom to any given coordinate and set a marker on it. The coordinate systems are obtained from config.js.|false|
 |draw|no|**[draw](#markdown-header-portalconfigmenutooldraw)**||The draw tool allows painting points, lines, polygons, circles, double circles, and texts to the map. You may download these drawing as KML, GeoJSON, or GPX.|false|
 |extendedFilter|no|**[tool](#markdown-header-portalconfigmenutool)**||_Deprecated in 3.0.0. Please use "filter" instead._ Dynamic filtering of WFS features. This requires an `extendedFilter` configuration on the WFS layer object.|false|
-|featureLister|no|**[featureLister](#markdown-header-portalconfigmenutoolfeaturelister)**||Lists all features of a vector layer.|false|
+|featureLister|no|**[featureLister](#markdown-header-portalconfigmenutoolfeaturelister)**||Lists all features of a vector layer and highlights the feature over whose name the mouse is located.|false|
 |fileImport|no|**[tool](#markdown-header-portalconfigmenutool)**||Import KML, GeoJSON, and GPX files with this tool.|false|
 |filter|no|**[filter](#markdown-header-portalconfigmenutoolfilter)**||Allows filtering WFS vector data.|false|
 |gfi|no|**[gfi](#markdown-header-portalconfigmenutoolgfi)**||Via  getFeatureInfo (GFI) information to arbitrary layers can be requested. For WMS, the data is fetched with a GetFeatureInfo request. Vector data (WFS, Sensor, GeoJSON, etc.) is already present in the client and will be shown from the already fetched information.|false|
@@ -1851,15 +1854,19 @@ Print module, configurable for 2 print services: *High Resolution PlotService* a
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|mapfishServiceId|yes|String||Print service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
+|mapfishServiceId|yes|String||_Deprecated in 3.0.0._ Print service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
+|printServiceId|yes|String||Print service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
+|printService|no|String|"mapfish"|Flag determining which print service is in use. `plotservice` activates the *High Resolution PlotService*, if the parameter is not set, *Mapfish 3* is used.|false|
+|printAppCapabilities|no|String|"capabilities.json"|path for the configuration of the print service|false|
 |currentLayoutName|no|String|""|Defines which layout is the default layout on opening the print tool, e.g. "A4 portrait format". If the given layout is not available oder none is provided, the first layout mentioned in the Capabilities is used.|false|
 |printAppId|no|String|"master"|Print service print app id. This tells the print service which template(s) to use.|false|
 |filename|no|String|"report"|Print result file name.|false|
 |title|no|String|"PrintResult"|Document title appearing as header.|false|
-|version|no|String||Flag determining which print service is in use. `"HighResolutionPlotService"` activates the *High Resolution PlotService*, if the parameter is not set, *Mapfish 3* is used.|false|
 |isLegendSelected|no|Boolean|false|Defines whether a checkbox to print the legend is offered. Only used for print services supporting legend printing (Mapfish Print 3).|false|
 |legendText|no|String|"Mit Legende"|Descriptive text for the legend print checkbox.|false|
 |dpiForPdf|no|Number|200|DPI resolution for the map in the PDF file.|false|
+|capabilitiesFilter|no|**[capabilitiesFilter](#markdown-header-portalconfigmenutoolprintcapabilitiesfilter)**||Filter for the response of the configured print service. Possible keys are layouts and outputFormats.|false|
+|defaultCapabilitiesFilter|no|**[capabilitiesFilter](#markdown-header-portalconfigmenutoolprintcapabilitiesfilter)**||If there is no key set in capabilitiesFilter, the key from this object is taken.|false|
 |useProxy|no|Boolean|false|_Deprecated in the next major release. [GDI-DE](https://www.gdi-de.org/en) recommends setting CORS headers on the required services instead of using proxies._ Defines whether a service URL should be requested via proxy. For this, dots in the URL are replaced with underscores.|false|
 
 **High Resolution PlotService example configuration**
@@ -1872,6 +1879,8 @@ Print module, configurable for 2 print services: *High Resolution PlotService* a
         "mapfishServiceId": "123456",
         "filename": "Print",
         "title": "My Title",
+        "printService": "plotservice",
+        "printAppCapabilities": "info.json",
         "version" : "HighResolutionPlotService"
     }
 }
@@ -1888,6 +1897,24 @@ Print module, configurable for 2 print services: *High Resolution PlotService* a
         "printAppId": "mrh",
         "filename": "Print",
         "title": "Mein Titel"
+    }
+}
+```
+
+### Portalconfig.menu.tool.print.capabilitiesFilter
+List of layouts and formats that filters the response from the print service in the respective category.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|layouts|no|String[]||Array of layouts should shown in the UI.|false|
+|outputFormats|no|String[]||Array of formats should shown in the UI.|false|
+
+**Beispiel capabilitiesFilter:**
+```json
+{
+    "capabilitiesFilter": {
+        "layouts": ["A4 Hochformat", "A3 Hochformat"],
+        "outputFormats": ["PDF"]
     }
 }
 ```
@@ -2211,11 +2238,13 @@ Object to change the drawing tool's download preselected format. It should be on
 
 [inherits]: # (Portalconfig.menu.tool)
 
-Module displaying vector features. By hovering a feature in the list, its position on the map is indicated with a marker.
+Module that displays vector features. Hovering over a feature in the list highlights the feature on the map.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |maxFeatures|no|Integer|20|Amount of features to display initially. More features of the same amount can be revealed by clicking a button.|false|
+|highlightVectorRulesPolygon|nein|**[highlightVectorRulesPolygon](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespolygon)**||Specify the fill color and outline color and stroke width for highlighting the polygon features.|false|
+|highlightVectorRulesPointLine|nein|**[highlightVectorRulesPointLine](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespointline)**||Specify outline color and stroke width for highlighting lines and scale factor for highlighting points.|false|
 
 **Example**
 
@@ -2224,10 +2253,96 @@ Module displaying vector features. By hovering a feature in the list, its positi
     "featureLister": {
         "name": "List",
         "glyphicon": "glyphicon-menu-hamburger",
-        "maxFeatures": 10
+        "maxFeatures": 10,
+        "highlightVectorRulesPolygon": {
+        "fill": {
+            "color": [255, 0, 255, 0.9]
+        },
+        "stroke": {
+            "width": 4,
+            "color": [0, 0, 204, 0.9]
+        }
+    },
+    "highlightVectorRulesPointLine": {
+        "stroke": {
+            "width": 8,
+            "color": [255, 0, 255, 0.9]
+        },
+        "image": {
+            "scale": 2
+        }
     }
 }
 ```
+
+##### Portalconfig.menu.tool.featureLister.highlightVectorRulesPolygon
+
+Specify the fill color and outline color and stroke width for highlighting the polygon features.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|fill|no|**[fill](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespolygonfill)**||Possible setting: color|false|
+|stroke|no|**[stroke](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespolygonstroke)**||Possible setting: width|false|
+
+***
+
+##### Portalconfig.menu.tool.featureLister.highlightVectorRulesPolygon.fill
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|color|no|Float[]|[255, 255, 255, 0.5]|Possible setting: color (RGBA)|false|
+
+```json
+"fill": { "color": [215, 102, 41, 0.9] }
+```
+
+***
+
+##### Portalconfig.menu.tool.featureLister.highlightVectorRulesPolygon.stroke
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|width|no|Integer|1|Possible setting: width|false|
+|color|no|Float[]|[255, 255, 255, 0.5]|Possible setting: color (RGBA)|false|
+
+```json
+"stroke": { "width": 4 , "color": [255, 0, 255, 0.9]}
+```
+
+***
+
+
+##### Portalconfig.menu.tool.featureLister.highlightVectorRulesPointLine
+
+Specify outline color and stroke width for highlighting lines and scale factor for highlighting points.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|stroke|no|**[stroke](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespointlinestroke)**||Possible setting: width|false|
+|image|no|**[image](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespointlineimage)**||Possible setting: scale|false|
+
+***
+
+##### Portalconfig.menu.tool.featureLister.highlightVectorRulesPointLine.stroke
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|width|no|Integer|1|Possible setting: width|false|
+|color|no|Float[]|[255, 255, 255, 0.5]|Possible setting: color (RGBA)|false|
+
+```json
+"stroke": { "width": 4 , "color": [255, 0, 255, 0.9]}
+```
+
+***
+
+##### Portalconfig.menu.tool.featureLister.highlightVectorRulesPointLine.image
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|scale|no|Integer|1.5|Possible setting: scale|false|
+
+```json
+"image": { "scale": 2}
+```
+
+***
 
 #### Portalconfig.menu.tool.measure
 
@@ -2577,6 +2692,7 @@ Multiple formulars (**[SearchInstances](#markdown-header-portalconfigmenutoolwfs
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |instances|yes|**[searchInstance](#markdown-header-portalconfigmenutoolwfssearchsearchinstance)**[]||Array of `searchInstances`. A singular **[searchInstance](#markdown-header-portalconfigmenutoolwfssearchsearchinstance)** corresponds to its own search form.|false|
+|zoomLevel|no|Number|5|Defines to which zoom level the tool should zoom. Should a chosen feature not fit the zoom level, a fitting zoom level is chosen automatically.|false|
 
 **Example**
 
@@ -2629,12 +2745,12 @@ A singular instance of the WFS Search which will be selectable through a dropdow
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |literals|yes|**[literal](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteral)**[]||Array of `literals`.|true|
-|requestConfig|yes|**[requestConfig](#markdown-header-portalconfigmenutoolwfssearchsearchinstancerequestconfig)**||An object, which mainly contains the id of the service (`layerId` or `restLayerId`) that is supposed to be requested. If a WFS@2.0.0 will be used, the `storedQueryId` needs to be provided as well.|false|
+|requestConfig|yes|**[requestConfig](#markdown-header-portalconfigmenutoolwfssearchsearchinstancerequestconfig)**||An object, which mainly contains the id of the service (`layerId` or `restLayerId`) that is supposed to be requested. If a WFS@2.0.0 will be used, the `storedQueryId` needs to be provided as well. Additionally, further options for requests can be set.|false|
 |selectSource|no|String||Optional Url leading to the expected options for the different inputs. See **[https://geoportal-hamburg.de/lgv-config/gemarkungen_hh.json]** for an example.|false|
 |suggestions|no|**[suggestions](#markdown-header-portalconfigmenutoolwfssearchsearchinstancesuggestions)**||If given, the service will be queried whenever a user inserts values into an input field to suggest a value.|false|
 |title|yes|String||Title of the search instance to be displayed in a dropdown inside the tool.|false|
 |userHelp|no|String||Information text regarding the search form to be displayed to the user. If not given, it will be generated from the structure of the config. May be a locale key. If the value explicitly set to `hide`, no information regarding the structure of the form will be displayed.|false|
-|resultDialogTitle|yes|String||Heading of the result list. If not configured the name `WFS search` will be displayed. May be a translation key.|false|
+|resultDialogTitle|no|String||Heading of the result list. If not configured the name `WFS search` will be displayed. May be a translation key.|false|
 |resultList|yes|**[resultList](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceresultlist)**||Settings for the output of the found features in the result list.|true|
 
 **Example**
@@ -2683,10 +2799,11 @@ A singular instance of the WFS Search which will be selectable through a dropdow
 #### Portalconfig.menu.tool.wfsSearch.searchInstance.literal
 
 A `literal` can either have the parameter `clause`, or the parameter `field`. If both are set, the `clause`-part will be ignored.
+However, a `field` needs to be wrapped inside a `clause` (as seen in most examples).
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|clause|no|**[clause](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralclause)**||Defines the way multiple `literals` should be queried together. Can be seen as a group of `literals`.|true|
+|clause|yes|**[clause](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralclause)**||Defines the way multiple `literals` should be queried together. Can be seen as a group of `literals`.|true|
 |field|no|**[field](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfield)**||Representation for the selection field of a service value for the user.|true|
 
 **Examples**
@@ -2805,7 +2922,7 @@ would create a single `field` with which the user can decide whether he wants to
 If the values are not an array, a label for the `field` will be shown instead of the dropdown.
 
 If the parameter `options` is set, a select field is used, otherwise a simple text input.
-If `options` is a String, it is important that the order of the Fields corresponds to the order of the objects in the external source.
+If `options` is a String, it is important that the order of the Fields corresponds to the order of the objects in the external source (`selectSource`).
 Assume the source looks like this:
 
 ```json
@@ -2869,7 +2986,7 @@ Then the order of the config should look like this:
 |inputPlaceholder|no|String/String[]||Placeholder for the UI element; only used if `options` is not set. Should contain example data. May be a locale key.|false|
 |inputTitle|no|String/String[]||Value to be shown when hovering the UI element. May be a locale key.|false|
 |required|no|Boolean/Boolean[]|false|Whether the field has to be filled.|false|
-|options|no|String/**[option](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)**[]/String[]||If `options` is an array, the given values are used for selection. If it is a String, there are different possibilities. If the String is empty, the keys of **[selectSource](#markdown-header-portalconfigmenutoolwfssearchsearchinstance)** are used. If the String is not empty, it is assumed that another field with `options=""` exists; otherwise the field is disabled. It is also assumed that the String represents an array in **[selectSource](#markdown-header-portalconfigmenutoolwfssearchsearchinstance)** providing further options. These options may either match **[option](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)** or are plain values (`String` / `Number`). In the latter case, the plain value is used as both id and `displayName`. **Note**: It is also possible to declare the `options` as a multidimensional array **[option](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)**[][]. However, this can't be used as a parameter for Masterportal Admin. This should be used if an **[option](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)**[] is wanted for a `field` that uses multiples parameters.|true|
+|options|no|String/**[option](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)**[]/String[]||If `options` is an array (irrelevant if of strings or **[options](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)**), the given values are used for selection. These options may either match **[option](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)** or are plain values (`String` / `Number`). In the latter case, the plain value is used as both id and `displayName`. <br /> If it is a String, there are different possibilities: <ul><li>If the String is empty, the keys of **[selectSource](#markdown-header-portalconfigmenutoolwfssearchsearchinstance)** are used.</li><li>If the String is not empty, it is assumed that another field with `options=""` exists; otherwise the field is disabled. It is also assumed that the String represents an array in **[selectSource](#markdown-header-portalconfigmenutoolwfssearchsearchinstance)** providing further options.</li></ul> **Note**: It is also possible to declare the `options` as a multidimensional array **[option](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)**[][]. However, this can't be used as a parameter for Masterportal Admin. This should be used if an **[option](#markdown-header-portalconfigmenutoolwfssearchsearchinstanceliteralfieldoption)**[] is wanted for a `field` that uses multiples parameters.|true|
 |type|no|enum["equal", "like"]/enum["equal", "like"][]||Required for usage with WFS@1.1.0. The `type` declared how the field should be compared to the value in the service.|false|
 |usesId|no|Boolean/Boolean[]|false|Only relevant if the Parameters `options` is set and an empty String (root element). Determines whether the key of the object of the external source should be used as a value for the query or if the object has an Id which should be used.|false|
 
@@ -2957,9 +3074,7 @@ If both are defined `restLayerId` is used.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|gazetteer|no|Boolean|false|Declares whether the used WFS service is a WFS-G, which needs to be parsed differently.|false|
-|nameSpaces|no|String[]||If a WFS-G is used, the namespaces need to be provided.|false|
-|memberSuffix|no|enum["member","featureMember"]|"member"|If a WFS-G is used, the suffix of the featureType needs to be specified.|false|
+|gazetteer|no|**[gazetteer](#markdown-header-portalconfigmenutoolwfssearchsearchinstancerequestconfiggazetteer)**||Declares whether the used WFS service is a WFS-G, which needs to be parsed differently.|false|
 |layerId|no|String||Id of the WFS service that should be queried. Information is fetched from **[services.json](services.json.md)**.|false|
 |likeFilter|no|**[likeFilter](#markdown-header-portalconfigmenutoolwfssearchsearchinstancerequestconfiglikefilter)**|{"wildCard": "*", "singleChar": "#", "escape": "!"}|The configuration of the service for the like filter.|true|
 |maxFeatures|no|Number/String|8|Maximum amount of features that are supposed to be returned from the service. Alternatively, the String `showAll` can be assigned to `maxFeatures` to load all features.|false|
@@ -2983,13 +3098,39 @@ If both are defined `restLayerId` is used.
 
 Values inside a filter for a WFS service can be compared with an `equal` or a `like`.
 If the comparison should be with a `like` then the filter needs additional properties. These may vary in value and property definition.
-For the documentation, it is assumed that the properties are called `wildCard`, `singleChar` and `escape`; variations like e.g. `wildCard`, `single` and `escape` are possible.
+For the documentation, it is assumed that the properties are called `wildCard`, `singleChar` and `escape`; variations like e.g. `wildCard`, `single` and `escape` are possible and need to be configured in line with the service.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |wildCard|yes|String|"*"|The wildcard value for the like filter.|true|
 |singleChar|yes|String|"#"|The single character value for the like filter.|true|
 |escape|yes|String|"!"|The escape character value for the like filter.|true|
+
+***
+
+#### Portalconfig.menu.tool.wfsSearch.searchInstance.requestConfig.gazetteer
+
+Parameters that are exclusively needed for using a WFS-G (Gazetteer).
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|namespaces|yes|String/String[]||The namespaces need to be provided.|false|
+|memberSuffix|yes|enum["member","featureMember"]||The suffix of the featureType needs to be specified.|false|
+
+**Example**
+
+```json
+{
+    "gazetteer": {
+        "namespaces": [
+            "http://www.adv-online.de/namespaces/adv/dog",
+            "http://geodienste.hamburg.de/dog_gages/services/wfs_dog?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&OUTPUTFORMAT=application/gml+xml;+version=3.2&TYPENAME=dog:Flurstueckskoordinaten&NAMESPACES=xmlns(dog,http://www.adv-online.de/namespaces/adv/dog)"
+        ],
+        "memberSuffix": "memberSuffix"
+    }
+}
+```
+
 
 ***
 
@@ -3141,6 +3282,9 @@ Coordinates tool. To display the height above sea level in addition to the 2 dim
 |heightValueWater|no|String||Coordinate query: the value in the element defined under "heightElementName" supplied by the WMS for an unmeasured height in the water area, it will display the internationalized text "Water surface, no heights available" under the key "common:modules.tools.coordToolkit.noHeightWater" in the interface. If this attribute is not specified, then the text provided by the WMS will be displayed.|false|
 |heightValueBuilding|no|String||Coordinate query: the value in the element defined under "heightElementName" supplied by the WMS for a non-measured height in the building area, it will display the internationalized text "Building area, no heights available" under the key "common:modules.tools.coordToolkit.noHeightBuilding" in the interface. If this attribute is not specified, then the text provided by the WMS will be displayed.|false|
 |zoomLevel|no|Number|7|Coordinate search: Specifies the zoom level to which you want to zoom.|false|
+|showCopyButtons|no|Boolean|true|Switch to show or hide the buttons for copying the coordinates.|false|
+|delimiter|no|String|"Pipe-Symbol"|Delimiter of the coordinates when copying the coordinate pair|false|
+
 
 
 **Example**
@@ -3154,6 +3298,8 @@ Coordinates tool. To display the height above sea level in addition to the 2 dim
             "heightElementName": "value_0",
             "heightValueWater": "-20",
             "heightValueBuilding": "200",
+            "delimiter": "-",
+            "showCopyButtons": true
           }
 ```
 
@@ -3167,7 +3313,7 @@ Routing-tool. Enables user to plan routes between multiple points with multiple 
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|activeRoutingToolOption|no|String|"DIRECTONS"|Which routing tool should be open.|false|
+|activeRoutingToolOption|no|String|"DIRECTIONS"|Which routing tool should be open.|false|
 |routingToolOptions|no|String[]|[ ]|Which routing tool should be enabled. ("DIRECTIONS", "ISOCHRONES")|false|
 |download|no|**[download](#markdown-header-portalconfigmenutoolroutingdownload)**||Downloadoptions|false|
 |geosearch|no|**[geosearch](#markdown-header-portalconfigmenutoolroutinggeosearch)**||Geosearchoptions|false|
@@ -3183,8 +3329,8 @@ Routing-tool. Enables user to plan routes between multiple points with multiple 
     "routing": {
         "name": "translate#common:menu.tools.routing",
         "glyphicon": "glyphicon-road",
-        "activeRoutingToolOption": "DIRECTONS",
-        "routingToolOptions": ["DIRECTONS", "ISOCHRONES"],
+        "activeRoutingToolOption": "DIRECTIONS",
+        "routingToolOptions": ["DIRECTIONS", "ISOCHRONES"],
         "download": {
             "filename": "",
             "format": "GEOJSON"
@@ -4603,5 +4749,16 @@ An extent is an array of four numbers describing a rectangular scope. The rectan
 ## Datatypes.CustomObject
 
 An object containing the required contents. Parameters depend on configuration, usage, and backend components.
+
+***
+
+## Datatypes.LayerId
+
+A string that refers to a layer id from the services-internet.json. In the example, the ID "1711" is used to refer to the layer "Krankenhäuser" in the services-internet.json of the city of Hamburg.
+
+**Example LayerId**
+```json
+"1711"
+```
 
 ***

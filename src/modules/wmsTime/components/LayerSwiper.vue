@@ -51,12 +51,12 @@ export default {
     />
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 @import "~variables";
 
 button {
     width: 50px;
-    background-color: @primary;
+    background-color: $primary;
     height: 30px;
     max-height: 100px;
     position: absolute;
@@ -73,7 +73,7 @@ button {
         bottom: -5000px;
         left: 50%;
         width: 4px;
-        background: @primary_contrast;
+        background: $primary_contrast;
         z-index: -1;
         transform: translate(-2px, 0);
         -webkit-transform: translate(-2px, 0);

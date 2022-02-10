@@ -13,7 +13,7 @@ import Contact from "./contact/store/indexContact";
 import CoordToolkit from "./coordToolkit/store/indexCoordToolkit";
 import Draw from "./draw/store/indexDraw";
 import FileImport from "./fileImport/store/indexFileImport";
-import GeneralFilter from "./generalFilter/store/indexGeneralFilter";
+import FilterGeneral from "./filterGeneral/store/indexFilterGeneral";
 import Gfi from "./gfi/store/indexGfi";
 import LayerClusterToggler from "./layerClusterToggler/store/indexLayerClusterToggler";
 import LayerSlider from "./layerSlider/store/indexLayerSlider";
@@ -42,7 +42,7 @@ export default {
         CoordToolkit,
         Draw,
         FileImport,
-        GeneralFilter,
+        FilterGeneral,
         Gfi,
         LayerClusterToggler,
         LayerSlider,

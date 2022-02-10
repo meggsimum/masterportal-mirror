@@ -4,8 +4,8 @@ import {getLayerList} from "masterportalAPI/src/rawLayerList";
 import "./2DMap";
 import "./2DMapView";
 import "./2DMapRadioBridge";
+import "./2DMapViewRadioBridge";
 
-import MapView from "../../../modules/core/mapView";
 import Map3dModel from "../../../modules/core/map3d";
 import ObliqueMap from "../../../modules/core/obliqueMap";
 import mapCollection from "../dataStorage/mapCollection";
@@ -25,14 +25,10 @@ function create2DMap (mapViewSettings) {
         }, "2D", {});
 
     mapCollection.addMap(map, "ol", "2D");
+    mapCollection.getMapView("ol", "2D").initStore();
 
-    new MapView({
-        view: map.getView(),
-        settings: mapViewSettings
-    });
-
-    Radio.trigger("ModelList", "addInitiallyNeededModels");
     store.dispatch("Map/setMapAttributes", {map: map});
+    Radio.trigger("ModelList", "addInitiallyNeededModels");
 }
 
 /**

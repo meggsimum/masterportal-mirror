@@ -8,12 +8,12 @@ import {expect} from "chai";
  * @param {Object} state the action is called with
  * @param {Object} rootState app's root state
  * @param {Object[]} expectedMutationsAndActions mutations expected to call and actions expected to dispatch
- * @param {Object} getters mocks for the expected getters to be called
- * @param {Function} done will be called if finished or fails
- * @param {Object} rootGetters app's root getters
+ * @param {Object} [getters={}] mocks for the expected getters to be called
+ * @param {Function} [done=null] will be called if finished or fails
+ * @param {Object} [rootGetters={}] app's root getters
  * @returns {void}
  */
-export default function testAction (action, payload, state, rootState, expectedMutationsAndActions, getters = {}, done, rootGetters) {
+export default function testAction (action, payload, state, rootState, expectedMutationsAndActions, getters = {}, done = null, rootGetters = {}) {
     let commit = null,
         dispatch = null,
         count = 0;

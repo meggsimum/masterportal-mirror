@@ -8,10 +8,10 @@ describe("src/modules/tools/gfi/components/themes/sensor/utils/mathematicalOpera
             expect(arrayPerHour(undefined, undefined)).to.be.an("array").that.is.empty;
         });
         it("should return an empty array for empty input", function () {
-            expect(arrayPerHour([], -1)).to.be.an("array").that.is.empty;
+            expect(arrayPerHour(-1, [])).to.be.an("array").that.is.empty;
         });
         it("should return an array with data from input array for incorrect input", function () {
-            expect(arrayPerHour([{}], 1)).to.be.an("array").that.is.empty;
+            expect(arrayPerHour(1, [{}])).to.be.an("array").that.is.empty;
         });
         it("should return an array with data for correct input", function () {
             const dataPerHour = [{
@@ -27,7 +27,7 @@ describe("src/modules/tools/gfi/components/themes/sensor/utils/mathematicalOpera
                 1: 0
             }];
 
-            expect(arrayPerHour(dataPerHour, 1)).to.be.an("array").that.includes(0, 1, 0);
+            expect(arrayPerHour(1, dataPerHour)).to.be.an("array").that.includes(0, 1, 0);
         });
     });
 

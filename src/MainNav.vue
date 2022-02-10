@@ -1,12 +1,12 @@
 <script>
 // TODO this is just the HTML copied in - functions/CSS are still to be migrated
-import Title from "./modules/title/components/Title.vue";
+import PortalTitle from "./modules/portalTitle/components/PortalTitle.vue";
 import LegendMenu from "./modules/legend/components/LegendMenu.vue";
 import {mapState, mapGetters} from "vuex";
 export default {
     name: "MainNav",
     components: {
-        Title,
+        PortalTitle,
         LegendMenu
     },
     computed: {
@@ -48,14 +48,14 @@ export default {
                         />
                     </div>
                     <LegendMenu v-if="legendConfig" />
-                    <Title />
+                    <PortalTitle />
                 </div>
             </div>
         </nav>
     </header>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     #main-nav{
         flex-grow:0;
     }

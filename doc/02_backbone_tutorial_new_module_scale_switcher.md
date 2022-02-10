@@ -7,7 +7,7 @@ Wir wollen ein Tool schreiben, über welches man den Kartenmaßstab steuern kann
 Darüber hinaus soll unser Tool auf Änderungen des Kartenmaßstabes reagieren und den entsprechend aktuellen Maßstab im Drop-Down-Menu anzeigen.
 
 ### Neues Tool anlegen
-In das Verzeichnis "modules -> tools" wechseln und einen neuen Ordner erstellen. Aus dem Ordnernamen sollte ersichtlich sein, um was für ein Tool es sich dabei handelt - z.B. "scale". Die für dieses Tool benötigten Dateien anlegen. In der View (view.js) wird auf Interaktion mit dem Nutzer reagiert und das Tool neu gerendert. Dazu wird das Template (template.html) benötigt, welches den Bauplan des Tools enthält. Im Model (model.js) werden die Daten und deren Logik vorgehalten. Stylingparameter werden in der style.less konfiguriert.
+In das Verzeichnis "modules -> tools" wechseln und einen neuen Ordner erstellen. Aus dem Ordnernamen sollte ersichtlich sein, um was für ein Tool es sich dabei handelt - z.B. "scale". Die für dieses Tool benötigten Dateien anlegen. In der View (view.js) wird auf Interaktion mit dem Nutzer reagiert und das Tool neu gerendert. Dazu wird das Template (template.html) benötigt, welches den Bauplan des Tools enthält. Im Model (model.js) werden die Daten und deren Logik vorgehalten. Stylingparameter werden in der style.scss konfiguriert.
 ```
 -  modules
    | -> tools
@@ -115,14 +115,14 @@ export default ScaleView;
 Jede View bekommt automatisch ein top level DOM Element (this.el) zugewiesen.
 Standardeinstellung für das DOM Element ist ein *div* Tag. In diesem Fall zeichnet sich beim rendern ein *div* an den Body. Dieser *div* ist befüllt mit dem Inhalt des *templates*.
 
-### less Regeln definieren
-Datei *modules/tools/scale/style.less* öffnen und folgenden Code eingeben.
+### scss Regeln definieren
+Datei *modules/tools/scale/style.scss* öffnen und folgenden Code eingeben.
 ```css
 .scale-switcher {
     border: 2px solid red;
 }
 
-Damit es keine Probleme mit less Regeln anderer Module/Tools gibt, wird über eine definierte Klasse "scale-switcher" gestylt.
+Damit es keine Probleme mit scss Regeln anderer Module/Tools gibt, wird über eine definierte Klasse "scale-switcher" gestylt.
 ```
 
 ### Model erstellen und zurückgeben

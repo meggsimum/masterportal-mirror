@@ -64,18 +64,18 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     @import "~variables";
 
     .mouse-position {
         display: flex;
         flex-direction: row;
 
-        background-color: @primary;
-        color: @primary_contrast;
-        font-size: @font_size_small;
-        line-height: @icon_length_small;
-        min-height: @icon_length_small;
+        background-color: $primary;
+        color: $primary_contrast;
+        font-size: $font_size_small_custom;
+        line-height: $icon_length_small;
+        min-height: $icon_length_small;
 
         transition: 1s ease-out;
         /* hack to prevent text from jumping during animation */
@@ -83,12 +83,12 @@ export default {
 
         &.closed {
             /* using translateX to prevent multiline flicker on width transformation */
-            transform: translateX(calc(-100% + @icon_length_small));
+            transform: translateX(calc(-100% + $icon_length_small));
         }
 
         .mouse-position-span {
             padding: 0 8px;
-            border-right: 1px solid @primary_contrast;
+            border-right: 1px solid $primary_contrast;
             color: #FFFFFF;
             min-width: 150px;
         }

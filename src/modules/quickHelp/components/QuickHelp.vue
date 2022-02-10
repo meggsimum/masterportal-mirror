@@ -204,7 +204,7 @@ export default {
     </ToolWindow>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 @import "~variables";
 
 .quick-help-window {
@@ -231,8 +231,8 @@ export default {
         color: #333333;
     }
     >a:hover, a:focus {
-        background-color: @accent_hover;
-        color: @primary_contrast;
+        background-color: $accent_hover;
+        color: $primary_contrast;
         cursor: pointer;
     }
 }

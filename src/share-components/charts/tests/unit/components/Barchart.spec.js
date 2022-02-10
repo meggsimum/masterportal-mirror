@@ -2,17 +2,17 @@ import Vuex from "vuex";
 import {shallowMount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
 import ChartJs from "chart.js";
-import Barchart from "../../../components/Barchart.vue";
+import BarchartItem from "../../../components/BarchartItem.vue";
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
-describe("src/share-components/charts/components/Barchart.vue", () => {
+describe("src/share-components/charts/components/BarchartItem.vue", () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = shallowMount(Barchart, {
+        wrapper = shallowMount(BarchartItem, {
             propsData: {
                 data: {
                     labels: [],

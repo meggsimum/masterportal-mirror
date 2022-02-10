@@ -1,8 +1,7 @@
 import {expect} from "chai";
 import {createZeroTimeObservation, addIndex, processHistoricalDataByWeekdays} from "../../../utils/processHistoricalDataByWeekdays.js";
 
-describe("src/modules/tools/gfi/components/themes/sensor/utils/calculateWorkloadForOneWeekday.js", () => {
-
+describe("src/modules/tools/gfi/components/themes/sensor/utils/processHistoricalDataByWeekdays.js", () => {
     describe("createZeroTimeObservation", function () {
         it("should return a copy of input object with the phenomenonTime of 00:00:00 at the same date.", function () {
             const observation = {

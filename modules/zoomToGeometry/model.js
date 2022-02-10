@@ -1,7 +1,7 @@
 import {WFS} from "ol/format.js";
 import {DEVICE_PIXEL_RATIO} from "ol/has.js";
 import {getLayerWhere} from "masterportalAPI/src/rawLayerList";
-import {fetch as fetchPolyfill} from "whatwg-fetch";
+import axios from "axios";
 import store from "../../src/app-store/index";
 import calculateExtent from "../../src/utils/calculateExtent";
 import mapCollection from "../../src/core/dataStorage/mapCollection";
@@ -70,20 +70,20 @@ const ZoomToGeometry = Backbone.Model.extend(/** @lends ZoomToGeometry.prototype
 
         Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
 
-        fetchPolyfill(url)
-            .then(response => response.text())
-            .then(responseAsString => new window.DOMParser().parseFromString(responseAsString, "text/xml"))
-            .then(responseXML => {
-                this.zoomToFeature(responseXML, name, attribute);
-            })
-            .catch(error => {
-                console.warn("The fetch of the data failed with the following error message: " + error);
-                Radio.trigger("Alert", "alert", {
-                    text: "<strong>" + i18next.t("modules.zoomToGeometry.alertParameterizedAccess") + "</strong> <br>"
-                    + "<small>" + i18next.t("modules.zoomToGeometry.alertRequiredService") + "</small>",
-                    kategorie: "alert-warning"
-                });
+        axios({
+            method: "get",
+            url: url,
+            responseType: "document"
+        }).then(response => {
+            this.zoomToFeature(response.data, name, attribute);
+        }).catch(error => {
+            console.warn("The fetch of the data failed with the following error message: " + error);
+            Radio.trigger("Alert", "alert", {
+                text: "<strong>" + i18next.t("modules.zoomToGeometry.alertParameterizedAccess") + "</strong> <br>"
+                + "<small>" + i18next.t("modules.zoomToGeometry.alertRequiredService") + "</small>",
+                kategorie: "alert-warning"
             });
+        });
     },
 
     /**

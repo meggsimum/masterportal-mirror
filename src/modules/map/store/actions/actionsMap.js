@@ -165,6 +165,13 @@ const actions = {
             };
             let url = layer.getSource().getFeatureInfoUrl(clickCoord, resolution, projection, gfiParams);
 
+            // this part is needed if a Url contains a style which seems to mess up the getFeatureInfo call
+            if (url.indexOf("STYLES") && url.indexOf("STYLES=&") === -1) {
+                const newUrl = url.replace(/STYLES=.*?&/g, "STYLES=&");
+
+                url = newUrl;
+            }
+
             /**
              * @deprecated in the next major-release!
              * useProxy

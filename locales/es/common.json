@@ -50,7 +50,7 @@
             "scaleSwitcher": "Cambiar escala",
             "selectFeatures": "Seleccionar entidad",
             "legend":"Leyenda",
-            "styleVt": "Estilo VT"
+            "styleVt": "Estilo Vector Tile Layers"
         },
         "contact": "Contacto",
         "info": "Información"
@@ -226,7 +226,6 @@
                 "errorHttpsMessage": " &#10060; El WMS que ha solicitado se encuentra bajo una http-url. El portal principal sólo puede integrar WMS a través de https (SSL).",
                 "errorEmptyUrl": "¡Introduzca aqui por favor la URL de un Servicio WMS!",
                 "placeholder": "Introduzca aquí la WMS-URL.",
-                "textExample": "Por ejemplo: https://geodienste.hamburg.de/HH_WMS_Gruenes_Netz",
                 "textLoadLayer": "Cargar capa",
                 "ifInExtent": "&#10060; Los geodatos proporcionados a través del WMS están fuera del área de visualización. No es posible añadir el servicio WMS.",
                 "checkVersion": "&#10060; Añadir WMS sólo es posible si la versión de la capa WMS externa es igual o superior a 1.3.0."
@@ -693,7 +692,8 @@
                 "address": "Dirección",
                 "location": "Lugar",
                 "subject": "Tema específico",
-                "topic": "Tema"
+                "topic": "Tema",
+                "general": "Tema"
             },
             "specialWFS": {
                 "ongoing": "en proceso",

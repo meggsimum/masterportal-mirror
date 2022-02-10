@@ -242,7 +242,6 @@
                 "errorMessage": " serviço especificado não pôde ser carregado. Por favor, certifique-se de que o URL foi especificado correctamente.<br><br> FSe o problema ainda ocorrer, por favor contacte o operador do serviço com a seguinte nota:<br><strong>Deve-se assegurar que um cabeçalho CORS é definido para o serviço. Isto é recomendado pelo <a target='_blank' href='https://www.gdi-de.org/SharedDocs/Downloads/DE/GDI-DE/Dokumente/Architektur_GDI-DE_Bereitstellung_Darstellungsdienste.pdf?__blob=publicationFile'>GDI-DE</a> no capítulo 4.7.1.</strong>",
                 "errorHttpsMessage": "O WMS que solicitou está localizado sob uma http url. O \"Masterportal\" só pode integrar WMS através de https (SSL).",
                 "placeholder": "Por favor introduza aqui o URL do WMS.",
-                "textExample": "Exemplo: https://geodienste.hamburg.de/HH_WMS_Gruenes_Netz",
                 "textLoadLayer": "Carregar camada",
                 "ifInExtent": "Os geodados fornecidos através do WMS estão fora da área de exposição. Adicionar WMS não é possível.",
                 "checkVersion": "Adicionar WMS só é possível se camada externa do WMS for igual ou superior a versão 1.3.0."
@@ -679,7 +678,8 @@
                 "address": "Endereço",
                 "location": "Localização",
                 "subject": "Assunto",
-                "topic": "Tópico"
+                "topic": "Tópico",
+                "general": "Tópico"
             },
             "specialWFS": {
                 "ongoing": "em processo",

@@ -286,7 +286,7 @@ export default {
     </button>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     @keyframes exportButtonLoaderSpinAnimation {
         from {
             transform: rotate(0);

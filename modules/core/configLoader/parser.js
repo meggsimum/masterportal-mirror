@@ -142,7 +142,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
             }
         });
 
-        this.parseMenu(this.get("portalConfig").menu, "root");
+        this.parseMenu("root", this.get("portalConfig").menu);
         this.parseControls(this.get("portalConfig").controls);
         this.parseSearchBar(this.get("portalConfig").searchBar);
 
@@ -172,11 +172,11 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
 
     /**
      * Parsed the menu entries (everything except the contents of the tree)
-     * @param {Object} [items={}] Single levels of the menu bar, e.g. contact, legend, tools and tree
      * @param {String} parentId indicates to whom the items will be added
+     * @param {Object} [items={}] Single levels of the menu bar, e.g. contact, legend, tools and tree
      * @return {void}
      */
-    parseMenu: function (items = {}, parentId) {
+    parseMenu: function (parentId, items = {}) {
         Object.entries(items).forEach(itemX => {
             const value = itemX[1],
                 key = itemX[0];
@@ -197,7 +197,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
                 // Attribute aus der config.json werden von item geerbt
                 Object.assign(item, value);
                 this.addItem(item);
-                this.parseMenu(value.children, key);
+                this.parseMenu(key, value.children);
             }
             else if (key.search("staticlinks") !== -1) {
                 value.forEach(staticlink => {
@@ -358,7 +358,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
      * @param {(boolean/object)} [time = false] If set to `true` or and Object, the configured Layer is expected to be a WMS-T.
      * @returns {void}
      */
-    addLayer: function (name, id, parentId, level, layers, url, version, {transparent = true, isSelected = false, time = false}) {
+    addLayer: function (name, id, parentId, level, layers, url, version, {transparent = true, isSelected = false, time = false, styles = ""}) {
         const layer = {
             id,
             name,
@@ -370,6 +370,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
             transparent,
             isSelected,
             time,
+            styles,
             cache: false,
             datasets: [],
             featureCount: 3,
@@ -491,36 +492,34 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
      * @returns {void}
      */
     addGdiLayer: function (hit) {
-        const treeType = this.get("treeType");
-        let level = 0,
-            layerTreeId,
-            parentId = "tree",
-            gdiLayer = {
-                cache: false,
-                featureCount: "3",
-                format: "image/png",
-                gutter: "0",
-                isChildLayer: false,
-                isSelected: true,
-                isVisibleInTree: true,
-                layerAttribution: "nicht vorhanden",
-                legendURL: "",
-                maxScale: "2500000",
-                minScale: "0",
-                singleTile: false,
-                tilesize: "512",
-                transparency: 0,
-                transparent: true,
-                typ: "WMS",
-                type: "layer",
-                urlIsVsible: true
-            };
+        if (hit?.source) {
+            const treeType = this.get("treeType");
+            let level = 0,
+                parentId = "tree",
+                gdiLayer = Object.assign({
+                    cache: false,
+                    featureCount: "3",
+                    format: "image/png",
+                    gfiAttributes: "showAll",
+                    gfiTheme: "default",
+                    gutter: "0",
+                    isChildLayer: false,
+                    isSelected: true,
+                    isVisibleInTree: true,
+                    layerAttribution: "nicht vorhanden",
+                    legendURL: "",
+                    maxScale: "2500000",
+                    minScale: "0",
+                    singleTile: false,
+                    tilesize: "512",
+                    transparency: 0,
+                    transparent: true,
+                    typ: "WMS",
+                    type: "layer",
+                    urlIsVsible: true
+                }, hit.source);
 
-        if (hit.source) {
-            // check if layer is already in layer tree
-            layerTreeId = this.getItemByAttributes({id: hit.source.id});
-            if (!layerTreeId) {
-
+            if (!this.getItemByAttributes({id: hit.source.id})) {
                 if (treeType === "custom") {
                     // create folder and add it as "Externe Fachdaten"
                     parentId = "extthema";
@@ -534,19 +533,32 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
                         this.addFolder("Fachthema", parentId, "ExternalLayer", 1, false, "common:tree.subjectData");
                     }
                 }
+                if (treeType === "default") {
+                    let category,
+                        parent = null;
+
+                    if (this.get("category") === "Opendata") {
+                        category = hit.source.datasets[0].kategorie_opendata[0];
+                    }
+                    else if (this.get("category") === "Inspire") {
+                        category = hit.source.datasets[0].kategorie_inspire[0];
+                    }
+                    else if (this.get("category") === "Behörde") {
+                        category = hit.source.datasets[0].kategorie_organisation;
+                    }
+                    parent = this.getItemByAttributes({name: category});
+                    if (parent) {
+                        parentId = parent.id;
+                    }
+                    level = 1;
+                }
+
                 gdiLayer = Object.assign(gdiLayer, {
-                    name: hit.source.name,
-                    id: hit.source.id,
                     parentId: parentId,
                     level: level,
-                    layers: hit.source.layers,
-                    url: hit.source.url,
-                    version: hit.source.version,
-                    gfiAttributes: hit.source.gfiAttributes ? hit.source.gfiAttributes : "showAll",
-                    gfiTheme: hit.source.gfiTheme ? hit.source.gfiTheme : "default",
-                    datasets: hit.source.datasets,
                     isJustAdded: true
                 });
+
                 this.addItemAtTop(gdiLayer);
                 Radio.trigger("ModelList", "addModelsByAttributes", {id: hit.source.id});
             }
@@ -557,7 +569,7 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
             }
         }
         else {
-            console.error("Es konnte kein Eintrag für Layer " + hit.source.id + " in ElasticSearch gefunden werden.");
+            console.error("No entry could be found for layer " + hit.source.id + " in ElasticSearch.");
         }
     },
 

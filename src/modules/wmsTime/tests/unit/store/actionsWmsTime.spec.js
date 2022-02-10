@@ -66,7 +66,8 @@ describe("src/modules/wmsTime/store/actionsWmsTime.js", () => {
                         return layerString;
                     }
                     return {};
-                }
+                },
+                updateTime: () => null
             };
         }
 
@@ -143,11 +144,10 @@ describe("src/modules/wmsTime/store/actionsWmsTime.js", () => {
             expect(commitSpy.secondCall.args).to.eql(["setTimeSliderDefaultValue", TIME]);
             expect(requestSpy.calledOnce).to.be.true;
             expect(requestSpy.firstCall.args).to.eql(["ModelList", "getModelByAttributes", {id: secondId}]);
-            expect(trigger.callCount).to.equal(5);
-            expect(trigger.firstCall.args).to.eql(["WmsTime", "updateTime", id, TIME]);
-            expect(trigger.secondCall.args).to.eql(["ModelList", "setModelAttributesById", id, {transparency}]);
-            expect(trigger.thirdCall.args).to.eql(["ModelList", "removeModelsById", secondId]);
-            expect(trigger.getCall(3).args).to.eql(["Parser", "removeItem", secondId]);
+            expect(trigger.callCount).to.equal(4);
+            expect(trigger.firstCall.args).to.eql(["ModelList", "setModelAttributesById", id, {transparency}]);
+            expect(trigger.secondCall.args).to.eql(["ModelList", "removeModelsById", secondId]);
+            expect(trigger.thirdCall.args).to.eql(["Parser", "removeItem", secondId]);
             expect(trigger.lastCall.args).to.eql(["Util", "refreshTree"]);
             expect(mapCollection.getMap("ol", "2D").removeLayer.calledOnce).to.be.true;
             expect(mapCollection.getMap("ol", "2D").removeLayer.firstCall.args).to.eql([layerString]);

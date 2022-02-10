@@ -54,7 +54,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.(le|c|sa)ss$/,
+                test: /\.(le|c|sa|sc)ss$/,
                 use: "null-loader"
             },
             {

@@ -390,7 +390,7 @@ const Util = Backbone.Model.extend(/** @lends Util.prototype */{
             sortedObj = this.sortObjectsAsAddress(sortedObj, first);
         }
         else {
-            sortedObj = this.sortObjectsNonAddress(sortedObj, first, second);
+            sortedObj = this.sortObjectsNonAddress(first, second, sortedObj);
         }
 
         return sortedObj;
@@ -398,12 +398,12 @@ const Util = Backbone.Model.extend(/** @lends Util.prototype */{
 
     /**
      * Sorts Objects not as address.
-     * @param {Object[]} [input=[]] Array with object to be sorted.
      * @param {String} first First attribute to sort by.
      * @param {String} second Second attribute to sort by.
+     * @param {Object[]} [input=[]] Array with object to be sorted.
      * @returns {Object[]} - Sorted array of objects.
      */
-    sortObjectsNonAddress: function (input = [], first, second) {
+    sortObjectsNonAddress: function (first, second, input = []) {
         const sortedOjectSecond = input.sort((elementA, elementB) => this.compareInputs(elementA, elementB, second)),
             sortedObjectFirst = sortedOjectSecond.sort((elementA, elementB) => this.compareInputs(elementA, elementB, first));
 
@@ -614,10 +614,10 @@ const Util = Backbone.Model.extend(/** @lends Util.prototype */{
      * Use Array.prototype.map() to map the values of an array to a function or property name.
      * Use Array.prototype.reduce() to create an object, where the keys are produced from the mapped results.
      * @param {array} [arr=[]] - elements to group
-     * @param {function} fn - reducer function
+     * @param {function} [fn=null] - reducer function
      * @returns {object} - the grouped object
      */
-    groupBy: function (arr = [], fn) {
+    groupBy: function (arr = [], fn = null) {
         return arr.map(typeof fn === "function" ? fn : val => val[fn]).reduce((acc, val, i) => {
             acc[val] = (acc[val] || []).concat(arr[i]);
             return acc;

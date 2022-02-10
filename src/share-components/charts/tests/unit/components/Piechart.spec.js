@@ -2,17 +2,17 @@ import Vuex from "vuex";
 import {shallowMount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
 import ChartJs from "chart.js";
-import Piechart from "../../../components/Piechart.vue";
+import PiechartItem from "../../../components/PiechartItem.vue";
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
-describe("src/share-components/charts/components/Piechart.vue", () => {
+describe("src/share-components/charts/components/PiechartItem.vue", () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = shallowMount(Piechart, {
+        wrapper = shallowMount(PiechartItem, {
             propsData: {
                 data: {
                     labels: [],
@@ -36,7 +36,7 @@ describe("src/share-components/charts/components/Piechart.vue", () => {
         });
     });
     describe("mounted as doughnut", () => {
-        const doughnut = shallowMount(Piechart, {
+        const doughnut = shallowMount(PiechartItem, {
             propsData: {
                 data: {
                     labels: [],

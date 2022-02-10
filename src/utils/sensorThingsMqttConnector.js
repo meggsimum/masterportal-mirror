@@ -268,12 +268,12 @@ export class SensorThingsMqttConnector {
      * closes the connection to the server
      * @post subscribe and unsubscribe will call errors if used on a closed connection
      * @param {String} [force=false] "passing it to true will close the client right away, without waiting for the in-flight messages to be acked." (see https://www.npmjs.com/package/mqtt)
-     * @param {Object} [options] options of end (see https://www.npmjs.com/package/mqtt)
-     * @param {Function} [onfinish] will be called when the client is closed
-     * @param {Function} [onerror] called if an error occurs
+     * @param {Object} [options=null] options of end (see https://www.npmjs.com/package/mqtt)
+     * @param {Function} [onfinish=null] will be called when the client is closed
+     * @param {Function} [onerror=null] called if an error occurs
      * @returns {void}
      */
-    end (force = false, options, onfinish, onerror) {
+    end (force = false, options = null, onfinish = null, onerror = null) {
         if (typeof this.mqttClient?.end !== "function") {
             if (typeof onerror === "function") {
                 onerror("sensorThingsMqtt.js, end: the mqttClient is not ready to end. Set mqttClient and connect before ending the connection.");

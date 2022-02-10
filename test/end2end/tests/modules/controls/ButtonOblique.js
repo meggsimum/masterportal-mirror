@@ -1,6 +1,6 @@
 const webdriver = require("selenium-webdriver"),
     {expect} = require("chai"),
-    {initDriver} = require("../../../library/driver"),
+    {initDriver, getDriver, quitDriver} = require("../../../library/driver"),
     {logTestingCloudUrlToTest} = require("../../../library/utils"),
     {getDirection, getCenter, areAllLayersHidden, isObModeOn, getObModeResolution} = require("../../../library/scripts"),
     {isMaster, is2D, isMobile} = require("../../../settings"),
@@ -55,7 +55,7 @@ function Button3DTests ({builder, url, resolution, mode, capability}) {
                     capability["sauce:options"].name = this.currentTest.fullTitle();
                     builder.withCapabilities(capability);
                 }
-                driver = await initDriver(builder, url, resolution);
+                driver = await getDriver(builder, url, resolution);
                 await driver.wait(until.elementLocated(By.css("#buttonOblique")));
                 buttonOB = await driver.findElement(By.css("#buttonOblique"));
             });
@@ -66,13 +66,12 @@ function Button3DTests ({builder, url, resolution, mode, capability}) {
                         logTestingCloudUrlToTest(sessionData.id_);
                     });
                 }
-                await driver.quit();
             });
 
             afterEach(async function () {
                 if (this.currentTest._currentRetry === this.currentTest._retries - 1) {
                     console.warn("      FAILED! Retrying test \"" + this.currentTest.title + "\"  after reloading url");
-                    await driver.quit();
+                    await quitDriver();
                     driver = await initDriver(builder, url, resolution);
                     await driver.wait(until.elementLocated(By.css("#buttonOblique")));
                     buttonOB = await driver.findElement(By.css("#buttonOblique"));

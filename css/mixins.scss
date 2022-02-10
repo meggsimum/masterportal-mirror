@@ -1,0 +1,26 @@
+/*
+ * This file contains scss mixins.
+ *
+ * ⚠️ This file must not contain any css rules. It is imported in many places,
+ * and css rules in this file would result in a copy of all of the rules per import.
+ */
+
+@import "./variables.scss";
+
+/* focus styling for actions like menu-entries, buttons, icons, etc */
+@mixin primary_action_focus {
+    outline: 3px solid $accent_focus;
+    outline: 3px auto  Highlight;
+    outline: 3px auto -webkit-focus-ring-color;
+}
+
+/* hover styling for actions like menu-entries, buttons, icons, etc */
+@mixin primary_action_hover {
+    opacity: 1;
+    &.btn-select, &:active, &.active, &:checked, &::selection, &.open, &[aria-expanded="true"] {
+        background-color: darken($accent_hover, 10%);
+    }
+    background-color: $accent_hover;
+    color: $primary_contrast;
+    cursor: pointer;
+}

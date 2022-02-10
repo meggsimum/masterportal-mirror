@@ -408,8 +408,8 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
-    @import "~/css/mixins.less";
+<style lang="scss" scoped>
+    @import "~/css/mixins.scss";
 
     .poi {
         color: rgb(85, 85, 85);
@@ -430,7 +430,7 @@ export default {
             padding: 12px;
             cursor: pointer;
             &:focus {
-                .primary_action_focus();
+                @include primary_action_focus;
             }
         }
         .modal-dialog {
@@ -440,7 +440,7 @@ export default {
             max-height: 78vH;
             overflow: auto;
             &:focus {
-                .primary_action_focus();
+                @include primary_action_focus;
             }
             tbody {
                 >tr {

@@ -530,7 +530,7 @@ function zoomOut () {
  * @returns {void}
  */
 function setResolution () {
-    Backbone.Radio.trigger("MapView", "setConstrainedResolution", arguments[0], 0);
+    Backbone.Radio.trigger("MapView", "setResolution", arguments[0]);
 }
 
 /**

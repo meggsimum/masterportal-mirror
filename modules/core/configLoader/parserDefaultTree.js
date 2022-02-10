@@ -22,7 +22,7 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
      * @returns {void}
      */
     parseTree: function (layerList, layer3dList = null, timeLayerList = null) {
-        let newLayerList = this.filterValidLayer(layerList, this.get("validLayerTypes"));
+        let newLayerList = this.filterValidLayer(this.get("validLayerTypes"), layerList);
 
         newLayerList = this.removeWmsBySensorThings(newLayerList);
         // Removes all layers that are already displayed in the cache
@@ -37,11 +37,11 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
     /**
      * Filters all objects from the layerList, which are not contained in the validLayerTypes list and are assigned to at least one dataset.
      *
-     * @param  {Object[]} [layerList = []] The layers from services.json.
      * @param {String[]} validLayerTypes The valid layerTypes.
+     * @param  {Object[]} [layerList = []] The layers from services.json.
      * @return {Object[]} Valid layers from services.json
      */
-    filterValidLayer: function (layerList = [], validLayerTypes) {
+    filterValidLayer: function (validLayerTypes, layerList = []) {
         return layerList.filter(element => {
             if (!element?.datasets) {
                 return false;

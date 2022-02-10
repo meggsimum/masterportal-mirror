@@ -1,5 +1,5 @@
 <script>
-import Modal from "../../../../share-components/modals/components/Modal.vue";
+import ModalItem from "../../../../share-components/modals/components/ModalItem.vue";
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import * as constants from "../store/constantsCompareFeatures";
 import ComparisonList from "./ComparisonList.vue";
@@ -17,7 +17,7 @@ import axios from "axios";
 export default {
     name: "CompareFeatures",
     components: {
-        Modal,
+        ModalItem,
         ComparisonList
     },
     data () {
@@ -92,13 +92,13 @@ export default {
     lang="html"
     class="template"
 >
-    <Modal
+    <ModalItem
         :title="$t('common:modules.tools.compareFeatures.title')"
         :icon="glyphicon"
         :show-modal="active"
         @modalHid="close"
     >
-        <Modal
+        <ModalItem
             :title="$t('common:modules.tools.compareFeatures.title')"
             :icon="glyphicon"
             :show-modal="showAlert && !active"
@@ -146,7 +146,7 @@ export default {
                     </button>
                 </div>
             </div>
-        </Modal>
+        </ModalItem>
         <template #header>
             <h4 class="tool-compareFeatures-modal-title">
                 {{ $t('common:modules.tools.compareFeatures.title') }}
@@ -246,19 +246,19 @@ export default {
                 </div>
             </div>
         </template>
-    </Modal>
+    </ModalItem>
 </template>
 
-<style lang="less" scoped>
-    @import "~/css/mixins.less";
+<style lang="scss" scoped>
+    @import "~/css/mixins.scss";
 
-    @font_family_1: "MasterPortalFont Bold","Arial Narrow",Arial,sans-serif;
+    $font_family_1: "MasterPortalFont Bold","Arial Narrow",Arial,sans-serif;
     .scrollable{
         overflow: auto;
         max-height: calc(100vh - 200px);
     }
     .tool-compareFeatures-modal-title {
-        font-family: @font_family_1;
+        font-family: $font_family_1;
     }
     #tool-compareFeatures-buttons-feedback-listFull {
         text-align: center;
@@ -273,10 +273,10 @@ export default {
     }
     #tool-compareFeatures-select {
         width: auto;
-        font-family: @font_family_default;
+        font-family: $font_family_default;
     }
     #tool-compareFeatures-select-label {
-        font-family: @font_family_1;
+        font-family: $font_family_1;
         font-size: 13px;
         font-weight: normal;
         line-height: 17px;
@@ -293,10 +293,10 @@ export default {
             margin-right: 20px;
             margin-left: 20px;
             &:focus {
-                .primary_action_focus();
+                @include primary_action_focus;
             }
             &:hover {
-                .primary_action_hover();
+                @include primary_action_hover;
             }
             padding-right: 10px;
         }
@@ -307,7 +307,7 @@ export default {
         p {
             line-height: 22px;
             &:first-child {
-                font-family: @font_family_1;
+                font-family: $font_family_1;
                 font-size: 14px;
             }
         }
@@ -323,7 +323,7 @@ export default {
     }
 </style>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     #modal-1-container #modal-1-overlay {
         z-index: 1000;
     }

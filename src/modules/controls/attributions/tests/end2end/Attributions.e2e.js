@@ -53,9 +53,9 @@ function AttributionsTests ({builder, url, resolution, capability}) {
             });
 
             it("should open/close closed/opened attributions on clicking attribution button", async function () {
+                attributionsButton = await driver.findElement(By.css(".attributions-button"));
                 await attributionsButton.click();
                 expect((await driver.findElements(By.css(".attributions-div"))).length).to.equal(0);
-                attributionsButton = await driver.findElement(By.css(".attributions-button"));
                 await attributionsButton.click();
                 attributionsDiv = await driver.findElement(By.css(".attributions-view"));
                 expect(attributionsDiv).to.exist;

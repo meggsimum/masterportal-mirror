@@ -45,7 +45,8 @@ const state = {
     selectedOptions: {},
     service: null,
     showResultList: false,
-    valuesReset: false
+    valuesReset: false,
+    zoomLevel: 5
 };
 
 export default state;

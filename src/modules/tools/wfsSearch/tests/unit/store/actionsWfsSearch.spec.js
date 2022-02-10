@@ -87,7 +87,7 @@ describe("src/modules/tools/wfsSearch/store/actionsWfsSearch.js", () => {
             expect(dispatch.firstCall.args).to.eql(["resetModule", false]);
             expect(dispatch.secondCall.args).to.eql(["resetModule", true]);
             expect(dispatch.thirdCall.args[0]).to.eql("Alerting/addSingleAlert");
-            expect(dispatch.thirdCall.args[1]).to.eql(i18next.t("common:modules.tools.wfsSearch.wrongConfig", {name: "wfsName"}));
+            expect(dispatch.thirdCall.args[1]).to.eql(i18next.t("common:modules.tools.wfsSearch.wrongConfig", {id: "wfsId"}));
             expect(dispatch.thirdCall.args[2]).to.eql({root: true});
         });
         it("should prepare the module if the WFS is given", () => {
@@ -169,10 +169,11 @@ describe("src/modules/tools/wfsSearch/store/actionsWfsSearch.js", () => {
     describe("resetResult", () => {
         it("should reset the results in the state", () => {
             const state = {
-                requiredValues: {Gemarkung: "Waldesch", Flur: 5}
-            };
+                    requiredValues: {Gemarkung: "Waldesch", Flur: 5}
+                },
+                getters = {currentInstance: {literals: []}};
 
-            actions.resetResult({state, commit, dispatch});
+            actions.resetResult({state, getters, commit, dispatch});
 
             expect(commit.callCount).to.equal(4);
             expect(commit.firstCall.args).to.eql(["setValuesReset", true]);

@@ -84,10 +84,6 @@ describe("src/modules/tools/addWMS/components/AddWMS.vue", () => {
         expect(wrapper.find("#wmsUrl").exists()).to.be.true;
     });
 
-    it("renders the example text for url", () => {
-        expect(wrapper.find(".WMS_example_text").exists()).to.be.true;
-    });
-
     it("renders the AddWMS button", () => {
         expect(wrapper.find("#addWMSButton").exists()).to.be.true;
     });

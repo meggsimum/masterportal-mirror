@@ -45,7 +45,7 @@ const actions = {
      * @returns {Boolean} false, if config does not contain the tool
      */
     pushAttributesToStoreElements: (context, configuredTool) => {
-        return fetchFirstModuleConfig(context, [configuredTool.configPath], configuredTool.component.name);
+        return fetchFirstModuleConfig(context, [configuredTool.configPath], configuredTool.key.charAt(0).toUpperCase() + configuredTool.key.slice(1));
     },
 
     /**

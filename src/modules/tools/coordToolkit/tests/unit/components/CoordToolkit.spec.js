@@ -27,6 +27,9 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
         mockMapMarkerActions = {
             removePointMarker: sinon.stub()
         },
+        mockAlertingActions = {
+            addSingleAlert: sinon.stub()
+        },
         mockMapActions = {
             addPointerMoveHandler: sinon.stub(),
             removePointerMoveHandler: sinon.stub(),
@@ -43,20 +46,33 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
                             coordToolkit:
                             {
                                 "name": "translate#common:menu.tools.coordToolkit",
-                                "glyphicon": "glyphicon-globe"
+                                "glyphicon": "glyphicon-globe",
+                                "showCopyButtons": true
                             }
                         }
                     }
                 }
             }
-        };
+        },
+        eventProj4326 = {
+            target: {
+                value: "http://www.opengis.net/gml/srs/epsg.xml#4326"
+            }
+        },
+        eventProj25832 = {
+            target: {
+                value: "http://www.opengis.net/gml/srs/epsg.xml#25832"
+            }
+        },
+        copyCoordinatesSpy = sinon.spy();
     let store,
-        wrapper;
+        wrapper,
+        text = "";
 
     beforeEach(() => {
-        CoordToolkit.actions.copyToClipboard = sinon.spy(CoordToolkit.actions.copyToClipboard);
         CoordToolkit.actions.validateInput = sinon.spy(CoordToolkit.actions.validateInput);
         CoordToolkit.actions.initHeightLayer = sinon.spy(CoordToolkit.actions.initHeightLayer);
+        CoordToolkit.actions.copyCoordinates = sinon.spy(CoordToolkit.actions.copyCoordinates);
 
         store = new Vuex.Store({
             namespaced: true,
@@ -76,19 +92,31 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
                 MapMarker: {
                     namespaced: true,
                     actions: mockMapMarkerActions
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: mockAlertingActions
                 }
             },
             actions: {
-                copyToClipboard: sinon.spy()
+                copyCoordinates: copyCoordinatesSpy
             },
             getters: {
-                uiStyle: () => ""
+                uiStyle: () => "",
+                mobile: () => false
             },
             state: {
                 configJson: mockConfigJson
             }
         });
         crs.registerProjections(namedProjections);
+
+        navigator.clipboard = {
+            writeText: (aText) => {
+                text = aText;
+            }
+        };
+        sinon.stub(navigator.clipboard, "writeText").resolves(text);
     });
 
     it("renders CoordToolkit without height field", () => {
@@ -117,6 +145,22 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
         expect(wrapper.find("#coord-toolkit").exists()).to.be.true;
         expect(wrapper.find("#coordinatesHeightField").exists()).to.be.true;
     });
+    it("renders CoordToolkit without copy-coords buttons", () => {
+        store.commit("Tools/CoordToolkit/setShowCopyButtons", false);
+        store.commit("Tools/CoordToolkit/setActive", true);
+        wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+
+        expect(wrapper.find("#coord-toolkit").exists()).to.be.true;
+        expect(wrapper.find("#copyCoordsPairBtn").exists()).to.be.false;
+    });
+    it("renders CoordToolkit with copy-coords buttons", () => {
+        store.commit("Tools/CoordToolkit/setShowCopyButtons", true);
+        store.commit("Tools/CoordToolkit/setActive", true);
+        wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+
+        expect(wrapper.find("#coord-toolkit").exists()).to.be.true;
+        expect(wrapper.find("#copyCoordsPairBtn").exists()).to.be.true;
+    });
     it("CoordToolkit mounting with heightLayerId shall call initHeightLayer", async () => {
         store.state.configJson.Portalconfig.menu.tools.children.coordToolkit.heightLayerId = "123";
         store.state.Tools.CoordToolkit.heightLayerId = "123";
@@ -124,7 +168,6 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
         await wrapper.vm.$nextTick();
 
         expect(CoordToolkit.actions.initHeightLayer.calledOnce).to.be.true;
-        store.state.Tools.CoordToolkit.heightLayerId = null;
     });
 
     it("has initially selected projection \"EPSG:25832\"", async () => {
@@ -244,27 +287,9 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
             expect(store.state.Tools.CoordToolkit.mode).to.be.equals("search");
             expect(wrapper.vm.isEnabled("search")).to.be.true;
         });
-        it("onInputClicked should call copyToClipboard if mode is 'supply'", async () => {
-            const value = "EPSG:4326",
-                event = {
-                    target: {
-                        value: value
-                    }
-                };
-
-            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
-            expect(store.state.Tools.CoordToolkit.mode).to.be.equals("search");
-            wrapper.vm.onInputClicked(event);
-            expect(CoordToolkit.actions.copyToClipboard.calledOnce).to.be.false;
-
-            wrapper.vm.changeMode("supply");
-            await wrapper.vm.$nextTick();
-            expect(store.state.Tools.CoordToolkit.mode).to.be.equals("supply");
-            wrapper.vm.onInputClicked(event);
-            expect(CoordToolkit.actions.copyToClipboard.calledOnce).to.be.true;
-        });
         it("onInputEvent should call validateInput if mode is 'search'", async () => {
             wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+            wrapper.vm.changeMode("supply");
             expect(store.state.Tools.CoordToolkit.mode).to.be.equals("supply");
             wrapper.vm.onInputEvent("input");
             expect(CoordToolkit.actions.validateInput.calledOnce).to.be.false;
@@ -274,6 +299,187 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
             expect(store.state.Tools.CoordToolkit.mode).to.be.equals("search");
             wrapper.vm.onInputEvent("input");
             expect(CoordToolkit.actions.validateInput.calledOnce).to.be.true;
+        });
+        it("copyCoords copies easting field", async () => {
+            let input = null;
+
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+
+            wrapper.vm.changeMode("search");
+            await wrapper.vm.$nextTick();
+            expect(store.state.Tools.CoordToolkit.mode).to.be.equals("search");
+            expect(wrapper.find("#coordinatesNorthingField").exists()).to.be.true;
+
+            input = await wrapper.find("#coordinatesNorthingField");
+            input.setValue("123456");
+            await wrapper.vm.$nextTick();
+
+            wrapper.vm.copyCoords(["coordinatesNorthingField"]);
+            await wrapper.vm.$nextTick();
+            expect(CoordToolkit.actions.copyCoordinates.calledOnce).to.be.true;
+            expect(CoordToolkit.actions.copyCoordinates.firstCall.args[1]).to.be.an("Array");
+            expect(CoordToolkit.actions.copyCoordinates.firstCall.args[1]).to.be.deep.equals(["123456"]);
+        });
+        it("copyCoords copies northing field", async () => {
+            let input = null;
+
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+
+            wrapper.vm.changeMode("supply");
+            await wrapper.vm.$nextTick();
+            expect(store.state.Tools.CoordToolkit.mode).to.be.equals("supply");
+            expect(wrapper.find("#coordinatesNorthingField").exists()).to.be.true;
+
+            input = await wrapper.find("#coordinatesNorthingField");
+            input.setValue("123456");
+            await wrapper.vm.$nextTick();
+
+            wrapper.vm.copyCoords(["coordinatesNorthingField"]);
+            await wrapper.vm.$nextTick();
+            expect(CoordToolkit.actions.copyCoordinates.calledOnce).to.be.true;
+            expect(CoordToolkit.actions.copyCoordinates.firstCall.args[1]).to.be.an("Array");
+            expect(CoordToolkit.actions.copyCoordinates.firstCall.args[1]).to.be.deep.equals(["123456"]);
+        });
+        it("copyCoords copies northing and easting field, projection not longlat", async () => {
+            let inputEasting = null,
+                inputNorthing = null;
+            const valueEasting = "123456",
+                valueNorthing = "789123";
+
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+
+            wrapper.vm.changeMode("supply");
+            await wrapper.vm.$nextTick();
+            expect(store.state.Tools.CoordToolkit.mode).to.be.equals("supply");
+            expect(wrapper.find("#coordinatesNorthingField").exists()).to.be.true;
+            expect(wrapper.find("#coordinatesEastingField").exists()).to.be.true;
+
+            inputNorthing = await wrapper.find("#coordinatesNorthingField");
+            inputEasting = await wrapper.find("#coordinatesEastingField");
+            inputNorthing.setValue(valueNorthing);
+            inputEasting.setValue(valueEasting);
+            await wrapper.vm.$nextTick();
+
+            wrapper.vm.copyCoords(["coordinatesEastingField", "coordinatesNorthingField"]);
+            await wrapper.vm.$nextTick();
+            expect(CoordToolkit.actions.copyCoordinates.calledOnce).to.be.true;
+            expect(CoordToolkit.actions.copyCoordinates.firstCall.args[1]).to.be.an("Array");
+            expect(CoordToolkit.actions.copyCoordinates.firstCall.args[1]).to.be.deep.equals([valueEasting, valueNorthing]);
+        });
+        it("copyCoords copies northing and easting field, projection is longlat, coordinates shall be reverted", async () => {
+            let inputEasting = null,
+                inputNorthing = null;
+            const valueEasting = "123456",
+                valueNorthing = "789123";
+
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+
+            wrapper.vm.changeMode("supply");
+            wrapper.vm.selectionChanged(eventProj4326);
+            await wrapper.vm.$nextTick();
+            expect(store.state.Tools.CoordToolkit.mode).to.be.equals("supply");
+            expect(wrapper.find("#coordinatesNorthingField").exists()).to.be.true;
+            expect(wrapper.find("#coordinatesEastingField").exists()).to.be.true;
+
+            inputNorthing = await wrapper.find("#coordinatesNorthingField");
+            inputEasting = await wrapper.find("#coordinatesEastingField");
+            inputNorthing.setValue(valueNorthing);
+            inputEasting.setValue(valueEasting);
+            await wrapper.vm.$nextTick();
+
+            wrapper.vm.copyCoords(["coordinatesEastingField", "coordinatesNorthingField"]);
+            await wrapper.vm.$nextTick();
+            expect(CoordToolkit.actions.copyCoordinates.calledOnce).to.be.true;
+            expect(CoordToolkit.actions.copyCoordinates.firstCall.args[1]).to.be.an("Array");
+            expect(CoordToolkit.actions.copyCoordinates.firstCall.args[1]).to.be.deep.equals([valueNorthing, valueEasting]);
+        });
+        it("getClassForEasting no longlat-projection", async () => {
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+            wrapper.vm.selectionChanged(eventProj25832);
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.getClassForEasting()).to.be.equals(" form-group form-group-sm");
+        });
+        it("getClassForEasting no error", async () => {
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+            wrapper.vm.selectionChanged(eventProj4326);
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.getClassForEasting()).to.be.equals("eastingToBottomNoError form-group form-group-sm");
+        });
+        it("getClassForEasting eastingError", async () => {
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+            wrapper.vm.selectionChanged(eventProj4326);
+            await wrapper.vm.$nextTick();
+            store.commit("Tools/CoordToolkit/setEastingNoCoord", true);
+            expect(wrapper.vm.getClassForEasting()).to.be.equals("eastingToBottomNoError form-group form-group-sm");
+        });
+        it("getClassForEasting northingError", async () => {
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+            wrapper.vm.selectionChanged(eventProj4326);
+            await wrapper.vm.$nextTick();
+            store.commit("Tools/CoordToolkit/setEastingNoCoord", false);
+            store.commit("Tools/CoordToolkit/setNorthingNoCoord", true);
+            expect(wrapper.vm.getClassForEasting()).to.be.equals("eastingToBottomOneError form-group form-group-sm");
+        });
+        it("getClassForEasting northingError and eastingError", async () => {
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+            wrapper.vm.selectionChanged(eventProj4326);
+            await wrapper.vm.$nextTick();
+            store.commit("Tools/CoordToolkit/setNorthingNoCoord", true);
+            store.commit("Tools/CoordToolkit/setEastingNoCoord", true);
+            expect(wrapper.vm.getClassForEasting()).to.be.equals("eastingToBottomTwoErrors form-group form-group-sm");
+        });
+        it("getClassForNorthing no longlat-projection", async () => {
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+            wrapper.vm.selectionChanged(eventProj25832);
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.getClassForNorthing()).to.be.equals(" form-group form-group-sm");
+        });
+        it("getClassForNorthing no error", async () => {
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+            wrapper.vm.selectionChanged(eventProj4326);
+            await wrapper.vm.$nextTick();
+            store.commit("Tools/CoordToolkit/setNorthingNoCoord", false);
+            store.commit("Tools/CoordToolkit/setEastingNoCoord", false);
+            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopNoError form-group form-group-sm");
+        });
+        it("getClassForNorthing eastingError", async () => {
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+            wrapper.vm.selectionChanged(eventProj4326);
+            await wrapper.vm.$nextTick();
+            store.commit("Tools/CoordToolkit/setEastingNoCoord", true);
+            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopEastingError form-group form-group-sm");
+        });
+        it("getClassForNorthing northingError", async () => {
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+            wrapper.vm.selectionChanged(eventProj4326);
+            await wrapper.vm.$nextTick();
+            store.commit("Tools/CoordToolkit/setEastingNoCoord", false);
+            store.commit("Tools/CoordToolkit/setNorthingNoCoord", true);
+            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopNoError form-group form-group-sm");
+        });
+        it("getClassForNorthing northingError and eastingError", async () => {
+            store.commit("Tools/CoordToolkit/setActive", true);
+            wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+            wrapper.vm.selectionChanged(eventProj4326);
+            await wrapper.vm.$nextTick();
+            store.commit("Tools/CoordToolkit/setNorthingNoCoord", true);
+            store.commit("Tools/CoordToolkit/setEastingNoMatch", true);
+            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopTwoErrors form-group form-group-sm");
+            store.commit("Tools/CoordToolkit/setEastingNoCoord", true);
+            expect(wrapper.vm.getClassForNorthing()).to.be.equals("northingToTopTwoErrorsEastNoValue form-group form-group-sm");
         });
     });
     describe("CoordToolkit.vue watcher", () => {

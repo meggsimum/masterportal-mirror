@@ -1,10 +1,10 @@
 /**
  * Returns an array which contains values at hour position.
- * @param  {Object[]} [dataPerHour=[]] Data for every day, according to targetresult.
  * @param  {Number} position One hour.
+ * @param  {Object[]} [dataPerHour=[]] Data for every day, according to targetresult.
  * @returns {Object[]} The data per hour.
  */
-export function arrayPerHour (dataPerHour = [], position) {
+export function arrayPerHour (position, dataPerHour = []) {
     const perHour = [];
 
     dataPerHour.forEach(day => {
@@ -28,7 +28,7 @@ export function calculateArithmeticMean (dataPerHour = []) {
 
     for (let i = 0; i < 24; i++) {
         let result = 0,
-            perHour = arrayPerHour(dataPerHour, i);
+            perHour = arrayPerHour(i, dataPerHour);
 
         if (perHour.length === 0) {
             dayMeans.push({

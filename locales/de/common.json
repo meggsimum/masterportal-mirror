@@ -19,7 +19,8 @@
         "cancel": "Abbrechen",
         "open": "Öffnen",
         "load": "Laden",
-        "reset": "Zurücksetzen"
+        "reset": "Zurücksetzen",
+        "stop": "Abbrechen"
     },
     "colors": {
         "blue": "Blau",
@@ -68,7 +69,7 @@
             "scaleSwitcher": "Maßstab umschalten",
             "selectFeatures": "Features auswählen",
             "legend":"Legende",
-            "styleVt": "Style VT",
+            "styleVt": "Style Vector Tile Layers",
             "bufferAnalysis": "Buffer Analyse",
             "wfsSearch": "WFS Suche",
             "routing": "Routing",
@@ -312,7 +313,6 @@
                 "errorHttpsMessage": " &#10060; Das von Ihnen angeforderte WMS befindet sich unter einer http-Url. Das Masterportal kann nur WMS über https (SSL) einbinden.",
                 "errorEmptyUrl": "Bitte die URL eines WMS in das Textfeld eingeben!",
                 "placeholder": "Hier bitte die WMS-URL eingeben.",
-                "textExample": "Beispiel: https://geodienste.hamburg.de/HH_WMS_Fahrradrouten",
                 "textLoadLayer": "Layer Laden",
                 "ifInExtent": "&#10060; Die über den WMS bereitgestellten Geodaten liegen außerhalb des darstellbaren Bereichs. WMS hinzufügen ist nicht möglich.",
                 "checkVersion": "&#10060; WMS hinzufügen ist nur möglich wenn die Version des externen WMS Layers gleich oder größer als 1.3.0 ist."
@@ -411,6 +411,27 @@
                 "serviceTwo": "Dienst 2",
                 "serviceThree": "Dienst 3",
                 "serviceFour": "Dienst 4"
+            },
+            "filterGeneral": {
+                "searchInMapExtent": "Suche im aktuellen Kartenausschnitt",
+                "snippetTags": {
+                    "resetAll": "Zurücksetzen"
+                },
+                "info": {
+                    "snippetCheckbox": "Das Kontrollkästchen kann durch einen Mausklick aktiviert/deaktiviert werden.",
+                    "snippetDropdown": "Sie können einen oder mehrere Werte aus der vorgegebenen Werte-Liste auswählen.",
+                    "snippetInput": "Sie können die gewünschten Suchkriterien im Textfeld eingeben.",
+                    "snippetSlider": "Für die Eingabe eines numerischen Wertes als Suchkriterium, können Sie den Schieberegler nach Rechts oder Links schieben. Zusätzlich können Sie den Wert direkt im Eingabefeld eingeben.",
+                    "snippetSliderRange": "Für die Eingabe von numerischen Werten als Minimum- bzw. Maximum-Suchkriterium können Sie den linken bzw. den rechten Schieberegler verschieben. Zusätzlich können Sie die Werte direkt in den Eingabefeldern eingeben.",
+                    "snippetDate": "Für die Eingabe eines Datums als Suchkriterium, klicken Sie im Datumseingabefeld und wählen Sie ein Datum aus dem geöffneten Kalender aus.",
+                    "snippetDateRange": "Für die Eingabe eines Datumsbereichs als Suchkriterium, klicken Sie in das Eingabefeld für das Start- bzw. End-Datum und wählen jeweils ein Start- bzw. End-Datum aus dem geöffneten Kalender aus."
+                },
+                "dropdown": {
+                    "defaultLabel": "Wählen Sie eine Option",
+                    "selectAll": "Alles auswählen",
+                    "emptyList": "Die Liste ist leer",
+                    "noElements": "Keine Elemente gefunden"
+                }
             },
             "filter": {
                 "result": "Treffer",
@@ -554,8 +575,8 @@
                 "noHeightBuilding": "Gebäudefläche, keine Höhen vorhanden",
                 "heightLayerInfo": "Grundlage der Höheninformation ist das \"{{layer}}\" mit Höhenangaben in Metern über Normalhöhennull (NHN).",
                 "hdms": {
-                    "eastingLabel": "Länge",
-                    "northingLabel": "Breite"
+                    "eastingLabel": "Breite",
+                    "northingLabel": "Länge"
                 },
                 "cartesian": {
                     "eastingLabel": "Rechtswert",
@@ -571,7 +592,9 @@
                 },
                 "hintSupply": "Klicken Sie in die Karte um Koordinaten abzufragen",
                 "hintSearch": "Geben Sie die zu suchenden Koordinaten ein",
-                "disabledTooltip": "Diese Funktion steht nicht in der 3D Ansicht zur Verfügung"
+                "disabledTooltip": "Diese Funktion steht nicht in der 3D Ansicht zur Verfügung",
+                "copyCoordsBtn": "Koordinatenpaar kopieren",
+                "copyCoordBtn": " {{value}} kopieren"
             },
             "gfi": {
                 "errorMessage": "Bei der Informationsabfrage (GetFeatureInfo) ist ein Fehler aufgetreten.<br>Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut. Falls das Problem weiterhin auftritt, wenden Sie sich bitte an den Betreiber des Dienstes.",
@@ -741,6 +764,7 @@
                 "targetLayerNotFound": "Der gespeicherte Ziel-Layer mit der ID {{layerId}} wurde nicht gefunden."
             },
             "wfsSearch": {
+                "wrongConfig": "Der Layer mit der Id \"{{id}}\" der Suchinstanz \"{{title}}\" ist nicht definiert.",
                 "noResults": "Es wurden keine Ergebnisse für Ihre Suchkriterien gefunden. Bitte versuchen Sie es erneut.",
                 "optionsPlaceholder": "Bitte wählen Sie eine Option aus!",
                 "resetButton": "Zurücksetzen",
@@ -965,7 +989,8 @@
                 "address": "Adresse",
                 "location": "Ort",
                 "subject": "Thema (externe Fachdaten)",
-                "topic": "Thema (Fachdaten)"
+                "topic": "Thema (Fachdaten)",
+                "general": "Fachdaten"
             },
             "specialWFS": {
                 "ongoing": "im Verfahren",
@@ -1099,7 +1124,9 @@
             "from": " ab",
             "to":" bis",
             "incorrectEntry": "Fehlerhafte Eingabe, bitte eine ganze Zahl eingeben!",
-            "outOfRangeErrorMessage": "Der Eingabewert muss innerhalb des Gültigkeitsbereiches {{minValueSlider}} und {{maxValueSlider}} liegen!"
+            "outOfRangeErrorMessage": "Der Eingabewert muss innerhalb des Gültigkeitsbereiches {{minValueSlider}} und {{maxValueSlider}} liegen!",
+            "valueEmptyErrorMessage": "Der Eingabewert darf nicht leer sein!",
+            "valueOutOfRangeErrorMessage": "Der Eingabewert {{inputValue}} muss innerhalb des Gültigkeitsbereiches {{minValueSlider}} und {{maxValueSlider}} liegen!"
         }
     },
     "share-components": {

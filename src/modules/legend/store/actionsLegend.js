@@ -37,8 +37,10 @@ const configPaths = [
         addLegend: function ({state, commit}, legendObj) {
             const legends = state.legends;
 
-            legends.push(legendObj);
-            commit("setLegends", legends);
+            if (!legends.find(layer => layer.name === legendObj.name)) {
+                legends.push(legendObj);
+                commit("setLegends", legends);
+            }
         },
 
         /**

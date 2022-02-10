@@ -169,34 +169,34 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
-@import "../../../../../css/mixins.less";
+<style lang="scss" scoped>
+@import "../../../../../css/mixins.scss";
 @import "~variables";
 
-@color_1: black;
-@background_color_1: #eee;
+$color_1: black;
+$background_color_1: #eee;
 
 #tool-layer-slider-player {
     .progress-bar {
-        background-color: @secondary_focus;
+        background-color: $secondary_focus;
         transition: all .6s;
     }
     .progress {
         height: 25px;
-        background-color: @background_color_1;
+        background-color: $background_color_1;
     }
     .active-button {
-        background-color: @background_color_1;
+        background-color: $background_color_1;
         transition: all .2s ease-in-out;
         &:focus {
-            .primary_action_focus();
+            @include primary_action_focus;
         }
         &:hover {
-            .primary_action_hover();
+            @include primary_action_hover;
         }
     }
     input[readonly] {
-        color: @color_1;
+        color: $color_1;
         cursor: not-allowed;
         white-space: nowrap;
         overflow: hidden;

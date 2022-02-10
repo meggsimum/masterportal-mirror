@@ -106,14 +106,14 @@ module.exports = function () {
         resolve: {
             alias: {
                 text: "text-loader",
-                "variables": path.resolve(__dirname, "..", "css", "variables.less")
+                "variables": path.resolve(__dirname, "..", "css", "variables.scss")
             }
         },
         module: {
             rules: [
                 // ignore all files ending with ".test.js".
                 {
-                    test: /\.test\.js$/,
+                    test: /\.(test|spec)\.js$/,
                     use: {
                         loader: "null-loader"
                     }
@@ -121,20 +121,20 @@ module.exports = function () {
                 // take all files ending with ".js" but not with ".test.js".
                 {
                     test: /\.js$/,
-                    exclude: /\bcore-js\b|\.test\.js$/,
+                    exclude: /\bcore-js\b|\.(test|spec)\.js$/,
                     use: {
                         loader: "babel-loader"
                     }
                 },
                 {
-                    test: /\.less$/,
+                    test: /\.scss$/,
                     use: [
                         {
                             loader: MiniCssExtractPlugin.loader,
                             options: {}
                         },
                         "css-loader",
-                        "less-loader"
+                        "sass-loader"
                     ]
                 },
                 {
@@ -160,22 +160,6 @@ module.exports = function () {
                     use: [
                         {
                             loader: "file-loader"
-                        }
-                    ]
-                },
-                {
-                    test: /\.s(c|a)ss$/,
-                    use: [
-                        "vue-style-loader",
-                        "css-loader",
-                        {
-                            loader: "sass-loader",
-                            options: {
-                                implementation: require("sass"),
-                                sassOptions: {
-                                    indentedSyntax: true // optional
-                                }
-                            }
                         }
                     ]
                 },

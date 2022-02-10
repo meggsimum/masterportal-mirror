@@ -1,5 +1,5 @@
 <script>
-import Alerting from "./modules/alerting/components/Alerting.vue";
+import AlertingItem from "./modules/alerting/components/AlertingItem.vue";
 import ConfirmAction from "./modules/confirmAction/components/ConfirmAction.vue";
 import ControlBar from "./modules/controls/ControlBar.vue";
 import LayerInformation from "./modules/layerInformation/components/LayerInformation.vue";
@@ -13,7 +13,7 @@ import {mapState} from "vuex";
 export default {
     name: "MapRegion",
     components: {
-        Alerting,
+        AlertingItem,
         ConfirmAction,
         ControlBar,
         LayerInformation,
@@ -71,19 +71,18 @@ export default {
             <div class="elements-positioned-over-map">
                 <LayerInformation />
                 <ControlBar class="controls" />
-                <QuickHelp
-                    v-if="getConfigObject()"
-                    :quick-help-config-js-object="typeof getConfigObject().quickHelp === 'object' || typeof getConfigObject().quickHelp === 'boolean' ? getConfigObject().quickHelp : false"
-                />
                 <WmsTime />
                 <MapMarker />
             </div>
         </div>
 
-
         <!-- elements that are somewhere above the map, but don't have a fixed position or are not always present -->
         <ConfirmAction />
-        <Alerting />
+        <AlertingItem />
+        <QuickHelp
+            v-if="getConfigObject()"
+            :quick-help-config-js-object="typeof getConfigObject().quickHelp === 'object' || typeof getConfigObject().quickHelp === 'boolean' ? getConfigObject().quickHelp : false"
+        />
 
         <template v-if="i18NextInitialized">
             <component
@@ -95,7 +94,7 @@ export default {
     </main>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     #sidebar, .sidebar{
         position: relative;
     }

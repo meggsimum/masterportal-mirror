@@ -40,6 +40,10 @@ const StyleList = Backbone.Collection.extend(/** @lends StyleList.prototype */{
             "getDefaultStyle": this.model.getDefaultStyle
         }, this);
 
+        channel.on({
+            "addToStyleList": jsonStyles => this.addToStyleList(jsonStyles)
+        }, this);
+
         if (Object.prototype.hasOwnProperty.call(Config, "styleConf") && Config.styleConf !== "") {
             this.fetchStyles(Config.styleConf);
         }
@@ -280,6 +284,25 @@ const StyleList = Backbone.Collection.extend(/** @lends StyleList.prototype */{
             styleId = store.getters["MapMarker/polygonStyleId"];
         }
         return styleId;
+    },
+
+    /**
+     * adds a style to the style list
+     * @param {Array} jsonStyles Array of styles
+     * @returns  {void}
+     */
+    addToStyleList: function (jsonStyles) {
+        const attrs = {
+                add: true,
+                colletion: this,
+                merge: false,
+                remove: false
+            },
+            styles = jsonStyles;
+
+        styles.forEach(style => {
+            this.add(new StyleModel(style, attrs));
+        });
     }
 });
 

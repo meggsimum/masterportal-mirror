@@ -1,16 +1,17 @@
 import AddWMS from "./addWMS/components/AddWMS.vue";
 import BufferAnalysis from "./bufferAnalysis/components/BufferAnalysis.vue";
 import CompareFeatures from "./compareFeatures/components/CompareFeatures.vue";
-import Contact from "./contact/components/Contact.vue";
+import ContactFormular from "./contact/components/ContactFormular.vue";
 import CoordToolkit from "./coordToolkit/components/CoordToolkit.vue";
-import Draw from "./draw/components/Draw.vue";
+import DrawItem from "./draw/components/DrawItem.vue";
 import FileImport from "./fileImport/components/FileImport.vue";
-import GeneralFilter from "./generalFilter/components/GeneralFilter.vue";
-import Gfi from "./gfi/components/Gfi.vue";
+import FilterGeneral from "./filterGeneral/components/FilterGeneral.vue";
+import GetFeatureInfo from "./gfi/components/GetFeatureInfo.vue";
 import LayerClusterToggler from "./layerClusterToggler/components/LayerClusterToggler.vue";
 import LayerSlider from "./layerSlider/components/LayerSlider.vue";
-import Measure from "./measure/components/Measure.vue";
-import Print from "./print/components/Print.vue";
+import MeasureInMap from "./measure/components/MeasureInMap.vue";
+import PrintMap from "./print/components/PrintMap.vue";
+import RoutingTemplate from "./routing/components/RoutingTemplate.vue";
 import SaveSelection from "./saveSelection/components/SaveSelection.vue";
 import ScaleSwitcher from "./scaleSwitcher/components/ScaleSwitcher.vue";
 import SearchByCoord from "./searchByCoord/components/SearchByCoord.vue";
@@ -18,7 +19,6 @@ import SelectFeatures from "./selectFeatures/components/SelectFeatures.vue";
 import StyleVT from "./styleVT/components/StyleVT.vue";
 import SupplyCoord from "./supplyCoord/components/SupplyCoord.vue";
 import WfsSearch from "./wfsSearch/components/WfsSearch.vue";
-import Routing from "./routing/components/Routing.vue";
 
 /**
  * User type definition
@@ -31,24 +31,24 @@ const state = {
         addWMS: AddWMS,
         bufferAnalysis: BufferAnalysis,
         compareFeatures: CompareFeatures,
-        contact: Contact,
+        contact: ContactFormular,
         coordToolkit: CoordToolkit,
-        draw: Draw,
+        draw: DrawItem,
         fileImport: FileImport,
-        gfi: Gfi,
-        generalFilter: GeneralFilter,
+        gfi: GetFeatureInfo,
+        filterGeneral: FilterGeneral,
         layerClusterToggler: LayerClusterToggler,
         layerSlider: LayerSlider,
-        measure: Measure,
-        print: Print,
+        measure: MeasureInMap,
+        print: PrintMap,
+        routing: RoutingTemplate,
         saveSelection: SaveSelection,
         scaleSwitcher: ScaleSwitcher,
         searchByCoord: SearchByCoord,
         selectFeatures: SelectFeatures,
         styleVT: StyleVT,
         supplyCoord: SupplyCoord,
-        wfsSearch: WfsSearch,
-        routing: Routing
+        wfsSearch: WfsSearch
     },
     configuredTools: []
 };

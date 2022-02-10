@@ -74,7 +74,7 @@ export default {
     </button>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     @import "~variables";
 
     .control-icon-table-style {

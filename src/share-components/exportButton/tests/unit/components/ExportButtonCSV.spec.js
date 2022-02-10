@@ -9,6 +9,12 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src/share-components/exportButton/components/exportButtonCSV.vue", () => {
+    before(() => {
+        i18next.init({
+            lng: "cimode",
+            debug: false
+        });
+    });
     describe("createFilename", () => {
         const wrapper = shallowMount(ExportButtonCSV, {
             propsData: {},

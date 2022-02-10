@@ -319,7 +319,7 @@ function setLayersVisible (layerParams) {
                 Radio.trigger("ModelList", "addModelsByAttributes", {id: optionsOfLayer.id});
                 layer = Radio.request("ModelList", "getModelByAttributes", {id: optionsOfLayer.id});
                 layer.setIsSelected(optionsOfLayer.visibility);
-                layer.setVisible(optionsOfLayer.visibility);
+                layer.setIsVisibleInMap(optionsOfLayer.visibility);
                 Radio.trigger("Util", "refreshTree");
             }
             else if (layerFromParser === undefined) {

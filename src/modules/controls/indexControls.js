@@ -3,15 +3,15 @@ import mutations from "./mutationsControls";
 import attributions from "./attributions/store/indexAttributions";
 import backForward from "./backForward/store/indexBackForward";
 import orientation from "./orientation/store/indexOrientation";
-import Attributions from "./attributions/components/Attributions.vue";
+import AttributionsItem from "./attributions/components/AttributionsItem.vue";
 import BackForward from "./backForward/components/BackForward.vue";
 import FullScreen from "./fullScreen/components/FullScreen.vue";
-import Orientation from "./orientation/components/Orientation.vue";
+import OrientationItem from "./orientation/components/OrientationItem.vue";
 import OverviewMap from "./overviewMap/components/OverviewMap.vue";
 import TotalView from "./totalView/components/TotalView.vue";
-import Zoom from "./zoom/components/Zoom.vue";
-import Freeze from "./freeze/components/Freeze.vue";
 import EasyReadMode from "./easyReadMode/components/EasyReadMode.vue";
+import ZoomInAndOut from "./zoom/components/ZoomInAndOut.vue";
+import FreezeScreen from "./freeze/components/FreezeScreen.vue";
 
 /**
  * controls-Module is required to be able to nest controls
@@ -30,15 +30,15 @@ export default {
     state: {
         // maps config.json.md control key to component
         componentMap: {
-            attributions: Attributions,
+            attributions: AttributionsItem,
             backForward: BackForward,
             fullScreen: FullScreen,
-            orientation: Orientation,
+            orientation: OrientationItem,
             overviewMap: OverviewMap,
             totalView: TotalView,
-            zoom: Zoom,
-            freeze: Freeze,
-            easyReadMode: EasyReadMode
+            easyReadMode: EasyReadMode,
+            zoom: ZoomInAndOut,
+            freeze: FreezeScreen
         },
         // config.json.md control keys where the matching element is to be hidden in mobile mode
         mobileHiddenControls: [

@@ -1,5 +1,7 @@
 import Model from "@modules/tools/featureLister/model.js";
 import {expect} from "chai";
+import sinon from "sinon";
+import store from "../../../../../src/app-store";
 
 describe("featureLister/model", function () {
     let model;
@@ -145,5 +147,158 @@ describe("featureLister/model", function () {
         it("should return false for undefined", function () {
             expect(model.isValidValue(NaN)).to.be.false;
         });
+    });
+    describe("highlightFeature", function () {
+        model = new Model();
+        const feature = {
+                id: "featureId"
+            },
+            featureWrapper = {
+                id: "featureId",
+                feature: feature
+            },
+            layer = {
+                id: "layerId",
+                styleId: "styleId",
+                name: "name",
+                style: {},
+                geometryType: "Polygon",
+                features: [
+                    featureWrapper
+                ]
+            };
+
+        beforeEach(() => {
+            model.set("layer", layer);
+            store.dispatch = sinon.spy();
+        });
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it("highlightFeature type polygon or line", function () {
+            const fill = model.get("highlightVectorRulesPolygon").fill,
+                stroke = model.get("highlightVectorRulesPolygon").stroke;
+
+            model.highlightFeature("featureId");
+
+            expect(store.dispatch.calledOnce).to.be.true;
+            expect(store.dispatch.args[0]).to.include.members(["Map/highlightFeature"]);
+            expect(store.dispatch.args[0][1].type).to.be.equals("highlightPolygon");
+            expect(store.dispatch.args[0][1].id).to.be.equals("featureId");
+            expect(store.dispatch.args[0][1].layer).to.be.deep.equals(layer);
+            expect(store.dispatch.args[0][1].feature).to.be.deep.equals(feature);
+            expect(store.dispatch.args[0][1].scale).to.be.undefined;
+            expect(store.dispatch.args[0][1].highlightStyle).not.to.be.undefined;
+            expect(store.dispatch.args[0][1].highlightStyle.fill).to.be.equals(fill);
+            expect(store.dispatch.args[0][1].highlightStyle.stroke).to.be.equals(stroke);
+        });
+        it("highlightFeature type point", function () {
+            const scale = model.get("highlightVectorRulesPointLine").image.scale;
+
+            layer.geometryType = "Point";
+            model.highlightFeature("featureId");
+
+            expect(store.dispatch.calledOnce).to.be.true;
+            expect(store.dispatch.args[0]).to.include.members(["Map/highlightFeature"]);
+            expect(store.dispatch.args[0][1].type).to.be.equals("increase");
+            expect(store.dispatch.args[0][1].id).to.be.equals("featureId");
+            expect(store.dispatch.args[0][1].layer).to.be.deep.equals(layer);
+            expect(store.dispatch.args[0][1].feature).to.be.deep.equals(feature);
+            expect(store.dispatch.args[0][1].scale).to.be.equals(scale);
+        });
+        it("highlightFeature type MultiPoint", function () {
+            const scale = model.get("highlightVectorRulesPointLine").image.scale;
+
+            layer.geometryType = "MultiPoint";
+            model.highlightFeature("featureId");
+
+            expect(store.dispatch.calledOnce).to.be.true;
+            expect(store.dispatch.args[0]).to.include.members(["Map/highlightFeature"]);
+            expect(store.dispatch.args[0][1].type).to.be.equals("increase");
+            expect(store.dispatch.args[0][1].id).to.be.equals("featureId");
+            expect(store.dispatch.args[0][1].layer).to.be.deep.equals(layer);
+            expect(store.dispatch.args[0][1].feature).to.be.deep.equals(feature);
+            expect(store.dispatch.args[0][1].scale).to.be.equals(scale);
+        });
+
+    });
+    describe("addLayerToList", function () {
+        model = new Model();
+        const feature = {
+                id: "featureId",
+                getGeometry: () => {
+                    return {
+                        getType: () => "Point"
+                    };
+                }
+            },
+            olLayer = {
+                getSource: () => {
+                    return {
+                        getFeatures: () =>{
+                            return features;
+                        }
+                    };
+                }
+            },
+            layer = {
+                id: "layerId",
+                get: (key) => {
+                    if (key === "layer") {
+                        return olLayer;
+                    }
+                    if (key === "styleId") {
+                        return "styleId";
+                    }
+                    if (key === "name") {
+                        return "name";
+                    }
+                    if (key === "style") {
+                        return "style";
+                    }
+                    return null;
+                }
+            };
+        let features = [feature];
+
+
+        beforeEach(() => {
+            model.set("layerlist", []);
+        });
+
+        it("addLayerToList, layer with feature", function () {
+            expect(model.get("layerlist").length).to.be.equals(0);
+            model.addLayerToList(layer);
+
+            expect(model.get("layerlist")).to.be.an("Array");
+            expect(model.get("layerlist")[0].id).to.be.equals("layerId");
+            expect(model.get("layerlist")[0].styleId).to.be.equals("styleId");
+            expect(model.get("layerlist")[0].name).to.be.equals("name");
+            expect(model.get("layerlist")[0].style).to.be.equals("style");
+            expect(model.get("layerlist")[0].geometryType).to.be.equals("Point");
+
+        });
+        it("addLayerToList, layer without feature", function () {
+            features = [];
+            expect(model.get("layerlist").length).to.be.equals(0);
+            model.addLayerToList(layer);
+
+            expect(model.get("layerlist")).to.be.an("Array");
+            expect(model.get("layerlist")[0].id).to.be.equals("layerId");
+            expect(model.get("layerlist")[0].styleId).to.be.equals("styleId");
+            expect(model.get("layerlist")[0].name).to.be.equals("name");
+            expect(model.get("layerlist")[0].style).to.be.equals("style");
+            expect(model.get("layerlist")[0].geometryType).to.be.equals("none");
+
+        });
+        it("addLayerToList, layer is undefined", function () {
+            model.addLayerToList();
+
+            expect(model.get("layerlist")).to.be.an("Array");
+            expect(model.get("layerlist").length).to.be.equals(0);
+        });
+
+
     });
 });

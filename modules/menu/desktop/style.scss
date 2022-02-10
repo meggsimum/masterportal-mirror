@@ -1,0 +1,190 @@
+@import "../../../css/mixins.scss";
+
+$color_1: rgb(51, 51, 51);
+$font_family_1: "MasterPortalFont", "Arial Narrow", Arial, sans-serif;
+$font_family_2: MasterPortalFont, "Arial Narrow", Arial, sans-serif;
+$background_color_1: rgb(51, 51, 51);
+
+/**************** Menu ***********************/
+/**************** Themenbaum ****************/
+/* ----------------------Themenbaum light -----------------------------*/
+/*Haupt Themenliste */
+/*Unterlisten*/
+/*-------------------Selection/Settings----------------------*/
+.submenu-style {
+    padding: 5px 0;
+    border-bottom: 1px solid rgb(229, 229, 229);
+}
+#root, ul#tree, ul#legend-menu, .portal-title {
+    .tabable {
+        text-decoration: none;
+        cursor: pointer;
+        &:hover {
+            @include primary_action_hover;
+        }
+        &:focus {
+            @include primary_action_focus;
+        }
+    }
+}
+
+ul#tree {
+    border: none;
+    font-family: $font_family_1;
+    padding: 0px 0;
+    min-width: 380px;
+
+    &.fixed {
+        display: block;
+    }
+    .menu-row {
+        line-height: 180%;
+        flex-basis: 100%;
+        display: flex;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        > a {
+            display: flex;
+        }
+    }
+    .closed {
+        &:not(.SelectedLayer) {
+            border-bottom: 1px solid #ddd;
+        }
+    }
+    .last-item {
+        margin-left: auto;
+    }
+    ul {
+        list-style: none;
+        padding: 0 0 0 0px;
+        -webkit-padding-start: 0px;
+        overflow-y: auto;
+        overflow-x: auto;
+        max-width: 500px;
+        max-height: 55vh;
+        .title {
+            padding: 0 0 0 5px;
+            font-family: $font_family_2;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        li {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 5px 5px;
+            a {
+                font-size: 15px;
+                margin: 0px;
+                color: $color_1;
+                flex-grow: 1;
+                &:hover {
+                    color: $color_1;
+                    background-color: lighten($primary_inactive, 40%);
+                }
+
+            }
+        }
+    }
+    .checked {
+        color: $secondary_selected;
+        &:hover {
+            background-color: $accent_active;
+        }
+    }
+    .glyphicon {
+        cursor: pointer;
+        font-size: 15px;
+        padding: 2px;
+    }
+    .glyphicon-info-sign, .glyphicon-cog, .glyphicon-tint, .glyphicon-remove-circle {
+        font-size: 18px;
+        color: $secondary_icon_button;
+
+    }
+    .highlightLayerInformationIcon {
+        color: $secondary_hover;
+    }
+    li.layer-catalog {
+        > .header {
+            padding: 8px 5px 7px 5px;
+            background-color: $background_color_1;
+            color: $accent_contrast;
+            font-size: 13px;
+        }
+        > div > a {
+            flex-grow: 1;
+            color: $accent_contrast;
+            .control-label {
+                padding: 0 0 0 5px;
+            }
+        }
+    }
+    .catalog-selection {
+        font-size: 11px;
+        font-weight: 400;
+        > select {
+            height: 20px;
+            padding: 0;
+            font-size: 11px;
+        }
+    }
+    .themen-folder {
+        font-weight: 400;
+    }
+    .rotate-adjust {
+        transform: rotate(180deg);
+        transition: 0.5s;
+        font-size: 15px;
+        cursor: pointer;
+    }
+    .rotate-adjust-back {
+        transform: rotate(0deg);
+        transition: 0.5s;
+        font-size: 15px;
+        cursor: pointer;
+    }
+    .rotate-pin {
+        transform: rotate(270deg);
+        transition: 0.5s;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .rotate-pin-back {
+        transform: rotate(360deg);
+        transition: 0.5s;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    #SelectedLayer {
+        a {
+            padding: 1px 0px 0px 5px;
+        }
+    }
+    .SelectedLayer {
+        .layer-selection-save {
+            font-size: 11px;
+            font-weight: 400;
+            cursor: pointer;
+        }
+    }
+}
+ul#tree.light {
+    overflow-y: auto;
+    font-size: 12px;
+    color: $color_1;
+    li {
+        padding: 5px 5px 0px 5px;
+        display: flex;
+        flex-wrap: wrap;
+        > div > a {
+            color: $color_1;
+            flex-grow: 1;
+        }
+        span.title {
+            padding: 2px 0 0 5px; 
+            cursor: pointer;
+        }
+    }
+}

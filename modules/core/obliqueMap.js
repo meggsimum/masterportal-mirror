@@ -4,6 +4,7 @@ import {defaults as olDefaultInteractions} from "ol/interaction.js";
 import {ViewDirection, viewDirectionNames} from "vcs-oblique/src/vcs/oblique/viewDirection";
 import {transformFromImage} from "vcs-oblique/src/vcs/oblique/helpers";
 import LoaderOverlay from "../../src/utils/loaderOverlay";
+import store from "../../src/app-store";
 
 /**
  * Creates an oblique map on activate and handles deactivation. Handles interactions, click-events and the activation of oblique layer.
@@ -13,7 +14,8 @@ const ObliqueMap = Backbone.Model.extend({
         active: false
     },
     initialize: function () {
-        const channel = Radio.channel("ObliqueMap");
+        const channel = Radio.channel("ObliqueMap"),
+            obliqueLayers = Radio.request("ModelList", "getModelsByAttributes", {typ: "Oblique"});
 
         this.pausedInteractions = [];
 
@@ -77,6 +79,9 @@ const ObliqueMap = Backbone.Model.extend({
                     this.setCenter(coordinate, resolution);
                 }
             }
+        });
+        obliqueLayers.forEach(layer => {
+            this.registerLayer(layer);
         });
     },
     /**
@@ -187,7 +192,7 @@ const ObliqueMap = Backbone.Model.extend({
      * Sets the tool gfi active.
      * @fires Core#RadioTriggerMapViewSetCenter
      * @fires Core#RadioTriggerMapBeforeChange
-     * @fires Core#RadioTriggerMapViewSetConstrainedResolution
+     * @fires Core#RadioTriggerMapViewSetResolution
      * @fires Core#RadioTriggerMapChange
      * @return {void}
      */
@@ -200,6 +205,7 @@ const ObliqueMap = Backbone.Model.extend({
 
         if (this.isActive() && this.currentCollection && this.currentDirection?.currentImage) {
             Radio.trigger("Map", "beforeChange", "2D");
+            store.commit("Map/setMapMode", "2D");
             this.deactivateOpenTreeOnTopicSearch();
             this.getCenter().then(function (center) {
                 const resolutionFactor = this.currentLayer.get("resolution"),
@@ -211,7 +217,7 @@ const ObliqueMap = Backbone.Model.extend({
                 map2D.getViewport().querySelector(".ol-overlaycontainer-stopevent").classList.remove("olcs-hideoverlay");
                 this.restore2DMapInteractions(map2D);
                 Radio.trigger("MapView", "setCenter", [center.coords[0], center.coords[1]]);
-                Radio.trigger("MapView", "setConstrainedResolution", resolution, 0);
+                Radio.trigger("MapView", "setResolution", resolution);
                 Radio.trigger("Map", "change", "2D");
             }.bind(this));
         }
@@ -400,6 +406,7 @@ const ObliqueMap = Backbone.Model.extend({
 
             this.setActiveToolToFalse();
             map2D = Radio.request("Map", "getMap");
+            store.commit("Map/setMapMode", "Oblique");
 
             if (!this.container) {
                 this.container = this.createAndInsertTargetContainer(map2D);
@@ -438,6 +445,7 @@ const ObliqueMap = Backbone.Model.extend({
                     this.activateLayer(layer, center, resolution).then(function () {
                         layer.set("isVisibleInMap", true);
                         layer.set("isSelected", true);
+                        // here the switching off of all not-oblique layers is triggered
                         Radio.trigger("Map", "change", "Oblique");
                         LoaderOverlay.hide();
                     });

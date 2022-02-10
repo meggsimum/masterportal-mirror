@@ -1,7 +1,7 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import getComponent from "../../../../utils/getComponent";
-import Tool from "../../Tool.vue";
+import ToolTemplate from "../../ToolTemplate.vue";
 import actions from "../store/actionsStyleVT";
 import getters from "../store/gettersStyleVT";
 import mutations from "../store/mutationsStyleVT";
@@ -9,7 +9,7 @@ import mutations from "../store/mutationsStyleVT";
 export default {
     name: "StyleVT",
     components: {
-        Tool
+        ToolTemplate
     },
     computed: {
         ...mapGetters("Tools/StyleVT", Object.keys(getters))
@@ -68,7 +68,7 @@ export default {
 </script>
 
 <template>
-    <Tool
+    <ToolTemplate
         :title="$t(name)"
         :icon="glyphicon"
         :active="active"
@@ -151,9 +151,9 @@ export default {
                 </form>
             </div>
         </template>
-    </Tool>
+    </ToolTemplate>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 @import "~variables";
 </style>

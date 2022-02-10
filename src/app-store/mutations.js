@@ -81,7 +81,7 @@ export default {
     setEasyReadMode (state, isEasyReadMode) {
         state.easyReadMode = isEasyReadMode;
     },
-    /** 
+    /**
      * Sets the url params at state and produces desired reaction.
      * @param {Object} state vuex state
      * @param {URLSearchParams} params an instance of URLSearchParams

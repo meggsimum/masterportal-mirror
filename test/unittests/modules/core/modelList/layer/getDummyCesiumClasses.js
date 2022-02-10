@@ -85,7 +85,7 @@ class Cesium3DTileContent {
  * @param {Object=} tileset -
  * @return {Cesium.Cesium3DTileFeature} -
  */
-export function createDummyCesium3DTileFeature (properties = {}, tileset) {
+export function createDummyCesium3DTileFeature (properties = {}, tileset = {}) {
     const dummy = new Cesium.Cesium3DTileFeature(),
         content = {batchTable: new BatchTable(properties)};
 
@@ -102,7 +102,7 @@ export function createDummyCesium3DTileFeature (properties = {}, tileset) {
  * @param {Object=} tileset -
  * @return {Cesium.Cesium3DTileFeature} -
  */
-export function createDummyCesium3DTileContent (properties = {}, tileset) {
+export function createDummyCesium3DTileContent (properties = {}, tileset = {}) {
     const feature = createDummyCesium3DTileFeature(properties, tileset),
         content = new Cesium3DTileContent(feature);
 

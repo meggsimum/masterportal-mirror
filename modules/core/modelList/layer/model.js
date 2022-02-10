@@ -13,7 +13,7 @@ const Layer = Item.extend(/** @lends Layer.prototype */{
         layerInfoClicked: false,
         singleBaselayer: false,
         legend: true,
-        maxScale: "1000000",
+        maxScale: "1000000000",
         minScale: "0",
         selectionIDX: 0,
         showSettings: true,
@@ -79,7 +79,7 @@ const Layer = Item.extend(/** @lends Layer.prototype */{
      * @fires Map#RadioTriggerMapAddLayerToIndex
      * @fires Layer#RadioTriggerVectorLayerFeaturesLoaded
      * @fires Layer#RadioTriggerVectorLayerFeatureUpdated
-     * @fires Core#RadioRequestMapViewGetResoByScale
+     * @fires Core#RadioRequestMapViewGetResolutionByScale
      * @fires Alerting#RadioTriggerAlertAlert
      * @fires LegendComponent:RadioTriggerLegendComponentUpdateLegend
      * @listens Layer#changeIsSelected
@@ -346,7 +346,7 @@ const Layer = Item.extend(/** @lends Layer.prototype */{
             });
         }
         else if (
-            (this.get("typ") === "WFS" || this.get("typ") === "GeoJSON" || this.get("typ") === "VectorBase")
+            (this.get("typ") === "WFS" || this.get("typ") === "GeoJSON")
             && Radio.request("Parser", "getTreeType") === "light"
         ) {
             this.listenToOnce(this, {
@@ -429,12 +429,12 @@ const Layer = Item.extend(/** @lends Layer.prototype */{
 
     /**
      * Sets visible min and max resolution on layer.
-     * @fires Core#RadioRequestMapViewGetResoByScale
+     * @fires Core#RadioRequestMapViewGetResolutionByScale
      * @returns {void}
      */
     getResolutions: function () {
-        const resoByMaxScale = Radio.request("MapView", "getResoByScale", this.get("maxScale"), "max"),
-            resoByMinScale = Radio.request("MapView", "getResoByScale", this.get("minScale"), "min");
+        const resoByMaxScale = Radio.request("MapView", "getResolutionByScale", this.get("maxScale"), "max"),
+            resoByMinScale = Radio.request("MapView", "getResolutionByScale", this.get("minScale"), "min");
 
         this.setMaxResolution(resoByMaxScale + (resoByMaxScale / 100));
         this.setMinResolution(resoByMinScale);
@@ -473,8 +473,7 @@ const Layer = Item.extend(/** @lends Layer.prototype */{
     toggleIsSelected: function () {
         const id = this.get("id"),
             layerGroup = Radio.request("ModelList", "getModelsByAttributes", {parentId: this.get("parentId")}),
-            singleBaselayer = this.get("singleBaselayer") && this.get("parentId") === "Baselayer",
-            timeLayer = this.get("typ") === "WMS" && this.get("time");
+            singleBaselayer = this.get("singleBaselayer") && this.get("parentId") === "Baselayer";
 
         this.setIsSelected(!this.get("isSelected"));
 
@@ -490,34 +489,9 @@ const Layer = Item.extend(/** @lends Layer.prototype */{
                     }
                 });
             }
-            if (timeLayer) {
-                store.commit("WmsTime/setTimeSliderActive", {active: true, currentLayerId: id});
-            }
-        }
-        else if (timeLayer) {
-            this.removeTimeLayer();
         }
     },
-    /**
-     * If a single WMS-T is shown: Remove the TimeSlider.
-     * If two WMS-T are shown: Remove the LayerSwiper; depending if the original layer was closed, update the layer with a new time value.
-     *
-     * @returns {void}
-     */
-    removeTimeLayer: function () {
-        const id = this.get("id");
 
-        // If the swiper is active, two WMS-T are currently active
-        if (store.getters["WmsTime/layerSwiper"].active) {
-            if (!id.endsWith(store.getters["WmsTime/layerAppendix"])) {
-                this.setIsSelected(true);
-            }
-            store.dispatch("WmsTime/toggleSwiper", id);
-        }
-        else {
-            store.commit("WmsTime/setTimeSliderActive", {active: false, currentLayerId: ""});
-        }
-    },
     /**
      * Toggles the attribute isVisibleInMap
      * @return {void}

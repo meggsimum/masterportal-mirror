@@ -143,7 +143,7 @@ const LayerView = LayerBaseView.extend(/** @lends LayerView.prototype */{
         this.$el.remove();
 
         if (this.model.get("typ") === "WMS" && this.model.get("time")) {
-            this.model.removeTimeLayer(this.model.get("id"));
+            this.model.removeLayer(this.model.get("id"));
         }
     },
 

@@ -379,6 +379,16 @@ Please see the [OpenLayers Icon documentation](https://openlayers.org/en/latest/
 |imageOffsetY||Float|`0.5`|Image y offset|
 |imageOffsetXUnit||String|`"fraction"`|Units in which the anchor x value is specified.|
 |imageOffsetYUnit||String|`"fraction"`|Units in which the anchor y value is specified.|
+|rotation|no|**[rotation](#markdown-header-pointiconrotation)**|`0`|Attribute for rotation of wfs features. If not set, the default value is `0` to show icons in standard alignment.|
+
+#### Point.Icon.rotation
+
+If set, the entry `rotation` has to be from type object with the following attributes:
+
+|Name|Required|Type|Default|Description|
+|----|--------|----|-------|-----------|
+|rotation.isDegree||Boolean|`false`|Whether value should be treated as degrees or radiants.|
+|rotation.value||Number|`0`|Rotation value (positive rotation clockwise).|
 
 #### Point.Circle
 
