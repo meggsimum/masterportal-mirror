@@ -27,9 +27,6 @@ function highlightPolygons (commit, dispatch, highlightObject) {
         commit("setHighlightedFeatures", highlightObject.features);
 
         highlightObject.features.forEach(feature => {
-            const styleObj = styleObject(highlightObject, feature),
-              clonedStyle = styleObj ? styleObj.clone() : undefined;
-
             const newStyle = new Style({
                 image: new Circle({
                     radius: 10,
@@ -44,10 +41,10 @@ function highlightPolygons (commit, dispatch, highlightObject) {
             });
             
             if (newStyle) {
-                console.log(newStyle);
+                //console.log(newStyle);
                 commit("setHighlightedFeaturesStyle", newStyle);
 
-                feature.setStyle(newStyle);
+                //feature.setStyle(newStyle);
             }
         });
     }

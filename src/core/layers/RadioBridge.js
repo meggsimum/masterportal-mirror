@@ -192,7 +192,6 @@ export function resetVectorLayerFeatures (layerId, allLayerFeatures) {
  * @returns {void}
  */
 export function featuresLoaded (layerId, features) {
-    console.log("featuresLoaded");
     Radio.trigger("VectorLayer", "featuresLoaded", layerId, features);
 }
 /**
