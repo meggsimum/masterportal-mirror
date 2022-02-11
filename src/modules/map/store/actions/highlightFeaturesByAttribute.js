@@ -1,18 +1,89 @@
+import {fetchFirstModuleConfig} from "../../../../utils/fetchFirstModuleConfig";
 import {WFS} from "ol/format.js";
+import VectorLayer from "ol/layer/Vector.js";
+import VectorSource from "ol/source/Vector.js";
+import {Style} from "ol/style.js";
+import Point from "ol/geom/Point.js";
+import Feature from "ol/Feature.js";
 import axios from "axios";
 
-    /**
+/**
+ * User type definition
+ * @typedef {Object} highlightFeaturesByAttributeState
+ * @property {String} pointStyleId The id references the style.json for a point map marker.
+ * @property {String} polygonStyleId The id references the style.json for a polygon map marker.
+ * @property {Object} highlightPoint The vector layer for the point map marker.
+ * @property {Object} highlightPolygon The vector layer for the polygon map marker.
+ */
+ const highlighFeaturesState = {
+    pointStyleId: "defaultHighlightFeaturesPoint", //defaultHighlightFeaturesPoint
+    polygonStyleId: "defaultHighlightFeaturesPolygon",
+    highlightPoint: new VectorLayer({
+        id: "highlight_point_layer",
+        name: "highlightPoint",
+        source: new VectorSource(),
+        visible: false,
+        style: new Style(),
+        alwaysOnTop: true
+    }),
+    highlightPolygon: new VectorLayer({
+        id: "highlight_polygon_layer",
+        name: "highlightPolygon",
+        source: new VectorSource(),
+        visible: false,
+        style: new Style(),
+        alwaysOnTop: true
+    })
+};
+
+const configPaths = [
+    "configJs.highlightFeatures"
+];
+
+/**
  * handles the response from a wfs get feature request
  * @param {string} response - XML to be sent as String
- * @param {integer} status - request status
+ * @param {Object} context The context Vue instance.
  * @returns {void}
  */
-function handleGetFeatureResponse (dispatch, response, wfsId) {
+function handleGetFeatureResponse (dispatch, response) {
     if (response.status === 200) {
-        const features = new WFS({version: "1.1.0"}).readFeatures(response.data);
+        // const moduleConfig = fetchFirstModuleConfig(context, configPaths, "HighlightFeatures", false);
+        // console.log(moduleConfig);
+        //2128
+        console.log(highlighFeaturesState.pointStyleId);
+        const styleListModel = Radio.request("StyleList", "returnModelById", highlighFeaturesState.pointStyleId);
+        console.log(styleListModel);
 
-        console.log(features);
-        dispatch("Map/highlightFeatures", {type: "highlightPolygons", features: features, layerId: wfsId}, {root: true});
+        const features = new WFS({version: "1.1.0"}).readFeatures(response.data),
+          newLayer = Radio.request("Map", "createLayerIfNotExists", "highlightFeatures");
+
+        features.forEach(feature => {
+            if (styleListModel) {
+                console.log(feature);
+                let coordValues = feature.getGeometry();
+
+                const iconfeature = new Feature({
+                        geometry: new Point(coordValues)
+                    }),
+                    featureStyle = styleListModel.createStyle(iconfeature, false);
+
+                iconfeature.setStyle(featureStyle);
+            }
+            //commit("addFeatureToMarker", {feature: iconfeature, marker: "markerPoint"});
+            //commit("setVisibilityMarker", {visibility: true, marker: "markerPoint"});
+        });
+        // rootGetters["Map/ol2DMap"].addLayerOnTop(state.markerPoint);
+
+        /*
+        console.log("created Layer");
+        newLayer.setMap(Radio.request("Map", "getMap"));
+        console.log("set Map");
+        newLayer.setVisible(true);
+        newLayer.getSource().addFeatures(features);
+        console.log("added features to layer");
+        */
+        //dispatch("Map/highlightFeatures", {type: "highlightPolygons", features: features, layerId: newLayer.layerId}, {root: true});
     }
     else {
         Radio.trigger("Alert", "alert", "Datenabfrage fehlgeschlagen. (Technische Details: " + status);
@@ -25,6 +96,7 @@ function handleGetFeatureResponse (dispatch, response, wfsId) {
  * @returns {void}
  */
 function highlightFeaturesByAttribute ({dispatch}, queryObject) {
+    console.log(queryObject.context);
     console.log(queryObject.propName);
     console.log(queryObject.propValue);
     console.log(queryObject.queryType);
@@ -77,7 +149,7 @@ function highlightFeaturesByAttribute ({dispatch}, queryObject) {
         headers: { 'content-type': 'raw' },
         timeout: 5000
     }).then(response => {
-        return handleGetFeatureResponse(dispatch, response, queryObject.wfsId);
+        return handleGetFeatureResponse(dispatch, response);
     }).catch(function (error) {
         if (error.response) {
             // Request made and server responded
