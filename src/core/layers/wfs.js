@@ -3,6 +3,7 @@ import LoaderOverlay from "../../utils/loaderOverlay";
 import Layer from "./layer";
 import * as bridge from "./RadioBridge.js";
 import Cluster from "ol/source/Cluster";
+import {bbox, all} from "ol/loadingstrategy.js";
 
 /**
  * Creates a layer of type WMS.
@@ -91,8 +92,10 @@ WFSLayer.prototype.createLayer = function (attrs) {
             },
             loadingParams: {
                 xhrParameters: attrs.isSecured ? {credentials: "include"} : null,
-                propertyname: this.getPropertyname(attrs)
-            }
+                propertyname: this.getPropertyname(attrs),
+                bbox: attrs.bboxGeometry ? attrs.bboxGeometry.getExtent().toString() : undefined
+            },
+            loadingStrategy: attrs.loadingStrategy === "all" ? all : bbox
         };
 
     if (styleFn) {
