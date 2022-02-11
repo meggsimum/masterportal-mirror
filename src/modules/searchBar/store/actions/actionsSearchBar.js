@@ -1,6 +1,7 @@
 import {fetchFirstModuleConfig} from "../../../../utils/fetchFirstModuleConfig";
-import actionsSearchBarOnClickOrHover from "./actionsSearchBarOnClickOrHover";
 import actionsSearchBarSearchInterfaces from "./actionsSearchBarSearchInterfaces";
+import actionsSearchBarSearchResult from "./actionsSearchBarSearchResult";
+import SearchInterface from "../../searchInterfaces/searchInterface";
 
 /**
  * @const {String} configPath An array of possible config locations. First one found will be used.
@@ -10,8 +11,8 @@ const configPaths = [
 ];
 
 export default {
-    ...actionsSearchBarOnClickOrHover,
     ...actionsSearchBarSearchInterfaces,
+    ...actionsSearchBarSearchResult,
 
     /**
      * Sets the config-params of the search bar into state.
@@ -20,5 +21,13 @@ export default {
      */
     initialize: context => {
         return fetchFirstModuleConfig(context, configPaths, "SearchBar");
+    },
+
+    /**
+     * Overwrite default values in search interface.
+     * @returns {void}
+     */
+    overwriteDefaultValues: ({state}) => {
+        SearchInterface.prototype.timeout = state.timeout;
     }
 };

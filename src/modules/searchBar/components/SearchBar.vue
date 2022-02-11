@@ -15,9 +15,10 @@ export default {
     },
     mounted () {
         this.initialize();
+        this.overwriteDefaultValues();
     },
     methods: {
-        ...mapActions("SearchBar", ["initialize"])
+        ...mapActions("SearchBar", ["initialize", "overwriteDefaultValues"])
     }
 };
 </script>

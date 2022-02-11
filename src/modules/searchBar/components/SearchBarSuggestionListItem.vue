@@ -1,13 +1,9 @@
 <script>
 import {mapGetters} from "vuex";
 import getters from "../store/gettersSearchBar";
-import SearchBarSuggestionListItem from "./SearchBarSuggestionListItem.vue";
 
 export default {
-    name: "SearchBarSuggestionList",
-    components: {
-        SearchBarSuggestionListItem
-    },
+    name: "SearchBarSuggestionListItem",
     computed: {
         ...mapGetters("SearchBar", Object.keys(getters))
     }
@@ -15,8 +11,8 @@ export default {
 </script>
 
 <template lang="html">
-    <div id="search-bar-suggestion-list">
-        <SearchBarSuggestionListItem />
+    <div id="search-bar-suggestion-list-item">
+        <!-- do something -->
     </div>
 </template>
 

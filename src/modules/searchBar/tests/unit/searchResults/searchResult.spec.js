@@ -1,7 +1,7 @@
 import {expect} from "chai";
-import SearchResult from "../../../searchInterfaces/searchResult.js";
+import SearchResult from "../../../searchResults/searchResult.js";
 
-describe("src/modules/searchBar/searchInterfaces/searchResult.js", () => {
+describe("src/modules/searchBar/searchResults/searchResult.js", () => {
     let SearchResult1 = null;
 
     before(() => {

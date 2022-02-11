@@ -20,11 +20,10 @@ import SearchInterface from "./searchInterface";
  * @param {String} [namespaces="xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml'"] XML name spaces to request `propertyNames` or `geometryName`.
  * @param {String[]} [onClick=["highligtFeature", "setMarker", "zoomToFeature"]] Actions that are fired when clicking on the search result.
  * @param {String[]} [onHover=["highligtFeature", "setMarker"]] Actions that are fired when hovering on the search result.
- * @param {Number} [timeout=6000] Service request timeout in ms.
  * @param {Boolean} [useProxy=false] Defines whether the URL should be proxied.
  * @returns {void}
  */
-export default function SearchInterfaceSpecialWfs ({definitions, icon, geometryName, maxFeatures, namespaces, onClick, onHover, timeout, useproxy} = {}) {
+export default function SearchInterfaceSpecialWfs ({definitions, icon, geometryName, maxFeatures, namespaces, onClick, onHover, useproxy} = {}) {
     SearchInterface.call(this, onClick || ["highligtFeature", "setMarker", "zoomToFeature"], onHover || ["highligtFeature", "setMarker"]);
 
     this.definitions = definitions;
@@ -33,7 +32,6 @@ export default function SearchInterfaceSpecialWfs ({definitions, icon, geometryN
     this.geometryName = geometryName || "app:geom";
     this.maxFeatures = maxFeatures || 20;
     this.namespaces = namespaces || "xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml'";
-    this.timeout = timeout || 6000;
     this.useproxy = useproxy || false;
 }
 

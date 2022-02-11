@@ -76,6 +76,7 @@ function tests (builder, url, browsername, resolution, config, mode, capability)
                 require("./tests/modules/menu/Layers.js"),
 
                 // modules/searchbar
+                require("../../src/modules/searchBar/tests/end2end/SearchBar.e2e.js"),
                 require("./tests/modules/searchbar/SearchCategories.js"),
                 require("./tests/modules/searchbar/ElasticSearch.js"),
 

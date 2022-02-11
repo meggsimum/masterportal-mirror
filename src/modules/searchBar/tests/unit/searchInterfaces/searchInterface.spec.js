@@ -1,5 +1,7 @@
-import {expect} from "chai";
 import SearchInterface from "../../../searchInterfaces/searchInterface.js";
+import {expect} from "chai";
+import axios from "axios";
+import sinon from "sinon";
 
 describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
     let SearchInterface1 = null;
@@ -43,6 +45,19 @@ describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
             expect(SearchInterface1.searchResults.length).equals(2);
             expect(SearchInterface1.searchResults[0].id).equals("abc");
             expect(SearchInterface1.searchResults[1].id).equals("def");
+        });
+    });
+
+    describe("requestSearch", () => {
+        it("should send a get request", async () => {
+            const urlMock = "/testUrl",
+                responseMock = {test: 123},
+                axiosMock = sinon.stub(axios, "get").resolves(responseMock);
+
+            await SearchInterface1.requestSearch(urlMock);
+
+            expect(axiosMock.calledOnce).to.be.true;
+            expect(axiosMock.args[0][0]).to.equals(urlMock);
         });
     });
 });

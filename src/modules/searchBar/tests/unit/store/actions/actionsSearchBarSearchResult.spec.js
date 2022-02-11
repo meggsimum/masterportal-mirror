@@ -1,5 +1,5 @@
 import testAction from "../../../../../../../test/unittests/VueTestUtils";
-import actions from "../../../../store/actions/actionsSearchBarOnClickOrHover";
+import actions from "../../../../store/actions/actionsSearchBarSearchResult";
 
 const {
     activateLayerInTopicTree,
@@ -10,7 +10,7 @@ const {
     setMarker
 } = actions;
 
-describe("src/modules/searchBar/store/actions/actionsSearchBarOnClickOrHover.spec.js", () => {
+describe("src/modules/searchBar/store/actions/actionsSearchBarSearchResult.spec.js", () => {
     describe("activateLayerInTopicTree", () => {
         it("activateLayerInTopicTree", done => {
             testAction(activateLayerInTopicTree, {}, {}, {}, [
