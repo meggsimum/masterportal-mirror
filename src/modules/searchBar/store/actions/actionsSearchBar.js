@@ -1,6 +1,12 @@
+/**
+ * Contains global actions of the search bar.
+ */
+
 import {fetchFirstModuleConfig} from "../../../../utils/fetchFirstModuleConfig";
+import actionsSearchBarResultList from "./actionsSearchBarResultList";
 import actionsSearchBarSearchInterfaces from "./actionsSearchBarSearchInterfaces";
 import actionsSearchBarSearchResult from "./actionsSearchBarSearchResult";
+import actionsSearchBarSuggestionList from "./actionsSearchBarSuggestionList";
 import SearchInterface from "../../searchInterfaces/searchInterface";
 
 /**
@@ -11,8 +17,10 @@ const configPaths = [
 ];
 
 export default {
+    ...actionsSearchBarResultList,
     ...actionsSearchBarSearchInterfaces,
     ...actionsSearchBarSearchResult,
+    ...actionsSearchBarSuggestionList,
 
     /**
      * Sets the config-params of the search bar into state.

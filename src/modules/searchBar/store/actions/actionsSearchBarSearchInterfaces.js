@@ -1,3 +1,7 @@
+/**
+ * Contains actions that communicate with the search interfaces.
+ */
+
 export default {
     /**
      * Instantiate the configured search interfaces

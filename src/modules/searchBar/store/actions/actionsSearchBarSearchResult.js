@@ -1,3 +1,7 @@
+/**
+ * Contains actions that communicate with other components after an interaction, such as onClick or onHover, with a search result.
+ */
+
 export default {
     /**
      * Activate the layer of the search result in topic tree.
