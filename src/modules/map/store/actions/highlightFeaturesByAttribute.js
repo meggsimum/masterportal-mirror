@@ -6,6 +6,7 @@ import {Style} from "ol/style.js";
 import Point from "ol/geom/Point.js";
 import Feature from "ol/Feature.js";
 import axios from "axios";
+import { Radio } from "backbone";
 
 /**
  * User type definition
@@ -55,24 +56,28 @@ function handleGetFeatureResponse (dispatch, response) {
         const styleListModel = Radio.request("StyleList", "returnModelById", highlighFeaturesState.pointStyleId);
         console.log(styleListModel);
 
-        const features = new WFS({version: "1.1.0"}).readFeatures(response.data),
-          newLayer = Radio.request("Map", "createLayerIfNotExists", "highlightFeatures");
+        const features = new WFS({version: "1.1.0"}).readFeatures(response.data);
+        let newLayer = Radio.request("Map", "createLayerIfNotExists", "highlightFeatures");
 
         features.forEach(feature => {
             if (styleListModel) {
-                console.log(feature);
-                let coordValues = feature.getGeometry();
+                //console.log(feature);
+                const geometry = feature.getGeometry(),
+                    coordinate = geometry.getType() === "Point" ? geometry.getCoordinates() : Extent.getCenter(geometry.getExtent()); // Remove later for more reliable fallback
 
                 const iconfeature = new Feature({
-                        geometry: new Point(coordValues)
+                        geometry: new Point(coordinate)
                     }),
                     featureStyle = styleListModel.createStyle(iconfeature, false);
 
                 iconfeature.setStyle(featureStyle);
+                highlighFeaturesState.highlightPoint.getSource().addFeature(iconfeature);
             }
             //commit("addFeatureToMarker", {feature: iconfeature, marker: "markerPoint"});
             //commit("setVisibilityMarker", {visibility: true, marker: "markerPoint"});
         });
+        highlighFeaturesState.highlightPoint.setVisible(true);
+        Radio.trigger("Map", "addLayerOnTop", highlighFeaturesState.highlightPoint);
         // rootGetters["Map/ol2DMap"].addLayerOnTop(state.markerPoint);
 
         /*
