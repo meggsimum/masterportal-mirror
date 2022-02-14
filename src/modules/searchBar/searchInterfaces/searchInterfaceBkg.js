@@ -34,14 +34,14 @@ export default function SearchInterfaceBkg ({geosearchServiceId, suggestServiceI
         });
 
     this.geosearchServiceId = geosearchServiceId;
-    this.suggestCount = suggestCount || 20;
+    this.suggestServiceId = suggestServiceId;
 
     this.epsg = epsg;
     this.extent = extent || [454591, 5809000, 700000, 6075769];
     this.filter = filter || "filter=(typ:*)";
     this.maxScore = maxScore;
     this.minScore = minScore;
-    this.suggestServiceId = suggestServiceId;
+    this.suggestCount = suggestCount || 20;
 }
 
 SearchInterfaceBkg.prototype = Object.create(SearchInterface.prototype);

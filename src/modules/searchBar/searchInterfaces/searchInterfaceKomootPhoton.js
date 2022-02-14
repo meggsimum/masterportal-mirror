@@ -2,6 +2,9 @@ import SearchInterface from "./searchInterface";
 
 /**
  * The search interface to the koomot photon geocoder.
+ * @constructs
+ * @extends SearchInterface
+ * @see {@link https://photon.komoot.io/}
  * @param {String} serviceId Search service id. Resolved using the rest-services.json file.
  *
  * @param {String} [bbox="9.6,53.3,10.4,53.8"] Boundingbox of the search.
@@ -16,8 +19,6 @@ import SearchInterface from "./searchInterface";
  * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
  * @param {String[]} [suggestionEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a suggestion list item.
  * @param {String[]} [suggestionEvents.onHover=["setMarker"]] Actions that are fired when hovering on a suggestion list item.
- * @constructs
- * @extends SearchInterface
  * @returns {void}
  */
 export default function SearchInterfaceKomootPhoton ({serviceId, bbox, limit, lang, lat, lon, osmTag, resultEvents, suggestionEvents} = {}) {

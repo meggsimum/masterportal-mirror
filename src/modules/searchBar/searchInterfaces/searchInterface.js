@@ -8,13 +8,15 @@ import axios from "axios";
  * @param {Object} [resultEvents={}] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} resultEvents.onClick Actions that are fired when clicking on a result list item.
  * @param {String[]} resultEvents.onHover Actions that are fired when hovering on a result list item.
+ * @param {Sting} [searchState="instantiated"] The search state. Can have the values: "aborted", "failed", "finished", "instantiated", "running".
  * @param {Object} [suggestionEvents={}] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
  * @param {String[]} suggestionEvents.onClick Actions that are fired when clicking on a suggestion list item.
  * @param {String[]} suggestionEvents.onHover Actions that are fired when hovering on a suggestion list item.
  * @returns {void}
  */
-export default function SearchInterface (resultEvents = [], suggestionEvents = []) {
+export default function SearchInterface (resultEvents = [], searchState = "instantiated", suggestionEvents = []) {
     this.resultEvents = resultEvents;
+    this.searchState = searchState;
     this.suggestionEvents = suggestionEvents;
 
     /**
@@ -44,6 +46,18 @@ export default function SearchInterface (resultEvents = [], suggestionEvents = [
  */
 SearchInterface.prototype.search = function () {
     throw new Error("This function must be overridden by the sub search interface!");
+};
+
+/**
+ * Aborts the previous request, if it is still running.
+ * @returns {void}
+ */
+SearchInterface.prototype.abortRequest = function () {
+    if (typeof this.currentController === AbortController) {
+        this.searchState = "aborted";
+        this.currentController.abort();
+        this.currentController = null;
+    }
 };
 
 /**
@@ -80,7 +94,9 @@ SearchInterface.prototype.pushObjectsToSearchResults = function (searchResults =
  * @returns {void}
  */
 SearchInterface.prototype.requestSearch = function (searchUrl, searchParams = {}) {
-    this.currentController = abortRequest(this.currentController);
+    this.abortRequest();
+    this.searchState = "running";
+    this.currentController = new AbortController();
 
     axios.get(searchUrl, {
         param: searchParams,
@@ -88,27 +104,14 @@ SearchInterface.prototype.requestSearch = function (searchUrl, searchParams = {}
         timeout: this.timeout
     })
         .then(response => {
+            this.searchState = "finished";
             return response;
         })
         .catch(error => {
+            this.searchState = "failed";
             console.error(error.toJSON());
         })
         .then(() => {
             this.currentController = null;
         });
 };
-
-/**
- * Creates a new abort controller and cancels the previous request that was already sent.
- * @param {AbortController} currentController The abort controller of previous request to cancel.
- * @returns {AbortController} The new abort controller for next request.
- */
-function abortRequest (currentController) {
-    const controller = new AbortController();
-
-    if (typeof currentController === AbortController) {
-        currentController.abort();
-    }
-
-    return controller;
-}
