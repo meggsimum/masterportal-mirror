@@ -6,7 +6,6 @@ import "./2DMapView";
 import "./2DMapRadioBridge";
 import "./2DMapViewRadioBridge";
 
-import Map3dModel from "../../../modules/core/map3d";
 import ObliqueMap from "../../../modules/core/obliqueMap";
 import mapCollection from "../dataStorage/mapCollection";
 import store from "../../app-store";
@@ -36,29 +35,19 @@ function create2DMap (mapViewSettings) {
  * @returns {void}
  */
 function create3DMap () {
-    // Todo hier die neue 3D map
+    // Todo hier die neue 3D map nach Umzug anlegen.
     if (window.Cesium) {
-        Radio.trigger("Map", "setMap3dModel", new Map3dModel());
+        // Radio.trigger("Map", "setMap3dModel", new Map3dModel());
+        const map3d = api.map.createMap({
+            map2D: store.getters["Map/ol2DMap"],
+            shadowTime: null
+        }, "3D");
+
+        mapCollection.addMap(map3d, "olcs", "3D");
     }
+
 }
 
-// mapid olcs?
-/**
- * Neu:Create the 3D map.
- * @returns {void}
- */
-function create3DMap_ () {
-    /* const map3D2 = api.map.createMap({
-        map2D: store.getters["Map/ol2DMap"],
-        shadowTime: Map3dModel.getShadowTime
-    }, "3D");
- */
-    // mapCollection.addMap(map3D2, "olcs", "3D");
-    // mapCollection.getMapView("olcs", "3D").initStore();
-
-    // store.dispatch("Map/setMapAttributes", {map: map3D});
-    // Radio.trigger("ModelList", "addInitiallyNeededModels");
-}
 
 /**
  * Create the oblique map.
@@ -79,7 +68,6 @@ function createObliqueMap (configJs) {
  */
 export function createMaps (configJs, mapViewSettings) {
     create2DMap(mapViewSettings);
-    create3DMap_();
     create3DMap();
     createObliqueMap(configJs);
 }
