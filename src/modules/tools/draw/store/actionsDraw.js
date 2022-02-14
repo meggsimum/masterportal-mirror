@@ -490,7 +490,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
         /**
          * Sets the given feature as currentFeature and applies the styleSettings
          *
-         * @param {ol/Feature} feature The OpenLayers feature to append to  current "drawState".
+         * @param {ol/Feature} feature The OpenLayers feature to append to the current "drawState".
          * @returns {void}
          */
         setAsCurrentFeatureAndApplyStyleSettings: async ({commit, dispatch, getters}, feature) => {
