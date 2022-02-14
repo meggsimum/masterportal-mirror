@@ -1,3 +1,8 @@
+/* Bereitstellung der 2D- und 3D Map sowie weitere häufig genutzte Elemente aus den Maps
+Maps werden direkt aus der mapCollection geladen!
+Ggf. für getters der layerList eine eigene gettersMapLayerList erzeugen
+Siehe:
+masterportal\src\modules\map\store\gettersMap.js */
 import {generateSimpleGetters} from "../../../app-store/utils/generators";
 import initialState from "./stateMap";
 
