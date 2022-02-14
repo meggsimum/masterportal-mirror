@@ -10,19 +10,27 @@ import SearchInterface from "./searchInterface";
  *
  * @param {String} [hitIcon="glyphicon-list"] CSS icon class of search results, shown before the result name.
  * @param {Object} [hitType="common:modules.searchbar.type.subject"] Search result type shown in the result list after the result name.
- * @param {String[]} [onClick=["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]] Actions that are fired when clicking on the search result.
- * @param {String[]} [onHover] Actions that are fired when hovering on the search result.
  * @param {Object} [payload={}] Matches the customObject description.
  * @param {String} [responseEntryPath=""] Response JSON attribute path to found features.
+ * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
+ * @param {String[]} [resultEvents.onClick=["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]] Actions that are fired when clicking on a result list item.
  * @param {String} [searchStringAttribute="searchString"] Search string attribute name for `payload` object.
+ * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
+ * @param {String[]} [suggestionEvents.onClick=["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]] Actions that are fired when clicking on a suggestion list item.
  * @param {String} [type="POST"] Request type.
  * @param {Boolean} [useProxy=false] Defines whether the URL should be proxied.
  * @constructs
  * @extends SearchInterface
  * @returns {void}
  */
-export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIcon, hitType, onClick, onHover, payload, responseEntryPath, searchStringAttribute, type, useProxy} = {}) {
-    SearchInterface.call(this, onClick || ["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"], onHover);
+export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIcon, hitType, payload, responseEntryPath, resultEvents, searchStringAttribute, suggestionEvents, type, useProxy} = {}) {
+    SearchInterface.call(this,
+        resultEvents || {
+            onClick: ["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]
+        },
+        suggestionEvents || {
+            onClick: ["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]
+        });
 
     this.hitMap = hitMap;
     this.serviceId = serviceId;

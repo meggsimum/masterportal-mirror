@@ -5,26 +5,32 @@ import axios from "axios";
  * Search interface is used as a parent element for concrete search interfaces.
  * @abstract
  * @constructs
- * @param {String[]} [onClick = []] Actions that are fired when clicking on the search result.
- * @param {String[]} [onHover = []] Actions that are fired when hovering on the search result.
- * @param {Number} [timeout = 5000] Timeout for request to a search interface.
+ * @param {Object} [resultEvents={}] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
+ * @param {String[]} resultEvents.onClick Actions that are fired when clicking on a result list item.
+ * @param {String[]} resultEvents.onHover Actions that are fired when hovering on a result list item.
+ * @param {Object} [suggestionEvents={}] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
+ * @param {String[]} suggestionEvents.onClick Actions that are fired when clicking on a suggestion list item.
+ * @param {String[]} suggestionEvents.onHover Actions that are fired when hovering on a suggestion list item.
  * @returns {void}
  */
-export default function SearchInterface (onClick = [], onHover = []) {
-    this.onClick = onClick;
-    this.onHover = onHover;
+export default function SearchInterface (resultEvents = [], suggestionEvents = []) {
+    this.resultEvents = resultEvents;
+    this.suggestionEvents = suggestionEvents;
 
     /**
+     * The current abor controller.
      * @type {String}
      */
     this.currentController = null;
 
     /**
+     * List with results of the search.
      * @type {Object[]}
      */
     this.searchResults = [];
 
     /**
+     * Timeout for request to a search interface.
      * @type {Number}
      */
     this.timeout = this.timeout || 5000;

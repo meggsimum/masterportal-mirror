@@ -9,13 +9,25 @@ import SearchInterface from "./searchInterface";
  *
  * @param {String} [classes = "place,highway,building,shop,historic,leisure,city,county"] May contain the classes to search for.
  * @param {Number} [limit = 5] Maximum amount of requested unfiltered results.
- * @param {String[]} [onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on the search result.
- * @param {String[]} [onHover=["setMarker"]] Actions that are fired when hovering on the search result.
+ * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
+ * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
  * @param {String} [states=""] May contain federal state names with arbitrary separators.
+ * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
+ * @param {String[]} [suggestionEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a suggestion list item.
+ * @param {String[]} [suggestionEvents.onHover=["setMarker"]] Actions that are fired when hovering on a suggestion list item.
  * @returns {void}
  */
-export default function SearchInterfaceOsmNominatim ({serviceId, classes, limit, onClick, onHover, states} = {}) {
-    SearchInterface.call(this, onClick || ["setMarker", "zoomToFeature"], onHover || ["setMarker"]);
+export default function SearchInterfaceOsmNominatim ({serviceId, classes, limit, resultEvents, states, suggestionEvents} = {}) {
+    SearchInterface.call(this,
+        resultEvents || {
+            onClick: ["setMarker", "zoomToFeature"],
+            onHover: ["setMarker"]
+        },
+        suggestionEvents || {
+            onClick: ["setMarker", "zoomToFeature"],
+            onHover: ["setMarker"]
+        });
 
     this.serviceId = serviceId;
 

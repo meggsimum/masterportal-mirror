@@ -10,14 +10,26 @@ import SearchInterface from "./searchInterface";
  * @param {String} [epsg] EPSG code of the coordinate reference system to use. By default, the value in `Portalconfig.mapView.epsg` is used.
  * @param {Number[]} [extent= [454591, 5809000, 700000, 6075769]] Coordinate extent in which search algorithms should return.
  * @param {String} [filter="filter=(typ:*)"] Filter string sent to the BKG interface.
- * @param {String[]} [onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on the search result.
- * @param {String[]} [onHover=["setMarker"]] Actions that are fired when hovering on the search result.
+ * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
+ * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
  * @param {Number} [score=0.6] Score defining the minimum quality of search results.
  * @param {Number} [suggestCount=20] Suggestion amount.
+ * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
+ * @param {String[]} [suggestionEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a suggestion list item.
+ * @param {String[]} [suggestionEvents.onHover=["setMarker"]] Actions that are fired when hovering on a suggestion list item.
  * @returns {void}
  */
-export default function SearchInterfaceBkg ({geosearchServiceId, suggestServiceId, epsg, extent, filter, onClick, onHover, score, suggestCount} = {}) {
-    SearchInterface.call(this, onClick || ["setMarker", "zoomToFeature"], onHover || ["setMarker"]);
+export default function SearchInterfaceBkg ({geosearchServiceId, suggestServiceId, epsg, extent, filter, resultEvents, score, suggestCount, suggestionEvents} = {}) {
+    SearchInterface.call(this,
+        resultEvents || {
+            onClick: ["setMarker", "zoomToFeature"],
+            onHover: ["setMarker"]
+        },
+        suggestionEvents || {
+            onClick: ["setMarker", "zoomToFeature"],
+            onHover: ["setMarker"]
+        });
 
     this.geosearchServiceId = geosearchServiceId;
     this.suggestCount = suggestCount || 20;

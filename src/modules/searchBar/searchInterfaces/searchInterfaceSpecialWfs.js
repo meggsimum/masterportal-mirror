@@ -18,13 +18,25 @@ import SearchInterface from "./searchInterface";
  * @param {String} [geometryName="app:geom"] Geometry attribute name required for zoom functionality.
  * @param {Number} [maxFeatures=20] Maximum amount of features returned.
  * @param {String} [namespaces="xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml'"] XML name spaces to request `propertyNames` or `geometryName`.
- * @param {String[]} [onClick=["highligtFeature", "setMarker", "zoomToFeature"]] Actions that are fired when clicking on the search result.
- * @param {String[]} [onHover=["highligtFeature", "setMarker"]] Actions that are fired when hovering on the search result.
+ * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
+ * @param {String[]} [resultEvents.onClick=["highligtFeature", "setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onHover=["highligtFeature", "setMarker"]] Actions that are fired when hovering on a result list item.
+ * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
+ * @param {String[]} [suggestionEvents.onClick=["highligtFeature", "setMarker", "zoomToFeature"]] Actions that are fired when clicking on a suggestion list item.
+ * @param {String[]} [suggestionEvents.onHover=["highligtFeature", "setMarker"]] Actions that are fired when hovering on a suggestion list item.
  * @param {Boolean} [useProxy=false] Defines whether the URL should be proxied.
  * @returns {void}
  */
-export default function SearchInterfaceSpecialWfs ({definitions, icon, geometryName, maxFeatures, namespaces, onClick, onHover, useproxy} = {}) {
-    SearchInterface.call(this, onClick || ["highligtFeature", "setMarker", "zoomToFeature"], onHover || ["highligtFeature", "setMarker"]);
+export default function SearchInterfaceSpecialWfs ({definitions, icon, geometryName, maxFeatures, namespaces, resultEvents, suggestionEvents, useproxy} = {}) {
+    SearchInterface.call(this,
+        resultEvents || {
+            onClick: ["highligtFeature", "setMarker", "zoomToFeature"],
+            onHover: ["highligtFeature", "setMarker"]
+        },
+        suggestionEvents || {
+            onClick: ["highligtFeature", "setMarker", "zoomToFeature"],
+            onHover: ["highligtFeature", "setMarker"]
+        });
 
     this.definitions = definitions;
 

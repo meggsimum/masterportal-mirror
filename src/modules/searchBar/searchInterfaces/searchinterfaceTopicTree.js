@@ -4,12 +4,20 @@ import SearchInterface from "./searchInterface";
  * The search interface to the topic tree.
  * @constructs
  * @extends SearchInterface
- * @param {String[]} [onClick=["activateLayerInTopicTree", "openTopicTree"]] Actions that are fired when clicking on the search result.
- * @param {String[]} [onHover=[]] Actions that are fired when hovering on the search result.
+ * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
+ * @param {String[]} [resultEvents.onClick=["activateLayerInTopicTree", "openTopicTree"]] Actions that are fired when clicking on a result list item.
+ * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
+ * @param {String[]} [suggestionEvents.onClick=["activateLayerInTopicTree", "openTopicTree"]] Actions that are fired when clicking on a suggestion list item.
  * @returns {void}
  */
-export default function SearchInterfaceTopicTree ({onclick, onHover} = {}) {
-    SearchInterface.call(this, onclick || ["activateLayerInTopicTree", "openTopicTree"], onHover);
+export default function SearchInterfaceTopicTree ({resultEvents, suggestionEvents} = {}) {
+    SearchInterface.call(this,
+        resultEvents || {
+            onClick: ["activateLayerInTopicTree", "openTopicTree"]
+        },
+        suggestionEvents || {
+            onClick: ["activateLayerInTopicTree", "openTopicTree"]
+        });
 }
 
 SearchInterfaceTopicTree.prototype = Object.create(SearchInterface.prototype);

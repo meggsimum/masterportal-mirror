@@ -9,15 +9,27 @@ import SearchInterface from "./searchInterface";
  * @param {Number} [lat=53.6] Latitude of the center for the search.
  * @param {Number} [limit=10] Maximum amount of requested unfiltered results.
  * @param {Number} [lon=10.0] Longtitude of the center for the search.
- * @param {String[]} [onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on the search result.
- * @param {String[]} [onHover=["setMarker"]] Actions that are fired when hovering on the search result.
  * @param {String} [osmTag] Filtering of OSM Tags.
+ * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
+ * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
+ * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
+ * @param {String[]} [suggestionEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a suggestion list item.
+ * @param {String[]} [suggestionEvents.onHover=["setMarker"]] Actions that are fired when hovering on a suggestion list item.
  * @constructs
  * @extends SearchInterface
  * @returns {void}
  */
-export default function SearchInterfaceKomootPhoton ({serviceId, bbox, limit, lang, lat, lon, onClick, onHover, osmTag} = {}) {
-    SearchInterface.call(this, onClick || ["setMarker", "zoomToFeature"], onHover || ["setMarker"]);
+export default function SearchInterfaceKomootPhoton ({serviceId, bbox, limit, lang, lat, lon, osmTag, resultEvents, suggestionEvents} = {}) {
+    SearchInterface.call(this,
+        resultEvents || {
+            onClick: ["setMarker", "zoomToFeature"],
+            onHover: ["setMarker"]
+        },
+        suggestionEvents || {
+            onClick: ["setMarker", "zoomToFeature"],
+            onHover: ["setMarker"]
+        });
 
     this.serviceId = serviceId;
 
