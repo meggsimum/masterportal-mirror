@@ -9,6 +9,7 @@ import Language from "../modules/language/store/indexLanguage";
 import LayerInformation from "../modules/layerInformation/store/indexLayerInformation";
 import Legend from "../modules/legend/store/indexLegend";
 import Map from "../modules/map/store/indexMap";
+import Maps from "../core/maps/store/indexMap";
 import MapMarker from "../modules/mapMarker/store/indexMapMarker";
 import QuickHelp from "../modules/quickHelp/store/indexQuickHelp";
 import PortalTitle from "../modules/portalTitle/store/indexPortalTitle";
@@ -36,6 +37,7 @@ const store = new Vuex.Store({
         LayerInformation,
         Legend,
         Map,
+        Maps,
         MapMarker,
         QuickHelp,
         PortalTitle,
