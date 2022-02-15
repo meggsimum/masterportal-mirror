@@ -104,6 +104,7 @@ export default {
 
     .attributions-wrapper {
         position: relative;
+        display: none;
 
         .attributions-view {
             color: $secondary_contrast;

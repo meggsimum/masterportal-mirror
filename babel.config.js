@@ -14,7 +14,8 @@ module.exports = function (api) {
             ]
         ],
         plugins = [
-            "@babel/plugin-syntax-dynamic-import"
+            "@babel/plugin-syntax-dynamic-import",
+            "transform-object-rest-spread"
         ];
 
     return {

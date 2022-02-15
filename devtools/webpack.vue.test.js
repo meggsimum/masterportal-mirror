@@ -23,6 +23,7 @@ module.exports = {
     target: "node",
     // use when debugging:
     // devtool: "cheap-module-eval-source-map",
+    devtool: "cheap-eval-source-map",
     // output: {
     //     devtoolModuleFilenameTemplate: "[absolute-resource-path]"
     // },
