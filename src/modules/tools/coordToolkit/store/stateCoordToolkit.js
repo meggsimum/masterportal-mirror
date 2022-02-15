@@ -26,6 +26,8 @@
  * @property {String} heightElementName element name in the response of getFeatureRequest of height layer
  * @property {String} heightValueWater value in the response of getFeatureRequest of height layer, if there is water area
  * @property {String} heightValueBuilding value in the response of getFeatureRequest of height layer, if there is building area
+ * @property {Boolean} showCopyButtons if true, copy-buttons are shown
+ * @property {String} delimiter delimits the copies coordinates
  * @property {String} zoomLevel used by search
  * @property {String} name displayed as title (config-param)
  * @property {String} glyphicon icon next to title (config-param)
@@ -61,6 +63,8 @@ const state = {
     heightElementName: null,
     heightValueWater: null,
     heightValueBuilding: null,
+    showCopyButtons: true,
+    delimiter: "|",
 
     // defaults for config.json parameters
     name: "common:menu.tools.coordToolkit",

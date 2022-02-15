@@ -150,7 +150,7 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 #tool-layer-slider-handle {
     display: flex;
     justify-content: space-evenly;
@@ -163,7 +163,7 @@ export default {
 }
 </style>
 
-<style lang="less">
+<style lang="scss">
 #tool-layer-slider-handle {
     .slider.slider-horizontal {
         width: 80%;

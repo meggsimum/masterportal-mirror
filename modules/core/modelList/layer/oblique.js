@@ -28,7 +28,6 @@ const ObliqueLayer = Layer.extend(/** @lends  ObliqueLayer.prototype*/{
      * @listens Layer#changeIsVisibleInMap
      */
     initialize: function () {
-        Radio.trigger("ObliqueMap", "registerLayer", this);
         this.listenTo(Radio.channel("Layer"), {
             "updateLayerInfo": function (name) {
                 if (this.get("name") === name && this.get("layerInfoChecked") === true) {

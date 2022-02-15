@@ -103,14 +103,14 @@ export default {
     </div>
 </template>
 
-<style lang="less">
+<style lang="scss">
     /* ⚠️ unscoped css, extend with care;
      * control (.ol-overviewmap) is out of scope;
      * overriding with global rule that avoids leaks
      * by using local id #overviewmap-wrapper */
 
     @import "~variables";
-    @box-shadow: 0 6px 12px @shadow;
+    $box-shadow: 0 6px 12px $shadow;
 
     #easy-read-mode-wrapper {
         position: relative;

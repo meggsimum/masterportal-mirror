@@ -20,14 +20,14 @@ const CustomTreeParser = Parser.extend(/** @lends CustomTreeParser.prototype */{
      * The object from config.json and services.json are merged by id.
      *
      * @param  {Object} [object={}] - Baselayer | Overlayer | Folder
-     * @param  {string} parentId Id of parent item.
-     * @param  {Number} level Level of recursion. Equals to level in layertree.
+     * @param  {String} [parentId=""] Id of parent item.
+     * @param  {Number} [level=0] Level of recursion. Equals to level in layertree.
      * @fires Core#RadioRequestRawLayerListGetLayerAttributesWhere
      * @fires Core#RadioRequestRawLayerListGetLayerAttributesList
      * @fires Core.ConfigLoader#RadioRequestParserGetTreeType
      * @returns {void}
      */
-    parseTree: function (object = {}, parentId, level) {
+    parseTree: function (object = {}, parentId = "", level = 0) {
         const isBaseLayer = Boolean(parentId === "Baselayer" || parentId === "tree"),
             treeType = Radio.request("Parser", "getTreeType");
 

@@ -60,6 +60,7 @@ const LayerView = LayerBaseView.extend(/** @lends LayerView.prototype */{
         this.initializeDomId();
         channel.on({
             "rerender": this.rerender,
+            "renderSetting": this.renderTransparency,
             "change:isOutOfRange": this.toggleColor,
             "change:isVisibleInTree": this.removeIfNotVisible
         }, this);
@@ -115,9 +116,9 @@ const LayerView = LayerBaseView.extend(/** @lends LayerView.prototype */{
             }
             this.$el.css("padding-left", ((this.model.get("level") * 15) + 5) + "px");
         }
-        if (this.model.get("isSettingVisible") === true) {
-            this.$el.append(this.templateSettings(attr));
-        }
+
+        this.renderTransparency();
+
         return this;
     },
 
@@ -139,8 +140,35 @@ const LayerView = LayerBaseView.extend(/** @lends LayerView.prototype */{
         if (!this.model.get("isSelected") && (this.model.get("maxScale") < scale || this.model.get("minScale") > scale)) {
             this.disableComponent();
         }
-        if (this.model.get("isSettingVisible")) {
+
+        if (this.model.get("isSettingVisible") === true) {
             this.$el.append(this.templateSettings(attr));
+        }
+    },
+
+    /**
+     * Draws the settings (transparency, metainfo, ...)
+     * @param {String} layerId The layer id.
+     * @return {void}
+     */
+    renderTransparency: function (layerId) {
+        const attr = this.model.toJSON();
+
+        // Animation cog
+        if (layerId === attr.id) {
+            this.$(".glyphicon-cog").toggleClass("rotate rotate-back");
+        }
+
+        // Slide-Animation templateSetting
+        if (this.model.get("isSettingVisible") === false) {
+            this.$el.find(".layer-settings").slideUp("slow", function () {
+                $(this).remove();
+            });
+        }
+        else {
+            this.$el.append(this.templateSettings(attr));
+            this.$el.find(".layer-settings").hide();
+            this.$el.find(".layer-settings").slideDown();
         }
     },
 

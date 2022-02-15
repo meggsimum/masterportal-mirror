@@ -303,12 +303,12 @@ export default {
     </Component>
 </template>
 
-<style lang="less" scoped>
-    @import "~/css/mixins.less";
+<style lang="scss" scoped>
+    @import "~/css/mixins.scss";
 
-    @background_color_2: #f5f5f5;
-    @background_color_3: #e6e6e6;
-    @font_family_1: "MasterPortalFont Bold","Arial Narrow",Arial,sans-serif;
+    $background_color_2: #f5f5f5;
+    $background_color_3: #e6e6e6;
+    $font_family_1: "MasterPortalFont Bold","Arial Narrow",Arial,sans-serif;
 
     #tool-compareFeatures {
         z-index: -1;
@@ -319,22 +319,22 @@ export default {
         top: 0px !important;
         left: 0px;
         &:focus {
-            .primary_action_focus();
+            @include primary_action_focus;
         }
         &:hover {
-            .primary_action_hover();
+            @include primary_action_hover;
         }
     }
     table {
-        font-family: @font_family_default;
+        font-family: $font_family_default;
         border-collapse: collapse;
         table-layout: fixed;
         width: 100%;
         a {
-            color: darken(@secondary_focus, 10%);
+            color: darken($secondary_focus, 10%);
             padding: 2px;
             &:hover{
-                .primary_action_hover();
+                @include primary_action_hover;
             }
         }
         tr {
@@ -342,10 +342,10 @@ export default {
                 max-width: 25px !important;
             }
             &:nth-child(odd) {
-                background-color: @background_color_2;
+                background-color: $background_color_2;
             }
             &:nth-child(even) {
-                background-color: @background_color_3;
+                background-color: $background_color_3;
             }
         }
         td {

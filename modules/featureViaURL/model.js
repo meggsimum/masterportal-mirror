@@ -51,12 +51,12 @@ const FeatureViaURL = Backbone.Model.extend(/** @lends FeatureViaURL.prototype*/
     /**
      * Creates a basic GeoJSON structure and adds the features given by the user from the URL to it.
      *
-     * @param {Number} [epsg=4326] The EPSG-Code in which the features are coded.
      * @param {Object[]} features The features given by the user to be added to the map.
      * @param {String} geometryType Geometry type of the given features.
+     * @param {Number} [epsg=4326] The EPSG-Code in which the features are coded.
      * @returns {Object} GeoJSON containing the features.
      */
-    createGeoJSON: function (epsg = 4326, features, geometryType) {
+    createGeoJSON: function (features, geometryType, epsg = 4326) {
         const geoJSON = {
             "type": "FeatureCollection",
             "crs": {
@@ -150,7 +150,7 @@ const FeatureViaURL = Backbone.Model.extend(/** @lends FeatureViaURL.prototype*/
                 Radio.trigger("Alert", "alert", i18next.t("common:modules.featureViaURL.messages.featureParsingAll"));
                 return;
             }
-            geoJSON = this.createGeoJSON(epsg, features, geometryType);
+            geoJSON = this.createGeoJSON(features, geometryType, epsg);
             if (geoJSON.features.length === 0) {
                 Radio.trigger("Alert", "alert", i18next.t("common:modules.featureViaURL.messages.featureParsingNoneAdded"));
             }

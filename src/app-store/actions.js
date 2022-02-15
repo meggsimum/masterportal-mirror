@@ -65,10 +65,10 @@ export default {
      * Secondly: the output given by the config.json for the path with the deprecated parameter. (output)
      * Thirdly: the deprecated key/parameter itself. (deprecatedKey)
      * @param {[String, String[]]} [entry=[]] - Array with the single "steps" / elements of the deprecated path. entry[0] ist the new path, elem[1] is an array of old paths
-     * @param {Object} config - The config.json or config.js.
+     * @param {Object} [config={}] - The config.json or config.js.
      * @returns {Object} - returns an object with the three mentioned above parameters.
     */
-    getDeprecatedParameters (entry = [], config) {
+    getDeprecatedParameters (entry = [], config = {}) {
         const newSplittedPath = entry[0].split(".");
         let oldSplittedPath = "",
             output = "",

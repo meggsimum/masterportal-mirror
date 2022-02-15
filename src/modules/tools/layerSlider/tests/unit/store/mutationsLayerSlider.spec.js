@@ -32,7 +32,7 @@ describe("src/modules/tools/layerSlider/store/mutationslayerSlider.js", () => {
         });
     });
     describe("setProgressBarWidth", () => {
-        it("setProgressBarWidth", () => {
+        it("setProgressBarWidth to 1/3 with three layers", () => {
             const state = {
                     progressBarWidth: 10
                 },
@@ -56,7 +56,62 @@ describe("src/modules/tools/layerSlider/store/mutationslayerSlider.js", () => {
 
             setProgressBarWidth(state, layerIds);
 
-            expect(state.progressBarWidth).to.equals(33);
+            expect(state.progressBarWidth.toFixed(3)).to.equals("33.333");
+        });
+        it("setProgressBarWidth to 1/11 with eleven layers", () => {
+            const state = {
+                    progressBarWidth: 10
+                },
+                layerIds = [
+                    {
+                        layerId: "0",
+                        index: 0
+                    },
+                    {
+                        layerId: "1",
+                        index: 1
+                    },
+                    {
+                        layerId: "2",
+                        index: 2
+                    },
+                    {
+                        layerId: "3",
+                        index: 3
+                    },
+                    {
+                        layerId: "4",
+                        index: 4
+                    },
+                    {
+                        layerId: "5",
+                        index: 5
+                    },
+                    {
+                        layerId: "6",
+                        index: 6
+                    },
+                    {
+                        layerId: "7",
+                        index: 7
+                    },
+                    {
+                        layerId: "8",
+                        index: 8
+                    },
+                    {
+                        layerId: "9",
+                        index: 9
+                    },
+                    {
+                        layerId: "10",
+                        index: 10
+                    }
+                ];
+
+            setProgressBarWidth(state, layerIds);
+
+            expect(state.progressBarWidth.toFixed(3)).to.equals("9.091");
         });
     });
     describe("setWindowsInterval", () => {

@@ -3,11 +3,11 @@ import OpenLayersVectorTileLayer from "ol/layer/VectorTile";
 import OpenLayersVectorTileSource from "ol/source/VectorTile";
 import TileGrid from "ol/tilegrid/TileGrid";
 import {extentFromProjection} from "ol/tilegrid";
+import {defaultResolutions} from "ol-mapbox-style/dist/util";
 import stylefunction from "ol-mapbox-style/dist/stylefunction";
 import store from "../../../../src/app-store/index";
 import getProxyUrl from "../../../../src/utils/getProxyUrl";
 import axios from "axios";
-import mapCollection from "../../../../src/core/dataStorage/mapCollection.js";
 
 import Layer from "./model";
 
@@ -58,20 +58,18 @@ const VectorTileLayer = Layer.extend(/** @lends VTLayer.prototype */{
             params = {
                 projection: dataEpsg,
                 format: new MVT(),
-                url: url
+                url: url,
+                tileSize: this.get("tileSize"),
+                zDirection: this.get("zDirection"),
+                minZoom: this.get("minZoom"),
+                maxZoom: this.get("maxZoom")
             };
-        let layerSource = null;
 
-        if (dataEpsg !== "EPSG:3857" || this.get("extent") || this.get("origin") || this.get("origins") || resolutions || this.get("tileSize")) {
+        if (dataEpsg !== "EPSG:3857" || this.get("extent") || this.get("origin") || this.get("origins") || resolutions) {
             params.tileGrid = this.createTileGrid(dataEpsg);
         }
 
-        layerSource = new OpenLayersVectorTileSource(params);
-
-        if (resolutions) {
-            layerSource.setTileUrlFunction((tileCoord) => this.createTileUrlFunction(tileCoord, url, layerSource.getTileGrid()));
-        }
-        this.setLayerSource(layerSource);
+        this.setLayerSource(new OpenLayersVectorTileSource(params));
     },
 
     /**
@@ -82,13 +80,14 @@ const VectorTileLayer = Layer.extend(/** @lends VTLayer.prototype */{
     createTileGrid: function (dataEpsg) {
         const extent = this.get("extent") || extentFromProjection(dataEpsg),
             origin = this.get("origin") || [extent[0], extent[3]], // upper left corner = [minX, maxY]
-            resolutions = this.get("resolutions") || mapCollection.getMap(store.getters["Map/mapId"], store.getters["Map/mapMode"]).getView().getResolutions(),
+            resolutions = this.get("resolutions") || defaultResolutions,
             tileSize = this.get("tileSize") || 512,
             origins = this.get("origins"),
             tileGridParams = {
                 extent: extent,
                 resolutions: resolutions,
-                tileSize: tileSize
+                tileSize: tileSize,
+                minZoom: this.get("minZoom")
             };
 
         if (origins) {
@@ -99,42 +98,6 @@ const VectorTileLayer = Layer.extend(/** @lends VTLayer.prototype */{
         }
 
         return new TileGrid(tileGridParams);
-    },
-
-    /**
-     * Creates a Tile url which are used to extrapolate the tiles.
-     * The coordinates of the tiles are replaced in it.
-     * @param {Number[]} tileCoord The tile coordinates.
-     * @param {String} url The url from vectorTile services.
-     * @param {module:ol/tilegrid/TileGrid~TileGrid} tileGrid The tileGrid.
-     * @returns {String} The url with replaced coordinates.
-     */
-    createTileUrlFunction: function (tileCoord, url, tileGrid) {
-        const z = tileCoord[0],
-            x = tileCoord[1],
-            y = tileCoord[2],
-            minusY = this.calculateMinusY(tileGrid, z, y),
-            replacedUrl = url
-                .replace("{z}", z)
-                .replace("{x}", x)
-                .replace("{y}", y)
-                .replace("{-y}", minusY);
-
-        return replacedUrl;
-    },
-
-    /**
-     * Calculates the -y value.
-     * The -y value is required by geoserver services.
-     * @param {module:ol/tilegrid/TileGrid~TileGrid} tileGrid The tileGrid.
-     * @param {Number} z The z coordinate.
-     * @param {Number} y The y coordinate.
-     * @returns {Number} The negative y coordinate
-     */
-    calculateMinusY: function (tileGrid, z, y) {
-        const tileRange = tileGrid.getFullTileRange(z);
-
-        return tileRange.maxY - y;
     },
 
     /**

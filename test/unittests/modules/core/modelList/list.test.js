@@ -1,5 +1,6 @@
 import Model from "@modules/core/modelList/list.js";
 import {expect} from "chai";
+import sinon from "sinon";
 
 describe("core/modelList/list", function () {
     let model;
@@ -138,7 +139,7 @@ describe("core/modelList/list", function () {
                     "name": "aLayer"
                 });
 
-            it("schould remove layer", function () {
+            it("should remove layer", function () {
                 model.add([xModel, yModel, zModel]);
                 model.removeLayerById("1001");
                 expect(model.get("1001")).to.be.undefined;
@@ -147,6 +148,36 @@ describe("core/modelList/list", function () {
                 model.add([xModel, yModel, zModel]);
                 model.removeLayerById("1001");
                 expect(model).to.have.lengthOf(2);
+            });
+        });
+        describe("selectedChanged", () => {
+            let AModel;
+
+            before(() => {
+                AModel = Backbone.Model.extend({
+                    defaults: {
+                        id: "9999",
+                        type: "xyz",
+                        isVisibleInMap: false
+                    },
+                    resetSelectionIDX: () => sinon.stub(),
+                    setIsVisibleInMap: function (value) {
+                        this.set("isVisibleInMap", value);
+                    }
+                });
+            });
+
+            it("should set isVisibleInMap to true if model has type layer", () => {
+                const abcModel = new AModel({type: "layer"});
+
+                model.selectedChanged(abcModel, true);
+                expect(abcModel.get("isVisibleInMap")).to.be.true;
+            });
+            it("should set isVisibleInMap to false if model has other type", () => {
+                const abcModel = new AModel({type: "abc"});
+
+                model.selectedChanged(abcModel, true);
+                expect(abcModel.get("isVisibleInMap")).to.be.false;
             });
         });
     });

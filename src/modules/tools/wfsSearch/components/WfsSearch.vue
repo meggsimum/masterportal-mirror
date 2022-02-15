@@ -1,11 +1,11 @@
 <script>
-import Modal from "../../../../share-components/modals/components/Modal.vue";
-import List from "../../../../share-components/list/components/List.vue";
+import ModalItem from "../../../../share-components/modals/components/ModalItem.vue";
+import ListItem from "../../../../share-components/list/components/ListItem.vue";
 import LoaderOverlay from "../../../../utils/loaderOverlay";
 import {mapActions, mapGetters, mapMutations} from "vuex";
-import Tool from "../../Tool.vue";
+import ToolTemplate from "../../ToolTemplate.vue";
 import getComponent from "../../../../utils/getComponent";
-import Literal from "./Literal.vue";
+import WfsSearchLiteral from "./WfsSearchLiteral.vue";
 import actions from "../store/actionsWfsSearch";
 import getters from "../store/gettersWfsSearch";
 import mutations from "../store/mutationsWfsSearch";
@@ -16,10 +16,10 @@ import isObject from "../../../../utils/isObject";
 export default {
     name: "WfsSearch",
     components: {
-        Literal,
-        List,
-        Tool,
-        Modal
+        WfsSearchLiteral,
+        ListItem,
+        ToolTemplate,
+        ModalItem
     },
     computed: {
         ...mapGetters("Tools/WfsSearch", Object.keys(getters)),
@@ -119,7 +119,7 @@ export default {
 
 <template>
     <div>
-        <Tool
+        <ToolTemplate
             :title="$t(name)"
             :icon="glyphicon"
             :active="active"
@@ -136,7 +136,6 @@ export default {
                 >
                     <template
                         v-if="instances.length > 1"
-                        class="form-group form-group-sm"
                     >
                         <label
                             id="tool-wfsSearch-instances-select-label"
@@ -180,7 +179,7 @@ export default {
                     </div>
                     <hr>
                     <template v-for="(literal, i) of currentInstance.literals">
-                        <Literal
+                        <WfsSearchLiteral
                             :key="'tool-wfsSearch-clause' + i"
                             :literal="literal"
                         />
@@ -222,8 +221,8 @@ export default {
                     </div>
                 </form>
             </template>
-        </Tool>
-        <Modal
+        </ToolTemplate>
+        <ModalItem
             :title="$t(name)"
             :icon="glyphicon"
             :show-modal="showResults"
@@ -236,12 +235,14 @@ export default {
                     <h4>{{ currentInstance.resultDialogTitle ? $t(currentInstance.resultDialogTitle) : $t(name) }}</h4>
                     <hr>
                 </header>
-                <List
+                <ListItem
                     :key="'tool-wfsSearch-list'"
                     :identifier="$t(name)"
                     :geometry-name="geometryName"
                     :table-heads="headers"
                     :table-data="results"
+                    :on-row-click-callback="setShowResultList.bind(this, false)"
+                    :max-zoom="zoomLevel"
                 />
             </template>
             <template v-else>
@@ -251,11 +252,11 @@ export default {
                 </header>
                 <span>{{ $t("common:modules.tools.wfsSearch.noResults") }}</span>
             </template>
-        </Modal>
+        </ModalItem>
     </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 @import "~variables";
 .btn {
     margin-top: 10px;

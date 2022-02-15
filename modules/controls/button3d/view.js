@@ -84,19 +84,12 @@ const Button3dView = Backbone.View.extend(/** @lends Button3dView.prototype */{
             this.$("#button3D").addClass("toggleButtonPressed");
             this.$("#3d-titel-open").hide();
             this.$("#3d-titel-close").show();
-            store.commit("Map/setMapMode", 1);
         }
         else {
             // 3d open
             this.$("#button3D").removeClass("toggleButtonPressed");
             this.$("#3d-titel-close").hide();
             this.$("#3d-titel-open").show();
-            if (mapMode === "2D") {
-                store.commit("Map/setMapMode", 0);
-            }
-            else {
-                store.commit("Map/setMapMode", 2);
-            }
         }
     },
     /**

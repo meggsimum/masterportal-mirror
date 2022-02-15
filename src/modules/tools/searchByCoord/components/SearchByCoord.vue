@@ -1,5 +1,5 @@
 <script>
-import Tool from "../../Tool.vue";
+import ToolTemplate from "../../ToolTemplate.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import getters from "../store/gettersSearchByCoord";
 import actions from "../store/actionsSearchByCoord";
@@ -9,7 +9,7 @@ import state from "../store/stateSearchByCoord";
 export default {
     name: "SearchByCoord",
     components: {
-        Tool
+        ToolTemplate
     },
     computed: {
         ...mapGetters("Tools/SearchByCoord", Object.keys(getters)),
@@ -92,7 +92,7 @@ export default {
 </script>
 
 <template lang="html">
-    <Tool
+    <ToolTemplate
         :title="name"
         :icon="glyphicon"
         :active="active"
@@ -205,10 +205,10 @@ export default {
                 </form>
             </div>
         </template>
-    </Tool>
+    </ToolTemplate>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     @import "~variables";
 #search-by-coord {
     @media (min-width: 768px) {

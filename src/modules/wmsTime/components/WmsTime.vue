@@ -40,27 +40,27 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
-    .transform(@value) {
-        transform: translateX(@value);
+<style lang="scss" scoped>
+    @mixin transform($value) {
+        transform: translateX($value);
         transition: ease transform 250ms;
     }
     .timeSlider-wrapper {
-        .transform(-50%);
+        @include transform(-50%);
     }
     .moveLeft {
-        .transform(-110%);
+        @include transform(-110%);
     }
     .moveRight {
-        .transform(10%);
+        @include transform(10%);
     }
 
     @media (min-width: 1075px) {
         .moveLeft {
-            .transform(-150%);
+            @include transform(-150%);
         }
         .moveRight {
-            .transform(50%);
+            @include transform(50%);
         }
     }
 </style>

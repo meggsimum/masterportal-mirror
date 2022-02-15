@@ -156,20 +156,20 @@ export function handleHTMLResponse (document, layer, url) {
  * @param {String} [layer.gfiTheme] the title of the theme - it does not check if the theme exists
  * @param {(Object|String)} [layer.attributesToShow] an object of attributes to show or a string "showAll" or "ignore"
  * @param {String} url the url to call the wms features from
- * @param {String|Object} [feature] the feature to get the id and the properties from
+ * @param {String|Object} [feature=null] the feature to get the id and the properties from
  * @param {?Object} [feature.properties] an object with the data of the feature as simple key/value pairs
  * @param {String} [feature.id=""] id the id of the feature
  * @param {Object[]} [features=null] a list of features
  * @param {String} [document=""] A html document as string with gfi content.
  * @returns {Object} an object{getTitle, getTheme, getAttributesToShow, getProperties, getId, getGfiUrl, getLayerId}
  */
-export function createGfiFeature (layer, url = "", feature, features = null, document = "") {
+export function createGfiFeature (layer, url = "", feature = null, features = null, document = "") {
     if (!layer) {
         return {};
     }
     return {
         getTitle: () => layer.get("name"),
-        getTheme: () => layer.get("gfiTheme") || "default",
+        getTheme: () => layer.get("gfiTheme") || "defaultTheme",
         getAttributesToShow: () => layer.get("gfiAttributes"),
         getProperties: () => feature ? feature.getProperties() : {},
         getFeatures: () => features,

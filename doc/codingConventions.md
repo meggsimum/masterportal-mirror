@@ -43,7 +43,7 @@ All the following rules must hold.
 * A.3.2 Names for variables, functions, folders, and files are in English and speaking.
 * A.3.3 Comments are written in English.
 * A.3.4 A function's block comment always describes its use.
-* A.3.5 Styles are written in the `.less` dialect.
+* A.3.5 Styles are written in the `.scss` dialect.
 * A.3.6 No use of `important!` in styles.
 * A.3.7 Modules and components must only influence behavior and style of their own and child elements.
 * A.3.8 No style changes may happen via JavaScript.
@@ -223,7 +223,7 @@ The code is written as readable and understandable as possible. The goal is not 
 * B.5.1 Use `scoped` within the style tag whenever possible.
 * B.5.2 Avoid usage of the `!important` keyword.
 * B.5.3 Avoid setting `width` and `height` to absolute values, as this hinders designing responsively.
-* B.5.4 The global less file `variables.less` contains all variables required by *BootstrapV3* and the Masterportal. All theming variables (fonts, colors, ...) are maintained here. The file `variables.less` must only contain variables, mixins, and functions. Adding CSS rules would result in a repetition per import, bloating the CSS size. The `variables.less` is imported to a component's style tag by using the `import` command.
+* B.5.4 The global scss file `variables.scss` contains all variables required by *BootstrapV3* and the Masterportal. All theming variables (fonts, colors, ...) are maintained here. The file `variables.scss` must only contain variables, mixins, and functions. Adding CSS rules would result in a repetition per import, bloating the CSS size. The `variables.scss` is imported to a component's style tag by using the `import` command.
 
 ---
 

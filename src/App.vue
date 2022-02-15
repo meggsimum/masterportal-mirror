@@ -3,7 +3,7 @@ import {mapMutations} from "vuex";
 import MainNav from "./MainNav.vue";
 import MapRegion from "./MapRegion.vue";
 import isDevMode from "./utils/isDevMode";
-import Footer from "./modules/footer/components/Footer.vue";
+import PortalFooter from "./modules/portalFooter/components/PortalFooter.vue";
 import {checkIsURLQueryValid} from "./utils/parametricUrl/stateModifier";
 
 export default {
@@ -11,7 +11,7 @@ export default {
     components: {
         MainNav,
         MapRegion,
-        Footer
+        PortalFooter
         // ,MapModuleDebug
     },
     data: () => ({isDevMode}),
@@ -42,7 +42,7 @@ export default {
     >
         <MainNav />
         <MapRegion class="map-region" />
-        <Footer />
+        <PortalFooter />
         <!-- <MapModuleDebug v-if="isDevMode" /> -->
         <!-- keep loader last so it's above it all
 
@@ -53,7 +53,7 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     @import "~variables";
 
     #masterportal-container {
@@ -66,8 +66,8 @@ export default {
         height: 100%;
         width: 100%;
 
-        font-family: @font_family_default;
-        font-size: @font_size_default;
+        font-family: $font_family_default;
+        font-size: $font_size_default;
 
         .map-region {
             display: flex;

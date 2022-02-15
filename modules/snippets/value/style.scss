@@ -1,0 +1,10 @@
+@import "../../../css/mixins.scss";
+
+.value-text .valueView {
+    &:focus {
+        @include primary_action_focus;
+    }
+    &:hover {
+        @include primary_action_hover;
+    }        
+}

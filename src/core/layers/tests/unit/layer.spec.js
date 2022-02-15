@@ -1,5 +1,7 @@
 import {expect} from "chai";
 import sinon from "sinon";
+import {Point, MultiPoint} from "ol/geom.js";
+import Feature from "ol/Feature.js";
 import Layer from "../../layer";
 import Group from "../../group";
 import store from "../../../../app-store";
@@ -12,12 +14,14 @@ describe("src/core/layers/layer.js", () => {
         newLayerSource = false,
         layerOpacity = 1,
         layerResoMin = 0,
-        layerResoMax = 1000;
+        layerResoMax = 1000,
+        featureList = [];
     const olLayer = {
         values_: {opacity: layerOpacity},
         getSource: () => {
             return {
-                refresh: () => sinon.spy
+                refresh: () => sinon.spy,
+                getFeatures: () => featureList
             };
         },
         setSource: () => {
@@ -85,6 +89,9 @@ describe("src/core/layers/layer.js", () => {
         store.getters = {
             treeType: "custom"
         };
+        featureList = [];
+        featureList.push(new Feature(new Point([1, 1])));
+        featureList.push(new Feature(new MultiPoint([[1, 1], [2, 2]])));
     });
     afterEach(() => {
         sinon.restore();
@@ -163,15 +170,16 @@ describe("src/core/layers/layer.js", () => {
         expect(layerRemoved).to.be.true;
     });
     it("checkForScale shall trigger menu rerender", function () {
-        let called = 0;
+        let calledMenu = 0,
+            calledIsOutOfRange = 0;
 
         sinon.stub(Radio, "trigger").callsFake((...args) => {
             args.forEach(arg => {
                 if (arg === "Menu") {
-                    called++;
+                    calledMenu++;
                 }
                 if (arg === "change:isOutOfRange") {
-                    called++;
+                    calledIsOutOfRange++;
                 }
             });
         });
@@ -181,13 +189,17 @@ describe("src/core/layers/layer.js", () => {
         const layerWrapper = new Layer(attributes, olLayer);
 
         expect(layerWrapper.get("isOutOfRange")).to.be.true;
-        expect(called).to.be.equals(2);
+        expect(calledMenu).to.be.equals(2);
+        expect(calledIsOutOfRange).to.be.equals(1);
 
+        calledMenu = 0;
+        calledIsOutOfRange = 0;
         layerWrapper.checkForScale({
             scale: "2000"
         });
         expect(layerWrapper.get("isOutOfRange")).to.be.false;
-        expect(called).to.be.equals(4);
+        expect(calledIsOutOfRange).to.be.equals(1);
+        expect(calledMenu).to.be.equals(1);
     });
     it("setIsVisibleInMap shall change layer visibility", function () {
         const layerWrapper = new Layer(attributes, olLayer);
@@ -256,15 +268,16 @@ describe("src/core/layers/layer.js", () => {
         expect(layerWrapper.get("layer").getOpacity()).to.be.equals(0.5);
     });
     it("setIsVisibleInTree shall trigger menu rerender", function () {
-        let called = 0;
+        let calledMenu = 0,
+            calledIsVisibleInTree = 0;
 
         sinon.stub(Radio, "trigger").callsFake((...args) => {
             args.forEach(arg => {
                 if (arg === "Menu") {
-                    called++;
+                    calledMenu++;
                 }
                 if (arg === "change:isVisibleInTree") {
-                    called++;
+                    calledIsVisibleInTree++;
                 }
             });
         });
@@ -274,7 +287,8 @@ describe("src/core/layers/layer.js", () => {
         expect(layerWrapper.get("isVisibleInTree")).to.be.undefined;
         layerWrapper.setIsVisibleInTree(true);
         expect(layerWrapper.get("isVisibleInTree")).to.be.true;
-        expect(called).to.be.equals(2);
+        expect(calledIsVisibleInTree).to.be.equals(1);
+        expect(calledMenu).to.be.equals(2);
     });
     it("resetSelectionIDX shall set selectionIDX to 0 and setSelectionIDX test", function () {
         const layerWrapper = new Layer(attributes, olLayer);
@@ -333,28 +347,28 @@ describe("src/core/layers/layer.js", () => {
         expect(counter).to.be.equals(2);
     });
     it("setIsSelected test true with treetype light", function () {
-        testSetIsSelected("light", 2, 0, true);
+        testSetIsSelected("light", 2, 1, true);
     });
     it("setIsSelected test false with treetype light", function () {
-        testSetIsSelected("light", 2, 0, false);
+        testSetIsSelected("light", 2, 1, false);
     });
     it("setIsSelected test true with treetype not light", function () {
-        testSetIsSelected("custom", 0, 3, true);
+        testSetIsSelected("custom", 2, 4, true);
     });
     it("setIsSelected test false with treetype not light", function () {
-        testSetIsSelected("custom", 0, 3, false);
+        testSetIsSelected("custom", 2, 4, false);
     });
     it("toggleIsVisibleInMap is true and treeType light", function () {
-        testIsVisibleInMap("light", true, 0);
+        testIsVisibleInMap("light", true, 1);
     });
     it("toggleIsVisibleInMap is false and treeType light", function () {
-        testIsVisibleInMap("light", false, 0);
+        testIsVisibleInMap("light", false, 1);
     });
     it("toggleIsVisibleInMap is true and treeType not light", function () {
-        testIsVisibleInMap("custom", true, 5);
+        testIsVisibleInMap("custom", true, 6);
     });
     it("toggleIsVisibleInMap is false and treeType not light", function () {
-        testIsVisibleInMap("custom", false, 2);
+        testIsVisibleInMap("custom", false, 3);
     });
 
     it("updateLayerSource test", function () {
@@ -600,8 +614,192 @@ describe("src/core/layers/layer.js", () => {
 
         expect(layer.getMaxResolution()).to.be.equals(600 + (600 / 100));
         expect(layer.getMinResolution()).to.be.equals(1);
+    });
+    it("prepareFeaturesFor3D without altitude", function () {
+        attributes.altitude = undefined;
+        const layerWrapper = new Layer(attributes, olLayer),
+            layer = layerWrapper.get("layer");
+        let alteredFeatures = null;
+
+        layerWrapper.prepareFeaturesFor3D(layer.getSource().getFeatures());
+        alteredFeatures = layer.getSource().getFeatures();
+
+        expect(alteredFeatures[0].getGeometry()).to.be.an.instanceof(Point);
+        expect(alteredFeatures[0].getGeometry().getCoordinates().length).to.be.equals(2);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1]).to.be.equals(1);
+    });
+    it("prepareFeaturesFor3D without altitudeOffset", function () {
+        attributes.altitudeOffset = undefined;
+        const layerWrapper = new Layer(attributes, olLayer),
+            layer = layerWrapper.get("layer");
+        let alteredFeatures = null;
+
+        layerWrapper.prepareFeaturesFor3D(layer.getSource().getFeatures());
+        alteredFeatures = layer.getSource().getFeatures();
+
+        expect(alteredFeatures[0].getGeometry()).to.be.an.instanceof(Point);
+        expect(alteredFeatures[0].getGeometry().getCoordinates().length).to.be.equals(2);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1]).to.be.equals(1);
+    });
+    it("prepareFeaturesFor3D set altitude on 2D-point geometry coordinates", function () {
+        attributes.altitude = 127;
+        const layerWrapper = new Layer(attributes, olLayer),
+            layer = layerWrapper.get("layer");
+        let alteredFeatures = null;
+
+        layerWrapper.prepareFeaturesFor3D(layer.getSource().getFeatures());
+        alteredFeatures = layer.getSource().getFeatures();
+
+        expect(alteredFeatures[0].getGeometry()).to.be.an.instanceof(Point);
+        expect(alteredFeatures[0].getGeometry().getCoordinates().length).to.be.equals(3);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[2]).to.be.equals(attributes.altitude);
 
     });
+    it("prepareFeaturesFor3D set altitude on 3D-point geometry coordinates", function () {
+        attributes.altitude = 127;
+        featureList = [];
+        featureList.push(new Feature(new Point([1, 1, 1])));
+
+        const layerWrapper = new Layer(attributes, olLayer),
+            layer = layerWrapper.get("layer");
+        let alteredFeatures = null;
+
+        layerWrapper.prepareFeaturesFor3D(layer.getSource().getFeatures());
+        alteredFeatures = layer.getSource().getFeatures();
+
+        expect(alteredFeatures[0].getGeometry()).to.be.an.instanceof(Point);
+        expect(alteredFeatures[0].getGeometry().getCoordinates().length).to.be.equals(3);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[2]).to.be.equals(attributes.altitude);
+
+    });
+    it("prepareFeaturesFor3D set altitudeOffset on 2D-point geometry coordinates", function () {
+        attributes.altitudeOffset = 10;
+        const layerWrapper = new Layer(attributes, olLayer),
+            layer = layerWrapper.get("layer");
+        let alteredFeatures = null;
+
+        layerWrapper.prepareFeaturesFor3D(layer.getSource().getFeatures());
+        alteredFeatures = layer.getSource().getFeatures();
+
+        expect(alteredFeatures[0].getGeometry()).to.be.an.instanceof(Point);
+        expect(alteredFeatures[0].getGeometry().getCoordinates().length).to.be.equals(3);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[2]).to.be.equals(attributes.altitudeOffset);
+
+    });
+    it("prepareFeaturesFor3D set altitudeOffset on 3D-point geometry coordinates", function () {
+        attributes.altitudeOffset = 10;
+        featureList = [];
+        featureList.push(new Feature(new Point([1, 1, 1])));
+
+        const layerWrapper = new Layer(attributes, olLayer),
+            layer = layerWrapper.get("layer");
+        let alteredFeatures = null;
+
+        layerWrapper.prepareFeaturesFor3D(layer.getSource().getFeatures());
+        alteredFeatures = layer.getSource().getFeatures();
+
+        expect(alteredFeatures[0].getGeometry()).to.be.an.instanceof(Point);
+        expect(alteredFeatures[0].getGeometry().getCoordinates().length).to.be.equals(3);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[2]).to.be.equals(attributes.altitudeOffset + 1);
+
+    });
+    it("prepareFeaturesFor3D set altitude on 2D-multipoint geometry coordinates", function () {
+        attributes.altitude = 127;
+        const layerWrapper = new Layer(attributes, olLayer),
+            layer = layerWrapper.get("layer");
+        let alteredFeatures = null;
+
+        layerWrapper.prepareFeaturesFor3D(layer.getSource().getFeatures());
+        alteredFeatures = layer.getSource().getFeatures();
+
+        expect(alteredFeatures[1].getGeometry()).to.be.an.instanceof(MultiPoint);
+        expect(alteredFeatures[1].getGeometry().getCoordinates().length).to.be.equals(2);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[0].length).to.be.equals(3);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[1].length).to.be.equals(3);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[0][0]).to.be.equals(1);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[0][1]).to.be.equals(1);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[0][2]).to.be.equals(attributes.altitude);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[1][0]).to.be.equals(2);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[1][1]).to.be.equals(2);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[1][2]).to.be.equals(attributes.altitude);
+    });
+    it("prepareFeaturesFor3D set altitude on 2D-multipoint geometry coordinates", function () {
+        attributes.altitude = 127;
+        featureList = [];
+        featureList.push(new Feature(new MultiPoint([[1, 1, 1], [2, 2, 2]])));
+
+        const layerWrapper = new Layer(attributes, olLayer),
+            layer = layerWrapper.get("layer");
+        let alteredFeatures = null;
+
+        layerWrapper.prepareFeaturesFor3D(layer.getSource().getFeatures());
+        alteredFeatures = layer.getSource().getFeatures();
+
+        expect(alteredFeatures[0].getGeometry()).to.be.an.instanceof(MultiPoint);
+        expect(alteredFeatures[0].getGeometry().getCoordinates().length).to.be.equals(2);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0].length).to.be.equals(3);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1].length).to.be.equals(3);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0][0]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0][1]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0][2]).to.be.equals(attributes.altitude);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1][0]).to.be.equals(2);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1][1]).to.be.equals(2);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1][2]).to.be.equals(attributes.altitude);
+    });
+    it("prepareFeaturesFor3D set altitudeOffset on 2D-multipoint geometry coordinates", function () {
+        attributes.altitudeOffset = 10;
+        const layerWrapper = new Layer(attributes, olLayer),
+            layer = layerWrapper.get("layer");
+        let alteredFeatures = null;
+
+        layerWrapper.prepareFeaturesFor3D(layer.getSource().getFeatures());
+        alteredFeatures = layer.getSource().getFeatures();
+
+        expect(alteredFeatures[1].getGeometry()).to.be.an.instanceof(MultiPoint);
+        expect(alteredFeatures[1].getGeometry().getCoordinates().length).to.be.equals(2);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[0].length).to.be.equals(3);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[1].length).to.be.equals(3);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[0][0]).to.be.equals(1);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[0][1]).to.be.equals(1);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[0][2]).to.be.equals(attributes.altitudeOffset);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[1][0]).to.be.equals(2);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[1][1]).to.be.equals(2);
+        expect(alteredFeatures[1].getGeometry().getCoordinates()[1][2]).to.be.equals(attributes.altitudeOffset);
+    });
+    it("prepareFeaturesFor3D set altitudeOffset on 2D-multipoint geometry coordinates", function () {
+        attributes.altitudeOffset = 10;
+        featureList = [];
+        featureList.push(new Feature(new MultiPoint([[1, 1, 1], [2, 2, 2]])));
+
+        const layerWrapper = new Layer(attributes, olLayer),
+            layer = layerWrapper.get("layer");
+        let alteredFeatures = null;
+
+        layerWrapper.prepareFeaturesFor3D(layer.getSource().getFeatures());
+        alteredFeatures = layer.getSource().getFeatures();
+
+        expect(alteredFeatures[0].getGeometry()).to.be.an.instanceof(MultiPoint);
+        expect(alteredFeatures[0].getGeometry().getCoordinates().length).to.be.equals(2);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0].length).to.be.equals(3);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1].length).to.be.equals(3);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0][0]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0][1]).to.be.equals(1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[0][2]).to.be.equals(attributes.altitudeOffset + 1);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1][0]).to.be.equals(2);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1][1]).to.be.equals(2);
+        expect(alteredFeatures[0].getGeometry().getCoordinates()[1][2]).to.be.equals(attributes.altitudeOffset + 2);
+    });
+
     /**
      * testSetIsSelected
      * @param {String} treetype the treetype
@@ -629,6 +827,7 @@ describe("src/core/layers/layer.js", () => {
             });
         });
 
+
         attributes.isSelected = !isSelected;
         attributes.isVisibleInMap = !isSelected;
         attributes.selectionIDX = 2;
@@ -645,6 +844,7 @@ describe("src/core/layers/layer.js", () => {
         expect(layerRemoved).to.be.equals(!isSelected);
         expect(counter).to.be.equals(calls);
     }
+
     /**
      * testIsVisibleInMap
      * @param {String} treeType the treeType
@@ -677,7 +877,4 @@ describe("src/core/layers/layer.js", () => {
         expect(layerVisible).to.be.equals(isVisibleInMap);
         expect(counter).to.be.equals(calls);
     }
-
-
 });
-

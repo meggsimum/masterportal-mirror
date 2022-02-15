@@ -17,14 +17,16 @@ export default {
             const toolsInSidebar = {};
 
             this.configuredTools.forEach(tool => {
-                if (typeof this.$store.state.Tools[tool.component.name] !== "undefined") {
-                    toolsInSidebar[tool.component.name] = this.$store.state.Tools[tool.component.name].renderToWindow === false;
+                const toolName = tool.key.charAt(0).toUpperCase() + tool.key.slice(1);
+
+                if (typeof this.$store.state.Tools[toolName] !== "undefined") {
+                    toolsInSidebar[toolName] = this.$store.state.Tools[toolName].renderToWindow === false;
                 }
-                else if (typeof this.$store.state[tool.component.name] !== "undefined") {
-                    toolsInSidebar[tool.component.name] = this.$store.state[tool.key].renderToWindow === false;
+                else if (typeof this.$store.state[toolName] !== "undefined") {
+                    toolsInSidebar[toolName] = this.$store.state[toolName].renderToWindow === false;
                 }
                 else {
-                    toolsInSidebar[tool.component.name] = false;
+                    toolsInSidebar[toolName] = false;
                 }
             });
 
@@ -39,7 +41,7 @@ export default {
         this.setToolActiveByConfig();
 
         this.configuredTools.forEach(configuredTool => {
-            const toolName = configuredTool?.component?.name;
+            const toolName = configuredTool?.key.charAt(0).toUpperCase() + configuredTool.key.slice(1);
 
             this.addToolNameAndGlyphiconToModelList(toolName);
         });
@@ -73,7 +75,7 @@ export default {
         <template v-for="tool in configuredTools">
             <component
                 :is="tool.component"
-                v-if="toolsInSidebar[tool.component.name] === showInSidebar"
+                v-if="toolsInSidebar[tool.key.charAt(0).toUpperCase() + tool.key.slice(1)] === showInSidebar"
                 :key="'tool-' + tool.key"
             />
         </template>

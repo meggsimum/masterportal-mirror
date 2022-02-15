@@ -1,0 +1,44 @@
+$color_4: rgb(82, 82, 82);
+
+/**************** Layer Settings ****************/
+/**************** Layer Settings Button Animation ****************/
+ul#tree {
+    .layer-settings {
+        flex-basis: 100%;
+        margin-top: 10px;
+        border-top: 1px solid #ddd;
+        padding: 10px 0px 10px 5px;
+        font-size: 12px;
+        .glyphicon {
+            font-size: 15px;
+            padding: 0px;
+        }
+        .glyphicon-picture {
+            padding-right: 16px;
+        }
+        .remove-layer {
+            color: #f2f2f2;
+            font-weight: bold;
+            background-color :$color_4;
+            border-radius: 10px;
+            padding: 5px;
+            margin-left: 25px;
+            cursor: pointer;
+        }
+        .transparency {
+            padding-left: 20px;
+        }
+        .badge {
+            padding-top: 6px;
+            background-color: #686868;
+        }
+    }
+}
+.rotate {
+    transform: rotate(-360deg);
+    transition: 0.5s;
+}
+.rotate-back {
+    transform: rotate(0deg);
+    transition: 0.5s;
+}

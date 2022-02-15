@@ -8,7 +8,7 @@ describe("src/modules/tools/gfi/components/themes/sensor/utils/calculateWorkload
             expect(calculateOneHour(undefined, undefined, undefined, undefined, undefined, undefined)).to.be.a("number").to.equal(0);
         });
         it("should return number 0 for empty input", function () {
-            expect(calculateOneHour([], "", -1, "", "", "")).to.be.a("number").to.equal(0);
+            expect(calculateOneHour("", -1, "", "", "", [])).to.be.a("number").to.equal(0);
         });
         it("should return number 0.167 for a result change after 10 minutes input", function () {
             const dataByActualTimeStep = [{
@@ -21,8 +21,8 @@ describe("src/modules/tools/gfi/components/themes/sensor/utils/calculateWorkload
                 nextTimeStep = "2018-06-21T02:00:00",
                 targetResult = "charging";
 
-            expect(calculateOneHour(dataByActualTimeStep, actualState, actualStateAsNumber,
-                actualTimeStep, nextTimeStep, targetResult)).to.be.a("number").to.equal(0.167);
+            expect(calculateOneHour(actualState, actualStateAsNumber,
+                actualTimeStep, nextTimeStep, targetResult, dataByActualTimeStep)).to.be.a("number").to.equal(0.167);
         });
     });
 
@@ -98,7 +98,7 @@ describe("src/modules/tools/gfi/components/themes/sensor/utils/calculateWorkload
             expect(calculateWorkloadForOneWeekday(undefined, undefined)).to.be.an("array").that.is.empty;
         });
         it("should return an empty array for empty input", function () {
-            expect(calculateWorkloadForOneWeekday([], "")).to.be.an("array").that.is.empty;
+            expect(calculateWorkloadForOneWeekday("", [])).to.be.an("array").that.is.empty;
         });
         it("should return an array with 24 objects representing the workload array for correct input", function () {
             const divideDataByWeekday = [[{
@@ -111,7 +111,7 @@ describe("src/modules/tools/gfi/components/themes/sensor/utils/calculateWorkload
                 }]],
                 targetResult = "charging";
 
-            expect(calculateWorkloadForOneWeekday(divideDataByWeekday, targetResult)).to.be.an("array").to.have.deep.members([{
+            expect(calculateWorkloadForOneWeekday(targetResult, divideDataByWeekday)).to.be.an("array").to.have.deep.members([{
                 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0,
                 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0,
                 15: 0, 16: 0, 17: 0, 18: 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 1

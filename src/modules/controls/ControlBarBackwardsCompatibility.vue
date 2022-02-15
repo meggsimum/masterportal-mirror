@@ -22,33 +22,33 @@ export default {
     />
 </template>
 
-<style lang="less">
+<style lang="scss">
     @import "~variables";
-    @color_1: #f3f3f3;
-    @background_color_1: #E10019;
-    @background_color_2: rgb(8,88,158);
+    $color_1: #f3f3f3;
+    $background_color_1: #E10019;
+    $background_color_2: rgb(8,88,158);
 
-    /* using this classname to scope css effects; can not use scoped less here since controls are not within scope, but added by jQuery */
+    /* using this classname to scope css effects; can not use scoped scss here since controls are not within scope, but added by jQuery */
     .backwards-compatibility-controls {
         /* use old styling way for glyphicons for old controls */
         .glyphicon {
-            color: @color_1;
-            background-color: @background_color_1;
+            color: $color_1;
+            background-color: $background_color_1;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
             &:hover {
                 cursor: pointer;
-                background-color: @primary_hover;
+                background-color: $primary_hover;
             }
             &:focus {
-                background-color: @primary_focus;
-                outline: 1px solid @primary_outline;
+                background-color: $primary_focus;
+                outline: 1px solid $primary_outline;
             }
             &:active {
-                background-color: @primary_active;
+                background-color: $primary_active;
             }
         }
         > .toggleButtonPressed {
-            background-color: @background_color_2;
+            background-color: $background_color_2;
         }
         /* forcing compatibility by overriding old-style layouting */
         .controls-row-right {

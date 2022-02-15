@@ -260,12 +260,13 @@
                 "title": "Hamburger Flurstücksuche",
                 "resultDialogTitle": "Trefferliste",
                 "requestConfig": {
-                  "gazetteer": true,
-                  "nameSpaces": [
-                    "http://www.adv-online.de/namespaces/adv/dog",
-                    "http://geodienste.hamburg.de/dog_gages/services/wfs_dog?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&OUTPUTFORMAT=application/gml+xml;+version=3.2&TYPENAME=dog:Flurstueckskoordinaten&NAMESPACES=xmlns(dog,http://www.adv-online.de/namespaces/adv/dog)"
-                  ],
-                  "memberSuffix": "member",
+                  "gazetteer": {
+                    "namespaces": [
+                      "http://www.adv-online.de/namespaces/adv/dog",
+                      "http://geodienste.hamburg.de/dog_gages/services/wfs_dog?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&OUTPUTFORMAT=application/gml+xml;+version=3.2&TYPENAME=dog:Flurstueckskoordinaten&NAMESPACES=xmlns(dog,http://www.adv-online.de/namespaces/adv/dog)"
+                    ],
+                    "memberSuffix": "member"
+                  },
                   "restLayerId": "6",
                   "storedQueryId": "Flurstueck"
                 },
@@ -411,7 +412,25 @@
           "featureLister": {
             "name": "translate#common:menu.tools.featureLister",
             "glyphicon": "glyphicon-menu-hamburger",
-            "lister": 10
+            "lister": 10,
+            "highlightVectorRulesPolygon": {
+              "fill": {
+                "color": [255, 255, 255, 0.9]
+            },
+            "stroke": {
+                "width": 4,
+                "color": [0, 0, 204, 0.9]
+            }
+          },
+          "highlightVectorRulesPointLine": {
+            "stroke": {
+                "width": 8,
+                "color": [255, 0, 255, 0.9]
+              },
+              "image": {
+                  "scale": 1.5
+              }
+            }
           },
           "saveSelection": {
             "name": "translate#common:menu.tools.saveSelection",
@@ -453,10 +472,6 @@
           "vueAddon": {
             "name": "AddonTool",
             "glyphicon": "glyphicon-screenshot"
-          },
-          "tacticalMark": {
-            "name": "Taktische Zeichen",
-            "glyphicon": "glyphicon-map-marker"
           }
         }
       },
@@ -601,13 +616,13 @@
           ]
         },
         {
+          "id": "8730"
+        },
+        {
           "id": "2128",
           "styleId": "2128",
           "styleGeometryType": ["Point"],
           "name": "translate#common:tree.trafficCameras"
-        },
-        {
-          "id": "8730"
         },
         {
           "id": "10220"

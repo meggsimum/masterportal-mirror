@@ -181,6 +181,7 @@ const BuildSpecModel = {
                 if (layer instanceof Group) {
                     layer.getLayers().getArray().forEach(childLayer => {
                         printLayers.push(this.buildLayerType(childLayer, currentResolution));
+                        visibleLayerIds.push(childLayer.get("id"));
                     });
                 }
                 else {
@@ -188,13 +189,15 @@ const BuildSpecModel = {
                 }
                 printLayers.forEach(printLayer => {
                     if (typeof printLayer !== "undefined") {
-                        visibleLayerIds.push(layer?.get("id"));
+                        if (layer?.get("id") !== undefined) {
+                            visibleLayerIds.push(layer?.get("id"));
+                        }
                         layers.push(printLayer);
                     }
+
                 });
             });
         }
-
         this.setVisibleLayerIds(visibleLayerIds);
         attributes.map.layers = layers.reverse();
     },
@@ -1042,13 +1045,16 @@ const BuildSpecModel = {
         if (isLegendSelected && legends.length > 0) {
             legendObject.layers = [];
             legends.forEach(legendObj => {
+                if (Radio.request("ModelList", "getModelByAttributes", {id: legendObj.id}).get("children")?.length > 0) {
+                    legendObj.id = Radio.request("ModelList", "getModelByAttributes", {id: legendObj.id}).get("children")[0].id;
+                }
+
                 if (this.defaults.visibleLayerIds.includes(legendObj.id)) {
                     const legendContainsPdf = this.legendContainsPdf(legendObj.legend);
 
                     if (isMetaDataAvailable) {
                         metaDataLayerList.push(legendObj.name);
                     }
-
                     if (legendContainsPdf) {
                         Radio.trigger("Alert", "alert", {
                             kategorie: "alert-info",
@@ -1064,7 +1070,6 @@ const BuildSpecModel = {
                         });
                     }
                 }
-
             });
         }
         this.setShowLegend(isLegendSelected);

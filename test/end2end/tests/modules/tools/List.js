@@ -130,7 +130,7 @@ async function ListTests ({builder, url, resolution, browsername, capability, mo
 
                 // wait with buffer until zooming is finished, because a fit is set to 800 milliseconds when zooming.
                 await driver.wait(new Promise(r => setTimeout(r, 1000)));
-                expect(await driver.executeScript(getCenter)).to.deep.equal([569773.549, 5937127.029]);
+                expect(await driver.executeScript(getCenter)).to.deep.equal([572117.612, 5936208.925]);
                 expect(await driver.executeScript(getResolution)).to.equal(0.13229159522920522);
             });
         });

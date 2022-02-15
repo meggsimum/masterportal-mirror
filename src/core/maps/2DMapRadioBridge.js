@@ -26,9 +26,6 @@ channel.reply({
 });
 
 channel.on({
-    "addLayer": function (layer) {
-        this.getMap().addLayer(layer);
-    },
     "addLayerToIndex": function (args) {
         mapCollection.getMap("ol", "2D").addLayerToIndex(args[0], args[1]);
     },

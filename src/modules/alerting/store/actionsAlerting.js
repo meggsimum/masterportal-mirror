@@ -132,6 +132,10 @@ export default {
             isInTime = false,
             displayAlert = false;
 
+        if (newAlertObj === undefined) {
+            return false;
+        }
+
         // in case its an object with deprecated text property, display warning and continue
         if (typeof newAlertObj.text === "string" && typeof newAlertObj.content !== "string") {
             console.warn("Deprecated: Alerting module - property \"text\" is deprecated. Use \"content\" instead.");

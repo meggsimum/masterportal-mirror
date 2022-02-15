@@ -343,14 +343,14 @@ export default {
     </ToolWindow>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     @import "~variables";
-    @color_1: #E10019;
-    @background_color_1: white;
-    @background_color_2: rgb(255, 255, 255);
+    $color_1: #E10019;
+    $background_color_1: white;
+    $background_color_2: rgb(255, 255, 255);
 
     .subtitle {
-        color: @color_1;
+        color: $color_1;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -363,12 +363,12 @@ export default {
         margin: 15px 0 10px 0;
     }
 
-    #layerInformation .abstract /deep/ p {
+    #layerInformation .abstract >>> p {
         padding: 2px 10px 2px 0;
     }
     .body {
         >ul {
-            background-color: @background_color_1;
+            background-color: $background_color_1;
         }
         max-height: 66vh;
         overflow-y: auto;
@@ -386,7 +386,7 @@ export default {
         width: 45vw;
         margin: 0 10px 30px 10px;
         z-index: 1010;
-        background-color: @background_color_2;
+        background-color: $background_color_2;
         box-shadow: 8px 8px 12px rgba(0, 0, 0, 0.176);
         border: 1px solid rgb(229, 229, 229);
 
@@ -452,11 +452,11 @@ export default {
     .dropdown-menu {
         width: 100%;
         a.active {
-            background-color: @accent_active;
+            background-color: $accent_active;
             color: white;
         }
         a:hover {
-            background-color: @accent_hover;
+            background-color: $accent_hover;
         }
     }
 

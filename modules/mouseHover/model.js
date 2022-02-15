@@ -362,12 +362,12 @@ const MouseHoverPopupModel = Backbone.Model.extend(/** @lends MouseHoverPopupMod
         let value = "";
 
         mouseHoverField.forEach((element, index) => {
-            if (typeof featureProperties[element] !== "string") {
-                console.error("Parameter \"mouseHoverField\" in config.json mit Wert \"" + element + "\" gibt keinen String zurück!");
+            if (typeof featureProperties[element.trim()] !== "string") {
+                console.error("Parameter \"mouseHoverField\" in config.json mit Wert \"" + element.trim() + "\" gibt keinen String zurück!");
                 value = value + "<span class='" + (index === 0 ? "title" : "") + "'>no data</span></br>";
                 return;
             }
-            value = value + "<span class='" + (index === 0 ? "title" : "") + "'>" + featureProperties[element] + "</span></br>";
+            value = value + "<span class='" + (index === 0 ? "title" : "") + "'>" + featureProperties[element.trim()] + "</span></br>";
         });
 
         return value;

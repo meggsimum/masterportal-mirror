@@ -31,6 +31,7 @@
  * @property {?String} [mapMode = "2D"] current map mode
  * @property {String} [mapId = "ol"] current map id
  * @property {String[]} loadedLayers list of ready loaded layers IDs
+ * @property {String[]} featuresLoaded is filled with layerId and features, after features are loaded. Next Load of features will overwrite the content.
  */
 const state = {
     size: null,
@@ -66,7 +67,8 @@ const state = {
     // highlightedFeature: null,
     // highlightedFeatureStyle: null,
     vectorFeaturesLoaded: false,
-    loadedLayers: []
+    loadedLayers: [],
+    featuresLoaded: {}
 };
 
 export default state;

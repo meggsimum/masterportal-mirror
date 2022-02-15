@@ -100,7 +100,7 @@ const ListView = ListViewMain.extend(/** @lends ListView.prototype */{
         let selectedModels;
 
         $("#SelectedLayer").html("");
-        if (selectedLayerModel.get("isExpanded")) {
+        if (selectedLayerModel?.get("isExpanded")) {
             selectedModels = this.collection.where({isSelected: true, type: "layer"});
             selectedModels = selectedModels.filter(model => model.get("name") !== "Oblique");
 

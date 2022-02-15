@@ -53,7 +53,7 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     #container-to-resize {
         width:100px;
         height:100px;

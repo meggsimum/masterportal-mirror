@@ -58,7 +58,7 @@ export default {
     </button>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     @import "~variables";
 
     .standalone {
@@ -67,11 +67,11 @@ export default {
         top: auto;
         margin: 5px;
 
-        font-size: calc(@icon_length - 0.35 * @icon_length);
-        height: @icon_length;
-        width: @icon_length;
+        font-size: calc($icon_length - 0.35 * $icon_length);
+        height: $icon_length;
+        width: $icon_length;
 
-        box-shadow: 0 6px 12px @shadow;
+        box-shadow: 0 6px 12px $shadow;
     }
 
     .inline {
@@ -79,14 +79,14 @@ export default {
         text-align: center;
         top: auto;
 
-        font-size: calc(@icon_length_small - 0.35 * @icon_length_small);
-        width: @icon_length_small;
-        height: @icon_length_small;
+        font-size: calc($icon_length_small - 0.35 * $icon_length_small);
+        width: $icon_length_small;
+        height: $icon_length_small;
     }
 
     .control-icon {
-        background-color: @primary;
-        color: @primary_contrast;
+        background-color: $primary;
+        color: $primary_contrast;
 
         pointer-events: all;
         cursor: pointer;
@@ -102,19 +102,19 @@ export default {
 
         /* pseudo-class state effects */
         &:hover {
-            background-color: @primary_hover;
+            background-color: $primary_hover;
         }
         &:focus {
-            background-color: @primary_focus;
-            outline: 1px solid @primary_outline;
+            background-color: $primary_focus;
+            outline: 1px solid $primary_outline;
         }
         &:active {
-            background-color: @primary_active;
+            background-color: $primary_active;
         }
 
         &:disabled {
-            background-color: @primary_inactive;
-            color: @primary_inactive_contrast;
+            background-color: $primary_inactive;
+            color: $primary_inactive_contrast;
             cursor: default;
         }
     }

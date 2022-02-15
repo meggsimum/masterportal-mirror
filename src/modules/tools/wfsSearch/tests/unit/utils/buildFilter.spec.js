@@ -58,7 +58,7 @@ describe("src/modules/tools/wfsSearch/utils/buildFilter.js", () => {
     describe("buildFilter", () => {
         it("should build a XML filter based upon the literal structure defined in the config and given user inputs", () => {
             expect(buildFilter(values)).to.eql([
-                "<And><PropertyIsEqualTo matchCase=\"false\"><PropertyName>gemname</PropertyName><Literal>Waldesch</Literal></PropertyIsEqualTo><PropertyIsEqualTo matchCase=\"false\"><PropertyName>flur</PropertyName><Literal>1</Literal></PropertyIsEqualTo><PropertyIsEqualTo matchCase=\"false\"><PropertyName>zaehler</PropertyName><Literal>741</Literal></PropertyIsEqualTo><PropertyIsEqualTo matchCase=\"false\"><PropertyName>nenner</PropertyName><Literal>0</Literal></PropertyIsEqualTo></And>"
+                "<ogc:And><ogc:PropertyIsEqualTo matchCase=\"false\"><ogc:PropertyName>gemname</ogc:PropertyName><ogc:Literal>Waldesch</ogc:Literal></ogc:PropertyIsEqualTo><ogc:PropertyIsEqualTo matchCase=\"false\"><ogc:PropertyName>flur</ogc:PropertyName><ogc:Literal>1</ogc:Literal></ogc:PropertyIsEqualTo><ogc:PropertyIsEqualTo matchCase=\"false\"><ogc:PropertyName>zaehler</ogc:PropertyName><ogc:Literal>741</ogc:Literal></ogc:PropertyIsEqualTo><ogc:PropertyIsEqualTo matchCase=\"false\"><ogc:PropertyName>nenner</ogc:PropertyName><ogc:Literal>0</ogc:Literal></ogc:PropertyIsEqualTo></ogc:And>"
             ]);
         });
     });
@@ -81,7 +81,7 @@ describe("src/modules/tools/wfsSearch/utils/buildFilter.js", () => {
                 "value": "Waldesch"
             };
 
-            expect(buildXmlFilter(field)).to.equal("<PropertyIsEqualTo matchCase=\"false\"><PropertyName>gemname</PropertyName><Literal>Waldesch</Literal></PropertyIsEqualTo>");
+            expect(buildXmlFilter(field)).to.equal("<ogc:PropertyIsEqualTo matchCase=\"false\"><ogc:PropertyName>gemname</ogc:PropertyName><ogc:Literal>Waldesch</ogc:Literal></ogc:PropertyIsEqualTo>");
         });
     });
 });

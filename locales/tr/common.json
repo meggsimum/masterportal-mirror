@@ -55,7 +55,7 @@
             "scaleSwitcher": "ölçek değiştirmek",
             "selectFeatures": "özellikleri seçmek",
             "legend": "Harita bilgileri",
-            "styleVt": "Stil VT",
+            "styleVt": "Stil Vector Tile Layers",
             "bufferAnalysis": "Arabellek analizi",
             "wfsSearch": "WFS arama"
         },
@@ -237,7 +237,6 @@
                 "errorHttpsMessage": "talep ettiğiniz WMS bir http url'sinin altında yer almaktadır. Masterportal, WMS'yi yalnızca https (SSL) aracılığıyla entegre edebilir.",
                 "errorEmptyUrl": "Lütfen metin alanına bir WMS'nin URL'sini girin!",
                 "placeholder": "Lütfen WMS URL'ini buraya girin.",
-                "textExample": "Örneğin: https://geodienste.hamburg.de/HH_WMS_Gruenes_Netz",
                 "textLoadLayer": "Katmanı yükle",
                 "ifInExtent": "WMS aracılığıyla kullanıma sunulan coğrafi veriler, görüntülenebilir alanın dışındadır. WMS eklenemiyor.",
                 "checkVersion": "Bir WMS eklemek, yalnızca harici WMS katmanının sürümü 1.3.0'dan büyük veya ona eşitse mümkündür."
@@ -471,8 +470,8 @@
                 "noHeightBuilding": "İnşaat alanı, yükseklik yok Gebäudefläche, keine Höhen vorhanden",
                 "heightLayerInfo": "Yükseklik bilgilerinin temeli, deniz seviyesinin üzerinde (NHN) ve metre cinsinden yükseklik bilgisine sahip olan \"{{layer}}\" ya dayanmaktadır.",
                 "hdms": {
-                    "eastingLabel": "Enlem",
-                    "northingLabel": "Boylam"
+                    "eastingLabel": "Boylam",
+                    "northingLabel": "Enlem"
                 },
                 "cartesian": {
                     "eastingLabel": "X-Koordinate",
@@ -794,7 +793,8 @@
                 "address": "Adres",
                 "location": "Yer",
                 "subject": "Teknik konu",
-                "topic": "Konu"
+                "topic": "Konu",
+                "general": "Konu"
             },
             "specialWFS": {
                 "ongoing": "Prosedürde",

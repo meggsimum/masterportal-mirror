@@ -1,5 +1,5 @@
 <script>
-import Tool from "../../Tool.vue";
+import ToolTemplate from "../../ToolTemplate.vue";
 import getComponent from "../../../../utils/getComponent";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import getters from "../store/gettersBufferAnalysis";
@@ -13,7 +13,7 @@ import {ResultType} from "../store/enums";
 export default {
     name: "BufferAnalysis",
     components: {
-        Tool
+        ToolTemplate
     },
     data: () => ({resultTypeEnum: ResultType}),
     computed: {
@@ -176,7 +176,7 @@ export default {
 </script>
 
 <template lang="html">
-    <Tool
+    <ToolTemplate
         :title="$t(name)"
         :icon="glyphicon"
         :active="active"
@@ -319,10 +319,10 @@ export default {
                 </div>
             </div>
         </template>
-    </Tool>
+    </ToolTemplate>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     // @import "~variables";
     #tool-bufferAnalysis-radiusRangeInput {
         -webkit-appearance: none;

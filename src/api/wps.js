@@ -1,13 +1,13 @@
-import {parse} from "ol/xml";
 import axios from "axios";
+import xml2json from "./utils/xml2json";
 
 export default {
     /**
      * @desc sends POST request to wps
-     * @param {string} url url
-     * @param {string} xmlString XML to be sent as String
-     * @param {function} responseFunction function to be called
-     * @param {number} timeout if set used as timeout in milliseconds, else timeout of 10.000 msecs is used
+     * @param {String} url url
+     * @param {String} xmlString XML to be sent as String
+     * @param {Function} responseFunction function to be called
+     * @param {Number} timeout if set used as timeout in milliseconds, else timeout of 10.000 msecs is used
      * @returns {void}
      */
     sendRequest: function (url, xmlString, responseFunction, timeout) {
@@ -21,10 +21,11 @@ export default {
             return this.handleResponse(response, responseFunction);
         });
     },
+
     /**
      * @desc handles wps response
-     * @param {string} response XML to be sent as String
-     * @param {function} responseFunction function to be called
+     * @param {String} response XML to be sent as String
+     * @param {Function} responseFunction function to be called
      * @returns {void}
      */
     handleResponse: function (response, responseFunction) {
@@ -35,60 +36,28 @@ export default {
         }
         responseFunction(obj, response.status);
     },
+
     /**
-     * Parse xml from string and turn xml into object
-     * @param {string} dataString the xml to be parsed as String
-     * @returns {object} xml parsed as object
+     * Parse xml from String and turn xml into Object
+     * @param {String} dataString the xml to be parsed as String
+     * @returns {Object} xml parsed as Object
      */
     parseDataString: function (dataString) {
-        const xml = parse(dataString);
+        const xml = new DOMParser().parseFromString(dataString, "text/xml"),
+            jsonResult = xml2json(xml, false);
 
-        return this.parseXmlToObject(xml);
+        return jsonResult;
     },
-    /**
-     * @desc parses an xml document to js
-     * @param  {xml} xml the response xml from the WPS
-     * @returns {object} parsed xml as js object
-     */
-    parseXmlToObject: function (xml) {
-        let children = xml?.children,
-            obj = {};
 
-        if (children && typeof children.forEach !== "function") {
-            children = xml?.documentElement?.childNodes;
-        }
-        if (children?.length === 0 || !children) {
-            obj = xml?.textContent ? xml?.textContent : xml?.innerHTML;
-        }
-        else if (children) {
-            children.forEach(child => {
-                const localName = child?.localName || child.innerHTML;
-                let old;
-
-                if (!Object.prototype.hasOwnProperty.call(obj, localName) && localName !== undefined) {
-                    obj[localName] = this.parseXmlToObject(child);
-                }
-                else {
-                    if (!Array.isArray(obj[localName])) {
-                        old = obj[localName];
-                        obj[localName] = [];
-                        obj[localName].push(old);
-                    }
-                    obj[localName].push(this.parseXmlToObject(child));
-                }
-            });
-        }
-        return obj;
-    },
     /**
      * @desc build xml for WPS request
-     * @param {string} identifier String The functionality to be invoked by the wps
-     * @param {obj} [data={}] Object Contains the Attributes to be sent
-     * @param {string} xmlTemplate String  XML frame template that is filled
-     * @param {string} dataInputXmlTemplate String Inner XML used to generate attributes
-     * @return {string} dataString
+     * @param {String} identifier String The functionality to be invoked by the wps
+     * @param {String} xmlTemplate String  XML frame template that is filled
+     * @param {String} dataInputXmlTemplate String Inner XML used to generate attributes
+     * @param {Object} [data={}] Object Contains the Attributes to be sent
+     * @return {String} dataString
      */
-    buildXML: function (identifier, data = {}, xmlTemplate, dataInputXmlTemplate) {
+    buildXML: function (identifier, xmlTemplate, dataInputXmlTemplate, data = {}) {
         let dataString = this.setXMLElement(xmlTemplate, "</ows:Identifier>", identifier);
 
         Object.entries(data).forEach(dat => {
@@ -105,13 +74,14 @@ export default {
 
         return dataString;
     },
+
     /**
      * @desc insert Value into tag
-     * @param {string} dataString dataString which gets enriched with data
-     * @param {string} closingTagName the closing tag of the attribute to be set
-     * @param {string} value Object the Value to be set, toString() is used to obtain string
-     * @param {string} dataType datatype which is uses for tag attribute
-     * @returns {string} newdataString with added dada
+     * @param {String} dataString dataString which gets enriched with data
+     * @param {String} closingTagName the closing tag of the attribute to be set
+     * @param {String} value Object the Value to be set, toString() is used to obtain String
+     * @param {String} dataType datatype which is uses for tag attribute
+     * @returns {String} newdataString with added dada
      */
     setXMLElement: function (dataString, closingTagName, value, dataType) {
         let newDataString = dataString === undefined ? "" : dataString;
@@ -125,10 +95,11 @@ export default {
         }
         return newDataString;
     },
+
     /**
      * @desc creates URL using model from rest-service
-     * @param {object} restModel Model retrieved from rest-services.json
-     * @returns {string} url to wps request
+     * @param {Object} restModel Model retrieved from rest-services.json
+     * @returns {String} url to wps request
      */
     buildUrl: function (restModel) {
         let url = "";
@@ -138,13 +109,14 @@ export default {
         }
         return url;
     },
+
     /**
      * @desc request to be built and sent to WPS
-     * @param {string} wpsID The service id, defined in rest-services.json
-     * @param {string} identifier The functionality to be invoked by the wps
-     * @param {object} data Contains the Attributes to be sent
-     * @param {function} responseFunction function to be called
-     * @param {number} timeout if set used as timeout in milliseconds, else timeout of 10.000 msecs is used
+     * @param {String} wpsID The service id, defined in rest-services.json
+     * @param {String} identifier The functionality to be invoked by the wps
+     * @param {Object} data Contains the Attributes to be sent
+     * @param {Function} responseFunction function to be called
+     * @param {Number} timeout if set used as timeout in milliseconds, else timeout of 10.000 msecs is used
      * @returns {void}
      */
     wpsRequest: function (wpsID, identifier, data, responseFunction, timeout) {
@@ -159,7 +131,7 @@ export default {
             "<wps:DataInputs></wps:DataInputs>" +
             "</wps:Execute>",
             dataInputXmlTemplate = "<wps:Input><ows:Identifier></ows:Identifier><wps:Data><wps:LiteralData></wps:LiteralData></wps:Data></wps:Input>",
-            xmlString = this.buildXML(identifier, data, xmlTemplate, dataInputXmlTemplate),
+            xmlString = this.buildXML(identifier, xmlTemplate, dataInputXmlTemplate, data),
             url = this.buildUrl(Radio.request("RestReader", "getServiceById", wpsID));
 
         this.sendRequest(url, xmlString, responseFunction, timeout);

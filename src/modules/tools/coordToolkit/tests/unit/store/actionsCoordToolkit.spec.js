@@ -830,8 +830,58 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
                 expect(dispatch.secondCall.args[0]).to.equal("moveToCoordinates");
                 expect(dispatch.secondCall.args[1]).to.eql(proj4Result);
             });
-        });
+            describe("copyCoordinates", () => {
+                it("copyCoordinates one value", () => {
+                    navigator.clipboard = {
+                        writeText: (aText) => {
+                            text = aText;
+                        }
+                    };
+                    let text = "";
+                    const state = {
+                            delimiter: "&"
+                        },
+                        coords = ["123456"],
+                        stub = sinon.stub(navigator.clipboard, "writeText").resolves(text);
 
+                    actions.copyCoordinates({state, dispatch}, coords);
+                    expect(stub.calledOnce).to.be.true;
+                    expect(stub.firstCall.args[0]).to.equal("123456");
+                });
+                it("copyCoordinates 2 values, use default delimiter", () => {
+                    navigator.clipboard = {
+                        writeText: (aText) => {
+                            text = aText;
+                        }
+                    };
+                    let text = "";
+                    const state = {delimiter: "|"},
+                        coords = ["123456", "789123"],
+                        stub = sinon.stub(navigator.clipboard, "writeText").resolves(text);
+
+                    actions.copyCoordinates({state, dispatch}, coords);
+                    expect(stub.calledOnce).to.be.true;
+                    expect(stub.firstCall.args[0]).to.equal("123456|789123");
+                });
+                it("copyCoordinates 2 values delimiter change", () => {
+                    navigator.clipboard = {
+                        writeText: (aText) => {
+                            text = aText;
+                        }
+                    };
+                    let text = "";
+                    const state = {
+                            delimiter: "&"
+                        },
+                        coords = ["123456", "789123"],
+                        stub = sinon.stub(navigator.clipboard, "writeText").resolves(text);
+
+                    actions.copyCoordinates({state, dispatch}, coords);
+                    expect(stub.calledOnce).to.be.true;
+                    expect(stub.firstCall.args[0]).to.equal("123456&789123");
+                });
+            });
+        });
     });
 });
 

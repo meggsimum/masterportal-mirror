@@ -1,0 +1,450 @@
+@import "../../../css/variables.scss";
+
+$color_1: #000;
+$color_2: #F2F2F2;
+$color_3: #808080;
+$color_4: #003063;
+$font_family_1: "MasterPortalFont",sans-serif;
+$font_family_2: "MasterPortalFont", sans-serif;
+$background_color_2: #fff;
+$background_color_3: #808080;
+$background_color_4: #ffffff;
+$background_color_5: transparent;
+$background_color_6: #D8D8D8;
+
+/**************** Layer Settings ****************/
+#table-navigation {
+    z-index: 5;;
+    position: absolute;
+    font-family: $font_family_1;
+    touch-action: pan-x pan-y;
+    border-radius: 12px;
+}
+.table-nav-0deg {
+    bottom: 80px;
+    left: calc(50% - 485px / 2);
+    transform: rotate(0deg);
+}
+.table-nav-90deg {
+    left: -80px;
+    top: calc(50% - 80px);
+    transform: rotate(90deg);
+}
+.table-nav-180deg {
+    left: calc(50% - 485px / 2 + 40px);
+    top: 80px;
+    transform: rotate(180deg);
+}
+.table-nav-270deg {
+    right: -80px;
+    top: calc(50% + 40px);
+    transform: rotate(270deg);
+}
+.table-nav {
+    border-radius: 12px;
+    margin: 5px;
+}
+.table-nav-main {
+    background-color: $secondary_table_style;
+    margin: 0px 5px;
+    width: 480px;
+    height: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+    padding: 5px;
+}
+#table-nav-drag{
+    width: 20px;
+    height: 40px;
+    position: relative;
+    left: -5px;
+}
+#table-nav-drag:before{
+    left:0;
+}
+#table-layer-list {
+    position: relative;
+    width: 40px;
+    background-color: $background_color_2;
+    left: 20px;
+    top: -45px;
+}
+#table-category-list {
+    .icon-categories {
+        font-size: 27.5px;
+        color: $color_1;
+    }
+    width: 40px;
+    background-color: $secondary_table_style;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+}
+#table-category-list.table-category-active {
+    background-color: $background_color_3;
+}
+.table-category-active {
+    .icon-categories {
+        &:after {
+            color: $color_2;
+        }
+    }
+}
+
+.table-category-list {
+    a {
+        &:link {
+            text-decoration: none;
+        }
+    }
+}
+a {
+    &:visited {
+        text-decoration: none;
+    }
+    &:hover {
+        text-decoration: none;
+    }
+    &:active {
+        text-decoration: none;
+    }
+}
+.table-tools {
+    background-color: $secondary_table_style;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    >p {
+        font-size: 26px;
+    }
+}
+
+.table-tools > div {
+    margin: 5px;
+}
+
+.table-categories {
+    background-color: $secondary_table_style;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+.table-tools-menu {
+    background-color: $secondary_table_style;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+    width: 268px;
+    display: none;
+    position: absolute;
+    bottom: 45px;
+    left: -207px;
+    padding: 12px;
+    margin-left: -149px;
+    &:after {
+        top: 100%;
+        left: 72px;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+    }
+    &:before {
+        top: 100%;
+        left: 72px;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+    }
+    #funnel {
+        bottom: 0px;
+        margin-left: 165px;
+        #middle-funnel {
+            width: 20px;
+        }
+    }
+    #ObliqueTable > a > #ObliqueTable_title{
+        padding-left: 5px;
+    }
+}
+.table-tools-active {
+    background-color: $background_color_3;
+    .icon-tools {
+        &:before {
+            color: $color_2;
+        }
+    }
+}
+.table-tool {
+    margin-bottom: 6px;
+    padding-top: 6px;
+    font-size: 17px;
+    border-top: 1px solid #C0C0C0;
+    >a {
+        color: $color_3;
+    }
+}
+#table-nav-layers-panel-toggler {
+    width: 40px;
+    height: 40px;
+}
+#table-nav-cat-panel-toggler {
+    width: 40px;
+    height: 40px;
+}
+.table-nav-layers-panel {
+    border-width: 0px;
+    -webkit-box-shadow: none;
+    background-color: $secondary_table_style;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+    margin-bottom: 75px;
+    position: absolute;
+    margin-top: -88px;
+    margin-left: -28px;
+    width: 480px;
+    bottom: -20px;
+    display: none;
+}
+.table-nav-cat-panel {
+    font-size: 17px;
+    border-width: 0px;
+    -webkit-box-shadow: none;
+    background-color: $secondary_table_style;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+    padding-left: 6px;
+    padding-top: 7px;
+    margin-bottom: 70px;
+    position: absolute;
+    margin-top: -88px;
+    width: 320px;
+    bottom: -20px;
+    display: none;
+    margin-left: -243px;
+    div > div.detailview-head {
+        display: none;
+    }
+    div > div.value-views-container{
+        display: none;
+    }
+    div > div.checkbox-container{
+        display: none;
+    }
+    #funnel {
+        margin-left: 221px;
+    }
+    #left-funnel-corner {
+        margin-left: 0px;
+    }
+    #middle-funnel {
+        width: 20px;
+    }
+    .multicheckbox-label{
+        vertical-align: text-bottom;
+        padding-left: 20px;
+    }
+}
+.table-layer-list {
+    a {
+        &:link {
+            text-decoration: none;
+        }
+    }
+}
+.layers {
+    padding-left: 0px;
+    padding-bottom: 12px;
+    touch-action: pan-x pan-y;
+}
+.icon-checkbox2 {
+    &:before {
+        color: $color_3;
+        margin-top: 8px;
+        padding-left: 8px;
+    }
+}
+.icon-checkbox {
+    &:before {
+        color: $color_4;
+        margin-top: 8px;
+        font-weight: 900;
+        padding-left: 8px;
+    }
+}
+.icon-drag{
+    &:before {
+        display: block;
+        left: 0em;
+        font-size: 26px;
+    }
+}
+.icon-burgermenu_alt {
+    #table-nav-layers-panel-toggler {
+        background-color: $background_color_3;
+        border-radius: 12px;
+        .icon-cross1:before {
+            display: block;
+            color: $color_2;
+            top: 11px;
+            left: 11px;
+            font-size: 18px;
+         }
+    }
+}
+.icon-burgermenu_alt.collapsed {
+    #table-nav-layers-panel-toggler {
+        background-color: $background_color_4;
+        .icon-cross1:before {
+                display: none;
+        }
+    }
+    &:before {
+        color: $color_4;
+        display: block;
+    }
+
+}
+.burgermenu-layer-list {
+    background-color: $background_color_5;
+    margin-bottom: 13px;
+    padding-bottom: 8px;
+    border-radius: 5px;
+    border: none;
+}
+#table-nav-layers-panel {
+    .layers {
+        max-height: 360px;
+        overflow-x: auto;
+        margin: 4px 4px;
+        .layer-item {
+            font-family: $font_family_2;
+            font-size: 17px;
+            .title{
+                display: block;
+                min-width: 385px;
+                overflow: auto;
+            }
+            .just-added {
+                font-weight: bold;
+                color: #003063;
+            }
+        }
+    }
+    .layers::-webkit-scrollbar {
+        background: #cccccc;
+        width: 10px;
+        border-radius: 10px;
+    }
+    .layers::-webkit-scrollbar-thumb {
+        background: #003063;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+    }
+    ul#layers {
+        border: none;
+        font-size: 15px;
+        padding: 0px 0;
+        min-width: 410px;
+        overflow: auto;
+        padding-bottom: 7px;
+        ul {
+            list-style: none;
+            padding: 0 0 0 0px;
+            -webkit-padding-start: 0px;
+            li {
+                border-bottom: 1px solid #ddd;
+                padding: 5px 15px;
+            }
+        }
+    }
+    .layer-settings {
+        clear: both;
+        margin-top: 25px;
+        margin-left: -3px;
+        font-size: 14px;
+        .glyphicon {
+            font-size: x-large;
+            color: $secondary_icon_button;
+            top: 8px;
+        }
+        .badge {
+            font-size: 14px;
+            padding-top: 6px;
+            background-color: #686868;
+        }
+        .remove-layer {
+            color: #F2F2F2;
+            font-weight: bold;
+            background-color: #808080;
+            border-radius: 10px;
+            padding: 6px 4px 4px 4px;
+            margin-left: 85px;
+            cursor: pointer;
+        }
+    }
+    .glyphicon-info-sign {
+        position: absolute;
+        font-size: 18px;
+        color: $secondary_icon_button;
+        top: 14px;
+        right: 50px;
+    }
+    .glyphicon-cog {
+        font-size: 18px;
+        color: $secondary_icon_button;
+        top: 4px;
+    }
+    .layer-settings-activated {
+        background-color: $background_color_6;
+    }
+}
+.checkboxicon-left {
+    margin-left: 25px;
+    cursor: pointer;
+}
+#funnel {
+    position: absolute;
+    display: flex;
+    margin-bottom: -10px;
+}
+#left-funnel-corner {
+    width: 10px;
+    height: 10px;
+    background-image: radial-gradient(circle at 0 100%, transparent 10px, #F2F2F2 10px);
+    margin-left: 24px;
+}
+#middle-funnel {
+    display: block;
+    width: 28px;
+    height: 10px;
+    background-color: $secondary_table_style;
+}
+#right-funnel-corner {
+    width: 10px;
+    height: 10px;
+    background-image: radial-gradient(circle at 100% 100%, transparent 10px, #F2F2F2 10px);
+}
+.closeclick-view {
+    z-index: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.closeclick-activated {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    touch-action: none;
+}
+.closeclick-deactivated {
+    height: 10px;
+    width: 10px;
+}
+.disableCategoryIcon {
+    cursor: default;
+}
+
+.disableCategoryButton {
+    opacity: 0.2;
+}

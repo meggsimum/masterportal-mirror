@@ -154,8 +154,8 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
-    @import "~/css/mixins.less";
+<style lang="scss" scoped>
+    @import "~/css/mixins.scss";
 
     .poi-choice {
         color: rgb(85, 85, 85);
@@ -179,10 +179,10 @@ export default {
             padding: 12px;
             cursor: pointer;
             &:focus {
-                .primary_action_focus();
+                @include primary_action_focus;
             }
             &:hover {
-                .primary_action_hover();
+                @include primary_action_hover;
             }
         }
         .modal-dialog {

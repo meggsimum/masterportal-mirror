@@ -70,11 +70,11 @@ const SidebarView = Backbone.View.extend(/** @lends SidebarView.prototype */{
     /**
      * Add HTML content to this sidebar
      * @param {HTML}    element Element from a tool view
-     * @param {boolean} draggable is the sidebar resizeable?
-     * @param {number}  fixedWidth fixed width of sidebar
+     * @param {Boolean} [draggable=false] is the sidebar resizeable?
+     * @param {Number|String}  [fixedWidth="auto"] fixed width of sidebar
      * @returns {void}
      */
-    addContent: function (element, draggable = false, fixedWidth) {
+    addContent: function (element, draggable = false, fixedWidth = "auto") {
         this.$el.html(this.template({draggable}));
         this.$el.find("#sidebar-content").html(element);
         this.model.setWidth(fixedWidth);

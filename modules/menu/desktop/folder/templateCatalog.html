@@ -38,7 +38,7 @@
                 </div>
             </form>
     <% } %>
-    <% if (id === "SelectedLayer" && this.model.collection.has("saveSelection")) { %>
+    <% if (id === "SelectedLayer" && this.model.collection.has({id:"saveSelection"})) { %>
         <div class="layer-selection-save tabable" tabindex="0">
             <span><%= saveSelectionText %></span>
             <span class="glyphicon glyphicon-share"></span>

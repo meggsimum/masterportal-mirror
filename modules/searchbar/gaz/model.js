@@ -66,9 +66,19 @@ const GazetteerModel = Backbone.Model.extend({
         if (config.minChars) {
             this.set("minChars", config.minChars);
         }
+        if (config.namespace) {
+            this.set("namespace", config.namespace);
+        }
         if (store.state.urlParams && store.state.urlParams["Search/query"]) {
             this.directSearch(store.state.urlParams && store.state.urlParams["Search/query"]);
         }
+    },
+
+    /**
+     * @returns {String} Namespace Prefix, e.g. "dog" for "http://www.adv-online.de/namespaces/adv/dog"
+     */
+    getNamespacePrefix: function () {
+        return this.get("namespace").split("/").pop();
     },
 
     // für Copy/Paste bei Adressen
@@ -128,10 +138,11 @@ const GazetteerModel = Backbone.Model.extend({
 
     parseStreets: function (data) {
         const hits = $("wfs\\:member,member", data),
-            streetNames = [];
+            streetNames = [],
+            namespacePrefix = this.getNamespacePrefix();
 
         hits.each(function (i, hit) {
-            streetNames.push($(hit).find("dog\\:strassenname, strassenname")[0].textContent);
+            streetNames.push($(hit).find(`${namespacePrefix}\\:strassenname, strassenname`)[0].textContent);
         }, this);
 
         Radio.trigger("Gaz", "streetNames", streetNames.sort());
@@ -144,14 +155,17 @@ const GazetteerModel = Backbone.Model.extend({
 
     parseHousenumbers: function (data) {
         const hits = $("wfs\\:member,member", data),
-            houseNumbers = [];
+            houseNumbers = [],
+            namespacePrefix = this.getNamespacePrefix();
         let sortedHouseNumbers = null;
 
         hits.toArray().forEach(hit => {
             houseNumbers.push({
                 position: $(hit).find("gml\\:pos,pos")[0].textContent,
-                number: $(hit).find("dog\\:hausnummer,hausnummer")[0].textContent,
-                affix: $(hit).find("dog\\:hausnummernzusatz,hausnummernzusatz")[0] ? $(hit).find("dog\\:hausnummernzusatz,hausnummernzusatz")[0].textContent : ""
+                number: $(hit).find(`${namespacePrefix}\\:hausnummer,hausnummer`)[0].textContent,
+                affix: $(hit).find(`${namespacePrefix}\\:hausnummernzusatz,hausnummernzusatz`)[0]
+                    ? $(hit).find(`${namespacePrefix}\\:hausnummernzusatz,hausnummernzusatz`)[0].textContent
+                    : ""
             });
         });
         sortedHouseNumbers = Radio.request("Util", "sort", "", houseNumbers, "number", "affix");
@@ -270,7 +284,8 @@ const GazetteerModel = Backbone.Model.extend({
      */
     getStreets: function (data) {
         const hits = $("wfs\\:member,member", data),
-            hitNames = [];
+            hitNames = [],
+            namespacePrefix = this.getNamespacePrefix();
         let posResult,
             position,
             hitName;
@@ -290,7 +305,7 @@ const GazetteerModel = Backbone.Model.extend({
            */
             posResult = $(hit).find("gml\\:pos,pos");
             position = posResult.length > 1 ? posResult[1].textContent.split(" ") : posResult[0].textContent.split(" ");
-            hitName = $(hit).find("dog\\:strassenname, strassenname")[0].textContent;
+            hitName = $(hit).find(`${namespacePrefix}\\:strassenname, strassenname`)[0].textContent;
             hitNames.push(hitName);
             // "Hitlist-Objekte"
             Radio.trigger("Searchbar", "pushHits", "hitList", {
@@ -387,7 +402,8 @@ const GazetteerModel = Backbone.Model.extend({
     },
 
     getParcel: function (data) {
-        const hits = $("wfs\\:member,member", data);
+        const hits = $("wfs\\:member,member", data),
+            namespacePrefix = this.getNamespacePrefix();
         let coordinate,
             position,
             geom,
@@ -396,8 +412,8 @@ const GazetteerModel = Backbone.Model.extend({
 
         hits.each(function (i, hit) {
             position = $(hit).find("gml\\:pos,pos")[0].textContent.split(" ");
-            gemarkung = $(hit).find("dog\\:gemarkung,gemarkung")[0].textContent;
-            flurstueck = $(hit).find("dog\\:flurstuecksnummer,flurstuecksnummer")[0].textContent;
+            gemarkung = $(hit).find(`${namespacePrefix}\\:gemarkung,gemarkung`)[0].textContent;
+            flurstueck = $(hit).find(`${namespacePrefix}\\:flurstuecksnummer,flurstuecksnummer`)[0].textContent;
             coordinate = [parseFloat(position[0]), parseFloat(position[1])];
             geom = $(hit).find("gml\\:posList, posList")[0].textContent;
             // "Hitlist-Objekte"
@@ -414,14 +430,15 @@ const GazetteerModel = Backbone.Model.extend({
     },
 
     getStreetKey: function (data) {
-        const hits = $("wfs\\:member,member", data);
+        const hits = $("wfs\\:member,member", data),
+            namespacePrefix = this.getNamespacePrefix();
         let coordinates,
             hitName;
 
         hits.each(function (i, hit) {
-            if ($(hit).find("gml\\:posList,posList").length > 0 && $(hit).find("dog\\:strassenname, strassenname").length > 0) {
+            if ($(hit).find("gml\\:posList,posList").length > 0 && $(hit).find(`${namespacePrefix}\\:strassenname, strassenname`).length > 0) {
                 coordinates = $(hit).find("gml\\:posList,posList")[0].textContent.split(" ");
-                hitName = $(hit).find("dog\\:strassenname, strassenname")[0].textContent;
+                hitName = $(hit).find(`${namespacePrefix}\\:strassenname, strassenname`)[0].textContent;
                 // "Hitlist-Objekte"
                 Radio.trigger("Searchbar", "pushHits", "hitList", {
                     name: hitName,
@@ -522,6 +539,7 @@ const GazetteerModel = Backbone.Model.extend({
     setHouseNumbers: function (data, streetname) {
         const hits = $("wfs\\:member,member", data),
             houseNumbers = [],
+            namespacePrefix = this.getNamespacePrefix(),
             that = this;
         let number,
             affix,
@@ -534,9 +552,9 @@ const GazetteerModel = Backbone.Model.extend({
         hits.each(function (i, hit) {
             position = $(hit).find("gml\\:pos,pos")[0].textContent.split(" ");
             coordinate = [parseFloat(position[0]), parseFloat(position[1])];
-            number = $(hit).find("dog\\:hausnummer,hausnummer")[0].textContent;
-            if ($(hit).find("dog\\:hausnummernzusatz,hausnummernzusatz")[0] !== undefined) {
-                affix = $(hit).find("dog\\:hausnummernzusatz,hausnummernzusatz")[0].textContent;
+            number = $(hit).find(`${namespacePrefix}\\:hausnummer,hausnummer`)[0].textContent;
+            if ($(hit).find(`${namespacePrefix}\\:hausnummernzusatz,hausnummernzusatz`)[0] !== undefined) {
+                affix = $(hit).find(`${namespacePrefix}\\:hausnummernzusatz,hausnummernzusatz`)[0].textContent;
                 name = streetname + " " + number + affix;
                 adress = {
                     streetname: streetname,

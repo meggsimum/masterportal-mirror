@@ -1,8 +1,10 @@
-import {assert} from "chai";
+import {assert, expect} from "chai";
 import GeoJsonLayerModel from "@modules/core/modelList/layer/geojson.js";
 import Util from "@testUtil";
 import Feature from "ol/Feature.js";
-import {expect} from "chai";
+import mapCollection from "../../../../../../src/core/dataStorage/mapCollection.js";
+import Map from "ol/Map";
+import View from "ol/View";
 
 describe("core/modelList/layer/geojson", function () {
     let geojsonLayer,
@@ -10,6 +12,14 @@ describe("core/modelList/layer/geojson", function () {
         utilModel;
 
     before(function () {
+        mapCollection.clear();
+        const map = new Map({
+            id: "ol",
+            mode: "2D",
+            view: new View()
+        });
+
+        mapCollection.addMap(map, "ol", "2D");
         utilModel = new Util();
         geojson = utilModel.getGeoJsonTestFeatures();
         geojsonLayer = new GeoJsonLayerModel();

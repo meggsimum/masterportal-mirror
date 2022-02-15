@@ -132,7 +132,7 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     @import "~variables";
     #legend-menu {
         border-right: 1px solid #e5e5e5;

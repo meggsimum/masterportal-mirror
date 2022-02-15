@@ -387,7 +387,7 @@ const mutations = {
 #### B.5.4
 
 ```html
-<style lang="less" scoped>
+<style lang="scss" scoped>
     @import "~variables";
 </style>
 ```

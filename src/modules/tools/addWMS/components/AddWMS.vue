@@ -2,7 +2,7 @@
 import {mapGetters, mapMutations} from "vuex";
 import getters from "../store/gettersAddWMS";
 import getComponent from "../../../../utils/getComponent";
-import Tool from "../../Tool.vue";
+import ToolTemplate from "../../ToolTemplate.vue";
 import mutations from "../store/mutationsAddWMS";
 import {WMSCapabilities} from "ol/format.js";
 import {intersects} from "ol/extent";
@@ -12,7 +12,7 @@ import axios from "axios";
 export default {
     name: "AddWMS",
     components: {
-        Tool
+        ToolTemplate
     },
     data: function () {
         return {
@@ -28,10 +28,6 @@ export default {
 
         placeholder () {
             return i18next.t("common:modules.tools.addWMS.placeholder");
-        },
-
-        textExample () {
-            return i18next.t("common:modules.tools.addWMS.textExample");
         },
 
         textLoadLayer () {
@@ -339,7 +335,7 @@ export default {
 </script>
 
 <template>
-    <Tool
+    <ToolTemplate
         :title="$t(name)"
         :icon="glyphicon"
         :active="active"
@@ -368,9 +364,6 @@ export default {
                     :placeholder="placeholder"
                     @keydown.enter="inputUrl"
                 >
-                <div class="WMS_example_text">
-                    {{ textExample }}
-                </div>
                 <button
                     id="addWMSButton"
                     type="button"
@@ -388,10 +381,10 @@ export default {
                 </button>
             </div>
         </template>
-    </Tool>
+    </ToolTemplate>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     @import "~variables";
     .addWMS {
         min-width: 400px;

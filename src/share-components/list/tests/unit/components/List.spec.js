@@ -5,14 +5,14 @@ import sinon from "sinon";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
 
-import List from "../../../components/List.vue";
+import ListItem from "../../../components/ListItem.vue";
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
 config.mocks.$t = key => key;
 
-describe("src/share-components/list/components/List.vue", () => {
+describe("src/share-components/list/components/ListItem.vue", () => {
     const olFeature = new Feature(),
         props = {
             identifier: "Spongebob",
@@ -54,7 +54,7 @@ describe("src/share-components/list/components/List.vue", () => {
     });
 
     it("should zoom to extent of a given feature", async () => {
-        const wrapper = shallowMount(List, {
+        const wrapper = shallowMount(ListItem, {
                 store,
                 propsData: props,
                 localVue

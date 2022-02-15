@@ -1,6 +1,7 @@
 {
     "Portalconfig": {
         "mapView": {
+            "backgroundImage":"https://geodienste.hamburg.de/lgv-config/img/backgroundCanvas.jpeg",
             "extent": [
                 442800,
                 5809000,

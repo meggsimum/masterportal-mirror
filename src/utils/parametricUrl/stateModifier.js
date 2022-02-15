@@ -5,9 +5,6 @@ import store from "../../app-store";
 import {transformToMapProjection} from "masterportalAPI/src/crs";
 import mapCollection from "../../core/dataStorage/mapCollection";
 
-const deprecated = ["isinitopen", "startupmodul", "style", "query", "center", "zoomlevel", "zoomtoextent", "zoomtogeometry", "bezirk",
-    "map", "layerids", "mdid", "featureid", "highlightfeature", "projection", "config", "marker"];
-
 /**
  * Searches for the keys in state and if found, sets the value at it.
  * @param {Object} state vuex state
@@ -128,23 +125,6 @@ export async function setValuesToState (state, params) {
     callActions(state);
 }
 
-
-/**
- * Checks the key for deprecated url param keys and logs a warning then.
- * @param {String} key to check
- * @param {String} translatedKey replacement for the key
- * @returns {void}
- */
-function checkDeprecated (key, translatedKey) {
-    if (deprecated.find(toolId => toolId.toLowerCase() === key.toLowerCase())) {
-        console.warn("Url Parameter '" + key.toUpperCase() + "' is deprecated in version 3.0.0. Please use '" + translatedKey + "' instead.");
-        store.dispatch("Alerting/addSingleAlert", i18next.t("common:utils.parametricURL.alertDeprecated", {
-            deprecatedKey: key.toUpperCase(),
-            currentUrl: `${window.location.href.split("?")[0]}?${translatedKey}`
-        }));
-    }
-}
-
 /**
  * Sets the given key and value to state.
  * @param {Object} state vuex state
@@ -155,7 +135,6 @@ function checkDeprecated (key, translatedKey) {
 export async function setValueToState (state, key, value) {
     if (typeof key === "string") {
         translate(key.trim(), value).then(entry => {
-            checkDeprecated(key, entry.key);
             const found = searchAndSetValue(state, entry.key.split("/"), entry.value);
 
             if (!found) {

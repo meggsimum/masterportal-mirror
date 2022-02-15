@@ -106,14 +106,14 @@ module.exports = function () {
         resolve: {
             alias: {
                 text: "text-loader",
-                "variables": path.resolve(__dirname, "..", "css", "variables.less")
+                "variables": path.resolve(__dirname, "..", "css", "variables.scss")
             }
         },
         module: {
             rules: [
                 // ignore all files ending with ".test.js".
                 {
-                    test: /\.test\.js$/,
+                    test: /\.(test|spec)\.js$/,
                     use: {
                         loader: "null-loader"
                     }
@@ -121,12 +121,13 @@ module.exports = function () {
                 // take all files ending with ".js" but not with ".test.js".
                 {
                     test: /\.js$/,
-                    exclude: /\bcore-js\b|\.test\.js$/,
+                    exclude: /\bcore-js\b|\.(test|spec)\.js$/,
                     use: {
                         loader: "babel-loader"
                     }
                 },
                 {
+<<<<<<< HEAD
                     test: /\.s(c|a)ss$/,
                     use: [
                         // "vue-style-loader",
@@ -160,13 +161,16 @@ module.exports = function () {
                 // },
                 {
                     test: /\.less$/,
+=======
+                    test: /\.scss$/,
+>>>>>>> cosi/merge
                     use: [
                         {
                             loader: MiniCssExtractPlugin.loader,
                             options: {}
                         },
                         "css-loader",
-                        "less-loader"
+                        "sass-loader"
                     ]
                 },
                 {

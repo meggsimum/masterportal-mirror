@@ -195,7 +195,7 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 @import "~variables";
 
 .d-flex {
@@ -224,11 +224,11 @@ export default {
 .drop-area-fake {
     background-color: #FFFFFF;
     border-radius: 12px;
-    border: 2px dashed @accent_disabled;
+    border: 2px dashed $accent_disabled;
     padding:24px;
     transition: background 0.25s, border-color 0.25s;
     &.dzReady {
-        background-color:@accent_hover;
+        background-color:$accent_hover;
         border-color:transparent;
         p.caption {
             color:#FFFFFF;
@@ -238,9 +238,9 @@ export default {
         margin:0;
         text-align:center;
         transition: color 0.35s;
-        font-family: @font_family_accent;
-        font-size: @font_size_huge;
-        color: @accent_disabled;
+        font-family: $font_family_accent;
+        font-size: $font_size_huge;
+        color: $accent_disabled;
     }
 }
 .drop-area {

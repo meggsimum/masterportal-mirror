@@ -1,5 +1,5 @@
-import Directions from "../components/Directions/Directions.vue";
-import Isochrones from "../components/Isochrones/Isochrones.vue";
+import DirectionsItem from "../components/Directions/DirectionsItem.vue";
+import IsochronesItem from "../components/Isochrones/IsochronesItem.vue";
 
 const speedProfileOptions = [
         "CAR", "HGV", "CYCLING", "FOOT", "WHEELCHAIR"
@@ -11,8 +11,8 @@ const speedProfileOptions = [
         {id: "STEPS", availableProfiles: ["CYCLING", "FOOT", "WHEELCHAIR"]}
     ],
     routingToolOptions = [
-        {id: "DIRECTIONS", component: Directions},
-        {id: "ISOCHRONES", component: Isochrones}
+        {id: "DIRECTIONS", component: DirectionsItem},
+        {id: "ISOCHRONES", component: IsochronesItem}
     ],
     downloadFormatOptions = [
         "KML", "GEOJSON", "GPX"

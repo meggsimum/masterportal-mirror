@@ -113,17 +113,17 @@ export default {
     </div>
 </template>
 
-<style lang="less" scoped>
-    @import "~/css/mixins.less";
+<style lang="scss" scoped>
+    @import "~/css/mixins.scss";
 
     div.toggleCheckboxComponent {
         width:63px;
 
         &:hover {
-            .primary_action_hover();
+            @include primary_action_hover;
         }
         &:focus {
-            .primary_action_focus();
+            @include primary_action_focus;
         }
     }
 </style>

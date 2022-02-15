@@ -1,5 +1,5 @@
 <script>
-import Tool from "../../Tool.vue";
+import ToolTemplate from "../../ToolTemplate.vue";
 import getComponent from "../../../../utils/getComponent";
 import {Pointer} from "ol/interaction.js";
 import {getProjections} from "masterportalAPI/src/crs";
@@ -10,7 +10,7 @@ import mutations from "../store/mutationsSupplyCoord";
 export default {
     name: "SupplyCoord",
     components: {
-        Tool
+        ToolTemplate
     },
     computed: {
         ...mapGetters("Tools/SupplyCoord", Object.keys(getters)),
@@ -158,7 +158,7 @@ export default {
 </script>
 
 <template lang="html">
-    <Tool
+    <ToolTemplate
         :title="$t(name)"
         :icon="glyphicon"
         :active="active"
@@ -238,5 +238,5 @@ export default {
                 </form>
             </div>
         </template>
-    </Tool>
+    </ToolTemplate>
 </template>

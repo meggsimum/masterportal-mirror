@@ -1,5 +1,5 @@
 <script>
-import Tool from "../../Tool.vue";
+import ToolTemplate from "../../ToolTemplate.vue";
 import getComponent from "../../../../utils/getComponent";
 import {Pointer} from "ol/interaction.js";
 import {getProjections} from "masterportalAPI/src/crs";
@@ -10,12 +10,12 @@ import mutations from "../store/mutationsCoordToolkit";
 export default {
     name: "CoordToolkit",
     components: {
-        Tool
+        ToolTemplate
     },
     computed: {
         ...mapGetters("Tools/CoordToolkit", Object.keys(getters)),
         ...mapGetters("Map", ["projection", "mouseCoord", "mapMode"]),
-        ...mapGetters(["uiStyle"]),
+        ...mapGetters(["uiStyle", "mobile"]),
         eastingNoCoordMessage: function () {
             if (this.currentProjection.projName !== "longlat") {
                 return this.$t("common:modules.tools.coordToolkit.errorMsg.noCoord", {valueKey: this.$t(this.getLabel("eastingLabel"))});
@@ -94,14 +94,14 @@ export default {
             "checkPosition",
             "changedPosition",
             "setFirstSearchPosition",
-            "copyToClipboard",
             "positionClicked",
             "setCoordinates",
             "removeMarker",
             "searchCoordinate",
             "validateInput",
             "newProjectionSelected",
-            "initHeightLayer"
+            "initHeightLayer",
+            "copyCoordinates"
         ]),
         ...mapActions("Alerting", ["addSingleAlert"]),
         ...mapActions("Map", {
@@ -280,16 +280,6 @@ export default {
             }
         },
         /**
-         * If curent mode is "supply" content of input is copied to clipboard.
-         * @param {Event} event click-event
-         * @returns {void}
-         */
-        onInputClicked (event) {
-            if (this.mode === "supply") {
-                this.copyToClipboard(event.currentTarget);
-            }
-        },
-        /**
          * If curent mode is "search" input is validated.
          * @param {Object} coordinatesValue value of input
          * @returns {void}
@@ -304,56 +294,68 @@ export default {
          * @returns {String} the className for the easting input field
          */
         getClassForEasting () {
-            if (this.currentProjection.id.indexOf("EPSG:4326") > -1) {
-                if (!this.eastingNoCoord && !this.eastingNoMatch && !this.northingNoCoord && !this.northingNoMatch) {
-                    return "eastingToBottomNoError";
+            const eastingError = this.eastingNoCoord || this.eastingNoMatch,
+                northingError = this.northingNoCoord || this.northingNoMatch;
+            let clazz = "";
+
+            if (this.currentProjection.projName === "longlat") {
+                if (!northingError && !eastingError) {
+                    clazz = "eastingToBottomNoError";
                 }
-                if ((this.eastingNoCoord || this.eastingNoMatch) && (this.northingNoCoord || this.northingNoMatch)) {
-                    if (this.eastingNoCoord && this.northingNoCoord) {
-                        return "eastingToBottomOneError";
-                    }
-                    return "eastingToBottomTwoErrors";
+                else if (eastingError && !northingError) {
+                    clazz = "eastingToBottomNoError";
                 }
-                if ((this.northingNoCoord || this.northingNoMatch) && !this.eastingNoCoord && !this.eastingNoMatch) {
-                    return "eastingToBottomOneError";
+                else if (!eastingError && northingError) {
+                    clazz = "eastingToBottomOneError";
                 }
-                if ((this.eastingNoCoord || this.eastingNoMatch) && !this.northingNoCoord || !this.northingNoMatch) {
-                    if (this.eastingNoCoord) {
-                        return "eastingToBottomNoError";
-                    }
-                    return "eastingToBottomOneError";
+                else {
+                    clazz = "eastingToBottomTwoErrors";
                 }
-                return "eastingToBottomNoError";
             }
-            return "";
+            return clazz + " form-group form-group-sm";
         },
         /**
          * Returns the className for the northing input field. Special Handling because fields positions are transformed.
          * @returns {String} the className for the northing input field
          */
         getClassForNorthing () {
-            if (this.currentProjection.id.indexOf("EPSG:4326") > -1) {
-                if (!this.eastingNoCoord && !this.eastingNoMatch && !this.northingNoCoord && !this.northingNoMatch) {
-                    return "northingToTopNoError";
+            const eastingError = this.eastingNoCoord || this.eastingNoMatch,
+                northingError = this.northingNoCoord || this.northingNoMatch;
+            let clazz = "";
+
+            if (this.currentProjection.projName === "longlat") {
+
+                if (!northingError && !eastingError) {
+                    clazz = "northingToTopNoError";
                 }
-                if ((this.eastingNoCoord || this.eastingNoMatch) && (this.northingNoCoord || this.northingNoMatch)) {
-                    if (this.eastingNoCoord && this.northingNoCoord) {
-                        return "northingToTopOneError";
-                    }
-                    return "northingToTopTwoErrors";
+                else if (!northingError && eastingError) {
+                    clazz = "northingToTopEastingError";
                 }
-                if ((this.eastingNoCoord || this.eastingNoMatch) && !this.northingNoCoord && !this.northingNoMatch) {
-                    return "northingToTopOneError";
+                else if (northingError && !eastingError) {
+                    clazz = "northingToTopNoError";
                 }
-                if ((this.northingNoCoord || this.northingNoMatch) && !this.eastingNoCoord || !this.eastingNoMatch) {
-                    if (this.northingNoCoord) {
-                        return "northingToTopNoError";
-                    }
-                    return "northingToTopOneError";
+                else if (this.eastingNoCoord) {
+                    clazz = "northingToTopTwoErrorsEastNoValue";
                 }
-                return "northingToTopNoError";
+                else {
+                    clazz = "northingToTopTwoErrors";
+                }
             }
-            return "";
+            return clazz + " form-group form-group-sm";
+        },
+        /**
+         * Returns the className for the labels.
+         * @returns {String} the className for the labels
+         */
+        getLabelClass () {
+            return this.showCopyButtons ? "col-md-3 col-sm-3 control-label" : "col-md-5 col-sm-5 control-label";
+        },
+        /**
+         * Returns the className for the input elements.
+         * @returns {String} the className for the input elements
+         */
+        getInputDivClass () {
+            return this.showCopyButtons ? "col-md-6 col-sm-6" : "col-md-7 col-sm-7";
         },
         /**
          * Returns true, if mapMode is 2D.
@@ -372,15 +374,40 @@ export default {
             }
             return this.mode === "supply";
         },
+        /**
+         * Returns true, if uiStyle is not SIMPLE or TABLE.
+         * @returns {boolean} true, if is default style
+         */
         isDefaultStyle () {
             return this.uiStyle !== "SIMPLE" && this.uiStyle !== "TABLE";
+        },
+        /**
+         * Copies the values of the coordinate fields.
+         * @param {Array} ids of the input-fields to get the coordinate values from
+         * @returns {void}
+         */
+        copyCoords (ids) {
+            let values = [];
+
+            ids.forEach(id => {
+                const el = this.$refs[id];
+
+                if (el) {
+                    values.push(el.value);
+                }
+            });
+            if (this.currentProjection.projName === "longlat") {
+                // reverted, because longlat-fields are swapped
+                values = values.reverse();
+            }
+            this.copyCoordinates(values);
         }
     }
 };
 </script>
 
 <template lang="html">
-    <Tool
+    <ToolTemplate
         :title="$t(name)"
         :icon="glyphicon"
         :active="active"
@@ -446,9 +473,9 @@ export default {
                     <div class="form-group form-group-sm">
                         <label
                             for="coordSystemField"
-                            class="col-md-5 col-sm-5 control-label"
+                            :class="getLabelClass()"
                         >{{ $t("modules.tools.coordToolkit.coordSystemField") }}</label>
-                        <div class="col-md-7 col-sm-7">
+                        <div :class="getInputDivClass()">
                             <select
                                 id="coordSystemField"
                                 ref="coordSystemField"
@@ -467,23 +494,22 @@ export default {
                         </div>
                     </div>
                     <div
-                        class="form-group form-group-sm"
                         :class="getClassForEasting()"
                     >
                         <label
                             id="coordinatesEastingLabel"
                             for="coordinatesEastingField"
-                            class="col-md-5 col-sm-5 control-label"
+                            :class="getLabelClass()"
                         >{{ $t(getLabel("eastingLabel")) }}</label>
-                        <div class="col-md-7 col-sm-7">
+                        <div :class="getInputDivClass()">
                             <input
                                 id="coordinatesEastingField"
+                                ref="coordinatesEastingField"
                                 v-model="coordinatesEasting.value"
                                 type="text"
                                 :readonly="isEnabled('supply')"
                                 :class="{ inputError: getEastingError, 'form-control': true}"
                                 :placeholder="isEnabled( 'search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesEastingExample : ''"
-                                @click="onInputClicked($event)"
                                 @input="onInputEvent(coordinatesEasting)"
                             ><p
                                 v-if="eastingNoCoord"
@@ -500,25 +526,58 @@ export default {
                                 {{ $t("modules.tools.coordToolkit.errorMsg.example") + coordinatesEastingExample }}
                             </p>
                         </div>
+                        <div
+                            v-if="isEnabled('supply') && !mobile && showCopyButtons"
+                            class="col-md-1 col-sm-1 copyBtn"
+                        >
+                            <button
+                                id="copyEastingBtn"
+                                type="button"
+                                class="btn singleCopy"
+                                :title="$t(`common:modules.tools.coordToolkit.copyCoordBtn`, {value: $t(getLabel('eastingLabel'))})"
+                                @click="copyCoords(['coordinatesEastingField'])"
+                            >
+                                <span
+                                    class="glyphicon glyphicon-copy"
+                                    aria-hidden="true"
+                                />
+                            </button>
+                        </div>
+                        <div
+                            v-if="isEnabled('supply') && !mobile && showCopyButtons"
+                            class="col-md-1 col-sm-1 copyBtn copyPairBtn"
+                        >
+                            <button
+                                id="copyCoordsPairBtn"
+                                type="button"
+                                class="btn"
+                                :title="$t(`common:modules.tools.coordToolkit.copyCoordsBtn`)"
+                                @click="copyCoords(['coordinatesEastingField', 'coordinatesNorthingField'])"
+                            >
+                                <span
+                                    class="glyphicon glyphicon-copy"
+                                    aria-hidden="true"
+                                />
+                            </button>
+                        </div>
                     </div>
                     <div
-                        class="form-group form-group-sm"
                         :class="getClassForNorthing()"
                     >
                         <label
                             id="coordinatesNorthingLabel"
                             for="coordinatesNorthingField"
-                            class="col-md-5 col-sm-5 control-label"
+                            :class="getLabelClass()"
                         >{{ $t(getLabel("northingLabel")) }}</label>
-                        <div class="col-md-7 col-sm-7">
+                        <div :class="getInputDivClass()">
                             <input
                                 id="coordinatesNorthingField"
+                                ref="coordinatesNorthingField"
                                 v-model="coordinatesNorthing.value"
                                 type="text"
                                 :class="{ inputError: getNorthingError , 'form-control': true}"
                                 :readonly="isEnabled( 'supply')"
                                 :placeholder="isEnabled( 'search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesNorthingExample : ''"
-                                @click="onInputClicked($event)"
                                 @input="onInputEvent(coordinatesNorthing)"
                             ><p
                                 v-if="northingNoCoord"
@@ -535,24 +594,40 @@ export default {
                                 {{ $t("modules.tools.coordToolkit.errorMsg.example") + coordinatesNorthingExample }}
                             </p>
                         </div>
+                        <div
+                            v-if="isEnabled('supply') && !mobile && showCopyButtons"
+                            class="col-md-1 col-sm-1 copyBtn"
+                        >
+                            <button
+                                id="copyNorthingBtn"
+                                type="button"
+                                class="btn singleCopy"
+                                :title="$t(`common:modules.tools.coordToolkit.copyCoordBtn`, {value: $t(getLabel('northingLabel'))})"
+                                @click="copyCoords(['coordinatesNorthingField'])"
+                            >
+                                <span
+                                    class="glyphicon glyphicon-copy"
+                                    aria-hidden="true"
+                                />
+                            </button>
+                        </div>
                     </div>
                     <div
                         v-if="isEnabled( 'supply') && heightLayer !== null"
-                        class="form-group form-group-sm"
+                        class="form-group form-group-sm inputDiv"
                     >
                         <label
                             id="coordinatesHeightLabel"
                             for="coordinatesHeightField"
-                            class="col-md-5 col-sm-5 control-label"
+                            :class="getLabelClass()"
                         >{{ $t("modules.tools.coordToolkit.heightLabel") }}</label>
-                        <div class="col-md-7 col-sm-7">
+                        <div :class="getInputDivClass()">
                             <input
                                 id="coordinatesHeightField"
                                 :value="$t(height)"
                                 type="text"
                                 class="form-control"
                                 :readonly="true"
-                                @click="onInputClicked($event)"
                             >
                         </div>
                     </div>
@@ -588,10 +663,10 @@ export default {
                 </form>
             </div>
         </template>
-    </Tool>
+    </ToolTemplate>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 @import "~variables";
 
 
@@ -620,11 +695,14 @@ export default {
     .hint{
         margin: 5px 0px 25px;
         text-align:center;
-        color: @secondary_focus;
+        color: $secondary_focus;
         transition: color 0.35s;
     }
     .info{
         max-width: 550px;
+    }
+    .eastingToBottomNoError .copyPairBtn{
+        transform: translate(0px, -45px)
     }
     .eastingToBottomNoError{
         transform: translate(0px, 45px)
@@ -632,17 +710,41 @@ export default {
     .northingToTopNoError{
         transform: translate(0px, -45px)
     }
-    .eastingToBottomOneError{
-        transform: translate(0px, 55px)
+    .northingToTopEastingError{
+        transform: translate(0px, -95px)
     }
-    .northingToTopOneError{
-        transform: translate(0px, -65px)
+    .eastingToBottomOneError{
+        transform: translate(0px, 85px)
     }
     .eastingToBottomTwoErrors{
-        transform: translate(0px, 75px)
+       transform: translate(0px, 85px);
     }
     .northingToTopTwoErrors{
+        transform: translate(0px, -95px)
+    }
+    .northingToTopTwoErrorsEastNoValue{
         transform: translate(0px, -75px)
+    }
+    #copyCoordsPairBtn{
+        height: 75px;
+        position: absolute;
+        top: 0;
+    }
+    .copyBtn{
+        padding-right: 0;
+        padding-left: 0;
+        max-width: 50px;
+    }
+    .singleCopy{
+        max-height: 30px
+    }
+   @media (max-width: 767px) {
+        .eastingToBottomNoError{
+            transform: translate(0px, 70px)
+        }
+        .northingToTopNoError{
+            transform: translate(0px, -70px)
+        }
     }
 </style>
 

@@ -15,6 +15,24 @@ const FeatureListerModel = Tool.extend(/** @lends FeatureListerModel.prototype *
         highlightedFeature: null,
         highlightedFeatureStyle: null,
         glyphicon: "glyphicon-menu-hamburger",
+        highlightVectorRulesPolygon: { // default style for highlighting polygons
+            "fill": {
+                "color": [255, 0, 255, 0.9]
+            },
+            "stroke": {
+                "width": 4,
+                "color": [0, 0, 204, 0.9]
+            }
+        },
+        highlightVectorRulesPointLine: { // default style for highlighting lines and points
+            "stroke": {
+                "width": 8,
+                "color": [255, 0, 255, 0.9]
+            },
+            "image": {
+                "scale": 2
+            }
+        },
         // translations
         visibleVectorLayers: "",
         chooseTheme: "",
@@ -61,7 +79,8 @@ const FeatureListerModel = Tool.extend(/** @lends FeatureListerModel.prototype *
             "languageChanged": this.changeLang
         });
         this.changeLang();
-        Radio.on("ModelList", "updateVisibleInMapList", this.checkVisibleLayer, this);
+
+        Radio.on("VectorLayer", "featuresLoaded", this.checkVisibleLayer, this);
         Radio.on("Map", "setGFIParams", this.highlightMouseFeature, this); // wird beim Öffnen eines GFI getriggert
         this.listenTo(this, {"change:layerid": this.getLayerWithLayerId});
         this.listenTo(this, {"change:featureid": this.getFeatureWithFeatureId});
@@ -149,17 +168,31 @@ const FeatureListerModel = Tool.extend(/** @lends FeatureListerModel.prototype *
         }
     },
     /**
-     * Scales the style of the selected feature by 1.5
-     * @param {String} id id of the feature to highlight
+     * Sets the style for highlighting of the selected feature depending on the geometryType.
+     * @param {String} featureId id of the feature to highlight
      * @return {void}
      */
-    highlightFeature: function (id) {
+    highlightFeature: function (featureId) {
         const layer = this.get("layer"),
+            featureWrapper = layer.features.find(feat => {
+                return feat.id.toString() === featureId;
+            }),
+            styleObj = layer.geometryType.toLowerCase().indexOf("polygon") > -1 ? this.get("highlightVectorRulesPolygon") : this.get("highlightVectorRulesPointLine"),
             highlightObject = {
-                type: "increase",
-                id: id,
-                layer: layer
+                type: layer.geometryType === "Point" || layer.geometryType === "MultiPoint" ? "increase" : "highlightPolygon",
+                id: featureId,
+                layer: layer,
+                feature: featureWrapper.feature,
+                scale: styleObj.image?.scale
             };
+
+        if (highlightObject.type === "highlightPolygon") {
+            highlightObject.highlightStyle = {
+                fill: styleObj.fill,
+                stroke: styleObj.stroke,
+                image: styleObj.image
+            };
+        }
 
         store.dispatch("Map/highlightFeature", highlightObject);
     },
@@ -369,12 +402,23 @@ const FeatureListerModel = Tool.extend(/** @lends FeatureListerModel.prototype *
      * @return {void}
      */
     addLayerToList: function (layer) {
-        const layerlist = this.get("layerlist");
+        if (!layer) {
+            return;
+        }
+        const layerlist = this.get("layerlist"),
+            features = layer.get("layer").getSource().getFeatures();
+        let geometryType = "none";
+
+        if (features.length > 0) {
+            geometryType = features[0].getGeometry().getType();
+        }
 
         layerlist.push({
             id: layer.id,
+            styleId: layer.get("styleId"),
             name: layer.get("name"),
-            style: layer.get("style")
+            style: layer.get("style"),
+            geometryType: geometryType
         });
         this.unset("layerlist", {silent: true});
         this.set("layerlist", layerlist);

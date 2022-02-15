@@ -8,6 +8,7 @@ import mapCollection from "../../../../../../../core/dataStorage/mapCollection.j
 const {
     chooseCurrentLayout,
     parseMapfishCapabilities,
+    parsePlotserviceCapabilities,
     getGfiForPrint,
     getAttributeInLayoutByName,
     togglePostrenderListener,
@@ -87,6 +88,39 @@ describe("src/modules/tools/print/store/actions/actionsPrintInitialization.js", 
 
             // action, payload, state, rootState, expectedMutationsAndActions, getters = {}, done, rootGetters
             testAction(parseMapfishCapabilities, payload, {}, {}, [
+                {type: "setLayoutList", payload: payload.layouts}
+            ], {}, done);
+        });
+    });
+
+    describe("parsePlotserviceCapabilities", function () {
+        it("should parse the plotservice capabilities", done => {
+            const payload = {
+                layouts: [
+                    {
+                        name: "A4 Hochformat",
+                        geoDocument: "pdf_a4_hoch"
+                    },
+                    {
+                        name: "A4 Querformat",
+                        geoDocument: "pdf_a4_quer"
+                    },
+                    {
+                        name: "A3 Hochformat",
+                        geoDocument: "pdf_a3_hoch"
+                    },
+                    {
+                        name: "A3 Querformat",
+                        geoDocument: "pdf_a3_quer"
+                    }
+                ],
+                formats: [
+                    "jpg", "png", "pdf"
+                ]
+            };
+
+            // action, payload, state, rootState, expectedMutationsAndActions, getters = {}, done, rootGetters
+            testAction(parsePlotserviceCapabilities, payload, {}, {}, [
                 {type: "setLayoutList", payload: payload.layouts}
             ], {}, done);
         });
