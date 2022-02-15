@@ -26,24 +26,34 @@ function create2DMap (mapViewSettings) {
     mapCollection.addMap(map, "ol", "2D");
     mapCollection.getMapView("ol", "2D").initStore();
 
+    // Remove later
+
     store.dispatch("Map/setMapAttributes", {map: map});
+    store.dispatch("Maps/setMapAttributes", {map: map});
     Radio.trigger("ModelList", "addInitiallyNeededModels");
 }
 
 /**
- * Alt:Create the 3D map.
+ * Create the 3D map.
+ * @param {Object} configJs The settings of config.json file.
  * @returns {void}
  */
 function create3DMap () {
     // Todo hier die neue 3D map nach Umzug anlegen.
+    // Layervorbereitungen hier per action aufrufen? vgl activateMap3d aus map3D.js
+    // shadowTime ergänzen
+    // startingMap3D.configJs
     if (window.Cesium) {
-        // Radio.trigger("Map", "setMap3dModel", new Map3dModel());
-        const map3d = api.map.createMap({
-            map2D: store.getters["Map/ol2DMap"],
-            shadowTime: null
-        }, "3D");
+        mapCollection.getMapView("ol", "2D").initStore();
+        const map3D2D = mapCollection.getMap("ol", "2D"),
+            map3D = api.map.createMap({
+                map2D: map3D2D,
+                shadowTime: undefined
+            }, "3D");
 
-        mapCollection.addMap(map3d, "olcs", "3D");
+        mapCollection.addMap(map3D, "olcs", "3D");
+        // store.dispatch("Maps/setMapAttributes", {map: map3D2D});
+        store.dispatch("Map/setMapAttributes", {map: map3D2D});
     }
 
 }
@@ -68,7 +78,7 @@ function createObliqueMap (configJs) {
  */
 export function createMaps (configJs, mapViewSettings) {
     create2DMap(mapViewSettings);
-    create3DMap();
+    create3DMap(configJs);
     createObliqueMap(configJs);
 }
 
