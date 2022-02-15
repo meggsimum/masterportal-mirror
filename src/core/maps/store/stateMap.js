@@ -32,7 +32,7 @@ const state = {
     mode: "2D",
     mouseCoordinate: null,
     overlayIds: null,
-    projection: "EPSG:25832",
+    projection: null,
     resolution: null,
     resolutions: null,
     rotation: null,
