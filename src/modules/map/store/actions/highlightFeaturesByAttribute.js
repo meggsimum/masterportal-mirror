@@ -1,4 +1,3 @@
-import {fetchFirstModuleConfig} from "../../../../utils/fetchFirstModuleConfig";
 import {WFS} from "ol/format.js";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
@@ -19,6 +18,7 @@ import { Radio } from "backbone";
  const highlighFeaturesState = {
     pointStyleId: "defaultHighlightFeaturesPoint", //defaultHighlightFeaturesPoint
     polygonStyleId: "defaultHighlightFeaturesPolygon",
+    lineStyleId: "defaultHighlightFeaturesLine",
     highlightPoint: new VectorLayer({
         id: "highlight_point_layer",
         name: "highlightPoint",
@@ -34,7 +34,16 @@ import { Radio } from "backbone";
         visible: false,
         style: new Style(),
         alwaysOnTop: true
-    })
+    }),
+    highlightLine: new VectorLayer({
+        id: "highlight_line_layer",
+        name: "highlightLine",
+        source: new VectorSource(),
+        visible: false,
+        style: new Style(),
+        alwaysOnTop: true
+    }),
+    config: undefined
 };
 
 const configPaths = [
@@ -44,51 +53,62 @@ const configPaths = [
 /**
  * handles the response from a wfs get feature request
  * @param {string} response - XML to be sent as String
- * @param {Object} context The context Vue instance.
+ * @param {Object} highlightFeaturesLayer The configuration for the Layer.
  * @returns {void}
  */
-function handleGetFeatureResponse (dispatch, response) {
+function handleGetFeatureResponse (dispatch, response, highlightFeaturesLayer) {
     if (response.status === 200) {
-        // const moduleConfig = fetchFirstModuleConfig(context, configPaths, "HighlightFeatures", false);
-        // console.log(moduleConfig);
-        //2128
-        console.log(highlighFeaturesState.pointStyleId);
-        const styleListModel = Radio.request("StyleList", "returnModelById", highlighFeaturesState.pointStyleId);
-        console.log(styleListModel);
+        let hadPoint = false, hadPolygon = false, hadLine = false;
+        const styleListModelPoint = Radio.request("StyleList", "returnModelById", highlighFeaturesState.pointStyleId);
+        const styleListModelPolygon = Radio.request("StyleList", "returnModelById", highlighFeaturesState.polygonStyleId);
+        const styleListModelLine = Radio.request("StyleList", "returnModelById", highlighFeaturesState.lineStyleId);
 
-        const features = new WFS({version: "1.1.0"}).readFeatures(response.data);
-        let newLayer = Radio.request("Map", "createLayerIfNotExists", "highlightFeatures");
+        const features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data);
 
         features.forEach(feature => {
-            if (styleListModel) {
-                //console.log(feature);
-                const geometry = feature.getGeometry(),
-                    coordinate = geometry.getType() === "Point" ? geometry.getCoordinates() : Extent.getCenter(geometry.getExtent()); // Remove later for more reliable fallback
+            const geometry = feature.getGeometry();
+            if (styleListModelPoint && geometry.getType() === "Point") {
+                hadPoint = true;
+                let coordinate = geometry.getCoordinates();
+                const iconFeature = new Feature({
+                    geometry: new Point(coordinate)
+                }),
+                featureStyle = styleListModelPoint.createStyle(iconFeature, false);
 
-                const iconfeature = new Feature({
-                        geometry: new Point(coordinate)
-                    }),
-                    featureStyle = styleListModel.createStyle(iconfeature, false);
-
-                iconfeature.setStyle(featureStyle);
-                highlighFeaturesState.highlightPoint.getSource().addFeature(iconfeature);
+                iconFeature.setStyle(featureStyle);
+                highlighFeaturesState.highlightPoint.getSource().addFeature(iconFeature);
             }
-            //commit("addFeatureToMarker", {feature: iconfeature, marker: "markerPoint"});
-            //commit("setVisibilityMarker", {visibility: true, marker: "markerPoint"});
+            else if (styleListModelPolygon && geometry.getType() === "Polygon") {
+                hadPolygon = true;
+                const newFeature = new Feature({
+                        geometry: geometry
+                    }),
+                    featureStyle = styleListModelPolygon.createStyle(newFeature, false);
+                newFeature.setStyle(featureStyle);
+                highlighFeaturesState.highlightPolygon.getSource().addFeature(newFeature);
+            }
+            else if (styleListModelLine && geometry.getType() === "LineString") {
+                hadLine = true;
+                const newFeature = new Feature({
+                        geometry: geometry
+                    }),
+                    featureStyle = styleListModelLine.createStyle(newFeature, false);
+                newFeature.setStyle(featureStyle);
+                highlighFeaturesState.highlightLine.getSource().addFeature(newFeature);
+            }
         });
-        highlighFeaturesState.highlightPoint.setVisible(true);
-        Radio.trigger("Map", "addLayerOnTop", highlighFeaturesState.highlightPoint);
-        // rootGetters["Map/ol2DMap"].addLayerOnTop(state.markerPoint);
-
-        /*
-        console.log("created Layer");
-        newLayer.setMap(Radio.request("Map", "getMap"));
-        console.log("set Map");
-        newLayer.setVisible(true);
-        newLayer.getSource().addFeatures(features);
-        console.log("added features to layer");
-        */
-        //dispatch("Map/highlightFeatures", {type: "highlightPolygons", features: features, layerId: newLayer.layerId}, {root: true});
+        if (hadPoint) {
+            highlighFeaturesState.highlightPoint.setVisible(true);
+            Radio.trigger("Map", "addLayerOnTop", highlighFeaturesState.highlightPoint);
+        }
+        if (hadPolygon) {
+            highlighFeaturesState.highlightPolygon.setVisible(true);
+            Radio.trigger("Map", "addLayerOnTop", highlighFeaturesState.highlightPolygon);
+        }
+        if (hadLine) {
+            highlighFeaturesState.highlightLine.setVisible(true);
+            Radio.trigger("Map", "addLayerOnTop", highlighFeaturesState.highlightLine);
+        }
     }
     else {
         Radio.trigger("Alert", "alert", "Datenabfrage fehlgeschlagen. (Technische Details: " + status);
@@ -101,28 +121,33 @@ function handleGetFeatureResponse (dispatch, response) {
  * @returns {void}
  */
 function highlightFeaturesByAttribute ({dispatch}, queryObject) {
-    console.log(queryObject.context);
-    console.log(queryObject.propName);
-    console.log(queryObject.propValue);
-    console.log(queryObject.queryType);
-    console.log(queryObject.wfsId);
-    const querySnippetLike = `<ogc:PropertyIsLike matchCase='false' wildCard='%' singleChar='#' escapeChar='!'>
-            <ogc:PropertyName>app:${queryObject.propName}</ogc:PropertyName>
+    const highlighFeaturesConfig = Object.prototype.hasOwnProperty.call(Config, "highlightFeatures") ? Config.highlightFeatures : undefined;
+    if (!highlighFeaturesConfig) {
+        console.warn("highlightFeatures not configured");
+        return;
+    }
+    const highlightFeaturesLayer = highlighFeaturesConfig.layers.find(layerConf => layerConf.id === queryObject.wfsId);
+    if (!highlightFeaturesLayer) {
+        console.warn("highlightFeatures Layer with ID " + queryObject.wfsId + " not found in Config");
+        return;
+    }
+
+    const querySnippetLike = `<ogc:PropertyIsLike matchCase='false' wildCard='${highlightFeaturesLayer.wildCard}' singleChar='${highlightFeaturesLayer.singleChar}' escapeChar='${highlightFeaturesLayer.escapeChar}'>
+            <ogc:PropertyName>${highlightFeaturesLayer.propNameSearchPrefix}${queryObject.propName}</ogc:PropertyName>
             <ogc:Literal>%${queryObject.propValue}%</ogc:Literal>
         </ogc:PropertyIsLike>`;
-    const querySnippetEqual = `<ogc:PropertyIsEqual matchCase='false' wildCard='*' singleChar='#' escapeChar='!'>
-        <ogc:PropertyName>app:${queryObject.propName}</ogc:PropertyName>
+    const querySnippetEqual = `<ogc:PropertyIsEqualTo matchCase='false' wildCard='${highlightFeaturesLayer.wildCard}' singleChar='${highlightFeaturesLayer.singleChar}' escapeChar='${highlightFeaturesLayer.escapeChar}'>
+        <ogc:PropertyName>${highlightFeaturesLayer.propNameSearchPrefix}${queryObject.propName}</ogc:PropertyName>
         <ogc:Literal>${queryObject.propValue}</ogc:Literal>
-    </ogc:PropertyIsEqual>`;
+    </ogc:PropertyIsEqualTo>`;
 
+    //P_TIERARTEN_INVASIV
     let reqData = `<?xml version='1.0' encoding='UTF-8'?>
-        <wfs:GetFeature service='WFS' xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml' xmlns:app='http://www.deegree.org/app' traverseXlinkDepth='*' version='1.1.0'>
-        <wfs:Query typeName='app:P_TIERARTEN_INVASIV'>
-        <wfs:PropertyName>app:SHAPE</wfs:PropertyName>
-        <wfs:PropertyName>app:ANZAHL</wfs:PropertyName>
-        <wfs:maxFeatures>20</wfs:maxFeatures>
+        <wfs:GetFeature service='WFS' xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml' xmlns:app='http://www.deegree.org/app' traverseXlinkDepth='*' version='${highlightFeaturesLayer.WFSVersion}'>
+        <wfs:Query typeName='${highlightFeaturesLayer.typename}'>
+        <wfs:PropertyName>${highlightFeaturesLayer.resultPropName}</wfs:PropertyName>
         <ogc:Filter>`;
-    if (queryObject.queryType === "isEqual") {
+    if (queryObject.queryType === "IsEqual") {
         reqData = reqData + querySnippetEqual;
     }
     else {
@@ -130,31 +155,14 @@ function highlightFeaturesByAttribute ({dispatch}, queryObject) {
     }
     reqData = reqData + "</ogc:Filter></wfs:Query></wfs:GetFeature>";
 
-    const reqData2 = `<?xml version='1.0' encoding='UTF-8'?>
-    <wfs:GetFeature service='WFS' xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml' xmlns:app='http://www.deegree.org/app' traverseXlinkDepth='*' version='1.1.0'>
-    <wfs:Query typeName='app:P_TIERARTEN_INVASIV'>
-    <wfs:PropertyName>app:ID_ART</wfs:PropertyName>
-    <wfs:PropertyName>app:SHAPE</wfs:PropertyName>
-    <wfs:maxFeatures>20</wfs:maxFeatures>
-    <ogc:Filter>
-        <ogc:PropertyIsLike matchCase='false' wildCard='*' singleChar='#' escapeChar='!'>
-            <ogc:PropertyName>app:DS_USER_CODE</ogc:PropertyName>
-            <ogc:Literal>*X9999X*</ogc:Literal>
-        </ogc:PropertyIsLike>
-    </ogc:Filter>
-    </wfs:Query>
-    </wfs:GetFeature>`;
-    
     axios({
         method: "post",
-        //url: "https://bsu-srv-arcgis.fhhnet.stadt.hamburg.de/security-proxy/services/wfs_ak19g?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetFeature&TYPENAME=app:P_TIERARTEN_INVASIV",
-        //data: "&FILTER=" + encodeURIComponent(reqData),
-        url: "https://bsu-srv-arcgis.fhhnet.stadt.hamburg.de/security-proxy/services/wfs_ak19g",
+        url: highlightFeaturesLayer.url,
         data: reqData,
         headers: { 'content-type': 'raw' },
         timeout: 5000
     }).then(response => {
-        return handleGetFeatureResponse(dispatch, response);
+        return handleGetFeatureResponse(dispatch, response, highlightFeaturesLayer);
     }).catch(function (error) {
         if (error.response) {
             // Request made and server responded

@@ -54,9 +54,14 @@ const actions = {
             if (rootState.urlParams["Map/highlightFeaturesByAttribute"]) {
                 const propName = rootState.urlParams["attributeName"];
                 const propValue = rootState.urlParams["attributeValue"];
-                const queryType = rootState.urlParams["query"];
+                const queryType = rootState.urlParams["Search/query"];
                 const wfsId = rootState.urlParams["wfsId"];
-                dispatch("highlightFeaturesByAttribute", {wfsId: wfsId, propName: propName, propValue: propValue, queryType: queryType});
+                if (propName && propValue && wfsId) {
+                    dispatch("highlightFeaturesByAttribute", {wfsId: wfsId, propName: propName, propValue: propValue, queryType: queryType});
+                }
+                else {
+                    console.warn("Not all required URL parameters given for highlightFeatures.");
+                }
                 //dispatch("highlightFeaturesByAttribute", {});
             }
         }});

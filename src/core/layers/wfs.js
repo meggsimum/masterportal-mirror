@@ -78,7 +78,6 @@ WFSLayer.prototype.createLayer = function (attrs) {
                 }
             }.bind(this),
             afterLoading: function (features) {
-                console.log("afterLoading");
                 this.featuresLoaded(attrs.id, features);
                 if (this.get("isSelected") || attrs.isSelected) {
                     LoaderOverlay.hide();
