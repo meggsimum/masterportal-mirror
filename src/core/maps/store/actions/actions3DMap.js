@@ -1,7 +1,6 @@
 import api from "masterportalAPI/src/maps/api";
 import store from "../../../../app-store";
 import mapCollection from "../../../dataStorage/mapCollection";
-
 import OLCesium from "olcs/OLCesium.js";
 
 /**
