@@ -82,8 +82,9 @@ const gettersMap = {
      * @param {number[]} state.clickPixel - the pixel coordinate of the click event
      * @returns {object[]} gfi features
      */
-    gfiFeaturesAtPixel: (state, {map3d, clickPixel}) => {
-        const featuresAtPixel = [];
+    gfiFeaturesAtPixel: (state, {clickPixel}) => {
+        const featuresAtPixel = [],
+            map3D = mapCollection.getMap("olcs", "3D");
 
         mapCollection.getMap("ol", "2D").forEachFeatureAtPixel(clickPixel, (feature, layer) => {
             if (layer?.getVisible() && layer?.get("gfiAttributes") && layer?.get("gfiAttributes") !== "ignore") {
@@ -106,9 +107,9 @@ const gettersMap = {
             }
         });
 
-        if (map3d && Array.isArray(clickPixel) && clickPixel.length === 2) {
+        if (map3D && Array.isArray(clickPixel) && clickPixel.length === 2) {
             // add features from map3d
-            const scene = map3d.getCesiumScene(),
+            const scene = map3D.getCesiumScene(),
                 tileFeatures = scene.drillPick({x: clickPixel[0], y: clickPixel[1]});
 
             tileFeatures.forEach(tileFeature => {
