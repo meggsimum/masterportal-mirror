@@ -422,7 +422,7 @@ const SourceModel = QueryModel.extend({
      */
     containsValue: function (feature, attrName, value) {
         if (feature.get(attrName) !== undefined) {
-            return feature.get(attrName).indexOf(value) !== -1;
+            return String(feature.get(attrName)).indexOf(value) !== -1;
         }
         return false;
     },
