@@ -128,3 +128,25 @@ VectorBaseLayer.prototype.showAllFeatures = function () {
         feature.setStyle(style(feature));
     });
 };
+
+/**
+ * Returns the style as a function.
+ * @param {Function|Object} style ol style object or style function.
+ * @returns {Function} - style as function.
+ */
+VectorBaseLayer.prototype.getStyleAsFunction = function (style) {
+    if (typeof style === "function") {
+        return style;
+    }
+
+    return function () {
+        return style;
+    };
+};
+/**
+ * Sets Style for layer.
+ * @returns {void}
+ */
+VectorBaseLayer.prototype.styling = function () {
+    this.layer.setStyle(this.getStyleAsFunction(this.get("style")));
+};
