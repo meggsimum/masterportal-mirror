@@ -32,6 +32,8 @@
     - Addresses pasted with `copy & paste` or the url parameter `query` are now executed directly on exactly one search hit in the gazetteer.
     - The `recommendedList` is now sorted by the attribute `searchResultOrder`.
 - Parametric URL: For the URL parameters `QUERY` and `SEARCH/QUERY` the house numbers must now be separated with a blank. This way the call in the URL is always the same as the displayed search result.
+- map3d ist moved to src/core/maps and into the masterportalAPI.
+- Path updated in map and map3d because abstraction in masterportalAPI changed to maps and moved into src
 
 ### Deprecated
 
