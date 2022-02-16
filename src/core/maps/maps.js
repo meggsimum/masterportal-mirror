@@ -5,7 +5,9 @@ import "./2DMap";
 import "./2DMapView";
 import "./2DMapRadioBridge";
 import "./2DMapViewRadioBridge";
+import "./3DMapRadioBridge";
 
+import {activateMap3D} from "./store/actions/actions3DMap";
 import ObliqueMap from "../../../modules/core/obliqueMap";
 import mapCollection from "../dataStorage/mapCollection";
 import store from "../../app-store";
@@ -39,20 +41,8 @@ function create2DMap (mapViewSettings) {
  * @returns {void}
  */
 function create3DMap () {
-    // Todo hier die neue 3D map nach Umzug anlegen.
-    // startingMap3D.configJs
-    if (window.Cesium) {
-        const map3D2D = mapCollection.getMap("ol", "2D"),
-            map3D = api.map.createMap({
-                map2D: map3D2D,
-                shadowTime: undefined
-            }, "3D");
-
-        mapCollection.addMap(map3D, "olcs", "3D");
-        // store.commit("Maps/setMode", "3D");
-        // map3D2D.mode = "3D";
-        // store.dispatch("Maps/setMapAttributes", {map: map3D2D});
-        // store.dispatch("Map/setMapAttributes", {map: map3D2D});
+    if (window.Cesium && Config.startingMap3D) {
+        activateMap3D();
     }
 
 }
