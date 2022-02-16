@@ -20,6 +20,8 @@
 - Issue #610: Refactor Elastic Search: The CreateHit() function has been modified to allow the Glyphicon and HitType to be assigned from the backend.
 -  The following NPM packages are updated:
     - jsdoc: 3.6.7 to 3.6.10
+- map3d ist moved to src/core/maps and into the masterportalAPI.
+- Path updated in map and map3d because abstraction in masterportalAPI changed to maps and moved into src
 
 ### Deprecated
 
