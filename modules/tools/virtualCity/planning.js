@@ -3,6 +3,7 @@ import EntitiesLayer from "../../core/modelList/layer/entities";
 import TileSetLayer from "../../../src/core/layers/tileset";
 import {parseFlightOptions} from "./flight";
 import StaticImageLayer from "../../core/modelList/layer/staticImage";
+import {activateMap3D} from "../../../src/core/maps/store/actions/actions3DMap.js";
 
 /**
  * ATTENTION! This tool is not tested and may not work anymore, since tileset-layer was refactored (Issue BG-1843).
@@ -32,7 +33,6 @@ const Planning = Backbone.Model.extend(/** @lends Planning.prototype */ {
      * @property {Array} flights - list of planning flights
      * @listens Core#RadioTriggerMapChange
      * @fires Core#RadioRequestMapIsMap3d
-     * @fires Core#RadioTriggerMapActivateMap3d
      * @fires Core#RadioTriggerMapSetCameraParameter
      */
     initialize () {
@@ -128,12 +128,11 @@ const Planning = Backbone.Model.extend(/** @lends Planning.prototype */ {
      * activates the planning project and jumps to the default Viewpoint
      * @returns {Promise} promise which returns when the planning has been loaded and activated
      * @fires Core#RadioRequestMapIsMap3d
-     * @fires Core#RadioTriggerMapActivateMap3d
      * @fires Core#RadioTriggerMapSetCameraParameter
      */
     activate () {
         if (!Radio.request("Map", "isMap3d")) {
-            Radio.trigger("Map", "activateMap3d");
+            activateMap3D();
         }
         return this.initializePlanning().then(() => {
             if (this.defaultViewpoint) {
