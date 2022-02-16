@@ -13,6 +13,8 @@
 - Issue #530: New checkbox for the print module to disable the auto adjustment of the print mask scale
 
 ### Changed
+- map3d ist moved to src/core/maps and into the masterportalAPI.
+- Path updated in map and map3d because abstraction in masterportalAPI changed to maps and moved into src
 
 ### Deprecated
 
