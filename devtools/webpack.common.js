@@ -127,43 +127,7 @@ module.exports = function () {
                     }
                 },
                 {
-<<<<<<< HEAD
-                    test: /\.s(c|a)ss$/,
-                    use: [
-                        // "vue-style-loader",
-                        {
-                            loader: MiniCssExtractPlugin.loader,
-                            options: {}
-                        },
-                        "css-loader",
-                        "sass-loader"
-                        // {
-                        //     loader: "sass-loader",
-                        //     options: {
-                        //         implementation: require("sass")
-                        //         // sassOptions: {
-                        //         //     indentedSyntax: true // optional
-                        //         // }
-                        //     }
-                        // }
-                    ]
-                },
-                // {
-                //     test: /\.scss$/,
-                //     use: [
-                //         {
-                //             loader: MiniCssExtractPlugin.loader,
-                //             options: {}
-                //         },
-                //         "css-loader",
-                //         "sass-loader"
-                //     ]
-                // },
-                {
-                    test: /\.less$/,
-=======
                     test: /\.scss$/,
->>>>>>> cosi/merge
                     use: [
                         {
                             loader: MiniCssExtractPlugin.loader,
