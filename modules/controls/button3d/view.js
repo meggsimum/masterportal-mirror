@@ -23,7 +23,6 @@ const Button3dView = Backbone.View.extend(/** @lends Button3dView.prototype */{
      * @fires Core#RadioRequestUtilGetUiStyle
      * @fires Core#RadioRequestMapIsMap3d
      * @fires Core.ModelList#RadioTriggerModelListToggleWfsCluster
-     * @fires Core#RadioTriggerMapDe
      * @fires Alerting#RadioTriggerAlertAlertRemove
      * @fires Tools.Filter#RadioTriggerFilterEnable
      * @fires Core#RadioTriggerObliqueMapDeactivate

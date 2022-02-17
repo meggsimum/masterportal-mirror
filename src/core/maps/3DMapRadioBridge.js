@@ -17,6 +17,6 @@ channel.on({
         mapCollection.getMap("olcs", "3D").setShadowTime(shadowTime);
     },
     "setCameraParameter": function (cameraParams) {
-        api.map.olcsMap.setCameraParameter(cameraParams, mapCollection.getMap("olcs", "3D"));
+        api.map.olcsMap.setCameraParameter(cameraParams, mapCollection.getMap("olcs", "3D"), Cesium);
     }
 });
