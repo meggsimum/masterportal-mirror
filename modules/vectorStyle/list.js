@@ -251,7 +251,7 @@ const StyleList = Backbone.Collection.extend(/** @lends StyleList.prototype */{
      * Gets the default style for highlightFeatures as point.
      * @returns {Object} The default style for highlightFeatures point Style.
      */
-     getHighlightFeaturesPointDefaultStyle: function () {
+    getHighlightFeaturesPointDefaultStyle: function () {
         return {
             styleId: "defaultHighlightFeaturesPoint",
             rules: [{
@@ -293,7 +293,7 @@ const StyleList = Backbone.Collection.extend(/** @lends StyleList.prototype */{
      * Gets the default style for highlightFeatures as polygon.
      * @returns {Object} The default style for highlightFeatures polygon Style.
      */
-     getHighlightFeaturesPolygonDefaultStyle: function () {
+    getHighlightFeaturesPolygonDefaultStyle: function () {
         return {
             styleId: "defaultHighlightFeaturesPolygon",
             rules: [{
@@ -312,7 +312,7 @@ const StyleList = Backbone.Collection.extend(/** @lends StyleList.prototype */{
      * Gets the default style for highlightFeatures as line.
      * @returns {Object} The default style for highlightFeatures line Style.
      */
-     getHighlightFeaturesLineDefaultStyle: function () {
+    getHighlightFeaturesLineDefaultStyle: function () {
         return {
             styleId: "defaultHighlightFeaturesLine",
             rules: [{
@@ -344,7 +344,7 @@ const StyleList = Backbone.Collection.extend(/** @lends StyleList.prototype */{
      * gets style id from HighlightFeatures
      * @returns {String} - Style id of highlightFeatures.
      */
-     getStyleIdForHighlightFeaturesPoint: function () {
+    getStyleIdForHighlightFeaturesPoint: function () {
         let styleId;
 
         if (store.getters["HighlightFeatures/pointStyleId"]) {
@@ -360,7 +360,7 @@ const StyleList = Backbone.Collection.extend(/** @lends StyleList.prototype */{
      * gets style id from HighlightFeatures
      * @returns {String} - Style id of highlightFeatures.
      */
-     getStyleIdForHighlightFeaturesLine: function () {
+    getStyleIdForHighlightFeaturesLine: function () {
         let styleId;
 
         if (store.getters["HighlightFeatures/lineStyleId"]) {
@@ -389,7 +389,7 @@ const StyleList = Backbone.Collection.extend(/** @lends StyleList.prototype */{
      * gets style id from HighlightFeatures
      * @returns {String} - Style id of highlightFeatures.
      */
-     getStyleIdForHighlightFeaturesPolygon: function () {
+    getStyleIdForHighlightFeaturesPolygon: function () {
         let styleId;
 
         if (store.getters["HighlightFeatures/polygonStyleId"]) {

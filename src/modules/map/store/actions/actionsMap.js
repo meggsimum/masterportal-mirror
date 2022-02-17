@@ -1,6 +1,5 @@
 import normalizeLayers from "./normalizeLayers";
 import * as highlightFeature from "./highlightFeature";
-import * as highlightFeatures from "./highlightFeatures";
 import * as highlightFeaturesByAttribute from "./highlightFeaturesByAttribute";
 import * as removeHighlightFeature from "./removeHighlighting";
 import {getWmsFeaturesByMimeType} from "../../../../api/gfi/getWmsFeaturesByMimeType";
@@ -49,20 +48,20 @@ const actions = {
         const mapView = map.getView(),
             channel = Radio.channel("VectorLayer"),
             parametricUrlChannel = Radio.channel("ParametricURL");
-        
-        parametricUrlChannel.on({"ready": id => {
+
+        parametricUrlChannel.on({"ready": () => {
             if (rootState.urlParams["Map/highlightFeaturesByAttribute"]) {
-                const propName = rootState.urlParams["attributeName"];
-                const propValue = rootState.urlParams["attributeValue"];
-                const queryType = rootState.urlParams["Search/query"];
-                const wfsId = rootState.urlParams["wfsId"];
+                const propName = rootState.urlParams.attributeName,
+                    propValue = rootState.urlParams.attributeValue,
+                    queryType = rootState.urlParams["Search/query"],
+                    wfsId = rootState.urlParams.wfsI;
+
                 if (propName && propValue && wfsId) {
                     dispatch("highlightFeaturesByAttribute", {wfsId: wfsId, propName: propName, propValue: propValue, queryType: queryType});
                 }
                 else {
                     console.warn("Not all required URL parameters given for highlightFeatures.");
                 }
-                //dispatch("highlightFeaturesByAttribute", {});
             }
         }});
 
@@ -405,7 +404,6 @@ const actions = {
         }
     },
     ...highlightFeature,
-    ...highlightFeatures,
     ...highlightFeaturesByAttribute,
     ...removeHighlightFeature
 };
