@@ -1,6 +1,7 @@
 import api from "masterportalAPI/src/maps/api";
 import store from "../../../../app-store";
 import mapCollection from "../../../dataStorage/mapCollection";
+
 import OLCesium from "olcs/OLCesium.js";
 
 /**
@@ -116,7 +117,7 @@ export function activateMap3D () {
         mapCollection.addMap(map3D, "olcs", "3D");
         scene = map3D.getCesiumScene();
         api.map.olcsMap.prepareScene({scene: scene, map3D: map3D, callback: clickEventCallback}, Config);
-        camera = api.map.olcsMap.prepareCamera(scene, store, map3D);
+        camera = api.map.olcsMap.prepareCamera(scene, store, map3D, Config, Cesium);
         camera.changed.addEventListener(reactToCameraChanged.bind(map3D));
     }
     map3D.setEnabled(true);
