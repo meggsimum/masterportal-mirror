@@ -258,13 +258,21 @@ describe("src/core/layers/layer.js", () => {
         expect(layerWrapper.attributes.transparency).to.be.equals(100);
     });
     it("updateLayerTransparency shall update layers opacity", function () {
-        // attributes.isSelected = false;
+        //attributes.isSelected = false;
         attributes.transparency = 50;
         const layerWrapper = new Layer(attributes, olLayer);
 
         expect(layerWrapper.attributes.transparency).to.be.equals(50);
         expect(layerWrapper.get("layer").getOpacity()).to.be.equals(0);
         layerWrapper.updateLayerTransparency();
+        expect(layerWrapper.get("layer").getOpacity()).to.be.equals(0.5);
+    });
+    it("updateLayerTransparency shall update layers opacity if selected is false", function () {
+        attributes.isSelected = false;
+        attributes.transparency = 50;
+        const layerWrapper = new Layer(attributes, olLayer);
+
+        expect(layerWrapper.attributes.transparency).to.be.equals(50);
         expect(layerWrapper.get("layer").getOpacity()).to.be.equals(0.5);
     });
     it("setIsVisibleInTree shall trigger menu rerender", function () {
