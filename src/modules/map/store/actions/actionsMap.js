@@ -53,8 +53,8 @@ const actions = {
             if (rootState.urlParams["Map/highlightFeaturesByAttribute"]) {
                 const propName = rootState.urlParams.attributeName,
                     propValue = rootState.urlParams.attributeValue,
-                    queryType = rootState.urlParams["Search/query"],
-                    wfsId = rootState.urlParams.wfsI;
+                    queryType = rootState.urlParams.attributeQuery,
+                    wfsId = rootState.urlParams.wfsId;
 
                 if (propName && propValue && wfsId) {
                     dispatch("highlightFeaturesByAttribute", {wfsId: wfsId, propName: propName, propValue: propValue, queryType: queryType});

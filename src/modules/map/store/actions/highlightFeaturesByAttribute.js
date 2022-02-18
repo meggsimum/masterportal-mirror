@@ -164,7 +164,7 @@ function highlightFeaturesByAttribute ({dispatch}, queryObject) {
         headers: {"content-type": "raw"},
         timeout: 5000
     }).then(response => {
-        return handleGetFeatureResponse(dispatch, response, highlightFeaturesLayer);
+        return handleGetFeatureResponse(response, highlightFeaturesLayer);
     }).catch(function (error) {
         if (error.response) {
             // Request made and server responded
