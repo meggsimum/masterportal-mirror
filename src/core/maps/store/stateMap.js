@@ -28,7 +28,7 @@ const state = {
     initialCenter: null,
     initialResolution: null,
     initialZoomLevel: null,
-    layerIds: null,
+    layerIds: [],
     mode: "2D",
     mouseCoordinate: null,
     overlayIds: null,
