@@ -4,6 +4,7 @@ import * as actionsMapInteractions from "./actionsMapInteractions.js";
 import * as actionsMapInteractionsZoomTo from "./actionsMapInteractionsZoomTo.js";
 import * as actionsMapLayers from "./actionsMapLayers.js";
 import * as actionsMapMode from "./actionsMapMode.js";
+import * as highlightFeature from "./highlightFeature.js";
 
 const actions = {
 
@@ -20,7 +21,8 @@ const actions = {
     ...actionsMapInteractions,
     ...actionsMapInteractionsZoomTo,
     ...actionsMapLayers,
-    ...actionsMapMode
+    ...actionsMapMode,
+    ...highlightFeature
 };
 
 export default actions;

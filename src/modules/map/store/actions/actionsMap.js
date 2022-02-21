@@ -39,7 +39,7 @@ const actions = {
      */
     setMapAttributes ({commit, dispatch, rootState}, {map}) {
         // discard old listeners
-        if (unsubscribes.length) {
+        if (unsubscribes.length > 0) {
             unsubscribes.forEach(unsubscribe => unsubscribe());
             unsubscribes = [];
         }

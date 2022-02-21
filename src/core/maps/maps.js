@@ -26,7 +26,7 @@ function create2DMap (mapViewSettings) {
     mapCollection.addMap(map, "ol", "2D");
     mapCollection.getMapView("ol", "2D").initStore();
 
-    // Remove later
+    // Remove later "Map/setMapAttributes"
 
     store.dispatch("Map/setMapAttributes", {map: map});
     store.dispatch("Maps/setMapAttributes", {map: map});
@@ -40,11 +40,8 @@ function create2DMap (mapViewSettings) {
  */
 function create3DMap () {
     // Todo hier die neue 3D map nach Umzug anlegen.
-    // Layervorbereitungen hier per action aufrufen? vgl activateMap3d aus map3D.js
-    // shadowTime ergänzen
     // startingMap3D.configJs
     if (window.Cesium) {
-        mapCollection.getMapView("ol", "2D").initStore();
         const map3D2D = mapCollection.getMap("ol", "2D"),
             map3D = api.map.createMap({
                 map2D: map3D2D,
@@ -52,8 +49,10 @@ function create3DMap () {
             }, "3D");
 
         mapCollection.addMap(map3D, "olcs", "3D");
+        // store.commit("Maps/setMode", "3D");
+        // map3D2D.mode = "3D";
         // store.dispatch("Maps/setMapAttributes", {map: map3D2D});
-        store.dispatch("Map/setMapAttributes", {map: map3D2D});
+        // store.dispatch("Map/setMapAttributes", {map: map3D2D});
     }
 
 }
