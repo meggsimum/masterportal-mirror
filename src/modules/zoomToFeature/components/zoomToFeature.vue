@@ -1,14 +1,14 @@
 <script>
-import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
-    name: "zoomToFeature",
+    // eslint-disable-next-line vue/match-component-file-name
+    name: "ZoomToFeature"
 
 };
 </script>
 
 <template>
-
+    <span />
 </template>
 
 <style scoped>
