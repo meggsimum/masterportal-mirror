@@ -25,9 +25,15 @@ function getFeaturesByLayerId (layerId) {
  * @returns {Boolean} true if the feature is in the current map extent of the browser
  */
 function isFeatureInMapExtent (feature) {
-    const mapExtent = Radio.request("MapView", "getCurrentExtent");
+    return intersects(getCurrentExtent(), feature.getGeometry().getExtent());
+}
 
-    return intersects(mapExtent, feature.getGeometry().getExtent());
+/**
+ * Returns the current extent of the browser.
+ * @returns {Object} the mapExtent
+ */
+function getCurrentExtent () {
+    return Radio.request("MapView", "getCurrentExtent");
 }
 
 /**
@@ -114,6 +120,7 @@ export {
     getFeaturesByLayerId,
     getLayerByLayerId,
     isFeatureInMapExtent,
+    getCurrentExtent,
     liveZoom,
     showFeaturesByIds,
     addLayerByLayerId,

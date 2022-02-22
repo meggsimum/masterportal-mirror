@@ -85,10 +85,19 @@ export default class MapHandler {
      * @returns {void}
      */
     initializeLayerFromExtern (filterId, layerId) {
-        const layerModel = this.handlers.createLayerIfNotExists(layerId);
-
-        this.layers[filterId] = layerModel;
+        this.layers[filterId] = Radio.request("Map", "createLayerIfNotExists", layerId);
         this.filteredIds[filterId] = [];
+    }
+
+    /**
+     * Checks if the layerModel of the given filterId is a layer from extern.
+     * @param {Number} filterId the id of the filter
+     * @returns {Boolean} true if this is a layer from extern
+     */
+    isLayerExtern (filterId) {
+        const layerModel = this.getLayerModelByFilterId(filterId);
+
+        return !isObject(layerModel.layer) || typeof layerModel.layer.getSource !== "function";
     }
 
     /**
@@ -164,7 +173,7 @@ export default class MapHandler {
             return;
         }
 
-        if (!this.isLayerActivated(filterId)) {
+        if (!this.isLayerActivated(filterId) && !this.isLayerExtern(filterId)) {
             layerModel.layer.getSource().once("featuresloadend", () => {
                 if (typeof onActivated === "function") {
                     onActivated();
@@ -210,7 +219,12 @@ export default class MapHandler {
 
         this.filteredIds[filterId] = [];
         if (isObject(layerModel) && typeof layerModel.get === "function") {
-            this.handlers.showFeaturesByIds(layerModel.get("id"), []);
+            if (!this.isLayerExtern(filterId)) {
+                this.handlers.showFeaturesByIds(layerModel.get("id"), []);
+            }
+            else {
+                layerModel.getSource().clear();
+            }
         }
     }
 
@@ -235,21 +249,23 @@ export default class MapHandler {
      * @returns {void}
      */
     addItemsToLayer (filterId, items) {
-        if (!Array.isArray(this.filteredIds[filterId]) || !Array.isArray(items)) {
-            return;
-        }
         const layerModel = this.getLayerModelByFilterId(filterId);
 
-        if (!isObject(layerModel) || typeof layerModel.get !== "function") {
+        if (!isObject(layerModel) || typeof layerModel.get !== "function" || !Array.isArray(items)) {
             return;
         }
-        items.forEach(item => {
-            if (isObject(item) && typeof item.getId === "function") {
-                this.filteredIds[filterId].push(item.getId());
-            }
-        });
 
-        this.handlers.showFeaturesByIds(layerModel.get("id"), this.filteredIds[filterId]);
+        if (this.isLayerExtern(filterId)) {
+            layerModel.getSource().addFeatures(items);
+        }
+        else {
+            items.forEach(item => {
+                if (isObject(item) && typeof item.getId === "function") {
+                    this.filteredIds[filterId].push(item.getId());
+                }
+            });
+            this.handlers.showFeaturesByIds(layerModel.get("id"), this.filteredIds[filterId]);
+        }
     }
 
     /**

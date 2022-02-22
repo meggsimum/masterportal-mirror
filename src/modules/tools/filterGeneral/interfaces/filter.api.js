@@ -2,7 +2,8 @@ import hash from "object-hash";
 import isObject from "../../../../utils/isObject";
 import {
     getFeaturesByLayerId,
-    isFeatureInMapExtent
+    isFeatureInMapExtent,
+    getCurrentExtent
 } from "../utils/openlayerFunctions.js";
 import IntervalRegister from "../utils/intervalRegister.js";
 import InterfaceOL from "./interface.ol.js";
@@ -26,7 +27,7 @@ export default class FilterApi {
             FilterApi.cache = {};
             FilterApi.interfaces = {
                 ol: new InterfaceOL(FilterApi.intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent}),
-                wfs: new InterfaceWFS()
+                wfs: new InterfaceWFS(FilterApi.intervalRegister, {getCurrentExtent})
             };
         }
     }
@@ -47,7 +48,7 @@ export default class FilterApi {
      */
     setServiceByLayerModel (layerId, layerModel) {
         this.service = {
-            type: "ol",
+            type: "tree",
             layerId,
             url: layerModel.get("url"),
             typename: layerModel.get("featureType"),
