@@ -2,7 +2,8 @@
 import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
-    name: "zoomToFeature"
+    name: "zoomToFeature",
+
 };
 </script>
 

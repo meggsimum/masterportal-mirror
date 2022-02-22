@@ -3,9 +3,9 @@ const Config = {
     ignoredKeys: ["BOUNDEDBY", "SHAPE", "SHAPE_LENGTH", "SHAPE_AREA", "OBJECTID", "GLOBALID", "GEOMETRY", "SHP", "SHP_AREA", "SHP_LENGTH", "GEOM"],
     wfsImgPath: "https://geodienste.hamburg.de/lgv-config/img/",
     zoomToFeature: {
-        attribute: "flaechenid",
-        wfsId: "4560",
-        styleId: "location_eventlotse"
+        attribute: "kh_nummer",
+        wfsId: "1711",
+        styleId: "1711"
     },
     zoomToGeometry: {
         layerId: "1692",
