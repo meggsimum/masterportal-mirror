@@ -166,8 +166,8 @@ WFSLayer.prototype.getStyleFunction = function (attrs) {
  */
 WFSLayer.prototype.updateSource = function () {
     if (this.get("sourceUpdated") === false) {
-        this.layer.getSource().refresh();
         this.set("sourceUpdated", true);
+        this.layer.getSource().refresh();
     }
 };
 /**

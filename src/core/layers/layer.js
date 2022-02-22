@@ -41,10 +41,13 @@ export default function Layer (attrs, layer, initialize = true) {
         levelUpText: i18next.t("common:tree.levelUp"),
         levelDownText: i18next.t("common:tree.levelDown"),
         settingsText: i18next.t("common:tree.settings"),
-        infosAndLegendText: i18next.t("common:tree.infosAndLegend")
+        infosAndLegendText: i18next.t("common:tree.infosAndLegend"),
+        isAutoRefreshing: false,
+        intervalAutoRefresh: -1
     };
 
     this.layer = layer;
+    this.observersAutoRefresh = [];
     this.attributes = {...Object.assign({}, this.layer.values_, defaults, attrs)};
     this.id = attrs.id;
     delete this.attributes.source;
@@ -162,6 +165,7 @@ Layer.prototype.toggleIsSelected = function () {
     handleSingleBaseLayer(newValue, this);
 };
 
+
 /**
  * Checks whether the layer is visible or not based on the scale.
  * @param {object} options - of the map, contains scale of the map
@@ -191,7 +195,6 @@ Layer.prototype.checkForScale = function (options) {
 Layer.prototype.setIsOutOfRange = function (value) {
     this.set("isOutOfRange", value);
 };
-
 /**
  * Setter for isVisibleInMap and setter for layer.setVisible
  * @param {Boolean} newValue Flag if layer is visible in map
@@ -321,7 +324,8 @@ Layer.prototype.toggleIsSettingVisible = function () {
  */
 Layer.prototype.setIsSelected = function (newValue) {
     const map = mapCollection.getMap("ol", "2D"),
-        treeType = store.getters.treeType;
+        treeType = store.getters.treeType,
+        autoRefresh = this.get("autoRefresh");
 
     // do not use this.set("isSelected", value), because of neverending recursion
     this.attributes.isSelected = newValue;
@@ -340,6 +344,10 @@ Layer.prototype.setIsSelected = function (newValue) {
     if (this.get("typ") === "WFS") {
         // data will be loaded at first selection
         this.updateSource();
+    }
+
+    if (typeof autoRefresh === "number" || typeof autoRefresh === "string") {
+        this.activateAutoRefresh(newValue, Math.max(500, autoRefresh));
     }
 };
 /**
@@ -370,6 +378,55 @@ Layer.prototype.updateLayerSource = function () {
         layers[0].setSource(this.get("layerSource"));
         layers[0].getSource().refresh();
     }
+};
+/**
+ * Creates and starts an interval to refresh the layer and clears running interval.
+ * @param {Boolean} isLayerSelected param to check if layer is selected
+ * @param {Number} autoRefresh the interval in ms
+ * @returns {void}
+ */
+Layer.prototype.activateAutoRefresh = function (isLayerSelected, autoRefresh) {
+    const layers = this.getLayers();
+
+    clearInterval(this.get("intervalAutoRefresh"));
+    this.set("intervalAutoRefresh", -1);
+
+    if (isLayerSelected) {
+        this.set("intervalAutoRefresh", setInterval(() => {
+            if (!this.get("isVisibleInMap") || this.get("isAutoRefreshing")) {
+                return;
+            }
+            this.setAutoRefreshEvent(layers[0]?.layer ? layers[0].layer : layers[0]);
+            layers.forEach(layer => {
+                const layerSource = layer?.layer ? layer.layer.getSource() : layer.getSource();
+
+                layerSource.refresh();
+            });
+        }, autoRefresh));
+    }
+};
+/**
+ * Sets the once event for 'featuresloadend'.
+ * Calls existing observers and passes the features of the given layer.
+ * @param {Layer} layer the layer
+ * @returns {void}
+ */
+Layer.prototype.setAutoRefreshEvent = function (layer) {
+    if (!layer) {
+        return;
+    }
+    const layerSource = layer.getSource();
+
+    this.set("isAutoRefreshing", true);
+
+    layerSource.once("featuresloadend", () => {
+        this.observersAutoRefresh.forEach(handler => {
+            if (typeof handler === "function") {
+                handler(layerSource.getFeatures());
+            }
+        });
+        this.set("isAutoRefreshing", false);
+    });
 };
 /**
  * Change language - sets default values for the language
@@ -576,6 +633,14 @@ Layer.prototype.setLegend = function (value) {
     store.dispatch("Legend/setLegendOnChanged", value);
 };
 /**
+ * Set observer for autoRefresh interval.
+ * @param {Function} handler the handler to execute on autoRefresh of the layer
+ * @returns {void}
+ */
+Layer.prototype.setObserverAutoInterval = function (handler) {
+    this.observersAutoRefresh.push(handler);
+};
+/**
  * Sets visible min and max resolution on layer.
  * @returns {void}
  */
@@ -595,6 +660,15 @@ Layer.prototype.setMinMaxResolutions = function () {
  */
 Layer.prototype.featuresLoaded = function (layerId, features) {
     bridge.featuresLoaded(layerId, features);
+};
+/**
+ * Get layers as array.
+ * @returns {Layer[]} layer as array
+ */
+Layer.prototype.getLayers = function () {
+    const layer = this.get("isClustered") ? this.layer.getSource() : this.layer;
+
+    return [layer];
 };
 // NOTICE: backbone-relevant functions, may be removed if all layers are no longer backbone models.
 // But set, get and has may stay, because they are convenient:)

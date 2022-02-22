@@ -587,6 +587,61 @@ describe("src/core/layers/layer.js", () => {
         expect(layerWrapper.has("idnotthere")).to.be.false;
 
     });
+    it("should return layer as array", () => {
+        const layerWrapper = new Layer(attributes, olLayer);
+
+        expect(layerWrapper.getLayers().length).to.be.above(0);
+    });
+    it("should set handler for autoInterval", function () {
+        const layerWrapper = new Layer(attributes, olLayer);
+
+        layerWrapper.setObserverAutoInterval("test");
+        expect(layerWrapper.observersAutoRefresh.length).to.be.above(0);
+    });
+    it("should not set the interval if autoRefresh is not number nor string", () => {
+        const layerWrapper = new Layer(attributes, olLayer);
+
+        layerWrapper.set("autoRefresh", true);
+        layerWrapper.setIsSelected(true);
+        expect(layerWrapper.get("intervalAutoRefresh")).to.be.equals(-1);
+        layerWrapper.setIsSelected(false);
+
+        layerWrapper.set("autoRefresh", false);
+        layerWrapper.setIsSelected(true);
+        expect(layerWrapper.get("intervalAutoRefresh")).to.be.equals(-1);
+        layerWrapper.setIsSelected(false);
+
+        layerWrapper.set("autoRefresh", true);
+        layerWrapper.setIsSelected(true);
+        expect(layerWrapper.get("intervalAutoRefresh")).to.be.equals(-1);
+        layerWrapper.setIsSelected(false);
+
+        layerWrapper.set("autoRefresh", null);
+        layerWrapper.setIsSelected(true);
+        expect(layerWrapper.get("intervalAutoRefresh")).to.be.equals(-1);
+        layerWrapper.setIsSelected(false);
+
+        layerWrapper.set("autoRefresh", undefined);
+        layerWrapper.setIsSelected(true);
+        expect(layerWrapper.get("intervalAutoRefresh")).to.be.equals(-1);
+        layerWrapper.setIsSelected(false);
+    });
+    it("should set the interval if autoRefresh is set", () => {
+        attributes.autoRefresh = "500";
+        const layerWrapper = new Layer(attributes, olLayer);
+
+        layerWrapper.setIsSelected(true);
+        expect(layerWrapper.get("intervalAutoRefresh")).to.not.equals(-1);
+        layerWrapper.setIsSelected(false);
+    });
+    it("should not set the interval if autoRefresh is not set", () => {
+        attributes.autoRefresh = undefined;
+        const layerWrapper = new Layer(attributes, olLayer);
+
+        layerWrapper.setIsSelected(true);
+        expect(layerWrapper.get("intervalAutoRefresh")).to.be.equals(-1);
+        layerWrapper.setIsSelected(false);
+    });
     it("setIsJustAdded shall set isJustAdded", function () {
         const layerWrapper = new Layer(attributes, olLayer);
 

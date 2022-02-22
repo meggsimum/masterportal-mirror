@@ -237,3 +237,10 @@ GroupedLayers.prototype.hideAllFeatures = function () {
         layer.hideAllFeatures();
     });
 };
+/**
+ * Get grouped layers as array.
+ * @returns {Layer[]} array of Layers
+ */
+GroupedLayers.prototype.getLayers = function () {
+    return this.attributes.layerSource;
+};
