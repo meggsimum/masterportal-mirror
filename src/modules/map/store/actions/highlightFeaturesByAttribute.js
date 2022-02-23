@@ -6,6 +6,7 @@ import Point from "ol/geom/Point.js";
 import Feature from "ol/Feature.js";
 import axios from "axios";
 import {Radio} from "backbone";
+import {getLayerList} from "masterportalAPI/src/rawLayerList";
 
 /**
  * User type definition
@@ -17,34 +18,10 @@ import {Radio} from "backbone";
  * @property {Object} highlightPolygon The vector layer for the polygon highlight features.
  * @property {Object} highlightLine The vector layer for the line highlight features.
  */
-const highlighFeaturesState = {
+const highlighFeaturesSettings = {
     pointStyleId: "defaultHighlightFeaturesPoint",
     polygonStyleId: "defaultHighlightFeaturesPolygon",
-    lineStyleId: "defaultHighlightFeaturesLine",
-    highlightPoint: new VectorLayer({
-        id: "highlight_point_layer",
-        name: "highlightPoint",
-        source: new VectorSource(),
-        visible: false,
-        style: new Style(),
-        alwaysOnTop: true
-    }),
-    highlightPolygon: new VectorLayer({
-        id: "highlight_polygon_layer",
-        name: "highlightPolygon",
-        source: new VectorSource(),
-        visible: false,
-        style: new Style(),
-        alwaysOnTop: true
-    }),
-    highlightLine: new VectorLayer({
-        id: "highlight_line_layer",
-        name: "highlightLine",
-        source: new VectorSource(),
-        visible: false,
-        style: new Style(),
-        alwaysOnTop: true
-    })
+    lineStyleId: "defaultHighlightFeaturesLine"
 };
 
 /**
@@ -58,10 +35,40 @@ function handleGetFeatureResponse (response, highlightFeaturesLayer) {
         let hadPoint = false,
             hadPolygon = false,
             hadLine = false;
-        const styleListModelPoint = Radio.request("StyleList", "returnModelById", highlighFeaturesState.pointStyleId),
-            styleListModelPolygon = Radio.request("StyleList", "returnModelById", highlighFeaturesState.polygonStyleId),
-            styleListModelLine = Radio.request("StyleList", "returnModelById", highlighFeaturesState.lineStyleId),
-            features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data);
+        const styleListModelPoint = Radio.request("StyleList", "returnModelById", highlighFeaturesSettings.pointStyleId),
+            styleListModelPolygon = Radio.request("StyleList", "returnModelById", highlighFeaturesSettings.polygonStyleId),
+            styleListModelLine = Radio.request("StyleList", "returnModelById", highlighFeaturesSettings.lineStyleId),
+            features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data),
+            highlightPoint = new VectorLayer({
+                id: "highlight_point_layer",
+                name: "highlightPoint",
+                source: new VectorSource(),
+                visible: false,
+                style: new Style(),
+                alwaysOnTop: true,
+                gfiAttributes: highlightFeaturesLayer.gfiAttributes,
+                gfiTheme: "default"
+            }),
+            highlightPolygon = new VectorLayer({
+                id: "highlight_polygon_layer",
+                name: "highlightPolygon",
+                source: new VectorSource(),
+                visible: false,
+                style: new Style(),
+                alwaysOnTop: true,
+                gfiAttributes: highlightFeaturesLayer.gfiAttributes,
+                gfiTheme: "default"
+            }),
+            highlightLine = new VectorLayer({
+                id: "highlight_line_layer",
+                name: "highlightLine",
+                source: new VectorSource(),
+                visible: false,
+                style: new Style(),
+                alwaysOnTop: true,
+                gfiAttributes: highlightFeaturesLayer.gfiAttributes,
+                gfiTheme: "default"
+            });
 
         features.forEach(feature => {
             const geometry = feature.getGeometry();
@@ -70,45 +77,48 @@ function handleGetFeatureResponse (response, highlightFeaturesLayer) {
                 hadPoint = true;
                 const coordinate = geometry.getCoordinates(),
                     iconFeature = new Feature({
-                        geometry: new Point(coordinate)
+                        geometry: new Point(coordinate),
+                        gfiAttributes: feature.values_
                     }),
                     featureStyle = styleListModelPoint.createStyle(iconFeature, false);
 
                 iconFeature.setStyle(featureStyle);
-                highlighFeaturesState.highlightPoint.getSource().addFeature(iconFeature);
+                highlightPoint.getSource().addFeature(iconFeature);
             }
             else if (styleListModelPolygon && geometry.getType() === "Polygon") {
                 hadPolygon = true;
                 const newFeature = new Feature({
-                        geometry: geometry
+                        geometry: geometry,
+                        gfiAttributes: feature.values_
                     }),
                     featureStyle = styleListModelPolygon.createStyle(newFeature, false);
 
                 newFeature.setStyle(featureStyle);
-                highlighFeaturesState.highlightPolygon.getSource().addFeature(newFeature);
+                highlightPolygon.getSource().addFeature(newFeature);
             }
             else if (styleListModelLine && geometry.getType() === "LineString") {
                 hadLine = true;
                 const newFeature = new Feature({
-                        geometry: geometry
+                        geometry: geometry,
+                        gfiAttributes: feature.values_
                     }),
                     featureStyle = styleListModelLine.createStyle(newFeature, false);
 
                 newFeature.setStyle(featureStyle);
-                highlighFeaturesState.highlightLine.getSource().addFeature(newFeature);
+                highlightLine.getSource().addFeature(newFeature);
             }
         });
         if (hadPoint) {
-            highlighFeaturesState.highlightPoint.setVisible(true);
-            Radio.trigger("Map", "addLayerOnTop", highlighFeaturesState.highlightPoint);
+            highlightPoint.setVisible(true);
+            Radio.trigger("Map", "addLayerOnTop", highlightPoint);
         }
         if (hadPolygon) {
-            highlighFeaturesState.highlightPolygon.setVisible(true);
-            Radio.trigger("Map", "addLayerOnTop", highlighFeaturesState.highlightPolygon);
+            highlightPolygon.setVisible(true);
+            Radio.trigger("Map", "addLayerOnTop", highlightPolygon);
         }
         if (hadLine) {
-            highlighFeaturesState.highlightLine.setVisible(true);
-            Radio.trigger("Map", "addLayerOnTop", highlighFeaturesState.highlightLine);
+            highlightLine.setVisible(true);
+            Radio.trigger("Map", "addLayerOnTop", highlightLine);
         }
     }
     else {
@@ -123,8 +133,9 @@ function handleGetFeatureResponse (response, highlightFeaturesLayer) {
  * @returns {void}
  */
 function highlightFeaturesByAttribute ({dispatch}, queryObject) {
-    const highlighFeaturesConfig = Object.prototype.hasOwnProperty.call(Config, "highlightFeatures") ? Config.highlightFeatures : undefined,
-        highlightFeaturesLayer = highlighFeaturesConfig.layers.find(layerConf => layerConf.id === queryObject.wfsId),
+    const layerConf = getLayerList(),
+        // highlighFeaturesConfig = Object.prototype.hasOwnProperty.call(Config, "highlightFeatures") ? Config.highlightFeatures : undefined,
+        highlightFeaturesLayer = layerConf.find(layerConf => layerConf.id === queryObject.wfsId),
         querySnippetLike = `<ogc:PropertyIsLike matchCase='false' wildCard='${highlightFeaturesLayer.wildCard}' singleChar='${highlightFeaturesLayer.singleChar}' escapeChar='${highlightFeaturesLayer.escapeChar}'>
             <ogc:PropertyName>${highlightFeaturesLayer.propNameSearchPrefix}${queryObject.propName}</ogc:PropertyName>
             <ogc:Literal>%${queryObject.propValue}%</ogc:Literal>
@@ -134,17 +145,25 @@ function highlightFeaturesByAttribute ({dispatch}, queryObject) {
             <ogc:Literal>${queryObject.propValue}</ogc:Literal>
         </ogc:PropertyIsEqualTo>`;
 
-    if (!highlighFeaturesConfig) {
-        console.warn("highlightFeatures not configured");
-        return;
-    }
     if (!highlightFeaturesLayer) {
         console.warn("highlightFeatures Layer with ID " + queryObject.wfsId + " not found in Config");
         return;
     }
+    if (highlightFeaturesLayer.wildCard.length !== 1) {
+        console.warn("wildCard parameter must be one character");
+        return;
+    }
+    if (highlightFeaturesLayer.singleChar.length !== 1) {
+        console.warn("singleChar parameter must be one character");
+        return;
+    }
+    if (highlightFeaturesLayer.escapeChar.length !== 1) {
+        console.warn("escpapeChar parameter must be one character");
+        return;
+    }
 
     let reqData = `<?xml version='1.0' encoding='UTF-8'?>
-        <wfs:GetFeature service='WFS' xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml' xmlns:app='http://www.deegree.org/app' traverseXlinkDepth='*' version='${highlightFeaturesLayer.WFSVersion}'>
+        <wfs:GetFeature service='WFS' xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml' xmlns:app='http://www.deegree.org/app' traverseXlinkDepth='*' version='${highlightFeaturesLayer.version}'>
         <wfs:Query typeName='${highlightFeaturesLayer.typename}'>
         <wfs:PropertyName>${highlightFeaturesLayer.resultPropName}</wfs:PropertyName>
         <ogc:Filter>`;
