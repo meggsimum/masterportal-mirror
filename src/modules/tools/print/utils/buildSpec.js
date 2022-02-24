@@ -481,9 +481,6 @@ const BuildSpecModel = {
                     styleGeometryFunction = style.getGeometryFunction();
                     if (styleGeometryFunction !== null && styleGeometryFunction !== undefined) {
                         clonedFeature.setGeometry(styleGeometryFunction(clonedFeature));
-                        if (clonedFeature.getGeometry().getCoordinates().length === 0 && feature.getGeometry().getCoordinates().length > 0) {
-                            clonedFeature.getGeometry().setCoordinates(feature.getGeometry().getCoordinates());
-                        }
                         geometryType = styleGeometryFunction(clonedFeature).getType();
                     }
                     stylingRules = this.getStylingRules(layer, clonedFeature, styleAttributes, style)
@@ -907,10 +904,9 @@ const BuildSpecModel = {
         convertedFeature = geojsonFormat.writeFeatureObject(clonedFeature);
         if (clonedFeature.getGeometry().getCoordinates().length === 0) {
             convertedFeature = undefined;
-            // todo jetzt ist das convertedFeature undefined --> das führt zu Fehlern --> was soll returned werden?
         }
         // if its a cluster remove property features
-        if (convertedFeature.properties && Object.prototype.hasOwnProperty.call(convertedFeature.properties, "features")) {
+        if (convertedFeature?.properties && Object.prototype.hasOwnProperty.call(convertedFeature.properties, "features")) {
             delete convertedFeature.properties.features;
         }
         return convertedFeature;

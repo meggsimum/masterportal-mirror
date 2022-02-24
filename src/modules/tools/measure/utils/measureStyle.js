@@ -65,6 +65,7 @@ export default [
                         coords.push(coordinate);
                     }
                 });
+                return new LineString(coords);
             }
             if (geom instanceof Polygon) {
                 geom.getCoordinates()[0].forEach(function (coordinate, index) {
@@ -72,6 +73,7 @@ export default [
                         coords.push(coordinate);
                     }
                 });
+                return new Polygon(coords);
             }
 
             return new MultiPoint(coords);
