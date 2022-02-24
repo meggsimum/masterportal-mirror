@@ -464,13 +464,10 @@ export default {
                                 </label>
                             </td>
                             <td>
-                                <label
-                                    for="'snippetRadioCheckbox-' + snippetId + '-' + val"
-                                    class="hidden"
-                                />
                                 <input
                                     :id="'snippetRadioCheckbox-' + snippetId + '-' + val"
                                     v-model="dropdownSelected"
+                                    :aria-label="'snippetRadioCheckbox-' + snippetId + '-' + val"
                                     :class="multiselect ? 'checkbox': 'radio'"
                                     :type="multiselect ? 'checkbox': 'radio'"
                                     :value="val"
