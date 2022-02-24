@@ -28,7 +28,7 @@ export default {
             required: false,
             default: false
         },
-        label: {
+        title: {
             type: [String, Boolean],
             required: false,
             default: true
@@ -69,12 +69,12 @@ export default {
         };
     },
     computed: {
-        labelText () {
-            if (this.label === true) {
+        titleText () {
+            if (this.title === true) {
                 return this.attrName;
             }
-            else if (typeof this.label === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.label, key => this.$t(key));
+            else if (typeof this.title === "string") {
+                return this.translateKeyWithPlausibilityCheck(this.title, key => this.$t(key));
             }
             return "";
         }
@@ -161,10 +161,10 @@ export default {
                 :disabled="disabled"
             >
             <label
-                v-if="label !== false"
+                v-if="title !== false"
                 :for="'snippetCheckbox-' + snippetId"
                 class="snippetCheckboxLabel"
-            >{{ labelText }}</label>
+            >{{ titleText }}</label>
         </div>
         <div
             v-if="info"

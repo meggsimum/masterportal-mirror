@@ -40,7 +40,7 @@ export default {
             required: false,
             default: "YYYY-MM-DD"
         },
-        label: {
+        title: {
             type: [String, Boolean],
             required: false,
             default: true
@@ -90,15 +90,15 @@ export default {
         };
     },
     computed: {
-        labelText () {
-            if (this.label === true) {
+        titleText () {
+            if (this.title === true) {
                 if (Array.isArray(this.attrName)) {
                     return this.attrName[0];
                 }
                 return this.attrName;
             }
-            else if (typeof this.label === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.label, key => this.$t(key));
+            else if (typeof this.title === "string") {
+                return this.translateKeyWithPlausibilityCheck(this.title, key => this.$t(key));
             }
             return "";
         },
@@ -388,14 +388,14 @@ export default {
         class="snippetDateRangeContainer"
     >
         <div
-            v-if="label !== false"
+            v-if="title !== false"
             class="left"
         >
             <label
                 for="date-from-input-container"
                 class="snippetDateRangeLabel"
             >
-                {{ labelText }}
+                {{ titleText }}
             </label>
         </div>
         <div

@@ -52,7 +52,7 @@ export default {
             required: false,
             default: false
         },
-        label: {
+        title: {
             type: [String, Boolean],
             required: false,
             default: true
@@ -118,12 +118,12 @@ export default {
         };
     },
     computed: {
-        labelText () {
-            if (this.label === true) {
+        titleText () {
+            if (this.title === true) {
                 return this.attrName;
             }
-            else if (typeof this.label === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.label, key => this.$t(key));
+            else if (typeof this.title === "string") {
+                return this.translateKeyWithPlausibilityCheck(this.title, key => this.$t(key));
             }
             return "";
         },
@@ -136,13 +136,13 @@ export default {
         dropdownValueComputed () {
             if (this.multiselect && this.addSelectAll) {
                 return [{
-                    selectAllLabel: this.selectAllLabel,
+                    selectAllTitle: this.selectAllTitle,
                     list: this.dropdownValue
                 }];
             }
             return this.dropdownValue;
         },
-        selectAllLabel () {
+        selectAllTitle () {
             return !this.allSelected ? this.$t("modules.tools.filterGeneral.dropdown.selectAll") : this.$t("modules.tools.filterGeneral.dropdown.deselectAll");
         }
     },
@@ -272,11 +272,11 @@ export default {
             return Object.keys(this.iconList).length > 0;
         },
         /**
-         * Returns the label to use in the gui.
-         * @returns {String} the label to use
+         * Returns the title to use in the gui.
+         * @returns {String} the title to use
          */
-        getLabel () {
-            return this.label || this.attrName;
+        getTitle () {
+            return this.title || this.attrName;
         },
         /**
          * Emits the current rule to whoever is listening.
@@ -373,13 +373,13 @@ export default {
             class="snippetDefaultContainer"
         >
             <div
-                v-if="label !== false"
+                v-if="title !== false"
                 class="left"
             >
                 <label
                     class="select-box-label"
                     :for="'snippetSelectBox-' + snippetId"
-                >{{ labelText }}</label>
+                >{{ titleText }}</label>
             </div>
             <div class="select-box-container">
                 <Multiselect
@@ -398,7 +398,7 @@ export default {
                     :loading="disable"
                     :group-select="multiselect && addSelectAll"
                     :group-values="(multiselect && addSelectAll) ? 'list' : ''"
-                    :group-label="(multiselect && addSelectAll) ? 'selectAllLabel' : ''"
+                    :group-label="(multiselect && addSelectAll) ? 'selectAllTitle' : ''"
                 >
                     <span slot="noOptions">{{ emptyList }}</span>
                     <span slot="noResult">{{ noElements }}</span>
@@ -412,7 +412,7 @@ export default {
             <div class="table-responsive">
                 <table :class="['table table-sm table-hover table-bordered table-striped', info ? 'left': '']">
                     <thead
-                        v-if="label !== false"
+                        v-if="title !== false"
                     >
                         <tr>
                             <th
@@ -421,7 +421,7 @@ export default {
                                 <div
                                     class="pull-left"
                                 >
-                                    {{ labelText }}
+                                    {{ titleText }}
                                 </div>
                                 <div
                                     v-if="multiselect && addSelectAll"
@@ -432,7 +432,7 @@ export default {
                                         class="link-secondary"
                                         @click="!allSelected ? selectAll() : deselectAll()"
                                     >
-                                        {{ selectAllLabel }}
+                                        {{ selectAllTitle }}
                                     </a>
                                 </div>
                             </th>

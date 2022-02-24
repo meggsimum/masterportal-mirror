@@ -17,7 +17,7 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
             expect(wrapper.vm.api).to.be.null;
             expect(wrapper.vm.info).to.be.false;
             expect(wrapper.vm.format).to.equal("YYYY-MM-DD");
-            expect(wrapper.vm.label).to.be.true;
+            expect(wrapper.vm.title).to.be.true;
             expect(wrapper.vm.minValue).to.be.undefined;
             expect(wrapper.vm.maxValue).to.be.undefined;
             expect(wrapper.vm.operator).to.equal("EQ");
@@ -66,10 +66,10 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
             expect(wrapper.vm.disabled).to.be.true;
             wrapper.destroy();
         });
-        it("should render with a label if the label is a string", () => {
+        it("should render with a title if the title is a string", () => {
             const wrapper = shallowMount(SnippetDate, {
                 propsData: {
-                    label: "foobar"
+                    title: "foobar"
                 },
                 localVue
             });
@@ -77,10 +77,10 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
             expect(wrapper.find(".snippetDateLabel").text()).to.be.equal("foobar");
             wrapper.destroy();
         });
-        it("should render without a label if label is a boolean and false", () => {
+        it("should render without a title if title is a boolean and false", () => {
             const wrapper = shallowMount(SnippetDate, {
                 propsData: {
-                    label: false
+                    title: false
                 },
                 localVue
             });

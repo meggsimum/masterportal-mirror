@@ -28,7 +28,7 @@ export default {
             required: false,
             default: false
         },
-        label: {
+        title: {
             type: [String, Boolean],
             required: false,
             default: true
@@ -67,12 +67,12 @@ export default {
         };
     },
     computed: {
-        labelText () {
-            if (this.label === true) {
+        titleText () {
+            if (this.title === true) {
                 return this.attrName;
             }
-            else if (typeof this.label === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.label, key => this.$t(key));
+            else if (typeof this.title === "string") {
+                return this.translateKeyWithPlausibilityCheck(this.title, key => this.$t(key));
             }
             return "";
         }
@@ -168,10 +168,10 @@ export default {
         </div>
         <div class="input-container">
             <label
-                v-if="label !== false"
+                v-if="title !== false"
                 :for="'snippetInput-' + snippetId"
                 class="snippetInputLabel left"
-            >{{ labelText }}</label>
+            >{{ titleText }}</label>
             <input
                 :id="'snippetInput-' + snippetId"
                 v-model="value"
