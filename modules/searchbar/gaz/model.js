@@ -129,12 +129,14 @@ const GazetteerModel = Backbone.Model.extend({
      * @returns {void}
      */
     pushResult: function (searchResult, evtType = null) {
+        const translatedType = this.getTranslationByType(searchResult.type);
+
         Radio.trigger("Searchbar", "pushHits", "hitList", {
             name: searchResult.name,
-            type: this.getTranslationByType(searchResult.type),
+            type: translatedType,
             coordinate: searchResult.geometry.coordinates,
             glyphicon: "glyphicon-road",
-            id: searchResult.name.replace(/ /g, "")
+            id: searchResult.name.replace(/ /g, "") + translatedType
         }, evtType);
     },
 

@@ -140,7 +140,7 @@ describe("modules/searchbar/gaz", () => {
                 type: "modules.searchbar.type.street",
                 coordinate: searchResult.geometry.coordinates,
                 glyphicon: "glyphicon-road",
-                id: searchResult.name.replace(/ /g, "")
+                id: searchResult.name.replace(/ /g, "") + "modules.searchbar.type.street"
             }, null]);
         });
     });

@@ -36,11 +36,11 @@
         "searchStringAttribute": "query_string",
         "responseEntryPath": "hits.hits",
         "hitMap": {
-            "name": ["_source.datasets.0.md_name", "_source.name"],
+            "name": "_source.name",
             "id": "_source.id",
             "source": "_source"
         },
-        "hitType": "common:modules.searchbar.type.general",
+        "hitType": "common:modules.searchbar.type.subject",
         "hitGlyphicon": "glyphicon-list"
       },
       "visibleVector": {
@@ -92,15 +92,6 @@
       },
       "tree": {
         "minChars": 3
-      },
-      "komoot": {
-        "minChars": 3,
-        "serviceId": "11",
-        "limit": 20,
-        "lang": "de",
-        "lat": 53.6,
-        "lon": 10.0,
-        "bbox": "9.6,53.3,10.4,53.8"
       },
       "zoomLevel": 9,
       "placeholder": "translate#common:modules.searchbar.placeholder.addressHospitalBplan"
