@@ -1,15 +1,12 @@
 const webpack = require("webpack"),
     path = require("path"),
     Vue = require("vue"),
-    VueLoaderPlugin = require("vue-loader/lib/plugin"),
-    // eslint-disable-next-line
-    fetch = (...args) => import("node-fetch").then(({default: fetch}) => fetch(...args));
+    VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 require("regenerator-runtime/runtime");
 require("chai/register-expect");
 require("jsdom-global")();
 global.DOMParser = window.DOMParser;
-global.fetch = fetch;
 
 URL.createObjectURL = function () {
     return false;

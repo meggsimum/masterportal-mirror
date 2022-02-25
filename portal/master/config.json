@@ -36,7 +36,7 @@
         "searchStringAttribute": "query_string",
         "responseEntryPath": "hits.hits",
         "hitMap": {
-            "name": "_source.name",
+            "name": ["_source.datasets.0.md_name", "_source.name"],
             "id": "_source.id",
             "source": "_source"
         },

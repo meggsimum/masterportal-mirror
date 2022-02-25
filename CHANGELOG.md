@@ -62,7 +62,6 @@
     - mocha: 9.1.4 to 9.2.0
     - mochapack: 2.1.2 to 2.1.4
     - masterportalAPI: v1.9.0
-    - node-fetch: 3.1.0 to 3.2.0
 - The version of node was updated, must be >= 16.13.2 < 17.
   The version of npm  was also updated, must be >= 8.1.2 < 9. (The node and npm versions are still mandatory via .npmrc.).
 - Issue #685: Changes WMS-T TimeSlider layout to accomodate larger timestamps.
