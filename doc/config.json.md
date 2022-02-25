@@ -267,7 +267,6 @@ Gazetteer search service configuration.
 |searchStreetKey|no|Boolean|false|Defines whether streets should be searched for by key.|false|
 |searchStreet|no|Boolean|false|Defines whether street search is active. Precondition to set `searchHouseNumbers` to `true`.|false|
 |serviceID|yes|String||Search service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
-|namespace|no|String|"http://www.adv-online.de/namespaces/adv/dog"|Namespace used for WFS-G properties.|false|
 
 **Example**
 

@@ -257,7 +257,6 @@ Konfiguration des Gazetteer Suchdienstes
 |searchStreetKey|nein|Boolean|false|Gibt an, ob nach Straßenschlüsseln gesucht werden soll.|false|
 |searchStreet|nein|Boolean|false|Gibt an, ob nach Straßen gesucht werden soll. Vorraussetzung für **searchHouseNumbers**.|false|
 |serviceID|ja|String||Id des Suchdienstes. Wird aufgelöst in der **[rest-services.json](rest-services.json.de.md)**.|false|
-|namespace|nein|String|"http://www.adv-online.de/namespaces/adv/dog"|Namespace für WFS-G Parameter.|false|
 
 **Beispiel**
 ```

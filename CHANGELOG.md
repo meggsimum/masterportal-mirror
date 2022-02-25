@@ -77,6 +77,7 @@
 ### Deprecated
 
 ### Removed
+- Configuration option of `namespace` was removed from gazetteer search, because masterportalAPI removes namespace from search hits.
 
 ### Fixed
 - Occasional language name "DE-DE" in the footer was changed to "DE".

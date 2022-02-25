@@ -2,6 +2,7 @@ const webpack = require("webpack"),
     path = require("path"),
     Vue = require("vue"),
     VueLoaderPlugin = require("vue-loader/lib/plugin"),
+    // eslint-disable-next-line
     fetch = (...args) => import("node-fetch").then(({default: fetch}) => fetch(...args));
 
 require("regenerator-runtime/runtime");

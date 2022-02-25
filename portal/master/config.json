@@ -10,41 +10,37 @@
       "gazetteer": {
         "minchars": 3,
         "serviceId": "8",
+        "searchAddress": true,
         "searchStreets": true,
         "searchHouseNumbers": true,
         "searchDistricts": true,
         "searchParcels": true,
         "searchStreetKey": true
       },
-      "osm": {
-        "minChars": 3,
-        "serviceId": "10",
-        "limit": 60,
-        "states": "Hamburg Thüringen Hessen Nordrhein-Westfalen",
-        "classes": "place,highway,building,shop,historic,leisure,county"
-      },
       "elasticSearch": {
-        "minChars": 3,
-        "serviceId": "elastic",
+        "minChars":3,
+        "serviceId":"elastic",
         "type": "GET",
+        "triggerEvent": {
+            "channel": "Parser",
+            "event": "addGdiLayer"
+        },
         "payload": {
-          "id": "query",
-          "params": {
-            "query_string": ""
-          }
+            "id":"query",
+            "params":{
+                "query_string":"",
+                "typ":["sensorthings","wms"],
+                "size":30
+            }
         },
         "searchStringAttribute": "query_string",
         "responseEntryPath": "hits.hits",
-        "triggerEvent": {
-          "channel": "Parser",
-          "event": "addGdiLayer"
-        },
         "hitMap": {
-          "name": "_source.name",
-          "id": "_source.id",
-          "source": "_source"
+            "name": "_source.name",
+            "id": "_source.id",
+            "source": "_source"
         },
-        "hitType": "common:modules.searchbar.type.subject",
+        "hitType": "common:modules.searchbar.type.general",
         "hitGlyphicon": "glyphicon-list"
       },
       "visibleVector": {
@@ -94,10 +90,19 @@
           }
         ]
       },
-      "visibleWFS": {
+      "tree": {
         "minChars": 3
       },
-      "startZoomLevel": 9,
+      "komoot": {
+        "minChars": 3,
+        "serviceId": "11",
+        "limit": 20,
+        "lang": "de",
+        "lat": 53.6,
+        "lon": 10.0,
+        "bbox": "9.6,53.3,10.4,53.8"
+      },
+      "zoomLevel": 9,
       "placeholder": "translate#common:modules.searchbar.placeholder.addressHospitalBplan"
     },
     "mapView": {
@@ -710,7 +715,7 @@
           "id": "10882",
           "styleId": "10882",
           "clusterDistance": 40,
-          "searchField": "bezeichnung",
+          "searchField": "haltestelle",
           "styleGeometryType": "Point"
         },
         {
