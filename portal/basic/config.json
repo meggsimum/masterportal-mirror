@@ -29,14 +29,14 @@
 			"tools": {
 				"name": "Werkzeuge",
 				"children": {
-					"streetsmart": {
-						"name": "streetsmart",
+					"streetSmart": {
+						"name": "translate#additional:menu.tools.streetsmart",
 						"glyphicon": "glyphicon-picture",
 						"streetsmartAPIVersion": "v22.2",
 						"reactVersion": "16.13.0"
 					  },
 					"gfi": {
-            "name": "Informationen abfragen",
+						"name": "Informationen abfragen",
 						"active": true
 					},
 					"coordToolkit": {
@@ -164,7 +164,17 @@
 				{
 				  "id": "1133",
           "name": "WFS Line (Default Style)"
-				}
+				},
+				{
+					"id":"streetSmartDots",
+					"name": "streetSmartDots",
+					"url": "https://atlas.cyclomedia.com/Recordings/wfs",
+					"featureType": "atlas:Recording",
+					"typ": "WFS",
+					"version" : "1.1.0",
+					"featureNS" : "http://www.deegree.org/app",
+					"outputFormat" : "XML"
+				   }
 			]
 		}
 	}
