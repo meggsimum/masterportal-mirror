@@ -127,11 +127,11 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
 
                 Radio.trigger("Searchbar", "pushHits", "hitList", hit);
             });
+            Radio.trigger("Searchbar", "createRecommendedList", "elasticSearch");
         }
         else {
             Radio.trigger("Searchbar", "removeHits", "hitList", {type: hitType});
         }
-        Radio.trigger("Searchbar", "createRecommendedList", "elasticSearch");
     },
 
     /**
@@ -155,6 +155,7 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
         if (Object.keys(triggerEvent).length > 0) {
             hit = Object.assign(hit, {triggerEvent: triggerEvent});
         }
+
         return hit;
     },
 
@@ -182,6 +183,7 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
                 attribute = attribute[pathPart];
             });
         }
+
         return attribute;
     }
 });

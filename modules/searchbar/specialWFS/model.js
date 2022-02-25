@@ -49,7 +49,7 @@ const SpecialWFSModel = Backbone.Model.extend({
             "search": this.search
         });
 
-        // initiale Suche
+        // initial search
         if (store.state.urlParams && store.state.urlParams["Search/query"]) {
             this.search(store.state.urlParams && store.state.urlParams["Search/query"]);
         }
@@ -274,7 +274,9 @@ const SpecialWFSModel = Backbone.Model.extend({
                 }
             });
         }
-        Radio.trigger("Searchbar", "createRecommendedList", "specialWFS");
+        if (elements.length) {
+            Radio.trigger("Searchbar", "createRecommendedList", "specialWFS");
+        }
     },
 
     /**

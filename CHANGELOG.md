@@ -20,6 +20,10 @@
 - Issue #610: Refactor Elastic Search: The CreateHit() function has been modified to allow the Glyphicon and HitType to be assigned from the backend.
 -  The following NPM packages are updated:
     - jsdoc: 3.6.7 to 3.6.10
+- Searchbar:
+    - Search results of elasticSearch are now displayed in the search bar in the order they come from the server.
+    - The Gazetteer search is now performed via the MasterportalAPI. A new attribute `searchAddress` has been introduced.
+    - Addresses pasted with `copy & paste` or the url parameter `query` are now executed directly on exactly one search hit in the gazetteer.
 
 ### Deprecated
 
@@ -58,13 +62,11 @@
     - mocha: 9.1.4 to 9.2.0
     - mochapack: 2.1.2 to 2.1.4
     - masterportalAPI: v1.9.0
+    - node-fetch: 3.1.0 to 3.2.0
 - The version of node was updated, must be >= 16.13.2 < 17.
   The version of npm  was also updated, must be >= 8.1.2 < 9. (The node and npm versions are still mandatory via .npmrc.).
-- Migrated the module 3D TerrainLayer from Backbone to Vue. The TerrainLayer uses the masterportalAPI's terrain layer on creation.
 - Issue #685: Changes WMS-T TimeSlider layout to accomodate larger timestamps.
 - Outsourced drawTypeOptions from constantsDraw.js into its own file
-- The vectorTile Layer is now refactored to src/core.
-- The 3D terrain layer is refactored. It is no longer a Backbone-model.The terrain layer uses the masterportalAPI's terrain layer on creation.
 - The 3D tileset layer is refactored. It is no longer a Backbone-model.The tileset layer uses the masterportalAPI's tileset layer on creation.
 - Path updated in map and map3d because abstraction in masterportalAPI changed to maps and moved into src
 - Checking the allowed version for wfs layers has been moved to the masterportalAPI.
@@ -162,6 +164,7 @@
 - Migrated the module vectorBaseLayer from Backbone to Vue. The VectorBaseLayer uses the masterportalAPI's vectorBase layer on creation.
 - Issue #655: A parameter "zoomLevel" was added to the WfsSearch tool. This feature was not implemented for WfsSearch, but available in the previously used tool parcelSearch. The field has been added to WfsSearch to work in the same fashion. For this, the ListItem.vue was changed to allow configuration of the zoom level via prop. It defaults to the previously fixed value.
 - Issue #486: WMS GFI can now show responses without tbody.
+- The Vue component `Tool` has been renamed to `ToolTemplate` due to a new linter rule.
 
 ### Deprecated
 

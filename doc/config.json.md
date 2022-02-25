@@ -260,6 +260,7 @@ Gazetteer search service configuration.
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |minChars|no|Integer|3|Minimum amount of characters required to start a search.|false|
+|searchAddress|no|Boolean|false|Defines whether address search is active. For backward compatibility, if "searchAddress" is not configured, the "searchAddress" attribute is set to "true" when "searchStreets" and "searchHouseNumbers" are set to "true".|false|
 |searchDistricts|no|Boolean|false|Defines whether district search is active.|false|
 |searchHouseNumbers|no|Boolean|false|Defines whether house numbers should be searched for. Requires `searchStreets` to be set to `true`, too.|false|
 |searchParcels|no|Boolean|false|Defines whether parcels search is active.|false|
@@ -356,7 +357,7 @@ Elasticsearch service configuration.
 |hitGlyphicon|no|String|"glyphicon-road"|CSS glyphicon class of search results, shown before the result name.|false|
 |useProxy|no|Boolean|false|Defines whether the URL should be proxied.|false|
 
-As an additional property, you may add `payload`. It is not required, and matches the **[CustomObject](#markdown-header-datatypescustomobject)** description. By default, it is set to the empty object `{}`. The object describes the payload to be sent as part of the request. It must provide the searchString attribute. This object can not be handled in the Admintool, since **[CustomObject](#markdown-header-datatypescustomobject)** is not yet supported.
+As an additional property, you may add `payload`. It is not required, and matches the **[CustomObject](#markdown-header-datatypescustomobject)** description. By default, it is set to the empty object `{}`. The object describes the payload to be sent as part of the request. It must provide the searchString attribute. For more info on usable attributes, see **[Elasticsearch Guide](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html)**. This object can not be handled in the Admintool, since **[CustomObject](#markdown-header-datatypescustomobject)** is not yet supported.
 
 **Example**
 
@@ -397,9 +398,9 @@ Object mapping result object attributes to keys.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|name|yes|String|"name"|Attribute value will be mapped to the attribute key. Required to display results.|false|
-|id|yes|String|"id"|Attribute value will be mapped to the attribute key. Required to display results.|false|
-|coordinate|yes|String|"coordinate"|Attribute value will be mapped to the attribute key. Required to display a map marker.|false|
+|name|yes|String/String[]|"name"|Attribute value will be mapped to the attribute key. Required to display results.|false|
+|id|yes|String/String[]|"id"|Attribute value will be mapped to the attribute key. Required to display results.|false|
+|coordinate|yes|String/String[]|"coordinate"|Attribute value will be mapped to the attribute key. Required to display a map marker.|false|
 
 ***
 

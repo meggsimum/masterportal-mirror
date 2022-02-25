@@ -250,6 +250,7 @@ Konfiguration des Gazetteer Suchdienstes
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
 |minChars|nein|Integer|3|Minimale Anzahl an Buchstaben, ab der die Suche losläuft.|false|
+|searchAddress|nein|Boolean|false|Gibt an, ob nach Adressen gesucht werden soll. Wenn "searchAddress" nicht konfiguriert ist, wird aus Gründen der Abwärtskompatibilität das Attribut "searchAddress" auf "true" gesetzt, wenn "searchStreets" und "searchHouseNumbers" auf "true" gesetzt sind.|false|
 |searchDistricts|nein|Boolean|false|Gibt an, ob nach Bezirken gesucht werden soll.|false|
 |searchHouseNumbers|nein|Boolean|false|Gibt an, ob nach Straßen und Hausnummern gesucht werden soll. Bedingt **searchStreets**=true.|false|
 |searchParcels|nein|Boolean|false|Gibt an, ob nach Flurstücken gesucht werden soll.|false|
@@ -338,14 +339,14 @@ Konfiguration des Elastic Search Suchdienstes
 |hitGlyphicon|nein|String|"glyphicon-road"|CSS Glyphicon Klasse des Suchergebnisses. Wird vor dem Namen angezeigt.|false|
 |useProxy|nein|Boolean|false|Flag die angibt ob die URL geproxied werden soll oder nicht.|false|
 
-Als zusätzliches property kann `payload` hinzugefügt werden. Es muss nicht zwingend gesetzt sein, und passt zur Beschreibung von **[CustomObject](#markdown-header-datatypescustomobject)**. Per default wird es als leeres Objekt `{}` gesetzt. Das Objekt beschreibt die Payload, die mitgeschickt werden soll. Es muss das Attribut für den searchString vorhalten. Dieses Objekt kann im Admintool nicht gepflegt werden, da dort **[CustomObject](#markdown-header-datatypescustomobject)** nicht definiert ist.
+Als zusätzliches property kann `payload` hinzugefügt werden. Es muss nicht zwingend gesetzt sein, und passt zur Beschreibung von **[CustomObject](#markdown-header-datatypescustomobject)**. Per default wird es als leeres Objekt `{}` gesetzt. Das Objekt beschreibt die Payload, die mitgeschickt werden soll. Es muss das Attribut für den searchString vorhalten. Für weitere Infos zu den nutzbaren Attributen siehe **[Elasticsearch Guide](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html)**. Dieses Objekt kann im Admintool nicht gepflegt werden, da dort **[CustomObject](#markdown-header-datatypescustomobject)** nicht definiert ist.
 
  **Beispiel**
 ```
 #!json
 "elasticSearch": {
     "minChars":3,
-    "serviceId":"elastic_hh",
+    "serviceId":"elastic",
     "type": "GET",
     "payload": {
         "id":"query",
@@ -377,9 +378,9 @@ Mapping Objekt. Mappt die Attribute des Ergebnis Objektes auf den entsprechenden
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|name|ja|String|"name"|Attribut value wird auf attribut key gemappt. Notwendig um das Ergebnis anzuzeigen.|false|
-|id|ja|String|"id"|Attribut value wird auf attribut key gemappt. Notwendig um das Ergebnis anzuzeigen.|false|
-|coordinate|ja|String|"coordinate"|Attribut value wird auf attribut key gemappt. Notwendig um den mapMarker anzuzeigen.|false|
+|name|ja|String/String[]|"name"|Attribut value wird auf attribut key gemappt. Notwendig um das Ergebnis anzuzeigen.|false|
+|id|ja|String/String[]|"id"|Attribut value wird auf attribut key gemappt. Notwendig um das Ergebnis anzuzeigen.|false|
+|coordinate|ja|String/String[]|"coordinate"|Attribut value wird auf attribut key gemappt. Notwendig um den mapMarker anzuzeigen.|false|
 
 ***
 

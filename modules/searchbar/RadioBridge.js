@@ -1,7 +1,7 @@
 /**
  * The Radio Channel GFI is no longer available in the "new" Gfi (src/modules/tools/gfi).
  * This file is used for communication between this module and the new Gfi.
- * It can be deleted, if this module has been refactored..
+ * It can be deleted, if this module has been refactored.
  */
 import store from "../../src/app-store";
 import {createGfiFeature} from "../../src/api/gfi/getWmsFeaturesByMimeType";
