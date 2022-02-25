@@ -10,7 +10,7 @@ import {calculateCircle} from "../utils/circleCalculations";
 import {createDrawInteraction, createModifyInteraction, createSelectInteraction} from "../utils/createInteractions";
 import {createStyle} from "../utils/style/createStyle";
 import createTooltipOverlay from "../utils/style/createTooltipOverlay";
-import {drawTypeOptions} from "./constantsDraw";
+import drawTypeOptions from "./drawTypeOptions";
 import getDrawTypeByGeometryType from "../utils/getDrawTypeByGeometryType";
 import postDrawEnd from "../utils/postDrawEnd";
 

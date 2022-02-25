@@ -15,10 +15,11 @@ describe("src/modules/tools/filterGeneral/components/SnippetCheckbox.vue", () =>
             const wrapper = shallowMount(SnippetCheckbox, {localVue});
 
             expect(wrapper.vm.info).to.be.false;
-            expect(wrapper.vm.label).to.be.true;
+            expect(wrapper.vm.title).to.be.true;
             expect(wrapper.vm.operator).to.equal("EQ");
             expect(wrapper.vm.prechecked).to.be.false;
             expect(wrapper.vm.snippetId).to.equal(0);
+            expect(wrapper.vm.value).to.deep.equal([true, false]);
             expect(wrapper.vm.visible).to.be.true;
             wrapper.destroy();
         });
@@ -63,10 +64,10 @@ describe("src/modules/tools/filterGeneral/components/SnippetCheckbox.vue", () =>
             expect(wrapper.find(".snippetCheckbox").element.disabled).to.be.true;
             wrapper.destroy();
         });
-        it("should render with a label if the label is a string", () => {
+        it("should render with a title if the title is a string", () => {
             const wrapper = shallowMount(SnippetCheckbox, {
                 propsData: {
-                    label: "foobar"
+                    title: "foobar"
                 },
                 localVue
             });
@@ -74,27 +75,15 @@ describe("src/modules/tools/filterGeneral/components/SnippetCheckbox.vue", () =>
             expect(wrapper.find(".snippetCheckboxLabel").text()).to.be.equal("foobar");
             wrapper.destroy();
         });
-        it("should render without a label if label is a boolean and false", () => {
+        it("should render without a title if title is a boolean and false", () => {
             const wrapper = shallowMount(SnippetCheckbox, {
                 propsData: {
-                    label: false
+                    title: false
                 },
                 localVue
             });
 
             expect(wrapper.find(".snippetCheckboxLabel").exists()).to.be.false;
-            wrapper.destroy();
-        });
-        it("should render the info span", () => {
-            const wrapper = shallowMount(SnippetCheckbox, {
-                propsData: {
-                    info: "this is an info text"
-                },
-                localVue
-            });
-
-            expect(wrapper.find(".info-text").exists()).to.be.true;
-            expect(wrapper.find(".info-text span").element.innerHTML).to.be.equal("this is an info text");
             wrapper.destroy();
         });
         it("should not render the info button if info is a boolean and false", () => {
@@ -164,11 +153,11 @@ describe("src/modules/tools/filterGeneral/components/SnippetCheckbox.vue", () =>
             });
             let called = false;
 
-            expect(wrapper.vm.value).to.equal(true);
+            expect(wrapper.vm.checked).to.equal(true);
             await wrapper.vm.resetSnippet(() => {
                 called = true;
             });
-            expect(wrapper.vm.value).to.equal(false);
+            expect(wrapper.vm.checked).to.equal(false);
             expect(called).to.be.true;
             wrapper.destroy();
         });

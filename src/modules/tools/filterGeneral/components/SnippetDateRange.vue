@@ -2,9 +2,13 @@
 import isObject from "../../../../utils/isObject";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
 import moment from "moment";
+import SnippetInfo from "./SnippetInfo.vue";
 
 export default {
     name: "SnippetDateRange",
+    components: {
+        SnippetInfo
+    },
     props: {
         api: {
             type: Object,
@@ -15,6 +19,11 @@ export default {
             type: [String, Array],
             required: false,
             default: ""
+        },
+        adjustment: {
+            type: [Object, Boolean],
+            required: false,
+            default: false
         },
         disabled: {
             type: Boolean,
@@ -31,7 +40,7 @@ export default {
             required: false,
             default: "YYYY-MM-DD"
         },
-        label: {
+        title: {
             type: [String, Boolean],
             required: false,
             default: true
@@ -72,32 +81,24 @@ export default {
             disable: true,
             internalFormat: "YYYY-MM-DD",
             isInitializing: true,
+            isAdjusting: false,
             minimumValue: "",
             maximumValue: "",
             value: ["", ""],
             precheckedIsValid: false,
-            showInfo: false
+            translationKey: "snippetDateRange"
         };
     },
     computed: {
-        labelText () {
-            if (this.label === true) {
+        titleText () {
+            if (this.title === true) {
                 if (Array.isArray(this.attrName)) {
                     return this.attrName[0];
                 }
                 return this.attrName;
             }
-            else if (typeof this.label === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.label, key => this.$t(key));
-            }
-            return "";
-        },
-        infoText () {
-            if (this.info === true) {
-                return this.$t("common:modules.tools.filterGeneral.info.snippetDateRange");
-            }
-            else if (typeof this.info === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.info, key => this.$t(key));
+            else if (typeof this.title === "string") {
+                return this.translateKeyWithPlausibilityCheck(this.title, key => this.$t(key));
             }
             return "";
         },
@@ -125,14 +126,39 @@ export default {
         }
     },
     watch: {
-        value () {
-            if (!this.isInitializing || this.precheckedIsValid) {
+        inRangeValueLeft (val) {
+            if (!this.isAdjusting && (!this.isInitializing || this.precheckedIsValid)) {
                 const value = [
-                    moment(this.inRangeValueLeft, this.internalFormat).format(this.format),
+                    moment(val, this.internalFormat).format(this.format),
                     moment(this.inRangeValueRight, this.internalFormat).format(this.format)
                 ];
 
                 this.emitCurrentRule(value, this.isInitializing);
+            }
+        },
+        inRangeValueRight (val) {
+            if (!this.isAdjusting && (!this.isInitializing || this.precheckedIsValid)) {
+                const value = [
+                    moment(this.inRangeValueLeft, this.internalFormat).format(this.format),
+                    moment(val, this.internalFormat).format(this.format)
+                ];
+
+                this.emitCurrentRule(value, this.isInitializing);
+            }
+        },
+        adjustment (adjusting) {
+            if (!isObject(adjusting) || this.visible === false) {
+                return;
+            }
+
+            if (adjusting?.start) {
+                this.isAdjusting = true;
+            }
+
+            if (adjusting?.finish) {
+                this.$nextTick(() => {
+                    this.isAdjusting = false;
+                });
             }
         },
         disabled (value) {
@@ -198,6 +224,12 @@ export default {
                 this.disable = false;
             });
         }
+        if (this.visible && this.precheckedIsValid) {
+            this.emitCurrentRule(this.prechecked, true);
+        }
+    },
+    mounted () {
+        this.$emit("setSnippetPrechecked", this.visible && this.precheckedIsValid);
     },
     methods: {
         translateKeyWithPlausibilityCheck,
@@ -322,11 +354,32 @@ export default {
             });
         },
         /**
-         * Toggles the info.
+         * Triggered once when changes are made at the date picker to avoid set of rules during changes.
          * @returns {void}
          */
-        toggleInfo () {
-            this.showInfo = !this.showInfo;
+        startDateChange () {
+            if (!isObject(this.adjustment)) {
+                return;
+            }
+            this.isAdjusting = true;
+        },
+        /**
+         * Triggered once when end of changes are detected at the date picker to start set of rules after changes.
+         * @returns {void}
+         */
+        endDateChange () {
+            if (!isObject(this.adjustment)) {
+                return;
+            }
+            this.isAdjusting = false;
+            this.$nextTick(() => {
+                const value = [
+                    moment(this.inRangeValueLeft, this.internalFormat).format(this.format),
+                    moment(this.inRangeValueRight, this.internalFormat).format(this.format)
+                ];
+
+                this.emitCurrentRule(value, this.isInitializing);
+            });
         }
     }
 };
@@ -338,27 +391,24 @@ export default {
         class="snippetDateRangeContainer"
     >
         <div
-            v-if="label !== false"
+            v-if="title !== false"
             class="left"
         >
             <label
                 for="date-from-input-container"
                 class="snippetDateRangeLabel"
             >
-                {{ labelText }}
+                {{ titleText }}
             </label>
         </div>
         <div
-            v-if="info !== false"
+            v-if="info"
             class="right"
         >
-            <div class="info-icon">
-                <span
-                    :class="['glyphicon glyphicon-info-sign', showInfo ? 'opened' : '']"
-                    @click="toggleInfo()"
-                    @keydown.enter="toggleInfo()"
-                >&nbsp;</span>
-            </div>
+            <SnippetInfo
+                :info="info"
+                :translation-key="translationKey"
+            />
         </div>
         <div class="date-input-container">
             <div
@@ -372,11 +422,14 @@ export default {
                     :id="'inputDateFrom-' + snippetId"
                     v-model="inRangeValueLeft"
                     name="inputDateFrom"
-                    class="snippetDateRangeFrom"
+                    class="snippetDateRangeFrom form-control"
                     type="date"
                     :min="minimumValue"
                     :max="inRangeValueRight"
                     :disabled="disable"
+                    @focus="startDateChange()"
+                    @blur="endDateChange()"
+                    @keyup.enter="endDateChange()"
                 >
             </div>
             <div
@@ -390,20 +443,15 @@ export default {
                     :id="'inputDateUntil-' + snippetId"
                     v-model="inRangeValueRight"
                     name="inputDateUntil"
-                    class="snippetDateRangeUntil"
+                    class="snippetDateRangeUntil form-control"
                     type="date"
                     :min="inRangeValueLeft"
                     :max="maximumValue"
                     :disabled="disable"
+                    @focus="startDateChange()"
+                    @blur="endDateChange()"
+                    @keyup.enter="endDateChange()"
                 >
-            </div>
-        </div>
-        <div
-            v-show="showInfo"
-            class="bottom"
-        >
-            <div class="info-text">
-                <span>{{ infoText }}</span>
             </div>
         </div>
     </div>
@@ -411,9 +459,10 @@ export default {
 
 <style lang="scss" scoped>
     @import "~/css/mixins.scss";
+    .form-control {
+        height: 28px;
+    }
     .snippetDateRangeContainer {
-        padding: 5px;
-        margin-bottom: 10px;
         height: auto;
     }
     .snippetDateRangeContainer input {
@@ -423,28 +472,7 @@ export default {
         outline: 0;
         position: relative;
         margin-bottom: 5px;
-    }
-    .snippetDateRangeContainer .info-icon {
-        float: right;
-        font-size: 16px;
-        color: #ddd;
-    }
-    .snippetDateRangeContainer .info-icon .opened {
-        color: #000;
-    }
-    .snippetDateRangeContainer .info-icon:hover {
-        cursor: pointer;
-        color: #a5a09e;
-    }
-    .snippetDateRangeContainer .info-text {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 10px;
-        padding: 15px 10px;
-    }
-    .snippetDateRangeContainer .bottom {
-        clear: left;
-        width: 100%;
+        height: 34px;
     }
     .snippetDateRangeContainer .left {
         float: left;
@@ -452,7 +480,7 @@ export default {
     }
     .snippetDateRangeContainer .right {
         position: absolute;
-        right: 10px;
+        right: 0;
     }
     input[type='range'] {
         width: 10.5rem;

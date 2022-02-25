@@ -3,7 +3,7 @@ import {expect} from "chai";
 import Util from "@modules/core/util.js";
 
 describe("core/configLoader/parserCustomTree", function () {
-    let testData;
+    let testData, backgroundMapsNoChildren, backgroundMapsWithChildren;
 
     before(function () {
         new Util();
@@ -29,6 +29,53 @@ describe("core/configLoader/parserCustomTree", function () {
                 ]
             }
         };
+        backgroundMapsNoChildren = {"Ordner": [{
+            "Titel": "Karten",
+            "isFolderSelectable": false,
+            "Layer": [{
+                "name": "Luftbild",
+                "id": ["452"],
+                "visibility": true
+            },
+
+            {
+                "name": "Stadtplan",
+                "id": ["453"]
+            }
+            ]
+        }]};
+        backgroundMapsWithChildren = {
+            "Ordner": [
+                {
+                    "Titel": "Karten 1:5000",
+                    "Layer": [
+                        {
+                            "id": "hamburg 1:5000",
+                            "name": "Hamburg",
+                            "children": [
+                                {
+                                    "id": "13716"
+                                },
+                                {
+                                    "id": "720"
+                                },
+                                {
+                                    "id": "13714"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Stadtplan",
+                            "id": "453"
+                        },
+                        {
+                            "name": "Luftbild",
+                            "id": "452",
+                            "visibility": true
+                        }
+                    ]
+                }
+            ]};
     });
 
     // Create a model and parse the test data. Take care that the model is clean (empty) before parsing the data.
@@ -52,7 +99,7 @@ describe("core/configLoader/parserCustomTree", function () {
      * @param {array} options - the model options
      * @returns {object} the model
      */
-    function getCustomBackgroundMapModel (options) {
+    function getCustomBackgroundMapModel (options = {backgroundMapsWithChildren: false}) {
         const model = new CustomTreeParser(options),
             testConfig = {};
 
@@ -65,29 +112,29 @@ describe("core/configLoader/parserCustomTree", function () {
                 {
                     "name": "Stadtplan",
                     "id": "453"
+                },
+                {
+                    "name": "M2500 (farbig)",
+                    "id": "13716"
+                },
+                {
+                    "name": "M5000 (farbig)",
+                    "id": "720"
+                },
+                {
+                    "name": "M10000 (farbig)",
+                    "id": "13714"
                 }
             ];
 
         };
 
-        testConfig.Hintergrundkarten = {
-            "Ordner": [{
-                "Titel": "Karten",
-                "isFolderSelectable": false,
-                "Layer": [{
-                    "name": "Luftbild",
-                    "id": ["452"],
-                    "visibility": true
-                },
-
-                {
-                    "name": "Stadtplan",
-                    "id": ["453"]
-                }
-                ]
-            }]
-        };
-
+        if (options.backgroundMapsWithChildren) {
+            testConfig.Hintergrundkarten = backgroundMapsWithChildren;
+        }
+        else {
+            testConfig.Hintergrundkarten = backgroundMapsNoChildren;
+        }
         model.setItemList([]);
         model.parseTree(testConfig.Hintergrundkarten, "Baselayer", 0);
         return model;
@@ -120,22 +167,40 @@ describe("core/configLoader/parserCustomTree", function () {
         });
     });
 
-    describe("the flag \"isLeafFolder\"", function () {
-        it("should be set to \"true\", if the folder has no child-folders", function () {
-            expect(Radio.request("Util", "findWhereJs", getCustomModel({isFolderSelectable: true}).get("itemList"), {"name": "Denkmalschutz"}).isLeafFolder).to.be.equal(true);
-        });
-        it("should be set to \"false\", if the folder has no child-folders", function () {
-            expect(Radio.request("Util", "findWhereJs", getCustomModel({isFolderSelectable: true}).get("itemList"), {"name": "Eisenbahnwesen / Personenbeförderung"}).isLeafFolder).to.be.equal(false);
-        });
-    });
-
     describe("background maps in folder structure shall always be in background", function () {
-        it("should be three with parentId baselayer", function () {
+        it("should be three with parentId baselayer or folderId", function () {
+            let folder = null;
             const itemList = getCustomBackgroundMapModel().get("itemList");
 
             expect(itemList.length).to.be.equal(3);
+            folder = itemList.filter(item => item.type === "folder")[0];
+            expect(folder).not.to.be.null;
             itemList.forEach(item => {
-                expect(item.parentId).to.be.equals("Baselayer");
+                if (item.type === "folder") {
+                    expect(item.parentId).to.be.equals("Baselayer");
+                }
+                else {
+                    expect(item.parentId).to.be.equals(folder.id);
+                    expect(item.isBaseLayer).to.be.equals(true);
+                }
+
+            });
+        });
+        it("backgroundmaps with children should have 'isBaseLayer' true", function () {
+            let folder = null;
+            const itemList = getCustomBackgroundMapModel({backgroundMapsWithChildren: true}).get("itemList");
+
+            expect(itemList.length).to.be.equal(2);
+            folder = itemList.filter(item => item.type === "folder")[0];
+            expect(folder).not.to.be.null;
+            itemList.forEach(item => {
+                if (item.type === "folder") {
+                    expect(item.parentId).to.be.equals("Baselayer");
+                }
+                else {
+                    expect(item.parentId).to.be.equals(folder.id);
+                    expect(item.isBaseLayer).to.be.equals(true);
+                }
             });
         });
     });

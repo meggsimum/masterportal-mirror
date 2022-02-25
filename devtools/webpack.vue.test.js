@@ -26,12 +26,6 @@ module.exports = {
     // output: {
     //     devtoolModuleFilenameTemplate: "[absolute-resource-path]"
     // },
-    devtool: "inline-cheap-module-source-map",
-    output: {
-        // use absolute paths in sourcemaps (important for debugging via IDE)
-        devtoolModuleFilenameTemplate: "[absolute-resource-path]",
-        devtoolFallbackModuleFilenameTemplate: "[absolute-resource-path]?[hash]"
-    },
 
     resolve: {
         alias: {
@@ -93,7 +87,8 @@ module.exports = {
             // fs: "fs",
             // requestAnimationFrame: "raf"
         }),
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new webpack.IgnorePlugin(/canvas/, /jsdom$/)
     ],
     node: {
         fs: "empty"

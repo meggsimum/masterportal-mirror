@@ -1,3 +1,4 @@
+import axios from "axios";
 import {getByArraySyntax} from "../utils/fetchFirstModuleConfig";
 
 export default {
@@ -37,6 +38,17 @@ export default {
             dispatch("Alerting/addSingleAlert", {content: i18next.t("common:modules.util.copyToClipboard.contentNotSaved")}, {root: true});
             console.error(`CopyToClipboard: ${err}`);
         }
+    },
+    /**
+     * Function to save config.js's content and load the config files which path is specified in config.js.
+     * @param {Object} config the config.js
+     * @returns {void}
+     */
+    loadConfigJs ({commit}, config) {
+        commit("setConfigJs", config);
+        return axios.get(config.restConf)
+            .then(response => commit("setRestConf", response.data))
+            .catch(error => console.error(`Error occured during loading restConf specified by config.json (${config.restConf}).`, error));
     },
     /**
      * Function to check if the deprecated parameters could be specified for more than one location e.g. they (location of the parameter or tool) have multiple possible paths.

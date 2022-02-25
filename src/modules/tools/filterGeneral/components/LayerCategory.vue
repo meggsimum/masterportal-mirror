@@ -1,4 +1,5 @@
 <script>
+import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
 import LayerItem from "./LayerItem.vue";
 
 export default {
@@ -35,6 +36,7 @@ export default {
         }
     },
     methods: {
+        translateKeyWithPlausibilityCheck,
         /**
          * Updates selectedLayers array.
          * @param {Number} filterId id which should be removed or added to selectedLayers array
@@ -93,6 +95,16 @@ export default {
          */
         setLayerLoaded (filterId) {
             this.$emit("setLayerLoaded", filterId);
+        },
+        /**
+         * Translate given description.
+         * @param {Object} filter the obj to fetch the description
+         * @returns {String} the translatet string or empty string if given param is not a string
+         */
+        translateDescription (filter) {
+            const description = this.selectedCategory.includes(filter.category) && filter.description ? filter.description : filter.shortDescription;
+
+            return translateKeyWithPlausibilityCheck(description, key => this.$t(key));
         }
     }
 };
@@ -123,9 +135,15 @@ export default {
                         data-toggle="collapse"
                         data-parent="#accordion"
                     >
-                        {{ filter.category }}
+                        {{ filter.category }} +
                     </a>
                 </h2>
+                <div
+                    v-if="filter.shortDescription || filter.description"
+                    class="layerInfoText"
+                >
+                    {{ translateDescription(filter) }}
+                </div>
                 <div
                     v-if="selectedCategory.includes(filter.category)"
                     class="panel-group"
@@ -179,9 +197,12 @@ export default {
     </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+    .panel-group .panel + .panel {
+        margin-top: 10px;
+    }
     .panel-default > .panel-heading {
-        cursor:default;
+        cursor: default;
         background-color: white;
     }
     .panel-title {

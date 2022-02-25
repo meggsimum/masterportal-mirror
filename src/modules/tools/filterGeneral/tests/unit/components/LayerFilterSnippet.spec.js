@@ -30,31 +30,6 @@ describe("src/modules/tools/filterGeneral/components/LayerFilterSnippet.vue", ()
         }
     });
 
-    describe("constructor", () => {
-        it("should setup with an external service if no internal service is given", () => {
-            expect(wrapper.vm.layerService).to.deep.equal({
-                type: "something external"
-            });
-        });
-        it("should setup with an external service if a layerId is given, but no internal service is given", () => {
-            const localWrapper = shallowMount(LayerFilterSnippet, {
-                propsData: {
-                    layerConfig: {
-                        layerId: "layerId",
-                        service: {
-                            type: "something external"
-                        }
-                    }
-                },
-                localVue
-            });
-
-            expect(wrapper.vm.layerService).to.deep.equal({
-                type: "something external"
-            });
-            localWrapper.destroy();
-        });
-    });
     describe("hasThisSnippetTheExpectedType", () => {
         it("should return false if the given snippet has not the expected type", () => {
             expect(wrapper.vm.hasThisSnippetTheExpectedType(undefined)).to.be.false;
@@ -72,10 +47,10 @@ describe("src/modules/tools/filterGeneral/components/LayerFilterSnippet.vue", ()
             expect(wrapper.vm.hasThisSnippetTheExpectedType({type: "something"}, "something")).to.be.true;
         });
     });
-    describe("searchInMapExtentChanged", () => {
+    describe("setSearchInMapExtent", () => {
         it("should set the internal searchInMapExtent variable to the given value", () => {
             expect(wrapper.vm.searchInMapExtent).to.be.false;
-            wrapper.vm.searchInMapExtentChanged(true);
+            wrapper.vm.setSearchInMapExtent(true);
             expect(wrapper.vm.searchInMapExtent).to.be.true;
         });
     });
@@ -181,6 +156,30 @@ describe("src/modules/tools/filterGeneral/components/LayerFilterSnippet.vue", ()
                 operator: "EQ"
             });
             expect(wrapper.vm.hasUnfixedRules()).to.be.true;
+        });
+    });
+    describe("getDefaultSnippetTypeByDataType", () => {
+        it("should return snippet type according to the input data type", () => {
+            expect(wrapper.vm.getDefaultSnippetTypeByDataType(undefined)).to.equal("text");
+            expect(wrapper.vm.getDefaultSnippetTypeByDataType(null)).to.equal("text");
+            expect(wrapper.vm.getDefaultSnippetTypeByDataType(0)).to.equal("text");
+            expect(wrapper.vm.getDefaultSnippetTypeByDataType({})).to.equal("text");
+            expect(wrapper.vm.getDefaultSnippetTypeByDataType([])).to.equal("text");
+            expect(wrapper.vm.getDefaultSnippetTypeByDataType("boolean")).to.equal("checkbox");
+            expect(wrapper.vm.getDefaultSnippetTypeByDataType("string")).to.equal("dropdown");
+            expect(wrapper.vm.getDefaultSnippetTypeByDataType("number")).to.equal("sliderRange");
+        });
+    });
+    describe("getDefaultOperatorByDataType", () => {
+        it("should return operator according to the input data type", () => {
+            expect(wrapper.vm.getDefaultOperatorByDataType(undefined)).to.equal("EQ");
+            expect(wrapper.vm.getDefaultOperatorByDataType(null)).to.equal("EQ");
+            expect(wrapper.vm.getDefaultOperatorByDataType(0)).to.equal("EQ");
+            expect(wrapper.vm.getDefaultOperatorByDataType({})).to.equal("EQ");
+            expect(wrapper.vm.getDefaultOperatorByDataType([])).to.equal("EQ");
+            expect(wrapper.vm.getDefaultOperatorByDataType("boolean")).to.equal("EQ");
+            expect(wrapper.vm.getDefaultOperatorByDataType("string")).to.equal("EQ");
+            expect(wrapper.vm.getDefaultOperatorByDataType("number")).to.equal("BETWEEN");
         });
     });
 });

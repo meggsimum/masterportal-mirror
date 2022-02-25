@@ -3,17 +3,6 @@ import httpClient from "../utils/httpClient";
 import getSystemInfo from "../utils/getSystemInfo";
 import getComponent from "../../../../utils/getComponent";
 
-/**
- * Retrieves and returns the url of the mail service.
- *
- * @param {String} id Id of the backend e-mail service.
- * @fires RestReader#RadioRequestRestReaderGetServiceById
- * @returns {?String} Returns the url of the mail service if it is configured.
- */
-function getServiceUrl (id) {
-    return Radio.request("RestReader", "getServiceById", id)?.get("url");
-}
-
 const actions = {
     /**
      * This action gets called after an e-mail has successfully been sent.
@@ -77,7 +66,7 @@ const actions = {
         const {to, from, serviceId, serviceID, includeSystemInfo} = state,
             id = serviceId || serviceID,
             systemInfo = getSystemInfo(rootGetters.portalTitle),
-            mailServiceUrl = getServiceUrl(id),
+            mailServiceUrl = rootGetters.getRestServiceById(id).url,
             ticketId = createTicketId(state.locationOfCustomerService);
 
         // stop sending if form is not valid
@@ -89,7 +78,7 @@ const actions = {
 
         // stop sending if mail service is not defined
         if (!mailServiceUrl) {
-            console.warn(`"An error occurred sending an e-mail: serviceId ${id} is unknown to the RestReader.`);
+            console.warn(`"An error occurred sending an e-mail: serviceId ${id} is unknown.`);
             dispatch("showWarningAlert", "common:modules.tools.contact.error.message");
             return;
         }

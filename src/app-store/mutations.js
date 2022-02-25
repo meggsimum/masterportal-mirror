@@ -55,6 +55,15 @@ export default {
         state.configJs = actions.checkWhereDeprecated(deprecatedParamsConfigJs, config);
     },
     /**
+     * Sets rest services configuration.
+     * @param {Object} state store state
+     * @param {Object} config rest-services.json
+     * @returns {void}
+     */
+    setRestConf (state, config) {
+        state.restConf = config;
+    },
+    /**
      * Sets mobile flag.
      * @param {Object} state store state
      * @param {Boolean} mobile whether browser resolution indicates mobile device

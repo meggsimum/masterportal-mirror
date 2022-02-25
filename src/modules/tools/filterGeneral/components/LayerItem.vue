@@ -1,4 +1,6 @@
 <script>
+import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
+
 export default {
     name: "LayerItem",
     props: {
@@ -20,6 +22,11 @@ export default {
             default: false
         }
     },
+    data () {
+        return {
+            selected: false
+        };
+    },
     methods: {
         /**
          * Updates selectedLayers array.
@@ -28,7 +35,9 @@ export default {
          */
         updateSelectedLayers (filterId) {
             this.$emit("updatetoselectedlayers", filterId);
-        }
+            this.selected = !this.selected;
+        },
+        translateKeyWithPlausibilityCheck
     }
 };
 </script>
@@ -50,8 +59,22 @@ export default {
                 data-parent="#accordion"
             >
                 {{ layer.title ? layer.title : layer.layerId }}
+                <span
+                    v-if="!selected"
+                    class="glyphicon glyphicon-chevron-down pull-right"
+                />
+                <span
+                    v-else
+                    class="glyphicon glyphicon-chevron-up pull-right"
+                />
             </a>
         </h2>
+        <div
+            v-if="layer.shortDescription && !selected"
+            class="layerInfoText"
+        >
+            {{ translateKeyWithPlausibilityCheck(layer.shortDescription, key => $t(key)) }}
+        </div>
         <slot
             :layer="layer"
         />

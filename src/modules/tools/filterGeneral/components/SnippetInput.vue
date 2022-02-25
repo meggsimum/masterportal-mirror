@@ -1,13 +1,22 @@
 <script>
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
+import SnippetInfo from "./SnippetInfo.vue";
 
 export default {
     name: "SnippetInput",
+    components: {
+        SnippetInfo
+    },
     props: {
         attrName: {
             type: String,
             required: false,
             default: ""
+        },
+        adjustment: {
+            type: [Object, Boolean],
+            required: false,
+            default: false
         },
         disabled: {
             type: Boolean,
@@ -19,7 +28,7 @@ export default {
             required: false,
             default: false
         },
-        label: {
+        title: {
             type: [String, Boolean],
             required: false,
             default: true
@@ -54,38 +63,27 @@ export default {
         return {
             isInitializing: true,
             value: "",
-            showInfo: false
+            translationKey: "snippetInput"
         };
     },
     computed: {
-        labelText () {
-            if (this.label === true) {
+        titleText () {
+            if (this.title === true) {
                 return this.attrName;
             }
-            else if (typeof this.label === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.label, key => this.$t(key));
-            }
-            return "";
-        },
-        infoText () {
-            if (this.info === true) {
-                return this.$t("common:modules.tools.filterGeneral.info.snippetInput");
-            }
-            else if (typeof this.info === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.info, key => this.$t(key));
+            else if (typeof this.title === "string") {
+                return this.translateKeyWithPlausibilityCheck(this.title, key => this.$t(key));
             }
             return "";
         }
     },
     watch: {
-        value: {
-            handler (value) {
-                if (!value) {
-                    this.deleteCurrentRule();
-                }
-                else {
-                    this.emitCurrentRule(value, this.isInitializing);
-                }
+        value (val) {
+            if (!val) {
+                this.deleteCurrentRule();
+            }
+            else {
+                this.emitCurrentRule(this.value, this.isInitializing);
             }
         }
     },
@@ -96,6 +94,12 @@ export default {
         this.$nextTick(() => {
             this.isInitializing = false;
         });
+        if (this.visible && this.prechecked !== "") {
+            this.emitCurrentRule(this.prechecked, true);
+        }
+    },
+    mounted () {
+        this.$emit("setSnippetPrechecked", this.visible && this.prechecked !== "");
     },
     methods: {
         translateKeyWithPlausibilityCheck,
@@ -139,11 +143,16 @@ export default {
             });
         },
         /**
-         * Toggles the info.
+         * Triggers when the input field has lost its focus.
          * @returns {void}
          */
-        toggleInfo () {
-            this.showInfo = !this.showInfo;
+        inputChanged () {
+            if (!this.value) {
+                this.deleteCurrentRule();
+            }
+            else {
+                this.emitCurrentRule(this.value, this.isInitializing);
+            }
         }
     }
 };
@@ -155,40 +164,31 @@ export default {
         class="snippetInputContainer"
     >
         <div
-            v-if="info !== false"
+            v-if="info"
             class="right"
         >
-            <div class="info-icon">
-                <span
-                    :class="['glyphicon glyphicon-info-sign', showInfo ? 'opened' : '']"
-                    @click="toggleInfo()"
-                    @keydown.enter="toggleInfo()"
-                >&nbsp;</span>
-            </div>
+            <SnippetInfo
+                :info="info"
+                :translation-key="translationKey"
+            />
         </div>
         <div class="input-container">
             <label
-                v-if="label !== false"
+                v-if="title !== false"
                 :for="'snippetInput-' + snippetId"
                 class="snippetInputLabel left"
-            >{{ labelText }}</label>
+            >{{ titleText }}</label>
             <input
                 :id="'snippetInput-' + snippetId"
                 v-model="value"
-                class="snippetInput"
+                class="snippetInput form-control"
                 type="text"
                 name="input"
                 :disabled="disabled"
                 :placeholder="placeholder"
+                @blur="inputChanged()"
+                @keyup.enter="inputChanged()"
             >
-        </div>
-        <div
-            v-show="showInfo"
-            class="bottom"
-        >
-            <div class="info-text">
-                <span>{{ infoText }}</span>
-            </div>
         </div>
     </div>
 </template>
@@ -202,8 +202,6 @@ export default {
         width: 100%;
     }
     .snippetInputContainer {
-        padding: 5px;
-        margin-bottom: 10px;
         height: auto;
     }
     .snippetInputContainer input {
@@ -213,27 +211,6 @@ export default {
         outline: 0;
         position: relative;
         margin-bottom: 5px;
-    }
-    .snippetInputContainer .info-icon {
-        float: right;
-        font-size: 16px;
-        color: #ddd;
-    }
-    .snippetInputContainer .info-icon .opened {
-        color: #000;
-    }
-    .snippetInputContainer .info-icon:hover {
-        cursor: pointer;
-        color: #a5a09e;
-    }
-    .snippetInputContainer .info-text {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 10px;
-        padding: 15px 10px;
-    }
-    .glyphicon-info-sign:before {
-        content: "\E086";
     }
     .snippetInputContainer .bottom {
         clear: left;
@@ -245,7 +222,7 @@ export default {
     }
     .snippetInputContainer .right {
         position: absolute;
-        right: 10px;
+        right: 0;
     }
     .category-layer .right {
         right: 30px;

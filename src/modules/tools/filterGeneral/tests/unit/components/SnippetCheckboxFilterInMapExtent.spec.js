@@ -30,6 +30,5 @@ describe("src/modules/tools/filterGeneral/components/SnippetCheckboxFilterInMapE
     it("should render correctly", () => {
         expect(wrapper.find("input").classes("snippetCheckbox")).to.be.true;
         expect(wrapper.find(".snippetCheckbox").element.checked).to.be.equal(false);
-        expect(wrapper.find(".info-text").exists()).to.be.true;
     });
 });

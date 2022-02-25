@@ -11,6 +11,12 @@ export default {
         ModalItem
     },
 
+    data () {
+        return {
+            availableLocalStorage: false
+        };
+    },
+
     computed: {
         ...mapGetters("Alerting", [
             "displayedAlerts",
@@ -26,7 +32,9 @@ export default {
          * see example file /portal/master/resources/broadcastedPortalAlerts.json
          * @returns {String} The normalized current browser URL
          */
-        currentUrl: () => document.URL.replace(/#.*$/, "").replace(/\/*\?.*$/, "/"),
+        currentUrl: () => {
+            return document.URL.replace(/#.*$/, "").replace(/\/*\?.*$/, "/").replace(/\bwww.\b/, "");
+        },
 
         /**
          * Console mapping to be able to debug in template.
@@ -42,13 +50,16 @@ export default {
          * @returns {void}
          */
         displayedAlerts (newDisplayedAlerts) {
-            // Local storage is synced with this.displayedAlerts
-            localStorage[this.localStorageDisplayedAlertsKey] = JSON.stringify(newDisplayedAlerts);
+            if (this.availableLocalStorage) {
+                // Local storage is synced with this.displayedAlert
+                localStorage[this.localStorageDisplayedAlertsKey] = JSON.stringify(newDisplayedAlerts);
+            }
         }
     },
 
     /**
      * Created hook: Creates event listener for legacy Radio calls (to be removed seometime).
+     * Checks if localstorage is available.
      * @returns {void}
      */
     created () {
@@ -57,6 +68,16 @@ export default {
                 this.addSingleAlert(newAlert);
             }
         });
+
+        try {
+            if (localStorage) {
+                this.availableLocalStorage = true;
+            }
+        }
+        catch {
+            this.availableLocalStorage = false;
+            console.error("Spelling localestorage is not available in this application. Please allow third party cookies in your browser!");
+        }
     },
 
     /**
@@ -67,7 +88,8 @@ export default {
         let initialDisplayedAlerts;
 
         this.initialize();
-        if (localStorage[this.localStorageDisplayedAlertsKey] !== undefined) {
+
+        if (this.availableLocalStorage && localStorage[this.localStorageDisplayedAlertsKey] !== undefined) {
             try {
                 initialDisplayedAlerts = JSON.parse(localStorage[this.localStorageDisplayedAlertsKey]);
 
@@ -117,7 +139,7 @@ export default {
 
             if (data.restrictedAlerts !== undefined && typeof data.restrictedAlerts === "object") {
                 Object.keys(data.restrictedAlerts).forEach(restrictedAlertUrl => {
-                    if (restrictedAlertUrl.toLowerCase() === this.currentUrl.toLowerCase() && Array.isArray(data.restrictedAlerts[restrictedAlertUrl])) {
+                    if (this.currentUrl.toLowerCase().startsWith(restrictedAlertUrl.toLowerCase()) && Array.isArray(data.restrictedAlerts[restrictedAlertUrl])) {
                         collectedAlertIds = [...collectedAlertIds, ...data.restrictedAlerts[restrictedAlertUrl]];
                     }
                 });
@@ -200,7 +222,7 @@ export default {
                         />
 
                         <p
-                            v-if="singleAlert.mustBeConfirmed"
+                            v-if="singleAlert.mustBeConfirmed && availableLocalStorage"
                             class="confirm"
                         >
                             <a

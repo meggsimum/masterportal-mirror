@@ -3,6 +3,7 @@ import {mapGetters, mapActions} from "vuex";
 import * as constants from "./../store/constantsRouting";
 import {GeoJSON, GPX} from "ol/format.js";
 import convertFeaturesToKml from "../../../../utils/convertFeaturesToKml";
+import directionsRouteStyle from "../utils/map/directions/route/directionsRouteStyle";
 import Feature from "ol/Feature";
 
 export default {
@@ -55,6 +56,22 @@ export default {
             }
 
             return this.isochronesAreaSource.getFeatures();
+        },
+        /**
+         * Retrieves the features and styles them for export with default route style
+         *
+         * @param {module:ol/Feature[]} features which are to be converted.
+         * @returns {module:ol/Feature[]} openlayers features
+         */
+        styleFeatures (features) {
+            for (const feature of features) {
+                const routeStyle = directionsRouteStyle(feature);
+
+                if (routeStyle[1]) {
+                    feature.setStyle(routeStyle[1]);
+                }
+            }
+            return features;
         },
         /**
          * Converts the features from OpenLayers Features to features in the chosen format.
@@ -132,7 +149,7 @@ export default {
             if (this.isDisabled) {
                 return;
             }
-            const downloadString = await this.getDownloadStringInFormat(this.getDownloadFeatures()),
+            const downloadString = await this.getDownloadStringInFormat(this.styleFeatures(this.getDownloadFeatures())),
                 fileName = this.getFileName();
 
             if (typeof navigator.msSaveOrOpenBlob === "function") {

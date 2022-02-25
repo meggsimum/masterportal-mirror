@@ -85,6 +85,13 @@ export default {
             }
         }
         return tool;
-    }
+    },
+
+    /**
+     * Returns a rest service from restConf by ID
+     * @param {Object} state the store state
+     * @returns {Object} the rest service config object
+     */
+    getRestServiceById: state => id => state?.restConf?.find(service => service.id === id)
 };
 

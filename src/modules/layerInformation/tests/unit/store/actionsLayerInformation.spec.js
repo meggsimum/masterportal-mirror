@@ -74,13 +74,14 @@ describe("src/modules/layerInformation/store/actionsLayerInformation.js", () => 
                         "urlIsVisible": true
                     },
                     metaDataCatalogueId: "2"
-                };
-                // metaURLs = ["https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid=73A344E9-CDB5-4A17-89C1-05E202989755"];
+                },
+                metaURLs = ["https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid=73A344E9-CDB5-4A17-89C1-05E202989755"];
 
-            // Once the RestReader (Radiorequest) is a vue component change the payload to metaURLs
             testAction(setMetadataURL, metaId, state, {}, [
-                {type: "setMetaURLs", payload: [""]}
-            ], {}, done);
+                {type: "setMetaURLs", payload: metaURLs}
+            ], {}, done, {
+                getRestServiceById: id => id === "2" ? {url: "https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid="} : {}
+            });
 
         });
 
@@ -114,6 +115,48 @@ describe("src/modules/layerInformation/store/actionsLayerInformation.js", () => 
                 {type: "setMetadataURL", payload: state.layerInfo.metaID, dispatch: true}
             ], {}, done);
 
+        });
+        it("should use showDocUrl if set", done => {
+            const state = {
+                layerInfo: {
+                    "id": "123",
+                    "metaID": "73A344E9-CDB5-4A17-89C1-05E202989755",
+                    "layername": "name",
+                    "url": "google.de",
+                    "urlIsVisible": true,
+                    "cswUrl": "https://metaver.de/csw",
+                    "showDocUrl": "https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid="
+                },
+                metaDataCatalogueId: "2"
+            };
+
+            testAction(setMetadataURL, "73A344E9-CDB5-4A17-89C1-05E202989755", state, {}, [
+                {type: "setMetaURLs", payload: ["https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid=73A344E9-CDB5-4A17-89C1-05E202989755"]}
+            ], {}, done, {
+                getRestServiceById: id => id === "2" ? {url: "https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid="} : {}
+            });
+
+        });
+        it("should use the url from metaDataCatalogueId if showDocUrl is not set", done => {
+            const state = {
+                    layerInfo: {
+                        "id": "123",
+                        "metaID": "73A344E9-CDB5-4A17-89C1-05E202989755",
+                        "layername": "name",
+                        "url": "google.de",
+                        "urlIsVisible": true,
+                        "cswUrl": "https://metaver.de/csw"
+                    },
+                    metaDataCatalogueId: "2"
+                },
+                metaURLs = ["https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid=73A344E9-CDB5-4A17-89C1-05E202989755"];
+
+            // Once the RestReader (Radiorequest) is a vue component change the payload to metaURLs
+            testAction(setMetadataURL, "73A344E9-CDB5-4A17-89C1-05E202989755", state, {}, [
+                {type: "setMetaURLs", payload: metaURLs}
+            ], {}, done, {
+                getRestServiceById: id => id === "2" ? {url: "https://metaver.de/trefferanzeige?cmd=doShowDocument&docuuid="} : {}
+            });
         });
 
     });

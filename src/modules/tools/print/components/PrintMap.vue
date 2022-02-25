@@ -261,13 +261,13 @@ export default {
                     filename: this.filename
                 });
 
+                this.setPrintStarted(true);
                 this.startPrint({
                     index,
                     getResponse: async (url, payload) => {
                         return axios.post(url, payload);
                     }
                 });
-                this.setPrintStarted(true);
             }
             else {
                 this.addSingleAlert(this.$t("common:modules.tools.print.alertMessage"));

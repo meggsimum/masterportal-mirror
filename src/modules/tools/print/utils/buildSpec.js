@@ -12,6 +12,10 @@ import uniqueId from "../../../../utils/uniqueId";
 import findWhereJs from "../../../../utils/findWhereJs";
 import Geometry from "ol/geom/Geometry";
 import {convertColor} from "../../../../utils/convertColor";
+import {MVTEncoder} from "@geoblocks/print";
+import VectorTileLayer from "ol/layer/VectorTile";
+import {getLastPrintedExtent} from "../store/actions/actionsPrintInitialization";
+
 
 const BuildSpecModel = {
     defaults: {
@@ -168,24 +172,24 @@ const BuildSpecModel = {
      * @param {ol.layer.Layer[]} layerList All visible layers on the map.
      * @returns {void}
      */
-    buildLayers: function (layerList) {
+    buildLayers: async function (layerList) {
         const layers = [],
             attributes = this.defaults.attributes,
             currentResolution = Radio.request("MapView", "getOptions")?.resolution,
             visibleLayerIds = [];
 
         if (Array.isArray(layerList)) {
-            layerList.forEach(layer => {
+            for (const layer of layerList) {
                 const printLayers = [];
 
                 if (layer instanceof Group) {
-                    layer.getLayers().getArray().forEach(childLayer => {
-                        printLayers.push(this.buildLayerType(childLayer, currentResolution));
+                    for (const childLayer of layer.getLayers().getArray()) {
+                        printLayers.push(await this.buildLayerType(childLayer, currentResolution));
                         visibleLayerIds.push(childLayer.get("id"));
-                    });
+                    }
                 }
                 else {
-                    printLayers.push(this.buildLayerType(layer, currentResolution));
+                    printLayers.push(await this.buildLayerType(layer, currentResolution));
                 }
                 printLayers.forEach(printLayer => {
                     if (typeof printLayer !== "undefined") {
@@ -196,7 +200,7 @@ const BuildSpecModel = {
                     }
 
                 });
-            });
+            }
         }
         this.setVisibleLayerIds(visibleLayerIds);
         attributes.map.layers = layers.reverse();
@@ -232,7 +236,7 @@ const BuildSpecModel = {
      * @param {Number} currentResolution Current map resolution
      * @returns {Object} - LayerObject for MapFish print.
      */
-    buildLayerType: function (layer, currentResolution) {
+    buildLayerType: async function (layer, currentResolution) {
         const extent = Radio.request("MapView", "getCurrentExtent"),
             layerMinRes = typeof layer?.get === "function" ? layer.get("minResolution") : false,
             layerMaxRes = typeof layer?.get === "function" ? layer.get("maxResolution") : false,
@@ -243,7 +247,12 @@ const BuildSpecModel = {
         if (isInScaleRange) {
             const source = layer.getSource();
 
-            if (layer instanceof Image) {
+            if (layer instanceof VectorTileLayer) {
+                const maskExtent = getLastPrintedExtent();
+
+                returnLayer = await this.buildVectorTile(layer, currentResolution, maskExtent);
+            }
+            else if (layer instanceof Image) {
                 returnLayer = this.buildImageWms(layer);
             }
             else if (layer instanceof Tile) {
@@ -330,6 +339,47 @@ const BuildSpecModel = {
         };
     },
 
+    /**
+     * returns vector tile layer information
+     * @param {ol.layer.VectorTile} layer vector tile layer with vector tile source
+     * @param {number} resolution print resolution
+     * @param {ol.Extent} extent printed extent
+     * @returns {Object} - static image layer spec
+     */
+    buildVectorTile: async function (layer, resolution, extent) {
+        MVTEncoder.useImmediateAPI = false;
+        const mapInfo = store.state.Tools.Print.layoutMapInfo,
+            targetDPI = store.state.Tools.Print.dpiForPdf,
+            factor = targetDPI / 72,
+            targetWidth = mapInfo[0] * factor,
+            targetHeight = mapInfo[1] * factor,
+            encoder = new MVTEncoder(),
+            r = await encoder.encodeMVTLayer({
+                layer,
+                tileResolution: resolution,
+                printResolution: resolution,
+                printExtent: extent,
+                canvasSize: [targetWidth, targetHeight]
+            }),
+            {extent: tileExtent, baseURL: tileBaseURL} = r[0];
+
+        if (r.length !== 1) {
+            throw new Error("handle several results");
+        }
+
+        if (r[0].baseURL.length <= 6) {
+            return null;
+        }
+
+        return {
+            extent: tileExtent,
+            baseURL: tileBaseURL,
+            type: "image",
+            name: layer.get("name"),
+            opacity: 1,
+            imageFormat: "image/png"
+        };
+    },
     /**
      * returns tile wms layer information
      * @param {ol.layer.Tile} layer tile layer with tile wms source
@@ -431,6 +481,9 @@ const BuildSpecModel = {
                     styleGeometryFunction = style.getGeometryFunction();
                     if (styleGeometryFunction !== null && styleGeometryFunction !== undefined) {
                         clonedFeature.setGeometry(styleGeometryFunction(clonedFeature));
+                        if (clonedFeature.getGeometry().getCoordinates().length === 0 && feature.getGeometry().getCoordinates().length > 0) {
+                            clonedFeature.getGeometry().setCoordinates(feature.getGeometry().getCoordinates());
+                        }
                         geometryType = styleGeometryFunction(clonedFeature).getType();
                     }
                     stylingRules = this.getStylingRules(layer, clonedFeature, styleAttributes, style)
@@ -854,6 +907,7 @@ const BuildSpecModel = {
         convertedFeature = geojsonFormat.writeFeatureObject(clonedFeature);
         if (clonedFeature.getGeometry().getCoordinates().length === 0) {
             convertedFeature = undefined;
+            // todo jetzt ist das convertedFeature undefined --> das führt zu Fehlern --> was soll returned werden?
         }
         // if its a cluster remove property features
         if (convertedFeature.properties && Object.prototype.hasOwnProperty.call(convertedFeature.properties, "features")) {

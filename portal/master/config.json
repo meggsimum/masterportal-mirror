@@ -743,7 +743,8 @@
             "strasse"
           ],
           "searchField": "name",
-          "extendedFilter": true
+          "extendedFilter": true,
+          "loadingStrategy": "all"
         },
         {
           "id": "8712",

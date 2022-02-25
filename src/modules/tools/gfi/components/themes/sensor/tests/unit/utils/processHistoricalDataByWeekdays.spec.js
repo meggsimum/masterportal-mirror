@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import {createZeroTimeObservation, addIndex, processHistoricalDataByWeekdays} from "../../../utils/processHistoricalDataByWeekdays.js";
+import * as moment from "moment";
 
 describe("src/modules/tools/gfi/components/themes/sensor/utils/processHistoricalDataByWeekdays.js", () => {
     describe("createZeroTimeObservation", function () {
@@ -84,35 +85,37 @@ describe("src/modules/tools/gfi/components/themes/sensor/utils/processHistorical
             ]);
         });
         it("should return an array with seven arrays that contains divided data for correct data without lastDay input", function () {
-            const historicalDataWithIndex = [{
+            const beforeOneYear = moment().subtract(1, "years").format("YYYY-MM-DD"),
+                historicalDataWithIndex = [{
                     Observations: [{
-                        phenomenonTime: "2020-06-17T10:55:52",
+                        phenomenonTime: beforeOneYear + "T10:55:52",
                         result: "available",
                         index: 0
                     }]
                 },
                 {
                     Observations: [{
-                        phenomenonTime: "2020-06-17T12:59:15",
+                        phenomenonTime: beforeOneYear + "T12:59:15",
                         result: "charging",
                         index: 0
                     },
                     {
-                        phenomenonTime: "2020-06-17T12:57:15",
+                        phenomenonTime: beforeOneYear + "T12:57:15",
                         result: "available",
                         index: 1
                     },
                     {
-                        phenomenonTime: "2020-06-15T10:40:00",
+                        phenomenonTime: beforeOneYear + "T10:40:00",
                         result: "charging",
                         index: 1
                     }]
                 }],
-                startDate = "2018-06-17";
+                startDate = beforeOneYear,
+                historicalDataByWeekdays = processHistoricalDataByWeekdays(historicalDataWithIndex, startDate);
 
-            expect(processHistoricalDataByWeekdays(historicalDataWithIndex, startDate)).to.be.an("array");
-            expect(processHistoricalDataByWeekdays(historicalDataWithIndex, startDate).length).equals(7);
-            processHistoricalDataByWeekdays(historicalDataWithIndex, startDate)[0][0].forEach(value => {
+            expect(historicalDataByWeekdays).to.be.an("array");
+            expect(historicalDataByWeekdays.length).equals(7);
+            historicalDataByWeekdays[0][0].forEach(value => {
                 expect(value).to.have.property("phenomenonTime");
                 expect(value).to.have.property("result");
             });

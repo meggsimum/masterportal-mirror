@@ -637,9 +637,9 @@
  */
 
 /**
- * @event Core.ModelList#RadioTriggerModelListSetIsSelectedOnChildLayers
- * @description See {@link List#setIsSelectedOnChildLayers}
- * @example Radio.trigger("ModelList", "setIsSelectedOnChildLayers", model)
+ * @event Core.ModelList#RadioTriggerModelListSetIsSelectedOnChildModels
+ * @description See {@link List#setIsSelectedOnChildModels}
+ * @example Radio.trigger("ModelList", "setIsSelectedOnChildModels", model)
  */
 
 /**

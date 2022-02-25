@@ -76,19 +76,11 @@ export default {
         /**
          * Shows or hides tool when active props changes. Also triggers map update due to change of available
          * space for map if shown in sidebar.
-         * @param {boolean} newValue    flag if tool is active
+         * @param {Boolean} newValue Flag if tool is active.
          * @returns {void}
          */
         active: function (newValue) {
-            const modelCollection = Radio.request("ModelList", "getCollection"),
-                gfiModel = modelCollection ? modelCollection.findWhere({id: "gfi"}) : undefined;
-
-            if (newValue && gfiModel) {
-                gfiModel.setIsActive(!this.deactivateGFI);
-            }
-            else {
-                Radio.trigger("ModelList", "toggleDefaultTool");
-            }
+            Radio.trigger("ModelList", "toggleDefaultTool");
 
             this.$nextTick(() => {
                 this.updateMap();

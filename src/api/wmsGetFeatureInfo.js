@@ -4,7 +4,11 @@ import axios from "axios";
 import handleAxiosResponse from "../utils/handleAxiosResponse.js";
 
 /**
- * handles the GetFeatureInfo request
+ * Handles the GetFeatureInfo request.
+ * Implementation rule to show GFI, derived from known services:
+ * 1. Nodes exist
+ * 2. No <body> exists, or it has child nodes
+ * 3. No <tbody> exists, or it has child nodes
  * @param {String} mimeType - text/xml | text/html
  * @param {String} url - the GetFeatureInfo request url
  * @returns {Promise<module:ol/Feature[]>}  Promise object represents the GetFeatureInfo request
@@ -16,9 +20,18 @@ export function requestGfi (mimeType, url) {
             const parsedDocument = parseDocumentString(docString, mimeType);
 
             if (mimeType === "text/html") {
-                if (parsedDocument.getElementsByTagName("tbody")[0]?.children.length >= 1) {
+                if (parsedDocument.childNodes.length > 0 &&
+                    (
+                        !parsedDocument.getElementsByTagName("body")[0] ||
+                        parsedDocument.getElementsByTagName("body")[0].children.length > 0
+                    ) &&
+                    (
+                        !parsedDocument.getElementsByTagName("tbody")[0] ||
+                        parsedDocument.getElementsByTagName("tbody")[0].children.length > 0
+                    )) {
                     return docString;
                 }
+
                 return null;
             }
 

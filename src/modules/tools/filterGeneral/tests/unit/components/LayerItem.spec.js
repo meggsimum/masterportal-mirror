@@ -12,10 +12,11 @@ config.mocks.$t = key => key;
 describe("src/modules/tools/filterGeneral/components/LayerItem.vue", () => {
     let wrapper;
 
-    const layer = [
+    const layer =
         {
             "title": "Schüleranzahl-Filter",
             "layerId": "8712",
+            "shortDescription": "foo bar",
             "service": {
                 "type": "ol",
                 "layerId": "8712",
@@ -35,8 +36,7 @@ describe("src/modules/tools/filterGeneral/components/LayerItem.vue", () => {
                     "visible": true
                 }
             ]
-        }
-    ];
+        };
 
     beforeEach(() => {
         wrapper = shallowMount(LayerItem, {
@@ -55,6 +55,12 @@ describe("src/modules/tools/filterGeneral/components/LayerItem.vue", () => {
 
     it("should render correctly", () => {
         expect(wrapper.find("div").classes("panel-heading")).to.be.true;
+    });
+
+    it("should render description", () => {
+        const description = wrapper.findAll(".layerInfoText");
+
+        expect(description.exists()).to.be.true;
     });
 
     it("should be disabled if passed as props", () => {

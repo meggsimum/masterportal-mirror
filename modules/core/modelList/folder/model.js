@@ -10,7 +10,6 @@ const Folder = Item.extend(/** @lends Folder.prototype */{
         isSelected: false,
         type: "",
         parentId: "",
-        isLeafFolder: false,
         id: "",
         selectAllGlyphicon: "glyphicon-unchecked",
         glyphicon: "glyphicon-folder-open",
@@ -42,7 +41,6 @@ const Folder = Item.extend(/** @lends Folder.prototype */{
      * @property {Boolean} isPinned=false Flag if tree is pinned
      * @property {String} type="" Flag what kind of item it is. "folder".
      * @property {String} parentId="" Id of parent node.
-     * @property {Boolean} isLeafFolder=false Flag if folder does not have subfolders.
      * @property {String} id="" Unique id for folder.
      * @property {String} selectAllGlyphicon="glyphicon-unchecked" Glyphicon class of folder to select all children.
      * @property {String} glyphicon="glyphicon-folder-open" Glyphicon class of folder

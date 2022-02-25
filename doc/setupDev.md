@@ -35,10 +35,10 @@ The Node Package Manager (**[NPM](http://npmjs.org)**) comes bundled with your N
 
 ```console
 $ node -v
-v14.18.3
+v16.13.2
 
 $ npm -v
-6.14.15
+8.1.2
 ```
 
 Npm can be configured via command line. Configuration entries are added to the file `C:\Users\<user>\.npmrc` that may also be edited directly. To view your complete configuration, run these lines:

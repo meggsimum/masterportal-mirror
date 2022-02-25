@@ -48,67 +48,39 @@ export default {
     <div
         class="snippetTagContainer"
     >
-        <div class="snippetTagLeft">
-            <div class="snippetTagLabel">
-                {{ label }}
-            </div>
-            <div class="snippetTagValue">
-                {{ value }}
-            </div>
-        </div>
-        <div class="snippetTagRight">
-            <div class="snippetTagRemove">
-                <a
-                    class="snippetTagRemoveButton"
-                    @click="removeTag()"
-                    @keydown.enter="removeTag()"
-                >X</a>
-            </div>
-        </div>
-        <div class="clear" />
+        <button
+            type="button"
+            class="btn-tags"
+            title="löschen"
+            @click="removeTag()"
+            @keydown.enter="removeTag()"
+        >
+            <span class="snippetTagValue pull-left">{{ value }}</span>
+            <span class="glyphicon glyphicon-remove pull-right" />
+            <br>
+            <span class="snippetTagLabel">{{ label }}</span>
+        </button>
     </div>
 </template>
 
 <style lang="scss" scoped>
     @import "~/css/mixins.scss";
-
     .snippetTagContainer {
+        margin: 0 0 2px 2px;
         float: left;
-        width: 80px;
-        height: 20px;
-        margin: 2px;
-        border: 1px solid Gray;
     }
-    .snippetTagContainer .clear {
-        clear: both;
-    }
-    .snippetTagContainer .snippetTagLeft {
-        float: left;
-        width: 80%;
-        height: 20px;
-        overflow: hidden;
-    }
-    .snippetTagContainer .snippetTagRight {
-        float: right;
-        width: 20%;
-        height: 20px;
+    .snippetTagContainer button {
+        min-height: 39px;
     }
     .snippetTagContainer .snippetTagLabel {
-        font-size: 6px;
-        color: Black;
+        font-size: 10px;
     }
     .snippetTagContainer .snippetTagValue {
         font-size: 10px;
-        color: Black;
-    }
-    .snippetTagRemoveButton {
         font-weight: bold;
-        color: Black;
-        text-decoration: none;
-        cursor: pointer;
+        padding-right: 2px;
     }
-    .snippetTagRemoveButton:hover {
-        color: Red;
-        text-decoration: underline;
+    .glyphicon-remove:hover {
+        color: #E10019;
     }
 </style>

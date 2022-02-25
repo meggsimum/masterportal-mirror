@@ -4,6 +4,7 @@ import AlertingStoreModule from "../../../store/indexAlerting";
 import AlertingItemComponent from "../../../components/AlertingItem.vue";
 import {expect} from "chai";
 import sinon from "sinon";
+import {JSDOM} from "jsdom";
 
 const
     localVue = createLocalVue(),
@@ -232,6 +233,78 @@ describe("src/modules/alerting/components/AlertingItem.vue", function () {
                 });
                 await wrapper.vm.$nextTick();
                 expect(wrapper.findAll(".singleAlertContainer").length).to.equal(2);
+            });
+        });
+
+        describe("currentUrl", function () {
+            const globalDocument = global.document,
+                globalWindow = global.window;
+            let mountingSettings1;
+
+            beforeEach(() => {
+                mountingSettings1 = {
+                    store,
+                    methods: {
+                        fetchBroadcast: function () {
+                            this.axiosCallback(alertingData);
+                        }
+                    },
+                    localVue
+                };
+            });
+
+            after(() => {
+                global.document = globalDocument;
+                global.window = globalWindow;
+            });
+
+            it("remove .www and from url", function () {
+                const dom = new JSDOM(
+                    `<html>
+                        <body>
+                        </body>
+                    </html>`,
+                    {url: "https://www.test.de/portal/"}
+                );
+                let wrapper1 = null;
+
+                global.document = dom.window.document;
+                global.window = dom.window;
+
+                wrapper1 = shallowMount(AlertingItemComponent, mountingSettings1);
+                expect(wrapper1.vm.currentUrl).to.equal("https://test.de/portal/");
+            });
+            it("remove # from url", function () {
+                const dom = new JSDOM(
+                    `<html>
+                        <body>
+                        </body>
+                    </html>`,
+                    {url: "https://test.de/portal/#"}
+                );
+                let wrapper1 = null;
+
+                global.document = dom.window.document;
+                global.window = dom.window;
+
+                wrapper1 = shallowMount(AlertingItemComponent, mountingSettings1);
+                expect(wrapper1.vm.currentUrl).to.equal("https://test.de/portal/");
+            });
+            it("remove ?param=xyz from url", function () {
+                const dom = new JSDOM(
+                    `<html>
+                        <body>
+                        </body>
+                    </html>`,
+                    {url: "https://test.de/portal?param=xyz"}
+                );
+                let wrapper1 = null;
+
+                global.document = dom.window.document;
+                global.window = dom.window;
+
+                wrapper1 = shallowMount(AlertingItemComponent, mountingSettings1);
+                expect(wrapper1.vm.currentUrl).to.equal("https://test.de/portal/");
             });
         });
     });

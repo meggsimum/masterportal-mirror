@@ -50,7 +50,7 @@ async function GfiTests ({builder, url, resolution, capability, mode}) {
 
 
         if (isMaster(url)) {
-            it("default tree gfi windows can be dragged, but not outside the screen", async function () {
+            it.skip("default tree gfi windows can be dragged, but not outside the screen", async function () {
                 do {
                     await clickFeature(driver, exampleHospital.coord);
                     await driver.wait(new Promise(r => setTimeout(r, 100)));

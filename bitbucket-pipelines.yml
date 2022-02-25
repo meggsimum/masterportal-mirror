@@ -1,4 +1,4 @@
-image: node:14.18.3
+image: node:16.13.2
 
 definitions:
   steps:

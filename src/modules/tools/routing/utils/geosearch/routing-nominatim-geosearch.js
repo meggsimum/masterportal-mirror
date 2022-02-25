@@ -1,6 +1,7 @@
 import axios from "axios";
 import {RoutingGeosearchResult} from "../classes/routing-geosearch-result";
 import state from "./../../store/stateRouting";
+import store from "../../../../../app-store";
 
 /**
  * Requests POIs from text from Nominatim
@@ -8,7 +9,7 @@ import state from "./../../store/stateRouting";
  * @returns {RoutingGeosearchResult[]} routingGeosearchResults
  */
 async function fetchRoutingNominatimGeosearch (search) {
-    const serviceUrl = Radio.request("RestReader", "getServiceById", state.geosearch.serviceId).get("url"),
+    const serviceUrl = store.getters.getRestServiceById(state.geosearch.serviceId).url,
         url = `${serviceUrl}&countrycodes=de&format=json&limit=${state.geosearch.limit}&bounded=1`,
         parameter = `&q=${encodeURIComponent(search)}`,
         response = await axios.get(url + parameter);
@@ -28,7 +29,7 @@ async function fetchRoutingNominatimGeosearch (search) {
  * @returns {RoutingGeosearchResult} routingGeosearchResult
  */
 async function fetchRoutingNominatimGeosearchReverse (coordinates) {
-    const serviceUrl = Radio.request("RestReader", "getServiceById", state.geosearchReverse.serviceId).get("url"),
+    const serviceUrl = store.getters.getRestServiceById(state.geosearchReverse.serviceId).url,
         url = `${serviceUrl}&lon=${coordinates[0]}&lat=${coordinates[1]}&format=json&addressdetails=0`,
         response = await axios.get(url);
 

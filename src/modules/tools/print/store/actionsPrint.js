@@ -64,7 +64,7 @@ export default {
      * @param {Number} print.index The print index.
      * @returns {void}
      */
-    startPrint: function ({state, dispatch, commit}, print) {
+    startPrint: async function ({state, dispatch, commit}, print) {
         commit("setProgressWidth", "width: 25%");
         getVisibleLayer();
 
@@ -95,7 +95,7 @@ export default {
         if (state.isScaleAvailable) {
             spec.buildScale(state.currentScale);
         }
-        spec.buildLayers(visibleLayerList);
+        await spec.buildLayers(visibleLayerList);
 
         if (state.isGfiAvailable) {
             dispatch("getGfiForPrint");
@@ -155,9 +155,9 @@ export default {
 
         if (cswObj.cswUrl === null || typeof cswObj.cswUrl === "undefined") {
             const cswId = Config.cswId || "3",
-                cswService = Radio.request("RestReader", "getServiceById", cswId);
+                cswService = rootGetters.getRestServiceById(cswId);
 
-            cswObj.cswUrl = cswService.get("url");
+            cswObj.cswUrl = cswService.url;
         }
 
         /**
@@ -210,7 +210,7 @@ export default {
      * @param {Object} printContent the content for the printRequest
      * @returns {void}
      */
-    createPrintJob: async function ({state, dispatch, commit}, printContent) {
+    createPrintJob: async function ({state, dispatch, rootGetters, commit}, printContent) {
         const printJob = printContent,
             printId = printJob.printAppId || state.printAppId,
             printFormat = printJob.format || state.currentFormat;
@@ -227,10 +227,10 @@ export default {
             let serviceUrl;
 
             if (state.mapfishServiceId !== "") {
-                serviceUrl = Radio.request("RestReader", "getServiceById", state.mapfishServiceId).get("url");
+                serviceUrl = rootGetters.getRestServiceById(state.mapfishServiceId).url;
             }
             else {
-                serviceUrl = Radio.request("RestReader", "getServiceById", "mapfish").get("url");
+                serviceUrl = rootGetters.getRestServiceById("mapfish").url;
             }
 
             if (!serviceUrl.includes("/print/")) {

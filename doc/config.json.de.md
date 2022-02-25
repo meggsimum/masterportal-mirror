@@ -41,7 +41,7 @@ Es existieren die im Folgenden aufgelisteten Konfigurationen:
 |menu|nein|**[menu](#markdown-header-portalconfigmenu)**||Hier können die Menüeinträge und deren Anordnung konfiguriert werden. Die Reihenfolge der Werkzeuge ist identisch mit der Reihenfolge in der config.json (siehe **[Tools](#markdown-header-portalconfigmenutools)**).|false|
 |searchBar|nein|**[searchBar](#markdown-header-portalconfigsearchbar)**||Über die Suchleiste können verschiedene Suchen gleichzeitig angefragt werden.|false|
 |layersRemovable|nein|Boolean|false|Gibt an, ob der Layer gelöscht werden darf.|false|
-|quickHelp|no|**[quickHelp](#markdown-header-portalconfigquickHelp)**||Konfiguration neuer und Manipulation bestehender QuickHelp-Fenster.|false|
+|quickHelp|nein|**[quickHelp](#markdown-header-portalconfigquickHelp)**||Konfiguration neuer und Manipulation bestehender QuickHelp-Fenster.|false|
 
 ***
 
@@ -841,7 +841,7 @@ Eine detailierte Anleitung zur Konfiguration des QuickHelp-Fensters siehe **[the
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|configs|yes|**[configs](#markdown-header-portalconfigquickhelpconfigs)**|{"search": true, "tree": true}|Die Konfiguration für bestehende und neue QuickHelp-Fenster.|false|
+|configs|ja|**[configs](#markdown-header-portalconfigquickhelpconfigs)**|{"search": true, "tree": true}|Die Konfiguration für bestehende und neue QuickHelp-Fenster.|false|
 
 ```json
 {
@@ -857,8 +857,8 @@ Eine detailierte Anleitung zur Konfiguration des QuickHelp-Fensters siehe **[the
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|search|no|**[search](#markdown-header-portalconfigquickhelpconfigssearch)**|true|Konfiguration des QuickHelp-Fensters der SearchBar.|false|
-|tree|no|**[tree](#markdown-header-portalconfigquickhelpconfigstree)**|true|Konfiguration des QuickHelp-Fensters des Themenbaums.|false|
+|search|nein|**[search](#markdown-header-portalconfigquickhelpconfigssearch)**|true|Konfiguration des QuickHelp-Fensters der SearchBar.|false|
+|tree|nein|**[tree](#markdown-header-portalconfigquickhelpconfigstree)**|true|Konfiguration des QuickHelp-Fensters des Themenbaums.|false|
 
 ```json
 {
@@ -877,8 +877,8 @@ Eine detailierte Anleitung zur Konfiguration des QuickHelp-Fensters siehe **[the
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|title|no|String|""|Der Titel/die Überschrift des QuickHelp-Fensters.|false|
-|content|no|**[section](#markdown-header-portalconfigquickhelpconfigssearchsection)**[]|[]|Der Titel/die Überschrift des QuickHelp-Fensters.|false|
+|title|nein|String|""|Der Titel/die Überschrift des QuickHelp-Fensters.|false|
+|content|nein|**[section](#markdown-header-portalconfigquickhelpconfigssearchsection)**[]|[]|Der Titel/die Überschrift des QuickHelp-Fensters.|false|
 
 ```json
 {
@@ -902,11 +902,11 @@ Ein Abschnitt kann mit den Schlüsselwörtern "vorher", "nachher" und "ausblende
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|title|no|String|""|Der Titel/die Überschrift des Abschnitts.|false|
-|list|no|**[paragraph](#markdown-header-portalconfigquickhelpconfigssearchsectionparagraph)**[]|[]|Eine Reihe von Absätzen oder Bildern des QuickHelp-Abschnitts.|false|
-|before|no|String||Ein Abschnittsschlüssel, vor dem dieser neue Abschnitt angehängt werden soll.|false|
-|after|no|String||Ein Abschnittsschlüssel, hinter dem dieser neue Abschnitt angehängt werden soll.|false|
-|hide|no|String||Ein Abschnittsschlüssel, der dazu führt, dass ein bestehender Abschnitt, der mit dem Abschnittsschlüssel angesprochen wird, ausgeblendet/entfernt wird.|false|
+|title|nein|String|""|Der Titel/die Überschrift des Abschnitts.|false|
+|list|nein|**[paragraph](#markdown-header-portalconfigquickhelpconfigssearchsectionparagraph)**[]|[]|Eine Reihe von Absätzen oder Bildern des QuickHelp-Abschnitts.|false|
+|before|nein|String||Ein Abschnittsschlüssel, vor dem dieser neue Abschnitt angehängt werden soll.|false|
+|after|nein|String||Ein Abschnittsschlüssel, hinter dem dieser neue Abschnitt angehängt werden soll.|false|
+|hide|nein|String||Ein Abschnittsschlüssel, der dazu führt, dass ein bestehender Abschnitt, der mit dem Abschnittsschlüssel angesprochen wird, ausgeblendet/entfernt wird.|false|
 
 ```json
 {
@@ -948,10 +948,10 @@ Configure als Objekt zur Angabe externer Bilder mit imgPath als URL und imgName 
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|text|no|String|""|Der Text als Übersetzungsschlüssel oder reiner Text.|false|
-|type|no|String|"text/plain"|Der Texttyp. Wenn "text/html" angegeben wird, wird der angegebene Text als HTML-Code wiedergegeben.|false|
-|imgName|no|String|""|Der Name des anzuzeigenden Bildes.|false|
-|imgPath|no|String|""|Der Pfad zum Bild, falls nicht angegeben, wird imgPath aus config.js übernommen.|false|
+|text|nein|String|""|Der Text als Übersetzungsschlüssel oder reiner Text.|false|
+|type|nein|String|"text/plain"|Der Texttyp. Wenn "text/html" angegeben wird, wird der angegebene Text als HTML-Code wiedergegeben.|false|
+|imgName|nein|String|""|Der Name des anzuzeigenden Bildes.|false|
+|imgPath|nein|String|""|Der Pfad zum Bild, falls nicht angegeben, wird imgPath aus config.js übernommen.|false|
 
 ```json
 {
@@ -1001,8 +1001,8 @@ Configure als Objekt zur Angabe externer Bilder mit imgPath als URL und imgName 
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|title|no|String|""|Der Titel/die Überschrift des QuickHelp-Fensters.|false|
-|content|no|**[section](#markdown-header-portalconfigquickhelpconfigstreesection)**[]|[]|Der Titel/die Überschrift des QuickHelp-Fensters.|false|
+|title|nein|String|""|Der Titel/die Überschrift des QuickHelp-Fensters.|false|
+|content|nein|**[section](#markdown-header-portalconfigquickhelpconfigstreesection)**[]|[]|Der Titel/die Überschrift des QuickHelp-Fensters.|false|
 
 ```json
 {
@@ -1026,11 +1026,11 @@ Ein Abschnitt kann mit den Schlüsselwörtern "vorher", "nachher" und "ausblende
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|title|no|String|""|Der Titel/die Überschrift des Abschnitts.|false|
-|list|no|**[paragraph](#markdown-header-portalconfigquickhelpconfigstreesectionparagraph)**[]|[]|Eine Reihe von Absätzen oder Bildern des QuickHelp-Abschnitts.|false|
-|before|no|String||Ein Abschnittsschlüssel, vor dem dieser neue Abschnitt angehängt werden soll.|false|
-|after|no|String||Ein Abschnittsschlüssel, hinter dem dieser neue Abschnitt angehängt werden soll.|false|
-|hide|no|String||Ein Abschnittsschlüssel, der dazu führt, dass ein bestehender Abschnitt, der mit dem Abschnittsschlüssel angesprochen wird, ausgeblendet/entfernt wird.|false|
+|title|nein|String|""|Der Titel/die Überschrift des Abschnitts.|false|
+|list|nein|**[paragraph](#markdown-header-portalconfigquickhelpconfigstreesectionparagraph)**[]|[]|Eine Reihe von Absätzen oder Bildern des QuickHelp-Abschnitts.|false|
+|before|nein|String||Ein Abschnittsschlüssel, vor dem dieser neue Abschnitt angehängt werden soll.|false|
+|after|nein|String||Ein Abschnittsschlüssel, hinter dem dieser neue Abschnitt angehängt werden soll.|false|
+|hide|nein|String||Ein Abschnittsschlüssel, der dazu führt, dass ein bestehender Abschnitt, der mit dem Abschnittsschlüssel angesprochen wird, ausgeblendet/entfernt wird.|false|
 
 ```json
 {
@@ -1072,10 +1072,10 @@ Configure als Objekt zur Angabe externer Bilder mit imgPath als URL und imgName 
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|text|no|String|""|Der Text als Übersetzungsschlüssel oder reiner Text.|false|
-|type|no|String|"text/plain"|Der Texttyp. Wenn "text/html" angegeben wird, wird der angegebene Text als HTML-Code wiedergegeben.|false|
-|imgName|no|String|""|Der Name des anzuzeigenden Bildes.|false|
-|imgPath|no|String|""|Der Pfad zum Bild, falls nicht angegeben, wird imgPath aus config.js übernommen.|false|
+|text|nein|String|""|Der Text als Übersetzungsschlüssel oder reiner Text.|false|
+|type|nein|String|"text/plain"|Der Texttyp. Wenn "text/html" angegeben wird, wird der angegebene Text als HTML-Code wiedergegeben.|false|
+|imgName|nein|String|""|Der Name des anzuzeigenden Bildes.|false|
+|imgPath|nein|String|""|Der Pfad zum Bild, falls nicht angegeben, wird imgPath aus config.js übernommen.|false|
 
 ```json
 {
@@ -1128,9 +1128,73 @@ Hier können die Menüeinträge und deren Anordnung konfiguriert werden. Die Rei
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
+|ansichten|nein|**[ansichten](#markdown-header-portalconfigmenuansichten)**||Vorkonfigurierte Kartenansicht im 2D und 3D Modus|false|
 |info|nein|**[info](#markdown-header-portalconfigmenuinfo)**||Ordner im Menü, der **[tools](#markdown-header-portalconfigmenutools)** oder **[staticlinks](#markdown-header-portalconfigmenustaticlinks)** darstellt.|false|
 |tools|nein|**[tools](#markdown-header-portalconfigmenutools)**||Ordner im Menü, der Werkzeuge darstellt.|false|
 |tree|nein|**[tree](#markdown-header-portalconfigmenutree)**||Darstellung und Position des Themenbaums.|false|
+
+***
+
+#### Portalconfig.menu.ansichten
+
+Konfigurations-Optionen für Kartenansichten.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|name|ja|String||Name der KartenAnsichten im Menü.|false|
+|glyphicon|nein|String|"glyphicon-list"|Glyphicon der Kartenanischten im Menü.|false|
+|children|nein|**[children](#markdown-header-portalconfigmenuansichtenchildren)**|false|Konfigurationen beliebig vieler Kartenansichten.|false|
+
+***
+
+#### Portalconfig.menu.ansichten.children
+
+Konfigurations-Optionen für Ansichten.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|view|nein|**[view](#markdown-header-portalconfigmenuansichtenchildrenview)**||Konfiguration einer einzelnen Kartenansicht.|false|
+
+***
+
+#### Portalconfig.menu.ansichten.children.view
+
+Konfigurations-Optionen für eine Kartenansicht.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|name|ja|String||Name der Kartenansicht.|false|
+|type|ja|String||Typ der Kartenansicht, muss immer "viewpoint" sein.|false|
+|glyphicon|nein|String||Glyphicon der Kartenansicht im Menü.|false|
+|center|nein|Number[]||Koordinate an der die Kartenansicht zentriert wird.|false|
+|zoomLevel|nein|Number||Zoom level der Kartenansicht.|false|
+|altitude|nein|Number||Höhe der Kamera in Metern. Wird nur für Kartenansichten im 3D Modus verwendet.|false|
+|heading|nein|Number||Richtung der Kamera in Radiant. Wird nur für Kartenansichten im 3D Modus verwendet.|false|
+|tilt|nein|Number||Neigung der Kamera in Radiant. Wird nur für Kartenansichten im 3D Modus verwendet.|false|
+
+**Beispiel einer Kartenansicht für den 2D und 3D Modus**
+```
+#!json
+"ansichten": {
+    "name": "translate#common:menu.views.name",
+    "glyphicon": "glyphicon-list",
+    "children": {
+        "view": {
+            "name": "translate#common:menu.views.view01",
+            "type": "viewpoint",
+            "glyphicon": "glyphicon-screenshot",
+            "center": [
+                564028.7954571751,
+                5934555.967867207
+            ],
+            "zoomLevel": 7.456437968949651,
+            "altitude": 272.3469798217454,
+            "heading": -0.30858728378862876,
+            "tilt": 0.9321791580603296
+        }
+    }
+}
+```
 
 ***
 
@@ -2032,7 +2096,7 @@ Objekt zum Ändern des konfigurierten Default-Wertes für einen Kreis im Zeichen
 |opacity|ja|Number|1|Die voreingestellte Transparenz des Kreises in einer Range [0..1].|false|
 |colorContour|ja|Number[]|[0, 0, 0, 1]|Die voreingestellte Rand-Farbe des Kreises als RGB color array mit Alpha-Kanal.|false|
 |opacityContour|ja|Number|1|Die voreingestellte Transparenz der Rand-Farbe des Kreises in einer Range [0..1].|false|
-|tooltipStyle|no|String|{}|Die voreingestellte Style des Tooltips|false|
+|tooltipStyle|nein|String|{}|Die voreingestellte Style des Tooltips|false|
 
 **Beispiel**
 
@@ -2299,7 +2363,7 @@ Werkzeug, wodurch der Nutzer/die Nutzerin mit einem definierten Postfach Kontakt
 |locationOfCustomerService|nein|String|"de"|Land, in welchem sich der Kundensupport befindet. Wird verwendet für das Datum innerhalb der ticketId.|false|
 |maxLines|nein|Number|5|Anzahl der Zeilen (Höhe) des Textbereiches des Formulars.|false|
 |showPrivacyPolicy|nein|Boolean|false|Flag, ob eine Checkbox angezeigt werden soll, um der Datenschutzerklärung zuzustimmen.|false|
-|privacyPolicyLink|no|String|"https://www.masterportal.org/datenschutz.html"|Link zur Datenschutzerklärung. Sollte gesetzt werden, wenn `showPrivacyPolicy` true ist.|false|
+|privacyPolicyLink|nein|String|"https://www.masterportal.org/datenschutz.html"|Link zur Datenschutzerklärung. Sollte gesetzt werden, wenn `showPrivacyPolicy` true ist.|false|
 |subject|nein|String||Der Betreff, welcher für die E-Mail verwendet wird.|false|
 |withTicketNo|nein|Boolean|true|Flag, ob bei erfolgreichem Versand der Anfrage eine Ticketnummer zurückgegeben werden soll.|false|
 
@@ -3975,7 +4039,7 @@ Hier werden die Ordner definiert. Ordner können auch verschachtelt konfiguriert
 |Titel|ja|String||Titel des Ordners.|false|
 |Layer|ja|**[Layer](#markdown-header-themenconfiglayer)**/**[GroupLayer](#markdown-header-themenconfiggrouplayer)**[]||Definition der Layer.|false|
 |Ordner|nein|**[Ordner](#markdown-header-themenconfigordner)**[]||Definition der Ordner.|false|
-|isFolderSelectable|nein|Boolean|true|Legt fest, ob alle Layer eines Ordners auf einmal über einen Haken aktiviert bzw. deaktiviert werden dürfen.|false|
+|isFolderSelectable|nein|Boolean|false|Legt fest, ob alle Layer eines Ordners auf einmal über einen Haken aktiviert bzw. deaktiviert werden dürfen. Funktioniert nur, wenn treeType="custom" konfiguriert ist. Ist dieser Wert nicht gesetzt wird die globale Einstellung im `config.js` Parameter `tree.isFolderSelectable` verwendet. |false|
 |invertLayerOrder|nein|Boolean|false|Legt fest, ob bei Klick auf den Ordner die Reihenfolge, in der die Layer der Map hinzugefügt werden, umgekehrt werden soll.|false|
 
 **Beispiel Fachdaten-Ordner mit einem Layer**
@@ -4314,7 +4378,7 @@ Hier werden Tileset typische Attribute aufgelistet.
 |Name|Verpflichtend|Typ|Default|Beschreibung|
 |----|-------------|---|-------|------------|
 |hiddenFeatures|nein|String[]|[]|Liste mit IDs, die in der Ebene versteckt werden sollen|
-|**[cesium3DTilesetOptions](https://cesiumjs.org/Cesium/Build/Documentation/Cesium3DTileset.html)**[]|no|**[cesium3DTilesetOption](#markdown-header-themenconfiglayertilesetcesium3dtilesetoption)**[]||Cesium 3D Tileset Options, werden direkt an das Cesium Tileset Objekt durchgereicht. maximumScreenSpaceError ist z.B. für die Sichtweite relevant.|
+|**[cesium3DTilesetOptions](https://cesiumjs.org/Cesium/Build/Documentation/Cesium3DTileset.html)**|nein|**[cesium3DTilesetOption](#markdown-header-themenconfiglayertilesetcesium3dtilesetoption)**||Cesium 3D Tileset Options, werden direkt an das Cesium Tileset Objekt durchgereicht. maximumScreenSpaceError ist z.B. für die Sichtweite relevant.|
 
 **Beispiel**
 ```
@@ -4359,7 +4423,7 @@ Hier werden Terrain typische Attribute aufgelistet.
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|
 |----|-------------|---|-------|------------|
-|**[cesiumTerrainProviderOptions](https://cesiumjs.org/Cesium/Build/Documentation/CesiumTerrainProvider.html)**|no|**[cesiumTerrainProviderOption](#markdown-header-themenconfiglayerterraincesiumterrainprovideroption)**[]||Cesium TerrainProvider Options, werden direkt an den Cesium TerrainProvider durchgereicht. requestVertexNormals ist z.B. für das Shading auf der Oberfläche relevant.|
+|**[cesiumTerrainProviderOptions](https://cesiumjs.org/Cesium/Build/Documentation/CesiumTerrainProvider.html)**|nein|**[cesiumTerrainProviderOption](#markdown-header-themenconfiglayerterraincesiumterrainprovideroption)**[]||Cesium TerrainProvider Options, werden direkt an den Cesium TerrainProvider durchgereicht. requestVertexNormals ist z.B. für das Shading auf der Oberfläche relevant.|
 
 [cesiumTerrainProviderOptions]: https://cesiumjs.org/Cesium/Build/Documentation/CesiumTerrainProvider.html
 
@@ -4468,7 +4532,7 @@ Mit StaticImage lassen sich Bilder als Layer laden und georeferenziert auf der K
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|id|ja|String|"Eineindeutige-ID7711"|Es muss eine eineindeutige ID vergeben werden.|false|
+|id|ja|String||Es muss eine eindeutige ID vergeben werden.|false|
 |typ|ja|String|"StaticImage"|Setzt den Layertypen auf StaticImage, welcher statische Bilder als Layer darstellen kann.|false|
 |url|ja|String|"https://meinedomain.de/bild.png"|Link zu dem anzuzeigenden Bild.|false|
 |name|ja|String|"Static Image Name"|Setzt den Namen des Layers für den Layerbaum.|false|
@@ -4508,7 +4572,8 @@ Hier werden Vector typische Attribute aufgelistet. Vector Layer sind WFS, GeoJSO
 |styleGeometryType|nein|String/String[]||Geometrietypen für einen WFS-Style, falls nur bestimmte Geometrien eines Layers angezeigt werden sollen **[siehe dazu](style.json.md#markdown-header-abbildungsvorschriften)**.|false|
 |hitTolerance|nein|String||Clicktoleranz bei der ein Treffer für die GetFeatureInfo-Abfrage ausgelöst wird.|false|
 |vtStyles|nein|**[vtStyle](#markdown-header-themenconfiglayervectorvtstyle)**[]||Auswählbare externe Style-Definition (nur für Vector Tile Layer)|false|
-|useMpFonts|no|Boolean|true|Nur für *Vector Tile Layer*. Schalter um die Schriftarten/Fontstacks aus externen Style-Definitionen durch die Standard-Schriftart des Masterportals zu ersetzen, um sicherzustellen dass alle Labels dargestellt werden können. Wenn auf false gesetzt, müssen die benötigten fonts ggf. separat z.B. via '<link rel=stylesheet ...>' in index.html eingebunden werden.|false|
+|useMpFonts|nein|Boolean|true|Nur für *Vector Tile Layer*. Schalter um die Schriftarten/Fontstacks aus externen Style-Definitionen durch die Standard-Schriftart des Masterportals zu ersetzen, um sicherzustellen dass alle Labels dargestellt werden können. Wenn auf false gesetzt, müssen die benötigten fonts ggf. separat z.B. via '<link rel=stylesheet ...>' in index.html eingebunden werden.|false|
+|loadingStrategy|nein|String|"bbox"|Ladestrategie zum Laden der Features. Mögliche Werte sind "bbox" oder "all". **[siehe dazu](https://openlayers.org/en/latest/apidoc/module-ol_loadingstrategy.html)**.|false|
 
 **Beispiel**
 ```
@@ -4528,6 +4593,7 @@ Hier werden Vector typische Attribute aufgelistet. Vector Layer sind WFS, GeoJSO
     "isNeverVisibleInTree": false,
     "clusterDistance": 60,
     "extendedFilter": true,
+    "loadingStrategy": "all",
     "filterOptions": [
         {
             "fieldName": "myFirstAttributeToFilter",

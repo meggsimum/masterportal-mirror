@@ -400,6 +400,7 @@
                 "serviceFour": "Service 4"
             },
             "filterGeneral": {
+                "filterButton": "Filter",
                 "searchInMapExtent": "Search in current map extent",
                 "snippetTags": {
                     "resetAll": "Reset all"
@@ -415,9 +416,14 @@
                 },
                 "dropdown": {
                     "selectAll": "Select all",
+                    "deselectAll": "Deselect all",
                     "defaultLabel": "Choose an Option",
                     "emptyList": "List is empty",
                     "noElements": "No elements found"
+                },
+                "filterResult": {
+                    "label": "All filtered Counts",
+                    "unit": "{{amountOfFilteredItems}} Results"
                 }
             },
             "filter": {

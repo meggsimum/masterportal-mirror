@@ -2,26 +2,14 @@ import {convertColor} from "../../../../utils/convertColor.js";
 
 /**
  * Returns a list of image paths from the Legend
- * @param {String} layerId layerId to get the legend data
+ * @param {Object[]} legendInfoList an array list of legend information
+ * @param {Object} styleModel the style model
  * @returns {Object} an object with the label of the legendInfo (value of the attrName) as key and the path of the icon as value
  */
-export default function getIconListFromLegend (layerId) {
-    const layerModel = Radio.request("ModelList", "getModelByAttributes", {id: layerId}),
-        result = {};
-    let styleId,
-        styleModel;
+function getIconListFromLegend (legendInfoList, styleModel) {
+    const result = {};
 
-    if (layerModel) {
-        styleId = layerModel.get("styleId");
-        if (styleId) {
-            styleModel = Radio.request("StyleList", "returnModelById", styleId);
-        }
-    }
-    if (!styleModel || !styleModel.getLegendInfos() || !Array.isArray(styleModel.getLegendInfos())) {
-        return {};
-    }
-
-    styleModel.getLegendInfos().forEach(legendInfo => {
+    legendInfoList.forEach(legendInfo => {
         // always show icon if configured, independend of geometry type
         if (legendInfo.styleObject.get("type") === "icon") {
             result[legendInfo.label] = legendInfo.styleObject.get("imagePath") + legendInfo.styleObject.get("imageName");
@@ -40,6 +28,26 @@ export default function getIconListFromLegend (layerId) {
     });
 
     return result;
+}
+
+/**
+ * Returns style Model
+ * @param {String} layerId layerId to get the legend data
+ * @returns {Object} the style model
+ */
+function getStyleModel (layerId) {
+    const layerModel = Radio.request("ModelList", "getModelByAttributes", {id: layerId});
+    let styleId,
+        styleModel;
+
+    if (layerModel) {
+        styleId = layerModel.get("styleId");
+        if (styleId) {
+            styleModel = Radio.request("StyleList", "returnModelById", styleId);
+        }
+    }
+
+    return styleModel;
 }
 
 /**
@@ -80,10 +88,10 @@ function createPolygonSVG (style) {
 function createCircleSVG (style) {
     let svg = "";
     const circleStrokeColor = style.get("circleStrokeColor") ? convertColor(style.get("circleStrokeColor"), "rgbString") : "black",
-        circleStrokeOpacity = style.get("circleStrokeColor")[3] || 0,
-        circleStrokeWidth = style.get("circleStrokeWidth"),
+        circleStrokeOpacity = Array.isArray(style.get("circleStrokeColor")) && style.get("circleStrokeColor").length > 3 ? style.get("circleStrokeColor")[3] : 0,
+        circleStrokeWidth = style.get("circleStrokeWidth") ? style.get("circleStrokeWidth") : "auto",
         circleFillColor = style.get("circleFillColor") ? convertColor(style.get("circleFillColor"), "rgbString") : "black",
-        circleFillOpacity = style.get("circleFillColor")[3] || 0;
+        circleFillOpacity = Array.isArray(style.get("circleFillColor")) && style.get("circleFillColor").length > 3 ? style.get("circleFillColor")[3] : 0;
 
     svg += "<svg height='25' width='25'>";
     svg += "<circle cx='12.5' cy='12.5' r='10' stroke='";
@@ -131,3 +139,4 @@ function createLineSVG (style) {
     return svg;
 }
 
+export {getStyleModel, getIconListFromLegend};

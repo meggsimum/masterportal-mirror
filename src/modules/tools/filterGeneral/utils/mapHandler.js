@@ -1,5 +1,5 @@
 import isObject from "../../../../utils/isObject.js";
-import Feature from "ol/Feature";
+import LayerGroup from "ol/layer/Group";
 
 /**
  * The MapHandler has control over OL and the Map.
@@ -15,8 +15,9 @@ export default class MapHandler {
     constructor (handlers, onerror) {
         this.handlers = handlers;
 
-        this.knownLayers = {};
-        this.currentlyFilteredItems = {};
+        this.layers = {};
+        this.filteredIds = {};
+        this.isZooming = false;
 
         if (typeof this.handlers?.getLayerByLayerId !== "function") {
             if (typeof onerror === "function") {
@@ -38,181 +39,260 @@ export default class MapHandler {
                 onerror(new Error("Filter MapHandler.constructor: The given handler needs a function 'liveZoom'"));
             }
         }
-    }
-
-    /**
-     * Visualizes the features of the given filterAnswer.
-     * @param {Object} filterAnswer the object to use for handling features/items
-     * @param {Function} onerror a function(error) with error of type Error
-     * @returns {void}
-     */
-    visualize (filterAnswer, onerror) {
-        if (!isObject(filterAnswer)) {
+        if (typeof this.handlers?.addLayerByLayerId !== "function") {
             if (typeof onerror === "function") {
-                onerror(new Error("Filter MapHandler.visualize: The given filterAnswer must be an object"));
+                onerror(new Error("Filter MapHandler.constructor: The given handler needs a function 'addLayerByLayerId'"));
             }
-            return;
         }
-        const service = isObject(filterAnswer.service) ? filterAnswer.service : false,
-            filterId = typeof filterAnswer?.filterId === "number" ? filterAnswer.filterId : false,
-            page = typeof filterAnswer?.paging?.page === "number" ? filterAnswer.paging.page : false,
-            items = Array.isArray(filterAnswer.items) ? filterAnswer.items : false;
-
-        if (service === false) {
+        if (typeof this.handlers?.getLayers !== "function") {
             if (typeof onerror === "function") {
-                onerror(new Error("Filter MapHandler.visualize: A service object is required to identify layers."));
+                onerror(new Error("Filter MapHandler.constructor: The given handler needs a function 'getLayers'"));
             }
-            return;
-        }
-        else if (filterId === false) {
-            if (typeof onerror === "function") {
-                onerror(new Error("Filter MapHandler.visualize: A filterId to identify the source must exist at the given filterAnswer."));
-            }
-            return;
-        }
-        else if (page === false) {
-            if (typeof onerror === "function") {
-                onerror(new Error("Filter MapHandler.visualize: The paging must contain a page parameter to identify the state of the filterAnswer."));
-            }
-            return;
-        }
-        else if (items === false) {
-            return;
-        }
-
-        if (service?.layerId) {
-            const layer = this.getLayerOfTreeSource(filterId, service.layerId);
-
-            this.visualizeTreeSource(filterId, items, layer, page);
-        }
-        else {
-            const layer = this.getLayerOfExternalSource(filterId);
-
-            this.visualizeExternalSource(items, layer, page);
         }
     }
 
     /**
-     * Visualizes the items for a layer rooted in the tree.
-     * @param {Number} filterId the internal filter ID to identify the source of the filter answer
-     * @param {ol/Feature[]} items a list of features, new in the filterAnswer
-     * @param {ol/Layer} layer the layer to handle
-     * @param {Number} page the number of the page within the paging
+     * Initializes an internal layer for the given layerId. This layer shall be configured via config.json and is accessible in the theme tree.
+     * @param {Number} filterId the filter id for reference
+     * @param {String} layerId the layer id
+     * @param {Function} onerror a function(error) if an error occurs
      * @returns {void}
      */
-    visualizeTreeSource (filterId, items, layer, page) {
-        const ids = [];
+    initializeLayerFromTree (filterId, layerId, onerror) {
+        const layers = this.handlers.getLayers(),
+            visibleLayer = typeof layers?.getArray !== "function" ? [] : layers.getArray().filter(layer => {
+                return layer.getVisible() === true && layer.get("id") === layerId;
+            });
+        let layerModel = null;
 
-        if (page === 1 || !Object.prototype.hasOwnProperty.call(this.currentlyFilteredItems, filterId)) {
-            this.currentlyFilteredItems[filterId] = [];
+        if (Array.isArray(visibleLayer) && !visibleLayer.length) {
+            this.handlers.addLayerByLayerId(layerId);
+        }
+        layerModel = this.handlers.getLayerByLayerId(layerId);
+
+        if (layerModel?.layer instanceof LayerGroup) {
+            const layerSource = layerModel.get("layerSource"),
+                isVisible = layerModel.get("visible") || layerModel.get("isSelected"),
+                isVisibleInMap = layerModel.get("isVisibleInMap");
+
+            layerSource.forEach(layer => {
+                if (layer.id === layerId) {
+                    layerModel = layer;
+                }
+            });
+
+            layerModel.set("isVisible", isVisible);
+            layerModel.set("isVisibleInMap", isVisibleInMap);
         }
 
-        this.currentlyFilteredItems[filterId].forEach(item => {
-            if (item instanceof Feature) {
-                ids.push(item.getId());
+        if (!layerModel) {
+            onerror(new Error("mapHandler - initializeInternalLayer: Please check your filter configuration. The given layerId does not exist in your config.json. Configure an extra service object for your filter configuration or add the layer to your config.json."));
+            return;
+        }
+
+        this.layers[filterId] = layerModel;
+        this.filteredIds[filterId] = [];
+    }
+
+    /**
+     * Initializes an external layer with the given layerId.
+     * @param {Number} filterId the filter id for reference
+     * @param {String} layerId the layer id to use for the layer
+     * @returns {void}
+     */
+    initializeLayerFromExtern (filterId, layerId) {
+        const layerModel = this.handlers.createLayerIfNotExists(layerId);
+
+        this.layers[filterId] = layerModel;
+        this.filteredIds[filterId] = [];
+    }
+
+    /**
+     * Getter for the layer model of the given filter id.
+     * @param {Number} filterId the filter id
+     * @returns {ol/Layer} the layer model
+     */
+    getLayerModelByFilterId (filterId) {
+        return this.layers[filterId];
+    }
+
+    /**
+     * Returns a list of filtered ids.
+     * @param {Number} filterId the filter id
+     * @returns {String[]} a list of layer ids
+     */
+    getFilteredIdsByFilterId (filterId) {
+        return this.filteredIds[filterId];
+    }
+
+    /**
+     * Returns the number of up to this point filtered items.
+     * @param {Number} filterId the filter id
+     * @returns {Number} the amount of items/features
+     */
+    getAmountOfFilteredItemsByFilterId (filterId) {
+        const ids = this.getFilteredIdsByFilterId(filterId);
+
+        if (Array.isArray(ids)) {
+            return ids.length;
+        }
+        return 0;
+    }
+
+    /**
+     * Checks if the layer for the given filterId exists and is visible in general (may not be visible on map).
+     * @param {Number} filterId the filter id
+     * @returns {Boolean} true if the layer is ready to use
+     */
+    isLayerActivated (filterId) {
+        const layerModel = this.getLayerModelByFilterId(filterId);
+
+        if (isObject(layerModel)) {
+            return layerModel.get("isVisible") ? layerModel.get("isVisible") : false;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the layer for the given filterId is visible on the map.
+     * @param {Number} filterId the filter id
+     * @returns {Boolean} true if the layer is visible on the map
+     */
+    isLayerVisibleInMap (filterId) {
+        const layerModel = this.getLayerModelByFilterId(filterId);
+
+        if (isObject(layerModel)) {
+            return layerModel.get("isVisibleInMap");
+        }
+        return false;
+    }
+
+    /**
+     * Activates the layer based on the state of the layer recognized by filterId.
+     * @param {Number} filterId the filter id
+     * @param {Function} onActivated a function to call when the layer is activated and ready to use
+     * @returns {void}
+     */
+    activateLayer (filterId, onActivated) {
+        const layerModel = this.getLayerModelByFilterId(filterId);
+
+        if (!isObject(layerModel)) {
+            return;
+        }
+
+        if (!this.isLayerActivated(filterId)) {
+            layerModel.layer.getSource().once("featuresloadend", () => {
+                if (typeof onActivated === "function") {
+                    onActivated();
+                }
+            });
+            layerModel.set("isSelected", true);
+            layerModel.set("isVisible", true);
+        }
+        else if (!this.isLayerVisibleInMap(filterId)) {
+            layerModel.set("isSelected", true);
+            layerModel.set("isVisible", true);
+            if (typeof onActivated === "function") {
+                onActivated();
             }
-        });
+        }
+        else if (typeof onActivated === "function") {
+            onActivated();
+        }
+    }
+
+    /**
+     * Deactivates the layer of the given filterId by setting isSelected and isVisible to false.
+     * @param {Number} filterId the filter id
+     * @returns {void}
+     */
+    deactivateLayer (filterId) {
+        const layerModel = this.getLayerModelByFilterId(filterId);
+
+        if (isObject(layerModel)) {
+            layerModel.set("isSelected", false);
+            layerModel.set("isVisible", false);
+        }
+    }
+
+    /**
+     * Empties the currently filteredIds and removes all features from the map.
+     * @info do not use layer.getSource().clear() here, as this would destroy all features and thereby any map handling
+     * @param {Number} filterId the filter id
+     * @returns {void}
+     */
+    clearLayer (filterId) {
+        const layerModel = this.getLayerModelByFilterId(filterId);
+
+        this.filteredIds[filterId] = [];
+        if (isObject(layerModel) && typeof layerModel.get === "function") {
+            this.handlers.showFeaturesByIds(layerModel.get("id"), []);
+        }
+    }
+
+    /**
+     * Refreshes the layer with the up to this point filtered items.
+     * @param {Number} filterId the filter id
+     * @returns {void}
+     */
+    refreshLayer (filterId) {
+        const layerModel = this.getLayerModelByFilterId(filterId);
+
+        if (isObject(layerModel) && typeof layerModel.get === "function") {
+            this.handlers.showFeaturesByIds(layerModel.get("id"), this.filteredIds[filterId]);
+        }
+    }
+
+    /**
+     * Adds the given items to the layer of the given filterId.
+     * @info Already added items shall not be part of items. Items are only new items.
+     * @param {Number} filterId the filter id
+     * @param {ol/Feature} items the items/features to add
+     * @returns {void}
+     */
+    addItemsToLayer (filterId, items) {
+        if (!Array.isArray(this.filteredIds[filterId]) || !Array.isArray(items)) {
+            return;
+        }
+        const layerModel = this.getLayerModelByFilterId(filterId);
+
+        if (!isObject(layerModel) || typeof layerModel.get !== "function") {
+            return;
+        }
         items.forEach(item => {
-            if (item instanceof Feature) {
-                this.currentlyFilteredItems[filterId].push(item);
-                ids.push(item.getId());
+            if (isObject(item) && typeof item.getId === "function") {
+                this.filteredIds[filterId].push(item.getId());
             }
         });
 
-        this.handlers.showFeaturesByIds(layer, ids);
-    }
-
-    /**
-     * Returns the layer by given id or the recycled layer from the internal known layers.
-     * @param {Number} filterId the internal filter ID to identify the source of the filter answer
-     * @param {Number} layerId the configured layer ID of the already (!) loaded layer
-     * @returns {Object} the layer to work with
-     */
-    getLayerOfTreeSource (filterId, layerId) {
-        if (Object.prototype.hasOwnProperty.call(this.knownLayers, filterId)) {
-            return this.knownLayers[filterId];
-        }
-        this.knownLayers[filterId] = this.handlers.getLayerByLayerId(layerId);
-        return this.knownLayers[filterId];
-    }
-
-    /**
-     * Visualizes the items for an external layer.
-     * @param {ol/Feature[]} items a list of features, new in the filterAnswer
-     * @param {ol/Layer} layer the layer to handle
-     * @param {Number} page the number of the page within the paging
-     * @param {Function} onerror a function(error) with error of type Error
-     * @returns {void}
-     */
-    visualizeExternalSource (items, layer, page, onerror) {
-        if (typeof layer?.getSource !== "function") {
-            if (typeof onerror === "function") {
-                onerror(new Error("Filter MapHandler.visualizeExternalSource: The layer must be a valid ol layer."));
-            }
-            return;
-        }
-        else if (page === 1) {
-            layer.getSource().clear();
-        }
-
-        items.forEach(item => {
-            if (item instanceof Feature) {
-                layer.getSource().addFeature(item);
-            }
-        });
-    }
-
-    /**
-     * Returns the layer by given id or the recycled layer from the internal known layers.
-     * @param {Number} filterId the internal filter ID to identify the source of the filter answer
-     * @returns {Object} the layer to work with
-     */
-    getLayerOfExternalSource (filterId) {
-        if (Object.prototype.hasOwnProperty.call(this.knownLayers, filterId)) {
-            return this.knownLayers[filterId];
-        }
-        this.knownLayers[filterId] = this.handlers.createLayerIfNotExists("filterGeneral-" + filterId);
-        return this.knownLayers[filterId];
-    }
-
-    /**
-     * Showing only the features with the id by triggering the function in openlayerFunction file
-     * @param {ol/Layer} layer the layer to handle
-     * @param {String[]} ids a list of feature ids
-     * @returns {void}
-     */
-    showFeaturesByIds (layer, ids) {
-        this.handlers.showFeaturesByIds(layer, ids);
+        this.handlers.showFeaturesByIds(layerModel.get("id"), this.filteredIds[filterId]);
     }
 
     /**
      * Zoom to filtered features
+     * @param {Number} filterId the filter id for reference
      * @param {Number} minScale the minimum scale
-     * @param {String[]} filteredFeatureIds the filtered feature Ids
-     * @param {String} layerId the layer Id
      * @param {Function} onerror a function(error) with error of type Error
      * @returns {void}
      */
-    zoomToFilteredFeature (minScale, filteredFeatureIds, layerId, onerror) {
-        if (typeof minScale !== "number") {
+    zoomToFilteredFeature (filterId, minScale, onerror) {
+        if (this.isZooming) {
+            return;
+        }
+        else if (typeof minScale !== "number") {
             if (typeof onerror === "function") {
                 onerror(new Error("Filter MapHandler.zoomToFilteredFeature: The format of minScale is not right"));
             }
             return;
         }
-        else if (!filteredFeatureIds.length) {
-            if (typeof onerror === "function") {
-                onerror(new Error("Filter MapHandler.zoomToFilteredFeature: There are no filtered features"));
-            }
-            return;
-        }
-        else if (typeof layerId === "undefined") {
-            if (typeof onerror === "function") {
-                onerror(new Error("Filter MapHandler.zoomToFilteredFeature: There are no valid layer Id"));
-            }
-            return;
-        }
+        const layerModel = this.getLayerModelByFilterId(filterId),
+            filteredFeatureIds = this.getFilteredIdsByFilterId(filterId);
 
-        this.handlers.liveZoom(minScale, filteredFeatureIds, layerId);
+        if (isObject(layerModel) && Array.isArray(filteredFeatureIds) && filteredFeatureIds.length) {
+            this.isZooming = true;
+            this.handlers.liveZoom(minScale, filteredFeatureIds, layerModel.get("id"), () => {
+                this.isZooming = false;
+            });
+        }
     }
 }

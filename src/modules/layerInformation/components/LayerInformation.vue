@@ -53,8 +53,10 @@ export default {
         },
         showInformation () {
             return this.active;
+        },
+        legendURL  () {
+            return this.layerInfo.legendURL;
         }
-
     },
 
     created () {
@@ -239,6 +241,7 @@ export default {
                 <hr>
                 <ul class="nav nav-tabs">
                     <li
+                        v-if="legendURL !== 'ignore'"
                         value="layerinfo-legend"
                         :class="{active: isActiveTab('layerinfo-legend') }"
                         @click="onClick"
@@ -279,6 +282,7 @@ export default {
                 </ul>
                 <div class="tab-content">
                     <div
+                        v-if="legendURL !== 'ignore'"
                         id="layerinfo-legend"
                         :class="getTabPaneClasses('layerinfo-legend')"
                         :show="isActiveTab('layerinfo-legend')"

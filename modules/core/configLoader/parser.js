@@ -321,9 +321,10 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
      * @param {Boolean} isExpanded - if true, folder will be expanded
      * @param {String} i18nKey - key for the name to translate
      * @param {Boolean} [invertLayerOrder=false] inverts the order the layers when added to the map on folder click
+     * @param {Boolean} [isFolderSelectable=false] flag if folder is selectable or not
      * @returns {void}
      */
-    addFolder: function (name, id, parentId, level, isExpanded, i18nKey, invertLayerOrder = false) {
+    addFolder: function (name, id, parentId, level, isExpanded, i18nKey, invertLayerOrder = false, isFolderSelectable = false) {
         const folder = {
             type: "folder",
             name: i18nKey ? i18next.t(i18nKey) : name,
@@ -338,7 +339,8 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
             isExpanded: isExpanded ? isExpanded : false,
             level: level,
             quickHelp: store.getters["QuickHelp/isSet"],
-            invertLayerOrder
+            invertLayerOrder,
+            isFolderSelectable
         };
 
         this.addItem(folder);
@@ -723,7 +725,6 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
             glyphicon: "glyphicon-plus-sign",
             id: "SelectedLayer",
             parentId: "tree",
-            isLeafFolder: true,
             isInThemen: true,
             isInitiallyExpanded: true,
             isAlwaysExpanded: isAlwaysExpandedList.includes("SelectedLayer"),

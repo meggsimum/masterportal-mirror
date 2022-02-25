@@ -1,4 +1,5 @@
 import hash from "object-hash";
+import isObject from "../../../../utils/isObject";
 import {
     getFeaturesByLayerId,
     isFeatureInMapExtent
@@ -15,11 +16,10 @@ export default class FilterApi {
     /**
      * @constructor
      * @param {Number} filterId the id of the VueFilter/Layer
-     * @param {Object} service the service to use
      */
-    constructor (filterId, service) {
+    constructor (filterId) {
         this.filterId = filterId;
-        this.service = service;
+        this.service = null;
 
         if (!(FilterApi.intervalRegister instanceof IntervalRegister)) {
             FilterApi.intervalRegister = new IntervalRegister();
@@ -31,12 +31,42 @@ export default class FilterApi {
         }
     }
     /**
+     * Setter for the default service using layerId and the original service object.
+     * @param {String} layerId the layer id
+     * @param {Object} service the service object
+     * @returns {void}
+     */
+    setServiceByServiceObject (layerId, service) {
+        this.service = Object.assign({layerId}, service);
+    }
+    /**
+     * Setter for the default service by layerId and layerModel.
+     * @param {String} layerId the layer id
+     * @param {ol/Layer} layerModel the layer model
+     * @returns {void}
+     */
+    setServiceByLayerModel (layerId, layerModel) {
+        this.service = {
+            type: "ol",
+            layerId,
+            url: layerModel.get("url"),
+            typename: layerModel.get("featureType"),
+            namespace: layerModel.get("featureNS")
+        };
+    }
+    /**
      * Returns an object {attrName: Type} with all attributes and their types.
      * @param {Function} onsuccess a function({attrName: Type}[])
      * @param {Function} onerror a function(errorMsg)
      * @returns {void}
      */
     getAttrTypes (onsuccess, onerror) {
+        if (!isObject(this.service)) {
+            if (typeof onerror === "function") {
+                onerror(new Error("FitlerApi - getAttrTypes: You have to set a default service first before using this function."));
+            }
+            return;
+        }
         const connector = this.getInterfaceByService(this.service),
             cacheKey = hash.sha1(["getAttrTypes", JSON.stringify(this.service)].join("."));
 
@@ -61,6 +91,12 @@ export default class FilterApi {
      * @returns {void}
      */
     getMinMax (attrName, onsuccess, onerror, minOnly, maxOnly) {
+        if (!isObject(this.service)) {
+            if (typeof onerror === "function") {
+                onerror(new Error("FitlerApi - getMinMax: You have to set a default service first before using this function."));
+            }
+            return;
+        }
         const connector = this.getInterfaceByService(this.service),
             cacheKey = hash.sha1(["getMinMax", JSON.stringify(this.service), attrName, minOnly, maxOnly].join("."));
 
@@ -83,6 +119,12 @@ export default class FilterApi {
      * @returns {void}
      */
     getUniqueValues (attrName, onsuccess, onerror) {
+        if (!isObject(this.service)) {
+            if (typeof onerror === "function") {
+                onerror(new Error("FitlerApi - getUniqueValues: You have to set a default service first before using this function."));
+            }
+            return;
+        }
         const connector = this.getInterfaceByService(this.service),
             cacheKey = hash.sha1(["getUniqueValues", JSON.stringify(this.service), attrName].join("."));
 
@@ -106,9 +148,15 @@ export default class FilterApi {
      * @returns {void}
      */
     filter (filterQuestion, onsuccess, onerror, refreshed = false) {
+        if (!isObject(this.service)) {
+            if (typeof onerror === "function") {
+                onerror(new Error("FitlerApi - filter: You have to set a default service first before using this function."));
+            }
+            return;
+        }
         const connector = this.getInterfaceByService(this.service);
 
-        connector.filter(filterQuestion, onsuccess, onerror, refreshed);
+        connector.filter(Object.assign(filterQuestion, {service: this.service}), onsuccess, onerror, refreshed);
     }
     /**
      * Stops the current filter.
@@ -117,6 +165,12 @@ export default class FilterApi {
      * @returns {void}
      */
     stop (onsuccess, onerror) {
+        if (!isObject(this.service)) {
+            if (typeof onerror === "function") {
+                onerror(new Error("FitlerApi - stop: You have to set a default service first before using this function."));
+            }
+            return;
+        }
         const connector = this.getInterfaceByService(this.service);
 
         if (connector instanceof InterfaceOL) {
@@ -133,13 +187,16 @@ export default class FilterApi {
         }
     }
 
+
+    /* private */
+
     /**
      * Returns the interface for the given service.
      * @param {Object} service the service to recognize the interface with
      * @returns {Object} an object to use as interface
      */
     getInterfaceByService (service) {
-        if (typeof service.type === "string" && service.type.toLowerCase() === "wfs") {
+        if (isObject(service) && typeof service.type === "string" && service.type.toLowerCase() === "wfs") {
             return FilterApi.interfaces.wfs;
         }
         return FilterApi.interfaces.ol;

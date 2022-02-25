@@ -19,6 +19,7 @@ const actions = {
             commit(toolId + "/setActive", active);
             if (toolId !== "Gfi") {
                 commit("Gfi/setActive", !state[toolId].deactivateGFI);
+                dispatch("activateToolInModelList", {tool: "Gfi", active: !state[toolId].deactivateGFI});
             }
         }
     },
@@ -70,7 +71,7 @@ const actions = {
 
         if (getters.getConfiguredToolNames.includes(activeToolName)) {
             commit(activeToolName + "/setActive", true);
-            dispatch("activateToolInModelList", activeToolName);
+            dispatch("activateToolInModelList", {tool: activeToolName, active: true});
         }
     },
 
@@ -88,12 +89,17 @@ const actions = {
             activeTools.forEach(tool => commit(tool + "/setActive", false));
 
             commit(firstActiveTool + "/setActive", true);
-            dispatch("activateToolInModelList", firstActiveTool);
+            dispatch("activateToolInModelList", {tool: firstActiveTool, active: true});
             if (activeTools.includes("Gfi") && state[firstActiveTool]?.deactivateGFI !== true) {
                 commit("Gfi/setActive", true);
+                dispatch("activateToolInModelList", {tool: "Gfi", active: true});
             }
 
             dispatch("errorMessageToManyToolsActive", {activeTools, firstActiveTool});
+        }
+        else if (activeTools.includes("Gfi")) {
+            commit("Gfi/setActive", true);
+            dispatch("activateToolInModelList", {tool: "Gfi", active: true});
         }
     },
 
@@ -118,14 +124,15 @@ const actions = {
 
     /**
      * Activates a tool in the ModelList.
-     * @param {String} activeTool The tool to activate.
+     * @param {String} tool The tool to activate or deactivate.
+     * @param {Boolean} active Specifies whether the tool should be activate or deactivate.
      * @returns {void}
      */
-    activateToolInModelList ({state}, activeTool) {
-        const model = getComponent(state[activeTool]?.id);
+    activateToolInModelList ({state}, {tool, active}) {
+        const model = getComponent(state[tool]?.id);
 
         if (model) {
-            model.set("isActive", true);
+            model.set("isActive", active);
         }
     },
 

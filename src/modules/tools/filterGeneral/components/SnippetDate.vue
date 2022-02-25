@@ -2,9 +2,13 @@
 import isObject from "../../../../utils/isObject";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
 import moment from "moment";
+import SnippetInfo from "./SnippetInfo.vue";
 
 export default {
     name: "SnippetDate",
+    components: {
+        SnippetInfo
+    },
     props: {
         api: {
             type: Object,
@@ -15,6 +19,11 @@ export default {
             type: String,
             required: false,
             default: ""
+        },
+        adjustment: {
+            type: [Object, Boolean],
+            required: false,
+            default: false
         },
         disabled: {
             type: Boolean,
@@ -31,7 +40,7 @@ export default {
             required: false,
             default: "YYYY-MM-DD"
         },
-        label: {
+        title: {
             type: [String, Boolean],
             required: false,
             default: true
@@ -72,29 +81,21 @@ export default {
             disable: true,
             internalFormat: "YYYY-MM-DD",
             isInitializing: true,
+            isAdjusting: false,
             minimumValue: "",
             maximumValue: "",
-            showInfo: false,
             value: "",
-            precheckedIsValid: false
+            precheckedIsValid: false,
+            translationKey: "snippetDate"
         };
     },
     computed: {
-        labelText () {
-            if (this.label === true) {
+        titleText () {
+            if (this.title === true) {
                 return this.attrName;
             }
-            else if (typeof this.label === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.label, key => this.$t(key));
-            }
-            return "";
-        },
-        infoText () {
-            if (this.info === true) {
-                return this.$t("common:modules.tools.filterGeneral.info.snippetDate");
-            }
-            else if (typeof this.info === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.info, key => this.$t(key));
+            else if (typeof this.title === "string") {
+                return this.translateKeyWithPlausibilityCheck(this.title, key => this.$t(key));
             }
             return "";
         },
@@ -122,8 +123,23 @@ export default {
     },
     watch: {
         value () {
-            if (!this.isInitializing || this.precheckedIsValid) {
+            if (!this.isAdjusting && (!this.isInitializing || this.precheckedIsValid)) {
                 this.emitCurrentRule(moment(this.inRangeValue, this.internalFormat).format(this.format), this.isInitializing);
+            }
+        },
+        adjustment (adjusting) {
+            if (!isObject(adjusting) || this.visible === false) {
+                return;
+            }
+
+            if (adjusting?.start) {
+                this.isAdjusting = true;
+            }
+
+            if (adjusting?.finish) {
+                this.$nextTick(() => {
+                    this.isAdjusting = false;
+                });
             }
         },
         disabled (value) {
@@ -188,6 +204,12 @@ export default {
                 this.disable = false;
             });
         }
+        if (this.visible && this.precheckedIsValid) {
+            this.emitCurrentRule(this.prechecked, true);
+        }
+    },
+    mounted () {
+        this.$emit("setSnippetPrechecked", this.visible && this.precheckedIsValid);
     },
     methods: {
         translateKeyWithPlausibilityCheck,
@@ -232,11 +254,27 @@ export default {
             });
         },
         /**
-         * Toggles the info.
+         * Triggered once when changes are made at the date picker to avoid set of rules during changes.
          * @returns {void}
          */
-        toggleInfo () {
-            this.showInfo = !this.showInfo;
+        startDateChange () {
+            if (!isObject(this.adjustment)) {
+                return;
+            }
+            this.isAdjusting = true;
+        },
+        /**
+         * Triggered once when end of changes are detected at the date picker to start set of rules after changes.
+         * @returns {void}
+         */
+        endDateChange () {
+            if (!isObject(this.adjustment)) {
+                return;
+            }
+            this.isAdjusting = false;
+            this.$nextTick(() => {
+                this.emitCurrentRule(moment(this.inRangeValue, this.internalFormat).format(this.format), this.isInitializing);
+            });
         }
     }
 };
@@ -248,50 +286,43 @@ export default {
         class="snippetDateContainer"
     >
         <div
-            v-if="info !== false"
+            v-if="info"
             class="right"
         >
-            <div class="info-icon">
-                <span
-                    :class="['glyphicon glyphicon-info-sign', showInfo ? 'opened' : '']"
-                    @click="toggleInfo()"
-                    @keydown.enter="toggleInfo()"
-                >&nbsp;</span>
-            </div>
+            <SnippetInfo
+                :info="info"
+                :translation-key="translationKey"
+            />
         </div>
         <div class="input-container">
             <label
-                v-if="label !== false"
+                v-if="title !== false"
                 class="snippetDateLabel left"
                 :for="'snippetDate-' + snippetId"
-            >{{ labelText }}</label>
+            >{{ titleText }}</label>
             <input
                 :id="'snippetDate-' + snippetId"
                 v-model="inRangeValue"
-                class="snippetDate"
+                class="snippetDate form-control"
                 type="date"
                 name="dateInput"
                 :max="maximumValue"
                 :min="minimumValue"
                 :disabled="disable"
+                @focus="startDateChange()"
+                @blur="endDateChange()"
+                @keyup.enter="endDateChange()"
             >
-        </div>
-        <div
-            v-show="showInfo"
-            class="bottom"
-        >
-            <div class="info-text">
-                <span>{{ infoText }}</span>
-            </div>
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
     @import "~/css/mixins.scss";
+    .form-control {
+        height: 28px;
+    }
     .snippetDateContainer {
-        padding: 5px;
-        margin-bottom: 10px;
         height: auto;
     }
     .snippetDateContainer input {
@@ -301,28 +332,7 @@ export default {
         outline: 0;
         position: relative;
         margin-bottom: 5px;
-    }
-    .snippetDateContainer .info-icon {
-        float: right;
-        font-size: 16px;
-        color: #ddd;
-    }
-    .snippetDateContainer .info-icon .opened {
-        color: #000;
-    }
-    .snippetDateContainer .info-icon:hover {
-        cursor: pointer;
-        color: #a5a09e;
-    }
-    .snippetDateContainer .info-text {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 10px;
-        padding: 15px 10px;
-    }
-    .snippetDateContainer .bottom {
-        clear: left;
-        width: 100%;
+        height: 34px;
     }
     .snippetDateContainer .left {
         float: left;
@@ -330,11 +340,10 @@ export default {
     }
     .snippetDateContainer .right {
         position: absolute;
-        right: 10px;
+        right: 0;
     }
     label {
         text-transform: capitalize;
-        margin: 0;
     }
     input[type="date"]::-webkit-calendar-picker-indicator {
         background: transparent;

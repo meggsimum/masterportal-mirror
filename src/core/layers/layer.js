@@ -1,7 +1,7 @@
 import store from "../../app-store";
 import mapCollection from "../../core/dataStorage/mapCollection.js";
-import deepCopy from "../../utils/deepCopy.js";
 import * as bridge from "./RadioBridge.js";
+import deepCopy from "../../utils/deepCopy.js";
 
 /**
  * Creates a layer object to extend from.
@@ -57,7 +57,7 @@ export default function Layer (attrs, layer, initialize = true) {
     this.setMinMaxResolutions();
     this.checkForScale({scale: store.getters["Map/scale"]});
     this.registerInteractionMapViewListeners();
-    bridge.onMapModeChanged(this);
+    this.onMapModeChanged(this);
     bridge.onLanguageChanged(this);
     this.changeLang();
 }
@@ -106,6 +106,22 @@ Layer.prototype.registerInteractionMapViewListeners = function () {
     });
 };
 /**
+ * Sets this layers to visible, if it supports the map mode else sets the visibility to false.
+ * @returns {void}
+ */
+Layer.prototype.onMapModeChanged = function () {
+    store.watch((state, getters) => getters["Map/mapMode"], mode => {
+        if (this.get("supported").indexOf(mode) >= 0) {
+            if (this.get("isVisibleInMap")) {
+                this.get("layer").setVisible(true);
+            }
+        }
+        else {
+            this.get("layer").setVisible(false);
+        }
+    }).bind(this);
+};
+/**
  * Setter for ol/layer.setMaxResolution
  * @param {Number} value Maximum resolution of layer
  * @returns {void}
@@ -140,11 +156,10 @@ Layer.prototype.removeLayer = function () {
  * @returns {void}
  */
 Layer.prototype.toggleIsSelected = function () {
-    const newValue = this.attributes.isSelected === undefined ? true : !this.attributes.isSelected,
-        map = mapCollection.getMap(store.state.Map.mapId, store.state.Map.mapMode);
+    const newValue = this.attributes.isSelected === undefined ? true : !this.attributes.isSelected;
 
     this.setIsSelected(newValue);
-    handleSingleBaseLayer(newValue, this, map);
+    handleSingleBaseLayer(newValue, this);
 };
 
 /**
@@ -394,10 +409,9 @@ Layer.prototype.moveUp = function () {
  * Called from setSelected, handles singleBaseLayer and timelayers.
  * @param {Boolean} isSelected true, if layer is selected
  * @param {ol.Layer} layer the dedicated layer
- * @param {ol.Map} map the current map
  * @returns {void}
  */
-function handleSingleBaseLayer (isSelected, layer, map) {
+function handleSingleBaseLayer (isSelected, layer) {
     const id = layer.get("id"),
         layerGroup = bridge.getLayerModelsByAttributes({parentId: layer.get("parentId")}),
         singleBaselayer = layer.get("singleBaselayer") && layer.get("parentId") === "Baselayer",
@@ -406,6 +420,8 @@ function handleSingleBaseLayer (isSelected, layer, map) {
     if (isSelected) {
         // This only works for treeType 'custom', otherwise the parentId is not set on the layer
         if (singleBaselayer) {
+            const map2D = mapCollection.getMap("ol", "2D");
+
             layerGroup.forEach(aLayer => {
                 // folders parentId is baselayer too, but they have not a function checkForScale
                 if (aLayer.get("id") !== id && typeof aLayer.checkForScale === "function") {
@@ -414,7 +430,7 @@ function handleSingleBaseLayer (isSelected, layer, map) {
                     if (aLayer.get("layer") !== undefined) {
                         aLayer.get("layer").setVisible(false);
                     }
-                    map?.removeLayer(aLayer.get("layer"));
+                    map2D?.removeLayer(aLayer.get("layer"));
                     // This makes sure that the Oblique Layer, if present in the layerList, is not selectable if switching between baseLayers
                     aLayer.checkForScale({scale: store.getters["Map/scale"]});
                 }
@@ -532,6 +548,7 @@ Layer.prototype.showLayerInformation = function () {
         "metaIdArray": metaID,
         "layername": name,
         "url": this.get("url"),
+        "legendURL": this.get("legendURL"),
         "typ": this.get("typ"),
         "cswUrl": cswUrl,
         "showDocUrl": showDocUrl,
@@ -641,6 +658,7 @@ Layer.prototype.toJSON = function () {
     delete atts.layerSource;
     delete atts.layers;
     delete atts.collection;
+    delete atts.options;
 
     return deepCopy(atts);
 };

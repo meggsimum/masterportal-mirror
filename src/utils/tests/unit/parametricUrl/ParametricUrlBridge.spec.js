@@ -186,6 +186,8 @@ describe("src/utils/parametricUrl/ParametricUrlBridge.js", () => {
             expect(metaIdAsParam).to.be.true;
         });
         it("test url param key 'Map/zoomToExtent'", () => {
+            store.state.urlParams.projection = undefined;
+            store.state.Map.projection = undefined;
             const radioTrigger = sinon.spy(Radio, "trigger"),
                 key = "Map/zoomToExtent",
                 value = [510000, 5850000, 625000, 6000000],

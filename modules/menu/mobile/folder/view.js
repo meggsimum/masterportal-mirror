@@ -32,7 +32,7 @@ const FolderView = Backbone.View.extend({
     },
     toggleIsSelected: function () {
         this.model.toggleIsSelected();
-        Radio.trigger("ModelList", "setIsSelectedOnChildLayers", this.model);
+        Radio.trigger("ModelList", "setIsSelectedOnChildModels", this.model);
         this.model.setIsExpanded(true);
     },
     removeIfNotVisible: function () {

@@ -1,7 +1,8 @@
 import moment from "moment";
 import {transform, get} from "ol/proj.js";
 import store from "../../src/app-store";
-import api from "masterportalAPI/abstraction/api";
+import mapCollection from "../../src/core/dataStorage/mapCollection.js";
+import api from "masterportalAPI/src/maps/api";
 
 const Map3dModel = Backbone.Model.extend(/** @lends Map3dModel.prototype*/{
     defaults: {
@@ -94,10 +95,11 @@ const Map3dModel = Backbone.Model.extend(/** @lends Map3dModel.prototype*/{
             this.prepareCamera(scene);
         }
         map3d.setEnabled(true);
-        Radio.trigger("Map", "change", "3D");
+        mapCollection.addMap(map3d, map3d.id, "3D");
         store.commit("Map/setMapId", map3d.id);
         store.commit("Map/setMapMode", "3D");
         store.dispatch("MapMarker/removePointMarker");
+        Radio.trigger("Map", "change", "3D");
     },
 
     /**
@@ -339,7 +341,7 @@ const Map3dModel = Backbone.Model.extend(/** @lends Map3dModel.prototype*/{
             scene.shadowMap.darkness = 0.6;
             scene.shadowMap.size = 2048;
             scene.fxaa = params?.fxaa ? params.fxaa : scene.fxaa;
-            scene.globe.enableLighting = params?.enableLighting ? params.enableLighting : scene.globe.enableLighting;
+            scene.globe.enableLighting = params?.enableLighting ? params.enableLighting : true;
             scene.globe.depthTestAgainstTerrain = true;
             scene.highDynamicRange = false;
             scene.pickTranslucentDepth = true;

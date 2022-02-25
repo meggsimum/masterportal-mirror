@@ -5,6 +5,18 @@ import Canvas from "./../../utils/buildCanvas";
 import BuildSpec from "./../../utils/buildSpec";
 import getVisibleLayer from "./../../utils/getVisibleLayer";
 import mapCollection from "../../../../../core/dataStorage/mapCollection.js";
+import {createEmpty, extendCoordinate} from "ol/extent.js";
+import {apply as applyTransform} from "ol/transform.js";
+
+let lastPrintedExtent;
+
+/**
+ * Return last printed extent
+ * @returns {Extent} OL extent
+ */
+export function getLastPrintedExtent () {
+    return lastPrintedExtent;
+}
 
 export default {
     /**
@@ -14,11 +26,11 @@ export default {
      * @param {Object} param.commit the commit
      * @returns {void}
      */
-    retrieveCapabilites: function ({state, dispatch, commit}) {
+    retrieveCapabilites: function ({state, dispatch, rootGetters, commit}) {
         let serviceUrl;
 
         if (state.serviceId !== "") {
-            serviceUrl = Radio.request("RestReader", "getServiceById", state.serviceId).get("url");
+            serviceUrl = rootGetters.getRestServiceById(state.serviceId).url;
 
             if (!serviceUrl.includes("/print/")) {
                 serviceUrl = serviceUrl + "print/";
@@ -68,7 +80,7 @@ export default {
         dispatch("getAttributeInLayoutByName", "gfi");
         dispatch("getAttributeInLayoutByName", "legend");
         dispatch("getAttributeInLayoutByName", "scale");
-        commit("setFormatList", response.formats);
+        commit("setFormatList", state.formatList);
         commit("setCurrentScale", Radio.request("MapView", "getOptions").scale);
         dispatch("togglePostrenderListener");
         if (state.isGfiAvailable) {
@@ -296,6 +308,7 @@ export default {
                 "context": evt.context
             },
             canvasPrintOptions = {
+                "pixelToCoordinateTransform": frameState.pixelToCoordinateTransform,
                 "mapSize": frameState.size,
                 "resolution": frameState.viewState.resolution,
                 "printMapSize": state.layoutMapInfo,
@@ -387,7 +400,11 @@ export default {
             minx = center[0] - (boundWidth / 2),
             miny = center[1] - (boundHeight / 2),
             maxx = center[0] + (boundWidth / 2),
-            maxy = center[1] + (boundHeight / 2);
+            maxy = center[1] + (boundHeight / 2),
+            extent = createEmpty(),
+            transform = canvasPrintOptions.pixelToCoordinateTransform,
+            c1 = applyTransform(transform, [minx, miny]),
+            c2 = applyTransform(transform, [maxx, maxy]);
 
         // Inner polygon,must be counter-clockwise
         canvasPrintOptions.context.moveTo(minx, miny);
@@ -396,6 +413,11 @@ export default {
         canvasPrintOptions.context.lineTo(maxx, miny);
         canvasPrintOptions.context.lineTo(minx, miny);
         canvasPrintOptions.context.closePath();
+
+        // Keep the print extent available for later use
+        extendCoordinate(extent, c1);
+        extendCoordinate(extent, c2);
+        lastPrintedExtent = extent;
     },
 
     /**

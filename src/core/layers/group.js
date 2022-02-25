@@ -4,9 +4,10 @@ import Layer from "./layer";
 import WMSLayer from "./wms";
 import WFSLayer from "./wfs";
 import WMTSLayer from "./wmts";
-import GeoJSONLayer from "../../../modules/core/modelList/layer/geojson";
+import GeoJSONLayer from "./geojson";
 import SensorLayer from "../../../modules/core/modelList/layer/sensor";
 import HeatmapLayer from "../../../modules/core/modelList/layer/heatmap";
+import * as bridge from "./RadioBridge.js";
 /**
  * Creates a layer of typ GROUP.
  * @param {Object} attrs attributes of the layer
@@ -42,7 +43,8 @@ GroupedLayers.prototype.createLayer = function (attrs) {
         }),
         groupLayer = new LayerGroup({
             layers: layers,
-            visible: false
+            visible: false,
+            name: attrs.name
         });
 
     this.layer = groupLayer;
@@ -185,7 +187,8 @@ GroupedLayers.prototype.checkForScale = function (options) {
     if (!options || !options.scale) {
         return;
     }
-    const currentScale = parseFloat(options.scale, 10);
+    const currentScale = parseFloat(options.scale, 10),
+        lastValue = this.get("isOutOfRange");
     let childLayersAreOutOfRange = true,
         groupLayerIsOutOfRange = false;
 
@@ -202,6 +205,9 @@ GroupedLayers.prototype.checkForScale = function (options) {
     }
 
     this.set("isOutOfRange", groupLayerIsOutOfRange || childLayersAreOutOfRange);
+    if (lastValue !== this.get("isOutOfRange")) {
+        bridge.outOfRangeChanged(this, this.get("isOutOfRange"));
+    }
 };
 /**
  * Shows all features by setting their style.

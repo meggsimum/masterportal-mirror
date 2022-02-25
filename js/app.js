@@ -2,7 +2,7 @@ import Vue from "vue";
 import App from "../src/App.vue";
 import store from "../src/app-store";
 import loadAddons from "../src/addons";
-import RestReaderList from "../modules/restReader/collection";
+import "../modules/restReader/RadioBridge";
 import Autostarter from "../modules/core/autostarter";
 import Util from "../modules/core/util";
 import StyleList from "../modules/vectorStyle/list";
@@ -96,7 +96,7 @@ async function loadApp () {
     // import and register Vue addons according the config.js
     await loadAddons(Config.addons);
 
-    store.commit("setConfigJs", Config);
+    await store.dispatch("loadConfigJs", Config);
 
     // must be done here, else it is done too late
     readUrlParamEarly();
@@ -118,7 +118,6 @@ async function loadApp () {
     }
 
     // Pass null to create an empty Collection with options
-    new RestReaderList(null, {url: Config.restConf});
     new Preparser(null, {url: Config.portalConf});
     handleUrlParamsBeforeVueMount(window.location.search);
 

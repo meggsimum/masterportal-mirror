@@ -61,7 +61,6 @@ describe("menu/mobile/folder/view", function () {
             toJSON: function () {
                 return {
                     "isFolderSelectable": this.isFolderSelectable,
-                    "isLeafFolder": true,
                     "isSelected": false,
                     "isSecured": false,
                     "name": "testFolder",

@@ -67,8 +67,7 @@ const Config = {
             tr: "Türkçe"
         },
         fallbackLanguage: "de",
-        changeLanguageOnStartWhen: ["querystring", "localStorage", "htmlTag"],
-        loadPath: "/locales/{{lng}}/{{ns}}.json"
+        changeLanguageOnStartWhen: ["querystring", "localStorage", "htmlTag"]
     }
 };
 

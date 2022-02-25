@@ -22,7 +22,7 @@ const FolderViewTree = Backbone.View.extend(/** @lends FolderViewTree.prototype 
      * @listens FolderViewTree#isVisibleInTree
      * @fires FolderViewTree#toggleIsExpanded
      * @fires FolderViewTree#toggleIsSelected
-     * @fires ModelList#RadioTriggerModelListSetIsSelectedOnChildLayers
+     * @fires ModelList#RadioTriggerModelListSetIsSelectedOnChildModels
      */
     initialize: function () {
         // prevents the theme tree to close due to Bootstrap
@@ -99,7 +99,7 @@ const FolderViewTree = Backbone.View.extend(/** @lends FolderViewTree.prototype 
      */
     toggleKeyAction: function (event) {
         if (event.which === 32 || event.which === 13) {
-            if (this.model.get("isFolderSelectable") && this.model.get("isLeafFolder")) {
+            if (this.model.get("isFolderSelectable")) {
                 this.toggleIsSelected();
             }
             else {
@@ -151,12 +151,12 @@ const FolderViewTree = Backbone.View.extend(/** @lends FolderViewTree.prototype 
     },
     /**
      * Toggle Selected
-     * @fires ModelList#RadioTriggerModelListSetIsSelectedOnChildLayers
+     * @fires ModelList#RadioTriggerModelListSetIsSelectedOnChildModels
      * @return {void}
      */
     toggleIsSelected: function () {
         this.model.toggleIsSelected();
-        Radio.trigger("ModelList", "setIsSelectedOnChildLayers", this.model);
+        Radio.trigger("ModelList", "setIsSelectedOnChildModels", this.model);
         this.model.setIsExpanded(true);
     },
     /**

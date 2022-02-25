@@ -1,5 +1,5 @@
 
-import ElasticModel from "../../core/elasticsearch";
+import {initializeSearch} from "../../../src/api/elasticsearch";
 import store from "../../../src/app-store";
 
 const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.prototype */{
@@ -20,8 +20,7 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
         hitType: "common:modules.searchbar.type.subject",
         hitGlyphicon: "glyphicon-road",
         async: false,
-        useProxy: false,
-        elasticSearch: new ElasticModel()
+        useProxy: false
     },
     /**
      * @class ElasticSearchModel
@@ -43,7 +42,6 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
      * @property {String} hitGlyphicon = "glyphicon-road" Css class of the glyphicon to be prepended in the recommended list.
      * @property {Boolean} async = false Flag if request should be asynchronous.
      * @property {Boolean} useProxy = false Flag if request should be proxied.
-     * @property {ElasticModel} elasticSearch = new ElasticSearch() ElasticModel.
      * @fires Core#RadioRequestParametricURLGetInitString
      * @fires Searchbar#RadioTriggerSearchbarPushHits
      * @fires Searchbar#RadioTriggerSearchbarRemoveHits
@@ -66,10 +64,10 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
      * @param {String} searchString The search string.
      * @returns {void}
      */
-    search: function (searchString) {
+    search: async function (searchString) {
         const searchStringAttribute = this.get("searchStringAttribute"),
             payload = this.appendSearchStringToPayload(this.get("payload"), searchStringAttribute, searchString),
-            xhrConfig = {
+            requestConfig = {
                 serviceId: this.get("serviceId"),
                 /**
                 * @deprecated in the next major-release!
@@ -77,14 +75,13 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
                 */
                 useProxy: this.get("useProxy"),
                 type: this.get("type"),
-                async: this.get("async"),
                 payload: payload,
                 responseEntryPath: this.get("responseEntryPath")
             };
         let result;
 
         if (searchString.length >= this.get("minChars")) {
-            result = this.get("elasticSearch").search(xhrConfig);
+            result = await initializeSearch(requestConfig);
             this.createRecommendedList(result.hits);
         }
     },
@@ -102,7 +99,7 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
             if (typeof payload[key] === "object") {
                 payload[key] = this.appendSearchStringToPayload(payload[key], searchStringAttribute, searchString);
             }
-            if (key === searchStringAttribute) {
+            else if (key === searchStringAttribute) {
                 payload[searchStringAttribute] = searchString;
             }
         });

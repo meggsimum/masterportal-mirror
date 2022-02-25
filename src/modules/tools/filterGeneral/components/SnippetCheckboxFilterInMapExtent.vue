@@ -1,16 +1,26 @@
 <script>
+import SnippetInfo from "./SnippetInfo.vue";
+
 export default {
     name: "SnippetCheckboxFilterInMapExtent",
+    components: {
+        SnippetInfo
+    },
     props: {
         filterId: {
             type: Number,
             required: true
+        },
+        info: {
+            type: [String, Boolean],
+            required: false,
+            default: true
         }
     },
     data () {
         return {
             checked: false,
-            showInfo: false
+            translationKey: "snippetCheckbox"
         };
     },
     watch: {
@@ -33,13 +43,6 @@ export default {
          */
         emitCurrentCommand (value) {
             this.$emit("commandChanged", value);
-        },
-        /**
-         * Toggles the info.
-         * @returns {void}
-         */
-        toggleInfo () {
-            this.showInfo = !this.showInfo;
         }
     }
 };
@@ -63,22 +66,14 @@ export default {
                 {{ $t('modules.tools.filterGeneral.searchInMapExtent') }}
             </label>
         </div>
-        <div class="right">
-            <div class="info-icon">
-                <span
-                    class="glyphicon glyphicon-info-sign"
-                    @click="toggleInfo()"
-                    @keydown.enter="toggleInfo()"
-                />
-            </div>
-        </div>
         <div
-            v-show="showInfo"
-            class="bottom"
+            v-if="info"
+            class="right"
         >
-            <div class="info-text">
-                <span>{{ $t("modules.tools.filterGeneral.checkBoxInfo") }}</span>
-            </div>
+            <SnippetInfo
+                :info="info"
+                :translation-key="translationKey"
+            />
         </div>
     </div>
 </template>
@@ -90,33 +85,11 @@ export default {
         height: auto;
         position: relative;
     }
-    .snippetCheckboxContainer .info-icon {
-        float: right;
-        font-size: 16px;
-        color: #ddd;
-    }
-    .snippetCheckboxContainer .info-icon .opened {
-        color: #000;
-    }
-    .snippetCheckboxContainer .info-icon:hover {
-        cursor: pointer;
-        color: #a5a09e;
-    }
-    .snippetCheckboxContainer .info-text {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 10px;
-        padding: 15px 10px;
-    }
-    .glyphicon-info-sign:before {
-        content: "\E086";
-    }
-    .snippetCheckboxContainer .bottom {
-        clear: left;
-        width: 100%;
-    }
     .snippetCheckboxContainer .left {
-        float: left;
+        input[type=radio], input[type=checkbox] {
+            margin: 0 5px 0 0;
+        }
+        /*float: left;*/
         input {
             float: left;
             width: 15px;
@@ -124,13 +97,12 @@ export default {
         }
         label {
             float: left;
-            width: calc(100% - 20px);
-            margin-bottom: 0;
+            /*margin-bottom: 0;*/
             cursor: pointer;
         }
     }
     .snippetCheckboxContainer .right {
         position: absolute;
-        right: -10px;
+        right: 0px;
     }
 </style>

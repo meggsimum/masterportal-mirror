@@ -10,16 +10,54 @@
 ## Unreleased - in development
 ### Added
 - The gazetteer search function now supports changing the namespace by configuration.
+- Issue #690: Documentation for the menu item `ansichten` (map view points) has been added.
+- It is now possible to configure a loading strategy for a wfs layer (default is bbox).
 
 ### Changed
+-  Default for isFolderSelectable is true. Overwriteable in config.js (globally) oder config.json(folder specific). Applies only for treeType="custom". In treeType="default" the top folders als not selectable and the child folders are selectable.
+-  Print uses formatList from statePrint, instead of all formats from mapfish Server.
+-  The following NPM packages are updated:
+    - mocha: 9.1.4 to 9.2.0
+    - mochapack: 2.1.2 to 2.1.4
+    - masterportalAPI: v1.9.0
+- The version of node was updated, must be >= 16.13.2 < 17.
+  The version of npm  was also updated, must be >= 8.1.2 < 9. (The node and npm versions are still mandatory via .npmrc.).
+- Migrated the module 3D TerrainLayer from Backbone to Vue. The TerrainLayer uses the masterportalAPI's terrain layer on creation.
+- Outsourced drawTypeOptions from constantsDraw.js into its own file
+- The vectorTile Layer is now refactored to src/core.
+- The 3D terrain layer is refactored. It is no longer a Backbone-model.The terrain layer uses the masterportalAPI's terrain layer on creation.
+- The 3D tileset layer is refactored. It is no longer a Backbone-model.The tileset layer uses the masterportalAPI's tileset layer on creation.
+- Path updated in map and map3d because abstraction in masterportalAPI changed to maps and moved into src
+- Checking the allowed version for wfs layers has been moved to the masterportalAPI.
+- Migrated the parsing of `rest-services.json` from Backbone to Vue. Backbone components using RestReader are connected using RadioBridge.
+- Routing tool: german translation of recommended route was corrected.
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- Issue #694: Folder with subfolders are also selectable. (Internal flag "isLeafFolder" removed)
+- Issue #695: Optimised order in if clause. First use "show_doc_url" in layers metadata, then check if service based on the config.js's metaDataCatalogueId exists. otherwise throw console.warn
+- Issue #666: The elastic search query string replacement function will now only take effect
+  when the configured key did not contain an object.
+- Issue #668: `layerInformation` shows legend information only if legendURL is not ignored.
+- Config parameters that are an array completely overwrite the default values of the associated array in the store.
+- Issue #666: Elastic Search requests utilizing "POST" methods were fixed.
+- The GFI is now always shown as selected in the menu when it is enabled.
+- Issue #689: `layerSlider` in Handle mode, the layer is now also displayed at the end of the bar.
+- A few translation errors were adjusted in config.json.md and config.json.en.md.
+- Tool Routing: Exported routes now inherit the style from route view.
+- Folder expand/collapse works in background maps, if treetype is 'custom'.
+- Issue #637, Issue #656: If background maps are configured in folder structures, then when such a background map is activated, no more subject data are overlaid.
+- Tool print: printing of the measurement result is fixed.
+- Newsfeed:
+    - Alert now also works with portal calls with index.html and url parameter.
+    - News is now displayed in an iframe. If no third party cookies are allowed by the browser, no confirm is possible, because it is not allowed to store in localstorage.
+    - Added the possibility to scroll in the alert.
 
 ---
+
 ## v2.18.0 - 2022-02-03
 ### Added
 - Package vue-multiselect: 2.1.6 is installed.
@@ -28,9 +66,12 @@
     - In addition, a minimum and maximum zoom level can be configured.
     - The `zDirection` can be used to specify, if the resolutions of the service and the portal are different, in which direction the resolution should be used.
 - Added WFS functions (GetFeature and DescribeFetureType) to the api folder to query the WFS-Requests in one place.
+- The VectorBaseLayer is refactored. It is no longer a Backbone-model. The VectorBaseLayer uses the masterportalAPI's vectorBase layer on creation.
+- The elastic search is now refactored.
 
 ### Changed
 - It is now possible to display layers at scales smaller than 1:1 000 000.
+- Migrated the layer GeoJSON from Backbone.js to Vue.js environment.
 - The following NPM packages are updated:
     - @babel/core: 7.16.0 to 7.16.12
     - @babel/eslint-parser: 7.16.0 to 7.16.5
@@ -72,10 +113,11 @@
   The version of npm  was also updated, must be >= 6.14.15 < 7. The file .npmrc was added to set "engine-strict=true", as a result, the npm version and the node version are mandatory. (It is planed that node will be updated to LTS in version 16).
 - Migrated the module mapView from Backbone to Vue.
 - Migrated the module vectorBaseLayer from Backbone to Vue. The VectorBaseLayer uses the masterportalAPI's vectorBase layer on creation.
-- Issue 655: A parameter "zoomLevel" was added to the WfsSearch tool. This feature was not implemented for WfsSearch, but available in the previously used tool parcelSearch. The field has been added to WfsSearch to work in the same fashion. For this, the ListItem.vue was changed to allow configuration of the zoom level via prop. It defaults to the previously fixed value.
+- Issue #655: A parameter "zoomLevel" was added to the WfsSearch tool. This feature was not implemented for WfsSearch, but available in the previously used tool parcelSearch. The field has been added to WfsSearch to work in the same fashion. For this, the ListItem.vue was changed to allow configuration of the zoom level via prop. It defaults to the previously fixed value.
+- Issue #486: WMS GFI can now show responses without tbody.
 
 ### Deprecated
--
+
 ### Removed
 - The following NPM packages are removed:
     - mocha-loader

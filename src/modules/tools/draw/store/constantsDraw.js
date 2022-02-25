@@ -1,6 +1,7 @@
 import actions from "./actionsDraw";
 import getters from "./gettersDraw";
 import mutations from "./mutationsDraw";
+import drawTypeOptions from "./drawTypeOptions";
 
 const colorOptions = [
         {color: "blue", value: [55, 126, 184]},
@@ -16,15 +17,6 @@ const colorOptions = [
         colorOptions[1],
         colorOptions[0],
         ...colorOptions.slice(2)
-    ],
-    drawTypeOptions = [
-        {geometry: "Point", id: "drawSymbol"},
-        {geometry: "LineString", id: "drawLine", altGeometry: ["MultiLineString"]},
-        {geometry: "LineString", id: "drawCurve"},
-        {geometry: "Polygon", id: "drawArea"},
-        {geometry: "Circle", id: "drawCircle"},
-        {geometry: "Circle", id: "drawDoubleCircle"},
-        {geometry: "Point", id: "writeText"}
     ],
     fontOptions = [
         {caption: "Arial", value: "Arial"},

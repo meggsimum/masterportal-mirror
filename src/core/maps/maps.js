@@ -1,4 +1,4 @@
-import api from "masterportalAPI/abstraction/api";
+import api from "masterportalAPI/src/maps/api";
 import {getLayerList} from "masterportalAPI/src/rawLayerList";
 
 import "./2DMap";

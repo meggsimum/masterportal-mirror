@@ -1,6 +1,7 @@
-import VectorTileModel from "@modules/core/modelList/layer/vectorTile.js";
+import VectorTile from "../../vectorTile.js";
 import {expect} from "chai";
 import sinon from "sinon";
+import axios from "axios";
 
 import * as stylefunction from "ol-mapbox-style/dist/stylefunction";
 
@@ -11,14 +12,37 @@ const vtStyles = [
     vtStylesDefaultL2 = [
         {name: "Layer One", id: "l1"},
         {name: "Layer Two", id: "l2", defaultStyle: true}
-    ];
+    ],
+    attrs = {
+        epsg: "EPSG:3857",
+        extent: [902186.6748764697, 7054472.604709217, 1161598.3542590786, 7175683.411718197],
+        format: "image/png",
+        gfiAttributes: "showAll",
+        gfiTheme: "default",
+        id: "911",
+        level: 0,
+        name: "InsideJob",
+        origin: [-20037508.342787, 20037508.342787],
+        resolutions: [78271.51696401172, 305.7481131406708, 152.8740565703354, 76.4370282851677, 2.3886571339114906],
+        styleId: "999962",
+        tileSize: 512,
+        transparency: 0,
+        typ: "VectorTile",
+        type: "layer",
+        url: "https://doesthisurlexist.de/vt/tiles/esri/Test_VT_3857/p12/tile/{z}/{y}/{x}.pbf",
+        useConfigName: true,
+        vtStyles: [
+            {name: "Layer One", id: "l1"},
+            {name: "Layer Two", id: "l2"}
+        ]
+    };
 
 describe("core/modelList/layer/vectorTile", function () {
     afterEach(sinon.restore);
 
     describe("isStyleValid", function () {
         it("returns true only if required fields all exist", function () {
-            const {isStyleValid} = VectorTileModel.prototype;
+            const {isStyleValid} = VectorTile.prototype;
 
             expect(isStyleValid(undefined)).to.be.false;
             expect(isStyleValid({})).to.be.false;
@@ -30,7 +54,7 @@ describe("core/modelList/layer/vectorTile", function () {
     });
 
     describe("setStyleById", function () {
-        /** @returns {object} mock context for setStyleById */
+    /** @returns {object} mock context for setStyleById */
         function makeContext () {
             return {
                 get: key => ({vtStyles})[key],
@@ -39,7 +63,7 @@ describe("core/modelList/layer/vectorTile", function () {
         }
 
         it("finds a style definition by id and uses setStyleByDefinition with it", function () {
-            const {setStyleById} = VectorTileModel.prototype,
+            const {setStyleById} = VectorTile.prototype,
                 context = makeContext(),
                 returnValue = setStyleById.call(context, "l2");
 
@@ -49,14 +73,14 @@ describe("core/modelList/layer/vectorTile", function () {
         });
 
         it("returns rejecting Promise if key not found", function (done) {
-            const {setStyleById} = VectorTileModel.prototype,
+            const {setStyleById} = VectorTile.prototype,
                 context = makeContext(),
                 returnValue = setStyleById.call(context, "l3");
             let caught = false;
 
             expect(context.setStyleByDefinition.notCalled).to.be.true;
             returnValue
-                // expect rejection
+            // expect rejection
                 .catch(() => {
                     caught = true;
                 })
@@ -64,14 +88,14 @@ describe("core/modelList/layer/vectorTile", function () {
                     expect(caught).to.be.true;
                     done();
                 })
-                // forward if falsely not rejected
+            // forward if falsely not rejected
                 .catch(err => done(err));
         });
     });
 
     describe("setStyleByDefinition", function () {
-        /* in case there ever exists a global fetch during testing,
-         * it is swapped here - just in case ... */
+    /* in case there ever exists a global fetch during testing,
+     * it is swapped here - just in case ... */
         let fetch = null;
 
         beforeEach(function () {
@@ -94,12 +118,12 @@ describe("core/modelList/layer/vectorTile", function () {
             };
 
         /**
-         * @param {function} done mocha callback done
-         * @returns {object} mock context for setStyleById
-         */
+     * @param {function} done mocha callback done
+     * @returns {object} mock context for setStyleById
+     */
         function makeContext (done) {
             return {
-                isStyleValid: VectorTileModel.prototype.isStyleValid,
+                isStyleValid: VectorTile.prototype.isStyleValid,
                 get: key => ({layer: Symbol.for("layer")})[key],
                 set: sinon.spy((key, value) => {
                     expect(stylefunction.default.calledOnce).to.be.true;
@@ -121,7 +145,7 @@ describe("core/modelList/layer/vectorTile", function () {
                 json: () => new Promise(ir => ir(validStyle))
             })));
 
-            const {setStyleByDefinition} = VectorTileModel.prototype,
+            const {setStyleByDefinition} = VectorTile.prototype,
                 context = makeContext(done);
 
             setStyleByDefinition.call(context, {id: "l0", url: "example.com/root.json"})
@@ -134,7 +158,7 @@ describe("core/modelList/layer/vectorTile", function () {
                 json: () => new Promise(ir => ir(invalidStyle))
             })));
 
-            const {setStyleByDefinition} = VectorTileModel.prototype,
+            const {setStyleByDefinition} = VectorTile.prototype,
                 context = makeContext(done);
 
             setStyleByDefinition
@@ -144,16 +168,16 @@ describe("core/modelList/layer/vectorTile", function () {
     });
 
     describe("setConfiguredLayerStyle", function () {
-        /**
-         * @param {object} params parameter object
-         * @param {?object} params.styleId style id from config.json
-         * @param {?string} params.givenVtStyles style set from services.json to use
-         * @param {function} params.done to be called finally
-         * @returns {object} mock context for setStyleById
-         */
+    /**
+     * @param {object} params parameter object
+     * @param {?object} params.styleId style id from config.json
+     * @param {?string} params.givenVtStyles style set from services.json to use
+     * @param {function} params.done to be called finally
+     * @returns {object} mock context for setStyleById
+     */
         function makeContext ({styleId, givenVtStyles, done}) {
             return {
-                isStyleValid: VectorTileModel.prototype.isStyleValid,
+                isStyleValid: VectorTile.prototype.isStyleValid,
                 get: key => ({
                     styleId,
                     isSelected: Symbol.for("visibility"),
@@ -162,10 +186,12 @@ describe("core/modelList/layer/vectorTile", function () {
                 set: sinon.spy(),
                 setStyleById: sinon.spy(() => new Promise(r => r())),
                 setStyleByDefinition: sinon.spy(() => new Promise(r => r())),
-                setVisible: sinon.spy(v => {
-                    expect(v).to.equal(Symbol.for("visibility"));
-                    done();
-                })
+                layer: {
+                    setVisible: sinon.spy(v => {
+                        expect(v).to.equal(Symbol.for("visibility"));
+                        done();
+                    })
+                }
             };
         }
 
@@ -173,7 +199,7 @@ describe("core/modelList/layer/vectorTile", function () {
             const context = makeContext({styleId: "lConfigJson", givenVtStyles: vtStylesDefaultL2, done}),
                 {set} = context;
 
-            VectorTileModel.prototype.setConfiguredLayerStyle.call(context);
+            VectorTile.prototype.setConfiguredLayerStyle.call(context);
 
             expect(set.calledOnce).to.be.true;
             expect(set.calledWith("selectedStyleID", "lConfigJson")).to.be.true;
@@ -183,7 +209,7 @@ describe("core/modelList/layer/vectorTile", function () {
             const context = makeContext({givenVtStyles: vtStylesDefaultL2, done}),
                 {set, setStyleByDefinition} = context;
 
-            VectorTileModel.prototype.setConfiguredLayerStyle.call(context);
+            VectorTile.prototype.setConfiguredLayerStyle.call(context);
 
             expect(set.calledOnce).to.be.true;
             expect(set.calledWith("selectedStyleID", "l2")).to.be.true;
@@ -195,7 +221,7 @@ describe("core/modelList/layer/vectorTile", function () {
             const context = makeContext({givenVtStyles: vtStyles, done}),
                 {set, setStyleByDefinition} = context;
 
-            VectorTileModel.prototype.setConfiguredLayerStyle.call(context);
+            VectorTile.prototype.setConfiguredLayerStyle.call(context);
 
             expect(set.calledOnce).to.be.true;
             expect(set.calledWith("selectedStyleID", "l1")).to.be.true;
@@ -209,7 +235,7 @@ describe("core/modelList/layer/vectorTile", function () {
 
             sinon.stub(console, "warn");
 
-            VectorTileModel.prototype.setConfiguredLayerStyle.call(context);
+            VectorTile.prototype.setConfiguredLayerStyle.call(context);
 
             expect(set.notCalled).to.be.true;
             expect(setStyleById.notCalled).to.be.true;
@@ -224,9 +250,9 @@ describe("core/modelList/layer/vectorTile", function () {
             const italicFont1 = "Font italic",
                 italicFont2 = "Font Italic",
                 italicFont3 = "Fontitalic",
-                returnedItalicFont1 = VectorTileModel.prototype.addMpFonts(italicFont1),
-                returnedItalicFont2 = VectorTileModel.prototype.addMpFonts(italicFont2),
-                returnedItalicFont3 = VectorTileModel.prototype.addMpFonts(italicFont3);
+                returnedItalicFont1 = VectorTile.prototype.addMpFonts(italicFont1),
+                returnedItalicFont2 = VectorTile.prototype.addMpFonts(italicFont2),
+                returnedItalicFont3 = VectorTile.prototype.addMpFonts(italicFont3);
 
             expect(returnedItalicFont1).to.equal("MasterPortalFont Italic");
             expect(returnedItalicFont2).to.equal("MasterPortalFont Italic");
@@ -237,9 +263,9 @@ describe("core/modelList/layer/vectorTile", function () {
             const boldFont1 = "Font bold",
                 boldFont2 = "Font Bold",
                 boldFont3 = "Fontbold",
-                returnedBoldFont1 = VectorTileModel.prototype.addMpFonts(boldFont1),
-                returnedBoldFont2 = VectorTileModel.prototype.addMpFonts(boldFont2),
-                returnedBoldFont3 = VectorTileModel.prototype.addMpFonts(boldFont3);
+                returnedBoldFont1 = VectorTile.prototype.addMpFonts(boldFont1),
+                returnedBoldFont2 = VectorTile.prototype.addMpFonts(boldFont2),
+                returnedBoldFont3 = VectorTile.prototype.addMpFonts(boldFont3);
 
             expect(returnedBoldFont1).to.equal("MasterPortalFont Bold");
             expect(returnedBoldFont2).to.equal("MasterPortalFont Bold");
@@ -250,13 +276,106 @@ describe("core/modelList/layer/vectorTile", function () {
             const Font1 = "Font",
                 Font2 = "Font Regular",
                 Font3 = "Font Extra",
-                returnedFont1 = VectorTileModel.prototype.addMpFonts(Font1),
-                returnedFont2 = VectorTileModel.prototype.addMpFonts(Font2),
-                returnedFont3 = VectorTileModel.prototype.addMpFonts(Font3);
+                returnedFont1 = VectorTile.prototype.addMpFonts(Font1),
+                returnedFont2 = VectorTile.prototype.addMpFonts(Font2),
+                returnedFont3 = VectorTile.prototype.addMpFonts(Font3);
 
             expect(returnedFont1).to.equal("MasterPortalFont");
             expect(returnedFont2).to.equal("MasterPortalFont");
             expect(returnedFont3).to.equal("MasterPortalFont");
+        });
+    });
+
+    describe("createLayerSource", function () {
+
+        /** @returns {object} mock context for setStyleById */
+        function makeContext () {
+            return {
+                get: key => ({
+                    useProxy: false,
+                    url: "www.unicornsarentreal.com/vt/tiles/esri/Test_VT_3857/p12/tile/{z}/{y}/{x}.pbf",
+                    resolutions: [78271.51696401172, 38.21851414258385, 19.109257071291925, 9.554628535645962, 4.777314267822981, 2.3886571339114906],
+                    epsg: "EPSG:3857",
+                    tileSize: 512,
+                    minZoom: -100000,
+                    maxZoom: 1000000
+                })[key],
+                createTileGrid: sinon.spy(VectorTile.prototype, "createTileGrid")
+            };
+        }
+
+        it("Creates vector tile layer source", function () {
+            const context = makeContext();
+
+            VectorTile.prototype.createLayerSource.call(context, attrs);
+
+            expect(context.createTileGrid.calledWith("EPSG:3857", attrs)).to.be.true;
+        });
+    });
+
+    describe("createTileGrid", function () {
+
+        /** @returns {object} mock context for setStyleById */
+        function makeContext () {
+            return {
+                get: key => ({
+                    resolutions: [78271.51696401172, 38.21851414258385, 19.109257071291925, 9.554628535645962, 4.777314267822981, 2.3886571339114906],
+                    tileSize: 512,
+                    minZoom: -100000,
+                    origin: [-20037508.342787, 20037508.342787],
+                    extent: [902186.6748764697, 7054472.604709217, 1161598.3542590786, 7175683.411718197]
+                })[key]
+            };
+        }
+
+        it("Creates a tilegrid", function () {
+            const context = makeContext(),
+                returnedTileGrid = VectorTile.prototype.createTileGrid.call(context, "EPSG:3857", attrs);
+
+            expect(returnedTileGrid).to.be.not.empty;
+        });
+    });
+
+    describe("fetchSpriteData", function () {
+        /** @returns {object} mock context for setStyleById */
+        function makeContext () {
+            return {
+                get: key => ({
+                    useProxy: false
+                })[key]
+            };
+        }
+        it("Creates a VectorTileLayer", async function () {
+
+            const url = "https://testemich.de/vt/tiles/esri/Test_VT_3857/p12/resources/sprites/sprite.json",
+                context = makeContext(),
+                resp = {
+                    config: {transitional: {}, transformRequest: Array(1), transformResponse: Array(1), timeout: 0},
+                    data: {},
+                    headers: {},
+                    request: {onreadystatechange: null, readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload},
+                    status: 200,
+                    statusText: "OK"
+                },
+                axiosMock = sinon.stub(axios, "get").resolves(Promise.resolve(resp));
+
+            await VectorTile.prototype.fetchSpriteData.call(context, url);
+            expect(axiosMock.calledOnce).to.be.true;
+        });
+    });
+
+    describe("createLegendURL", function () {
+        /** @returns {object} mock context for setStyleById */
+        function makeContext () {
+            return {
+                setLegendURL: sinon.spy(() => Symbol.for("Promise"))
+            };
+        }
+        it("sets the legend URL", function () {
+            const context = makeContext();
+
+            VectorTile.prototype.createLegendURL.call(context);
+            expect(context.setLegendURL.calledOnce).to.be.true;
         });
     });
 });

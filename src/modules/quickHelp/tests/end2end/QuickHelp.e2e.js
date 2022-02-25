@@ -40,7 +40,7 @@ async function QuickHelpTests ({builder, url, resolution, capability}) {
                 }
             });
 
-            it("clicking questionmark sign near searchbar opens quick help and click the x will close it", async () => {
+            it.skip("clicking questionmark sign near searchbar opens quick help and click the x will close it", async () => {
                 navBarIcon = await driver.findElement(By.css("div#searchbar span.glyphicon-question-sign"));
                 await navBarIcon.click();
 

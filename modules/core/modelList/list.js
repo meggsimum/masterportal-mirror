@@ -4,13 +4,13 @@ import GroupedLayers from "../../../src/core/layers/group";
 import WMSTimeLayer from "../../../src/core/layers/wmsTime";
 import WMTSLayer from "../../../src/core/layers/wmts";
 import StaticImageLayer from "./layer/staticImage";
-import GeoJSONLayer from "./layer/geojson";
+import GeoJSONLayer from "../../../src/core/layers/geojson";
 import SensorLayer from "./layer/sensor";
 import HeatmapLayer from "./layer/heatmap";
-import TerrainLayer from "./layer/terrain";
+import TerrainLayer from "../../../src/core/layers/terrain";
 import EntitiesLayer from "./layer/entities";
-import TileSetLayer from "./layer/tileset";
-import VectorTileLayer from "./layer/vectorTile";
+import VectorTileLayer from "../../../src/core/layers/vectorTile";
+import TileSetLayer from "../../../src/core/layers/tileset";
 import VectorBaseLayer from "../../../src/core/layers/vectorBase";
 import ObliqueLayer from "./layer/oblique";
 import Folder from "./folder/model";
@@ -57,7 +57,7 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
      * @listens ModelList#RadioTriggerModelListRemoveModelsById
      * @listens ModelList#RadioTriggerModelListAddInitiallyNeededModels
      * @listens ModelList#RadioTriggerModelListAddModelsByAttributes
-     * @listens ModelList#RadioTriggerModelListSetIsSelectedOnChildLayers
+     * @listens ModelList#RadioTriggerModelListSetIsSelectedOnChildModels
      * @listens ModelList#RadioTriggerModelListSetIsSelectedOnParent
      * @listens ModelList#RadioTriggerModelListShowModelInTree
      * @listens ModelList#RadioTriggerModelListCloseAllExpandedFolder
@@ -106,7 +106,7 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
             "addInitiallyNeededModels": this.addInitiallyNeededModels,
             "addModelsByAttributes": this.addModelsByAttributes,
             "addModel": this.addModel,
-            "setIsSelectedOnChildLayers": this.setIsSelectedOnChildLayers,
+            "setIsSelectedOnChildModels": this.setIsSelectedOnChildModels,
             "setIsSelectedOnParent": this.setIsSelectedOnParent,
             "showModelInTree": this.showModelInTree,
             "closeAllExpandedFolder": this.closeAllExpandedFolder,
@@ -386,12 +386,12 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
         });
     },
     /**
-     * All layer models of a leaf folder (folder with only layers, and no folders)
+     * All models of a folder
      * get selected or deselected based on the parends attribute isSelected
      * @param {Folder} model - folderModel
      * @return {void}
      */
-    setIsSelectedOnChildLayers: function (model) {
+    setIsSelectedOnChildModels: function (model) {
         const folder = Radio.request("Parser", "getItemsByAttributes", {id: model.get("id")});
         let descendantModels = this.add(Radio.request("Parser", "getItemsByAttributes", {parentId: model.get("id")}));
 
@@ -410,7 +410,13 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
 
         // Setting each layer as selected will trigger rerender of OL canvas and displayed selected layers.
         descendantModels.forEach(childModel => {
+            const type = childModel.get("type");
+
             childModel.setIsSelected(model.get("isSelected"));
+            // if child is of type "folder", call setIsSelectedOnChildModels recursively with child
+            if (type === "folder") {
+                this.setIsSelectedOnChildModels(childModel);
+            }
         });
     },
 

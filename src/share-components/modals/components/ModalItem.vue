@@ -183,6 +183,11 @@ export default {
         position:relative;
         padding: 5px;
 
+        #modal-1-content-container {
+            max-height: 80vh;
+            overflow: auto;
+        }
+
         .glyphicon.glyphicon-remove {
             position:absolute;
             right:2px;

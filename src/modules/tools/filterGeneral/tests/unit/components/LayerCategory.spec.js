@@ -36,6 +36,7 @@ describe("src/modules/tools/filterGeneral/components/LayerCategory.vue", () => {
                 categoriesOnly: [
                     {
                         category: "TEST",
+                        shortDescription: "foo bar",
                         layers: [
                             {
                                 "layerId": "8713",
@@ -71,6 +72,12 @@ describe("src/modules/tools/filterGeneral/components/LayerCategory.vue", () => {
 
     it("should render filters", () => {
         expect(wrapper.findAll(".panel-default").exists()).to.be.true;
+    });
+
+    it("should render description", () => {
+        const description = wrapper.findAll(".layerInfoText");
+
+        expect(description.exists()).to.be.true;
     });
 
     describe("updateSelectedLayers", () => {

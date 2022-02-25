@@ -91,14 +91,9 @@ const MobileMenu = Backbone.View.extend({
     },
 
     descentInTree: function (model) {
-        const lightModels = Radio.request("Parser", "getItemsByAttributes", {parentId: model.get("id")});
-        let models = [];
+        const lightModels = Radio.request("Parser", "getItemsByAttributes", {parentId: model.get("id")}),
+            models = this.collection.add(lightModels);
 
-        models = this.collection.add(lightModels);
-
-        if (model.get("isLeafFolder")) {
-            models.push(model);
-        }
         this.slideModels("descent", models, model.get("parentId"));
     },
 
@@ -191,7 +186,7 @@ const MobileMenu = Backbone.View.extend({
                 case "folder": {
                     attr = model.toJSON();
 
-                    if (attr.isLeafFolder && attr.isExpanded && !attr.isFolderSelectable) {
+                    if (attr.isExpanded && !attr.isFolderSelectable) {
                         // if the selectAll-checkbox should be hidden: don't add folder-view
                         // for expanded leaf-folder -> omit empty group item.
                         return;

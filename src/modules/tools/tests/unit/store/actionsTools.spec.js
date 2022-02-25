@@ -33,7 +33,8 @@ describe("src/modules/tools/actionsTools.js", () => {
             testAction(setToolActive, payload, state, {}, [
                 {type: "controlActivationOfTools", payload: payload.name, dispatch: true},
                 {type: Object.keys(state)[0] + "/setActive", payload: payload.active, dispatch: true},
-                {type: "Gfi/setActive", payload: payload.active, commit: true}
+                {type: "Gfi/setActive", payload: true, commit: true},
+                {type: "activateToolInModelList", payload: {tool: "Gfi", active: true}, dispatch: true}
             ], {}, done);
         });
         it("setToolActive deactivate a tool and activate gfi", done => {
@@ -46,7 +47,8 @@ describe("src/modules/tools/actionsTools.js", () => {
             testAction(setToolActive, payload, state, {}, [
                 {type: "controlActivationOfTools", payload: payload.name, dispatch: true},
                 {type: Object.keys(state)[0] + "/setActive", payload: payload.active, commit: true},
-                {type: "Gfi/setActive", payload: true, commit: true}
+                {type: "Gfi/setActive", payload: true, commit: true},
+                {type: "activateToolInModelList", payload: {tool: "Gfi", active: true}, dispatch: true}
             ], {}, done);
         });
 
@@ -128,7 +130,8 @@ describe("src/modules/tools/actionsTools.js", () => {
             testAction(controlActivationOfTools, activeToolName, state, {}, [
                 {type: "Draw/setActive", payload: false},
                 {type: "ScaleSwitcher/setActive", payload: false},
-                {type: "SupplyCoord/setActive", payload: true}
+                {type: "SupplyCoord/setActive", payload: true},
+                {type: "activateToolInModelList", payload: {tool: "SupplyCoord", active: true}, dispatch: true}
             ], {
                 getConfiguredToolNames: ["Draw", "ScaleSwitcher", "SupplyCoord"],
                 getActiveToolNames: ["Draw", "ScaleSwitcher"]
@@ -147,7 +150,7 @@ describe("src/modules/tools/actionsTools.js", () => {
             testAction(setToolActiveByConfig, {}, state, {}, [
                 {type: "ScaleSwitcher/setActive", payload: false},
                 {type: "ScaleSwitcher/setActive", payload: true},
-                {type: "activateToolInModelList", payload: "ScaleSwitcher", dispatch: true},
+                {type: "activateToolInModelList", payload: {tool: "ScaleSwitcher", active: true}, dispatch: true},
                 {type: "errorMessageToManyToolsActive", payload: {
                     activeTools: ["ScaleSwitcher"],
                     firstActiveTool: "ScaleSwitcher"
@@ -176,7 +179,7 @@ describe("src/modules/tools/actionsTools.js", () => {
                 {type: "ScaleSwitcher/setActive", payload: false},
                 {type: "FileImport/setActive", payload: false},
                 {type: "SupplyCoord/setActive", payload: true},
-                {type: "activateToolInModelList", payload: "SupplyCoord", dispatch: true},
+                {type: "activateToolInModelList", payload: {tool: "SupplyCoord", active: true}, dispatch: true},
                 {type: "errorMessageToManyToolsActive", payload: {
                     activeTools: ["SupplyCoord", "ScaleSwitcher", "FileImport"],
                     firstActiveTool: "SupplyCoord"
@@ -204,7 +207,7 @@ describe("src/modules/tools/actionsTools.js", () => {
                 {type: "ScaleSwitcher/setActive", payload: false},
                 {type: "Gfi/setActive", payload: false},
                 {type: "SupplyCoord/setActive", payload: true},
-                {type: "activateToolInModelList", payload: "SupplyCoord", dispatch: true},
+                {type: "activateToolInModelList", payload: {tool: "SupplyCoord", active: true}, dispatch: true},
                 {type: "errorMessageToManyToolsActive", payload: {
                     activeTools: ["SupplyCoord", "ScaleSwitcher", "Gfi"],
                     firstActiveTool: "SupplyCoord"
@@ -232,8 +235,9 @@ describe("src/modules/tools/actionsTools.js", () => {
                 {type: "ScaleSwitcher/setActive", payload: false},
                 {type: "Gfi/setActive", payload: false},
                 {type: "SupplyCoord/setActive", payload: true},
-                {type: "activateToolInModelList", payload: "SupplyCoord", dispatch: true},
+                {type: "activateToolInModelList", payload: {tool: "SupplyCoord", active: true}, dispatch: true},
                 {type: "Gfi/setActive", payload: true},
+                {type: "activateToolInModelList", payload: {tool: "Gfi", active: true}, dispatch: true},
                 {type: "errorMessageToManyToolsActive", payload: {
                     activeTools: ["SupplyCoord", "ScaleSwitcher", "Gfi"],
                     firstActiveTool: "SupplyCoord"

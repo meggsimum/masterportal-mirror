@@ -1,6 +1,7 @@
 import axios from "axios";
 import {RoutingGeosearchResult} from "../classes/routing-geosearch-result";
 import state from "./../../store/stateRouting";
+import store from "../../../../../app-store";
 
 /**
  * Requests POIs from text from BKG
@@ -8,7 +9,7 @@ import state from "./../../store/stateRouting";
  * @returns {RoutingGeosearchResult[]} routingGeosearchResults
  */
 async function fetchRoutingBkgGeosearch (search) {
-    const serviceUrl = Radio.request("RestReader", "getServiceById", state.geosearch.serviceId).get("url"),
+    const serviceUrl = store.getters.getRestServiceById(state.geosearch.serviceId).url,
         url = `${serviceUrl}?count=${state.geosearch.limit}&properties=text`,
         parameter = `&query=${encodeURIComponent(search)}`,
         response = await axios.get(url + parameter);
@@ -28,7 +29,7 @@ async function fetchRoutingBkgGeosearch (search) {
  * @returns {RoutingGeosearchResult} routingGeosearchResult
  */
 async function fetchRoutingBkgGeosearchReverse (coordinates) {
-    const serviceUrl = Radio.request("RestReader", "getServiceById", state.geosearchReverse.serviceId).get("url"),
+    const serviceUrl = store.getters.getRestServiceById(state.geosearchReverse.serviceId).url,
         filterQuery = "&filter=" + (state.geosearchReverse.filter ? state.geosearchReverse.filter : "typ:ort"),
         url = `${serviceUrl}?lon=${coordinates[0]}&lat=${coordinates[1]}&count=1&properties=text&distance=${state.geosearchReverse.distance}${filterQuery}`,
         response = await axios.get(url);

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <div class="menu-row">
-    <% if(isLeafFolder && isFolderSelectable && isSelected) { %>
+    <% if(isFolderSelectable && isSelected) { %>
         <a class="<%= id %> dropdown-item tabable checked" tabindex="0">
     <%} else {%>
         <a class="<%= id %> dropdown-item tabable" tabindex="0">
@@ -11,7 +11,7 @@
         <% } else { %>
         <span class="glyphicon glyphicon-plus-sign"> </span>
         <% } %> 
-        <% if(isLeafFolder && isFolderSelectable) { %> <% if(isSelected) { %>
+        <% if(isFolderSelectable) { %> <% if(isSelected) { %>
         <span
             class="glyphicon glyphicon-check selectall"
             title="<%= hideAllTopicsText %>"

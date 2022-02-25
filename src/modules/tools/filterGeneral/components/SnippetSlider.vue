@@ -1,9 +1,13 @@
 <script>
 import isObject from "../../../../utils/isObject";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
+import SnippetInfo from "./SnippetInfo.vue";
 
 export default {
     name: "SnippetSlider",
+    components: {
+        SnippetInfo
+    },
     props: {
         api: {
             type: Object,
@@ -14,6 +18,11 @@ export default {
             type: String,
             required: false,
             default: ""
+        },
+        adjustment: {
+            type: [Object, Boolean],
+            required: false,
+            default: false
         },
         decimalPlaces: {
             type: Number,
@@ -30,7 +39,7 @@ export default {
             required: false,
             default: false
         },
-        label: {
+        title: {
             type: [String, Boolean],
             required: false,
             default: true
@@ -70,28 +79,20 @@ export default {
         return {
             disable: true,
             isInitializing: true,
+            isAdjusting: false,
             minimumValue: 0,
             maximumValue: 100,
-            showInfo: false,
-            value: 0
+            value: 0,
+            translationKey: "snippetSlider"
         };
     },
     computed: {
-        labelText () {
-            if (this.label === true) {
+        titleText () {
+            if (this.title === true) {
                 return this.attrName;
             }
-            else if (typeof this.label === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.label, key => this.$t(key));
-            }
-            return "";
-        },
-        infoText () {
-            if (this.info === true) {
-                return this.$t("common:modules.tools.filterGeneral.info.snippetSlider");
-            }
-            else if (typeof this.info === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.info, key => this.$t(key));
+            else if (typeof this.title === "string") {
+                return this.translateKeyWithPlausibilityCheck(this.title, key => this.$t(key));
             }
             return "";
         },
@@ -108,8 +109,23 @@ export default {
     },
     watch: {
         value () {
-            if (!this.isInitializing || typeof this.prechecked !== "undefined") {
+            if (!this.isAdjusting && (!this.isInitializing || typeof this.prechecked !== "undefined")) {
                 this.emitCurrentRule(this.inRangeValue, this.isInitializing);
+            }
+        },
+        adjustment (adjusting) {
+            if (!isObject(adjusting) || this.visible === false) {
+                return;
+            }
+
+            if (adjusting?.start) {
+                this.isAdjusting = true;
+            }
+
+            if (adjusting?.finish) {
+                this.$nextTick(() => {
+                    this.isAdjusting = false;
+                });
             }
         },
         disabled (value) {
@@ -151,6 +167,12 @@ export default {
                 this.disable = false;
             });
         }
+        if (this.visible && typeof this.prechecked !== "undefined") {
+            this.emitCurrentRule(this.prechecked, true);
+        }
+    },
+    mounted () {
+        this.$emit("setSnippetPrechecked", this.visible && typeof this.prechecked !== "undefined");
     },
     methods: {
         translateKeyWithPlausibilityCheck,
@@ -199,19 +221,37 @@ export default {
             });
         },
         /**
-         * Toggles the info.
-         * @returns {void}
-         */
-        toggleInfo () {
-            this.showInfo = !this.showInfo;
-        },
-        /**
          * Returns the steps the slider will make over the number range.
          * @param {Number} decimalPlaces the amount of decimal places
          * @returns {Number} the steps
          */
         getSliderSteps (decimalPlaces) {
             return 1 / Math.pow(10, decimalPlaces);
+        },
+        /**
+         * Triggered once when changes are made at the slider to avoid set of rules during changes.
+         * @returns {void}
+         */
+        startSliderChange () {
+            if (!isObject(this.adjustment)) {
+                return;
+            }
+            this.isAdjusting = true;
+        },
+        /**
+         * Triggered once when end of changes are detected at the slider to start set of rules after changes.
+         * @param {Event} evt - input event
+         * @returns {void}
+         */
+        endSliderChange (evt) {
+            this.checkInput(evt);
+            if (!isObject(this.adjustment)) {
+                return;
+            }
+            this.$nextTick(() => {
+                this.isAdjusting = false;
+                this.emitCurrentRule(this.inRangeValue, this.isInitializing);
+            });
         },
         /**
          * Checking if the input field is valid and reset to valid value
@@ -259,34 +299,32 @@ export default {
         class="snippetSliderContainer"
     >
         <div
-            v-if="info !== false"
+            v-if="info"
             class="right"
         >
-            <div class="info-icon">
-                <span
-                    :class="['glyphicon glyphicon-info-sign', showInfo ? 'opened' : '']"
-                    @click="toggleInfo()"
-                    @keydown.enter="toggleInfo()"
-                >&nbsp;</span>
-            </div>
+            <SnippetInfo
+                :info="info"
+                :translation-key="translationKey"
+            />
         </div>
         <label
-            v-if="label !== false"
+            v-if="title !== false"
             :for="'snippetSlider-' + snippetId"
             class="snippetSliderLabel left"
-        >{{ labelText }}</label>
+        >{{ titleText }}</label>
         <input
             :id="'snippetSlider-' + snippetId"
             ref="inputNumber"
             v-model="inRangeValue"
-            class="input-single"
+            class="input-single form-control"
             type="number"
             :min="minimumValue"
             :max="maximumValue"
-            :name="label"
+            :name="title"
             :disabled="disable"
-            @blur="checkInput"
-            @keyup.enter="checkInput"
+            @focus="startSliderChange()"
+            @blur="endSliderChange"
+            @keyup.enter="endSliderChange"
         >
         <div class="slider-input-container">
             <input
@@ -298,26 +336,21 @@ export default {
                 :disabled="disable"
                 :min="minimumValue"
                 :max="maximumValue"
+                @mousedown="startSliderChange()"
+                @mouseup="endSliderChange"
             >
         </div>
         <span class="min">{{ minimumValue }}</span>
         <span class="max">{{ maximumValue }}</span>
-        <div
-            v-show="showInfo"
-            class="bottom"
-        >
-            <div class="info-text">
-                <span>{{ infoText }}</span>
-            </div>
-        </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
     @import "~/css/mixins.scss";
+    .form-control {
+        height: 28px;
+    }
     .snippetSliderContainer {
-        padding: 5px;
-        margin-bottom: 10px;
         height: auto;
     }
     .snippetSliderContainer input {
@@ -328,35 +361,13 @@ export default {
         position: relative;
         margin-bottom: 5px;
     }
-    .snippetSliderContainer .info-icon {
-        float: right;
-        font-size: 16px;
-        color: #ddd;
-    }
-    .snippetSliderContainer .info-icon .opened {
-        color: #000;
-    }
-    .snippetSliderContainer .info-icon:hover {
-        cursor: pointer;
-        color: #a5a09e;
-    }
-    .snippetSliderContainer .info-text {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 10px;
-        padding: 15px 10px;
-    }
-    .snippetSliderContainer .bottom {
-        clear: left;
-        width: 100%;
-    }
     .snippetSliderContainer .left {
         float: left;
         width: 90%;
     }
     .snippetSliderContainer .right {
         position: absolute;
-        right: 10px;
+        right: 0;
     }
     input[type="number"] {
         text-align: center;
@@ -376,6 +387,19 @@ export default {
         margin: 0;
     }
 
+    input[type="range"]:active::-ms-thumb {
+        background-color: #fff;
+        border: 1px solid #3177b1;
+    }
+    input[type="range"]:active::-moz-range-thumb {
+        background-color: #fff;
+        border: 1px solid #3177b1;
+    }
+    input[type="range"]:active::-webkit-slider-thumb {
+        background-color: #fff;
+        border: 1px solid #3177b1;
+    }
+
     /* Firefox */
     input[type="range"] {
         -webkit-appearance: none;
@@ -383,6 +407,7 @@ export default {
         height: 15px;
         overflow: hidden;
         width: 100%;
+        border-radius: 10px;
     }
 
     input[type="range"]::-webkit-slider-runnable-track {

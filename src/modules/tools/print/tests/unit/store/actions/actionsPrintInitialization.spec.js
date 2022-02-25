@@ -338,6 +338,7 @@ describe("src/modules/tools/print/store/actions/actionsPrintInitialization.js", 
                     },
                     frameState: {
                         size: [1348, 864],
+                        pixelToCoordinateTransform: [10.583327618336, 0, 0, -10.583327618336, 1104618.7926526342, 7087941.480887591],
                         viewState: {
                             resolution: 15.874991427504629
                         }
@@ -361,6 +362,7 @@ describe("src/modules/tools/print/store/actions/actionsPrintInitialization.js", 
                 },
                 canvasPrintOptions = {
                     "mapSize": evt.frameState.size,
+                    "pixelToCoordinateTransform": evt.frameState.pixelToCoordinateTransform,
                     "resolution": evt.frameState.viewState.resolution,
                     "printMapSize": state.layoutMapInfo,
                     "scale": 20000,
@@ -522,6 +524,7 @@ describe("src/modules/tools/print/store/actions/actionsPrintInitialization.js", 
                         }
                     },
                     frameState: {
+                        pixelToCoordinateTransform: [10.583327618336, 0, 0, -10.583327618336, 1104618.7926526342, 7087941.480887591],
                         size: [1348, 864],
                         viewState: {
                             resolution: 15.874991427504629
@@ -538,6 +541,7 @@ describe("src/modules/tools/print/store/actions/actionsPrintInitialization.js", 
                 },
                 canvasPrintOptions = {
                     "mapSize": evt.frameState.size,
+                    "pixelToCoordinateTransform": evt.frameState.pixelToCoordinateTransform,
                     "resolution": evt.frameState.viewState.resolution,
                     "printMapSize": state.layoutMapInfo,
                     "scale": 20000,

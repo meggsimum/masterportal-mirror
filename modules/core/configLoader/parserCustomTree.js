@@ -28,7 +28,7 @@ const CustomTreeParser = Parser.extend(/** @lends CustomTreeParser.prototype */{
      * @returns {void}
      */
     parseTree: function (object = {}, parentId = "", level = 0) {
-        const isBaseLayer = Boolean(parentId === "Baselayer" || parentId === "tree"),
+        const isBaseLayer = Boolean(parentId === "Baselayer" || parentId === "tree" || this.isAncestorBaseLayer(parentId)),
             treeType = Radio.request("Parser", "getTreeType");
 
         if (object?.Layer) {
@@ -162,7 +162,6 @@ const CustomTreeParser = Parser.extend(/** @lends CustomTreeParser.prototype */{
         }
         if (object?.Ordner) {
             object.Ordner.forEach(folder => {
-                const isLeafFolder = !folder?.Ordner;
                 let isFolderSelectable;
 
                 // Visiblity of SelectAll-Box. Use item property first, if not defined use global setting.
@@ -182,7 +181,6 @@ const CustomTreeParser = Parser.extend(/** @lends CustomTreeParser.prototype */{
                     parentId: parentId,
                     name: folder.Titel,
                     id: folder.id,
-                    isLeafFolder: isLeafFolder,
                     isFolderSelectable: isFolderSelectable,
                     level: level,
                     glyphicon: "glyphicon-plus-sign",
@@ -192,9 +190,32 @@ const CustomTreeParser = Parser.extend(/** @lends CustomTreeParser.prototype */{
                     invertLayerOrder: folder.invertLayerOrder
                 });
                 // rekursiver Aufruf
-                this.parseTree(folder, isBaseLayer ? parentId : folder.id, level + 1);
+                this.parseTree(folder, folder.id, level + 1);
             });
         }
+    },
+
+    /**
+     * Returns true, if the parent or grandparent has the parentId 'Baselayer'.
+     * @param {String} parentId id of the parent
+     * @returns {Boolean} true, if one of the next 2 ancestors has the parentId 'Baselayer'
+     */
+    isAncestorBaseLayer: function (parentId) {
+        const parent = Radio.request("Parser", "getItemByAttributes", {id: parentId});
+
+        if (parent) {
+            if (parent.parentId === "Baselayer") {
+                return true;
+            }
+
+            const grandParent = Radio.request("Parser", "getItemByAttributes", {id: parent.parentId});
+
+            if (grandParent && grandParent.parentId === "Baselayer") {
+                return true;
+            }
+
+        }
+        return false;
     },
 
     getRawLayerList: function () {

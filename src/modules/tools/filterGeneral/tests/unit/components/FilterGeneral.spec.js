@@ -61,49 +61,110 @@ describe("src/modules/tools/filterGeneral/components/FilterGeneral.vue", () => {
         }
     });
 
-    it("shows only layer names with selectbox if none is selected", () => {
-        wrapper = mount(FilterGeneral, {store, localVue});
+    describe("setFilterId", () => {
+        it("should set filterId for given layers from store", () => {
+            wrapper = shallowMount(FilterGeneral, {store, localVue});
+            const expected = [{
+                filterId: 0,
+                layerId: "8712",
+                searchInMapExtent: true,
+                paging: 10,
+                snippets: [
+                    {
+                        attrName: "checkbox",
+                        label: "Ist dies eine Schwerpunktschule?",
+                        type: "checkbox",
+                        operator: "EQ",
+                        prechecked: false,
+                        visible: true
+                    }
+                ]
+            }];
 
-        const layers = wrapper.find(".layerSelector");
-
-        expect(layers.exists()).to.be.true;
+            wrapper.vm.setFilterId();
+            expect(wrapper.vm.layers).to.deep.equal(expected);
+        });
     });
 
-    it("should update layer by passed filterIds", () => {
-        wrapper = shallowMount(FilterGeneral, {store, localVue});
-        wrapper.vm.updateSelectedLayers([0]);
+    describe("replaceStringWithObjectLayers", () => {
+        it("replace a string with a filter object", () => {
+            FilterGeneralModule.state.layers = [
+                "8712"
+            ];
 
-        const expected = [{
-            filterId: 0,
-            layerId: "8712",
-            searchInMapExtent: true,
-            paging: 10,
-            snippets: [
-                {
-                    attrName: "checkbox",
-                    label: "Ist dies eine Schwerpunktschule?",
-                    type: "checkbox",
-                    operator: "EQ",
-                    prechecked: false,
-                    visible: true
+            store = new Vuex.Store({
+                namespaces: true,
+                modules: {
+                    Tools: {
+                        namespaced: true,
+                        modules: {
+                            FilterGeneral: FilterGeneralModule
+                        }
+                    }
+                },
+                getters: {
+                    uiStyle: () => sinon.stub()
                 }
-            ]
-        }];
+            });
 
-        expect(wrapper.vm.selectedLayers).to.deep.equal(expected);
+            const expected = [{
+                layerId: "8712"
+            }];
+
+            wrapper = shallowMount(FilterGeneral, {store, localVue});
+            wrapper.vm.replaceStringWithObjectLayers();
+            expect(wrapper.vm.layers).to.deep.equal(expected);
+        });
     });
 
-    it("should show layer if filterId is in selectedLayers", () => {
-        wrapper = shallowMount(FilterGeneral, {store, localVue});
-        wrapper.vm.updateSelectedLayers([0]);
+    describe("component", () => {
+        it("shows only layer names with selectbox if none is selected", () => {
+            wrapper = mount(FilterGeneral, {store, localVue});
 
-        expect(wrapper.vm.showLayerSnippet(0)).to.be.true;
-    });
+            const layers = wrapper.find(".layerSelector");
 
-    it("should not show layer if filterId is not in selectedLayers", () => {
-        wrapper = shallowMount(FilterGeneral, {store, localVue});
-        wrapper.vm.updateSelectedLayers([1]);
+            expect(layers.exists()).to.be.true;
+        });
 
-        expect(wrapper.vm.showLayerSnippet(0)).to.be.false;
+        it("should update layer by passed filterIds", () => {
+            wrapper = shallowMount(FilterGeneral, {store, localVue});
+            wrapper.vm.setFilterId();
+            wrapper.vm.updateSelectedLayers([0]);
+
+            const expected = [{
+                filterId: 0,
+                layerId: "8712",
+                searchInMapExtent: true,
+                paging: 10,
+                snippets: [
+                    {
+                        attrName: "checkbox",
+                        label: "Ist dies eine Schwerpunktschule?",
+                        type: "checkbox",
+                        operator: "EQ",
+                        prechecked: false,
+                        visible: true
+                    }
+                ]
+            }];
+
+            expect(wrapper.vm.selectedLayers).to.deep.equal(expected);
+        });
+
+        it("should show layer if filterId is in selectedLayers", () => {
+            wrapper = shallowMount(FilterGeneral, {store, localVue});
+            wrapper.vm.setFilterId();
+            wrapper.vm.updateSelectedLayers([0]);
+
+            expect(wrapper.vm.showLayerSnippet(0)).to.be.true;
+        });
+
+        it("should not show layer if filterId is not in selectedLayers", () => {
+            wrapper = shallowMount(FilterGeneral, {store, localVue});
+            wrapper.vm.setFilterId();
+            wrapper.vm.updateSelectedLayers([1]);
+
+            expect(wrapper.vm.showLayerSnippet(0)).to.be.false;
+        });
     });
 });

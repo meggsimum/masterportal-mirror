@@ -19,7 +19,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetDropdown.vue", () =>
             expect(wrapper.vm.autoInit).to.be.true;
             expect(wrapper.vm.display).to.equal("default");
             expect(wrapper.vm.info).to.be.false;
-            expect(wrapper.vm.label).to.be.true;
+            expect(wrapper.vm.title).to.be.true;
             expect(wrapper.vm.multiselect).to.be.false;
             expect(wrapper.vm.operator).to.equal("EQ");
             expect(wrapper.vm.prechecked).to.be.undefined;
@@ -58,10 +58,10 @@ describe("src/modules/tools/filterGeneral/components/SnippetDropdown.vue", () =>
             expect(wrapper.vm.disabled).to.be.true;
             wrapper.destroy();
         });
-        it("should render with a label if the label is a string", () => {
+        it("should render with a title if the title is a string", () => {
             const wrapper = shallowMount(SnippetDropdown, {
                 propsData: {
-                    label: "foobar"
+                    title: "foobar"
                 },
                 localVue
             });
@@ -69,38 +69,15 @@ describe("src/modules/tools/filterGeneral/components/SnippetDropdown.vue", () =>
             expect(wrapper.find(".select-box-label").text()).to.be.equal("foobar");
             wrapper.destroy();
         });
-        it("should render without a label if label is a boolean and false", () => {
+        it("should render without a title if title is a boolean and false", () => {
             const wrapper = shallowMount(SnippetDropdown, {
                 propsData: {
-                    label: false
+                    title: false
                 },
                 localVue
             });
 
             expect(wrapper.find(".select-box-label").exists()).to.be.false;
-            wrapper.destroy();
-        });
-        it("should render the info span", () => {
-            const wrapper = shallowMount(SnippetDropdown, {
-                propsData: {
-                    info: "this is an info text"
-                },
-                localVue
-            });
-
-            expect(wrapper.find(".info-text").exists()).to.be.true;
-            expect(wrapper.find(".info-text span").element.innerHTML).to.be.equal("this is an info text");
-            wrapper.destroy();
-        });
-        it("should not render the info button if info is a boolean and false", () => {
-            const wrapper = shallowMount(SnippetDropdown, {
-                propsData: {
-                    info: false
-                },
-                localVue
-            });
-
-            expect(wrapper.find(".info-icon").exists()).to.be.false;
             wrapper.destroy();
         });
         it("should have an empty list if autoInit is false and the api may be set", () => {
@@ -207,6 +184,43 @@ describe("src/modules/tools/filterGeneral/components/SnippetDropdown.vue", () =>
             });
             expect(wrapper.vm.dropdownSelected).to.deep.equal([]);
             expect(called).to.be.true;
+            wrapper.destroy();
+        });
+    });
+
+    describe("display list", () => {
+        it("should render a list with radio", async () => {
+            const wrapper = shallowMount(SnippetDropdown, {
+                propsData: {
+                    "type": "dropdown",
+                    "attrName": "kapitelbezeichnung",
+                    "display": "list",
+                    "multiselect": false,
+                    "value": ["yek", "do"]
+                },
+                localVue
+            });
+
+            expect(wrapper.find(".snippetListContainer").exists()).to.be.true;
+            expect(wrapper.find(".snippetListContainer .radio").exists()).to.be.true;
+
+            wrapper.destroy();
+        });
+        it("should render a list with checkbox", async () => {
+            const wrapper = shallowMount(SnippetDropdown, {
+                propsData: {
+                    "type": "dropdown",
+                    "attrName": "kapitelbezeichnung",
+                    "display": "list",
+                    "multiselect": true,
+                    "value": ["yek", "do"]
+                },
+                localVue
+            });
+
+            expect(wrapper.find(".snippetListContainer").exists()).to.be.true;
+            expect(wrapper.find(".snippetListContainer .checkbox").exists()).to.be.true;
+
             wrapper.destroy();
         });
     });

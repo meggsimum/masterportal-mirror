@@ -74,7 +74,8 @@ describe("src/modules/tools/layerSlider/components/LayerSliderHandle.vue", () =>
                                 dataSliderTicks: () => ""
                             },
                             actions: {
-                                setActiveIndex: sinon.stub()
+                                setActiveIndex: sinon.stub(),
+                                sendModification: sinon.stub()
                             },
                             mutations: {
                                 setActive: sinon.stub(),
@@ -152,6 +153,65 @@ describe("src/modules/tools/layerSlider/components/LayerSliderHandle.vue", () =>
             wrapper = shallowMount(LayerSliderHandleComponent, {store, localVue});
 
             expect(wrapper.vm.getPositionFromValue(14, "next")).to.equal(2);
+        });
+    });
+
+    describe("showLayer", () => {
+        it("show layer with status true, if transparency is 100", async () => {
+            wrapper = shallowMount(LayerSliderHandleComponent, {store, localVue});
+
+            const spySendModification = sinon.spy(wrapper.vm, "sendModification");
+
+            await wrapper.vm.showLayer("100", 100, ["100", "200", "300"]);
+
+            expect(spySendModification.calledOnce).to.be.true;
+            expect(spySendModification.args[0]).to.deep.includes({
+                layerId: "100",
+                status: true,
+                transparency: 0
+            });
+        });
+        it("show layer with status true, if transparency is 0", async () => {
+            wrapper = shallowMount(LayerSliderHandleComponent, {store, localVue});
+
+            const spySendModification = sinon.spy(wrapper.vm, "sendModification");
+
+            await wrapper.vm.showLayer("100", 0, ["100", "200", "300"]);
+
+            expect(spySendModification.calledOnce).to.be.true;
+            expect(spySendModification.args[0]).to.deep.includes({
+                layerId: "100",
+                status: true,
+                transparency: 0
+            });
+        });
+        it("show layer with status true, if transparency is 37", async () => {
+            wrapper = shallowMount(LayerSliderHandleComponent, {store, localVue});
+
+            const spySendModification = sinon.spy(wrapper.vm, "sendModification");
+
+            await wrapper.vm.showLayer("100", 37, ["100", "200", "300"]);
+
+            expect(spySendModification.calledOnce).to.be.true;
+            expect(spySendModification.args[0]).to.deep.includes({
+                layerId: "100",
+                status: true,
+                transparency: 37
+            });
+        });
+        it("show layer with status false, if transparency is 110", async () => {
+            wrapper = shallowMount(LayerSliderHandleComponent, {store, localVue});
+
+            const spySendModification = sinon.spy(wrapper.vm, "sendModification");
+
+            await wrapper.vm.showLayer("100", 110, ["100", "200", "300"]);
+
+            expect(spySendModification.calledOnce).to.be.true;
+            expect(spySendModification.args[0]).to.deep.includes({
+                layerId: "100",
+                status: false,
+                transparency: 110
+            });
         });
     });
 });

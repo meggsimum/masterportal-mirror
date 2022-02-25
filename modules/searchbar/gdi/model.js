@@ -1,13 +1,12 @@
 import "../model";
-import ElasticModel from "../../core/elasticsearch";
+import {initializeSearch} from "../../../src/api/elasticsearch";
 
 const GdiModel = Backbone.Model.extend(/** @lends GdiModel.prototype */{
     defaults: {
         minChars: 3,
         serviceId: "",
         queryObject: {},
-        sortByName: false,
-        elasticSearch: new ElasticModel()
+        sortByName: false
     },
     /**
      * @class GdiModel
@@ -18,7 +17,6 @@ const GdiModel = Backbone.Model.extend(/** @lends GdiModel.prototype */{
      * @property {String} serviceId="" Id of restService to derive url from.
      * @property {Object} queryObject={} Payload used to append to url.
      * @property {Boolean} sortByName=false Parameter to config if the searching result alphanumerically
-     * @property {ElasticModel} elasticSearch = new ElasticSearch() ElasticModel.
      * @fires Core#RadioRequestParametricURLGetInitString
      * @fires Searchbar#RadioTriggerSearchbarPushHits
      * @fires Searchbar#RadioTriggerSearchbarRemoveHits
@@ -57,9 +55,9 @@ const GdiModel = Backbone.Model.extend(/** @lends GdiModel.prototype */{
      * @param {String} searchString The search string.
      * @returns {void}
      */
-    search: function (searchString) {
+    search: async function (searchString) {
         const payload = this.appendSearchStringToPayload(this.get("queryObject"), "query_string", searchString),
-            xhrConfig = {
+            requestConfig = {
                 url: this.get("url"),
                 type: "GET",
                 useProxy: false,
@@ -70,7 +68,7 @@ const GdiModel = Backbone.Model.extend(/** @lends GdiModel.prototype */{
         let result;
 
         if (searchString.length >= this.get("minChars")) {
-            result = this.get("elasticSearch").search(xhrConfig);
+            result = await initializeSearch(requestConfig);
             this.createRecommendedList(result.hits);
         }
     },

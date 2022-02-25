@@ -1,5 +1,6 @@
 import axios from "axios";
 import state from "./../../store/stateRouting";
+import store from "../../../../../app-store";
 import {RoutingDirections} from "../classes/routing-directions";
 import {RoutingDirectionsStep} from "../classes/routing-directions-step";
 import {RoutingDirectionsSegment} from "../classes/routing-directions-segment";
@@ -42,7 +43,7 @@ async function fetchRoutingOrsDirections ({
     avoidPolygons,
     instructions
 }) {
-    const serviceUrl = Radio.request("RestReader", "getServiceById", state.directionsSettings.serviceId).get("url"),
+    const serviceUrl = store.getters.getRestServiceById(state.directionsSettings.serviceId).url,
         url = `${serviceUrl}/v2/directions/${routingOrsSpeedProfile(speedProfile)}/geojson`;
     let result = null,
         feature = null,

@@ -39,7 +39,6 @@ describe("src/core/layers/wfs.js", () => {
             name: "wfsTestLayer",
             id: "id",
             typ: "wfs",
-            allowedVersions: ["1.1.0", "2.0.0"],
             version: "2.0.0",
             gfiTheme: "gfiTheme",
             isChildLayer: false,
@@ -104,44 +103,6 @@ describe("src/core/layers/wfs.js", () => {
             expect(wfsLayer.get("layer").getVisible()).to.be.false;
         });
     });
-    describe("getVersion and checkVersion", () => {
-        it("getVersion shall always return a version, check allowed version", function () {
-            const wfsLayer = new WfsLayer(attributes),
-                notAllowdVersion = "2.1.0",
-                changedAttrs = {
-                    allowedVersions: ["1.1.0", "2.0.0"],
-                    version: notAllowdVersion
-                };
-            let version = wfsLayer.getVersion(attributes);
-
-            expect(version).to.be.equals(attributes.version);
-            version = wfsLayer.getVersion(changedAttrs);
-            expect(version).to.be.equal(changedAttrs.allowedVersions[0]);
-        });
-        it("getVersion shall always return a version, check not allowed version", function () {
-            const notAllowdVersion = "2.1.0";
-            let wfsLayer = null,
-                version = null;
-
-            attributes.allowedVersions = ["1.1.0", "2.0.0"];
-            attributes.version = notAllowdVersion;
-            wfsLayer = new WfsLayer(attributes);
-            version = wfsLayer.getVersion(attributes);
-
-            expect(version).to.be.equal(attributes.allowedVersions[0]);
-        });
-        it("checkVersion shall return true, if version is allowed", function () {
-            const wfsLayer = new WfsLayer(attributes),
-                notAllowdVersion = "2.1.0";
-            let isVersionValid = wfsLayer.checkVersion(attributes.name, attributes.version, attributes.allowedVersions);
-
-            expect(isVersionValid).to.be.true;
-            isVersionValid = wfsLayer.checkVersion("", notAllowdVersion, ["1.1.0", "2.0.0"]);
-
-            expect(isVersionValid).to.be.false;
-            expect(console.warn.calledOnce).to.be.true;
-        });
-    });
     describe("getFeaturesFilterFunction", () => {
         it("getFeaturesFilterFunction shall filter getGeometry", function () {
             const wfsLayer = new WfsLayer(attributes),
@@ -166,7 +127,8 @@ describe("src/core/layers/wfs.js", () => {
                         return true;
                     }
                     return false;
-                }
+                },
+                getExtent: () => ["1"]
             };
             const wfsLayer = new WfsLayer(attributes),
                 featuresFilterFunction = wfsLayer.getFeaturesFilterFunction(attributes),

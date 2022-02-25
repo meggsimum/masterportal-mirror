@@ -221,23 +221,4 @@ export function onLanguageChanged (layer) {
         }
     }, this);
 }
-/**
- * Listens to changes in Radio.channel 'Map'.
- * Sets all layers to visible, if they support the map mode else sets their visibility to false.
- * @param {Object} layer the layer to change visibility at
- * @returns {void}
- */
-export function onMapModeChanged (layer) {
-    Radio.channel("Map").on({
-        "change": function (mode) {
-            if (layer.get("supported").indexOf(mode) >= 0) {
-                if (layer.get("isVisibleInMap")) {
-                    layer.get("layer").setVisible(true);
-                }
-            }
-            else if (layer.get("layer") !== undefined) {
-                layer.get("layer").setVisible(false);
-            }
-        }
-    }, this);
-}
+

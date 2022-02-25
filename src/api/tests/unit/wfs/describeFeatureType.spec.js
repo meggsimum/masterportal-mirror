@@ -168,12 +168,12 @@ describe("src/api/wfs/describeFeatureType.js", () => {
             expect(console.error.calledWith("api/wfs/describeFeatureType: Version is [object Object]. Version has to be a string. Default is 1.1.0.")).to.be.true;
         });
 
-        it("should return a reponse if the first paramerter is correct and the second parameter is not defined", async () => {
+        it.skip("should return a reponse if the first paramerter is correct and the second parameter is not defined", async () => {
             const response = await describeFeatureType("https://geodienste.hamburg.de/HH_WFS_Krankenhaeuser", undefined);
 
             expect(response).to.be.an("object");
         });
-        it("should return a reponse if the first and second parameter are correct", async () => {
+        it.skip("should return a reponse if the first and second parameter are correct", async () => {
             const response = await describeFeatureType("https://geodienste.hamburg.de/HH_WFS_Krankenhaeuser", "2.0.0");
 
             expect(response).to.be.an("object");

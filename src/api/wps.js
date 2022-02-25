@@ -1,5 +1,6 @@
 import axios from "axios";
 import xml2json from "./utils/xml2json";
+import store from "../app-store";
 
 export default {
     /**
@@ -97,20 +98,6 @@ export default {
     },
 
     /**
-     * @desc creates URL using model from rest-service
-     * @param {Object} restModel Model retrieved from rest-services.json
-     * @returns {String} url to wps request
-     */
-    buildUrl: function (restModel) {
-        let url = "";
-
-        if (restModel && restModel.get("url")) {
-            url = restModel.get("url");
-        }
-        return url;
-    },
-
-    /**
      * @desc request to be built and sent to WPS
      * @param {String} wpsID The service id, defined in rest-services.json
      * @param {String} identifier The functionality to be invoked by the wps
@@ -132,7 +119,7 @@ export default {
             "</wps:Execute>",
             dataInputXmlTemplate = "<wps:Input><ows:Identifier></ows:Identifier><wps:Data><wps:LiteralData></wps:LiteralData></wps:Data></wps:Input>",
             xmlString = this.buildXML(identifier, xmlTemplate, dataInputXmlTemplate, data),
-            url = this.buildUrl(Radio.request("RestReader", "getServiceById", wpsID));
+            url = store.getters.getRestServiceById(wpsID)?.url;
 
         this.sendRequest(url, xmlString, responseFunction, timeout);
     }

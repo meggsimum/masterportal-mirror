@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "../../../../../../../app-store";
 import {expect} from "chai";
 import sinon from "sinon";
 import {RoutingDirections} from "../../../../utils/classes/routing-directions";
@@ -8,8 +9,8 @@ import {fetchRoutingOrsDirections} from "../../../../utils/directions/routing-or
 
 describe("src/modules/tools/routing/utils/directions/routing-ors-directions.js", () => {
     beforeEach(() => {
-        sinon.stub(Radio, "request").callsFake(() => ({get: () => "tmp"}));
         sinon.stub(i18next, "t").callsFake((...args) => args);
+        store.getters.getRestServiceById = () => ({url: "tmp"});
     });
 
     afterEach(() => {

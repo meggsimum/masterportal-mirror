@@ -114,7 +114,7 @@ export default {
         showLayer: function (layerId, transparency, layerIds) {
             this.sendModification({
                 layerId: layerId,
-                status: transparency >= 0 && transparency < 100,
+                status: transparency >= 0 && transparency <= 100,
                 transparency: transparency === 100 ? 0 : transparency
             });
 

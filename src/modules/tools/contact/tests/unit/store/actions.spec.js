@@ -104,11 +104,6 @@ describe("src/modules/tools/contact/store/actionsContact.js", () => {
                 serviceId: "007",
                 includeSystemInfo: true
             };
-            sinon
-                .stub(Radio, "request")
-                .callsFake(() => ({
-                    get: key => ({url: "example.com"})[key]
-                }));
         });
 
         afterEach(sinon.restore);
@@ -135,7 +130,8 @@ describe("src/modules/tools/contact/store/actionsContact.js", () => {
                     validForm: true
                 },
                 rootGetters: {
-                    portalTitle: "Test"
+                    portalTitle: "Test",
+                    getRestServiceById: id => id === "007" ? {url: "example.com"} : {}
                 }
             });
         });

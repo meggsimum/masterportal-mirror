@@ -17,7 +17,7 @@ export default class InterfaceOL {
         this.intervalRegister = intervalRegister;
         this.getFeaturesByLayerId = getFeaturesByLayerId;
         this.isFeatureInMapExtent = isFeatureInMapExtent;
-        this.interfaceWFS = new InterfaceWFS();
+        this.interfaceWFS = new InterfaceWFS(intervalRegister);
     }
 
     /**

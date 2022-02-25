@@ -4,6 +4,7 @@ import {RoutingIsochrones} from "../classes/routing-isochrones";
 import {RoutingIsochronesArea} from "../classes/routing-isochrones-area";
 import routingOrsSpeedProfile from "../speedprofiles/routing-ors-speedprofiles";
 import state from "./../../store/stateRouting";
+import store from "../../../../../app-store";
 
 /**
  * Translates the optimization in the corresponding value for the service
@@ -51,7 +52,7 @@ async function fetchRoutingOrsIsochrones ({
     transformCoordinates
 }) {
 
-    const serviceUrl = Radio.request("RestReader", "getServiceById", state.isochronesSettings.serviceId).get("url"),
+    const serviceUrl = store.getters.getRestServiceById(state.isochronesSettings.serviceId).url,
         url = `${serviceUrl}/v2/isochrones/${routingOrsSpeedProfile(speedProfile)}`,
         rangeValue = optimization === "TIME" ? state.isochronesSettings.timeValue : state.isochronesSettings.distanceValue,
         optimizationMultiplicator = routingOrsOptimizationMultiplicator(optimization),

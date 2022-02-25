@@ -15,7 +15,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetInput.vue", () => {
             const wrapper = shallowMount(SnippetInput, {localVue});
 
             expect(wrapper.vm.info).to.be.false;
-            expect(wrapper.vm.label).to.be.true;
+            expect(wrapper.vm.title).to.be.true;
             expect(wrapper.vm.operator).to.equal("IN");
             expect(wrapper.vm.prechecked).to.equal("");
             expect(wrapper.vm.snippetId).to.equal(0);
@@ -63,10 +63,10 @@ describe("src/modules/tools/filterGeneral/components/SnippetInput.vue", () => {
             expect(wrapper.find(".snippetInput").attributes("placeholder")).to.be.equal("this is a placeholder");
             wrapper.destroy();
         });
-        it("should render with a label if the label is a string", () => {
+        it("should render with a title if the title is a string", () => {
             const wrapper = shallowMount(SnippetInput, {
                 propsData: {
-                    label: "foobar"
+                    title: "foobar"
                 },
                 localVue
             });
@@ -74,27 +74,15 @@ describe("src/modules/tools/filterGeneral/components/SnippetInput.vue", () => {
             expect(wrapper.find(".snippetInputLabel").text()).to.be.equal("foobar");
             wrapper.destroy();
         });
-        it("should render without a label if label is a boolean and false", () => {
+        it("should render without a title if title is a boolean and false", () => {
             const wrapper = shallowMount(SnippetInput, {
                 propsData: {
-                    label: false
+                    title: false
                 },
                 localVue
             });
 
             expect(wrapper.find(".snippetInputLabel").exists()).to.be.false;
-            wrapper.destroy();
-        });
-        it("should render the info span", () => {
-            const wrapper = shallowMount(SnippetInput, {
-                propsData: {
-                    info: "this is an info text"
-                },
-                localVue
-            });
-
-            expect(wrapper.find(".info-text").exists()).to.be.true;
-            expect(wrapper.find(".info-text span").element.innerHTML).to.be.equal("this is an info text");
             wrapper.destroy();
         });
         it("should not render the info button if info is a boolean and false", () => {

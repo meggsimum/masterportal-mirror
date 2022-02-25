@@ -1,13 +1,15 @@
 <script>
 import Multiselect from "vue-multiselect";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
-import getIconListFromLegend from "../utils/getIconListFromLegend.js";
+import {getStyleModel, getIconListFromLegend} from "../utils/getIconListFromLegend.js";
 import isObject from "../../../../utils/isObject.js";
+import SnippetInfo from "./SnippetInfo.vue";
 
 export default {
     name: "SnippetDropdown",
     components: {
-        Multiselect
+        Multiselect,
+        SnippetInfo
     },
     props: {
         api: {
@@ -22,6 +24,11 @@ export default {
         },
         addSelectAll: {
             type: [String, Boolean],
+            required: false,
+            default: false
+        },
+        adjustment: {
+            type: [Object, Boolean],
             required: false,
             default: false
         },
@@ -45,7 +52,7 @@ export default {
             required: false,
             default: false
         },
-        label: {
+        title: {
             type: [String, Boolean],
             required: false,
             default: true
@@ -100,28 +107,23 @@ export default {
         return {
             disable: true,
             isInitializing: true,
-            showInfo: false,
+            isAdjusting: false,
             dropdownValue: [],
             dropdownSelected: [],
-            iconList: {}
+            styleModel: {},
+            legendsInfo: [],
+            iconList: {},
+            allSelected: false,
+            translationKey: "snippetDropdown"
         };
     },
     computed: {
-        labelText () {
-            if (this.label === true) {
+        titleText () {
+            if (this.title === true) {
                 return this.attrName;
             }
-            else if (typeof this.label === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.label, key => this.$t(key));
-            }
-            return "";
-        },
-        infoText () {
-            if (this.info === true) {
-                return this.$t("common:modules.tools.filterGeneral.info.snippetDropdown");
-            }
-            else if (typeof this.info === "string") {
-                return this.translateKeyWithPlausibilityCheck(this.info, key => this.$t(key));
+            else if (typeof this.title === "string") {
+                return this.translateKeyWithPlausibilityCheck(this.title, key => this.$t(key));
             }
             return "";
         },
@@ -131,35 +133,71 @@ export default {
         noElements () {
             return this.$t("modules.tools.filterGeneral.dropdown.noElements");
         },
-        dropdownOptions () {
-            if (!this.anyIconExists() || !isObject(this.iconList) || !Array.isArray(this.dropdownValue)) {
-                return this.dropdownValue;
+        dropdownValueComputed () {
+            if (this.multiselect && this.addSelectAll) {
+                return [{
+                    selectAllTitle: this.selectAllTitle,
+                    list: this.dropdownValue
+                }];
             }
-            const result = [];
-
-            this.dropdownValue.forEach(value => {
-                result.push({
-                    title: value,
-                    desc: value,
-                    img: this.iconExists(value) ? this.iconList[value] : ""
-                });
-            });
-            return result;
+            return this.dropdownValue;
+        },
+        selectAllTitle () {
+            return !this.allSelected ? this.$t("modules.tools.filterGeneral.dropdown.selectAll") : this.$t("modules.tools.filterGeneral.dropdown.deselectAll");
         }
     },
     watch: {
         dropdownSelected (value) {
-            if (!this.isInitializing || this.isInitializing && Array.isArray(this.prechecked)) {
-                if (Array.isArray(value) && value.length) {
+            if (!this.isAdjusting && (!this.isInitializing || this.isInitializing && Array.isArray(this.prechecked))) {
+                if (typeof value === "string" && value || Array.isArray(value) && value.length) {
                     this.emitCurrentRule(value, this.isInitializing);
                 }
                 else {
                     this.deleteCurrentRule();
                 }
             }
+            this.allSelected = this.dropdownValue.length !== 0 && this.dropdownValue.length === this.dropdownSelected.length;
+        },
+        adjustment (adjusting) {
+            if (!isObject(adjusting) || this.visible === false) {
+                return;
+            }
+
+            if (adjusting?.start) {
+                this.isAdjusting = true;
+                this.dropdownValue = [];
+            }
+
+            if (isObject(adjusting?.adjust) && Array.isArray(adjusting.adjust?.value)) {
+                adjusting.adjust.value.forEach(value => {
+                    if (!this.dropdownValue.includes(value) && (!Array.isArray(this.value) || this.value.includes(value))) {
+                        this.dropdownValue.push(value);
+                    }
+                });
+            }
+            if (adjusting?.finish) {
+                const selected = [];
+
+                if (Array.isArray(this.dropdownValue)) {
+                    this.dropdownValue.forEach(value => {
+                        if (this.dropdownSelected.includes(value)) {
+                            selected.push(value);
+                        }
+                    });
+                }
+                this.dropdownSelected = selected;
+                this.$nextTick(() => {
+                    this.isAdjusting = false;
+                });
+            }
         },
         disabled (value) {
             this.disable = typeof value === "boolean" ? value : true;
+        },
+        legendsInfo (value) {
+            if (this.renderIcons === "fromLegend") {
+                this.iconList = getIconListFromLegend(value, this.styleModel);
+            }
         }
     },
     created () {
@@ -199,14 +237,27 @@ export default {
                 this.disable = false;
             });
         }
+
+        if (this.visible && Array.isArray(this.prechecked) && this.prechecked.length) {
+            this.emitCurrentRule(this.prechecked, true);
+        }
     },
     mounted () {
         if (this.renderIcons === "fromLegend") {
-            this.iconList = getIconListFromLegend(this.layerId);
+            this.styleModel = getStyleModel(this.layerId);
+
+            if (!this.styleModel || !this.styleModel.getLegendInfos() || !Array.isArray(this.styleModel.getLegendInfos())) {
+                this.legendsInfo = [];
+            }
+            else {
+                this.legendsInfo = this.styleModel.getLegendInfos();
+            }
         }
         else if (isObject(this.renderIcons)) {
             this.iconList = this.renderIcons;
         }
+
+        this.$emit("setSnippetPrechecked", this.visible && Array.isArray(this.prechecked) && this.prechecked.length);
     },
     methods: {
         translateKeyWithPlausibilityCheck,
@@ -227,11 +278,11 @@ export default {
             return Object.keys(this.iconList).length > 0;
         },
         /**
-         * Returns the label to use in the gui.
-         * @returns {String} the label to use
+         * Returns the title to use in the gui.
+         * @returns {String} the title to use
          */
-        getLabel () {
-            return this.label || this.attrName;
+        getTitle () {
+            return this.title || this.attrName;
         },
         /**
          * Emits the current rule to whoever is listening.
@@ -287,11 +338,23 @@ export default {
             });
         },
         /**
-         * Toggles the info.
+         * Select all items
          * @returns {void}
          */
-        toggleInfo () {
-            this.showInfo = !this.showInfo;
+        selectAll () {
+            this.dropdownSelected = [];
+            for (const item of this.dropdownValue) {
+                if (item) {
+                    this.dropdownSelected.push(item);
+                }
+            }
+        },
+        /**
+         * Deselect all items
+         * @returns {void}
+         */
+        deselectAll () {
+            this.dropdownSelected = [];
         }
     }
 };
@@ -303,35 +366,32 @@ export default {
         class="snippetDropdownContainer"
     >
         <div
+            v-if="info"
+            class="right"
+        >
+            <SnippetInfo
+                :info="info"
+                :translation-key="translationKey"
+            />
+        </div>
+        <div
             v-if="display === 'default'"
             class="snippetDefaultContainer"
         >
             <div
-                v-if="label !== false"
+                v-if="title !== false"
                 class="left"
             >
                 <label
                     class="select-box-label"
                     :for="'snippetSelectBox-' + snippetId"
-                >{{ labelText }}</label>
-            </div>
-            <div
-                v-if="info !== false"
-                class="right"
-            >
-                <div class="info-icon">
-                    <span
-                        :class="['glyphicon glyphicon-info-sign', showInfo ? 'opened' : '']"
-                        @click="toggleInfo()"
-                        @keydown.enter="toggleInfo()"
-                    >&nbsp;</span>
-                </div>
+                >{{ titleText }}</label>
             </div>
             <div class="select-box-container">
                 <Multiselect
                     :id="'snippetSelectBox-' + snippetId"
                     v-model="dropdownSelected"
-                    :options="dropdownValue"
+                    :options="dropdownValueComputed"
                     name="select-box"
                     :disabled="disable"
                     :multiple="multiselect"
@@ -342,18 +402,13 @@ export default {
                     :close-on-select="true"
                     :clear-on-select="false"
                     :loading="disable"
+                    :group-select="multiselect && addSelectAll"
+                    :group-values="(multiselect && addSelectAll) ? 'list' : ''"
+                    :group-label="(multiselect && addSelectAll) ? 'selectAllTitle' : ''"
                 >
                     <span slot="noOptions">{{ emptyList }}</span>
                     <span slot="noResult">{{ noElements }}</span>
                 </Multiselect>
-            </div>
-            <div
-                v-show="showInfo"
-                class="bottom"
-            >
-                <div class="info-text">
-                    <span>{{ infoText }}</span>
-                </div>
             </div>
         </div>
         <div
@@ -361,15 +416,31 @@ export default {
             class="snippetListContainer"
         >
             <div class="table-responsive">
-                <table class="table table-sm table-hover table-bordered table-striped">
+                <table :class="['table table-sm table-hover table-bordered table-striped', info ? 'left': '']">
                     <thead
-                        v-if="label !== false"
+                        v-if="title !== false"
                     >
                         <tr>
                             <th
                                 :colspan="anyIconExists() ? 3 : 2"
                             >
-                                {{ labelText }}
+                                <div
+                                    class="pull-left"
+                                >
+                                    {{ titleText }}
+                                </div>
+                                <div
+                                    v-if="multiselect && addSelectAll"
+                                    class="pull-right"
+                                >
+                                    <a
+                                        href="#"
+                                        class="link-secondary"
+                                        @click="!allSelected ? selectAll() : deselectAll()"
+                                    >
+                                        {{ selectAllTitle }}
+                                    </a>
+                                </div>
                             </th>
                         </tr>
                     </thead>
@@ -381,28 +452,34 @@ export default {
                             <td
                                 v-if="anyIconExists()"
                             >
-                                <img
-                                    v-show="iconExists(val)"
-                                    class="snippetListContainerIcon"
-                                    :src="iconList[val]"
-                                    :alt="val"
+                                <label
+                                    for="'snippetRadioCheckbox-' + snippetId + '-' + val"
                                 >
+                                    <img
+                                        v-show="iconExists(val)"
+                                        class="snippetListContainerIcon"
+                                        :src="iconList[val]"
+                                        :alt="val"
+                                    >
+                                </label>
                             </td>
                             <td>
                                 <label
-                                    for="'snippetCheckbox-' + snippetId + '-' + val"
+                                    for="'snippetRadioCheckbox-' + snippetId + '-' + val"
+                                    class="hidden"
                                 />
                                 <input
-                                    :id="'snippetCheckbox-' + snippetId + '-' + val"
+                                    :id="'snippetRadioCheckbox-' + snippetId + '-' + val"
                                     v-model="dropdownSelected"
-                                    type="checkbox"
+                                    :class="multiselect ? 'checkbox': 'radio'"
+                                    :type="multiselect ? 'checkbox': 'radio'"
                                     :value="val"
                                 >
                             </td>
                             <td>
                                 <label
                                     class="check-box-label"
-                                    :for="'snippetCheckbox-' + snippetId + '-' + val"
+                                    :for="'snippetRadioCheckbox-' + snippetId + '-' + val"
                                 >{{ val }}</label>
                             </td>
                         </tr>
@@ -505,33 +582,25 @@ export default {
         background-color: initial;
     }
     .snippetDropdownContainer {
-        padding: 5px;
-        margin-bottom: 10px;
         height: auto;
     }
-    .snippetDropdownContainer .info-icon {
-        float: right;
-        font-size: 16px;
-        color: #ddd;
+    .snippetDropdownContainer input[type=radio], input[type=checkbox] {
+        margin: 0;
     }
-    .snippetDropdownContainer .info-icon .opened {
-        color: #000;
+    .snippetDropdownContainer .radio, .snippetDropdownContainer .checkbox {
+        display: inline-block;
     }
-    .snippetDropdownContainer .info-icon:hover {
-        cursor: pointer;
-        color: #a5a09e;
+    .snippetDropdownContainer label {
+        margin-bottom: 0;
     }
-    .snippetDropdownContainer .info-text {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 10px;
-        padding: 15px 10px;
+    .snippetDropdownContainer .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+        padding: 4px;
+        line-height: 1.428571429;
+        vertical-align: middle;
+        border-top: 1px solid #ddd;
     }
     .snippetListContainer .snippetListContainerIcon {
-        width: 22px;
-    }
-    .glyphicon-info-sign:before {
-        content: "\E086";
+        width: 25px;
     }
     .snippetDropdownContainer select {
         clear: left;
@@ -541,11 +610,24 @@ export default {
         clear: left;
         width: 100%;
     }
-    .snippetDropdownContainer .right {
+    .snippetDropdownContainer .table-responsive .right {
         position: absolute;
-        right: 10px;
+        right: 0;
     }
-    .category-layer .right {
+    .snippetDropdownContainer .table-responsive a {
+        margin-right: 20px;
+    }
+    .panel .snippetDropdownContainer .right,  .snippetDropdownContainer .right {
+        position: absolute;
+        right: 0;
+    }
+    .category-layer .panel .right {
         right: 30px;
+    }
+    .category-layer .panel .table-responsive .right {
+        right: 24px;
+    }
+    .table {
+        margin-bottom: 10px;
     }
 </style>

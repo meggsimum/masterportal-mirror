@@ -17,7 +17,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetSlider.vue", () => {
             expect(wrapper.vm.api).to.be.null;
             expect(wrapper.vm.decimalPlaces).to.equal(0);
             expect(wrapper.vm.info).to.be.false;
-            expect(wrapper.vm.label).to.be.true;
+            expect(wrapper.vm.title).to.be.true;
             expect(wrapper.vm.minValue).to.be.undefined;
             expect(wrapper.vm.maxValue).to.be.undefined;
             expect(wrapper.vm.operator).to.equal("EQ");
@@ -128,10 +128,10 @@ describe("src/modules/tools/filterGeneral/components/SnippetSlider.vue", () => {
             expect(wrapper.vm.disabled).to.be.true;
             wrapper.destroy();
         });
-        it("should render with a label if the label is a string", () => {
+        it("should render with a title if the title is a string", () => {
             const wrapper = shallowMount(SnippetSlider, {
                 propsData: {
-                    label: "foobar"
+                    title: "foobar"
                 },
                 localVue
             });
@@ -139,38 +139,15 @@ describe("src/modules/tools/filterGeneral/components/SnippetSlider.vue", () => {
             expect(wrapper.find(".snippetSliderLabel").text()).to.be.equal("foobar");
             wrapper.destroy();
         });
-        it("should render without a label if label is a boolean and false", () => {
+        it("should render without a title if title is a boolean and false", () => {
             const wrapper = shallowMount(SnippetSlider, {
                 propsData: {
-                    label: false
+                    title: false
                 },
                 localVue
             });
 
             expect(wrapper.find(".snippetSliderLabel").exists()).to.be.false;
-            wrapper.destroy();
-        });
-        it("should render the info span", () => {
-            const wrapper = shallowMount(SnippetSlider, {
-                propsData: {
-                    info: "this is an info text"
-                },
-                localVue
-            });
-
-            expect(wrapper.find(".info-text").exists()).to.be.true;
-            expect(wrapper.find(".info-text span").element.innerHTML).to.be.equal("this is an info text");
-            wrapper.destroy();
-        });
-        it("should not render the info button if info is a boolean and false", () => {
-            const wrapper = shallowMount(SnippetSlider, {
-                propsData: {
-                    info: false
-                },
-                localVue
-            });
-
-            expect(wrapper.find(".info-icon").exists()).to.be.false;
             wrapper.destroy();
         });
         it("should set both minimumValue and maximumValue from properties if given", () => {

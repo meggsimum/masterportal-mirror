@@ -37,10 +37,4 @@ describe("api/WPS", () => {
             expect(WPS.buildXML(identifier, xmlTemplate, dataInputXmlTemplate, data)).to.have.string(expectedOutput);
         });
     });
-
-    describe("buildUrl", () => {
-        it("return empty string if input is undefined", () => {
-            expect(WPS.buildUrl(undefined)).to.be.a("string").to.have.a.lengthOf(0);
-        });
-    });
 });

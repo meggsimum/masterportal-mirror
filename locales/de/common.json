@@ -400,6 +400,7 @@
                 "serviceFour": "Dienst 4"
             },
             "filterGeneral": {
+                "filterButton": "Filtern",
                 "searchInMapExtent": "Suche im aktuellen Kartenausschnitt",
                 "snippetTags": {
                     "resetAll": "Zurücksetzen"
@@ -416,8 +417,13 @@
                 "dropdown": {
                     "defaultLabel": "Wählen Sie eine Option",
                     "selectAll": "Alles auswählen",
+                    "deselectAll": "Alles abwählen",
                     "emptyList": "Die Liste ist leer",
                     "noElements": "Keine Elemente gefunden"
+                },
+                "filterResult": {
+                    "label": "Alle Filter-Treffer",
+                    "unit": "{{amountOfFilteredItems}} Treffer"
                 }
             },
             "filter": {
@@ -841,7 +847,7 @@
                         }
                     },
                     "preference": {
-                        "RECOMMENDED": "Schnellste Route",
+                        "RECOMMENDED": "Empfohlene Route",
                         "SHORTEST": "Kürzeste Route"
                     }
                 },
