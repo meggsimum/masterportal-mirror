@@ -57,6 +57,7 @@ const state = {
     selectedCoordinates: [],
     height: "",
     heightLayer: null,
+    zoomLevel: 7,
     heightLayerId: null,
     heightInfoFormat: "application/vnd.ogc.gml",
     heightElementName: null,
