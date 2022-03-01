@@ -6,33 +6,28 @@ const BasePage = require("../pages/BasePage");
 
 describe("URL Query Parameters", function () {
     const BUTTON_3D = {id: "button3D"},
-        TREE = {css: "#root > li.dropdown.dropdown-folder.open"};
+        COMPASS_NORTH_POINTER = {id: "north-pointer"};
 
     let basePage;
 
     beforeEach(async function () {
         basePage = new BasePage(this.driver);
-        // await basePage.load();
     });
 
-    it("?Map/mapMode=0 test shall start in 2D-mode @deep", async function () {
+    it("?Map/mapMode=2D shall start in 2D-mode @deep", async function () {
         await basePage.load("?Map/mapMode=2D");
-
         await basePage.isDisplayed(BUTTON_3D, 5000);
         const button = basePage.find(BUTTON_3D);
 
         expect(button.getText()).to.equals("3D");
     });
-    // it("?Map/mapMode=3D test shall start in 3D-mode", async function () {
-    //     await loadUrl(driver, `${url}?Map/mapMode=3D`, mode);
-    //     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
-    //     expect(await driver.findElement(By.css("#north-pointer"))).to.exist;
-    // });
-    // it("?Map/mapMode=3D test shall start in 3D-mode", async function () {
-    //     await loadUrl(driver, `${url}?Map/mapMode=3D`, mode);
-    //     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
-    //     expect(await driver.findElement(By.css("#north-pointer"))).to.exist;
-    // });
+    it("?Map/mapMode=3D shall start in 3D-mode @basic", async function () {
+        await basePage.load("?Map/mapMode=3D");
+        await basePage.isDisplayed(COMPASS_NORTH_POINTER, 5000);
+        const button = basePage.find(COMPASS_NORTH_POINTER);
+
+        expect(button).to.exist();
+    });
     // it("?Map/mapMode=3D&heading=-1.2502079000000208 test shall start in 3D-mode and shall set heading", async function () {
     //     await loadUrl(driver, `${url}?Map/mapMode=3D&heading=-1.2502079000000208`, mode);
     //     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
