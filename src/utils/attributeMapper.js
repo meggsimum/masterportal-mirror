@@ -29,7 +29,6 @@ function mapAttributes (properties, mappingObject, isNested = true) {
                 value = prepareValue(properties, key);
 
             if (typeof newKey === "object") {
-                console.log("typeof newKey = object");
                 value = prepareValueFromObject(key, newKey, properties);
                 newKey = newKey.name;
             }
