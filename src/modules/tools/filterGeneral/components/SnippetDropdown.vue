@@ -465,8 +465,18 @@ export default {
                             </td>
                             <td>
                                 <input
+                                    v-if="multiselect"
                                     :id="'snippetRadioCheckbox-' + snippetId + '-' + val"
                                     v-model="dropdownSelected"
+                                    :aria-label="'snippetRadioCheckbox-' + snippetId + '-' + val"
+                                    :class="multiselect ? 'checkbox': 'radio'"
+                                    :type="multiselect ? 'checkbox': 'radio'"
+                                    :value="val"
+                                >
+                                <input
+                                    v-else
+                                    :id="'snippetRadioCheckbox-' + snippetId + '-' + val"
+                                    v-model="dropdownSelected[0]"
                                     :aria-label="'snippetRadioCheckbox-' + snippetId + '-' + val"
                                     :class="multiselect ? 'checkbox': 'radio'"
                                     :type="multiselect ? 'checkbox': 'radio'"
