@@ -12,10 +12,8 @@ class DriverFactory {
     console.warn("this.config:",this.config);
     switch (this.config.host) {
       case 'saucelabs':
-        // const url = 'https://test.geoportal-hamburg.de/master_dev/'
-        // builder.usingServer(url)
-        builder.forBrowser(this.config.sauce.browser || "chrome")
-        console.warn("called builder.forBrowser with ", this.config.sauce.browser || "chrome")
+        const url = 'https://ondemand.eu-central-1.saucelabs.com/wd/hub'
+        builder.usingServer(url)
         builder.withCapabilities(this.config.sauce)
         console.warn("called builder.withCapabilities:", this.config.sauce);
         break
