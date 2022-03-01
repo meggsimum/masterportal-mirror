@@ -26,11 +26,12 @@ const highlighFeaturesSettings = {
 
 /**
  * handles the response from a wfs get feature request
+ * @param {Function} dispatch dispatch function
  * @param {string} response - XML to be sent as String
  * @param {Object} highlightFeaturesLayer The configuration for the Layer.
  * @returns {void}
  */
-function handleGetFeatureResponse (response, highlightFeaturesLayer) {
+function handleGetFeatureResponse (dispatch, response, highlightFeaturesLayer) {
     if (response.status === 200) {
         let hadPoint = false,
             hadPolygon = false,
@@ -122,19 +123,19 @@ function handleGetFeatureResponse (response, highlightFeaturesLayer) {
         }
     }
     else {
-        Radio.trigger("Alert", "alert", "Datenabfrage fehlgeschlagen. (Technische Details: " + status);
+        dispatch("Alerting/addSingleAlert", "Datenabfrage fehlgeschlagen. (Technische Details: " + status);
     }
 }
 
 /**
  * highlight Features by Attributes
+ * @param {Object} dispatch dispatch
  * @param {Object} queryObject the Query as read from the URL
  * @returns {void}
  */
-function highlightFeaturesByAttribute (queryObject) {
-    const layerConfList = getLayerList(),
-        // highlighFeaturesConfig = Object.prototype.hasOwnProperty.call(Config, "highlightFeatures") ? Config.highlightFeatures : undefined,
-        highlightFeaturesLayer = layerConfList.find(layerConf => layerConf.id === queryObject.wfsId),
+function highlightFeaturesByAttribute ({dispatch}, queryObject) {
+    const layerList = getLayerList(),
+        highlightFeaturesLayer = layerList.find(layerConf => layerConf.id === queryObject.wfsId),
         querySnippetLike = `<ogc:PropertyIsLike matchCase='false' wildCard='${highlightFeaturesLayer.wildCard}' singleChar='${highlightFeaturesLayer.singleChar}' escapeChar='${highlightFeaturesLayer.escapeChar}'>
             <ogc:PropertyName>${highlightFeaturesLayer.propNameSearchPrefix}${queryObject.propName}</ogc:PropertyName>
             <ogc:Literal>%${queryObject.propValue}%</ogc:Literal>
@@ -182,7 +183,7 @@ function highlightFeaturesByAttribute (queryObject) {
         headers: {"content-type": "raw"},
         timeout: 5000
     }).then(response => {
-        return handleGetFeatureResponse(response, highlightFeaturesLayer);
+        handleGetFeatureResponse(dispatch, response, highlightFeaturesLayer);
     }).catch(function (error) {
         if (error.response) {
             // Request made and server responded
