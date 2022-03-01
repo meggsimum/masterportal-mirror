@@ -618,9 +618,12 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
         describe("transformCoordinates", () => {
             it("Does not transform coordinates of the ETRS89 format and moves to coordinates", () => {
                 const state = {
-                    currentProjection: {id: "http://www.opengis.net/gml/srs/epsg.xml#25832"},
-                    selectedCoordinates: ["564459.13", "5935103.67"]
-                };
+                        currentProjection: {id: "http://www.opengis.net/gml/srs/epsg.xml#25832"},
+                        selectedCoordinates: ["564459.13", "5935103.67"]
+                    },
+                    rootState = {
+                        Map: {zoomLevel: 7}
+                    };
 
                 sinon.stub(Radio, "request").callsFake((...args) => {
                     let ret = null;
@@ -636,7 +639,7 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
                 });
 
 
-                actions.transformCoordinates({state, dispatch});
+                actions.transformCoordinates({state, dispatch, rootState});
 
                 expect(dispatch.firstCall.args[0]).to.equal("setZoom");
                 expect(dispatch.secondCall.args[0]).to.equal("moveToCoordinates");
@@ -650,7 +653,10 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
                     proj4Result = Symbol(),
                     proj4Spy = sinon.spy(() => {
                         return proj4Result;
-                    });
+                    }),
+                    rootState = {
+                        Map: {zoomLevel: 7}
+                    };
 
                 sinon.stub(Radio, "request").callsFake((...args) => {
                     let ret = null;
@@ -667,7 +673,7 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
 
 
                 sinon.stub(proj4, "default").callsFake(proj4Spy);
-                actions.transformCoordinates({state, dispatch});
+                actions.transformCoordinates({state, dispatch, rootState});
 
                 expect(proj4Spy.firstCall.args[0]).to.equal("EPSG:4326");
                 expect(proj4Spy.secondCall.args[0]).to.equal("EPSG:25832");
@@ -683,7 +689,10 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
                     proj4Result = Symbol(),
                     proj4Spy = sinon.spy(() => {
                         return proj4Result;
-                    });
+                    }),
+                    rootState = {
+                        Map: {zoomLevel: 7}
+                    };
 
                 sinon.stub(Radio, "request").callsFake((...args) => {
                     let ret = null;
@@ -700,7 +709,7 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
 
 
                 sinon.stub(proj4, "default").callsFake(proj4Spy);
-                actions.transformCoordinates({state, dispatch});
+                actions.transformCoordinates({state, dispatch, rootState});
 
                 expect(proj4Spy.firstCall.args[0]).to.equal("EPSG:4326");
                 expect(proj4Spy.secondCall.args[0]).to.equal("EPSG:25832");
@@ -716,7 +725,10 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
                     proj4Result = Symbol(),
                     proj4Spy = sinon.spy(() => {
                         return proj4Result;
-                    });
+                    }),
+                    rootState = {
+                        Map: {zoomLevel: 7}
+                    };
 
                 sinon.stub(Radio, "request").callsFake((...args) => {
                     let ret = null;
@@ -733,7 +745,7 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
 
 
                 sinon.stub(proj4, "default").callsFake(proj4Spy);
-                actions.transformCoordinates({state, dispatch});
+                actions.transformCoordinates({state, dispatch, rootState});
 
                 expect(proj4Spy.firstCall.args[0]).to.equal("EPSG:31467");
                 expect(proj4Spy.secondCall.args[0]).to.equal("EPSG:25832");
@@ -749,7 +761,10 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
                     proj4Result = Symbol(),
                     proj4Spy = sinon.spy(() => {
                         return proj4Result;
-                    });
+                    }),
+                    rootState = {
+                        Map: {zoomLevel: 7}
+                    };
 
                 sinon.stub(Radio, "request").callsFake((...args) => {
                     let ret = null;
@@ -766,7 +781,7 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
 
 
                 sinon.stub(proj4, "default").callsFake(proj4Spy);
-                actions.transformCoordinates({state, dispatch});
+                actions.transformCoordinates({state, dispatch, rootState});
 
                 expect(proj4Spy.firstCall.args[0]).to.equal("EPSG:8395");
                 expect(proj4Spy.secondCall.args[0]).to.equal("EPSG:25832");
@@ -776,9 +791,12 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
             });
             it("Transforms coordinates of the http://www.opengis.net/gml/srs/epsg.xml#25832 format and moves to coordinates", () => {
                 const state = {
-                    currentProjection: {id: "http://www.opengis.net/gml/srs/epsg.xml#25832"},
-                    selectedCoordinates: [["53.55555", ""], ["10.01234", ""]]
-                };
+                        currentProjection: {id: "http://www.opengis.net/gml/srs/epsg.xml#25832"},
+                        selectedCoordinates: [["53.55555", ""], ["10.01234", ""]]
+                    },
+                    rootState = {
+                        Map: {zoomLevel: 7}
+                    };
 
                 sinon.stub(Radio, "request").callsFake((...args) => {
                     let ret = null;
@@ -793,7 +811,7 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
                     return ret;
                 });
 
-                actions.transformCoordinates({state, dispatch});
+                actions.transformCoordinates({state, dispatch, rootState});
 
                 expect(dispatch.firstCall.args[0]).to.equal("setZoom");
                 expect(dispatch.secondCall.args[0]).to.equal("moveToCoordinates");
@@ -806,7 +824,10 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
                     proj4Result = Symbol(),
                     proj4Spy = sinon.spy(() => {
                         return proj4Result;
-                    });
+                    }),
+                    rootState = {
+                        Map: {zoomLevel: 7}
+                    };
 
                 sinon.stub(Radio, "request").callsFake((...args) => {
                     let ret = null;
@@ -822,7 +843,7 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
                 });
 
                 sinon.stub(proj4, "default").callsFake(proj4Spy);
-                actions.transformCoordinates({state, dispatch});
+                actions.transformCoordinates({state, dispatch, rootState});
 
                 expect(proj4Spy.firstCall.args[0]).to.equal("EPSG:8395");
                 expect(proj4Spy.secondCall.args[0]).to.equal("EPSG:25833");
