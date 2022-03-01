@@ -2,9 +2,9 @@
 module.exports = {
     baseUrl: process.env.BASE_URL || 'https://test.geoportal-hamburg.de/master_dev/',
     host: process.env.HOST || 'saucelabs',
-    browser: process.env.BROWSER || 'chrome',
+    browserName: process.env.BROWSER || 'chrome',
     sauce: {
-      "browser": process.env.BROWSER || 'chrome',
+      "browserName": process.env.BROWSER || 'chrome',
       "browserVersion": process.env.BROWSER_VERSION || 'latest',
       "platformName": process.env.PLATFORM_NAME || 'Windows 10',
       "sauce:options": {

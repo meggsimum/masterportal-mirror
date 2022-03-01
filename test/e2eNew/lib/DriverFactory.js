@@ -18,10 +18,8 @@ class DriverFactory {
         console.warn("called builder.withCapabilities:", this.config.sauce);
         break
       case 'localhost':
-        // process.env.PATH +=
-        //   path.delimiter + path.join(__dirname, '..', 'vendor')
         this.setLocalProxyChrome(builder)
-        builder.forBrowser(this.config.browser || "chrome")
+        builder.forBrowser(this.config.browserName || "chrome")
         break
     }
     return builder
@@ -57,9 +55,9 @@ class DriverFactory {
     options = options.addArguments("--ignore-certificate-errors");
     options = options.addArguments("--ignore-ssl-errors");
 
-    // if (testService === undefined) {
+    if (this.config.host !== "saucelabs") {
         options = options.addArguments("--no-sandbox");
-    // }
+    }
 
     builder.setChromeOptions(options);
   }
