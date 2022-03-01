@@ -19,7 +19,7 @@ describe("URL Query Parameters", function () {
         await basePage.load("?Map/mapMode=2D");
 
         await basePage.isDisplayed(BUTTON_3D, 5000);
-        const button = basePage.findElement(BUTTON_3D);
+        const button = basePage.find(BUTTON_3D);
 
         expect(button.getText()).to.equals("3D");
     });
