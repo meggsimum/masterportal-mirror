@@ -193,7 +193,6 @@ export default {
          * @returns {Array.<String[]>} Array of [key,value]-pairs - may be empty
          */
         translateGFI: function (properties, gfiAttributes) {
-            console.log(gfiAttributes);
             const resultProperties = this.processLinksAndBreaks(properties);
 
             // showAll => just use properties and make key look nice
