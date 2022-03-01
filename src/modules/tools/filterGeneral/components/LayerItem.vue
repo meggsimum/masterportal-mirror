@@ -20,12 +20,31 @@ export default {
             type: Boolean,
             required: false,
             default: false
+        },
+        changedSelectedLayers: {
+            type: Array,
+            required: false,
+            default: () => []
         }
     },
     data () {
         return {
             selected: false
         };
+    },
+    mounted () {
+        if (this.changedSelectedLayers.length) {
+            this.changedSelectedLayers.forEach(layer => {
+                if (layer.filterId === this.layer.filterId) {
+                    this.updateSelectedLayers(this.layer.filterId);
+                    this.selected = true;
+                }
+            });
+        }
+
+        if (this.layer.active && !this.changedSelectedLayers.length) {
+            this.updateSelectedLayers(this.layer.filterId);
+        }
     },
     methods: {
         /**
