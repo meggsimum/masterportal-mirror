@@ -22,7 +22,7 @@ describe("URL Query Parameters", function () {
     it("?Map/mapMode=3D shall start in 3D-mode @basic", async function () {
         await basePage.load("?Map/mapMode=3D");
         await basePage.isDisplayed(COMPASS_NORTH_POINTER, 5000);
-        expect(await basePage.find(COMPASS_NORTH_POINTER)).to.exist();
+        expect(await basePage.find(COMPASS_NORTH_POINTER)).to.exist;
     });
     // it("?Map/mapMode=3D&heading=-1.2502079000000208 test shall start in 3D-mode and shall set heading", async function () {
     //     await loadUrl(driver, `${url}?Map/mapMode=3D&heading=-1.2502079000000208`, mode);
