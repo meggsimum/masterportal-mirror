@@ -19,7 +19,8 @@ class DriverFactory {
         // process.env.PATH +=
         //   path.delimiter + path.join(__dirname, '..', 'vendor')
         this.setLocalProxyChrome(builder)
-        builder.forBrowser(this.config.browser)
+        //todo: browser soll aus config kommen
+        builder.forBrowser(this.config.browser || "chrome")
         break
     }
     return builder
