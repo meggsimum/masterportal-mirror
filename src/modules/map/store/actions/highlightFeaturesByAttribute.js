@@ -77,33 +77,33 @@ function handleGetFeatureResponse (response, highlightFeaturesLayer) {
                 hadPoint = true;
                 const coordinate = geometry.getCoordinates(),
                     iconFeature = new Feature({
-                        geometry: new Point(coordinate),
-                        gfiAttributes: feature.values_
+                        geometry: new Point(coordinate)
                     }),
                     featureStyle = styleListModelPoint.createStyle(iconFeature, false);
-
+                
+                iconFeature.setProperties(feature.getProperties());
                 iconFeature.setStyle(featureStyle);
                 highlightPoint.getSource().addFeature(iconFeature);
             }
             else if (styleListModelPolygon && geometry.getType() === "Polygon") {
                 hadPolygon = true;
                 const newFeature = new Feature({
-                        geometry: geometry,
-                        gfiAttributes: feature.values_
+                        geometry: geometry
                     }),
                     featureStyle = styleListModelPolygon.createStyle(newFeature, false);
-
+                
+                newFeature.setProperties(feature.getProperties());
                 newFeature.setStyle(featureStyle);
                 highlightPolygon.getSource().addFeature(newFeature);
             }
             else if (styleListModelLine && geometry.getType() === "LineString") {
                 hadLine = true;
                 const newFeature = new Feature({
-                        geometry: geometry,
-                        gfiAttributes: feature.values_
+                        geometry: geometry
                     }),
                     featureStyle = styleListModelLine.createStyle(newFeature, false);
-
+                
+                newFeature.setProperties(feature.getProperties());
                 newFeature.setStyle(featureStyle);
                 highlightLine.getSource().addFeature(newFeature);
             }

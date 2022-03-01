@@ -9,15 +9,12 @@ import thousandsSeparator from "./thousandsSeparator";
  * @returns {Object} The mapped properties.
  */
 function mapAttributes (properties, mappingObject, isNested = true) {
-    console.log("mapAttributes");
-    console.log(properties);
     let mappedProperties;
 
     if (!mappingObject) {
         return false;
     }
     if (!isNested) {
-        console.log("!isNested");
         if (typeof mappingObject === "string") {
             mappedProperties = prepareValue(properties, mappingObject);
         }
@@ -26,13 +23,11 @@ function mapAttributes (properties, mappingObject, isNested = true) {
         }
     }
     else {
-        console.log("isNested");
         mappedProperties = {};
         Object.keys(mappingObject).forEach(key => {
             let newKey = mappingObject[key],
                 value = prepareValue(properties, key);
-            console.log(newKey);
-            console.log(value);
+
             if (typeof newKey === "object") {
                 console.log("typeof newKey = object");
                 value = prepareValueFromObject(key, newKey, properties);
@@ -55,9 +50,6 @@ function mapAttributes (properties, mappingObject, isNested = true) {
 function prepareValue (properties, key) {
     const isPath = isObjectPath(key);
     let value = properties[Object.keys(properties).find(propertiesKey => propertiesKey.toLowerCase() === key.toLowerCase())];
-    if (!value && Object.prototype.hasOwnProperty.call(properties, "gfiAttributes")) {
-        value = properties.gfiAttributes[Object.keys(properties.gfiAttributes).find(propertiesKey => propertiesKey.toLowerCase() === key.toLowerCase())];
-    }
 
     if (isPath) {
         value = getValueFromObjectByPath(properties, key);
