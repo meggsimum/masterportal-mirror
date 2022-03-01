@@ -80,7 +80,7 @@ function handleGetFeatureResponse (response, highlightFeaturesLayer) {
                         geometry: new Point(coordinate)
                     }),
                     featureStyle = styleListModelPoint.createStyle(iconFeature, false);
-                
+
                 iconFeature.setProperties(feature.getProperties());
                 iconFeature.setStyle(featureStyle);
                 highlightPoint.getSource().addFeature(iconFeature);
@@ -91,7 +91,7 @@ function handleGetFeatureResponse (response, highlightFeaturesLayer) {
                         geometry: geometry
                     }),
                     featureStyle = styleListModelPolygon.createStyle(newFeature, false);
-                
+
                 newFeature.setProperties(feature.getProperties());
                 newFeature.setStyle(featureStyle);
                 highlightPolygon.getSource().addFeature(newFeature);
@@ -102,7 +102,7 @@ function handleGetFeatureResponse (response, highlightFeaturesLayer) {
                         geometry: geometry
                     }),
                     featureStyle = styleListModelLine.createStyle(newFeature, false);
-                
+
                 newFeature.setProperties(feature.getProperties());
                 newFeature.setStyle(featureStyle);
                 highlightLine.getSource().addFeature(newFeature);
@@ -128,14 +128,13 @@ function handleGetFeatureResponse (response, highlightFeaturesLayer) {
 
 /**
  * highlight Features by Attributes
- * @param {Object} dispatch dispatch
  * @param {Object} queryObject the Query as read from the URL
  * @returns {void}
  */
-function highlightFeaturesByAttribute ({dispatch}, queryObject) {
-    const layerConf = getLayerList(),
+function highlightFeaturesByAttribute (queryObject) {
+    const layerConfList = getLayerList(),
         // highlighFeaturesConfig = Object.prototype.hasOwnProperty.call(Config, "highlightFeatures") ? Config.highlightFeatures : undefined,
-        highlightFeaturesLayer = layerConf.find(layerConf => layerConf.id === queryObject.wfsId),
+        highlightFeaturesLayer = layerConfList.find(layerConf => layerConf.id === queryObject.wfsId),
         querySnippetLike = `<ogc:PropertyIsLike matchCase='false' wildCard='${highlightFeaturesLayer.wildCard}' singleChar='${highlightFeaturesLayer.singleChar}' escapeChar='${highlightFeaturesLayer.escapeChar}'>
             <ogc:PropertyName>${highlightFeaturesLayer.propNameSearchPrefix}${queryObject.propName}</ogc:PropertyName>
             <ogc:Literal>%${queryObject.propValue}%</ogc:Literal>
