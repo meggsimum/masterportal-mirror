@@ -43,6 +43,7 @@
 ### Removed
 
 ### Fixed
+- Issue #596: The coordToolkit is no longer zooming to a fixed zoom level. In some configuration cases the old fixed zoom level had a larger scale or was out of the service supported scale
 - Issue #694: Folder with subfolders are also selectable. (Internal flag "isLeafFolder" removed)
 - Issue #695: Optimised order in if clause. First use "show_doc_url" in layers metadata, then check if service based on the config.js's metaDataCatalogueId exists. otherwise throw console.warn
 - Issue #666: The elastic search query string replacement function will now only take effect

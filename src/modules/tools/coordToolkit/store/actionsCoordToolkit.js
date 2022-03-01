@@ -383,11 +383,11 @@ export default {
      * @param {Object} context actions context object.
      * @returns {void}
      */
-    transformCoordinates ({state, dispatch}) {
+    transformCoordinates ({state, dispatch, rootState}) {
         const mapProjection = Radio.request("MapView", "getProjection").getCode();
 
         if (state.selectedCoordinates.length === 2) {
-            dispatch("setZoom", state.zoomLevel);
+            dispatch("setZoom", rootState.Map.zoomLevel + rootState.Map.zoomLevel / 2);
 
             if (state.currentProjection.id === "EPSG:4326" || state.currentProjection.id === "EPSG:4326-DG") {
                 const coordinates = convertSexagesimalToDecimal(state.selectedCoordinates);
