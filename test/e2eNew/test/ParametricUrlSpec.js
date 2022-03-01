@@ -17,16 +17,12 @@ describe("URL Query Parameters", function () {
     it("?Map/mapMode=2D shall start in 2D-mode @deep", async function () {
         await basePage.load("?Map/mapMode=2D");
         await basePage.isDisplayed(BUTTON_3D, 5000);
-        const button = await basePage.find(BUTTON_3D);
-
-        expect(button.getText()).to.equals("3D");
+        expect(await basePage.find(BUTTON_3D).getText()).to.equals("3D");
     });
     it("?Map/mapMode=3D shall start in 3D-mode @basic", async function () {
         await basePage.load("?Map/mapMode=3D");
         await basePage.isDisplayed(COMPASS_NORTH_POINTER, 5000);
-        const button = await basePage.find(COMPASS_NORTH_POINTER);
-
-        expect(button).to.exist();
+        expect(await basePage.find(COMPASS_NORTH_POINTER)).to.exist();
     });
     // it("?Map/mapMode=3D&heading=-1.2502079000000208 test shall start in 3D-mode and shall set heading", async function () {
     //     await loadUrl(driver, `${url}?Map/mapMode=3D&heading=-1.2502079000000208`, mode);
