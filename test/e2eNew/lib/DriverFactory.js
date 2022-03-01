@@ -12,9 +12,9 @@ class DriverFactory {
     console.warn("this.config:",this.config);
     switch (this.config.host) {
       case 'saucelabs':
-        const url = 'https://test.geoportal-hamburg.de/master_dev/'
-        builder.usingServer(url)
-        builder.forBrowser(this.config.browser || "chrome")
+        // const url = 'https://test.geoportal-hamburg.de/master_dev/'
+        // builder.usingServer(url)
+        builder.forBrowser(this.config.sauce.browser || "chrome")
         builder.withCapabilities(this.config.sauce)
         break
       case 'localhost':
