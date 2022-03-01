@@ -15,25 +15,13 @@ describe("URL Query Parameters", function () {
         // await basePage.load();
     });
 
-    // run with: npm testneu -- --grep @basic
-    // to run all tests with the marker @basic
-    it("is menu visible and opens tree on click @basic", async function () {
-        await basePage.isDisplayed(MENU, 12000);
-        await basePage.click(MENU);
-
-        assert(await basePage.isDisplayed(TREE));
-    });
-
-    it("?Map/mapMode=0 test shall start in 2D-mode", async function () {
+    it("?Map/mapMode=0 test shall start in 2D-mode @deep", async function () {
         await basePage.load("?Map/mapMode=2D");
 
         await basePage.isDisplayed(BUTTON_3D, 5000);
         const button = basePage.findElement(BUTTON_3D);
 
         expect(button.getText()).to.equals("3D");
-
-        // await driver.wait(until.elementLocated(By.css("#button3D")), 5000);
-        // expect(await (await driver.findElement(By.css("#button3D"))).getText()).to.equals("3D");
     });
     // it("?Map/mapMode=3D test shall start in 3D-mode", async function () {
     //     await loadUrl(driver, `${url}?Map/mapMode=3D`, mode);

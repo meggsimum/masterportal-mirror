@@ -38,7 +38,7 @@ class DriverFactory {
       this.driver.executeScript('sauce:job-result=' + testPassed)
       if (!testPassed)
         console.log(
-          'See a video of the run at https://saucelabs.com/tests/' +
+          'See a video of the run at https://app.eu-central-1.saucelabs.com/tests/' +
             this.sessionId
         )
     }
