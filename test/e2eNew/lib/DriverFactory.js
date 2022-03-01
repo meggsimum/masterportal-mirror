@@ -15,7 +15,9 @@ class DriverFactory {
         // const url = 'https://test.geoportal-hamburg.de/master_dev/'
         // builder.usingServer(url)
         builder.forBrowser(this.config.sauce.browser || "chrome")
+        console.warn("called builder.forBrowser with ", this.config.sauce.browser || "chrome")
         builder.withCapabilities(this.config.sauce)
+        console.warn("called builder.withCapabilities:", this.config.sauce);
         break
       case 'localhost':
         // process.env.PATH +=
