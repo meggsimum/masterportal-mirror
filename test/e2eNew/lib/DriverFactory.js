@@ -9,13 +9,10 @@ class DriverFactory {
 
   _configure() {
     let builder = new Builder()
-    console.warn("this.config:",this.config);
     switch (this.config.host) {
       case 'saucelabs':
-        const url = 'https://ondemand.eu-central-1.saucelabs.com/wd/hub'
-        builder.usingServer(url)
+        builder.usingServer(this.config.saucelabsUrl)
         builder.withCapabilities(this.config.sauce)
-        console.warn("called builder.withCapabilities:", this.config.sauce);
         break
       case 'localhost':
         this.setLocalProxyChrome(builder)
@@ -37,10 +34,7 @@ class DriverFactory {
       this.driver.executeScript('sauce:job-name=' + this.testName)
       this.driver.executeScript('sauce:job-result=' + testPassed)
       if (!testPassed)
-        console.log(
-          'See a video of the run at https://app.eu-central-1.saucelabs.com/tests/' +
-            this.sessionId
-        )
+        console.log( "See a video of the run at "+this.config.saucelabsUrl+"/" + this.sessionId )
     }
     await this.driver.quit()
   }

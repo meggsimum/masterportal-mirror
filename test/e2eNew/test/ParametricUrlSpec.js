@@ -17,14 +17,14 @@ describe("URL Query Parameters", function () {
     it("?Map/mapMode=2D shall start in 2D-mode @deep", async function () {
         await basePage.load("?Map/mapMode=2D");
         await basePage.isDisplayed(BUTTON_3D, 5000);
-        const button = basePage.find(BUTTON_3D);
+        const button = await basePage.find(BUTTON_3D);
 
         expect(button.getText()).to.equals("3D");
     });
     it("?Map/mapMode=3D shall start in 3D-mode @basic", async function () {
         await basePage.load("?Map/mapMode=3D");
         await basePage.isDisplayed(COMPASS_NORTH_POINTER, 5000);
-        const button = basePage.find(COMPASS_NORTH_POINTER);
+        const button = await basePage.find(COMPASS_NORTH_POINTER);
 
         expect(button).to.exist();
     });
