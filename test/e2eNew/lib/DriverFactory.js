@@ -9,17 +9,18 @@ class DriverFactory {
 
   _configure() {
     let builder = new Builder()
+    console.warn("this.config:",this.config);
     switch (this.config.host) {
       case 'saucelabs':
         const url = 'https://test.geoportal-hamburg.de/master_dev/'
         builder.usingServer(url)
+        builder.forBrowser(this.config.browser || "chrome")
         builder.withCapabilities(this.config.sauce)
         break
       case 'localhost':
         // process.env.PATH +=
         //   path.delimiter + path.join(__dirname, '..', 'vendor')
         this.setLocalProxyChrome(builder)
-        //todo: browser soll aus config kommen
         builder.forBrowser(this.config.browser || "chrome")
         break
     }
