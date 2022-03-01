@@ -13,6 +13,9 @@
     "type": "git",
     "url": "https://bitbucket.org/geowerkstatt-hamburg/masterportal.git"
   },
+  "mocha": {
+    "timeout": 30000
+  },
   "main": "js/main.js",
   "scripts": {
     "start": "webpack-dev-server --config devtools/webpack.dev.js",
@@ -22,9 +25,12 @@
     "test:vue:watch": "npm run test:vue -- --watch",
     "test:all": "npm run test && npm run test:vue",
     "test:all:watch": "npm-run-all --parallel test:watch test:vue:watch",
+    "testneu": "env HOST=localhost env BROWSER=chrome mocha test/**/*Spec.js",
+    "browsertestOnSauceLabs": "env BROWSER=chrome mocha test/**/*Spec.js",
+    "testneuParallel": "mocha --parallel test/*Spec.js",
     "browsertestWithDevServer": "env NODE_ENV=e2eTest env browser=fromCapabilities webpack-dev-server --reporter ./test/end2end/library/reporter.js --config devtools/webpack.browsertest.js",
     "browsertestOnExternalServer": "env browser=fromCapabilities env urlPart=\\/ ./node_modules/.bin/mocha --reporter ./test/end2end/library/reporter.js ./test/end2end/TestRunner.js",
-    "browsertestOnSauceLabs": "env browser=fromCapabilities ./node_modules/.bin/mocha --reporter ./test/end2end/library/reporter.js ./test/end2end/TestRunner.js",
+    "browsertestOnSauceLabsOrig": "env browser=fromCapabilities ./node_modules/.bin/mocha --reporter ./test/end2end/library/reporter.js ./test/end2end/TestRunner.js",
     "browsertest": "env urlPart=portal/ ./node_modules/.bin/mocha --reporter ./test/end2end/library/reporter.js ./test/end2end/TestRunner.js",
     "build": "node devtools/tasks/build.js",
     "buildPortal": "node devtools/tasks/buildPortal.js",
@@ -104,6 +110,7 @@
   "devDependencies": {
     "@babel/core": "^7.16.12",
     "@babel/eslint-parser": "^7.16.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.16.7",
     "@babel/preset-env": "^7.16.11",
     "@geoblocks/print": "^0.7.1",
     "@intlify/vue-i18n-loader": "^2.1.2",
@@ -135,6 +142,7 @@
     "jsdom-global": "^3.0.2",
     "mini-css-extract-plugin": "^0.9.0",
     "mocha": "^9.2.0",
+    "mocha-parallel-tests": "^2.3.0",
     "mochapack": "^2.1.4",
     "mock-local-storage": "^1.1.19",
     "node-fetch": "^3.1.0",
