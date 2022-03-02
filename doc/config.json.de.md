@@ -1295,6 +1295,7 @@ Ein Ordner-Object wird dadurch definiert, dass es neben "name" und "glyphicon" n
 [type:draw]: # (Portalconfig.menu.tool.draw)
 [type:featureLister]: # (Portalconfig.menu.tool.featureLister)
 [type:filter]: # (Portalconfig.menu.tool.filter)
+[type:filterGeneral]: # (Portalconfig.menu.tool.filterGeneral)
 [type:gfi]: # (Portalconfig.menu.tool.gfi)
 [type:layerClusterToggler]: # (Portalconfig.menu.tool.layerClusterToggler)
 [type:layerSlider]: # (Portalconfig.menu.tool.layerSlider)
@@ -1327,6 +1328,7 @@ Liste aller konfigurierbaren Werkzeuge. Jedes Werkzeug erbt von **[tool](#markdo
 |featureLister|nein|**[featureLister](#markdown-header-portalconfigmenutoolfeaturelister)**||Listet alle Features eines Vektorlayers auf.|false|
 |fileImport|nein|**[tool](#markdown-header-portalconfigmenutool)**||Import von Dateien des Typs *.kml, *.geojson und *. gpx. Über dieses Werkzeug können solche Dateien importiert werden.|false|
 |filter|nein|**[filter](#markdown-header-portalconfigmenutoolfilter)**||Filtermodul mit dem sich Vektordaten aus WFS filtern lassen.|false|
+|filterGeneral|nein|**[filterGeneral](#markdown-header-portalconfigmenutoolfiltergeneral)**||Konfiguration eines fortgeschrittenen Filters für WFS Vektordaten.|false|
 |gfi|nein|**[gfi](#markdown-header-portalconfigmenutoolgfi)**||Mit der GetFeatureInfo(gfi) lassen sich Informationen zu beliebigen Layern anzeigen. Dabei werden bei einem WMS die Daten über die GetFeatureInfo geladen. Bei Vektordaten (WFS, Sensor, GeoJSON usw.) werden die angezeigten Attribute aus den Daten selbst verwendet.|false|
 |kmlimport|nein|**[tool](#markdown-header-portalconfigmenutool)**||Deprecated in 3.0.0 Bitte "fileImport" verwenden.|false|
 |layerClusterToggler|nein|**[tool](#markdown-header-portalconfigtoollayerClusterToggler)**||_Mit diesem Werkzeug lassen sich Layer in Clustern gleichzeitig aktivieren/laden und deaktivieren_|false|
@@ -1345,7 +1347,7 @@ Liste aller konfigurierbaren Werkzeuge. Jedes Werkzeug erbt von **[tool](#markdo
 |supplyCoord|nein|**[tool](#markdown-header-portalconfigmenutool)**||Deprecated in 3.0.0 Bitte "coordToolkit" verwenden. Werkzeug um Koordinaten per Maus(-Klick) abzufragen. Per Klick in die Karte werden die Koordinaten in der Anzeige eingefroren und können per Klick auf die Anzeige direkt in die Zwischenablage kopiert werden.|false|
 |resetTree|nein|**[tool](#markdown-header-portalconfigmenutool)**||Werkzeug um Themenbaum zurückzusetzen. Per Klick auf Werkzeugname im Menü unter Werkzeuge wird der Themenbaum zurückgesetzt.|false|
 |virtualcity|nein|**[virtualcity](#markdown-header-portalconfigmenutoolvirtualcity)**||virtualcityPLANNER planning Viewer|false|
-|wfsFeatureFilter|nein|**[tool](#markdown-header-portalconfigmenutool)**||Deprecated in 3.0.0 Bitte "filter" verwenden. Filtern von WFS Features. Über dieses Werkzeug können WFS features gefiltert werden. Dies setzt jedoch eine Konfiguration der "filterOptions" am WFS-Layer-Objekt voraus.|false|
+|wfsFeatureFilter|nein|**[tool](#markdown-header-portalconfigmenutool)**||Deprecated in 3.0.0 Bitte "filterGeneral" verwenden. Filtern von WFS Features. Über dieses Werkzeug können WFS features gefiltert werden. Dies setzt jedoch eine Konfiguration der "filterOptions" am WFS-Layer-Objekt voraus.|false|
 |wfsSearch|nein|**[wfsSearch](#markdown-header-portalconfigmenutoolwfssearch)**||Ermöglicht es ein Formular zu erstellen, um einen WFS Layer abgekoppelt von der Suchleiste mittels Filter anzufragen. Es ist möglich entweder eine gespeicherte Anfrage (Stored Query, WFS@2.0.0) zu nutzen oder eine Anfrage mithilfe der konfigurierten Parameter zu definieren (WFS@1.1.0).|false|
 |wfst|nein|**[wfst](#markdown-header-portalconfigmenutoolwfst)**||WFS-T Modul mit dem Features visualisiert, erstellt, aktualisiert und gelöscht werden können.|false|
 |bufferAnalysis|nein|**[tool](#markdown-header-portalconfigmenutool)**||In der Buffer-Analyse muss ein Quell-Layer, ein Buffer-Radius und ein Ziel-Layer ausgewählt werden. Buffer-Radien werden um die Features des Quell-Layers dargestellt. Sobald ein Ziel-Layer gewählt wurde, werden nur die Features dieses Layers hervorgehoben, welche sich außerhalb der Buffer-Radien befinden. Auch eine invertierte Anzeige ist möglich. Bei dieser werden nur die Features des Ziel-Layers innerhalb der Radien hervorgehoben werden.|false|
@@ -1688,6 +1690,308 @@ Der letzte Schritt damit der Slider als Datumsfilter verwendet werden kann, ist 
     "format": "DD.MM.YYYY",
     "type": "date"
   }
+```
+
+***
+
+#### Portalconfig.menu.tool.filterGeneral
+
+[inherits]: # (Portalconfig.menu.tool)
+
+Das Filterwerkzeug bietet eine Reihe von Optionen zum Filtern von Vektordaten.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|layerSelectorVisible|nein|Boolean|true|Verwenden des Auswahl-Selektors für die Layer. Auf `false` setzen um keine Selektion zu verwenden.|false|
+|multiLayerSelector|nein|Boolean|true|Wenn layerSelectorVisible auf `true` gesetzt ist, kann hiermit das Verhalten zum Öffnen mehrerer Selektoren gleichzeitig eingestellt werden.|false|
+|liveZoomToFeatures|nein|Boolean|true|Zoomen bei Filterung auf den Browser-Extent der die gefilterten Features umfasst.|false|
+|minScale|nein|Integer|5000|Der minimale Zoom-Level an dem das Zoomen nach Filterung immer stoppt.|false|
+|layers|nein|[filterLayer](#markdown-header-portalconfigmenutoolfiltergeneralfilterlayer)[]|[]|Konfiguration der zu filternden Layer. Wenn hier ein Array von Layer-Ids angegeben wird, versucht das System eine automatische Ermittlung der Layer- und seine Snippet-Einstellungen.|false|
+
+**Beispiel**
+
+Beispiel für die Konfiguration eines Filters mit einem einzigen Layer. Das Layer und seine Snippets werden automatisch eingestellt.
+
+```json
+{
+    "filterGeneral":{
+        "active": false,
+        "name": "Filter",
+        "glyphicon": "glyphicon-filter",
+        "renderToWindow": false,
+        "deactivateGFI": false,
+        "layerSelectorVisible": false,
+        "layers": [
+            {
+                "layerId": "8712"
+            }
+        ]
+    }
+}
+```
+
+***
+
+#### Portalconfig.menu.tool.filterGeneral.filterLayer
+
+Die Konfiguration eines Layers.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|layerId|nein|String||Die Layer-Id, muss identisch sein mit der unter `Themenconfig` konfigurierten Id des Layers.|false|
+|title|nein|String||Der Titel der für den Auswahl-Selektor verwendet werden soll (nur bei layerSelectorVisible true). Kann ein Übersetzungs-Key sein. Wenn nicht eingestellt, dann wird die Layer-Id per default verwendet.|false|
+|category|nein|String||Anstelle von `title` kann `category` als Titel konfiguriert werden. Hiermit kann der Selektor mehrdimensional gemacht werden. Ein Parameter `layers` als [filterLayer](#markdown-header-portalconfigmenutoolfiltergeneralfilterlayer)[] wird erwartet, der nach den hier beschriebenen Regeln funktioniert. Die Parameter `description` and `shortDescription` stehen wie beschrieben auch für die Kategorie-Ebene zur Verfügung (siehe Beispiele).|false|
+|description|nein|String|""|Die detailierte Beschreibung eines Layers bei geöffnetem Auswahl-Selektor oder immer über dem Filter wenn layerSelectorVisible `false` ist. Kann ein Übersetzungs-Key sein.|false|
+|shortDescription|nein|String|""|Eine kürzere Version der Beschreibung die bei Verwendung von Auswahl-Selektoren bei geschlossenen Selektoren angezeigt wird. Kann ein Übersetzungs-Key sein.|false|
+|active|no|Boolean|false|Auf `true` setzen, damit der Filter mit diesem geöffneten Filter-Layer initial geöffnet wird - nur verfügbar, wenn layerSelectorVisible auf `true` steht. Steht multiLayerSelector auf `false` und mehr als ein Filter-Layer wird auf active `true` gestellt, dann wird nur das letzte dieser Layer initial geöffnet.|false|
+|strategy|nein|String||Es gibt zwei Filter-Strategien: `passive` - Filtern nur nach Klick auf den Filter-Button. Und `active` - Filterung findet immer sofort statt, wenn die Einstellung irgendeines der Snippets verändert wird. Die passive Strategie ist der Default.|false|
+|searchInMapExtent|nein|Boolean|false|Wenn auf `true` eingestellt, wird automatisch eine generische Checkbox erzeugt, mit der die Filterung auf den Browser-Extent beschränkt werden kann. Ist die Checkbox angehakt, ist das automatische Zoomen ausgeschaltet. Bitte unbedingt [loadingStrategy](#markdown-header-themenconfiglayervector) auf `all` setzen, da es sonst zu ungewollten Effekten kommt, wenn nach dem Filtern herausgezoomt wird.|false|
+|searchInMapExtentInfo|nein|Boolean|true|Rechts von der Checkbox wird ein Info-Symbol angezeigt, bei Klick wird eine Standard-Beschreibung eingeblendet. Auf `false` stellen, wenn es nicht angezeigt werden soll. Kann auch als String mit einem eigenen Info-Text eingestellt werden oder als Übersetzungs-Key.|false|
+|showHits|nein|Boolean|true|Die Treffer nach einer Filterung werden als Text angezeigt. Auf `false` stellen, um die Treffer nicht anzuzeigen.|false|
+|snippetTags|nein|Boolean|true|Wenn gefiltert wurde, wird die Einstellung des Filters als Tags über dem Filter angezeigt. Auf `false` stellen, wenn dies vermieden werden soll.|false|
+|labelFilterButton|nein|String|"common:modules.tools.filterGeneral.filterButton"|Bei passiver Strategie (`passive`): Der verwendetet Text vom Filter-Button. Kann auch ein Übersetzungs-Key sein.|false|
+|paging|nein|Number|1000|Der Filter lädt Features Stück für Stück in die Map. Dies ermöglicht einen Ladebalken der die Usability bei großen Datenmengen verbessert. Das Paging ist die Stück-Größe. Bei zu gering eingestellter Größe wird das Filtern ausgebremst. Bei zu groß eingestellter Größe steigt die Verzögerung der Anzeige in der Karte. Der beste Wert kann nur von Fall zu Fall durch Ausprobieren ermittelt werden.|false|
+|snippets|nein|[snippets](#markdown-header-portalconfigmenutoolfiltergeneralfilterlayersnippets)[]|[]|Konfiguration der sogenannten Snippets für das Filtern. Kann bei der minimalsten Variante ein Array von Attribut-Namen sein. Kann komplett weggelassen werden, wenn die automatische Snippet-Ermittlung verwendet werden soll.|false|
+
+**Beispiel**
+
+Dieses Beispiel konfiguriert ein Layer mit nur einem einzigen Snippet. Die Art des Snippets und seine Einstellungen werden automatisch ermittelt. Siehe [filterLayerSnippets](#markdown-header-portalconfigmenutoolfiltergeneralfilterlayersnippets) um mehr zur Konfiguration von Snippets zu erfahren.
+
+```json
+{
+    "layerId": "8712",
+    "title": "Schools",
+    "strategy": "active",
+    "searchInMapExtent": true,
+    "showHits": true,
+    "shortDescription": "School master data and pupil numbers of Hamburg schools",
+    "description": "School master data and pupil numbers of Hamburg schools",
+    "snippetTags": true,
+    "paging": 100,
+    "snippets": [
+        {
+            "attrName": "rebbz_homepage"
+        }
+    ]
+}
+```
+
+**Beispiel**
+
+Das folgende Beispiel zeigt wie der Parameter `category` anstelle von `title` gesetzt wird, um mit einem Parameter `layers` eine weitere Ebene in den Selektor einzubauen.
+
+```json
+{
+    "category": "Schools and Hospitals",
+    "shortDescription": "Numbers of Hamburg schools and hospitals",
+    "description": "Numbers of Hamburg schools and hospitals",
+    "layers": [
+        {
+            "layerId": "8712",
+            "title": "Schools",
+            "strategy": "active",
+            "searchInMapExtent": true,
+            "searchInMapExtentInfo": true,
+            "showHits": true,
+            "shortDescription": "School master data and pupil numbers of Hamburg schools",
+            "description": "School master data and pupil numbers of Hamburg schools",
+            "snippetTags": true,
+            "paging": 100,
+            "snippets": [
+                {
+                    "attrName": "rebbz_homepage"
+                }
+            ]
+        },
+        {
+            "layerId": "8713",
+            "title": "Hospitals",
+            "snippetTags": true,
+            "paging": 100,
+            "snippets": [
+                {
+                    "attrName": "hospital_name"
+                }
+            ]
+        }
+    ]
+}
+```
+
+***
+
+#### Portalconfig.menu.tool.filterGeneral.filterLayer.snippets
+
+Ein Objekt das ein einzelnes Snippet beschreibt.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|attrName|ja|String||Der Name des Attributes auf dem dieses Snippet filtern soll. Kann ein Array sein, wenn `Ranges` verwendet werden sollen. (Array-Option nur für `sliderRange` and `dateRange` - siehe Beispiele).|false|
+|title|nein|String||Der Titel des Snippets. Kann ein Übersetzungs-Key sein. Wenn nicht eingestellt, wird attrName verwendet. Kann explizit auf `false` gesetzt werden um die Anzeige eines Titels zu unterbinden.|false|
+|info|nein|String||Info-Text zu diesem Snippet oder ein Übersetzungs-Key. Wenn eingestellt, dann wird rechts vom Snippet ein Info-Symbol angezeigt, das bei Klick den Text darstellt. Kann auch einfach auf `true` gestellt werden, wenn ein Standard-Text ausreichend ist.|false|
+|type|nein|String||Der Snippet-Typ: `checkbox`, `dropdown`, `text`, `slider`, `sliderRange`, `date`, `dateRange`. Wird automatisch ermittelt, wenn nicht angegeben - dabei wird der Datentyp als Grundlage genommen: boolean wird zu `checkbox`, string wird zu `dropdown`, number wird zu `sliderRange`, unbekannt wird zu `text`.|false|
+|operator|nein|String||Der logische Operator wie der eingestellte Wert mit dem Wert in der Datenbank verglichen wird. Abhängig davon ob es Sinn macht können dies folgende Werte sein: `INTERSECTS`, `BETWEEN`, `EQ`, `IN`, `STARTSWITH`, `ENDSWITH`, `NE`, `GT`, `GE`, `LT`, `LE`. Wenn weggelassen, gilt der Default: boolean wird zu `EQ`, string wird zu `EQ`, number wird zu `BETWEEN`, unbekannt wird zu `EQ`.|false|
+|visible|nein|Boolean|true|Das Snippet wird angezeigt. Auf `false` stellen um das Snippet zu verbergen: Dadurch können mithilfe von `prechecked` Werte im versteckten Snippet fest eingestellt werden, die dann bei jeder Filterung gelten.|false|
+|prechecked|nein|String[]||Initial aktiv eingestellte Werte. Für `dropdown`, `sliderRange` und `dateRange` ist dies ein Array, für checkbox ein boolean, für slider eine number, für text ein string und für date ein string der über das `format` spezifiziert werden muss.|false|
+|value|nein|String[]||Initial verwendete Werte zur Auswahl. Wenn nicht eingestellt, werden die Werte so möglich automatisch ermittelt (für `dropdown`, `slider(Range)` und `date(Range)`. Im Falle von `checkbox` wird hier die true/false-Übersetzung der Werte in der Datenbank gemacht - so die Werte in der Datenbank keine Boolean-Werte sind. (z.B. ["Ja", "Nein"] - siehe Beispiele).|false|
+|format|nein|String|"YYYY-MM-DD"|Nur für Snippet-Typ `date` und `dateRange`: Das verwendete Format des Datums in der Datenbank. Wenn nicht angegeben wird ISO8601 angenommen.|false|
+|minValue|nein|Number||Nur für Snippet-Typ `slider(Range)` und `date(Range)`: Der Minimal-Wert als number oder Datums-String. Weglassen um die automatische Ermittlung der Werte zu aktivieren.|false|
+|maxValue|nein|Number||Nur für Snippet-Typ `slider(Range)` und `date(Range)`: Der Maximal-Wert als number oder Datums-String. Weglassen um die automatische Ermittlung der Werte zu aktivieren.|false|
+|display|nein|String|"default"|Nur für Snippet-Typ `dropdown`: Wenn auf `list` eingestellt, wird anstelle einer Dropdown-Box eine Liste angezeigt.|false|
+|autoInit|nein|Boolean|true|Nur für Snippet-Typ `dropdown`: Schaltet wenn auf `false` gestellt die automatischen Ermittlungen von Inhalts-, Min- und Max-Werten ab.|false|
+|placeholder|nein|String|""|Nur für Snippet-Typ `dropdown`: Der Platzhalter bei Nicht-Einstellung der Dropdown. Kann ein Übersetzungs-Key sein.|false|
+|multiselect|nein|Boolean|true|Nur für Snippet-Typ `dropdown`: Gleichzeitige Auswahl vieler Werte. Auf `false` stellen um auf Einzelauswahl umzustellen.|false|
+|addSelectAll|nein|Boolean|false|Nur für Snippet-Typ `dropdown` mit `multiselect: true`: Ein zusätzlicher Eintrag zum Selektieren/Deselektieren aller Werte wird angeboten.|false|
+|renderIcons|nein|String|"none"|Nur für Snippet-Typ `dropdown` mit `display: "list"`: Wenn auf den String `fromLegend` eingestellt, werden Icons aus der Legende bezogen und links neben den Werten angezeigt. Wird hier ein Objekt angegeben, werden die Key-Namen als Wert und der Value als Bild-Pfad verwendet: {attrName: imagePath} (siehe Beispiele).|false|
+
+**Beispiel**
+
+Beispiel für ein Text-Snippet. Eine Input-Box mit Platzhalter zur freien Filterung von einem Attribut.
+
+```json
+{
+    "title": "Description of school",
+    "attrName": "school_description",
+    "type": "text",
+    "operator": "IN",
+    "placeholder": "Search in description"
+}
+```
+
+**Beispiel**
+
+Beispiel für ein Checkbox-Snippet. Eine Checkbox die - wenn gesetzt - nach "Oui" als true-Wert filtert. Die Checkbox ist per Default angehakt.
+
+```json
+{
+    "title": "A l'option végétalienne ?",
+    "attrName": "vegan_option",
+    "type": "checkbox",
+    "operator": "EQ",
+    "value": ["Oui", "Non"],
+    "prechecked": true
+}
+```
+
+**Beispiel**
+
+Beispiel für ein Dropdown-Snippet. Eine einfache Dropdown-Box die keine Mehrfachauswahl zulässt und einen Platzhalter hat.
+
+```json
+{
+    "title": "District",
+    "attrName": "city_district",
+    "type": "dropdown",
+    "multiselect": false,
+    "placeholder": "Choose a district"
+}
+```
+
+**Beispiel**
+
+Beispiel für ein Dropdown-Snippet. Eine als Liste dargestellte Auswahl (nicht als Dropdown-Box) mit Mehrfachauswahl und Alle-Auswählen Option. Zusätzlich mit Icons, Info, festen Werten und voreingestellten Werten.
+
+```json
+{
+    "title": "District",
+    "attrName": "city_district",
+    "info": "Some districts of London.",
+    "type": "dropdown",
+    "display": "list",
+    "multiselect": true,
+    "addSelectAll": true,
+    "value": [
+        "Whitehall and Westminster",
+        "Piccadilly and St James's",
+        "Soho and Trafalgar Square",
+        "Covent Garden and Strand",
+        "Bloomsbury and Fitzrovia"
+    ],
+    "prechecked": [
+        "Piccadilly and St James's",
+        "Soho and Trafalgar Square"
+    ],
+    "renderIcons": {
+        "Whitehall and Westminster": "https://example.com/img/whitehall.png",
+        "Piccadilly and St James's": "https://example.com/img/piccadilly.png",
+        "Soho and Trafalgar Square": "https://example.com/img/soho.png",
+        "Covent Garden and Strand": "https://example.com/img/covent.png",
+        "Bloomsbury and Fitzrovia": "https://example.com/img/bloomsbury.png"
+    },
+    "placeholder": "Choose a district"
+}
+```
+
+**Beispiel**
+
+Beispiel für ein Slider-Snippet. Ein Slider für einen Einzelwert und Kleinergleich-Operator. Mit gesetztem minValue und maxValue, was die automatische Wertermittlung abschaltet.
+
+```json
+{
+    "title": "First classes",
+    "attrName": "number_of_first_classes",
+    "type": "slider",
+    "operator": "LE",
+    "minValue": 1,
+    "maxValue": 5
+}
+```
+
+**Beispiel**
+
+Beispiel für ein SliderRange-Snippet. Eine SliderRange die ihre Grenzwerte automatisch ermittelt (wegen fehlendem minValue und maxValue).
+
+```json
+{
+    "title": "Angle d'inclinaison du toit du garage",
+    "attrName": "angle",
+    "type": "sliderRange",
+    "operator": "BETWEEN"
+}
+```
+
+**Beispiel**
+
+Beispiel für ein SliderRange-Snippet. Ein SliderRange mit zwei attrName-Angaben für min und max. Mit gesetztem minValue und maxValue, was die automatische Wertermittlung abschaltet.
+
+```json
+{
+    "title": "Angle d'inclinaison du toit du garage",
+    "attrName": ["angle_minimal", "angle_maximal"],
+    "type": "sliderRange",
+    "operator": "BETWEEN",
+    "minValue": 0,
+    "maxValue": 90
+}
+```
+
+**Beispiel**
+
+Beispiel für ein Date-Snippet. Ein Datepicker zur Auswahl eines Einzeldatums. Mit gesetztem minValue und maxValue, was die automatische Wertermittlung abschaltet.
+
+```json
+{
+    "title": "Birthday",
+    "attrName": "birthday",
+    "type": "date",
+    "format": "YYYY-MM-DD",
+    "minValue": "2000-01-01",
+    "maxValue": "2022-12-31"
+}
+```
+
+**Beispiel**
+
+Beispiel für ein DateRange-Snippet. Mit zwei Attribut-Namen für Min- und Maxwerte. Bitte das spezielle Datums-Format beachten. Benutzt den INTERSECTS-Operator und die automatische Grenzermittlung.
+
+```json
+{
+    "title": "Bauzeit der Autobahnen",
+    "attrName": ["autobahn_baubeginn", "autobahn_bauende"],
+    "type": "dateRange",
+    "operator": "INTERSECTS",
+    "format": "DD.MM.YY"
+}
 ```
 
 ***

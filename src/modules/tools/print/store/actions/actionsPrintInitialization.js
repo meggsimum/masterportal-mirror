@@ -297,7 +297,7 @@ export default {
      * @param {ol.render.Event} evt - postrender
      * @returns {void}
      */
-    createPrintMask: function ({dispatch, commit, state}, evt) {
+    createPrintMask: function ({dispatch, state}, evt) {
         dispatch("getPrintMapSize");
         dispatch("getPrintMapScales");
 
@@ -324,7 +324,6 @@ export default {
 
         if (state.isScaleSelectedManually) {
             canvasPrintOptions.scale = state.currentScale;
-            commit("setIsScaleSelectedManually", false);
         }
         else {
             dispatch("getOptimalScale", canvasOptions);

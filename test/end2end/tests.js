@@ -57,7 +57,7 @@ function tests (builder, url, browsername, resolution, config, mode, capability)
             }
         });
         const suites = [
-                // src/modules/controls
+            // src/modules/controls
                 require("../../src/modules/controls/attributions/tests/end2end/Attributions.e2e.js"),
                 require("../../src/modules/controls/backForward/tests/end2end/BackForward.e2e.js"),
                 // TODO - uncommented Button3D because the pipeline takes too long
@@ -86,7 +86,7 @@ function tests (builder, url, browsername, resolution, config, mode, capability)
                 require("./tests/modules/tools/ExtendedFilter.js"),
                 require("./tests/modules/tools/List.js"),
                 require("../../src/modules/tools/supplyCoord/tests/end2end/SupplyCoord.e2e.js"),
-                // require("../../src/modules/tools/coordToolkit/tests/end2end/CoordToolkit.e2e.js"),
+                require("../../src/modules/tools/coordToolkit/tests/end2end/CoordToolkit.e2e.js"),
                 require("../../src/modules/tools/measure/tests/end2end/Measure.e2e.js"),
                 require("../../src/modules/tools/scaleSwitcher/tests/end2end/ScaleSwitcher.e2e.js"),
                 require("./tests/modules/tools/ParcelSearch.js"),
@@ -103,7 +103,7 @@ function tests (builder, url, browsername, resolution, config, mode, capability)
                 require("../../src/modules/quickHelp/tests/end2end/QuickHelp.e2e.js"),
 
                 // src\utils
-                // require("../../src/utils/tests/end2end/parametricUrl/ParametricUrl.e2e.js"),
+                require("../../src/utils/tests/end2end/parametricUrl/ParametricUrl.e2e.js"),
 
                 // non-module tests
                 require("../../src/tests/end2end/Pan.e2e.js"),
