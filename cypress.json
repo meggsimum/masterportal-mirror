@@ -1,0 +1,7 @@
+{
+    "chromeWebSecurity": false,
+    "hosts": {
+        "*.localhost": "127.0.0.1"
+    },
+    "baseUrl": "https://localhost:9001/portal/master/"
+}
