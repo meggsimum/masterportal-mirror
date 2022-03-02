@@ -403,6 +403,7 @@
                 "filterButton": "Filter",
                 "searchInMapExtent": "Search in current map extent",
                 "snippetTags": {
+                    "selectionText": "Your selection:",
                     "resetAll": "Reset all"
                 },
                 "info": {
