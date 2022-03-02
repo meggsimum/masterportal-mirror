@@ -258,7 +258,7 @@ const StyleList = Backbone.Collection.extend(/** @lends StyleList.prototype */{
                 style:
                 {
                     type: "icon",
-                    imageName: "mapMarker.svg",
+                    imageName: "pointMarker.svg",
                     imagePath: "../../img/",
                     imageScale: 1,
                     imageWidth: 34,
