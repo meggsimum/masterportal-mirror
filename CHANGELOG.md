@@ -17,6 +17,7 @@
 ### Deprecated
 
 ### Removed
+- Removed hardcoded LayerIds in wms.js for setting whether the Layers are supportedIn3D. Setting to be done via services.json attribute notSupportedFor3D.
 
 ### Fixed
 - Issue #733, #680, #683: transparency setting has no visible effect in treeType custom
