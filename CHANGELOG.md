@@ -29,6 +29,7 @@
 
 ### Removed
 - Removed hardcoded LayerIds for 3D support in wms.js. Setting has to be done now via services.json attribute notSupportedIn3D.
+- Configuration option of `namespace` was removed from gazetteer search, because masterportalAPI removes namespace from search hits.
 
 ### Fixed
 - Issue #605: Draw Tool fixed to support not using simple_point as first item of iconList.
@@ -72,11 +73,6 @@
 - Migrated the parsing of `rest-services.json` from Backbone to Vue. Backbone components using RestReader are connected using RadioBridge.
 - Routing tool: german translation of recommended route was corrected.
 - The action Map/HighlightFeature now works for more than one feature, via removeHighlightFeature(feature) an individual highlighting can be removed, or all if no argument is given
-
-### Deprecated
-
-### Removed
-- Configuration option of `namespace` was removed from gazetteer search, because masterportalAPI removes namespace from search hits.
 
 ### Fixed
 - Occasional language name "DE-DE" in the footer was changed to "DE".

@@ -61,7 +61,10 @@ async function SearchCategories ({builder, browsername, url, resolution, capabil
                 const categorySelector = By.xpath(`//li[contains(@class,'type')][contains(.,'${categoryName || idPart}')]`),
                     categoryOpenSelector = By.xpath(`//li[contains(@class,'type')][contains(@class,'open')][contains(.,'${categoryName || idPart}')]`),
                     entrySelector = By.xpath(`//li[contains(@id,'${idPart}')][contains(@class,'hit')]`);
-                let marker = null;
+                let marker = null,
+                    elList = null,
+                    lastElement = null;
+
 
                 if (setsMarker) {
                     marker = "markerPoint";
@@ -81,8 +84,11 @@ async function SearchCategories ({builder, browsername, url, resolution, capabil
                     await driver.wait(new Promise(r => setTimeout(r, 100)));
                 } while ((await driver.findElements(categoryOpenSelector)).length === 0);
 
-                await driver.wait(until.elementIsVisible(await driver.findElement(entrySelector)), 12000);
-                await reclickUntilNotStale(driver, entrySelector);
+                elList = await driver.findElements(entrySelector);
+                lastElement = elList[elList.length - 1];
+
+                await driver.wait(until.elementIsVisible(await lastElement), 12000);
+                await lastElement.click();
 
                 if (movesCenter) {
                     await driver.wait(async () => initialCenter !== await driver.executeScript(getCenter), 12000);
@@ -185,7 +191,7 @@ async function SearchCategories ({builder, browsername, url, resolution, capabil
             });
 
             // NOTE using this instead of 'Krankenhaus' since I can't find the KH search
-            it.skip("category 'Kita' shows results; on click, zooms to the place and marks it with a marker", async function () {
+            it("category 'Kita' shows results; on click, zooms to the place and marks it with a marker", async function () {
                 await selectAndVerifyFirstHit({
                     setsMarker: true,
                     showsPolygon: false,
