@@ -835,9 +835,9 @@ const BuildSpecModel = {
             geojsonFormat = new GeoJSON();
         let convertedFeature;
 
-        // remove all object properties except geometry. Otherwise mapfish runs into an error
+        // remove all object and array properties except geometry. Otherwise mapfish runs into an error
         Object.keys(clonedFeature.getProperties()).forEach(property => {
-            if (isObject(clonedFeature.get(property)) && !(clonedFeature.get(property) instanceof Geometry)) {
+            if (isObject(clonedFeature.get(property)) && !(clonedFeature.get(property) instanceof Geometry) || Array.isArray(clonedFeature.get(property))) {
                 clonedFeature.unset(property);
             }
         });
