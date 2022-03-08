@@ -1,6 +1,6 @@
 import "../model";
 import store from "../../../src/app-store";
-import {search} from "masterportalAPI/src/searchAddress/search";
+import {search, setGazetteerUrl} from "masterportalAPI/src/searchAddress";
 
 const GazetteerModel = Backbone.Model.extend({
     defaults: {
@@ -26,7 +26,7 @@ const GazetteerModel = Backbone.Model.extend({
             "setPastedHouseNumber": this.setPastedHouseNumber
         });
 
-        this.set("gazetteerURL", store.getters.getRestServiceById(this.get("serviceId"))?.url);
+        this.setGazetteerURL(store.getters.getRestServiceById(this.get("serviceId"))?.url);
 
         if (typeof config.searchAddress === "undefined" && this.get("searchStreets") && this.get("searchHouseNumbers")) {
             this.set("searchAddress", true);
@@ -156,6 +156,17 @@ const GazetteerModel = Backbone.Model.extend({
         };
 
         return i18next.t(keys[type]);
+    },
+
+    /**
+     * Set the gazetteer URL.
+     * Also sets the URL in masterportalAPI.
+     * @param {String} gazetteerURL The gazetteer URL.
+     * @returns {void}
+     */
+    setGazetteerURL: function (gazetteerURL) {
+        setGazetteerUrl(gazetteerURL);
+        this.set("gazetteerURL", gazetteerURL);
     },
 
     /**
