@@ -15,7 +15,8 @@
         "Radio": true,
         "Backbone": true,
         "Cesium": true,
-        "i18next": true
+        "i18next": true,
+        "StreetSmartApi": true
     },
     "plugins": [
         "chai-friendly",
