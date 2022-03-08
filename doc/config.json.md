@@ -267,6 +267,7 @@ Gazetteer search service configuration.
 |searchStreetKey|no|Boolean|false|Defines whether streets should be searched for by key.|false|
 |searchStreet|no|Boolean|false|Defines whether street search is active. Precondition to set `searchHouseNumbers` to `true`.|false|
 |serviceID|yes|String||Search service id. Resolved using the **[rest-services.json](rest-services.json.md)** file.|false|
+|showGeographicIdentifier|no|Boolean|false|Specifies whether the attribute `geographicIdentifier` should be used to display the search result.|false|
 
 **Example**
 
@@ -279,7 +280,8 @@ Gazetteer search service configuration.
         "searchHouseNumbers": true,
         "searchDistricts": true,
         "searchParcels": true,
-        "searchStreetKey": true
+        "searchStreetKey": true,
+        "showGeographicIdentifier": false
     }
 }
 ```

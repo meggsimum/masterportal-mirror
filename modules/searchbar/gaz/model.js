@@ -1,6 +1,6 @@
 import "../model";
 import store from "../../../src/app-store";
-import {search, setGazetteerUrl} from "masterportalAPI/src/searchAddress";
+import {search, setGazetteerUrl, setShowGeographicIdentifier} from "masterportalAPI/src/searchAddress";
 
 const GazetteerModel = Backbone.Model.extend({
     defaults: {
@@ -11,7 +11,9 @@ const GazetteerModel = Backbone.Model.extend({
         searchHouseNumbers: false,
         searchDistricts: false,
         searchParcels: false,
-        searchStreetKey: false
+        searchStreetKey: false,
+        serviceId: null,
+        showGeographicIdentifier: false
     },
     /**
      * @description Initialization of the Gazetteer search
@@ -27,6 +29,7 @@ const GazetteerModel = Backbone.Model.extend({
         });
 
         this.setGazetteerURL(store.getters.getRestServiceById(this.get("serviceId"))?.url);
+        setShowGeographicIdentifier(this.get("showGeographicIdentifier"));
 
         if (typeof config.searchAddress === "undefined" && this.get("searchStreets") && this.get("searchHouseNumbers")) {
             this.set("searchAddress", true);
