@@ -604,7 +604,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
             store.dispatch("MapMarker/removePolygonMarker");
             hit.coordinate = this.sanitizePoint(hit.coordinate);
             store.dispatch("MapMarker/placingPointMarker", hit.coordinate);
-            store.dispatch("Tools/Streetsmart/setPosition", hit.coordinate);
+            store.dispatch("Tools/StreetSmart/setPosition", hit.coordinate);
             Radio.trigger("MapView", "setCenter", hit.coordinate, zoomLevel);
         }
         else {
@@ -1031,7 +1031,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
             if (hit.coordinate.length === 2) {
                 hit.coordinate = this.sanitizePoint(hit.coordinate);
                 store.dispatch("MapMarker/placingPointMarker", hit.coordinate);
-                store.dispatch("Tools/Streetsmart/setPosition", hit.coordinate);
+                store.dispatch("Tools/StreetSmart/setPosition", hit.coordinate);
             }
             else {
                 store.dispatch("MapMarker/placingPolygonMarker", getWKTGeom(hit));
