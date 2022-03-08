@@ -27,7 +27,7 @@ export default function WMSLayer (attrs) {
 
     // Hack for services that do not support EPSG:4326
     // notSupportedFor3DNeu is a temporary attribute
-    if (this.get("notSupportedFor3DNeu") || this.get("notSupportedFor3D") === true) {
+    if (this.get("notSupportedFor3DNeu") || this.get("notSupportedIn3D") === true) {
         this.set("supported", ["2D"]);
     }
 }
