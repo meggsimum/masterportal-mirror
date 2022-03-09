@@ -238,6 +238,7 @@ export default {
             }
 
             commit("setServiceUrl", serviceUrl);
+            serviceUrlDefinition = state.serviceUrl;
         }
 
         url = state.printService === "plotservice" ? serviceUrlDefinition + "/create.json" : serviceUrlDefinition + printId + "/report." + printFormat;
