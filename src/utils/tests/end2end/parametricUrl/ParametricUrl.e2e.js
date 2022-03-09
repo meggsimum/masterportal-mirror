@@ -835,7 +835,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
               */
 
                 it("?query= fills and executes search and zooms to result if unique address", async function () {
-                    await loadUrl(driver, `${url}?query=Neuenfelder Straße,19`, mode);
+                    await loadUrl(driver, `${url}?query=Neuenfelder Straße 19`, mode);
 
                     await driver.wait(until.elementLocated(By.css("#searchInput")), 12000);
                     const input = await driver.findElement(By.css("#searchInput")),
@@ -859,7 +859,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                 });
 
                 it("?Search/query= fills and executes search and zooms to result if unique address", async function () {
-                    await loadUrl(driver, `${url}?Search/query=Neuenfelder Straße,19`, mode);
+                    await loadUrl(driver, `${url}?Search/query=Neuenfelder Straße 19`, mode);
 
                     await driver.wait(until.elementLocated(By.css("#searchInput")), 12000);
                     const input = await driver.findElement(By.css("#searchInput")),

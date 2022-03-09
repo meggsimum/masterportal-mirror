@@ -26,6 +26,7 @@
     - Search results of elasticSearch are now displayed in the search bar in the order they come from the server.
     - The Gazetteer search is now performed via the MasterportalAPI. A new attribute `searchAddress` has been introduced.
     - Addresses pasted with `copy & paste` or the url parameter `query` are now executed directly on exactly one search hit in the gazetteer.
+- Parametric URL: For the URL parameters `QUERY` and `SEARCH/QUERY` the house numbers must now be separated with a blank. This way the call in the URL is always the same as the displayed search result.
 
 ### Deprecated
 
@@ -226,7 +227,7 @@
     - Removed copy of coordinates if click in input-field.
 
 ### Deprecated
-- Parametric url: all deprecation-warnings are removed, besides STARTUPMODUL and BEZIRK.
+- Parametric URL: all deprecation-warnings are removed, besides STARTUPMODUL and BEZIRK.
 
 ### Removed
 - WMS-layer: Hamburgensie for web_atlasde has been removed.
@@ -243,7 +244,7 @@
     - The canvas is now drawn on the top layer after a new layer is switched on in the topic tree.
     - When printing is opened initially, the canvas is now always drawn on the top layer.
     - Grouplayer legends are now printable.
-- ParametricUrl:
+- Parametric URL:
     - Layers can be loaded by mdid value.
 - Topic tree:
     - In the "light" type topic tree, layers loaded via url parameters are now sorted correctly.
@@ -278,7 +279,7 @@
 - The library "svg-url-loader" was added to package.json devDependencies.
 - Added the new Tool `Routing`.
 - Searchbar: An option "sortByName" in gdi to config if the rearching results from elastic sorted alphanumerically or not.
-- ParametricURL: An alert has been added which displays the new notation of a parameterized call.
+- Parametric URL: An alert has been added which displays the new notation of a parameterized call.
 - Handling of polygons with holes to WKT geometry parsing.
 
 ### Changed
@@ -359,7 +360,7 @@
 - New parameter "searchResultOrder" for ranking category of searching result.
 - New csv specialized export button "ExportButtonCSV" is now integrated in Vue.js.
 - Function in src/utils/translateKeyWithPlausibilityCheck.js to prevent a text with ":" in it to be recognized as translation key.
-- Migrated the Parametric Url from Backbone.js to Vue.js. Previous parameters are supported up to version 3.0.0, see also doc/urlParameter.md.
+- Migrated the Parametric URL from Backbone.js to Vue.js. Previous parameters are supported up to version 3.0.0, see also doc/urlParameter.md.
 
 ### Changed
 - Accessibility: Changed contrast ratio > 3:1 in all tools, themes, etc.
@@ -395,7 +396,7 @@
 
 ##  v2.13.0 - 2021-09-01
 ### Added
-- Migrated the Parametric Url from Backbone.js to Vue.js. Previous parameters are supported up to version 3.0.0, see also doc/urlParameter.md.
+- Migrated the Parametric URL from Backbone.js to Vue.js. Previous parameters are supported up to version 3.0.0, see also doc/urlParameter.md.
 - Autocomplete functionality for the contact tool.
 - A library for standard colors and barrier free colors "src/utils/colors.js" to use within javascript, with initial colors/colorsets: MP standard blue; MP standard red; Color Universal Design by "J*Fly data depository for Drosophila reserchers" (https://jfly.uni-koeln.de/color/ - 7 colors); three additional color sets "Hamburg blue scheme" (10 colors), "blue scheme plus" (10 colors) and "traffic light scheme" (7 colors) contributed by the IfBQ of Hamburg Town.
 - Issue #631: Adds a tutorial to use the remote interface in an iFrame.
@@ -952,7 +953,7 @@
     - Letzter Status kann direkt beim Abonnieren geholt werden (Retain-Message).
     - Konfigurierbarkeit für Sensordaten im GFI wurde erweitert.
 - GeoJson: Werden als default in EPSG:4326 gelesen, können aber über crs einen eigenen EPSG Code mitgeben.
-- ParametricURL: Neue Parameter zoomToExtent und zoomToGeometry, zoomt auf einen in der URL angegebenen Kartenausschnitt bzw. auf eine ausgewählte Geometrie.
+- Parametric URL: Neue Parameter zoomToExtent und zoomToGeometry, zoomt auf einen in der URL angegebenen Kartenausschnitt bzw. auf eine ausgewählte Geometrie.
 - MasterportalAPI: Einbinden der MasterportalAPI als Kern des Masterportals.
 - Heatmap: Erweitert für WFS und GeoJson.
 - end2end-Test: Die Möglichkeit end2end-Tests zu schreiben wurde implementiert.

@@ -35,8 +35,8 @@ MAPMARKER|Sets a marker to the given coordinate and zooms to it. If `PROJECTION`
 |MAP/MDID|Activates the layer with the given metadata id. Only usable in tree mode `"default"`.|`?Map/mdId=6E28E698-F4FA-4231-A8C5-CC44441FF2A7`|
 |PROJECTION|Coordinate reference system EPSG code. Only works when used in combination with `MAP/ZOOMTOEXTENT`, `MAP/CENTER` and `MAPMARKER`, the coordinates of the Parameters are transformed to the projection. If not set, projection of the map is used. Does not set the projection of the map.|`&projection=EPSG:4326`|
 |MAP/PROJECTION|Coordinate reference system EPSG code. Only works when used in combination with `MAP/ZOOMTOEXTENT`, `MAP/CENTER` and `MAPMARKER`, the coordinates of the Parameters are transformed to the projection. If not set, projection of the map is used. Does not set the projection of the map. |`?Map/projection=EPSG:4326`|
-|QUERY|Starts an address search via the search slot with any string given. House numbers must be given separated with a comma.|`&query=Neuenfelder Straße,19`|
-|SEARCH/QUERY|Starts an address search via the search slot with any string given. House numbers must be given separated with a comma.|`?Search/query=Neuenfelder Straße,19`|
+|QUERY|Starts an address search via the search slot with any string given. House numbers must be given separated with a blank.|`&query=Neuenfelder Straße 19`|
+|SEARCH/QUERY|Starts an address search via the search slot with any string given. House numbers must be given separated with a blank.|`?Search/query=Neuenfelder Straße 19`|
 |STARTUPMODUL|_Deprecated in major release 3.0.0. Please use the parameter `"TOOLS/[tool-id]/ACTIVE=TRUE"` instead_. |`?startupmodul=Draw`||
 |STYLE|Activates a special UI variant. E.g. `simple` may be set to hide all UI elements in an iFrame scenario.|`?style=simple`|
 |UISTYLE|Activates a special UI variant. E.g. `simple` may be set to hide all UI elements in an iFrame scenario.|`?uiStyle=simple`|
