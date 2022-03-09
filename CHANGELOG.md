@@ -65,9 +65,11 @@
     - mochapack: 2.1.2 to 2.1.4
     - masterportalAPI: v1.9.0
 - The version of node was updated, must be >= 16.13.2 < 17.
-  The version of npm  was also updated, must be >= 8.1.2 < 9. (The node and npm versions are still mandatory via .npmrc.).
+- The version of npm  was also updated, must be >= 8.1.2 < 9. (The node and npm versions are still mandatory via .npmrc.).
 - Issue #685: Changes WMS-T TimeSlider layout to accomodate larger timestamps.
 - Outsourced drawTypeOptions from constantsDraw.js into its own file
+- The vectorTile Layer is now refactored to src/core.
+- The 3D terrain layer is refactored. It is no longer a Backbone-model.The terrain layer uses the masterportalAPI's terrain layer on creation.
 - The 3D tileset layer is refactored. It is no longer a Backbone-model.The tileset layer uses the masterportalAPI's tileset layer on creation.
 - Path updated in map and map3d because abstraction in masterportalAPI changed to maps and moved into src
 - Checking the allowed version for wfs layers has been moved to the masterportalAPI.
