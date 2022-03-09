@@ -22,6 +22,7 @@
 
 ### Fixed
 - Issue #733, #680, #683: transparency setting has no visible effect in treeType custom
+- Print will now use serviceUrl when generated
 
 ---
 ## v2.19.0 - 2022-03-02
