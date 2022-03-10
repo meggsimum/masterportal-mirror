@@ -26,6 +26,7 @@
     - Search results of elasticSearch are now displayed in the search bar in the order they come from the server.
     - The Gazetteer search is now performed via the MasterportalAPI. A new attribute `searchAddress` has been introduced.
     - Addresses pasted with `copy & paste` or the url parameter `query` are now executed directly on exactly one search hit in the gazetteer.
+    - The `recommendedList` is now sorted by the attribute `searchResultOrder`.
 - Parametric URL: For the URL parameters `QUERY` and `SEARCH/QUERY` the house numbers must now be separated with a blank. This way the call in the URL is always the same as the displayed search result.
 
 ### Deprecated

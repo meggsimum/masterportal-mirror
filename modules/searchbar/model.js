@@ -329,30 +329,68 @@ const SearchbarModel = Backbone.Model.extend(/** @lends SearchbarModel.prototype
         const max = this.get("recommendedListLength"),
             originalOrderHitList = this.get("originalOrderHitList"),
             hitList = this.get("hitList"),
-            finalHitList = hitList.concat(originalOrderHitList);
+            finalHitList = hitList.concat(originalOrderHitList),
+            typeList = this.prepareTypeList(finalHitList);
         let recommendedList = [];
 
         this.setFinalHitList(finalHitList);
+        this.setTypeList(typeList);
 
-        if (finalHitList.length > max) {
-            if (this.get("selectRandomHits")) {
-                recommendedList = this.getRandomEntriesOfEachType(finalHitList, max);
-            }
-            else {
-                recommendedList = finalHitList.slice(0, max);
-            }
+        if (finalHitList.length > max && this.get("selectRandomHits")) {
+            recommendedList = this.getRandomEntriesOfEachType(finalHitList, max);
         }
         else {
-            recommendedList = finalHitList;
+            recommendedList = this.chooseRecommendedHits(typeList, max);
+            recommendedList = this.sortRecommendedList(typeList, recommendedList);
         }
 
         this.setRecommendedList(recommendedList);
-        this.setTypeList(this.prepareTypeList(finalHitList));
         this.trigger("renderRecommendedList");
 
         if (triggeredBy === "initialSearchFinished" && finalHitList.length === 1) {
             Radio.trigger("ViewZoom", "hitSelected");
         }
+    },
+
+    /**
+     * Choose the results for recommenden List
+     * @param {Object[]} typeList Sorted Hits by Type.
+     * @param {Number} max Length of recommended list.
+     * @returns {Object[]} Hits for recommended list.
+     */
+    chooseRecommendedHits: function (typeList, max) {
+        const recommendedList = [];
+
+        for (let i = 0; i < max; i++) {
+            typeList.forEach(typeItem => {
+                if (typeItem.list[i] && recommendedList.length < max) {
+                    recommendedList.push(typeItem.list[i]);
+                }
+            });
+        }
+
+        return recommendedList;
+    },
+
+    /**
+     * Sorts list for recommended list by types of typeList.
+     * @param {Object[]} typeList Sorted Hits by Type.
+     * @param {Object[]} recommendedList Unsorted hits for recommended list.
+     * @returns {Object[]} Sorted hits for recommended list.
+     */
+    sortRecommendedList: function (typeList, recommendedList) {
+        const sortedRecommendedList = [],
+            typeNames = typeList.map(types => types.type);
+
+        typeNames.forEach(type => {
+            recommendedList.forEach(hit => {
+                if (hit.type === type) {
+                    sortedRecommendedList.push(hit);
+                }
+            });
+        });
+
+        return sortedRecommendedList;
     },
 
     /**
