@@ -7,7 +7,7 @@ const {
     search
 } = actions;
 
-describe.only("src/modules/searchBar/store/actions/actionsSearchBarSearchInterfaces.spec.js", () => {
+describe("src/modules/searchBar/store/actions/actionsSearchBarSearchInterfaces.spec.js", () => {
     describe("instantiateSearchInterfaces", () => {
         it("should instantiate the gazetteer search interface", () => {
             const state = {
