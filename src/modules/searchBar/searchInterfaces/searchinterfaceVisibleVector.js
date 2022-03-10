@@ -8,18 +8,14 @@ import SearchInterface from "./searchInterface";
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
- * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
- * @param {String[]} [suggestionEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a suggestion list item.
- * @param {String[]} [suggestionEvents.onHover=["setMarker"]] Actions that are fired when hovering on a suggestion list item.
+ * @param {String} [searchInterfaceId="visibleVector"] The id of the service interface.
  * @returns {void}
  */
-export default function SearchInterfaceVisibleVector ({layerTypes, resultEvents, suggestionEvents} = {}) {
+export default function SearchInterfaceVisibleVector ({layerTypes, resultEvents, searchInterfaceId} = {}) {
     SearchInterface.call(this,
+        "client",
+        searchInterfaceId || "visibleVector",
         resultEvents || {
-            onClick: ["setMarker", "zoomToFeature"],
-            onHover: ["setMarker"]
-        },
-        suggestionEvents || {
             onClick: ["setMarker", "zoomToFeature"],
             onHover: ["setMarker"]
         });

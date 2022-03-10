@@ -1,11 +1,17 @@
 import {expect} from "chai";
+import sinon from "sinon";
 import SearchInterface from "../../../searchInterfaces/searchInterface.js";
 import SearchInterfaceGazetteer from "../../../searchInterfaces/searchInterfaceGazetteer.js";
+import store from "../../../../../app-store";
 
 describe("src/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.js", () => {
     let SearchInterface1 = null;
 
     before(() => {
+        store.getters = {
+            getRestServiceById: () => sinon.stub()
+        };
+
         SearchInterface1 = new SearchInterfaceGazetteer();
     });
 

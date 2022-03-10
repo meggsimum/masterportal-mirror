@@ -10,7 +10,9 @@
  * @property {Number} [zoomLevel=7] Defines the zoom level to use on zooming to a result.
  *
  * @property {String} [searchInput=""] The search input.
- * @property {Object[]} [searchResult=[]] The results of the configured searchInterfaces.
+ * @property {Object[]} [searchInterfaceInstances=[]] The configured searchInterfaces.
+ * @property {Object[]} [searchResults=[]] The results of the configured searchInterfaces.
+ * @property {Object[]} [searchSuggestions=[]] The suggestions of the configured searchInterfaces.
  */
 const state = {
     id: "searchBar",
@@ -22,7 +24,9 @@ const state = {
     zoomLevel: 7,
 
     searchInput: "",
-    searchResults: []
+    searchInterfaceInstances: [],
+    searchResults: [],
+    searchSuggestions: []
 };
 
 export default state;

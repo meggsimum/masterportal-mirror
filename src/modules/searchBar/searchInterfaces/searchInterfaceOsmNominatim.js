@@ -12,19 +12,15 @@ import SearchInterface from "./searchInterface";
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
+ * @param {String} [searchInterfaceId="osmNominatim"] The id of the service interface.
  * @param {String} [states=""] May contain federal state names with arbitrary separators.
- * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
- * @param {String[]} [suggestionEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a suggestion list item.
- * @param {String[]} [suggestionEvents.onHover=["setMarker"]] Actions that are fired when hovering on a suggestion list item.
  * @returns {void}
  */
-export default function SearchInterfaceOsmNominatim ({serviceId, classes, limit, resultEvents, states, suggestionEvents} = {}) {
+export default function SearchInterfaceOsmNominatim ({serviceId, classes, limit, resultEvents, searchInterfaceId, states} = {}) {
     SearchInterface.call(this,
+        "client",
+        searchInterfaceId || "osmNominatim",
         resultEvents || {
-            onClick: ["setMarker", "zoomToFeature"],
-            onHover: ["setMarker"]
-        },
-        suggestionEvents || {
             onClick: ["setMarker", "zoomToFeature"],
             onHover: ["setMarker"]
         });

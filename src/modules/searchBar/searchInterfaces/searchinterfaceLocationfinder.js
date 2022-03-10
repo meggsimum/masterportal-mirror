@@ -12,19 +12,15 @@ import SearchInterface from "./searchInterface";
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["setMarker"]] Actions that are fired when hovering on a result list item.
- * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
- * @param {String[]} [suggestionEvents.onClick=["setMarker", "zoomToFeature"]] Actions that are fired when clicking on a suggestion list item.
- * @param {String[]} [suggestionEvents.onHover=["setMarker"]] Actions that are fired when hovering on a suggestion list item.
+ * @param {String} [searchInterfaceId="locationFinder"] The id of the service interface.
  * @param {Boolean} [useProxy=false] Defines whether a service URL should be requested via proxy.
  * @returns {void}
  */
-export default function SearchInterfaceLocationFinder ({serviceId, classes, epsg, incrementalSearch, resultEvents, suggestionEvents, useProxy} = {}) {
+export default function SearchInterfaceLocationFinder ({serviceId, classes, epsg, incrementalSearch, resultEvents, searchInterfaceId, useProxy} = {}) {
     SearchInterface.call(this,
+        "client",
+        searchInterfaceId || "loactionFinder",
         resultEvents || {
-            onClick: ["setMarker", "zoomToFeature"],
-            onHover: ["setMarker"]
-        },
-        suggestionEvents || {
             onClick: ["setMarker", "zoomToFeature"],
             onHover: ["setMarker"]
         });

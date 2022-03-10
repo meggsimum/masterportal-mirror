@@ -13,94 +13,17 @@
       }
     },
     "searchBar": {
-      "gazetteer": {
-        "minchars": 3,
-        "serviceId": "8",
-        "searchAddress": true,
-        "searchStreets": true,
-        "searchHouseNumbers": true,
-        "searchDistricts": true,
-        "searchParcels": true,
-        "searchStreetKey": true
-      },
-      "elasticSearch": {
-        "minChars": 3,
-        "serviceId": "elastic",
-        "type": "GET",
-        "triggerEvent": {
-          "channel": "Parser",
-          "event": "addGdiLayer"
-        },
-        "payload": {
-          "id": "query",
-          "params": {
-            "query_string": "",
-            "typ": [
-              "sensorthings",
-              "wms"
-            ],
-            "size": 30
-          }
-        },
-        "searchStringAttribute": "query_string",
-        "responseEntryPath": "hits.hits",
-        "hitMap": {
-          "name": "_source.name",
-          "id": "_source.id",
-          "source": "_source"
-        },
-        "hitType": "common:modules.searchbar.type.subject",
-        "hitIcon": "bi-list-ul"
-      },
-      "visibleVector": {
-        "gfiOnClick": true
-      },
-      "specialWFS": {
-        "minChars": 3,
-        "timeout": 10000,
-        "definitions": [
-          {
-            "url": "/geodienste.hamburg.de/HH_WFS_Bebauungsplaene",
-            "typeName": "app:hh_hh_festgestellt",
-            "propertyNames": [
-              "app:geltendes_planrecht"
-            ],
-            "geometryName": "app:geom",
-            "name": "translate#common:modules.searchbar.specialWFS.terminated",
-            "namespaces": "xmlns:app='http://www.deegree.org/app'"
-          },
-          {
-            "url": "/geodienste.hamburg.de/HH_WFS_Bebauungsplaene",
-            "typeName": "app:prosin_imverfahren",
-            "propertyNames": [
-              "app:plan"
-            ],
-            "geometryName": "app:the_geom",
-            "name": "translate#common:modules.searchbar.specialWFS.ongoing",
-            "namespaces": "xmlns:app='http://www.deegree.org/app'"
-          },
-          {
-            "url": "/geodienste.hamburg.de/HH_WFS_KitaEinrichtung",
-            "typeName": "app:KitaEinrichtungen",
-            "propertyNames": [
-              "app:Name"
-            ],
-            "name": "translate#common:modules.searchbar.specialWFS.childcare",
-            "namespaces": "xmlns:app='http://www.deegree.org/app'"
-          },
-          {
-            "url": "/geodienste.hamburg.de/HH_WFS_Stoerfallbetriebe",
-            "typeName": "app:stoerfallbetrieb",
-            "propertyNames": [
-              "app:standort"
-            ],
-            "name": "translate#common:modules.searchbar.specialWFS.hazardous",
-            "namespaces": "xmlns:app='http://www.deegree.org/app'"
-          }
-        ]
-      },
-      "tree": {
-        "minChars": 3
+      "dev": true,
+      "searchInterfaces": {
+        "gazetteer": {
+          "serviceId": "8",
+          "searchAddress": true,
+          "searchStreets": true,
+          "searchHouseNumbers": true,
+          "searchDistricts": true,
+          "searchParcels": true,
+          "searchStreetKey": true
+        }
       },
       "zoomLevel": 9,
       "placeholder": "translate#common:modules.searchbar.placeholder.addressHospitalBplan"

@@ -60,4 +60,23 @@ describe("src/modules/searchBar/searchInterfaces/searchInterface.js", () => {
             expect(axiosMock.args[0][0]).to.equals(urlMock);
         });
     });
+
+    describe("resultEventsToObject", () => {
+        it("should convert result events to an object structure", () => {
+            const resultEvents = {
+                onClick: ["setMarker", "zoomToFeature"],
+                onHover: ["setMarker"]
+            };
+
+            expect(SearchInterface1.resultEventsToObject(resultEvents)).to.deep.equals({
+                onClick: {
+                    setMarker: {},
+                    zoomToFeature: {}
+                },
+                onHover: {
+                    setMarker: {}
+                }
+            });
+        });
+    });
 });

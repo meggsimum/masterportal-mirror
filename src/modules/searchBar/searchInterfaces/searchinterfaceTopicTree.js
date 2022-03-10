@@ -6,16 +6,14 @@ import SearchInterface from "./searchInterface";
  * @extends SearchInterface
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["activateLayerInTopicTree", "openTopicTree"]] Actions that are fired when clicking on a result list item.
- * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
- * @param {String[]} [suggestionEvents.onClick=["activateLayerInTopicTree", "openTopicTree"]] Actions that are fired when clicking on a suggestion list item.
+ * @param {String} [searchInterfaceId="topicTree"] The id of the service interface.
  * @returns {void}
  */
-export default function SearchInterfaceTopicTree ({resultEvents, suggestionEvents} = {}) {
+export default function SearchInterfaceTopicTree ({resultEvents, searchInterfaceId} = {}) {
     SearchInterface.call(this,
+        "client",
+        searchInterfaceId || "topicTree",
         resultEvents || {
-            onClick: ["activateLayerInTopicTree", "openTopicTree"]
-        },
-        suggestionEvents || {
             onClick: ["activateLayerInTopicTree", "openTopicTree"]
         });
 }

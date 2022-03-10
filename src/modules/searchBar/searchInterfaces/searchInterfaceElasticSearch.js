@@ -14,21 +14,19 @@ import SearchInterface from "./searchInterface";
  * @param {String} [responseEntryPath=""] Response JSON attribute path to found features.
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]] Actions that are fired when clicking on a result list item.
+ * @param {String} [searchInterfaceId="elasticSearch"] The id of the service interface.
  * @param {String} [searchStringAttribute="searchString"] Search string attribute name for `payload` object.
- * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
- * @param {String[]} [suggestionEvents.onClick=["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]] Actions that are fired when clicking on a suggestion list item.
  * @param {String} [type="POST"] Request type.
  * @param {Boolean} [useProxy=false] Defines whether the URL should be proxied.
  * @constructs
  * @extends SearchInterface
  * @returns {void}
  */
-export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIcon, hitType, payload, responseEntryPath, resultEvents, searchStringAttribute, suggestionEvents, type, useProxy} = {}) {
+export default function SearchInterfaceElasticSearch ({hitMap, serviceId, hitIcon, hitType, payload, responseEntryPath, resultEvents, searchInterfaceId, searchStringAttribute, type, useProxy} = {}) {
     SearchInterface.call(this,
+        "request",
+        searchInterfaceId || "elasticSearch",
         resultEvents || {
-            onClick: ["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]
-        },
-        suggestionEvents || {
             onClick: ["activateLayerInTopicTree", "addLayerToTopicTree", "openTopicTree"]
         });
 

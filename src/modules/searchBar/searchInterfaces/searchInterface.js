@@ -5,19 +5,19 @@ import axios from "axios";
  * Search interface is used as a parent element for concrete search interfaces.
  * @abstract
  * @constructs
+ * @param {String} paging Shows if all search hits are already in the store or if new requests have to be sent for further search hits. Possible values are "client" or "request.
+ * @param {String} searchInterfaceId The id of the service interface.
  * @param {Object} [resultEvents={}] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
- * @param {String[]} resultEvents.onClick Actions that are fired when clicking on a result list item.
- * @param {String[]} resultEvents.onHover Actions that are fired when hovering on a result list item.
+ * @param {String[]} [resultEvents.onClick] Actions that are fired when clicking on a result list item.
+ * @param {String[]} [resultEvents.onHover] Actions that are fired when hovering on a result list item.
  * @param {Sting} [searchState="instantiated"] The search state. Can have the values: "aborted", "failed", "finished", "instantiated", "running".
- * @param {Object} [suggestionEvents={}] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
- * @param {String[]} suggestionEvents.onClick Actions that are fired when clicking on a suggestion list item.
- * @param {String[]} suggestionEvents.onHover Actions that are fired when hovering on a suggestion list item.
  * @returns {void}
  */
-export default function SearchInterface (resultEvents = [], searchState = "instantiated", suggestionEvents = []) {
+export default function SearchInterface (paging, searchInterfaceId, resultEvents = [], searchState = "instantiated") {
+    this.paging = paging;
+    this.searchInterfaceId = searchInterfaceId;
     this.resultEvents = resultEvents;
     this.searchState = searchState;
-    this.suggestionEvents = suggestionEvents;
 
     /**
      * The current abor controller.
@@ -35,7 +35,13 @@ export default function SearchInterface (resultEvents = [], searchState = "insta
      * Timeout for request to a search interface.
      * @type {Number}
      */
-    this.timeout = this.timeout || 5000;
+    this.timeout = this.timeout ?? 5000;
+
+    /**
+     * Total number of hits.
+     * @type {Number}
+     */
+    this.totalHits = 0;
 }
 
 /**
@@ -114,4 +120,23 @@ SearchInterface.prototype.requestSearch = function (searchUrl, searchParams = {}
         .then(() => {
             this.currentController = null;
         });
+};
+
+/**
+ * Create an Object of resultEvents.
+ * @param {Object} resultEvents The result events.
+ * @returns {Object} The result evnets as object.
+ */
+SearchInterface.prototype.resultEventsToObject = function (resultEvents) {
+    const resultEventsAsObject = {};
+
+    Object.entries(resultEvents).forEach(([key, values]) => {
+        resultEventsAsObject[key] = {};
+
+        values.forEach(value => {
+            resultEventsAsObject[key][value] = {};
+        });
+    });
+
+    return resultEventsAsObject;
 };

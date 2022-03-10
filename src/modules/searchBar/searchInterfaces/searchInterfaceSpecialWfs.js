@@ -21,19 +21,15 @@ import SearchInterface from "./searchInterface";
  * @param {Object} [resultEvents] Actions that are executed when an interaction, such as hover or click, is performed with a result list item.
  * @param {String[]} [resultEvents.onClick=["highligtFeature", "setMarker", "zoomToFeature"]] Actions that are fired when clicking on a result list item.
  * @param {String[]} [resultEvents.onHover=["highligtFeature", "setMarker"]] Actions that are fired when hovering on a result list item.
- * @param {Object} [suggestionEvents] Actions that are executed when an interaction, such as hover or click, is performed with a suggestion list item.
- * @param {String[]} [suggestionEvents.onClick=["highligtFeature", "setMarker", "zoomToFeature"]] Actions that are fired when clicking on a suggestion list item.
- * @param {String[]} [suggestionEvents.onHover=["highligtFeature", "setMarker"]] Actions that are fired when hovering on a suggestion list item.
+ * @param {String} [searchInterfaceId="specialWfs"] The id of the service interface.
  * @param {Boolean} [useProxy=false] Defines whether the URL should be proxied.
  * @returns {void}
  */
-export default function SearchInterfaceSpecialWfs ({definitions, icon, geometryName, maxFeatures, namespaces, resultEvents, suggestionEvents, useproxy} = {}) {
+export default function SearchInterfaceSpecialWfs ({definitions, icon, geometryName, maxFeatures, namespaces, resultEvents, searchInterfaceId, useproxy} = {}) {
     SearchInterface.call(this,
+        "client",
+        searchInterfaceId || "specialWfs",
         resultEvents || {
-            onClick: ["highligtFeature", "setMarker", "zoomToFeature"],
-            onHover: ["highligtFeature", "setMarker"]
-        },
-        suggestionEvents || {
             onClick: ["highligtFeature", "setMarker", "zoomToFeature"],
             onHover: ["highligtFeature", "setMarker"]
         });
