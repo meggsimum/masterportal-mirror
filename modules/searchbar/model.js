@@ -247,14 +247,14 @@ const SearchbarModel = Backbone.Model.extend(/** @lends SearchbarModel.prototype
      * @return {void}
      */
     pushHits: function (attribute, value, evtType) {
-        const tempArray = [...this.get(attribute)];
+        const clonedAttributes = [...this.get(attribute)];
 
-        tempArray.push(value);
-        this.set(attribute, [].concat(...[].concat(...tempArray)));
+        clonedAttributes.push(value);
+        this.set(attribute, [].concat(...[].concat(...clonedAttributes)));
 
         if (evtType === "paste") {
             Radio.trigger("ViewZoom", "setMarkerZoom", value);
-            if (tempArray.length > 1) {
+            if (clonedAttributes.length > 1) {
                 Radio.trigger("Searchbar", "createRecommendedList");
             }
         }

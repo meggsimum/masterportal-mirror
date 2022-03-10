@@ -18,27 +18,30 @@
         "searchStreetKey": true
       },
       "elasticSearch": {
-        "minChars":3,
-        "serviceId":"elastic",
+        "minChars": 3,
+        "serviceId": "elastic",
         "type": "GET",
         "triggerEvent": {
-            "channel": "Parser",
-            "event": "addGdiLayer"
+          "channel": "Parser",
+          "event": "addGdiLayer"
         },
         "payload": {
-            "id":"query",
-            "params":{
-                "query_string":"",
-                "typ":["sensorthings","wms"],
-                "size":30
-            }
+          "id": "query",
+          "params": {
+            "query_string": "",
+            "typ": [
+              "sensorthings",
+              "wms"
+            ],
+            "size": 30
+          }
         },
         "searchStringAttribute": "query_string",
         "responseEntryPath": "hits.hits",
         "hitMap": {
-            "name": "_source.name",
-            "id": "_source.id",
-            "source": "_source"
+          "name": "_source.name",
+          "id": "_source.id",
+          "source": "_source"
         },
         "hitType": "common:modules.searchbar.type.subject",
         "hitGlyphicon": "glyphicon-list"
@@ -343,7 +346,7 @@
           "coordToolkit": {
             "name": "translate#common:menu.tools.coordToolkit",
             "glyphicon": "glyphicon-globe",
-            "heightLayerId" : "19173",
+            "heightLayerId": "19173",
             "heightElementName": "value_0",
             "heightValueWater": "-20",
             "heightValueBuilding": "200"
@@ -411,20 +414,35 @@
             "lister": 10,
             "highlightVectorRulesPolygon": {
               "fill": {
-                "color": [255, 255, 255, 0.9]
-            },
-            "stroke": {
+                "color": [
+                  255,
+                  255,
+                  255,
+                  0.9
+                ]
+              },
+              "stroke": {
                 "width": 4,
-                "color": [0, 0, 204, 0.9]
-            }
-          },
-          "highlightVectorRulesPointLine": {
-            "stroke": {
+                "color": [
+                  0,
+                  0,
+                  204,
+                  0.9
+                ]
+              }
+            },
+            "highlightVectorRulesPointLine": {
+              "stroke": {
                 "width": 8,
-                "color": [255, 0, 255, 0.9]
+                "color": [
+                  255,
+                  0,
+                  255,
+                  0.9
+                ]
               },
               "image": {
-                  "scale": 1.5
+                "scale": 1.5
               }
             }
           },
@@ -617,7 +635,9 @@
         {
           "id": "2128",
           "styleId": "2128",
-          "styleGeometryType": ["Point"],
+          "styleGeometryType": [
+            "Point"
+          ],
           "name": "translate#common:tree.trafficCameras"
         },
         {
@@ -811,9 +831,9 @@
           "styleId": "18106",
           "clusterDistance": 50,
           "loadThingsOnlyInCurrentExtent": true,
-          "gfiTheme" : {
+          "gfiTheme": {
             "name": "sensor",
-            "params" : {
+            "params": {
               "charts": {
                 "barPercentage": 1.1,
                 "values": {
@@ -828,28 +848,28 @@
                     "noticeText": "common:modules.tools.gfi.themes.sensor.sensorBarChart.noticeTextCharging"
                   },
                   "outoforder": {
-                      "title": "common:modules.tools.gfi.themes.sensor.chargingStations.outoforder",
-                      "color": "rgba(175, 175, 175, 1)",
-                      "noticeText": "common:modules.tools.gfi.themes.sensor.sensorBarChart.noticeTextOutoforder"
+                    "title": "common:modules.tools.gfi.themes.sensor.chargingStations.outoforder",
+                    "color": "rgba(175, 175, 175, 1)",
+                    "noticeText": "common:modules.tools.gfi.themes.sensor.sensorBarChart.noticeTextOutoforder"
                   }
                 }
               }
             }
           },
-          "gfiAttributes" : {
+          "gfiAttributes": {
             "dataStreamPhenomenonTime": "Letze Zustandsänderung",
             "dataStreamValue": "Zustand",
-            "connector" : "Stecker",
-            "steckerTyp" : "SteckerTyp",
-            "authMeth2" : "Authentifizierungsmethode",
-            "dataStreamId" : "DataStreamIds"
+            "connector": "Stecker",
+            "steckerTyp": "SteckerTyp",
+            "authMeth2": "Authentifizierungsmethode",
+            "dataStreamId": "DataStreamIds"
           }
         },
         {
           "id": "13023"
         },
         {
-          "id" : "19173"
+          "id": "19173"
         }
       ]
     }
