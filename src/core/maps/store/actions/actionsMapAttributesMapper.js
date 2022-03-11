@@ -10,7 +10,7 @@ Siehe:
 masterportal\src\modules\map\store\actions\actionsMap.js
 masterportal\src\core\maps\2DMap.js
 masterportal\src\core\maps\2DMapView.js */
-
+// import {activateMap3D} from "./actions3DMap";
 
 let unsubscribes = [];
 
@@ -172,17 +172,18 @@ function normalizeLayers (layerArray) {
 }
 
 /**
-     * Sets the center of the current view.
-     * @param {Object} payload parameter object
-     * @param {number[]} mapView view of the the map
-     * @returns {void}
-     */
+ * Sets the center of the current view.
+ * @param {Object} payload parameter object
+ * @param {number[]} mapView view of the the map
+ * @returns {void}
+ */
 function setCenter ({commit, getters}, mapView) {
+    // activateMap3D();
     const coords = mapView.getCenter();
 
     if (Array.isArray(coords) && coords.length === 2 && typeof coords[0] === "number" && typeof coords[1] === "number") {
         commit("setCenter", coords);
-        getters.ol2DMap.getView().setCenter(coords);
+        getters.getView.setCenter(coords);
     }
     else {
         console.warn("Center was not set. Probably there is a data type error. The format of the coordinate must be an array with two numbers.");
