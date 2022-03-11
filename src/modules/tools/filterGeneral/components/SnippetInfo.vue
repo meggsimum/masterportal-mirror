@@ -50,6 +50,7 @@ export default {
         <div class="info-icon">
             <span
                 :class="['glyphicon glyphicon-info-sign', showInfo ? 'opened' : '']"
+                tabindex="0"
                 @click="toggleInfo()"
                 @keydown.enter="toggleInfo()"
             />

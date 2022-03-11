@@ -477,6 +477,7 @@ export default {
                             class="checkbox"
                             type="checkbox"
                             :value="val"
+                            tabindex="0"
                         >
                         <input
                             v-else
@@ -486,6 +487,7 @@ export default {
                             class="radio"
                             type="radio"
                             :value="val"
+                            tabindex="0"
                         >
                     </span>
                     <span
