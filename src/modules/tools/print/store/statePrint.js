@@ -46,6 +46,7 @@ const state = {
     active: false,
     name: "common:menu.tools.print",
     id: "print",
+    printMapMarker: false,
     isVisibleInMenu: true,
     renderToWindow: false,
     resizableWindow: true,

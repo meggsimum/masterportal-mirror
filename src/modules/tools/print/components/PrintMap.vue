@@ -134,7 +134,7 @@ export default {
         Backbone.Events.listenTo(Radio.channel("ModelList"), {
             "updatedSelectedLayerList": () => {
                 if (typeof this.eventListener !== "undefined") {
-                    getVisibleLayer();
+                    getVisibleLayer(this.printMapMarker);
                     this.updateCanvasLayer();
                     this.updateCanvasByFeaturesLoadend(this.visibleLayerList);
                 }
@@ -184,7 +184,7 @@ export default {
                     }
 
                     layerSource.once("featuresloadend", () => {
-                        getVisibleLayer();
+                        getVisibleLayer(this.printMapMarker);
                         this.updateCanvasLayer();
                         this.togglePostrenderListener();
                     });

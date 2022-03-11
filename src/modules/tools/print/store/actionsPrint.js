@@ -66,7 +66,7 @@ export default {
      */
     startPrint: async function ({state, dispatch, commit}, print) {
         commit("setProgressWidth", "width: 25%");
-        getVisibleLayer();
+        getVisibleLayer(state.printMapMarker);
 
         const visibleLayerList = state.visibleLayerList,
             attr = {
@@ -238,6 +238,7 @@ export default {
             }
 
             commit("setServiceUrl", serviceUrl);
+            serviceUrlDefinition = state.serviceUrl;
         }
 
         url = state.printService === "plotservice" ? serviceUrlDefinition + "/create.json" : serviceUrlDefinition + printId + "/report." + printFormat;

@@ -170,7 +170,7 @@ export default {
     togglePostrenderListener: function ({state, dispatch, commit}) {
         const foundVectorTileLayers = [];
 
-        getVisibleLayer();
+        getVisibleLayer(state.printMapMarker);
 
         /*
         * Since MapFish 3 does not yet support VTL (see https://github.com/mapfish/mapfish-print/issues/659),
