@@ -48,7 +48,7 @@ export default {
     },
     computed: {
         ...mapGetters("controls/orientation", Object.keys(getters)),
-        ...mapGetters("Map", ["ol2DMap"])
+        ...mapGetters("Map", ["ol2DMap", "projection"])
     },
     watch: {
         tracking () {
@@ -232,7 +232,7 @@ export default {
                 position = geolocation.getPosition(),
                 firstGeolocation = this.firstGeolocation,
                 zoomMode = this.zoomMode,
-                centerPosition = proj4(proj4("EPSG:4326"), proj4(this.epsg), position);
+                centerPosition = proj4(proj4("EPSG:4326"), proj4(this.projection.getCode()), position);
 
             // setting the center position
             this.setPosition(centerPosition);
@@ -333,7 +333,7 @@ export default {
                 Radio.trigger("Util", "showLoader");
                 const geolocation = this.geolocation,
                     position = geolocation.getPosition(),
-                    centerPosition = proj4(proj4("EPSG:4326"), proj4(this.epsg), position);
+                    centerPosition = proj4(proj4("EPSG:4326"), proj4(this.projection.getCode()), position);
 
                 // setting the center position
                 this.setPosition(centerPosition);

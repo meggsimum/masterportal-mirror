@@ -110,8 +110,8 @@ describe("src/modules/map/store/actions/highlightFeature.js", () => {
             };
 
             testAction(actions.highlightFeature, highlightObject, state, {}, [
-                {type: "setHighlightedFeature", payload: highlightObject.feature},
-                {type: "setHighlightedFeatureStyle", payload: highlightObject.feature.getStyle()}
+                {type: "addHighlightedFeature", payload: highlightObject.feature},
+                {type: "addHighlightedFeatureStyle", payload: highlightObject.feature.getStyle()}
             ], {}, done);
         });
 
@@ -125,7 +125,7 @@ describe("src/modules/map/store/actions/highlightFeature.js", () => {
 
             testAction(actions.highlightFeature, highlightObject, state, {}, [
 
-            ], {}, done);
+            ], {layerById: () => undefined}, done);
         });
         it("should highlight the polygon feature via highlightVectorRules gfi parameter", done => {
             const highlightObject = {
@@ -150,8 +150,8 @@ describe("src/modules/map/store/actions/highlightFeature.js", () => {
             };
 
             testAction(actions.highlightFeature, highlightObject, state, {}, [
-                {type: "setHighlightedFeature", payload: highlightObject.feature},
-                {type: "setHighlightedFeatureStyle", payload: highlightObject.feature.getStyle()}
+                {type: "addHighlightedFeature", payload: highlightObject.feature},
+                {type: "addHighlightedFeatureStyle", payload: highlightObject.feature.getStyle()}
             ], {}, done);
         });
         it("should highlight the polygon feature via mapMarker", done => {

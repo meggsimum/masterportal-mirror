@@ -102,6 +102,7 @@ export default {
     watch: {
         active: function () {
             if (this.active) {
+                this.setIsScaleSelectedManually(false);
                 this.retrieveCapabilites();
                 this.setCurrentMapScale(this.scale);
             }
@@ -133,7 +134,7 @@ export default {
         Backbone.Events.listenTo(Radio.channel("ModelList"), {
             "updatedSelectedLayerList": () => {
                 if (typeof this.eventListener !== "undefined") {
-                    getVisibleLayer();
+                    getVisibleLayer(this.printMapMarker);
                     this.updateCanvasLayer();
                     this.updateCanvasByFeaturesLoadend(this.visibleLayerList);
                 }
@@ -183,7 +184,7 @@ export default {
                     }
 
                     layerSource.once("featuresloadend", () => {
-                        getVisibleLayer();
+                        getVisibleLayer(this.printMapMarker);
                         this.updateCanvasLayer();
                         this.togglePostrenderListener();
                     });
@@ -328,7 +329,7 @@ export default {
         :icon="glyphicon"
         :active="active"
         :show-in-sidebar="true"
-        :initial-width="350"
+        :initial-width="400"
         :render-to-window="renderToWindow"
         :resizable-window="resizableWindow"
         :deactivate-gfi="deactivateGFI"
@@ -416,7 +417,6 @@ export default {
                                 :key="i"
                                 :value="scale"
                                 :selected="scale === currentScale"
-                                @click="updateScale(scale)"
                             >
                                 1 : {{ returnScale(scale) }}
                             </option>
@@ -440,6 +440,26 @@ export default {
                         class="hint-info"
                     >
                         {{ $t("common:modules.tools.print.hintInfoScale") }}
+                    </div>
+                </div>
+                <div
+                    class="form-group form-group-sm"
+                >
+                    <label
+                        class="col-sm-5 control-label"
+                        for="autoAdjustScale"
+                    >
+                        {{ $t("common:modules.tools.print.autoAdjustScale") }}
+                    </label>
+                    <div class="col-sm-7">
+                        <div class="checkbox">
+                            <input
+                                id="autoAdjustScale"
+                                type="checkbox"
+                                :checked="autoAdjustScale"
+                                @change="setAutoAdjustScale($event.target.checked)"
+                            >
+                        </div>
                     </div>
                 </div>
                 <div

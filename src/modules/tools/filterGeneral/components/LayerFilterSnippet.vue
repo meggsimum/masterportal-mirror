@@ -577,6 +577,11 @@ export default {
                 v-show="hasUnfixedRules()"
                 class="snippetTagsWrapper"
             >
+                <div
+                    class="snippetTagText"
+                >
+                    {{ $t("modules.tools.filterGeneral.snippetTags.selectionText") }}
+                </div>
                 <SnippetTag
                     :is-reset-all="true"
                     label=""
@@ -857,6 +862,11 @@ export default {
         margin: 8px 0;
         max-height: 200px;
         overflow-y: auto;
+    }
+    .snippetTagText {
+        font-size: 12px;
+        float: left;
+        padding: 6px 4px 0px 0px;
     }
     .form-group {
         clear: both;

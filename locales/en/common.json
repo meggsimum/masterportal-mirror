@@ -1,5 +1,11 @@
 {
     "masterPortalVersion": "Masterportal V. {{masterPortalVersionNumber}}",
+    "general": {
+        "opened": "Open",
+        "cancelled": "Cancelled",
+        "error": "Error",
+        "success": "Success"
+    },
     "button": {
         "back": "Back",
         "download": "Download",
@@ -7,6 +13,13 @@
         "close": "Close",
         "minimize": "Minimize",
         "confirm": "Confirm",
+        "edit": "Edit",
+        "delete": "Delete",
+        "save": "Save",
+        "cancel": "Cancel",
+        "open": "Open",
+        "load": "Load",
+        "reset": "Reset",
         "stop": "Stop"
     },
     "colors": {
@@ -336,6 +349,7 @@
                 "formatLabel": "Format",
                 "scaleLabel": "Printing scale",
                 "withLegendLabel": "With legend",
+                "autoAdjustScale": "Adjust printing scale automatically",
                 "printLabel": "Create file",
                 "downloadFile": "Download file",
                 "createDownloadFile": "Will be created...",
@@ -403,6 +417,7 @@
                 "filterButton": "Filter",
                 "searchInMapExtent": "Search in current map extent",
                 "snippetTags": {
+                    "selectionText": "Your selection:",
                     "resetAll": "Reset all"
                 },
                 "info": {

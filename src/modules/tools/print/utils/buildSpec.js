@@ -481,9 +481,6 @@ const BuildSpecModel = {
                     styleGeometryFunction = style.getGeometryFunction();
                     if (styleGeometryFunction !== null && styleGeometryFunction !== undefined) {
                         clonedFeature.setGeometry(styleGeometryFunction(clonedFeature));
-                        if (clonedFeature.getGeometry().getCoordinates().length === 0 && feature.getGeometry().getCoordinates().length > 0) {
-                            clonedFeature.getGeometry().setCoordinates(feature.getGeometry().getCoordinates());
-                        }
                         geometryType = styleGeometryFunction(clonedFeature).getType();
                     }
                     stylingRules = this.getStylingRules(layer, clonedFeature, styleAttributes, style)
@@ -626,6 +623,9 @@ const BuildSpecModel = {
         else if (src.charAt(0) === "/") {
             url = origin + src;
         }
+        else if (src.indexOf("../") === 0) {
+            url = new URL(src, window.location.href).href;
+        }
         else if (origin.indexOf("localhost") === -1) {
             // backwards-compatibility:
             url = origin + "/lgv-config/img/" + this.getImageName(src);
@@ -633,6 +633,7 @@ const BuildSpecModel = {
         else if (src.indexOf("data:image/svg+xml;charset=utf-8") === 0) {
             url = src;
         }
+
         return url;
     },
 
@@ -907,10 +908,9 @@ const BuildSpecModel = {
         convertedFeature = geojsonFormat.writeFeatureObject(clonedFeature);
         if (clonedFeature.getGeometry().getCoordinates().length === 0) {
             convertedFeature = undefined;
-            // todo jetzt ist das convertedFeature undefined --> das führt zu Fehlern --> was soll returned werden?
         }
         // if its a cluster remove property features
-        if (convertedFeature.properties && Object.prototype.hasOwnProperty.call(convertedFeature.properties, "features")) {
+        if (convertedFeature?.properties && Object.prototype.hasOwnProperty.call(convertedFeature.properties, "features")) {
             delete convertedFeature.properties.features;
         }
         return convertedFeature;

@@ -448,9 +448,10 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
      * @param {String} [parentId] Id for the correct position of the layer in the layertree.
      * @param {String} [styleId] Id for the styling of the features; should correspond to a style from the style.json.
      * @param {(String | Object)} [gfiAttributes="ignore"] Attributes to be shown when clicking on the feature using the GFI tool.
+     * @param {Object} [opts] additional options to append to the model on initialization
      * @returns {void}
      */
-    addVectorLayer: function (name, id, features, parentId, styleId, gfiAttributes = "ignore") {
+    addVectorLayer: function (name, id, features, parentId, styleId, gfiAttributes = "ignore", opts = {}) {
         const layer = {
             type: "layer",
             name: name,
@@ -468,7 +469,8 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
             isSelected: true,
             cache: false,
             datasets: [],
-            urlIsVisible: false
+            urlIsVisible: false,
+            ...opts
         };
 
         if (styleId !== undefined) {

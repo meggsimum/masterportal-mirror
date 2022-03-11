@@ -40,7 +40,7 @@ export default {
             @click="toggleLanguageWindow"
             @keydown.enter="toggleLanguageWindow"
         >
-            {{ $i18n.i18next.language }}
+            {{ $i18n.i18next.languages[0] }}
         </a>
         <div
             v-if="showWindow"

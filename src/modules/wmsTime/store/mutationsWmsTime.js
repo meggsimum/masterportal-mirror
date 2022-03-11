@@ -9,8 +9,11 @@ const mutations = {
         state.windowWidth = window.innerWidth;
     },
     // TimeSlider mutations
-    addTimeSliderObject (state, object) {
-        state.timeSlider.objects.push(object);
+    addTimeSliderObject (state, timeSliderObject) {
+        state.timeSlider.objects = [
+            ...state.timeSlider.objects,
+            timeSliderObject
+        ];
     },
     setTimeSliderActive ({timeSlider}, {active, currentLayerId}) {
         timeSlider.active = active;

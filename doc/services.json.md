@@ -110,11 +110,15 @@ to <br>
 Possible configuration for the time related parameters of a WMS-T.
 If a parameter is also present in the service, the definition in this config is used.
 
+> ⚠️ Please mind that `version` must be set to `1.1.1`. The Masterportal implementation does currently not support newer versions.
+
 |Name|Verpflichtend|Typ|default|Beschreibung|Beispiel|
 |----|-------------|---|-------|------------|--------|
-|default|no|Number||Initial moment to be displayed for the WMS-T. **Beware**: If the configured value is not part of the time range of possible values, the default of the service is used instead.|`1970`|
+|default|no|String||Initial moment to be displayed for the WMS-T. **Beware**: If the configured value is not part of the time range of possible values, the default of the service is used instead.|`"1970"`|
 |keyboardMovement|no|Number|`5`| Value in pixels that the swiper should be moved when using the arrow keys.|`5`|
 |playbackDelay|no|Number|`1`|When using the playback function, this is the time in seconds which a moment should be shown before the rendering of the next moment is initiated.|`42`|
+|dimensionName|no|String|`"time"`|Name of GetCapabilities <Dimension> tag to use for layer; time format|`"REFERENCE_TIME"`|
+|extentName|no|String|`"time"`|Name of GetCapabilities <Extent> tag to use for layer; contains valid points in time|`"REFERENCE_TIME"`|
 
 ***
 

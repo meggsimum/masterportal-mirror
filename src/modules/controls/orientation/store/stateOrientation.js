@@ -7,8 +7,7 @@ const state = {
     showPoi: false,
     geolocation: null,
     position: null,
-    activeCategory: "",
-    epsg: "EPSG:25832"
+    activeCategory: ""
 };
 
 export default state;

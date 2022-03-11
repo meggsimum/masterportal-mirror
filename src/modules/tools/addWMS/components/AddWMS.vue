@@ -25,6 +25,7 @@ export default {
     },
     computed: {
         ...mapGetters("Tools/AddWMS", Object.keys(getters)),
+        ...mapGetters("Map", ["projection"]),
 
         placeholder () {
             return i18next.t("common:modules.tools.addWMS.placeholder");
@@ -276,15 +277,15 @@ export default {
                     secondLayerExtent = [];
 
                 layer.forEach(singleLayer => {
-                    if (singleLayer.crs === "EPSG:25832") {
+                    if (singleLayer.crs === this.projection.getCode()) {
                         firstLayerExtent = [singleLayer.extent[0], singleLayer.extent[1]];
                         secondLayerExtent = [singleLayer.extent[2], singleLayer.extent[3]];
                     }
                 });
 
                 if (!firstLayerExtent.length && !secondLayerExtent.length) {
-                    firstLayerExtent = transformCoord(layer[0].crs, "EPSG:25832", [layer[0].extent[0], layer[0].extent[1]]);
-                    secondLayerExtent = transformCoord(layer[0].crs, "EPSG:25832", [layer[0].extent[2], layer[0].extent[3]]);
+                    firstLayerExtent = transformCoord(layer[0].crs, this.projection.getCode(), [layer[0].extent[0], layer[0].extent[1]]);
+                    secondLayerExtent = transformCoord(layer[0].crs, this.projection.getCode(), [layer[0].extent[2], layer[0].extent[3]]);
                 }
 
                 layerExtent = [firstLayerExtent[0], firstLayerExtent[1], secondLayerExtent[0], secondLayerExtent[1]];

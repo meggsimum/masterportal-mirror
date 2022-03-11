@@ -125,7 +125,7 @@
                 }
             },
             "legend": {
-              "name": "common:modules.legend.name",
+              "name": "translate#common:modules.legend.name",
               "glyphicon": "glyphicon-book",
               "showCollapseAllButton": true
             },

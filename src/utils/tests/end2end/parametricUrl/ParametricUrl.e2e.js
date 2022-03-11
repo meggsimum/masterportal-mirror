@@ -727,7 +727,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     ]), 20000);
                 });
 
-                it("?featureViaURL test point", async function () {
+                it.skip("?featureViaURL test point", async function () {
                     await loadUrl(driver, `${url}?featureViaURL=[{"layerId":"42","features":[{"coordinates":[566331.53,5928359.43],"label":"TestPunkt"}]}]`, mode);
 
                     await driver.wait(until.elementLocated(By.css(".navbar")), 12000);
@@ -736,7 +736,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     ]), 20000);
                 });
 
-                it("?featureViaURL test point", async function () {
+                it.skip("?featureViaURL test line", async function () {
                     await loadUrl(driver, `${url}?featureViaURL=[{"layerId":"4200","features":[{"coordinates":[[10.15,53.5],[10.05,53.5],[10.05,53.55]],"label":"TestLinie"}]}]`, mode);
                     await driver.wait(until.elementLocated(By.css(".navbar")), 12000);
                     await driver.executeScript(isLayerVisible, "4200");

@@ -1,12 +1,26 @@
 {
     "masterPortalVersion": "Masterportal V. {{masterPortalVersionNumber}}",
+    "general": {
+        "opened": "Aperto",
+        "cancelled": "Annullato",
+        "error": "Errore",
+        "success": "Successo"
+    },
     "button": {
         "back": "Indietro",
         "download": "Scarica",
         "search": "Cerca",
         "close": "Chiudi",
         "minimize": "Riduci",
-        "confirm": "Verifica"
+        "confirm": "Verifica",
+        "edit": "Modificare",
+        "delete": "Eliminare",
+        "save": "Salva",
+        "cancel": "Annulla",
+        "open": "Aprire",
+        "load": "Carico",
+        "reset": "Ripristina",
+        "stop": "Fermare"
     },
     "colors": {
         "blue": "Blu",

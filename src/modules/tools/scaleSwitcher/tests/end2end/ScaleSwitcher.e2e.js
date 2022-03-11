@@ -46,7 +46,7 @@ async function ScaleSwitcherTests ({builder, url, resolution, capability}) {
                 }
             });
 
-            it.skip("Open the tool scaleSwitcher and check if all elements are visible", async function () {
+            it("Open the tool scaleSwitcher and check if all elements are visible", async function () {
                 let counter = 0;
 
                 do {

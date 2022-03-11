@@ -75,30 +75,36 @@ describe("src/core/layers/wmsTime.js", () => {
     it("extractExtentValues - extract an object that contains the time range", function () {
         const wmsTimeLayer = new WMSTimeLayer(attributes),
             extent = {
-                values: "2006/2018/P2Y"
+                value: "2006/2018/P2Y"
             };
 
         expect(wmsTimeLayer.extractExtentValues(extent)).deep.equals({
-            step: 1,
-            timeRange: [2006, 2008, 2010, 2012, 2014, 2016, 2018]
+            step: {
+                years: "2"
+            },
+            timeRange: ["2006", "2008", "2010", "2012", "2014", "2016", "2018"]
         });
     });
     it("createTimeRange - create an array with the time range", function () {
         const wmsTimeLayer = new WMSTimeLayer(attributes),
-            min = 2006,
-            max = 2018,
-            step = 1;
+            min = "2006",
+            max = "2018",
+            step = {
+                years: "2"
+            };
 
         expect(wmsTimeLayer.createTimeRange(min, max, step)).to.be.an("array");
-        expect(wmsTimeLayer.createTimeRange(min, max, step)).includes(2006, 2008, 2010, 2012, 2014, 2016, 2018);
+        expect(wmsTimeLayer.createTimeRange(min, max, step)).includes("2006", "2008", "2010", "2012", "2014", "2016", "2018");
     });
     it("createTimeRange - create an array with the time range", function () {
         const wmsTimeLayer = new WMSTimeLayer(attributes),
-            min = 2006,
-            max = 2018,
-            step = 1;
+            min = "2006",
+            max = "2018",
+            step = {
+                years: "2"
+            };
 
         expect(wmsTimeLayer.createTimeRange(min, max, step)).to.be.an("array");
-        expect(wmsTimeLayer.createTimeRange(min, max, step)).includes(2006, 2008, 2010, 2012, 2014, 2016, 2018);
+        expect(wmsTimeLayer.createTimeRange(min, max, step)).includes("2006", "2008", "2010", "2012", "2014", "2016", "2018");
     });
 });

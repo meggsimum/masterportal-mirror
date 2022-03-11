@@ -331,17 +331,19 @@ const actions = {
      * Zoom to the given geometry or extent based on the current map size.
      * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#fit|ol.view.fit}
      * @param {module:ol/geom/Geometry | module:ol/extent} payload.geometryOrExtent The geometry or extent to zoom to.
-     * @param {Object} payload.options Documentation linked.
+     * @param {Object} [payload.options] Documentation linked.
      * @returns {void}
      */
-    zoomTo ({commit, getters}, {geometryOrExtent, options}) {
+    zoomTo ({commit, getters}, {geometryOrExtent, options = {}}) {
         const mapView = getters.ol2DMap.getView();
 
         mapView.fit(geometryOrExtent, {
             duration: options?.duration ? options.duration : 800,
+            callback: () => {
+                commit("setCenter", mapView.getCenter());
+            },
             ...options
         });
-        commit("setCenter", mapView.getCenter());
     },
     /**
      * Creates a new vector layer and adds it to the map.

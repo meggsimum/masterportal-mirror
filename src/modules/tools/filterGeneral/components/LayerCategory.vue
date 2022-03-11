@@ -22,6 +22,11 @@ export default {
             type: Array,
             required: false,
             default: () => []
+        },
+        changedSelectedLayers: {
+            type: Array,
+            required: false,
+            default: () => []
         }
     },
     data () {
@@ -187,6 +192,7 @@ export default {
                 :layer="filter"
                 :multi-layer-selector="multiLayerSelector"
                 :disabled="disabled(filter.filterId)"
+                :changed-selected-layers="changedSelectedLayers"
                 @updatetoselectedlayers="updateSelectedLayers"
             >
                 <slot

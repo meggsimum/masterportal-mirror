@@ -57,8 +57,6 @@ export default {
         >
             <span class="snippetTagValue pull-left">{{ value }}</span>
             <span class="glyphicon glyphicon-remove pull-right" />
-            <br>
-            <span class="snippetTagLabel">{{ label }}</span>
         </button>
     </div>
 </template>
@@ -70,15 +68,24 @@ export default {
         float: left;
     }
     .snippetTagContainer button {
-        min-height: 39px;
+        padding: 5px 6px;
+        font-size: 12px;
+        font-family: "MasterPortalFont", "Arial", sans-serif;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.5);
+        border: none;
+    }
+    .snippetTagContainer button:hover {
+        opacity: 1;
+        background-color: #3177b1;
+        color: #F3F3F3;
+        cursor: pointer;
     }
     .snippetTagContainer .snippetTagLabel {
         font-size: 10px;
     }
     .snippetTagContainer .snippetTagValue {
-        font-size: 10px;
-        font-weight: bold;
-        padding-right: 2px;
+        padding-right: 5px;
     }
     .glyphicon-remove:hover {
         color: #E10019;

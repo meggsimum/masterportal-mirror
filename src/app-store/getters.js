@@ -7,7 +7,7 @@ export default {
     footerConfig: state => state?.configJs?.footer || null,
     loaderText: state => state?.configJs?.loaderText || "",
     scaleLineConfig: state => state?.configJs?.scaleLine || null,
-    uiStyle: state => (state?.urlParams?.uiStyle || state?.configJs?.uiStyle)?.toUpperCase(),
+    uiStyle: state => (state?.urlParams?.uiStyle || state?.configJs?.uiStyle || "DEFAULT")?.toUpperCase(),
     // gfiWindow is deprecated in the next major-release
     gfiWindow: state => state?.configJs.gfiWindow,
     ignoredKeys: state => state?.configJs.ignoredKeys || [],

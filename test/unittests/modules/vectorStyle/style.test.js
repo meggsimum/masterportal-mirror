@@ -36,5 +36,18 @@ describe("vectorStyleModel", function () {
 
             expect(styleModel.prepareField(featureProperties, field)).to.equal(15);
         });
+        it("Should not overwrite styles if style definitions are not provided", function () {
+            const defaultStyles = {
+                "circleRadius": 10,
+                "circleFillColor": [0, 153, 255, 1],
+                "circleStrokeColor": [0, 0, 0, 1],
+                "circleStrokeWidth": 2
+            };
+
+            styleModel.set(defaultStyles);
+            styleModel.overwriteStyling(undefined);
+
+            expect(styleModel.attributes).to.deep.equal(defaultStyles);
+        });
     });
 });

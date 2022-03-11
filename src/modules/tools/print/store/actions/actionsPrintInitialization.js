@@ -118,9 +118,11 @@ export default {
      * @returns {void}
      */
     chooseCurrentLayout: function ({state, commit}, layouts) {
-        const currentLayout = layouts.filter(layout => layout.name === state.currentLayoutName);
+        const configuredLayout = layouts.find(layout => layout.name === state.currentLayoutName),
+            layoutToUse = configuredLayout || layouts[0];
 
-        commit("setCurrentLayout", currentLayout.length === 1 ? currentLayout[0] : layouts[0]);
+        commit("setCurrentLayout", layoutToUse);
+        commit("setCurrentLayoutName", layoutToUse.name);
     },
 
     /**
@@ -168,7 +170,7 @@ export default {
     togglePostrenderListener: function ({state, dispatch, commit}) {
         const foundVectorTileLayers = [];
 
-        getVisibleLayer();
+        getVisibleLayer(state.printMapMarker);
 
         /*
         * Since MapFish 3 does not yet support VTL (see https://github.com/mapfish/mapfish-print/issues/659),
@@ -297,7 +299,7 @@ export default {
      * @param {ol.render.Event} evt - postrender
      * @returns {void}
      */
-    createPrintMask: function ({dispatch, commit, state}, evt) {
+    createPrintMask: function ({dispatch, state}, evt) {
         dispatch("getPrintMapSize");
         dispatch("getPrintMapScales");
 
@@ -324,20 +326,21 @@ export default {
 
         if (state.isScaleSelectedManually) {
             canvasPrintOptions.scale = state.currentScale;
-            commit("setIsScaleSelectedManually", false);
         }
-        else {
+        else if (state.autoAdjustScale) {
             dispatch("getOptimalScale", canvasOptions);
             canvasPrintOptions.scale = state.optimalScale;
         }
-
+        else {
+            canvasPrintOptions.scale = state.currentScale;
+        }
 
         dispatch("drawMask", drawMaskOpt);
         dispatch("drawPrintPage", canvasPrintOptions);
         context.fillStyle = "rgba(0, 5, 25, 0.55)";
         context.fill();
 
-        dispatch("setPrintLayers", state.optimalScale);
+        dispatch("setPrintLayers", canvasPrintOptions.scale);
     },
     /**
      * gets the optimal print scale for a map

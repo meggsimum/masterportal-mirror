@@ -244,6 +244,7 @@ export default {
                     class="layerSelector"
                     :filters-only="filtersOnly"
                     :categories-only="categoriesOnly"
+                    :changed-selected-layers="selectedLayers"
                     :multi-layer-selector="multiLayerSelector"
                     @updateselectedlayers="updateSelectedLayers"
                     @setLayerLoaded="setLayerLoaded"

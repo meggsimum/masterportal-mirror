@@ -34,12 +34,16 @@ const StyleModel = Backbone.Model.extend(/** @lends StyleModel.prototype */{
     * @returns {void}
     */
     overwriteStyling: function (styles) {
-        let key;
+        // check if styles object is defined
+        // if not, use defaults instead
+        if (styles) {
+            let key;
 
-        for (key in styles) {
-            const value = styles[key];
+            for (key in styles) {
+                const value = styles[key];
 
-            this.set(key, value);
+                this.set(key, value);
+            }
         }
     },
     /**

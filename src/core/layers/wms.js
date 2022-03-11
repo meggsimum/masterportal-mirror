@@ -16,7 +16,6 @@ export default function WMSLayer (attrs) {
         showSettings: true,
         extent: null,
         isSecured: false,
-        notSupportedFor3D: ["1747", "1749", "1750", "9822", "12600", "9823", "1752", "9821", "1750", "1751", "12599", "2297"],
         useProxy: false
     };
 
@@ -27,7 +26,8 @@ export default function WMSLayer (attrs) {
     bridge.listenToChangeSLDBody(this);
 
     // Hack for services that do not support EPSG:4326
-    if (this.get("notSupportedFor3D").includes(this.get("id"))) {
+    // notSupportedFor3DNeu is a temporary attribute
+    if (this.get("notSupportedFor3DNeu") || this.get("notSupportedIn3D") === true) {
         this.set("supported", ["2D"]);
     }
 }

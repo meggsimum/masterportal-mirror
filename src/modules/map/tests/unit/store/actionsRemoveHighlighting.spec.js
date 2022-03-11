@@ -49,13 +49,13 @@ describe("src/modules/map/store/actions/removeHighlighting.js", () => {
         const olFeature = createFeature();
 
         state = {
-            highlightedFeature: olFeature,
-            highlightedFeatureStyle: olFeature.getStyle()
+            highlightedFeatures: [olFeature],
+            highlightedFeatureStyles: [olFeature.getStyle()]
         };
         it("should reset the feature icon increase", done => {
-            testAction(actions.removeHighlightFeature, null, state, {}, [
-                {type: "setHighlightedFeature", payload: null},
-                {type: "setHighlightedFeatureStyle", payload: null}
+            testAction(actions.removeHighlightFeature, olFeature, state, {}, [
+                {type: "setHighlightedFeatureStyles", payload: []},
+                {type: "setHighlightedFeatures", payload: []}
             ], {}, done);
         });
     });

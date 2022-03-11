@@ -11,9 +11,6 @@ const getters = {
     defaultValue (_, {currentTimeSliderObject}) {
         return currentTimeSliderObject.defaultValue;
     },
-    min (_, {timeRange}) {
-        return timeRange.length > 0 ? timeRange[0] : 0;
-    },
     /**
      * Test whether the current width surpasses the mobileWidth
      * (Width with which the mobile view is triggered).
@@ -25,12 +22,6 @@ const getters = {
         const mobileWidth = 800;
 
         return windowWidth > mobileWidth;
-    },
-    max (_, {timeRange}) {
-        return timeRange.length > 0 ? timeRange[timeRange.length - 1] : Number.MAX_SAFE_INTEGER;
-    },
-    step (_, {currentTimeSliderObject}) {
-        return currentTimeSliderObject.step;
     },
     timeRange (_, {currentTimeSliderObject}) {
         return currentTimeSliderObject?.timeRange || [];

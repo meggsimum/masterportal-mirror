@@ -187,4 +187,9 @@ describe("src/core/layers/group.js", () => {
         groupLayer.checkForScale(options);
         expect(groupLayer.get("isOutOfRange")).to.be.false;
     });
+    it("should return grouped layer as array", () => {
+        const layerWrapper = new GroupedLayers(groupAttributes);
+
+        expect(layerWrapper.getLayers().length).to.be.above(0);
+    });
 });

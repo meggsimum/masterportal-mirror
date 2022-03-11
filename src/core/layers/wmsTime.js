@@ -1,8 +1,9 @@
 import axios from "axios";
-import WMSCapabilities from "ol/format/WMSCapabilities";
+import moment from "moment";
 
 import handleAxiosResponse from "../../utils/handleAxiosResponse";
 import store from "../../app-store";
+import detectIso8601Precision from "../../utils/detectIso8601Precision";
 import WMSLayer from "./wms";
 
 /**
@@ -45,6 +46,58 @@ WMSTimeLayer.prototype.getRawLayerAttributes = function (attrs) {
 };
 
 /**
+ * Retrieves wmsTime-related entries from GetCapabilities layer specification.
+ * @param {String} xmlCapabilities GetCapabilities XML response
+ * @param {String} layerName name of layer to use
+ * @param {object} timeSpecification may contain "dimensionName" and "extentName"
+ * @returns {object} dimension and extent of layer
+ */
+WMSTimeLayer.prototype.retrieveTimeData = function (xmlCapabilities, layerName, timeSpecification) {
+    const {dimensionName, extentName} = timeSpecification,
+        xmlDocument = new DOMParser().parseFromString(xmlCapabilities, "text/xml"),
+        layerNode = [
+            ...xmlDocument.querySelectorAll("Layer > Name")
+        ].filter(node => node.textContent === layerName)[0].parentNode,
+        xmlDimension = layerNode.querySelector(`Dimension[name="${dimensionName}"]`),
+        xmlExtent = layerNode.querySelector(`Extent[name="${extentName}"]`),
+        dimension = xmlDimension ? this.retrieveAttributeValues(xmlDimension) : null,
+        extent = xmlExtent ? this.retrieveAttributeValues(xmlExtent) : null;
+
+    return {dimension, extent};
+};
+
+/**
+ * @param {String[]} timeRange valid points in time for WMS-T
+ * @param {String?} extentDefault default specified by service
+ * @param {String?} configuredDefault default specified by config (preferred usage)
+ * @returns {String} default to use
+ */
+WMSTimeLayer.prototype.determineDefault = function (timeRange, extentDefault, configuredDefault) {
+    if (configuredDefault && configuredDefault !== "current") {
+        if (timeRange.includes(configuredDefault)) {
+            return configuredDefault;
+        }
+
+        console.error(
+            `Configured WMS-T default ${configuredDefault} is not within timeRange:`,
+            timeRange,
+            "Falling back to WMS-T default value."
+        );
+    }
+
+    if (configuredDefault === "current" || extentDefault === "current") {
+        const now = moment(),
+            firstGreater = timeRange.find(
+                timestamp => moment(timestamp).diff(now) >= 0
+            );
+
+        return firstGreater || timeRange[timeRange.length - 1];
+    }
+
+    return extentDefault || timeRange[0];
+};
+
+/**
  * Prepares the parameters for the WMS-T.
  * This includes creating the range of possible time values, the minimum step between these as well as the initial value set.
  * @param {Object} attrs Attributes of the layer.
@@ -52,29 +105,48 @@ WMSTimeLayer.prototype.getRawLayerAttributes = function (attrs) {
  * @returns {Promise<number>} If the functions resolves, the initial value for the time dimension is returned.
  */
 WMSTimeLayer.prototype.prepareTime = function (attrs) {
-    const time = attrs.time;
+    const time = typeof attrs.time === "object" ? attrs.time : {};
+
+    if (!time.dimensionName) {
+        time.dimensionName = "time";
+    }
+
+    if (!time.extentName) {
+        time.extentName = "time";
+    }
+
+    // @deprecated
+    if (typeof time.default === "number") {
+        console.warn(
+            `WMS-T has '"default": ${time.default}' configured as number.
+            Using number is deprecated, this field is now a string.
+            Please use '"default": "${time.default}"' instead.
+            This value is converted, but this breaks in next major release.`
+        );
+        time.default = String(time.default);
+    }
 
     return this.requestCapabilities(attrs.url, attrs.version, attrs.layers)
-        .then(result => {
-            const {Dimension, Extent} = result.Capability.Layer.Layer[0];
+        .then(xmlCapabilities => {
+            const {dimension, extent} = this.retrieveTimeData(xmlCapabilities, attrs.layers, time);
 
-            if (!Dimension || !Extent || Dimension[0].name !== "time" || Extent.name !== "time") {
+            if (!dimension || !extent) {
                 throw Error(i18next.t("common:modules.core.modelList.layer.wms.invalidTimeLayer", {id: this.id}));
             }
-            return Extent;
-        })
-        .then(extent => {
-            const {step, timeRange} = this.extractExtentValues(extent),
-                defaultValue = typeof time === "object" && timeRange[0] <= time.default && time.default <= timeRange[timeRange.length - 1]
-                    ? time.default
-                    : Number(extent.default),
-                timeData = {defaultValue, step, timeRange};
+            else if (dimension.units !== "ISO8601") {
+                throw Error(`WMS-T layer ${this.id} specifies time dimension in unit ${dimension.units}. Only ISO8601 is supported.`);
+            }
+            else {
+                const {step, timeRange} = this.extractExtentValues(extent),
+                    defaultValue = this.determineDefault(timeRange, extent.default, time.default),
+                    timeData = {defaultValue, step, timeRange};
 
-            attrs.time = typeof time === "object" ? {...time, ...timeData} : timeData;
-            timeData.layerId = attrs.id;
-            store.commit("WmsTime/addTimeSliderObject", {keyboardMovement: attrs.keyboardMovement, ...timeData});
+                attrs.time = {...time, ...timeData};
+                timeData.layerId = attrs.id;
+                store.commit("WmsTime/addTimeSliderObject", {keyboardMovement: attrs.keyboardMovement, ...timeData});
 
-            return defaultValue;
+                return defaultValue;
+            }
         })
         .catch(error => {
             this.removeLayer();
@@ -95,27 +167,7 @@ WMSTimeLayer.prototype.prepareTime = function (attrs) {
  */
 WMSTimeLayer.prototype.requestCapabilities = function (url, version, layers) {
     return axios.get(encodeURI(`${url}?service=WMS&version=${version}&layers=${layers}&request=GetCapabilities`))
-        .then(response => handleAxiosResponse(response, "WMS, createLayerSource, requestCapabilities"))
-        .then(result => {
-            const capabilities = new WMSCapabilities().read(result);
-
-            capabilities.Capability.Layer.Layer[0].Extent = this.findTimeDimensionalExtent(new DOMParser().parseFromString(result, "text/xml").firstElementChild);
-            return capabilities;
-        });
-};
-
-/**
- * Search for the time dimensional Extent in the given HTMLCollection returned from a request to a WMS-T.
- * @param {HTMLCollection} element The root HTMLCollection returned from a getCapabilities request to a WMS-T.
- * @returns {?Object} An object containing the needed Values from the time dimensional extent for further usage.
- */
-WMSTimeLayer.prototype.findTimeDimensionalExtent = function (element) {
-    const capability = this.findNode(element, "Capability"),
-        outerLayer = this.findNode(capability, "Layer"),
-        innerFirstLayer = this.findNode(outerLayer, "Layer"),
-        extent = this.findNode(innerFirstLayer, "Extent");
-
-    return extent ? this.retrieveExtentValues(extent) : null;
+        .then(response => handleAxiosResponse(response, "WMS, createLayerSource, requestCapabilities"));
 };
 
 /**
@@ -131,12 +183,33 @@ WMSTimeLayer.prototype.findNode = function (element, nodeName) {
 /**
  * Retrieves the attributes from the given HTMLCollection and adds the key value pairs to an object.
  * Also retrieves its value.
- * @param {HTMLCollection} extent The Collection of values for the time dimensional Extent.
- * @returns {Object} An Object containing the attributes of the time dimensional Extent as well as its value.
+ * @param {HTMLCollection} node The Collection of values for the time node.
+ * @returns {Object} An Object containing the attributes of the time node as well as its value.
  */
-WMSTimeLayer.prototype.retrieveExtentValues = function (extent) {
-    return [...extent.attributes]
-        .reduce((acc, att) => ({...acc, [att.name]: att.value}), {values: extent.innerHTML});
+WMSTimeLayer.prototype.retrieveAttributeValues = function (node) {
+    return [...node.attributes]
+        .reduce((acc, att) => ({...acc, [att.name]: att.value}), {value: node.innerHTML});
+};
+
+/**
+ * Compares WMS-T resolution increments.
+ * @param {object} step increment to compare to
+ * @param {object} increment increment to consider
+ * @returns {boolean} whether increment is smaller
+ */
+WMSTimeLayer.prototype.incrementIsSmaller = function (step, increment) {
+    const compareStrings = [step, increment].map(
+        ({years, months, days, minutes, hours, seconds}) => "P" +
+            (years || "").padStart(4, "0") + "Y" +
+            (months || "").padStart(2, "0") + "M" +
+            (days || "").padStart(2, "0") + "D" +
+            "T" +
+            (minutes || "").padStart(2, "0") + "H" +
+            (hours || "").padStart(2, "0") + "M" +
+            (seconds || "").padStart(2, "0") + "S"
+    );
+
+    return compareStrings[0] > compareStrings[1];
 };
 
 /**
@@ -150,17 +223,15 @@ WMSTimeLayer.prototype.retrieveExtentValues = function (extent) {
  *         The step is retrieved from the resolution.
  * - Case 4: List of multiple intervals; ',' and '/' are present. For every interval the process described in CASE 3 will be performed.
  *
- * @param {String} extent Time dimensional extent retrieved from the service.
- * @param {String} extent.values The values of the time dimensional extent.
- * @returns {Object} An object containing the range of possible time values as well as the minimum step between these.
+ * @param {object} extent Time dimensional extent retrieved from the service.
+ * @returns {Object} An object containing the range of possible time values.
  */
-WMSTimeLayer.prototype.extractExtentValues = function ({values}) {
-    const timeRange = [];
-    let smallestStep = 1;
-
-    // NOTE: This was implemented against a service that uses the syntax described in CASE 3. Might need adjustment to work for the others.
-    timeRange.push(
-        ...new Set(values.replace(" ", "").split(",")
+WMSTimeLayer.prototype.extractExtentValues = function (extent) {
+    let step;
+    const extentValue = extent.value,
+        timeRange = extentValue
+            .replaceAll(" ", "")
+            .split(",")
             .map(entry => entry.split("/"))
             .map(entry => {
                 // CASE 1 & 2
@@ -168,35 +239,79 @@ WMSTimeLayer.prototype.extractExtentValues = function ({values}) {
                     return entry;
                 }
                 // CASE 3 & 4
-                const [min, max] = entry.map(Number),
-                    resolution = entry[2],
-                    step = Number([...resolution][1]);
+                const [min, max, resolution] = entry,
+                    increment = this.getIncrementsFromResolution(resolution),
+                    singleTimeRange = this.createTimeRange(min, max, increment);
 
-                // NOTE: This was implemented against a service that uses years. Might need adjustment to work for services that use months oder days.
-                if (step < smallestStep) {
-                    smallestStep = step;
+                if (!step || this.incrementIsSmaller(step, increment)) {
+                    step = increment;
                 }
 
-                return this.createTimeRange(min, max, step);
+                return singleTimeRange;
             })
             .flat(1)
-            .map(Number)
-            .sort((first, second) => first - second)));
+            .sort((first, second) => first > second);
 
-    return {step: smallestStep, timeRange};
+    return {
+        timeRange: [...new Set(timeRange)], // dedupe
+        step
+    };
 };
 
 /**
- * Creates an array with ascending values from min to max separated by step.
- * @param {Number} min Minimum value.
- * @param {Number} max Maximum value.
- * @param {Number} step Distance between each value inside the array.
- * @returns {Number[]} Array of numbers between min and max with a distance of step to each neighbouring number.
+ * @param {String} resolution in WMS-T format, e.g. "P1900YT5M"; see specification
+ * @returns {object} map of increments for start date
  */
-WMSTimeLayer.prototype.createTimeRange = function (min, max, step) {
-    return Array(Math.floor((max - min) / step) + 1)
-        .fill(undefined)
-        .map((_, index) => min + (index * step));
+WMSTimeLayer.prototype.getIncrementsFromResolution = function (resolution) {
+    const increments = {},
+        shorthandsLeft = {
+            Y: "years",
+            M: "months",
+            D: "days"
+        },
+        shorthandsRight = {
+            H: "hours",
+            M: "minutes",
+            S: "seconds"
+        },
+        [leftHand, rightHand] = resolution.split("T");
+
+    [...leftHand.matchAll(/(\d+)[^0-9]/g)].forEach(([hit, increment]) => {
+        increments[shorthandsLeft[hit.slice(-1)]] = increment;
+    });
+
+    if (rightHand) {
+        [...rightHand.matchAll(/(\d+)[^0-9]/g)].forEach(([hit, increment]) => {
+            increments[shorthandsRight[hit.slice(-1)]] = increment;
+        });
+    }
+
+    return increments;
+};
+
+/**
+ * Creates an array with ascending values from min to max separated by resolution.
+ * @param {String} min Minimum value.
+ * @param {String} max Maximum value.
+ * @param {object} increment Distance between each value inside the array.
+ * @returns {object} Steps and step increments.
+ */
+WMSTimeLayer.prototype.createTimeRange = function (min, max, increment) {
+    const increments = Object.entries(increment),
+        start = moment.utc(min),
+        end = moment.utc(max),
+        timeRange = [],
+        format = detectIso8601Precision(min),
+        suffix = min.endsWith("Z") ? "Z" : "";
+
+    while (start.valueOf() <= end.valueOf()) {
+        timeRange.push(start.format(format) + suffix);
+        increments.forEach(([units, difference]) => {
+            start.add(Number(difference), units);
+        });
+    }
+
+    return timeRange;
 };
 
 /**

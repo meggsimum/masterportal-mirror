@@ -30,6 +30,13 @@ import {handleUrlParamsBeforeVueMount, readUrlParamEarly} from "../src/utils/par
 import {createMaps} from "../src/core/maps/maps.js";
 
 /**
+ * Vuetify
+ * @description Test vuetify as main UI framework
+ * @external
+ */
+import {instantiateVuetify} from "../src/plugins/vuetify/vuetify";
+
+/**
  * WFSFeatureFilterView
  * @deprecated in 3.0.0
  */
@@ -71,7 +78,11 @@ async function loadApp () {
     const legacyAddons = Object.is(ADDONS, {}) ? {} : ADDONS,
         utilConfig = {},
         style = Radio.request("Util", "getUiStyle"),
-        vueI18Next = initiateVueI18Next();
+        vueI18Next = initiateVueI18Next(),
+        // instantiate Vue with Vuetify Plugin if the "vuetify" flag is set in the config.js
+        // returns undefined if not
+        vuetify = await instantiateVuetify();
+
     /* eslint-disable no-undef */
     let app = {},
         searchbarAttributes = {};
@@ -106,7 +117,8 @@ async function loadApp () {
         name: "VueApp",
         render: h => h(App),
         store,
-        i18n: vueI18Next
+        i18n: vueI18Next,
+        vuetify
     });
 
 

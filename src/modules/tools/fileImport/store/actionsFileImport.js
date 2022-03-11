@@ -1,5 +1,6 @@
 import getProxyUrl from "../../../../utils/getProxyUrl";
 import {GeoJSON, GPX, KML} from "ol/format.js";
+import Circle from "ol/geom/Circle";
 
 const supportedFormats = {
     kml: new KML({extractStyles: true, iconUrlFunction: (url) => proxyGstaticUrl(url)}),
@@ -220,6 +221,12 @@ export default {
         features.forEach(feature => {
             let geometries;
 
+            if (feature.get("isGeoCircle")) {
+                const circleCenter = feature.get("geoCircleCenter").split(",").map(parseFloat),
+                    circleRadius = parseFloat(feature.get("geoCircleRadius"));
+
+                feature.setGeometry(new Circle(circleCenter, circleRadius));
+            }
             if (feature.getGeometry() === null) {
                 featureError = true;
                 alertingMessage = {
