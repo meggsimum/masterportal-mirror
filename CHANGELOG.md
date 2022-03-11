@@ -11,6 +11,7 @@
 ## Unreleased - in development
 ### Added
 - Issue #530: New checkbox for the print module to disable the auto adjustment of the print mask scale
+- Issue #613: Highlighting via gfi.highlightVectorRules now works also with default styled features
 
 ### Changed
 - Issue #674, #676: addWMS tool and orientation control are now using the CRS of the map instead of hard coded CRS

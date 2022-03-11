@@ -138,6 +138,11 @@ function styleObject (highlightObject, feature) {
     if (!styleModel) {
         styleModel = Radio.request("StyleList", "returnModelById", highlightObject.layer.styleId);
     }
+
+    if (!styleModel) {
+        styleModel = Radio.request("StyleList", "returnModelById", "default");
+    }
+
     if (styleModel) {
         style = styleModel.createStyle(feature, false);
         if (Array.isArray(style) && style.length > 0) {
