@@ -19,7 +19,7 @@ export default {
     computed: {
         ...mapGetters("Tools/Measure", Object.keys(getters)),
         ...mapGetters(["uiStyle"]),
-        ...mapGetters("Map", ["layerById", "is3d", "ol2DMap"])
+        ...mapGetters("Map", ["is3d", "ol2DMap"])
     },
     watch: {
         /**

@@ -93,6 +93,9 @@ describe("src/core/maps/store/actions/actionsMapAttributesMapper.js", () => {
                             setCenter: setCenter
                         };
                     }
+                },
+                getView: {
+                    setCenter: setCenter
                 }
             };
             warn = sinon.spy();
