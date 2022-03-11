@@ -29,7 +29,13 @@ export default {
             this.replaceMenuChild();
         }
     },
-    updated () {
+    async updated () {
+        // TODO: When migrating the menu to Vue, get rid of this sleep call.
+        if (this.mobile) {
+            await this.$nextTick();
+            await new Promise(done => setTimeout(done, 300));
+            await this.$nextTick();
+        }
         this.replaceMenuChild();
     },
     methods: {
