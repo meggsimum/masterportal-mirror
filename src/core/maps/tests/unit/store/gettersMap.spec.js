@@ -1,39 +1,93 @@
 import {expect} from "chai";
-// import sinon from "sinon";
+import sinon from "sinon";
 import getters from "../../../store/gettersMap";
-// import stateMap from "../../../store/stateMap";
+import mutations from "../../../store/mutationsMap";
 import Feature from "ol/Feature";
 import LayerGroup from "ol/layer/Group";
+import View from "ol/View";
+import VectorLayer from "ol/layer/Vector.js";
+import VectorSource from "ol/source/Vector.js";
+import mapCollection from "../../../../dataStorage/mapCollection";
+
+const {addLayerToMap} = mutations;
 
 describe("src/core/maps/store/gettersMap.js", () => {
 
     describe("Map simple getters", () => {
-        /* it("returns the layerList from state", async () => {
-            const getLayerList = sinon.spy(),
-                getterFunction = {
-                    getLayerList: () => {
-                        return {
-                            getLayerList: getLayerList
-                        };
+
+        it("returns the layerList from state", () => {
+            expect(getters.getLayerList()).to.be.a("array");
+        });
+        it("returns the 2D map", () => {
+            const map = {
+                id: "ol",
+                mode: "2D"
+            };
+
+            mapCollection.addMap(map, "ol", "2D");
+
+            expect(getters.get2DMap()).to.deep.equal({id: "ol", mode: "2D"});
+        });
+        it("returns the 3D map", () => {
+            const map = {
+                id: "olcs",
+                mode: "3D"
+            };
+
+            mapCollection.addMap(map, "olcs", "3D");
+
+            expect(getters.get3DMap()).to.deep.equal({id: "olcs", mode: "3D"});
+        });
+        it("returns the map layers", () => {
+            const layers = [],
+                map = {
+                    id: "ol",
+                    mode: "2D",
+                    addLayer: (layer) => {
+                        layers.push(layer);
+                    },
+                    getLayers: () => {
+                        return layer;
                     }
+                },
+                layer = new VectorLayer({
+                    name: "layer123",
+                    source: new VectorSource()
+                }),
+                state = {
+                    mapId: "ol",
+                    mapMode: "2D"
                 };
 
-            expect(await getters.getLayerList).to.equal(getterFunction.getLayerList);
+            mapCollection.clear();
+            mapCollection.addMap(map, "ol", "2D");
+            addLayerToMap(state, layer);
+
+            expect(getters.getLayers().values_.name).to.equals("layer123");
         });
     });
 
     describe("Map custom getters", () => {
-        it("returns the visibleLayerList", async () => {
-            const feature1 = new Feature({visible: true}),
-                feature2 = new Feature({visible: true}),
-                feature3 = new Feature({visible: false})
+
+        it(" gfiFeaturesAtPixel returns an array", () => {
+            const map = {
+                    id: "ol",
+                    mode: "2D",
+                    view: new View(),
+                    forEachFeatureAtPixel: sinon.spy()
+                },
                 state = {
-                    layerList: [feature1, feature2, feature3]
+                    mapId: "ol",
+                    mapMode: "2D"
                 };
 
-
-            expect(getters.getLayerList).to.be.an("array").that.contains(feature1, feature2);
-        }); */
+            mapCollection.clear();
+            mapCollection.addMap(map, "ol", "2D");
+            expect(getters.gfiFeaturesAtPixel(state, [40, 50])).be.a("array");
+        });
+        it("returns the visibleLayerList", () => {
+            expect(getters.getVisibleLayerList()).to.be.a("array");
+        });
         it("returns the visibleLayerListWithChildrenFromGroupLayers without Group layers", () => {
             const feature1 = new Feature({visible: true}),
                 feature2 = new Feature({visible: true}),
@@ -63,15 +117,9 @@ describe("src/core/maps/store/gettersMap.js", () => {
             const feature1 = new Feature({visible: true, typ: "WMS"}),
                 feature2 = new Feature({visible: true, typ: "WFS"}),
                 feature3 = new Feature({visible: true, typ: "WMS"}),
-                grouplayer = new LayerGroup({
-                    layers: [feature1, feature2]
-                }),
-                state = {
-                    layerList: [grouplayer, feature3]
-                },
                 visibleLayerListWithChildrenFromGroupLayers = [feature1, feature2, feature3];
 
-            expect(getters.visibleWmsLayerList(state, {visibleLayerListWithChildrenFromGroupLayers})).to.be.an("array").that.contains(feature1, feature3);
+            expect(getters.visibleWmsLayerList({}, {visibleLayerListWithChildrenFromGroupLayers})).to.be.an("array").that.contains(feature1, feature3);
         });
 
         it("returns the Features in reverse order", () => {
