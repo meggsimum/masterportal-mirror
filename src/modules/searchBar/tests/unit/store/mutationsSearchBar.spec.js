@@ -23,14 +23,10 @@ describe("src/modules/searchBar/store/mutationsSearchBar.spec.js", () => {
     });
 
     describe("addSearchHits", () => {
-        const instance = {
-                searchInterfaceId: "The first instance",
-                searchState: "finnished",
-                totalHits: 1
-            },
-            searchHits = {
-                id: "The first search hit"
-            };
+        const searchHits = {
+            id: "The first search hit",
+            searchInterfaceId: "The first instance"
+        };
 
         it("Should add search hits to state searchSuggestions by searchtype = 'suggestion'", () => {
             const state = {
@@ -39,15 +35,11 @@ describe("src/modules/searchBar/store/mutationsSearchBar.spec.js", () => {
                 },
                 searchType = "suggestion";
 
-            addSearchHits(state, {instance, searchHits, searchType});
+            addSearchHits(state, {searchHits, searchType});
 
             expect(state.searchSuggestions).to.deep.equals([{
-                searchInterfaceId: "The first instance",
-                searchState: "finnished",
-                totalHits: 1,
-                searchSuggestions: {
-                    id: "The first search hit"
-                }
+                id: "The first search hit",
+                searchInterfaceId: "The first instance"
             }]);
             expect(state.searchResults).to.be.empty;
         });
@@ -59,16 +51,12 @@ describe("src/modules/searchBar/store/mutationsSearchBar.spec.js", () => {
                 },
                 searchType = "result";
 
-            addSearchHits(state, {instance, searchHits, searchType});
+            addSearchHits(state, {searchHits, searchType});
 
             expect(state.searchSuggestions).to.be.empty;
             expect(state.searchResults).to.deep.equals([{
-                searchInterfaceId: "The first instance",
-                searchState: "finnished",
-                totalHits: 1,
-                searchResults: {
-                    id: "The first search hit"
-                }
+                id: "The first search hit",
+                searchInterfaceId: "The first instance"
             }]);
         });
     });

@@ -56,7 +56,7 @@ SearchInterfaceGazetteer.prototype.search = async function (searchInput) {
     const searchResults = await this.startSearch(searchInput),
         normalizedResults = this.normalizeResults(searchResults);
 
-    this.pushObjectsToSearchResults(normalizedResults);
+    this.pushHitsToSearchResultsOrSuggestions(normalizedResults);
     this.totalHits = this.searchResults.length;
 
     return this.searchResults;

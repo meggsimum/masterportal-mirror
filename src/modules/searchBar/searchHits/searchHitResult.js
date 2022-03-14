@@ -1,9 +1,14 @@
+import SearchHit from "./searchHit";
+
 /**
  * A search result with its parameters.
  * For each search result there is a default value.
  * @constructs
+ * @extends SearchHit
  * @param {String} category The category to which the search result should be assigned.
  * @param {String} id The id of the search result.
+ * @param {String} index The index of the search results, representing the order.
+ * @param {String} searchInterfaceId The id of the search interface.
  * @param {String} name The name of the search result.
  *
  * @param {Object} [events={}] Events that are performed with the intercation of a search result.
@@ -64,14 +69,10 @@
     }
  * @returns {void}
  */
-export default function SearchResult ({category, events, id, name, displayedInfo, icon, imagePath, toolTip} = {}) {
-    this.category = category;
-    this.events = events;
-    this.id = id;
-    this.name = name;
+export default function SearchHitResult ({category, events, id, index, name, searchInterfaceId, displayedInfo, icon, imagePath, toolTip} = {}) {
+    SearchHit.call(this, {category, id, index, name, searchInterfaceId, displayedInfo, icon, imagePath, toolTip});
 
-    this.displayedInfo = displayedInfo || "";
-    this.icon = icon || "";
-    this.imagePath = imagePath || "";
-    this.toolTip = toolTip || "";
+    this.events = events;
 }
+
+SearchHitResult.prototype = Object.create(SearchHit.prototype);

@@ -18,25 +18,16 @@ const mutations = {
      * Adds search hits to result or suggestion list depending on search type.
      * @param {Object} state The state of search bar.
      * @param {Object} param The params.
-     * @param {Object} param.instance The search instance.
      * @param {Object} param.searchHits The search hits.
      * @param {Object} param.searchType The search type.
      * @returns {void}
      */
-    addSearchHits (state, {instance, searchHits, searchType}) {
-        const hits = {
-            searchInterfaceId: instance.searchInterfaceId,
-            searchState: instance.searchState,
-            totalHits: instance.totalHits
-        };
-
+    addSearchHits (state, {searchHits, searchType}) {
         if (searchType === "suggestion") {
-            hits.searchSuggestions = searchHits;
-            state.searchSuggestions.push(hits);
+            state.searchSuggestions = state.searchSuggestions.concat(searchHits);
         }
         else if (searchType === "result") {
-            hits.searchResults = searchHits;
-            state.searchResults.push(hits);
+            state.searchResults = state.searchResults.concat(searchHits);
         }
     }
 };

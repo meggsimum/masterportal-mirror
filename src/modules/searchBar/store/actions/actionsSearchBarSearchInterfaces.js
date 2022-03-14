@@ -24,14 +24,14 @@ export default {
      * and push the response objects to the state attribute "searchResults".
      * @param {Object} payload The payload.
      * @param {Object} payload.searchInput The search input.
-     * @param {Object} [payload.searchType="result"] The search type "suggestion" or "result"
+     * @param {Object} [payload.searchType="result"] The search type "suggestion" or "result".
      * @returns {void}
      */
     search: ({state, commit}, {searchInput, searchType = "result"}) => {
         state.searchInterfaceInstances.forEach(instance => {
             instance.search(searchInput, searchType)
                 .then(searchHits => {
-                    commit("addSearchHits", {instance, searchHits, searchType});
+                    commit("addSearchHits", {searchHits, searchType});
                 });
         });
     }
