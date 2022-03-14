@@ -12,6 +12,7 @@
 ## Unreleased - in development
 ### Added
 - Issue #530: New checkbox for the print module to disable the auto adjustment of the print mask scale
+- Added new layer type OAF (OGCApiFeatures)
 
 ### Changed
 - Issue #674, #676: addWMS tool and orientation control are now using the CRS of the map instead of hard coded CRS

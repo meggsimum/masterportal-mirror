@@ -4881,6 +4881,14 @@ Hier werden Vector typische Attribute aufgelistet. Vector Layer sind WFS, GeoJSO
 |vtStyles|nein|**[vtStyle](#markdown-header-themenconfiglayervectorvtstyle)**[]||Auswählbare externe Style-Definition (nur für Vector Tile Layer)|false|
 |useMpFonts|nein|Boolean|true|Nur für *Vector Tile Layer*. Schalter um die Schriftarten/Fontstacks aus externen Style-Definitionen durch die Standard-Schriftart des Masterportals zu ersetzen, um sicherzustellen dass alle Labels dargestellt werden können. Wenn auf false gesetzt, müssen die benötigten fonts ggf. separat z.B. via '<link rel=stylesheet ...>' in index.html eingebunden werden.|false|
 |loadingStrategy|nein|String|"bbox"|Ladestrategie zum Laden der Features. Mögliche Werte sind "bbox" oder "all". **[siehe dazu](https://openlayers.org/en/latest/apidoc/module-ol_loadingstrategy.html)**.|false|
+|outputFormat|false|String|"json"|Für OAF Layer: Das Format in dem die Antwort vom OAF Server kommen sollen.|false|
+|bulk|false|Boolean|true|Für OAF Layer: Bestimmt ob die Antwort vom Server alle Features zurück gibt.|false|
+|limit|false|Number||Für OAF Layer: Zum begrenzen der Anzahl von Features die vom Server zurück geliefert werden. Ignoriert wenn bulk=true.|false|
+|offset|false|Number||Für OAF Layer: Ein Start-Index zum definieren der Position in der Serverantwort. Ignoriert wenn bulk=true.|false|
+|bbox|false|Number[]||Für OAF Layer: Die boundingbox definiert als Array von Zahlen|false|
+|bboxCrs|false|String|"EPSG:25832"|Für OAF Layer: Das Koordinatensystem der bbox|false|
+|datetime|false|String||Für OAF Layer: Ein Datumsstring - kann auch ein Datumszeitraum sein|false|
+|crs|false|String|EPSG:25832|Für OAF Layer: Das Koordinatensystem|false|
 
 **Beispiel**
 ```

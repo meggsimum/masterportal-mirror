@@ -4959,7 +4959,14 @@ List of attributes typically used in vector layers. Vector layers are WFS, GeoJS
 |vtStyles|no|**[vtStyle](#markdown-header-themenconfiglayervectorvtstyle)**[]||Choosable external style definitions. Only available in a *Vector Tile Layer*.|false|
 |useMpFonts|no|Boolean|true|Only available in a *Vector Tile Layer*. Switch to overwrite Fontstacks of external style definitions, to assure needed fonts are available. If set to false, used fonts need to be added separately e.g. via '<link rel=stylesheet ...>' in index.html |false|
 |loadingStrategy|no|String|"bbox"|Strategy function for loading features. Possible values are "bbox" or "all". **[More information](https://openlayers.org/en/latest/apidoc/module-ol_loadingstrategy.html)**.|false|
-
+|outputFormat|false|String|"json"|For OAF: The oaf response format.|false|
+|bulk|false|Boolean|true|For OAF: Flag to get all results from the oaf response.|false|
+|limit|false|Number||For OAF: Limits the number of items presented in the response document. Ignored if bulk is true.|false|
+|offset|false|Number||For OAF: The start index of the items presented in the response document. Ignored if bulk is true.|false|
+|bbox|false|Number[]||For OAF: The bounding boxes that describe the spatial extent of the dataset [minx, miny, maxx, maxy].|false|
+|bboxCrs|false|String|"EPSG:25832"|For OAF: The coordinate reference system of the value of the bbox parameter.|false|
+|datetime|false|String||For OAF: Either a date-time or a period string that adheres to RFC 3339.|false|
+|crs|false|String|EPSG:25832|For OAF: The coordinate reference system of the response geometries.|false|
 
 
 **Example**
