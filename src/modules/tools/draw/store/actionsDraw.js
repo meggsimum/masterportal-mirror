@@ -443,6 +443,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                 state.layer.getSource().addFeature(featureToRestore);
                 state.layer.getSource().getFeatureById(featureId).setStyle(featureToRestore.getStyle());
                 dispatch("updateRedoArray", {remove: true});
+                dispatch("updateUndoArray", {remove: false, feature: featureToRestore});
             }
         },
         /**
@@ -562,11 +563,16 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          * @returns {void}
          */
         undoLastStep ({state, dispatch}) {
-            const features = state.layer.getSource().getFeatures(),
+            /**
+             * NOTE: state.layer.getSource().getFeatures() doesn't return the features in the order they were added.
+             * Therefore it is necessary to keep an array with the features in the right order.
+             */
+            const features = state.undoArray,
                 featureToRemove = features[features.length - 1];
 
             if (typeof featureToRemove !== "undefined" && featureToRemove !== null) {
                 dispatch("updateRedoArray", {remove: false, feature: featureToRemove});
+                dispatch("updateUndoArray", {remove: true});
                 state.layer.getSource().removeFeature(featureToRemove);
             }
         },
@@ -644,6 +650,25 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                 redoArray.push(feature);
             }
             commit("setRedoArray", redoArray);
+        },
+        /**
+         * Adds or removes one element from the undoArray.
+         *
+         * @param {Object} payload payload object.
+         * @param {Boolean} payload.remove Remove one feature from the array if true.
+         * @param {Object} [payload.feature] feature to be added to the array, if given.
+         * @returns {void}
+         */
+        updateUndoArray: ({state, commit}, {remove, feature}) => {
+            const undoArray = state.undoArray;
+
+            if (remove) {
+                undoArray.pop();
+            }
+            else {
+                undoArray.push(feature);
+            }
+            commit("setUndoArray", undoArray);
         },
         ...withoutGUI
     };

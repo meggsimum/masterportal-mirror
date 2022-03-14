@@ -84,7 +84,7 @@ export function getXmlFeatures (layer, url) {
     if (typeof url !== "string") {
         return [];
     }
-    return requestGfi("text/xml", url).then(featureInfos => {
+    return requestGfi("text/xml", url, layer).then(featureInfos => {
         return handleXmlResponse(featureInfos, layer, url);
     });
 }
@@ -129,7 +129,7 @@ export function getHtmlFeature (layer, url) {
         return [];
     }
 
-    return requestGfi("text/html", url).then(document => {
+    return requestGfi("text/html", url, layer).then(document => {
         return handleHTMLResponse(document, layer, url);
     });
 }

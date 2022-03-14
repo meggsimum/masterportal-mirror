@@ -110,7 +110,7 @@ export default {
          */
         url = state.heightLayer.get("useProxy") ? getProxyUrl(url) : url;
 
-        requestGfi("text/xml", url, false).then(features => {
+        requestGfi("text/xml", url, state.heightLayer).then(features => {
             dispatch("retrieveHeightFromGfiResponse", features);
         });
     },

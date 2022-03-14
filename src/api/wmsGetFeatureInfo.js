@@ -2,6 +2,7 @@ import WMSGetFeatureInfo from "ol/format/WMSGetFeatureInfo.js";
 import Feature from "ol/Feature";
 import axios from "axios";
 import handleAxiosResponse from "../utils/handleAxiosResponse.js";
+import {getLayerWhere} from "masterportalAPI/src/rawLayerList";
 
 /**
  * Handles the GetFeatureInfo request.
@@ -11,10 +12,17 @@ import handleAxiosResponse from "../utils/handleAxiosResponse.js";
  * 3. No <tbody> exists, or it has child nodes
  * @param {String} mimeType - text/xml | text/html
  * @param {String} url - the GetFeatureInfo request url
+ * @param {ol/layer} layer - layer that's requested (used to infer credential use)
  * @returns {Promise<module:ol/Feature[]>}  Promise object represents the GetFeatureInfo request
  */
-export function requestGfi (mimeType, url) {
-    return axios.get(url)
+export function requestGfi (mimeType, url, layer) {
+    const layerSpecification = getLayerWhere({id: layer.get("id")}),
+        layerIsSecured = Boolean(layerSpecification?.isSecured);
+
+    return axios({
+        method: "get",
+        withCredentials: layerIsSecured,
+        url})
         .then(response => handleAxiosResponse(response, "requestGfi"))
         .then(docString => {
             const parsedDocument = parseDocumentString(docString, mimeType);

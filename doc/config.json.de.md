@@ -1438,6 +1438,7 @@ Zeigt Informationen zu einem abgefragten Feature ab, indem GetFeatureInfo-Reques
 ##### Portalconfig.menu.tool.gfi.highlightVectorRules
 
 Liste der Einstellungen zum Überschreiben von Vektorstyles bei GFI Abfragen.
+Hinweis: Das Highlighting funktioniert nur, wenn der Layer in der config.json über eine gültige StyleId verfügt!
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|

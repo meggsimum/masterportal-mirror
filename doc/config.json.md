@@ -1498,6 +1498,7 @@ Displays information to a clicked feature by firing a *GetFeatureInfo* or *GetFe
 ##### Portalconfig.menu.tool.gfi.highlightVectorRules
 
 Configuration list to overwrite vector styles on gfi requests.
+Hint: highlighting only works if there is a styleId in config.json configured for the layer.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
