@@ -1,17 +1,3 @@
-/* actionsMapAttributesMapper
-Attribute sollen initial aus der Map und View in den store geladen werden
-Listener sollen registriert werden um die Attribute im state aktuell zu halten
-Siehe:
-masterportal\src\modules\map\store\actions\actionsMap.js
-actionsMap/addPointerMoveHandler()
-UnListener Functions zusammenfassen
-actionsMap/removePointerMoveHandler()
-Siehe:
-masterportal\src\modules\map\store\actions\actionsMap.js
-masterportal\src\core\maps\2DMap.js
-masterportal\src\core\maps\2DMapView.js */
-// import {activateMap3D} from "./actions3DMap";
-
 let unsubscribes = [];
 
 /**
@@ -178,7 +164,6 @@ function normalizeLayers (layerArray) {
  * @returns {void}
  */
 function setCenter ({commit, getters}, mapView) {
-    // activateMap3D();
     const coords = mapView.getCenter();
 
     if (Array.isArray(coords) && coords.length === 2 && typeof coords[0] === "number" && typeof coords[1] === "number") {

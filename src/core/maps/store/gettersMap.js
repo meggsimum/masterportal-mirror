@@ -27,6 +27,7 @@ const getters = {
      * @returns {Object} layer collection of the map.
      */
     getLayers: () => {
+
         return mapCollection.getMap("ol", "2D").getLayers();
     },
     /**
