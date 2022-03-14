@@ -32,6 +32,8 @@
 - Issue #696: Draw tool now undoes and redoes drawn features in correct order
 - Fix some vulnerabilities in dependencies.
 
+---
+
 ## v2.19.0 - 2022-03-02
 ### Added
 - The gazetteer search function now supports changing the namespace by configuration.
