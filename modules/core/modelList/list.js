@@ -1,5 +1,6 @@
 import WMSLayer from "../../../src/core/layers/wms";
 import WFSLayer from "../../../src/core/layers/wfs";
+import OAFLayer from "../../../src/core/layers/oaf";
 import GroupedLayers from "../../../src/core/layers/group";
 import WMSTimeLayer from "../../../src/core/layers/wmsTime";
 import WMTSLayer from "../../../src/core/layers/wmts";
@@ -181,6 +182,9 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
                     return new GeoJSONLayer(attrs, options);
                 }
                 return new WFSLayer(attrs, options);
+            }
+            else if (attrs.typ === "OAF") {
+                return new OAFLayer(attrs, options);
             }
             else if (attrs.typ === "StaticImage") {
                 return new StaticImageLayer(attrs, options);

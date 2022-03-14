@@ -102,6 +102,7 @@ const MouseHoverPopupModel = Backbone.Model.extend(/** @lends MouseHoverPopupMod
             wfsLayers = [],
             geoJsonLayers = [],
             sensorThingsLayers = [],
+            oafLayers = [],
             vectorLayers = [],
             mouseHoverLayers = [],
             mouseHoverInfos = [];
@@ -110,7 +111,7 @@ const MouseHoverPopupModel = Backbone.Model.extend(/** @lends MouseHoverPopupMod
         layerGroups = Radio.request("Parser", "getItemsByAttributes", {type: "layer", typ: "GROUP"});
         layerGroups.forEach(layerGroup => {
             layerGroup.children.forEach(layer => {
-                if (["WFS", "GeoJSON", "SensorThings"].indexOf(layer.typ) !== -1) {
+                if (["WFS", "GeoJSON", "SensorThings", "OAF"].indexOf(layer.typ) !== -1) {
                     groupLayers.push(layer);
                 }
             });
@@ -119,9 +120,10 @@ const MouseHoverPopupModel = Backbone.Model.extend(/** @lends MouseHoverPopupMod
         wfsLayers = Radio.request("Parser", "getItemsByAttributes", {typ: "WFS"});
         geoJsonLayers = Radio.request("Parser", "getItemsByAttributes", {typ: "GeoJSON"});
         sensorThingsLayers = Radio.request("Parser", "getItemsByAttributes", {typ: "SensorThings"});
+        oafLayers = Radio.request("Parser", "getItemsByAttributes", {typ: "OAF"});
 
         // union all found layers using the layer id
-        wfsLayers.concat(geoJsonLayers, sensorThingsLayers, groupLayers).forEach(layer => {
+        wfsLayers.concat(geoJsonLayers, sensorThingsLayers, oafLayers, groupLayers).forEach(layer => {
             if (layer.id === undefined) {
                 return;
             }
