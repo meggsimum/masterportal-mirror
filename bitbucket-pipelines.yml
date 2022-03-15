@@ -79,3 +79,13 @@ pipelines:
                 script:
                     - export url=https://test.geoportal-hamburg.de
                     - npm run browsertestOnExternalServer --testservice=saucelabs
+        npm audit:
+            - step:
+                name: npm audit (security)
+                caches:
+                    - node
+                script:
+                    - npm install
+                    - npm audit --json --only-prod
+                    - npm audit --json
+
