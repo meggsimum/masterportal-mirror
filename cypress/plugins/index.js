@@ -21,6 +21,6 @@ module.exports = (on, config) => {
   // `config` is the resolved Cypress config
   console.log(config);
   return {
-    browsers: config.browsers.filter((browser) => browser.name === 'electron'),
+    browsers: config.browsers//.filter((browser) => browser.name === 'chrome'),
   }
 }
