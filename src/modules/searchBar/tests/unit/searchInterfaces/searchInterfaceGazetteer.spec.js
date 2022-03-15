@@ -4,7 +4,7 @@ import SearchInterface from "../../../searchInterfaces/searchInterface.js";
 import SearchInterfaceGazetteer from "../../../searchInterfaces/searchInterfaceGazetteer.js";
 import store from "../../../../../app-store";
 
-describe.only("src/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.js", () => {
+describe("src/modules/searchBar/searchInterfaces/searchInterfaceGazetteer.js", () => {
     let SearchInterface1 = null;
 
     before(() => {
