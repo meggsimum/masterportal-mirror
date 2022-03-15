@@ -760,8 +760,8 @@
           "additionalInfoField": "adresse_strasse_hausnr"
         },
         {
-          "id": "753",
-          "styleId": "753",
+          "id": "682",
+          "styleId": "682",
           "visibility": false,
           "mouseHoverField": "Name",
           "extendedFilter": true
