@@ -2,7 +2,6 @@ import ButtonObliqueTemplate from "text-loader!./template.html";
 import ButtonObliqueTemplateTable from "text-loader!./templateTable.html";
 import ButtonObliqueModel from "./model";
 import store from "../../../src/app-store";
-import {deactivateMap3D} from "../../../src/core/maps/store/actions/actions3DMap.js";
 
 /**
  * @member ButtonObliqueTemplate
@@ -168,7 +167,7 @@ const ButtonObliqueView = Backbone.View.extend(/** @lends ButtonObliqueView.prot
                     this.mapChange();
                 }
             }.bind(this));
-            deactivateMap3D();
+            store.dispatch("Maps/deactivateMap3D");
             return;
         }
         this.$("#ObliqueTable-title-open").hide();
