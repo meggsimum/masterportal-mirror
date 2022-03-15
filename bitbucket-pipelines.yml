@@ -81,11 +81,17 @@ pipelines:
                     - npm run browsertestOnExternalServer --testservice=saucelabs
         npm audit:
             - step:
-                name: npm audit (security)
+                name: npm audit --only=prod (security)
                 caches:
                     - node
                 script:
                     - npm install
                     - npm audit --json --only=prod
+                    - npm audit --json
+             - step:
+                name: npm audit (security)
+                caches:
+                    - node
+                script:
                     - npm audit --json
 
