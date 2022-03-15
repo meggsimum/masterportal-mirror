@@ -7,7 +7,6 @@ import "./2DMapRadioBridge";
 import "./2DMapViewRadioBridge";
 import "./3DMapRadioBridge";
 
-import {activateMap3D} from "./store/actions/actions3DMap";
 import ObliqueMap from "../../../modules/core/obliqueMap";
 import mapCollection from "../dataStorage/mapCollection";
 import store from "../../app-store";
@@ -42,7 +41,7 @@ function create2DMap (mapViewSettings) {
  */
 function create3DMap () {
     if (window.Cesium && Config.startingMap3D) {
-        activateMap3D();
+        store.dispatch("Maps/activateMap3D");
     }
 
 }

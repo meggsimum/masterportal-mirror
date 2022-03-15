@@ -186,7 +186,7 @@ const Button3dView = Backbone.View.extend(/** @lends Button3dView.prototype */{
      */
     controlsMapChangeClose3D: function (activeTools, supportedOnlyIn3d) {
         Radio.trigger("ModelList", "toggleWfsCluster", true);
-        deactivateMap3D();
+        store.dispatch("Maps/deactivateMap3D");
         Radio.trigger("Alert", "alert:remove");
         Radio.trigger("Filter", "enable");
         this.$("#3d-titel-close").hide();
@@ -253,7 +253,7 @@ const Button3dView = Backbone.View.extend(/** @lends Button3dView.prototype */{
             this.$("#3d-titel-close").show();
             Radio.trigger("Filter", "disable");
             Radio.trigger("ModelList", "toggleWfsCluster", false);
-            activateMap3D();
+            store.dispatch("Maps/activateMap3D");
             this.model.setButtonTitle("2D");
 
             this.open3dCatalog();

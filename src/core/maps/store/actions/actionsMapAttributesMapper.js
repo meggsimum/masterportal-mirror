@@ -109,9 +109,9 @@ function updateClick ({getters, commit, dispatch, rootGetters}, evt) {
     }
 
     if (rootGetters["Tools/Gfi/active"]) {
-        commit("setGfiFeatures", null);
+        // commit("setGfiFeatures", null);
         dispatch("MapMarker/removePolygonMarker", null, {root: true});
-        dispatch("collectGfiFeatures");
+        // dispatch("collectGfiFeatures");
     }
 
     if (!rootGetters["controls/orientation/poiModeCurrentPositionEnabled"]) {
@@ -175,7 +175,7 @@ function setCenter ({commit, getters}, mapView) {
     }
 }
 
-export {
+export default {
     setMapAttributes,
     setViewAttributes,
     updateAttributes,
