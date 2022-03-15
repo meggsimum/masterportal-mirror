@@ -1,7 +1,7 @@
 /**
  * Contains actions that communicate with the search interfaces.
  */
-import SearchInterfaceGazetteer from "../../searchInterfaces/SearchInterfaceGazetteer";
+import SearchInterfaceGazetteer from "../../searchInterfaces/searchInterfaceGazetteer";
 
 export default {
     /**
