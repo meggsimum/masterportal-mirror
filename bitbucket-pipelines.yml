@@ -86,6 +86,6 @@ pipelines:
                     - node
                 script:
                     - npm install
-                    - npm audit --json --only-prod
+                    - npm audit --json --only=prod
                     - npm audit --json
 
