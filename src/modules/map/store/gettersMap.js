@@ -86,41 +86,43 @@ const gettersMap = {
         const featuresAtPixel = [],
             map3D = mapCollection.getMap("olcs", "3D");
 
-        mapCollection.getMap("ol", "2D").forEachFeatureAtPixel(clickPixel, (feature, layer) => {
-            if (layer?.getVisible() && layer?.get("gfiAttributes") && layer?.get("gfiAttributes") !== "ignore") {
-                if (feature.getProperties().features) {
-                    feature.get("features").forEach(function (clusteredFeature) {
+        if (clickPixel) {
+            mapCollection.getMap("ol", "2D").forEachFeatureAtPixel(clickPixel, (feature, layer) => {
+                if (layer?.getVisible() && layer?.get("gfiAttributes") && layer?.get("gfiAttributes") !== "ignore") {
+                    if (feature.getProperties().features) {
+                        feature.get("features").forEach(function (clusteredFeature) {
+                            featuresAtPixel.push(createGfiFeature(
+                                layer,
+                                "",
+                                clusteredFeature
+                            ));
+                        });
+                    }
+                    else {
                         featuresAtPixel.push(createGfiFeature(
                             layer,
                             "",
-                            clusteredFeature
+                            feature
                         ));
-                    });
-                }
-                else {
-                    featuresAtPixel.push(createGfiFeature(
-                        layer,
-                        "",
-                        feature
-                    ));
-                }
-            }
-        });
-
-        if (map3D && Array.isArray(clickPixel) && clickPixel.length === 2) {
-            // add features from map3d
-            const scene = map3D.getCesiumScene(),
-                tileFeatures = scene.drillPick({x: clickPixel[0], y: clickPixel[1]});
-
-            tileFeatures.forEach(tileFeature => {
-                const gfiFeatures = getGfiFeaturesByTileFeature(tileFeature);
-
-                if (Array.isArray(gfiFeatures)) {
-                    gfiFeatures.forEach(gfiFeature => {
-                        featuresAtPixel.push(gfiFeature);
-                    });
+                    }
                 }
             });
+
+            if (map3D && Array.isArray(clickPixel) && clickPixel.length === 2) {
+                // add features from map3d
+                const scene = map3D.getCesiumScene(),
+                    tileFeatures = scene.drillPick({x: clickPixel[0], y: clickPixel[1]});
+
+                tileFeatures.forEach(tileFeature => {
+                    const gfiFeatures = getGfiFeaturesByTileFeature(tileFeature);
+
+                    if (Array.isArray(gfiFeatures)) {
+                        gfiFeatures.forEach(gfiFeature => {
+                            featuresAtPixel.push(gfiFeature);
+                        });
+                    }
+                });
+            }
         }
 
         return featuresAtPixel;

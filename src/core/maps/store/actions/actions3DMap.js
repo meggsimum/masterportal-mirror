@@ -1,5 +1,6 @@
 import api from "masterportalAPI/src/maps/api";
 import store from "../../../../app-store";
+import getters from "../gettersMap.js";
 import mapCollection from "../../../dataStorage/mapCollection";
 
 import OLCesium from "olcs/OLCesium.js";
@@ -10,7 +11,7 @@ import OLCesium from "olcs/OLCesium.js";
  * @returns {void}
  */
 OLCesium.prototype.setShadowTime = function (time) {
-    this.time = time;
+    getters.get3DMap().time = time;
 };
 
 /**
@@ -18,7 +19,7 @@ OLCesium.prototype.setShadowTime = function (time) {
      * @returns {Boolean} Flag if map is in 3d mode and enabled.
      */
 OLCesium.prototype.isMap3d = function () {
-    const map3D = Radio.request("Map", "getMap3d");
+    const map3D = getters.get3DMap();
 
     return map3D && map3D.getEnabled();
 };
@@ -28,7 +29,7 @@ OLCesium.prototype.isMap3d = function () {
  * @returns {Cesium.JulianDate} - shadow time in julian date format.
  */
 function shadowTime () {
-    return this.time || Cesium.JulianDate.fromDate(new Date());
+    return getters.get3DMap().time || Cesium.JulianDate.fromDate(new Date());
 }
 /**
  * Reacts if the camera has changed.
@@ -36,8 +37,7 @@ function shadowTime () {
  * @returns {void}
  */
 function reactToCameraChanged () {
-    // console.log(store.getters["Maps/get3DMap"])
-    const camera = mapCollection.getMap("olcs", "3D").getCamera();
+    const camera = getters.getCamera();
 
     Radio.trigger("Map", "cameraChanged", {"heading": camera.getHeading(), "altitude": camera.getAltitude(), "tilt": camera.getTilt()});
 }
