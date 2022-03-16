@@ -2,7 +2,8 @@
 * @property {String} backgroundImage BackgroundImage of the map.
 * @property {Number[]} boundingBox Current boundingBox values of the map.
 * @property {Number[]} center Current center values of the map.
-* @property {Number[]} clickCoordinate Current coordinates where the mouse click event were triggered.
+* @property {Number[]} clickCoordinate Current coordinates where the mouse click event was triggered.
+* @property {Number[]} clickCoordinate Current pixel values where the mouse click event was triggered.
 * @property {Number[]} extent Current extent values of the map.
 * @property {Number[]} initialCenter Initial center values of the map.
 * @property {Number} initialResolution Initial resolution values of the map.
@@ -24,6 +25,7 @@ const state = {
     boundingBox: null,
     center: null,
     clickCoordinate: null,
+    clickPixel: null,
     extent: null,
     initialCenter: null,
     initialResolution: null,

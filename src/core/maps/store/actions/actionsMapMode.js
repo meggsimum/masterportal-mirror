@@ -71,10 +71,9 @@ async function activateMap3D ({getters, dispatch}) {
         camera.changed.addEventListener(dispatch("reactToCameraChanged"));
     }
     map3D.setEnabled(true);
-    Radio.trigger("Map", "change", "3D");
+    // Radio.trigger("Map", "change", "3D");
     store.commit("Map/setMapId", map3D.id);
     store.commit("Map/setMapMode", "3D");
-    store.commit("Maps/setMapId", map3D.id);
     store.commit("Maps/setMode", "3D");
     store.dispatch("MapMarker/removePointMarker");
 }
@@ -108,8 +107,9 @@ function deactivateMap3D () {
                 view.setResolution(resolutions[resolutions.length - 1]);
             }
             Radio.trigger("Alert", "alert:remove");
-            Radio.trigger("Map", "change", "2D");
+            // Radio.trigger("Map", "change", "2D");
             store.commit("Map/setMapId", map.get("id"));
+            store.commit("Maps/setMode", "2D");
             store.commit("Map/setMapMode", "2D");
         });
     }
