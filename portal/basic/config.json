@@ -29,12 +29,6 @@
 			"tools": {
 				"name": "Werkzeuge",
 				"children": {
-					"streetSmart": {
-						"name": "translate#additional:menu.tools.streetsmart",
-						"glyphicon": "glyphicon-picture",
-						"streetsmartAPIVersion": "v22.2",
-						"reactVersion": "16.13.0"
-					  },
 					"gfi": {
 						"name": "Informationen abfragen",
 						"active": true
