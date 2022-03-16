@@ -30,7 +30,7 @@
 				"name": "Werkzeuge",
 				"children": {
 					"gfi": {
-						"name": "Informationen abfragen",
+            "name": "Informationen abfragen",
 						"active": true
 					},
 					"coordToolkit": {
