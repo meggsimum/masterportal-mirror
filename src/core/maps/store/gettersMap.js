@@ -40,41 +40,43 @@ const getters = {
         const featuresAtPixel = [],
             map3D = getters.get3DMap();
 
-        mapCollection.getMap("ol", "2D").forEachFeatureAtPixel(clickPixel, (feature, layer) => {
-            if (layer?.getVisible() && layer?.get("gfiAttributes") && layer?.get("gfiAttributes") !== "ignore") {
-                if (feature.getProperties().features) {
-                    feature.get("features").forEach(function (clusteredFeature) {
+        if (clickPixel) {
+            mapCollection.getMap("ol", "2D").forEachFeatureAtPixel(clickPixel, (feature, layer) => {
+                if (layer?.getVisible() && layer?.get("gfiAttributes") && layer?.get("gfiAttributes") !== "ignore") {
+                    if (feature.getProperties().features) {
+                        feature.get("features").forEach(function (clusteredFeature) {
+                            featuresAtPixel.push(createGfiFeature(
+                                layer,
+                                "",
+                                clusteredFeature
+                            ));
+                        });
+                    }
+                    else {
                         featuresAtPixel.push(createGfiFeature(
                             layer,
                             "",
-                            clusteredFeature
+                            feature
                         ));
-                    });
-                }
-                else {
-                    featuresAtPixel.push(createGfiFeature(
-                        layer,
-                        "",
-                        feature
-                    ));
-                }
-            }
-        });
-
-        if (map3D && Array.isArray(clickPixel) && clickPixel.length === 2) {
-            // add features from map3d
-            const scene = map3D.getCesiumScene(),
-                tileFeatures = scene.drillPick({x: clickPixel[0], y: clickPixel[1]});
-
-            tileFeatures.forEach(tileFeature => {
-                const gfiFeatures = getGfiFeaturesByTileFeature(tileFeature);
-
-                if (Array.isArray(gfiFeatures)) {
-                    gfiFeatures.forEach(gfiFeature => {
-                        featuresAtPixel.push(gfiFeature);
-                    });
+                    }
                 }
             });
+
+            if (map3D && Array.isArray(clickPixel) && clickPixel.length === 2) {
+                // add features from map3d
+                const scene = map3D.getCesiumScene(),
+                    tileFeatures = scene.drillPick({x: clickPixel[0], y: clickPixel[1]});
+
+                tileFeatures.forEach(tileFeature => {
+                    const gfiFeatures = getGfiFeaturesByTileFeature(tileFeature);
+
+                    if (Array.isArray(gfiFeatures)) {
+                        gfiFeatures.forEach(gfiFeature => {
+                            featuresAtPixel.push(gfiFeature);
+                        });
+                    }
+                });
+            }
         }
 
         return featuresAtPixel;
@@ -242,7 +244,7 @@ const getters = {
      * @returns {Object} Returns the layerlist.
      */
     getLayerList: () => {
-        return getLayerList();
+        return getters.get2DMap().getLayers().getArray();
     },
     /**
      * Gets all visible layers from layerList
@@ -254,15 +256,12 @@ const getters = {
     },
     /**
      * Gets all visible layers with children from group layers.
-     * @param {Object} state - The map state.
-     * @param {Object} visibleLayerList visible layers.
-     * @param {Object[]} getters.layerList all visible layers in the map.
      * @returns {Object[]} all visible layers.
      */
-    visibleLayerListWithChildrenFromGroupLayers: (state, {visibleLayerList}) => {
+    visibleLayerListWithChildrenFromGroupLayers: () => {
         const list = [];
 
-        visibleLayerList.forEach(layer => {
+        getters.getVisibleLayerList().forEach(layer => {
 
             if (layer.get("layers") && typeof layer.get("layers").getArray === "function") {
                 layer.get("layers").getArray().forEach(childLayer => {
@@ -276,15 +275,13 @@ const getters = {
         return list;
     },
     /**
-     * Gets all visible wms layers.
-     * @param {Object} state - the map state
-     * @param {Object} visibleLayerListWithChildrenFromGroupLayers children list from group layers
+     * Gets all visible wms layers
      * @param {Object} getters - the map getters
-     * @param {Object[]} getters.visibleLayerList - all visible layers in the map
+     * @param {Object[]} getters.visibleLayerListWithChildrenFromGroupLayers children list from group layers
      * @returns {Object[]} all visible wms layers
      */
-    visibleWmsLayerList: (state, {visibleLayerListWithChildrenFromGroupLayers}) => {
-        return visibleLayerListWithChildrenFromGroupLayers.filter(layer => {
+    visibleWmsLayerList: () => {
+        return getters.visibleLayerListWithChildrenFromGroupLayers().filter(layer => {
             return layer.get("typ") === "WMS";
         });
     },

@@ -46,7 +46,6 @@ function create3DMap () {
 
 }
 
-
 /**
  * Create the oblique map.
  * @param {Object} configJs The config.js file.
@@ -59,7 +58,7 @@ function createObliqueMap (configJs) {
 }
 
 /**
- * Create the map in differnt modes (2D, 3D and oblique)
+ * Create the map in different modes (2D, 3D and oblique)
  * @param {Object} configJs The config.js file.
  * @param {Object} mapViewSettings The mapViewSettings of config.json file.
  * @returns {void}
@@ -68,19 +67,4 @@ export function createMaps (configJs, mapViewSettings) {
     create2DMap(mapViewSettings);
     create3DMap(configJs);
     createObliqueMap(configJs);
-}
-
-/**
- * Returns the mapmode. Oblique, 3D and 2D are available for selection.
- * @todo Refactor this function once the 3DMap and ObliqueMap have been migrated.
- * @returns {String} The current mapMode.
- */
-export function getMapMode () {
-    if (Radio.request("ObliqueMap", "isActive")) {
-        return "Oblique";
-    }
-    else if (Radio.request("Map", "isMap3d")) {
-        return "3D";
-    }
-    return "2D";
 }

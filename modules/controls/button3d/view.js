@@ -2,7 +2,6 @@ import Button3dTemplate from "text-loader!./template.html";
 import Button3dTemplateTable from "text-loader!./templateTable.html";
 import Button3dModel from "./model";
 import store from "../../../src/app-store";
-import {activateMap3D, deactivateMap3D} from "../../../src/core/maps/store/actions/actions3DMap";
 /**
  * @member Button3dTemplate
  * @description Template used for the 3D Button

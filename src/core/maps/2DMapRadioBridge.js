@@ -1,5 +1,5 @@
 import mapCollection from "../dataStorage/mapCollection";
-import {getMapMode} from "./maps.js";
+import getMapMode from "./store/actions/actionsMapMode.js";
 
 const channel = Radio.channel("Map");
 
