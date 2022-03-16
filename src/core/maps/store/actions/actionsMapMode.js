@@ -114,9 +114,24 @@ function deactivateMap3D () {
         });
     }
 }
+/**
+ * Returns the mapmode. Oblique, 3D and 2D are available for selection.
+ * @todo Refactor this function once the 3DMap and ObliqueMap have been migrated.
+ * @returns {String} The current mapMode.
+ */
+function getMapMode () {
+    if (Radio.request("ObliqueMap", "isActive")) {
+        return "Oblique";
+    }
+    else if (Radio.request("Map", "isMap3d")) {
+        return "3D";
+    }
+    return "2D";
+}
 export default {
     activateMap3D,
-    deactivateMap3D
+    deactivateMap3D,
+    getMapMode
 };
 
 

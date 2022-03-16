@@ -113,7 +113,7 @@ function updateClick ({getters, commit, dispatch, rootGetters}, evt) {
     if (rootGetters["Tools/Gfi/active"]) {
         commit("setGfiFeatures", null);
         dispatch("MapMarker/removePolygonMarker", null, {root: true});
-        dispatch("collectGfiFeatures");
+        dispatch("Maps/collectGfiFeatures", null, {root: true});
     }
 
     if (!rootGetters["controls/orientation/poiModeCurrentPositionEnabled"]) {
