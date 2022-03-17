@@ -1040,7 +1040,9 @@
         "vectorStyle": {
             "styleModel": {
                 "getGeometryTypeFromWFSFetchfailed": "Die Legende konnte in der Layerinformation nicht erstellt werden!",
-                "getGeometryTypeFromWFSFetchfailedMessage": "Details: Ein benötigter Dienst antwortet nicht."
+                "getGeometryTypeFromWFSFetchfailedMessage": "Details: Ein benötigter Dienst antwortet nicht.",
+                "getGeometryTypeFromOAFFetchfailed": "Die Legende konnte in der Layerinformation nicht erstellt werden!",
+                "getGeometryTypeFromOAFFetchfailedMessage": "Details: Die API antwortet nicht."
             }
         },
         "wmsTime": {

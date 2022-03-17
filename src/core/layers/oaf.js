@@ -186,6 +186,7 @@ OAFLayer.prototype.createLegend = function () {
         this.setLegend(legend);
     }
     else if (styleModel && legend === true) {
+        styleModel.getGeometryTypeFromWFS(this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"), this.get("useProxy"));
         this.setLegend(styleModel.getLegendInfos());
     }
     else if (typeof legend === "string") {
