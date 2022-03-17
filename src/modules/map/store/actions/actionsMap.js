@@ -1,6 +1,6 @@
 import normalizeLayers from "./normalizeLayers";
 import * as highlightFeature from "./highlightFeature";
-import * as highlightFeaturesByAttribute from "./highlightFeaturesByAttribute";
+import * as highlightFeaturesByAttribute from "../../../highlightFeaturesByAttribute/store/actions/highlightFeaturesByAttribute";
 import * as removeHighlightFeature from "./removeHighlighting";
 import {getWmsFeaturesByMimeType} from "../../../../api/gfi/getWmsFeaturesByMimeType";
 import getProxyUrl from "../../../../utils/getProxyUrl";
@@ -60,7 +60,7 @@ const actions = {
                     dispatch("highlightFeaturesByAttribute", {wfsId: wfsId, propName: propName, propValue: propValue, queryType: queryType});
                 }
                 else {
-                    console.warn("Not all required URL parameters given for highlightFeatures.");
+                    console.warn("Not all required URL parameters given for highlightFeaturesByAttribute.");
                 }
             }
         }});
