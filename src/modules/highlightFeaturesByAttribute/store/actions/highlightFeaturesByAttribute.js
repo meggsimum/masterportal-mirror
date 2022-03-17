@@ -10,15 +10,12 @@ import {getLayerList} from "masterportalAPI/src/rawLayerList";
 
 /**
  * User type definition
- * @typedef {Object} highlightFeaturesByAttributeState
+ * @typedef {Object} highlighFeaturesByAttributeSettings
  * @property {String} pointStyleId The id references the style.json for a point highlight features.
  * @property {String} polygonStyleId The id references the style.json for a polygon highlight features.
  * @property {String} lineStyleId The id references the style.json for a line highlight features.
- * @property {Object} highlightPoint The vector layer for the point highlight features.
- * @property {Object} highlightPolygon The vector layer for the polygon highlight features.
- * @property {Object} highlightLine The vector layer for the line highlight features.
  */
-const highlighFeaturesSettings = {
+const highlighFeaturesByAttributeSettings = {
     pointStyleId: "defaultHighlightFeaturesPoint",
     polygonStyleId: "defaultHighlightFeaturesPolygon",
     lineStyleId: "defaultHighlightFeaturesLine"
@@ -36,9 +33,9 @@ function handleGetFeatureResponse (dispatch, response, highlightFeaturesLayer) {
         let hadPoint = false,
             hadPolygon = false,
             hadLine = false;
-        const styleListModelPoint = Radio.request("StyleList", "returnModelById", highlighFeaturesSettings.pointStyleId),
-            styleListModelPolygon = Radio.request("StyleList", "returnModelById", highlighFeaturesSettings.polygonStyleId),
-            styleListModelLine = Radio.request("StyleList", "returnModelById", highlighFeaturesSettings.lineStyleId),
+        const styleListModelPoint = Radio.request("StyleList", "returnModelById", highlighFeaturesByAttributeSettings.pointStyleId),
+            styleListModelPolygon = Radio.request("StyleList", "returnModelById", highlighFeaturesByAttributeSettings.polygonStyleId),
+            styleListModelLine = Radio.request("StyleList", "returnModelById", highlighFeaturesByAttributeSettings.lineStyleId),
             features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data),
             highlightPoint = new VectorLayer({
                 id: "highlight_point_layer",
@@ -70,6 +67,19 @@ function handleGetFeatureResponse (dispatch, response, highlightFeaturesLayer) {
                 gfiAttributes: highlightFeaturesLayer.gfiAttributes,
                 gfiTheme: "default"
             });
+        
+        if (features.length === 0) {
+            if (window.DOMParser) {
+                let parser = new DOMParser();
+                let xmlDoc = parser.parseFromString(response.data, "text/xml");
+                let exceptionText = xmlDoc.getElementsByTagName("ExceptionText")[0].childNodes[0].nodeValue;
+                
+                dispatch("Alerting/addSingleAlert", "Datenabfrage fehlgeschlagen. (Technische Details: " + exceptionText, {root: true});
+            }
+            else {
+                console.warn("highlightFeaturesByAttribute: No results found and couldn't parse response");
+            }
+        }
 
         features.forEach(feature => {
             const geometry = feature.getGeometry();
@@ -123,7 +133,7 @@ function handleGetFeatureResponse (dispatch, response, highlightFeaturesLayer) {
         }
     }
     else {
-        dispatch("Alerting/addSingleAlert", "Datenabfrage fehlgeschlagen. (Technische Details: " + status);
+        dispatch("Alerting/addSingleAlert", "Datenabfrage fehlgeschlagen. (Technische Details: " + status, {root: true});
     }
 }
 
@@ -146,29 +156,33 @@ function highlightFeaturesByAttribute ({dispatch}, queryObject) {
         </ogc:PropertyIsEqualTo>`;
 
     if (!highlightFeaturesLayer) {
-        console.warn("highlightFeatures Layer with ID " + queryObject.wfsId + " not found in Config");
+        console.warn("highlightFeaturesByAttribute Layer with ID " + queryObject.wfsId + " not found in Config");
         return;
     }
-    if (highlightFeaturesLayer.wildCard.length !== 1) {
-        console.warn("wildCard parameter must be one character");
+    if (!highlightFeaturesLayer.url) {
+        console.warn("highlightFeaturesByAttribute Layer has no url configured");
         return;
     }
-    if (highlightFeaturesLayer.singleChar.length !== 1) {
-        console.warn("singleChar parameter must be one character");
+    if (highlightFeaturesLayer.wildCard && highlightFeaturesLayer.wildCard.length !== 1) {
+        console.warn("highlightFeaturesByAttribute: wildCard config setting must be one character");
         return;
     }
-    if (highlightFeaturesLayer.escapeChar.length !== 1) {
-        console.warn("escpapeChar parameter must be one character");
+    if (highlightFeaturesLayer.singleChar && highlightFeaturesLayer.singleChar.length !== 1) {
+        console.warn("highlightFeaturesByAttribute: singleChar config setting must be one character");
+        return;
+    }
+    if (highlightFeaturesLayer.escapeChar && highlightFeaturesLayer.escapeChar.length !== 1) {
+        console.warn("highlightFeaturesByAttribute: escpapeChar config setting must be one character");
         return;
     }
 
     let reqData = `<?xml version='1.0' encoding='UTF-8'?>
         <wfs:GetFeature service='WFS' xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml' xmlns:app='http://www.deegree.org/app' traverseXlinkDepth='*' version='${highlightFeaturesLayer.version}'>
-        <wfs:Query typeName='${highlightFeaturesLayer.typename}'>
+        <wfs:Query typeName='${highlightFeaturesLayer.featureType}'>
         <wfs:PropertyName>${highlightFeaturesLayer.resultPropName}</wfs:PropertyName>
         <ogc:Filter>`;
 
-    if (queryObject.queryType === "IsEqual") {
+    if (queryObject.queryType && queryObject.queryType.toLowerCase() === "isequal") {
         reqData = reqData + querySnippetEqual;
     }
     else {
