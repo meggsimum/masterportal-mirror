@@ -1,8 +1,9 @@
 {
-    "chromeWebSecurity": false,
-    "experimentalSourceRewriting": true,
-    "hosts": {
+    "xchromeWebSecurity": false,
+    "xexperimentalSourceRewriting": true,
+    "xhosts": {
         "*.localhost": "127.0.0.1"
     },
-    "baseUrl": "https://localhost:9001"
+    "baseUrl": "https://localhost:9001",
+    "clientRoute": "/"
 }
