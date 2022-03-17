@@ -4,6 +4,10 @@ import Layer from "./layer";
 import * as bridge from "./RadioBridge.js";
 import Cluster from "ol/source/Cluster";
 import {bbox, all} from "ol/loadingstrategy.js";
+import store from "../../app-store";
+import axios from "axios";
+import isObject from "../../utils/isObject";
+
 
 /**
  * Creates a layer of type OAF.
@@ -18,7 +22,8 @@ export default function OAFLayer (attrs) {
         isClustered: false,
         altitudeMode: "clampToGround",
         useProxy: false,
-        sourceUpdated: false
+        sourceUpdated: false,
+        datasets: [{}]
     };
 
     this.createLayer(Object.assign(defaults, attrs));
@@ -30,6 +35,7 @@ export default function OAFLayer (attrs) {
     if (attrs.clusterDistance) {
         this.set("isClustered", true);
     }
+
     this.createLegend();
 }
 // Link prototypes and add prototype methods, means OAFLayer uses all methods and properties of Layer
@@ -57,7 +63,9 @@ OAFLayer.prototype.createLayer = function (attrs) {
             bbox: attrs.bbox,
             datetime: attrs.datetime,
             crs,
-            bboxCrs: attrs.bboxCrs
+            bboxCrs: attrs.bboxCrs,
+            cswUrl: attrs.cswUrl,
+            params: attrs.params
         },
         layerParams = {
             name: attrs.name,
@@ -267,4 +275,67 @@ OAFLayer.prototype.getStyleAsFunction = function (style) {
  */
 OAFLayer.prototype.styling = function () {
     this.layer.setStyle(this.getStyleAsFunction(this.get("style")));
+};
+
+OAFLayer.prototype.showLayerInformation = function () {
+    let cswUrl = null,
+        showDocUrl = null,
+        layerMetaId = null;
+
+    const metaID = [],
+        name = this.get("name");
+
+    if (Array.isArray(this.get("datasets")) && this.get("datasets")[0] !== null && typeof this.get("datasets")[0] === "object") {
+        cswUrl = this.get("datasets")[0]?.csw_url ? this.get("datasets")[0].csw_url : null;
+        showDocUrl = this.get("datasets")[0]?.show_doc_url ? this.get("datasets")[0].show_doc_url : null;
+        layerMetaId = this.get("datasets")[0]?.md_id ? this.get("datasets")[0].md_id : null;
+    }
+    if (!cswUrl && !layerMetaId) {
+        const baseUrl = this.get("url") + "?f=json";
+
+        axios({
+            method: "GET",
+            url: baseUrl
+        }).then((response) => {
+            const links = response.data.links,
+                metaLink = links.filter(link => link.rel === "describedBy" && link.type === "application/xml")[0];
+
+            layerMetaId = isObject(metaLink) && Object.prototype.hasOwnProperty.call(metaLink, "href") ? new URLSearchParams(metaLink.href).get("id") : undefined;
+            if (layerMetaId) {
+                this.setLayerinfoActive(this.get("cswUrl"), layerMetaId, metaID, name, showDocUrl);
+            }
+            else {
+                console.warn("OAF Layerinfo: layerMetaId is not set");
+            }
+        });
+    }
+
+    metaID.push(layerMetaId);
+    this.setLayerinfoActive(cswUrl, layerMetaId, metaID, name, showDocUrl);
+};
+
+
+OAFLayer.prototype.setLayerinfoActive = function (cswUrl, layerMetaId, metaID, name, showDocUrl) {
+    store.dispatch("LayerInformation/layerInfo", {
+        "id": this.get("id"),
+        "metaID": layerMetaId,
+        "metaIdArray": metaID,
+        "layername": name,
+        "url": this.get("url"),
+        "legendURL": this.get("legendURL"),
+        "typ": this.get("typ"),
+        "cswUrl": cswUrl,
+        "showDocUrl": showDocUrl,
+        "urlIsVisible": this.get("urlIsVisible")
+    });
+
+    store.dispatch("LayerInformation/activate", true);
+    store.dispatch("LayerInformation/additionalSingleLayerInfo");
+    store.dispatch("LayerInformation/setMetadataURL", layerMetaId);
+    store.dispatch("Legend/setLayerIdForLayerInfo", this.get("id"));
+    store.dispatch("Legend/setLayerCounterIdForLayerInfo", Date.now());
+    if (typeof this.createLegend === "function") {
+        this.createLegend();
+    }
+    this.setLayerInfoChecked(true);
 };

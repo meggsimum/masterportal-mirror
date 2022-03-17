@@ -43,7 +43,7 @@ export default {
             return this.downloadLinks && this.downloadLinks.length > 1;
         },
         layerUrl () {
-            return this.layerInfo.url + "?SERVICE=" + this.layerInfo.typ + "&REQUEST=GetCapabilities";
+            return this.layerInfo.typ === "OAF" ? this.layerInfo.url : this.layerInfo.url + "?SERVICE=" + this.layerInfo.typ + "&REQUEST=GetCapabilities";
         },
         showMoreLayers () {
             if (this.layerInfo.metaIdArray) {
