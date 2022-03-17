@@ -1,19 +1,6 @@
-/* Wenn der Map-Modus gewechselt wird sollen hier entsprechende Actions ausgeführt werden
-z.B. 2D -> 3D oder 3D -> Oblique etc.
-Siehe
-masterportal\modules\controls\button3d\view.js
-masterportal\modules\controls\buttonOblique\view.js */
 import mapCollection from "../../../dataStorage/mapCollection";
 import api from "masterportalAPI/src/maps/api";
 import store from "../../../../app-store";
-/**
- * Changes between the different map modes
- * @param {Object} state state object
- * @param {String} mapMode current map mode
- * @returns {void}
- */
-/* function changeMapMode ({commit, dispatch}, mapMode) {
-}; */
 /**
  * Deactivates oblique mode and listens to change event to activate 3d mode.
  * @listens Core#RadioTriggerMapChange

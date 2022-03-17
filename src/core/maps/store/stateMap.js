@@ -31,6 +31,7 @@ const state = {
     initialResolution: null,
     initialZoomLevel: null,
     layerIds: [],
+    gfiFeatures: [],
     mode: "2D",
     mouseCoordinate: null,
     overlayIds: null,

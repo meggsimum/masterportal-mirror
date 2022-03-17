@@ -1,5 +1,5 @@
 import mapCollection from "../dataStorage/mapCollection";
-import getMapMode from "./store/actions/actionsMapMode.js";
+import mapMode from "./store/actions/actionsMapMode.js";
 
 const channel = Radio.channel("Map");
 
@@ -22,7 +22,7 @@ channel.reply({
     "getLayerByName": function (name) {
         return mapCollection.getMap("ol", "2D").getLayerByName(name);
     },
-    "getMapMode": getMapMode
+    "getMapMode": mapMode.getMapMode()
 });
 
 channel.on({
