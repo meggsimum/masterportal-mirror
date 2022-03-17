@@ -19,6 +19,7 @@ import SelectFeatures from "./selectFeatures/components/SelectFeatures.vue";
 import StyleVT from "./styleVT/components/StyleVT.vue";
 import SupplyCoord from "./supplyCoord/components/SupplyCoord.vue";
 import WfsSearch from "./wfsSearch/components/WfsSearch.vue";
+import WfsTransaction from "./wfsTransaction/components/WfsTransaction.vue";
 
 /**
  * User type definition
@@ -48,7 +49,8 @@ const state = {
         selectFeatures: SelectFeatures,
         styleVT: StyleVT,
         supplyCoord: SupplyCoord,
-        wfsSearch: WfsSearch
+        wfsSearch: WfsSearch,
+        wfsTransaction: WfsTransaction
     },
     configuredTools: []
 };

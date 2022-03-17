@@ -27,6 +27,7 @@ import SelectFeatures from "./selectFeatures/store/indexSelectFeatures";
 import StyleVT from "./styleVT/store/indexStyleVT";
 import SupplyCoord from "./supplyCoord/store/indexSupplyCoord";
 import WfsSearch from "./wfsSearch/store/indexWfsSearch";
+import WfsTransaction from "./wfsTransaction/store/indexWfsTransaction";
 
 /**
  * This is here to test app-store/utils/composeModules.
@@ -55,7 +56,8 @@ export default {
         SelectFeatures,
         StyleVT,
         SupplyCoord,
-        WfsSearch
+        WfsSearch,
+        WfsTransaction
     },
     state,
     getters,
