@@ -1,8 +1,10 @@
 import {expect} from "chai";
+import Map from "ol/Map.js";
 import sinon from "sinon";
 import getters from "../../../store/gettersMap";
 import mutations from "../../../store/mutationsMap";
 import Feature from "ol/Feature";
+import Layer from "ol/layer/Layer";
 import LayerGroup from "ol/layer/Group";
 import View from "ol/View";
 import VectorLayer from "ol/layer/Vector.js";
@@ -24,6 +26,7 @@ describe("src/core/maps/store/gettersMap.js", () => {
                 mode: "2D"
             };
 
+            mapCollection.clear();
             mapCollection.addMap(map, "ol", "2D");
 
             expect(getters.get2DMap()).to.deep.equal({id: "ol", mode: "2D"});
@@ -86,40 +89,102 @@ describe("src/core/maps/store/gettersMap.js", () => {
             expect(getters.gfiFeaturesAtPixel(state, [40, 50])).be.a("array");
         });
         it("returns the visibleLayerList", () => {
+            const map = new Map({
+                id: "ol",
+                mode: "2D"
+            });
+
+            mapCollection.clear();
+            mapCollection.addMap(map, "ol", "2D");
             expect(getters.getVisibleLayerList()).to.be.a("array");
         });
-        it("returns the visibleLayerListWithChildrenFromGroupLayers without Group layers", () => {
-            const feature1 = new Feature({visible: true}),
-                feature2 = new Feature({visible: true}),
-                feature3 = new Feature({visible: false}),
-                state = {
-                    layerList: [feature1, feature2, feature3]
-                },
-                visibleLayerList = [feature1, feature2];
-
-            expect(getters.visibleLayerListWithChildrenFromGroupLayers(state, {visibleLayerList})).to.be.an("array").that.contains(feature1, feature2);
-        });
         it("returns the visibleLayerListWithChildrenFromGroupLayers with Group layers", () => {
-            const feature1 = new Feature({visible: true}),
-                feature2 = new Feature({visible: true}),
-                feature3 = new Feature({visible: true}),
+            const layers = [],
+                map = {
+                    id: "ol",
+                    mode: "2D",
+                    addLayer: (grouplayer) => {
+                        layers.push(grouplayer);
+                    },
+                    getLayers: () => {
+                        return grouplayer.getLayers();
+                    }
+                },
+                layer1 = new Layer({visible: true}),
+                layer2 = new Layer({visible: true}),
                 grouplayer = new LayerGroup({
-                    layers: [feature1, feature2]
+                    layers: [layer1, layer2]
                 }),
                 state = {
-                    layerList: [grouplayer, feature3]
-                },
-                visibleLayerList = [grouplayer, feature3];
+                    mapId: "ol",
+                    mapMode: "2D"
+                };
 
-            expect(getters.visibleLayerListWithChildrenFromGroupLayers(state, {visibleLayerList})).to.be.an("array").that.contains(feature1, feature2, feature3);
+            mapCollection.clear();
+            mapCollection.addMap(map, "ol", "2D");
+            addLayerToMap(state, grouplayer);
+
+            expect(getters.visibleLayerListWithChildrenFromGroupLayers()).to.be.a("array").that.contains(layer1, layer2);
         });
-        it("returns the visibleWmsLayerList", () => {
-            const feature1 = new Feature({visible: true, typ: "WMS"}),
-                feature2 = new Feature({visible: true, typ: "WFS"}),
-                feature3 = new Feature({visible: true, typ: "WMS"}),
-                visibleLayerListWithChildrenFromGroupLayers = [feature1, feature2, feature3];
+        it("returns the visibleLayerListWithChildrenFromGroupLayers without Group layers", () => {
+            const layers = [],
+                map = {
+                    id: "ol",
+                    mode: "2D",
+                    addLayer: (layer1) => {
+                        layers.push(layer1);
+                    },
+                    getLayers: () => {
+                        return layer1;
+                    },
+                    getArray: () => [layer1]
+                },
+                layer1 = {
+                    get: () => true,
+                    visible: true,
+                    getArray: () => [layer1],
+                    getVisible: () => true
+                },
+                state = {
+                    mapId: "ol",
+                    mapMode: "2D"
+                };
 
-            expect(getters.visibleWmsLayerList({}, {visibleLayerListWithChildrenFromGroupLayers})).to.be.an("array").that.contains(feature1, feature3);
+            mapCollection.clear();
+            mapCollection.addMap(map, "ol", "2D");
+            addLayerToMap(state, layer1);
+
+            expect(getters.visibleLayerListWithChildrenFromGroupLayers()).to.be.a("array").that.contains(layer1);
+        });
+        it("returns the visibleWmsLayerList from grouplayer", () => {
+            const layers = [],
+                map = {
+                    id: "ol",
+                    mode: "2D",
+                    addLayer: (grouplayer) => {
+                        layers.push(grouplayer);
+                    },
+                    getLayers: () => {
+                        return grouplayer.getLayers();
+                    },
+                    getArray: () => [grouplayer]
+                },
+                layer1 = new Layer({visible: true, typ: "WMS"}),
+                layer2 = new Layer({visible: true, typ: "WFS"}),
+                layer3 = new Layer({visible: true, typ: "WMS"}),
+                grouplayer = new LayerGroup({
+                    layers: [layer1, layer2, layer3]
+                }),
+                state = {
+                    mapId: "ol",
+                    mapMode: "2D"
+                };
+
+            mapCollection.clear();
+            mapCollection.addMap(map, "ol", "2D");
+            addLayerToMap(state, grouplayer);
+
+            expect(getters.visibleWmsLayerList()).to.be.a("array").that.contains(layer1, layer3);
         });
 
         it("returns the Features in reverse order", () => {
