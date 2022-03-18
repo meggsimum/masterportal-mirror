@@ -26,14 +26,13 @@ const getters = {
      * @returns {Object} layer collection of the map.
      */
     getLayers: () => {
-
         return mapCollection.getMap("ol", "2D").getLayers();
     },
     /**
-     * gets the features at the given pixel for the gfi
-     * @param {object} state - the map state
-     * @param {number[]} state.clickPixel - the pixel coordinate of the click event
-     * @returns {object[]} gfi features
+     * Gets the features at the given pixel for the gfi
+     * @param {Object} state - the map state
+     * @param {Number[]} state.clickPixel - the pixel coordinate of the click event
+     * @returns {Object[]} gfi features
      */
     gfiFeaturesAtPixel: (state, {clickPixel}) => {
         const featuresAtPixel = [],
@@ -148,15 +147,14 @@ const getters = {
         return mapCollection.getMap("olcs", "3D").getCesiumScene();
     },
     /**
-     * Returns
-     *
-     * @param {Object} state Current state object of the store.
-     * @returns {Object} Returns the .
+     * Returns the shadowMap of the cesium scene
+     * @returns {Object} Returns the shadowMap.
      */
     getShadowMap: () => {
         return mapCollection.getMap("olcs", "3D").getCesiumScene().shadowMap;
     },
     /**
+     * Revers the gfi features
      * @param {object} state - the map state
      * @returns {Array} reversed gfiFeatures Array from state
      */
@@ -168,6 +166,7 @@ const getters = {
         return state.gfiFeatures;
     },
     /**
+     * Returns the 3D mode
      * @param {Object} mode of the map
      * @return {boolean} whether the portal is currently in 3D mode
      */
@@ -198,7 +197,7 @@ const getters = {
         return scaleNumber >= 1000 ? `${Math.round(scaleNumber / 100) / 10} km` : `${scaleNumber} m`;
     },
     /**
-     * returns a beautified state in format "1 : scale" where scale is rounded based on its value
+     * Returns a beautified state in format "1 : scale" where scale is rounded based on its value
      * @param {Object} _ state
      * @param {Object} params getter parameters
      * @param {Number} params.scale a value (number) from computed scale 1:x
@@ -247,7 +246,6 @@ const getters = {
     },
     /**
      * Gets all visible layers from map
-     * @param {Object[]} state.layerList - all visible layers in the map
      * @returns {Object[]} all visible layers
      */
     getVisibleLayerList: () => {
@@ -285,7 +283,7 @@ const getters = {
         });
     },
     /**
-     * gets all visible wms layers at the current resolution
+     * Gets all visible wms layers at the current resolution
      * @param {Object} state - the map state
      * @param {Object} getters - the map getters
      * @param {Object[]} getters.visibleWmsLayerList - all visible wms layers in the map
