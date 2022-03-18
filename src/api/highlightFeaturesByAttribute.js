@@ -147,20 +147,15 @@ function handleGetFeatureResponse (dispatch, response, highlightFeaturesLayer) {
         const features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data);
 
         if (features.length === 0) {
-            if (window.DOMParser) {
-                const parser = new DOMParser(),
-                    xmlDoc = parser.parseFromString(response.data, "text/xml"),
-                    exceptionText = xmlDoc.getElementsByTagName("ExceptionText")[0].childNodes[0].nodeValue;
+            const parser = new DOMParser(),
+                xmlDoc = parser.parseFromString(response.data, "text/xml"),
+                exceptionText = xmlDoc.getElementsByTagName("ExceptionText")[0].childNodes[0].nodeValue;
 
-                if (!exceptionText) {
-                    console.warn("highlightFeaturesByAttribute: No results found and couldn't parse response");
-                }
-                else {
-                    dispatch("Alerting/addSingleAlert", "Datenabfrage fehlgeschlagen. (Technische Details: " + exceptionText, {root: true});
-                }
+            if (!exceptionText) {
+                console.warn("highlightFeaturesByAttribute: No results found and couldn't parse response");
             }
             else {
-                console.warn("highlightFeaturesByAttribute: No results found and couldn't parse response");
+                dispatch("Alerting/addSingleAlert", "Datenabfrage fehlgeschlagen. (Technische Details: " + exceptionText, {root: true});
             }
         }
 
