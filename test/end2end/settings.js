@@ -171,14 +171,14 @@ function getCapabilities () {
             "browserName": "chrome",
             "browserVersion": "latest",
             "platformName": "Windows 10"
-        }
-        /* ,
+        },
         {
             ...baseSaucelabs,
             "browserName": "firefox",
             "browserVersion": "latest",
             "platformName": "Windows 10"
-        },
+        }
+        /*
         {
             ...baseSaucelabs,
             "browserName": "MicrosoftEdge",
