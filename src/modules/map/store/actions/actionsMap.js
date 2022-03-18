@@ -1,6 +1,5 @@
 import normalizeLayers from "./normalizeLayers";
 import * as highlightFeature from "./highlightFeature";
-import * as highlightFeaturesByAttribute from "../../../highlightFeaturesByAttribute/store/actions/highlightFeaturesByAttribute";
 import * as removeHighlightFeature from "./removeHighlighting";
 import {getWmsFeaturesByMimeType} from "../../../../api/gfi/getWmsFeaturesByMimeType";
 import getProxyUrl from "../../../../utils/getProxyUrl";
@@ -46,24 +45,7 @@ const actions = {
         }
 
         const mapView = map.getView(),
-            channel = Radio.channel("VectorLayer"),
-            parametricUrlChannel = Radio.channel("ParametricURL");
-
-        parametricUrlChannel.on({"ready": () => {
-            if (rootState.urlParams["Map/highlightFeaturesByAttribute"]) {
-                const propName = rootState.urlParams.attributeName,
-                    propValue = rootState.urlParams.attributeValue,
-                    queryType = rootState.urlParams.attributeQuery,
-                    wfsId = rootState.urlParams.wfsId;
-
-                if (propName && propValue && wfsId) {
-                    dispatch("highlightFeaturesByAttribute", {wfsId: wfsId, propName: propName, propValue: propValue, queryType: queryType});
-                }
-                else {
-                    console.warn("Not all required URL parameters given for highlightFeaturesByAttribute.");
-                }
-            }
-        }});
+            channel = Radio.channel("VectorLayer");
 
         // listen to featuresLoaded event to be able to determine if all features of a layer are completely loaded
         channel.on({"featuresLoaded": id => {
@@ -406,7 +388,6 @@ const actions = {
         }
     },
     ...highlightFeature,
-    ...highlightFeaturesByAttribute,
     ...removeHighlightFeature
 };
 
