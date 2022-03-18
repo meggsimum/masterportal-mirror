@@ -1,5 +1,4 @@
 const Config = {
-    addons: ["streetSmart"],
     wfsImgPath: "./resources/img/",
     namedProjections: [
         ["EPSG:25832", "+title=ETRS89/UTM 32N +proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"]
@@ -25,20 +24,6 @@ const Config = {
     mouseHover: {
         numFeaturesToShow: 2,
         infoText: "(weitere Objekte. Bitte zoomen.)"
-    },
-    portalLanguage: {
-        enabled: true,
-        debug: false,
-        languages: {
-            de: "Deutsch",
-            en: "English",
-            es: "Español",
-            it: "Italiano",
-            pt: "Português",
-            tr: "Türkçe"
-        },
-        fallbackLanguage: "de",
-        changeLanguageOnStartWhen: ["querystring", "localStorage", "htmlTag"]
     }
 };
 

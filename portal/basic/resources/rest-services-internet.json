@@ -28,18 +28,5 @@
     "name" : "Email Service by PHP",
     "url" : "https://geoportal-hamburg.de/smtp/sendmail.php",
     "typ" : "EmailService"
-  },
-  {
-    "id" : "streetsmart",
-    "name" : "StreetSmart",
-    "url" : "https://atlas.cyclomedia.com/",
-    "typ" : "StreeSmartApi",
-    "params": {
-      "username": "markus.besenfelder@gv.hamburg.de",
-      "password": "s.hKKA-EtusCd[F",
-      "apiKey": "aT4J6745OrAliTstanAJmTU1yfwNyPQhuLM5aP0ZarYFuvsR2Dg12nANy7c9ar0Z",
-      "xxxsrs": "EPSG:25832",
-      "locale": "de"
-    }
   }
 ]

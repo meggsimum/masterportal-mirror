@@ -1,25 +1,5 @@
 [
   {
-    "styleId": "streetsmartMarker",
-    "rules":
-    [
-      {
-        "style":
-          {
-          "type": "icon",
-          "imageName": "arrow-up-circle-fill.svg",
-          "imageScale": 2,
-          "imageWidth": 32,
-          "imageHeight": 32,
-          "imageOffsetX": 8,
-          "imageOffsetY": 8,
-          "imageOffsetXUnit": "pixels",
-          "imageOffsetYUnit": "pixels"
-          }
-      }
-    ]
-  },
-  {
     "styleId": "location_eventlotse",
     "rules":
     [
