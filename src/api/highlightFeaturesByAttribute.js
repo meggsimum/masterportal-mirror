@@ -41,7 +41,7 @@ function createVectorLayer (styleId, name, gfiAttributes) {
 }
 
 /**
- * highlight Features
+ * highlight Features for Points
  * @param {String} modelId The model Id
  * @param {String} styleId The style Id
  * @param {String} name Layer name
@@ -49,7 +49,7 @@ function createVectorLayer (styleId, name, gfiAttributes) {
  * @param {Array} features The loaded WFS features
  * @returns {void} nothing
 */
-function highlightFeaturesForLayerPoint (modelId, styleId, name, gfiAttributes, features) {
+function highlightPointFeature (modelId, styleId, name, gfiAttributes, features) {
     const styleListModel = Radio.request("StyleList", "returnModelById", modelId),
         highlightLayer = createVectorLayer(styleId, name, gfiAttributes);
     let hadPoint = false;
@@ -87,7 +87,7 @@ function highlightFeaturesForLayerPoint (modelId, styleId, name, gfiAttributes, 
  * @param {Array} features The loaded WFS features
  * @returns {void} nothing
 */
-function highlightFeaturesForLayer (modelId, styleId, name, geometryRequested, gfiAttributes, features) {
+function highlightLineOrPolygonFeature (modelId, styleId, name, geometryRequested, gfiAttributes, features) {
     const styleListModel = Radio.request("StyleList", "returnModelById", modelId),
         highlightLayer = createVectorLayer(styleId, name, gfiAttributes);
     let hadGeometry = false;
@@ -164,9 +164,9 @@ function handleGetFeatureResponse (dispatch, response, highlightFeaturesLayer) {
             }
         }
 
-        highlightFeaturesForLayerPoint(highlighFeaturesByAttributeSettings.pointStyleId, "highlight_point_layer", "highlightPoint", highlightFeaturesLayer.gfiAttributes, features);
-        highlightFeaturesForLayer(highlighFeaturesByAttributeSettings.polygonStyleId, "highlight_polygon_layer", "highlightPolygon", "Polygon", highlightFeaturesLayer.gfiAttributes, features);
-        highlightFeaturesForLayer(highlighFeaturesByAttributeSettings.lineStyleId, "highlight_line_layer", "highlightLine", "LineString", highlightFeaturesLayer.gfiAttributes, features);
+        highlightPointFeature(highlighFeaturesByAttributeSettings.pointStyleId, "highlight_point_layer", "highlightPoint", highlightFeaturesLayer.gfiAttributes, features);
+        highlightLineOrPolygonFeature(highlighFeaturesByAttributeSettings.polygonStyleId, "highlight_polygon_layer", "highlightPolygon", "Polygon", highlightFeaturesLayer.gfiAttributes, features);
+        highlightLineOrPolygonFeature(highlighFeaturesByAttributeSettings.lineStyleId, "highlight_line_layer", "highlightLine", "LineString", highlightFeaturesLayer.gfiAttributes, features);
     }
     else {
         dispatch("Alerting/addSingleAlert", "Datenabfrage fehlgeschlagen. (Technische Details: " + status, {root: true});
