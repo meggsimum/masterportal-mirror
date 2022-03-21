@@ -38,7 +38,7 @@ const getters = {
      */
     gfiFeaturesAtPixel: (state, {clickPixel}) => {
         const featuresAtPixel = [],
-            map3D = mapCollection.getMap("olcs", "3D");
+            map3D = getters.get3DMap();
 
         mapCollection.getMap("ol", "2D").forEachFeatureAtPixel(clickPixel, (feature, layer) => {
             if (layer?.getVisible() && layer?.get("gfiAttributes") && layer?.get("gfiAttributes") !== "ignore") {
@@ -92,7 +92,7 @@ const getters = {
      * @returns {Object} overlay of the map.
      */
     getOverlayById: (id) => {
-        return mapCollection.getMap("ol", "2D").getOverlayById(id);
+        return getters.get2DMap().getOverlayById(id);
     },
     /**
      * Returns the corresponding resolution for the scale.
