@@ -250,7 +250,7 @@ const getters = {
      * @returns {Object[]} all visible layers
      */
     getVisibleLayerList: () => {
-        return getLayerList().filter(layer => layer.getVisible());
+        return getters.getLayerList().filter(layer => layer.getVisible());
     },
     /**
      * Gets all visible layers with children from group layers.
