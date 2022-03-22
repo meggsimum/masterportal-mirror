@@ -24,7 +24,7 @@ function deactivateOblique () {
  * @fires Core#RadioTriggerMapChange
  * @returns {void}
  */
-async function activateMap3D ({getters, dispatch}) {
+async function activateMap3D ({getters, dispatch, commit}) {
     const mapMode = getters.mode;
     let map3D = getters.get3DMap,
         scene,
@@ -59,9 +59,9 @@ async function activateMap3D ({getters, dispatch}) {
     }
     map3D.setEnabled(true);
     // Radio.trigger("Map", "change", "3D");
+    commit("setMode", "3D");
     store.commit("Map/setMapId", map3D.id);
     store.commit("Map/setMapMode", "3D");
-    store.commit("Maps/setMode", "3D");
     store.dispatch("MapMarker/removePointMarker");
 }
 
@@ -118,7 +118,8 @@ function getMapMode () {
 export default {
     activateMap3D,
     deactivateMap3D,
-    getMapMode
+    getMapMode,
+    deactivateOblique
 };
 
 

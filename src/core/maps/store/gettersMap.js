@@ -1,5 +1,4 @@
 import {generateSimpleGetters} from "../../../app-store/utils/generators";
-import {getLayerList} from "masterportalAPI/src/rawLayerList";
 import initialState from "./stateMap";
 import {createGfiFeature} from "../../../api/gfi/getWmsFeaturesByMimeType";
 import {getGfiFeaturesByTileFeature} from "../../../api/gfi/getGfiFeaturesByTileFeature";

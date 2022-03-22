@@ -15,9 +15,30 @@ const {addLayerToMap} = mutations;
 
 describe("src/core/maps/store/gettersMap.js", () => {
 
-    describe("Map simple getters", () => {
+    describe("Map simple getters", async () => {
 
         it("returns the layerList from state", () => {
+            const layers = [],
+                map = {
+                    id: "ol",
+                    mode: "2D",
+                    addLayer: (layer1) => {
+                        layers.push(layer1);
+                    },
+                    getLayers: () => {
+                        return layer1;
+                    },
+                    getArray: () => [layer1]
+                },
+                layer1 = {
+                    get: () => true,
+                    visible: true,
+                    getArray: () => [layer1],
+                    getVisible: () => true
+                };
+
+            mapCollection.clear();
+            mapCollection.addMap(map, "ol", "2D");
             expect(getters.getLayerList()).to.be.a("array");
         });
         it("returns the 2D map", () => {
