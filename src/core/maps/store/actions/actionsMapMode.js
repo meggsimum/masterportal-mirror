@@ -7,10 +7,10 @@ import store from "../../../../app-store";
  * @fires Core#RadioTriggerObliqueMapDeactivate
  * @returns {void}
  */
-function deactivateOblique () {
+function deactivateOblique ({dispatch}) {
     Radio.once("Map", "change", function (onceMapMode) {
         if (onceMapMode === "2D") {
-            store.dispatch("Maps/activateMap3D");
+            dispatch("activateMap3D");
         }
     });
     Radio.trigger("ObliqueMap", "deactivate");
@@ -73,7 +73,7 @@ async function activateMap3D ({getters, dispatch, commit}) {
  * @fires Core#RadioTriggerMapChange
  * @returns {void}
  */
-function deactivateMap3D () {
+function deactivateMap3D ({commit}) {
     const map3D = mapCollection.getMap("olcs", "3D"),
         map = Radio.request("Map", "getMap"),
         view = map.getView();
@@ -96,7 +96,7 @@ function deactivateMap3D () {
             Radio.trigger("Alert", "alert:remove");
             // Radio.trigger("Map", "change", "2D");
             store.commit("Map/setMapId", map.get("id"));
-            store.commit("Maps/setMode", "2D");
+            commit("setMode", "2D");
             store.commit("Map/setMapMode", "2D");
         });
     }
