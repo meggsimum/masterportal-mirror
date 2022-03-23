@@ -121,18 +121,8 @@ function highlightLineOrPolygonFeature (modelId, styleId, name, geometryRequeste
  * @returns {void}
 */
 function handleGetFeatureError (dispatch, error) {
-    if (error.response) {
-        console.error(error.response.data);
-        dispatch("Alerting/addSingleAlert", "Datenabfrage fehlgeschlagen. (Technische Details: " + error.response.data, {root: true});
-    }
-    else if (error.request) {
-        console.error(error.request);
-        dispatch("Alerting/addSingleAlert", "Datenabfrage fehlgeschlagen. (Technische Details: " + error.request, {root: true});
-    }
-    else {
-        console.error(error.message);
-        dispatch("Alerting/addSingleAlert", "Datenabfrage fehlgeschlagen. (Technische Details: " + error.message, {root: true});
-    }
+    console.error(error);
+    dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
 }
 
 /**
@@ -151,11 +141,9 @@ function handleGetFeatureResponse (dispatch, response, highlightFeaturesLayer) {
                 xmlDoc = parser.parseFromString(response.data, "text/xml"),
                 exceptionText = xmlDoc.getElementsByTagName("ExceptionText")[0].childNodes[0].nodeValue;
 
-            if (!exceptionText) {
-                console.warn("highlightFeaturesByAttribute: No results found and couldn't parse response");
-            }
-            else {
-                dispatch("Alerting/addSingleAlert", "Datenabfrage fehlgeschlagen. (Technische Details: " + exceptionText, {root: true});
+            if (exceptionText) {
+                console.error("highlightFeaturesByAttribute: service exception: " + exceptionText);
+                dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
             }
         }
 
@@ -164,7 +152,8 @@ function handleGetFeatureResponse (dispatch, response, highlightFeaturesLayer) {
         highlightLineOrPolygonFeature(highlighFeaturesByAttributeSettings.lineStyleId, "highlight_line_layer", "highlightLine", "LineString", highlightFeaturesLayer.gfiAttributes, features);
     }
     else {
-        dispatch("Alerting/addSingleAlert", "Datenabfrage fehlgeschlagen. (Technische Details: " + status, {root: true});
+        console.warn(status);
+        dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
     }
 }
 
@@ -227,23 +216,23 @@ function getWFSQuery (featureType, resultPropName, version, filterSnippet) {
 */
 function configHasErrors (layer, wfsId) {
     if (!layer) {
-        console.warn("highlightFeaturesByAttribute: Layer with ID " + wfsId + " not found in Config");
+        console.error("highlightFeaturesByAttribute: Layer with ID " + wfsId + " not found in Config");
         return true;
     }
     if (!layer.url) {
-        console.warn("highlightFeaturesByAttribute: Layer with ID " + wfsId + " has no url configured");
+        console.error("highlightFeaturesByAttribute: Layer with ID " + wfsId + " has no url configured");
         return true;
     }
     if (layer.wildCard && layer.wildCard.length !== 1) {
-        console.warn("highlightFeaturesByAttribute: wildCard config setting must exist and be one character");
+        console.error("highlightFeaturesByAttribute: wildCard config setting must exist and be one character");
         return true;
     }
     if (layer.singleChar && layer.singleChar.length !== 1) {
-        console.warn("highlightFeaturesByAttribute: singleChar config setting must exist and be one character");
+        console.error("highlightFeaturesByAttribute: singleChar config setting must exist and be one character");
         return true;
     }
     if (layer.escapeChar && layer.escapeChar.length !== 1) {
-        console.warn("highlightFeaturesByAttribute: escapeChar config setting must exist and be one character");
+        console.error("highlightFeaturesByAttribute: escapeChar config setting must exist and be one character");
         return true;
     }
 
@@ -264,23 +253,23 @@ export function highlightFeaturesByAttribute (dispatch, wfsId, propName, propVal
         layer = layerList.find(layerConf => layerConf.id === wfsId),
         isEqual = queryType && queryType.toLowerCase() === "isequal",
         filterSnippet = getOGCFilterSnippet(isEqual,
-            layer.wildCard,
-            layer.singleChar,
-            layer.escapeChar,
-            layer.propNameSearchPrefix,
+            layer?.wildCard,
+            layer?.singleChar,
+            layer?.escapeChar,
+            layer?.propNameSearchPrefix,
             propName,
             propValue),
-        requestBody = getWFSQuery(layer.featureType, layer.resultPropName, layer.version, filterSnippet);
+        requestBody = getWFSQuery(layer?.featureType, layer?.resultPropName, layer?.version, filterSnippet);
 
     if (configHasErrors(layer, wfsId)) {
-        dispatch("Alerting/addSingleAlert", "Konfiguration fehlerhaft. Bitte Konsolen-Ausgabe prüfen.", {root: true});
+        dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.configurationError"), {root: true});
         return;
     }
     axios.post(layer.url, requestBody, {
         headers: {
             "Content-Type": "raw"
         },
-        timeout: layer.timeout || 5000
+        timeout: layer?.timeout
     })
         .then(response => {
             handleGetFeatureResponse(dispatch, response, layer);

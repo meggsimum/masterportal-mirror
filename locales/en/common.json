@@ -204,6 +204,12 @@
                 "noNameDefined": "FeatureViaURL: No name was defined for the layer with the id {{layerId}}."
             }
         },
+        "highlightFeaturesByAttribute": {
+            "messages": {
+                "requestFailed": "Request failed.",
+                "configurationError": "Configuration error. Please check the console messages."
+            }
+        },
         "quickHelp": {
             "titleTag": "Open/close help",
             "search": {

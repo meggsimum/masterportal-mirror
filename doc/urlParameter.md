@@ -22,6 +22,7 @@ Special URL parameters exist to change configuration details or execute initial 
 |HEADING|Only works when used in combination with `MAP/MAPMODE`. Sets the heading in 3D mode.|`?Map/mapMode=3D&heading=-1.2502079000000208`||
 |HIGHLIGHTFEATURE|Describes a layer's feature that is to be highlighted. Layer and feature id are given separated by a comma.|`&highlightfeature=layerid,featureId`|
 |MAP/HIGHLIGHTFEATURE|Describes a layer's feature that is to be highlighted. Layer and feature id are given separated by a comma. |`&Map/highlightfeature=layerid,featureId`||
+|MAP/HIGHLIGHTFEATURESBYATTRIBUTE|Highlights the features of a WFS configured via URL parameters wfsId, attributeName, attributeValue and optional attributeQuery. The wfsId has to match the layer configuration in **[config.Themenconfig.Fachdaten.Layer](config.json.md)** and services-internet.json. See also |`?Map/highlightFeaturesByAttribute=1&wfsId=1&attributeName=DK5&attributeValue=valueToSearchFor[&attributeQuery=islike||isequal]`|`?Map/highlightFeaturesByAttribute=1&wfsId=1-BUKEA&attributeName=DK5&attributeValue=1&attributeQuery=islike`|
 |LNG|Sets the language, if configured in config.js|`?lng=en`|
 |ISINITOPEN|The module matching the given id of the tool is opened initially. Please mind that only one of the windowed tools may be open at a time.|`&isinitopen=draw`|
 |TOOLS/[tool-id]/ACTIVE=TRUE|The module matching the given id of the tool is opened initially. Please mind that only one of the windowed tools may be open at a time.|`?Tools/Draw/active=true`|`?Draw/active=true` or `?draw/active` or `?draw=true`|
@@ -49,4 +50,18 @@ MAPMARKER|Sets a marker to the given coordinate and zooms to it. If `PROJECTION`
 |MAP/ZOOMTOEXTENT|Zooms to an extent. May be combined with projection.|`?Map/zoomToExtent=510000,5850000,625000,6000000`|
 |ZOOMTOGEOMETRY|Zooms to a feature requested from a WFS. Allowed parameters depend on **[config.zoomToGeometry](config.js.md)**. As an alternative to the feature name, features may also be addressed by their `geometries` array index, starting at 1.|`?zoomToGeometry=bergedorf`|
 |MAP/ZOOMTOGEOMETRY|Zooms to a feature requested from a WFS. Allowed parameters depend on **[config.zoomToGeometry](config.js.md)**. As an alternative to the feature name, features may also be addressed by their `geometries` array index, starting at 1.|`?Map/zoomToGeometry=bergedorf`|
+
+#### config.Themenconfig.Fachdaten.Layer
+
+[inherits]: # (Themenconfig.Layer)
+
+List of typical WFS query attributes for highlightFeaturesByAttribute.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|propNameSearchPrefix|yes|String||Search prefix for the WFS query - e.g. app:.|false|
+|wildCard|yes|String||The wildcard character for the WFS query -e.g. %|false|
+|singleChar|yes|String||The single character for the WFS query - e.g. #|false|
+|escapeChar|yes|String||The escape character for the WFS query - e.g. ||false|
+|resultPropName|yes|String||The result property name for the WFS query - e.g. app:SHAPE||false|
 

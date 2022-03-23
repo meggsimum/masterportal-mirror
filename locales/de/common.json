@@ -205,6 +205,12 @@
                 "noNameDefined": "FeatureViaURL: Es wurde kein Name für den Layer mit der ID {{layerId}} in der Konfiguration definiert."
             }
         },
+        "highlightFeaturesByAttribute": {
+            "messages": {
+                "requestFailed": "Datenabfrage fehlgeschlagen.",
+                "configurationError": "Konfiguration fehlerhaft. Bitte Konsolenausgabe prüfen."
+            }
+        },
         "quickHelp": {
             "titleTag": "Hilfe öffnen/schließen",
             "search": {
