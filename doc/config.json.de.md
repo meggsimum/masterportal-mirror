@@ -4689,11 +4689,11 @@ Attribute für die WFS Suche bei highlighFeaturesByAttribute
 
 |Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
 |----|--------|----|-------|-----------|------|
-|propNameSearchPrefix|ja|String||Suchprefix für den typename bei der WFS Suche - z.Bsp. app:.|false|
-|wildCard|ja|String||Das zu verwendende Zeichen für das Jokerzeichen - z.Bsp. %|false|
-|singleChar|ja|String||Das Zeichen für den singleChar WFS parameter - z.Bsp. #|false|
-|escapeChar|ja|String||Das Zeichen für den escapeChar WFS parameter - z.Bsp. ||false|
-|resultPropName|ja|String||Der Name des zurück zu liefernden Ergebnis Typs - z.Bsp. app:SHAPE||false|
+|propNameSearchPrefix|ja|String||Suchprefix für den typename bei der WFS Suche - z.Bsp. app:.|ja|
+|wildCard|ja|String||Das zu verwendende Zeichen für das Jokerzeichen - z.Bsp. %|ja|
+|singleChar|ja|String||Das Zeichen für den singleChar WFS parameter - z.Bsp. #|ja|
+|escapeChar|ja|String||Das Zeichen für den escapeChar WFS parameter - z.Bsp. ||ja|
+|resultPropName|ja|String||Der Name des zurück zu liefernden Ergebnis Typs - z.Bsp. app:SHAPE||ja|
 
 **Example**
 

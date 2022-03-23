@@ -4767,11 +4767,11 @@ List of typical WFS query attributes for highlightFeaturesByAttribute.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|propNameSearchPrefix|yes|String||Search prefix for the WFS query - e.g. app:.|false|
-|wildCard|yes|String||The wildcard character for the WFS query -e.g. %|false|
-|singleChar|yes|String||The single character for the WFS query - e.g. #|false|
-|escapeChar|yes|String||The escape character for the WFS query - e.g. ||false|
-|resultPropName|yes|String||The result property name for the WFS query - e.g. app:SHAPE||false|
+|propNameSearchPrefix|yes|String||Search prefix for the WFS query - e.g. app:.|yes|
+|wildCard|yes|String||The wildcard character for the WFS query -e.g. %|yes|
+|singleChar|yes|String||The single character for the WFS query - e.g. #|yes|
+|escapeChar|yes|String||The escape character for the WFS query - e.g. ||yes|
+|resultPropName|yes|String||The result property name for the WFS query - e.g. app:SHAPE||yes|
 
 **Example**
 
