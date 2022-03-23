@@ -2,7 +2,6 @@ import Button3dTemplate from "text-loader!./template.html";
 import Button3dTemplateTable from "text-loader!./templateTable.html";
 import Button3dModel from "./model";
 import store from "../../../src/app-store";
-import {activateMap3D, deactivateMap3D} from "../../../src/core/maps/store/actions/actions3DMap";
 /**
  * @member Button3dTemplate
  * @description Template used for the 3D Button
@@ -186,7 +185,7 @@ const Button3dView = Backbone.View.extend(/** @lends Button3dView.prototype */{
      */
     controlsMapChangeClose3D: function (activeTools, supportedOnlyIn3d) {
         Radio.trigger("ModelList", "toggleWfsCluster", true);
-        deactivateMap3D();
+        store.dispatch("Maps/deactivateMap3D");
         Radio.trigger("Alert", "alert:remove");
         Radio.trigger("Filter", "enable");
         this.$("#3d-titel-close").hide();
@@ -253,7 +252,7 @@ const Button3dView = Backbone.View.extend(/** @lends Button3dView.prototype */{
             this.$("#3d-titel-close").show();
             Radio.trigger("Filter", "disable");
             Radio.trigger("ModelList", "toggleWfsCluster", false);
-            activateMap3D();
+            store.dispatch("Maps/activateMap3D");
             this.model.setButtonTitle("2D");
 
             this.open3dCatalog();

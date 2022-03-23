@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import sinon from "sinon";
-import * as actions from "../../../store/actions/actionsMapAttributesMapper.js";
+import actions from "../../../store/actions/actionsMapAttributesMapper.js";
 
 describe("src/core/maps/store/actions/actionsMapAttributesMapper.js", () => {
     describe("updateClick: Listener for click on the map", () => {
@@ -18,9 +18,9 @@ describe("src/core/maps/store/actions/actionsMapAttributesMapper.js", () => {
                 };
 
             actions.updateClick({commit, getters, rootGetters}, obj);
-            expect(commit.calledOnce).to.be.true;
-            expect(commit.args).to.deep.equal([
-                ["setClickCoordinate", [4, 56]]
+            expect(commit.calledTwice).to.be.true;
+            expect(commit.firstCall.args).to.deep.equal([
+                "setClickCoordinate", [4, 56]
             ]);
         });
 
@@ -42,9 +42,12 @@ describe("src/core/maps/store/actions/actionsMapAttributesMapper.js", () => {
                 };
 
             actions.updateClick({commit, getters, rootGetters}, obj);
-            expect(commit.calledOnce).to.be.true;
-            expect(commit.args).to.deep.equal([
-                ["setClickCoordinate", [4, 56]]
+            expect(commit.calledTwice).to.be.true;
+            expect(commit.firstCall.args).to.deep.equal([
+                "setClickCoordinate", [4, 56]
+            ]);
+            expect(commit.secondCall.args).to.deep.equal([
+                "setClickCartesianCoordinate", [12, 99]
             ]);
         });
 
@@ -63,10 +66,10 @@ describe("src/core/maps/store/actions/actionsMapAttributesMapper.js", () => {
                 };
 
             actions.updateClick({commit, getters, dispatch, rootGetters}, obj);
-            expect(commit.calledTwice).to.be.true;
+            expect(commit.calledThrice).to.be.true;
             expect(dispatch.calledTwice).to.be.true;
-            expect(dispatch.args[0]).to.include.members(["MapMarker/removePolygonMarker"]);
-            expect(dispatch.args[1]).to.include.members(["collectGfiFeatures"]);
+            expect(dispatch.firstCall.args[0]).to.equal("MapMarker/removePolygonMarker");
+            expect(dispatch.secondCall.args[0]).to.equal("Maps/collectGfiFeatures");
         });
     });
 

@@ -103,15 +103,17 @@ function updateClick ({getters, commit, dispatch, rootGetters}, evt) {
 
     if (getters.mode === "2D" || getters.mode === "Oblique") {
         commit("setClickCoordinate", evt.coordinate);
+        commit("setClickPixel", evt.pixel);
     }
     else {
         commit("setClickCoordinate", evt.pickedPosition);
+        commit("setClickCartesianCoordinate", [evt.position.x, evt.position.y]);
     }
 
     if (rootGetters["Tools/Gfi/active"]) {
         commit("setGfiFeatures", null);
         dispatch("MapMarker/removePolygonMarker", null, {root: true});
-        dispatch("collectGfiFeatures");
+        dispatch("Maps/collectGfiFeatures", null, {root: true});
     }
 
     if (!rootGetters["controls/orientation/poiModeCurrentPositionEnabled"]) {
@@ -175,7 +177,7 @@ function setCenter ({commit, getters}, mapView) {
     }
 }
 
-export {
+export default {
     setMapAttributes,
     setViewAttributes,
     updateAttributes,

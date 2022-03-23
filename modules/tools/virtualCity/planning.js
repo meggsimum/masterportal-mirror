@@ -3,7 +3,7 @@ import EntitiesLayer from "../../core/modelList/layer/entities";
 import TileSetLayer from "../../../src/core/layers/tileset";
 import {parseFlightOptions} from "./flight";
 import StaticImageLayer from "../../core/modelList/layer/staticImage";
-import {activateMap3D} from "../../../src/core/maps/store/actions/actions3DMap.js";
+import store from "../../../src/app-store";
 
 /**
  * ATTENTION! This tool is not tested and may not work anymore, since tileset-layer was refactored (Issue BG-1843).
@@ -132,7 +132,7 @@ const Planning = Backbone.Model.extend(/** @lends Planning.prototype */ {
      */
     activate () {
         if (!Radio.request("Map", "isMap3d")) {
-            activateMap3D();
+            store.dispatch("Maps/activateMap3D");
         }
         return this.initializePlanning().then(() => {
             if (this.defaultViewpoint) {
