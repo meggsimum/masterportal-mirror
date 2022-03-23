@@ -12,6 +12,7 @@ const allAddons = VUE_ADDONS || {};
 export default async function (config) {
     Vue.prototype.$toolAddons = []; // add .$toolAddons to store tools in
     Vue.prototype.$gfiThemeAddons = []; // add .$gfiThemeAddons to store themes in
+    Vue.prototype.$controls = []; // add .$gfiThemeAddons to store themes in
     if (config) {
         const addons = config.map(async addonKey => {
             try {
@@ -23,6 +24,9 @@ export default async function (config) {
                     }
                     else if (addonConf.type === "gfiTheme") {
                         await loadGfiThemes(addonKey);
+                    }
+                    else if (addonConf.type === "control") {
+                        // await loadGfiThemes(addonKey);
                     }
                 }
             }
