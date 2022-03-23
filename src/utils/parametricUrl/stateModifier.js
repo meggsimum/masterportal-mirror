@@ -105,10 +105,10 @@ function callActions (state) {
         store.dispatch("Map/setZoomLevel", state.Map.zoomLevel);
     }
     if (state.urlParams["Map/highlightFeaturesByAttribute"]) {
-        const propName = state.urlParams.attributeName,
-            propValue = state.urlParams.attributeValue,
-            queryType = state.urlParams.attributeQuery,
-            wfsId = state.urlParams.wfsId;
+        const propName = state.urlParams?.attributeName,
+            propValue = state.urlParams?.attributeValue,
+            queryType = state.urlParams?.attributeQuery,
+            wfsId = state.urlParams?.wfsId;
 
         if (propName && propValue && wfsId) {
             highlightFeaturesByAttribute(store.dispatch, wfsId, propName, propValue, queryType);

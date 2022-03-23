@@ -33,6 +33,18 @@ export function readUrlParamEarly () {
                     store.state.urlParams.configJson = value;
                 }
             }
+            else if (key.toLowerCase() === "wfsid") {
+                store.state.urlParams.wfsId = value;
+            }
+            else if (key.toLowerCase() === "attributename") {
+                store.state.urlParams.attributeName = value;
+            }
+            else if (key.toLowerCase() === "attributevalue") {
+                store.state.urlParams.attributeValue = value;
+            }
+            else if (key.toLowerCase() === "attributequery") {
+                store.state.urlParams.attributeQuery = value;
+            }
         });
     }
 }
