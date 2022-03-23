@@ -4759,6 +4759,34 @@ For such cases, define `gfiAsNewWindow` manually as described above.
 ```
 
 ***
+#### Themenconfig.Layer.WFS
+
+[inherits]: # (Themenconfig.Layer)
+
+List of typical WFS query attributes for highlightFeaturesByAttribute.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|propNameSearchPrefix|yes|String||Search prefix for the WFS query - e.g. app:.|false|
+|wildCard|yes|String||The wildcard character for the WFS query -e.g. %|false|
+|singleChar|yes|String||The single character for the WFS query - e.g. #|false|
+|escapeChar|yes|String||The escape character for the WFS query - e.g. ||false|
+|resultPropName|yes|String||The result property name for the WFS query - e.g. app:SHAPE||false|
+
+**Example**
+
+```
+#!json
+{
+    "id": "1",
+    "visibility": false,
+    "name": "Tierarten invasiv",
+    "propNameSearchPrefix": "app:",
+    "wildCard": "%",
+    "singleChar": "#",
+    "escapeChar": "!", 
+    "resultPropName": "app:SHAPE"
+}
 
 #### Themenconfig.Layer.Tileset
 
