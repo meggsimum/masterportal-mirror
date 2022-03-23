@@ -72,10 +72,11 @@ WMSLayer.prototype.getRawLayerAttributes = function (attrs) {
         layers: attrs.layers,
         version: attrs.version,
         olAttribution: attrs.olAttribution,
-        transparent: attrs.transparent.toString(),
+        transparent: attrs.transparent?.toString(),
         singleTile: attrs.singleTile,
         minScale: parseInt(attrs.minScale, 10),
-        maxScale: parseInt(attrs.maxScale, 10)
+        maxScale: parseInt(attrs.maxScale, 10),
+        crs: attrs.crs
     };
 
     if (attrs.styles !== "nicht vorhanden") {
