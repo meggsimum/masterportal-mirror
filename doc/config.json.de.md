@@ -4673,6 +4673,35 @@ Beispiel:
 
 ***
 
+#### Themenconfig.Layer.WFS
+
+[inherits]: # (Themenconfig.Layer)
+
+Attribute für die WFS Suche bei highlighFeaturesByAttribute
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|--------|----|-------|-----------|------|
+|propNameSearchPrefix|ja|String||Suchprefix für den typename bei der WFS Suche - z.Bsp. app:.|false|
+|wildCard|ja|String||Das zu verwendende Zeichen für das Jokerzeichen - z.Bsp. %|false|
+|singleChar|ja|String||Das Zeichen für den singleChar WFS parameter - z.Bsp. #|false|
+|escapeChar|ja|String||Das Zeichen für den escapeChar WFS parameter - z.Bsp. ||false|
+|resultPropName|ja|String||Der Name des zurück zu liefernden Ergebnis Typs - z.Bsp. app:SHAPE||false|
+
+**Example**
+
+```
+#!json
+{
+    "id": "1",
+    "visibility": false,
+    "name": "Tierarten invasiv",
+    "propNameSearchPrefix": "app:",
+    "wildCard": "%",
+    "singleChar": "#",
+    "escapeChar": "!", 
+    "resultPropName": "app:SHAPE"
+}
+
 #### Themenconfig.Layer.Tileset
 
 [inherits]: # (Themenconfig.Layer)
