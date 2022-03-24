@@ -76,7 +76,7 @@ export default {
     rotatePointMarker ({commit, getters}, angle) {
         const features = getters.markerPoint?.getSource().getFeatures();
 
-        if (features.length > 0) {
+        if (features && features.length > 0) {
             const feature = features[0],
                 icon = feature.getStyle().getImage().clone();
 
