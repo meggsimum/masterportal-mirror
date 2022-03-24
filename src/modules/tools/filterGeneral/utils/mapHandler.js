@@ -49,22 +49,31 @@ export default class MapHandler {
                 onerror(new Error("Filter MapHandler.constructor: The given handler needs a function 'getLayers'"));
             }
         }
+        if (typeof this.handlers?.setParserAttributeByLayerId !== "function") {
+            if (typeof onerror === "function") {
+                onerror(new Error("Filter MapHandler.constructor: The given handler needs a function 'setParserAttributeByLayerId'"));
+            }
+        }
     }
 
     /**
-     * Initializes an internal layer for the given layerId. This layer shall be configured via config.json and is accessible in the theme tree.
+     * Initializes a layer for the given layerId. This layer must be configured via config.json.
      * @param {Number} filterId the filter id for reference
      * @param {String} layerId the layer id
+     * @param {Boolean} extern true if external filtering will take place
      * @param {Function} onerror a function(error) if an error occurs
      * @returns {void}
      */
-    initializeLayerFromTree (filterId, layerId, onerror) {
+    initializeLayer (filterId, layerId, extern, onerror) {
         const layers = this.handlers.getLayers(),
             visibleLayer = typeof layers?.getArray !== "function" ? [] : layers.getArray().filter(layer => {
                 return layer.getVisible() === true && layer.get("id") === layerId;
             });
         let layerModel = null;
 
+        if (extern) {
+            this.handlers.setParserAttributeByLayerId(layerId, "doNotLoadInitially", true);
+        }
         if (Array.isArray(visibleLayer) && !visibleLayer.length) {
             this.handlers.addLayerByLayerId(layerId);
         }
@@ -86,22 +95,9 @@ export default class MapHandler {
         }
 
         if (!layerModel) {
-            onerror(new Error("mapHandler - initializeInternalLayer: Please check your filter configuration. The given layerId does not exist in your config.json. Configure an extra service object for your filter configuration or add the layer to your config.json."));
+            onerror(new Error("mapHandler - initializeLayer: Please check your filter configuration. The given layerId does not exist in your config.json. Configure an extra service object for your filter configuration or add the layer to your config.json."));
             return;
         }
-
-        this.layers[filterId] = layerModel;
-        this.filteredIds[filterId] = [];
-    }
-
-    /**
-     * Initializes an external layer with the given layerId.
-     * @param {Number} filterId the filter id for reference
-     * @param {String} layerId the layer id to use for the layer
-     * @returns {void}
-     */
-    initializeLayerFromExtern (filterId, layerId) {
-        const layerModel = this.handlers.createLayerIfNotExists(layerId);
 
         this.layers[filterId] = layerModel;
         this.filteredIds[filterId] = [];
@@ -219,27 +215,22 @@ export default class MapHandler {
      * Empties the currently filteredIds and removes all features from the map.
      * @info do not use layer.getSource().clear() here, as this would destroy all features and thereby any map handling
      * @param {Number} filterId the filter id
+     * @param {Boolean} extern true if filtering is external
      * @returns {void}
      */
-    clearLayer (filterId) {
+    clearLayer (filterId, extern) {
         const layerModel = this.getLayerModelByFilterId(filterId);
 
         this.filteredIds[filterId] = [];
-        if (isObject(layerModel) && typeof layerModel.get === "function") {
-            this.handlers.showFeaturesByIds(layerModel.get("id"), []);
+        if (!isObject(layerModel) || typeof layerModel.get !== "function") {
+            return;
         }
-    }
 
-    /**
-     * Refreshes the layer with the up to this point filtered items.
-     * @param {Number} filterId the filter id
-     * @returns {void}
-     */
-    refreshLayer (filterId) {
-        const layerModel = this.getLayerModelByFilterId(filterId);
-
-        if (isObject(layerModel) && typeof layerModel.get === "function") {
-            this.handlers.showFeaturesByIds(layerModel.get("id"), this.filteredIds[filterId]);
+        if (extern) {
+            layerModel.get("layerSource").clear();
+        }
+        else {
+            this.handlers.showFeaturesByIds(layerModel.get("id"), []);
         }
     }
 
@@ -248,9 +239,10 @@ export default class MapHandler {
      * @info Already added items shall not be part of items. Items are only new items.
      * @param {Number} filterId the filter id
      * @param {ol/Feature} items the items/features to add
+     * @param {Boolean} extern true if filtering is external
      * @returns {void}
      */
-    addItemsToLayer (filterId, items) {
+    addItemsToLayer (filterId, items, extern) {
         if (!Array.isArray(this.filteredIds[filterId]) || !Array.isArray(items)) {
             return;
         }
@@ -259,13 +251,19 @@ export default class MapHandler {
         if (!isObject(layerModel) || typeof layerModel.get !== "function") {
             return;
         }
+
         items.forEach(item => {
             if (isObject(item) && typeof item.getId === "function") {
                 this.filteredIds[filterId].push(item.getId());
             }
         });
 
-        this.handlers.showFeaturesByIds(layerModel.get("id"), this.filteredIds[filterId]);
+        if (extern) {
+            layerModel.get("layerSource").addFeatures(items);
+        }
+        else {
+            this.handlers.showFeaturesByIds(layerModel.get("id"), this.filteredIds[filterId]);
+        }
     }
 
     /**

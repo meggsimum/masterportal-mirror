@@ -13,6 +13,10 @@ localVue.use(Vuex);
 config.mocks.$t = key => key;
 
 describe("src/modules/tools/wfsSearch/components/WfsSearch.vue", () => {
+    const arbitraryFeature = {
+        getGeometryName: () => "Klein bottle"
+    };
+
     let instances,
         store;
 
@@ -147,5 +151,60 @@ describe("src/modules/tools/wfsSearch/components/WfsSearch.vue", () => {
         expect(searchButton.exists()).to.be.true;
         expect(searchButton.text()).to.equal("common:modules.tools.wfsSearch.showResults (1)");
         expect(searchButton.element.disabled).to.be.true;
+    });
+    it("renders a pagination when more results than are to be shown are available", () => {
+        store.commit("Tools/WfsSearch/setSearched", true);
+        store.commit("Tools/WfsSearch/setResultsPerPage", 2);
+        store.commit("Tools/WfsSearch/setShowResultList", true);
+        store.commit("Tools/WfsSearch/setResults", [
+            arbitraryFeature, arbitraryFeature, arbitraryFeature,
+            arbitraryFeature, arbitraryFeature
+        ]);
+        store.commit("Tools/WfsSearch/setInstances", instances);
+
+        const wrapper = mount(WfsSearch, {
+                localVue,
+                store
+            }),
+            pagination = wrapper.find("ul.pagination");
+
+        expect(pagination.exists()).to.be.true;
+        expect(pagination.findAll("li").length).to.equal(3);
+    });
+    it("doesn't render a pagination when 0 is chosen for 'resultsPerPage'", () => {
+        store.commit("Tools/WfsSearch/setSearched", true);
+        store.commit("Tools/WfsSearch/setResultsPerPage", 0);
+        store.commit("Tools/WfsSearch/setShowResultList", true);
+        store.commit("Tools/WfsSearch/setResults", [
+            arbitraryFeature, arbitraryFeature, arbitraryFeature,
+            arbitraryFeature, arbitraryFeature
+        ]);
+        store.commit("Tools/WfsSearch/setInstances", instances);
+
+        const wrapper = mount(WfsSearch, {
+                localVue,
+                store
+            }),
+            pagination = wrapper.find("ul.pagination");
+
+        expect(pagination.exists()).to.be.false;
+    });
+    it("doesn't render a pagination when resultsPerPage is larger than result list length", () => {
+        store.commit("Tools/WfsSearch/setSearched", true);
+        store.commit("Tools/WfsSearch/setResultsPerPage", 9001);
+        store.commit("Tools/WfsSearch/setShowResultList", true);
+        store.commit("Tools/WfsSearch/setResults", [
+            arbitraryFeature, arbitraryFeature, arbitraryFeature,
+            arbitraryFeature, arbitraryFeature
+        ]);
+        store.commit("Tools/WfsSearch/setInstances", instances);
+
+        const wrapper = mount(WfsSearch, {
+                localVue,
+                store
+            }),
+            pagination = wrapper.find("ul.pagination");
+
+        expect(pagination.exists()).to.be.false;
     });
 });

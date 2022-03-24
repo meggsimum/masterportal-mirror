@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import describeFeatureTypeWFS from "../../../../utils/describeFeatureType/describeFeatureTypeWFS.js";
+import {describeFeatureTypeWFS} from "../../../../utils/describeFeatureType/describeFeatureTypeWFS.js";
 
 describe("src/modules/tools/filterGeneral/utils/describeFeatureType/describeFeatureTypeWFS.js", () => {
     let lastSuccess = false,

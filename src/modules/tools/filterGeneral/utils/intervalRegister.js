@@ -1,15 +1,14 @@
 /**
- * Register for paging and autorefresh intervals.
- * We use the filterId to identify paging and autorefresh intervals to start and stop them.
+ * Register for paging intervals.
+ * We use the filterId to identify paging intervals to start and stop them.
  * @class
  */
 export default class IntervalRegister {
     /**
      * @constructor
      * @param {Object} pagingIntv the paging interval
-     * @param {Object} autoRefreshIntv autorefresh intervals
      */
-    constructor (pagingIntv = {}, autoRefreshIntv = {}) {
+    constructor (pagingIntv = {}) {
         // make this instance a singleton
         if (IntervalRegister.instance instanceof IntervalRegister) {
             return IntervalRegister.instance;
@@ -17,7 +16,6 @@ export default class IntervalRegister {
         IntervalRegister.instance = this;
 
         this.pagingIntv = pagingIntv;
-        this.autoRefreshIntv = autoRefreshIntv;
     }
 
     /**
@@ -34,20 +32,6 @@ export default class IntervalRegister {
             handler();
         }
     }
-    /**
-     * Starts a autorefreshing interval and runs the handler once immediately.
-     * @param {Number} filterId the id of the filter
-     * @param {Function} handler the handler to call for every cycle
-     * @param {Number} mseconds the milliseconds to wait before calling the next cycle
-     * @returns {void}
-     */
-    startAutoRefreshing (filterId, handler, mseconds) {
-        this.stopAutoRefreshing(filterId);
-        if (typeof handler === "function") {
-            this.autoRefreshIntv[filterId] = setInterval(handler, mseconds);
-            handler();
-        }
-    }
 
     /**
      * Aborts all running intervals.
@@ -58,11 +42,7 @@ export default class IntervalRegister {
         Object.values(this.pagingIntv).forEach(intv => {
             clearInterval(intv);
         });
-        Object.values(this.autoRefreshIntv).forEach(intv => {
-            clearInterval(intv);
-        });
         this.pagingIntv = {};
-        this.autoRefreshIntv = {};
     }
     /**
      * Aborts all running intervals for the given filterId.
@@ -72,7 +52,6 @@ export default class IntervalRegister {
      */
     abortFilter (filterId) {
         this.stopPagingInterval(filterId);
-        this.stopAutoRefreshing(filterId);
     }
     /**
      * Stops the paging interval.
@@ -87,15 +66,11 @@ export default class IntervalRegister {
         this.pagingIntv[filterId] = false;
     }
     /**
-     * Stops the autorefreshing interval.
-     * @post the interval is stopped
+     * Checks if a interval is running.
      * @param {Number} filterId the id of the filter to stop
-     * @returns {void}
+     * @returns {Boolean} true if the interval of this filterId is running
      */
-    stopAutoRefreshing (filterId) {
-        if (typeof this.autoRefreshIntv[filterId] === "number") {
-            clearInterval(this.autoRefreshIntv[filterId]);
-        }
-        this.autoRefreshIntv[filterId] = false;
+    isPagingIntervalRunning (filterId) {
+        return typeof this.pagingIntv[filterId] === "number";
     }
 }

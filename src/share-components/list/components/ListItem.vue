@@ -33,6 +33,33 @@ export default {
             type: Number,
             required: false,
             default: 5
+        },
+        // generates a pagination if resultsPerPage>0 and tableData.length>resultsPerPage
+        resultsPerPage: {
+            type: Number,
+            required: false,
+            default: 0
+        }
+    },
+    data: () => ({
+        visiblePage: 0
+    }),
+    computed: {
+        visibleTableData () {
+            if (this.resultsPerPage <= 0 ||
+                this.tableData.length < this.resultsPerPage) {
+                return this.tableData;
+            }
+
+            return this.tableData.slice(
+                this.resultsPerPage * this.visiblePage,
+                this.resultsPerPage * (this.visiblePage + 1)
+            );
+        },
+        pageCount () {
+            return this.resultsPerPage > 0 && this.tableData.length > this.resultsPerPage
+                ? Math.ceil(this.tableData.length / this.resultsPerPage)
+                : 1;
         }
     },
     methods: {
@@ -77,6 +104,9 @@ export default {
                 }
             }
             return "";
+        },
+        setVisiblePage (index) {
+            this.visiblePage = index;
         }
     }
 };
@@ -98,7 +128,7 @@ export default {
                 </th>
             </tr>
             <tr
-                v-for="(data, i) in tableData"
+                v-for="(data, i) in visibleTableData"
                 :key="data + i"
                 @click="onRowClick(data)"
             >
@@ -135,6 +165,22 @@ export default {
                 </td>
             </tr>
         </table>
+        <nav
+            v-if="pageCount > 1"
+            :aria-label="$t('common:share-components.list.pagination')"
+        >
+            <ul class="pagination">
+                <li
+                    v-for="(_, index) of Array.from({length: pageCount})"
+                    :key="index"
+                    class="page-item"
+                    @click="setVisiblePage(index)"
+                    @keyup.space.stop.prevent="setVisiblePage(index)"
+                >
+                    <a href="#">{{ index + 1 }}</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </template>
 

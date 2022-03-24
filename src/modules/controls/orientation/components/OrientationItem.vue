@@ -27,9 +27,9 @@ export default {
         },
         /** the distances in config.json */
         poiDistances: {
-            type: Array,
+            type: [Boolean, Array],
             required: false,
-            default: null
+            default: () => []
         }
     },
     data () {
@@ -48,7 +48,10 @@ export default {
     },
     computed: {
         ...mapGetters("controls/orientation", Object.keys(getters)),
-        ...mapGetters("Map", ["ol2DMap", "projection"])
+        ...mapGetters("Map", ["ol2DMap", "projection"]),
+        poiDistancesLocal () {
+            return this.poiDistances === true ? [500, 1000, 2000] : this.poiDistances;
+        }
     },
     watch: {
         tracking () {
@@ -160,12 +163,12 @@ export default {
         checkWFS () {
             const visibleWFSModels = Radio.request("ModelList", "getModelsByAttributes", {isVisibleInMap: true, typ: "WFS"});
 
-            if (Array.isArray(this.poiDistances) && this.poiDistances.length > 0 || this.poiDistances === true) {
+            if (this.poiDistancesLocal.length > 0) {
                 if (!visibleWFSModels.length) {
                     this.setShowPoiIcon(false);
                     this.$store.dispatch("MapMarker/removePointMarker");
                 }
-                else if (Array.isArray(this.poiDistances) && this.poiDistances.length > 0 || this.poiDistances === true) {
+                else {
                     this.setShowPoiIcon(true);
                 }
             }
@@ -479,7 +482,7 @@ export default {
         />
         <PoiOrientation
             v-if="showPoi"
-            :poi-distances="poiDistances"
+            :poi-distances="poiDistancesLocal"
             :get-features-in-circle="getVectorFeaturesInCircle"
             @hide="untrackPOI"
         />

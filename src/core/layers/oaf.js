@@ -1,16 +1,20 @@
-import {wfs} from "masterportalAPI";
+import {oaf} from "masterportalAPI";
 import LoaderOverlay from "../../utils/loaderOverlay";
 import Layer from "./layer";
 import * as bridge from "./RadioBridge.js";
 import Cluster from "ol/source/Cluster";
 import {bbox, all} from "ol/loadingstrategy.js";
+import store from "../../app-store";
+import axios from "axios";
+import isObject from "../../utils/isObject";
+
 
 /**
- * Creates a layer of type WMS.
+ * Creates a layer of type OAF.
  * @param {Object} attrs  attributes of the layer
  * @returns {void}
  */
-export default function WFSLayer (attrs) {
+export default function OAFLayer (attrs) {
     const defaults = {
         supported: ["2D", "3D"],
         showSettings: true,
@@ -18,7 +22,8 @@ export default function WFSLayer (attrs) {
         isClustered: false,
         altitudeMode: "clampToGround",
         useProxy: false,
-        sourceUpdated: false
+        sourceUpdated: false,
+        datasets: [{}]
     };
 
     this.createLayer(Object.assign(defaults, attrs));
@@ -30,25 +35,37 @@ export default function WFSLayer (attrs) {
     if (attrs.clusterDistance) {
         this.set("isClustered", true);
     }
+
     this.createLegend();
 }
-// Link prototypes and add prototype methods, means WFSLayer uses all methods and properties of Layer
-WFSLayer.prototype = Object.create(Layer.prototype);
+// Link prototypes and add prototype methods, means OAFLayer uses all methods and properties of Layer
+OAFLayer.prototype = Object.create(Layer.prototype);
 
 /**
- * Creates a layer of type WFS by using wfs-layer of the masterportalapi.
+ * Creates a layer of type OAF by using oaf-layer of the masterportalapi.
  * Sets all needed attributes at the layer and the layer source.
  * @param {Object} attrs  params of the raw layer
  * @returns {void}
  */
-WFSLayer.prototype.createLayer = function (attrs) {
-    const rawLayerAttributes = {
+OAFLayer.prototype.createLayer = function (attrs) {
+    const crs = attrs.crs ? attrs.crs : "EPSG:25832",
+        rawLayerAttributes = {
             id: attrs.id,
             url: attrs.url,
             clusterDistance: attrs.clusterDistance,
             featureNS: attrs.featureNS,
             featureType: attrs.featureType,
-            version: attrs.version
+            version: attrs.version,
+            outputFormat: attrs.outputFormat,
+            limit: attrs.limit,
+            offset: attrs.offset,
+            bulk: attrs.bulk,
+            bbox: attrs.bbox,
+            datetime: attrs.datetime,
+            crs,
+            bboxCrs: attrs.bboxCrs,
+            cswUrl: attrs.cswUrl,
+            params: attrs.params
         },
         layerParams = {
             name: attrs.name,
@@ -62,8 +79,6 @@ WFSLayer.prototype.createLayer = function (attrs) {
         },
         styleFn = this.getStyleFunction(attrs),
         options = {
-            doNotLoadInitially: attrs.doNotLoadInitially,
-            wfsFilter: attrs.wfsFilter,
             clusterGeometryFunction: (feature) => {
                 // do not cluster invisible features; can't rely on style since it will be null initially
                 if (feature.get("hideInClustering") === true) {
@@ -72,10 +87,6 @@ WFSLayer.prototype.createLayer = function (attrs) {
                 return feature.getGeometry();
             },
             featuresFilter: this.getFeaturesFilterFunction(attrs),
-            // If an Object contains a property which holds a Function, the property is called a method.
-            // This method, when called, will always have it's this variable set to the Object it is associated with.
-            // This is true for both strict and non-strict modes.
-            // therefore use [fn].bind(this)
             beforeLoading: function () {
                 if (this.get("isSelected") || attrs.isSelected) {
                     LoaderOverlay.show();
@@ -88,7 +99,7 @@ WFSLayer.prototype.createLayer = function (attrs) {
                 }
             }.bind(this),
             onLoadingError: (error) => {
-                console.error("masterportal wfs loading error:", error);
+                console.error("masterportal oaf loading error:", error);
             },
             loadingParams: {
                 xhrParameters: attrs.isSecured ? {credentials: "include"} : null,
@@ -104,7 +115,7 @@ WFSLayer.prototype.createLayer = function (attrs) {
     }
     options.style = styleFn;
 
-    this.layer = wfs.createLayer(rawLayerAttributes, {layerParams, options});
+    this.layer = oaf.createLayer(rawLayerAttributes, {layerParams, options});
 };
 
 /**
@@ -112,7 +123,7 @@ WFSLayer.prototype.createLayer = function (attrs) {
  * @param {Object} attrs  params of the raw layer
  * @returns {Function} to filter features with
  */
-WFSLayer.prototype.getFeaturesFilterFunction = function (attrs) {
+OAFLayer.prototype.getFeaturesFilterFunction = function (attrs) {
     return function (features) {
         // only use features with a geometry
         let filteredFeatures = features.filter(feature => feature.getGeometry() !== undefined);
@@ -128,7 +139,7 @@ WFSLayer.prototype.getFeaturesFilterFunction = function (attrs) {
  * @param {Object} attrs  params of the raw layer
  * @returns {string} the propertynames as string
  */
-WFSLayer.prototype.getPropertyname = function (attrs) {
+OAFLayer.prototype.getPropertyname = function (attrs) {
     let propertyname = "";
 
     if (Array.isArray(attrs.propertyNames)) {
@@ -137,11 +148,11 @@ WFSLayer.prototype.getPropertyname = function (attrs) {
     return propertyname;
 };
 /**
- * Sets Style for layer.
+ * Get style function for layer.
  * @param {Object} attrs  params of the raw layer
- * @returns {void}
+ * @returns {Function} the style function
  */
-WFSLayer.prototype.getStyleFunction = function (attrs) {
+OAFLayer.prototype.getStyleFunction = function (attrs) {
     const styleId = attrs.styleId,
         styleModel = bridge.getStyleModelById(styleId);
     let isClusterFeature = false,
@@ -165,7 +176,7 @@ WFSLayer.prototype.getStyleFunction = function (attrs) {
  * Updates the layers source by calling refresh at source. Depending on attribute 'sourceUpdated'.
  * @returns {void}
  */
-WFSLayer.prototype.updateSource = function () {
+OAFLayer.prototype.updateSource = function () {
     if (this.get("sourceUpdated") === false) {
         this.set("sourceUpdated", true);
         this.layer.getSource().refresh();
@@ -175,36 +186,15 @@ WFSLayer.prototype.updateSource = function () {
  * Creates the legend
  * @returns {void}
  */
-WFSLayer.prototype.createLegend = function () {
+OAFLayer.prototype.createLegend = function () {
     const styleModel = bridge.getStyleModelById(this.get("styleId")),
-        isSecured = this.attributes.isSecured;
-    let legend = this.get("legend");
-
-    /**
-     * @deprecated in 3.0.0
-     */
-    if (this.get("legendURL")) {
-        if (this.get("legendURL") === "") {
-            legend = true;
-        }
-        else if (this.get("legendURL") === "ignore") {
-            legend = false;
-        }
-        else {
-            legend = this.get("legendURL");
-        }
-    }
+        legend = this.get("legend");
 
     if (Array.isArray(legend)) {
         this.setLegend(legend);
     }
     else if (styleModel && legend === true) {
-        if (!isSecured) {
-            styleModel.getGeometryTypeFromWFS(this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"), this.get("useProxy"));
-        }
-        else if (isSecured) {
-            styleModel.getGeometryTypeFromSecuredWFS(this.get("url"), this.get("version"), this.get("featureType"), this.get("styleGeometryType"));
-        }
+        styleModel.getGeometryTypeFromOAF(this.get("url"), this.get("featureType"), this.get("styleGeometryType"), this.get("useProxy"));
         this.setLegend(styleModel.getLegendInfos());
     }
     else if (typeof legend === "string") {
@@ -212,10 +202,10 @@ WFSLayer.prototype.createLegend = function () {
     }
 };
 /**
- * Hides all features by setting style= null for all features.
+ * Hides all features by setting style=null for all features.
  * @returns {void}
  */
-WFSLayer.prototype.hideAllFeatures = function () {
+OAFLayer.prototype.hideAllFeatures = function () {
     const layerSource = this.get("layerSource") instanceof Cluster ? this.get("layerSource").getSource() : this.get("layerSource"),
         features = layerSource.getFeatures();
 
@@ -233,7 +223,7 @@ WFSLayer.prototype.hideAllFeatures = function () {
  * Shows all features by setting their style.
  * @returns {void}
  */
-WFSLayer.prototype.showAllFeatures = function () {
+OAFLayer.prototype.showAllFeatures = function () {
     const collection = this.get("layerSource").getFeatures();
 
     collection.forEach((feature) => {
@@ -247,7 +237,7 @@ WFSLayer.prototype.showAllFeatures = function () {
  * @param {String[]} featureIdList List of feature ids.
  * @returns {void}
  */
-WFSLayer.prototype.showFeaturesByIds = function (featureIdList) {
+OAFLayer.prototype.showFeaturesByIds = function (featureIdList) {
     const layerSource = this.get("layerSource") instanceof Cluster ? this.get("layerSource").getSource() : this.get("layerSource"),
         allLayerFeatures = layerSource.getFeatures(),
         featuresToShow = featureIdList.map(id => layerSource.getFeatureById(id));
@@ -270,7 +260,7 @@ WFSLayer.prototype.showFeaturesByIds = function (featureIdList) {
  * @param {Function|Object} style ol style object or style function.
  * @returns {Function} - style as function.
  */
-WFSLayer.prototype.getStyleAsFunction = function (style) {
+OAFLayer.prototype.getStyleAsFunction = function (style) {
     if (typeof style === "function") {
         return style;
     }
@@ -283,6 +273,81 @@ WFSLayer.prototype.getStyleAsFunction = function (style) {
  * Sets Style for layer.
  * @returns {void}
  */
-WFSLayer.prototype.styling = function () {
+OAFLayer.prototype.styling = function () {
     this.layer.setStyle(this.getStyleAsFunction(this.get("style")));
+};
+
+/**
+ * Initiates the presentation of layer information.
+ * @returns {void}
+ */
+OAFLayer.prototype.showLayerInformation = function () {
+    let cswUrl = null,
+        showDocUrl = null,
+        layerMetaId = null;
+
+    const metaID = [],
+        name = this.get("name");
+
+    if (Array.isArray(this.get("datasets")) && this.get("datasets")[0] !== null && typeof this.get("datasets")[0] === "object") {
+        cswUrl = this.get("datasets")[0]?.csw_url ? this.get("datasets")[0].csw_url : null;
+        showDocUrl = this.get("datasets")[0]?.show_doc_url ? this.get("datasets")[0].show_doc_url : null;
+        layerMetaId = this.get("datasets")[0]?.md_id ? this.get("datasets")[0].md_id : null;
+    }
+    if (!cswUrl && !layerMetaId) {
+        const baseUrl = this.get("url") + "?f=json";
+
+        axios({
+            method: "GET",
+            url: baseUrl
+        }).then((response) => {
+            const links = response.data.links,
+                metaLink = links.filter(link => link.rel === "describedBy" && link.type === "application/xml")[0];
+
+            layerMetaId = isObject(metaLink) && Object.prototype.hasOwnProperty.call(metaLink, "href") ? new URLSearchParams(metaLink.href).get("id") : undefined;
+            if (layerMetaId) {
+                this.setLayerinfoActive(this.get("cswUrl"), layerMetaId, metaID, name, showDocUrl);
+            }
+            else {
+                console.warn("OAF Layerinfo: layerMetaId is not set");
+            }
+        });
+    }
+
+    metaID.push(layerMetaId);
+    this.setLayerinfoActive(cswUrl, layerMetaId, metaID, name, showDocUrl);
+};
+
+/**
+ * Sets the layer info attributes and activate it.
+ * @param {String} cswUrl the csw url
+ * @param {String} layerMetaId the layer metadata id
+ * @param {String[]} metaID the metadata id array
+ * @param {String} name the name of the layer
+ * @param {String} showDocUrl the document url
+ * @returns {void}
+ */
+OAFLayer.prototype.setLayerinfoActive = function (cswUrl, layerMetaId, metaID, name, showDocUrl) {
+    store.dispatch("LayerInformation/layerInfo", {
+        "id": this.get("id"),
+        "metaID": layerMetaId,
+        "metaIdArray": metaID,
+        "layername": name,
+        "url": this.get("url"),
+        "legendURL": this.get("legendURL"),
+        "typ": this.get("typ"),
+        "cswUrl": cswUrl,
+        "showDocUrl": showDocUrl,
+        "urlIsVisible": this.get("urlIsVisible")
+    });
+
+    store.dispatch("LayerInformation/activate", true);
+    store.dispatch("LayerInformation/additionalSingleLayerInfo");
+    store.dispatch("LayerInformation/setMetadataURL", layerMetaId);
+    store.dispatch("Legend/setLayerIdForLayerInfo", this.get("id"));
+    store.dispatch("Legend/setLayerCounterIdForLayerInfo", Date.now());
+    if (typeof this.createLegend === "function") {
+        this.createLegend();
+    }
+    this.setLayerInfoChecked(true);
 };

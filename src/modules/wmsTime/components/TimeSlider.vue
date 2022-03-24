@@ -61,9 +61,14 @@ export default {
 
             if (index === this.timeRange.length) {
                 this.playing = false;
+                this.clearPlayback();
                 return;
             }
             this.sliderValue = index;
+        },
+        clearPlayback () {
+            clearInterval(this.playbackHandle);
+            this.playbackHandle = null;
         },
         nextIndex (forward = true) {
             return this.sliderValue + (forward ? 1 : -1);
@@ -81,8 +86,7 @@ export default {
                 this.playbackHandle = setInterval(this.animate, this.timeSlider.playbackDelay * 1000);
             }
             else {
-                clearInterval(this.playbackHandle);
-                this.playbackHandle = null;
+                this.clearPlayback();
             }
         }
     }

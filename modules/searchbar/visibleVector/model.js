@@ -54,11 +54,12 @@ const VisibleVectorModel = Backbone.Model.extend(/** @lends VisibleVectorModel.p
         const visibleGroupLayers = Radio.request("ModelList", "getModelsByAttributes", {isVisibleInMap: true, typ: "GROUP"}),
             layerTypes = this.get("layerTypes");
 
-        let vectorLayerModels = [],
-            foundMatchingFeatures = [],
-            filteredModels = [];
-
         if (this.get("inUse") === false && searchString.length >= this.get("minChars")) {
+            let vectorLayerModels = [],
+                foundMatchingFeatures = [],
+                filteredModels = [],
+                concatedfoundMatchingFeatures = [];
+
             this.setInUse(true);
 
             layerTypes.forEach(layerType => {
@@ -72,9 +73,12 @@ const VisibleVectorModel = Backbone.Model.extend(/** @lends VisibleVectorModel.p
             });
 
             foundMatchingFeatures = this.findMatchingFeatures(filteredModels, searchString);
-            Radio.trigger("Searchbar", "pushHits", "hitList", foundMatchingFeatures);
+            concatedfoundMatchingFeatures = [].concat(...foundMatchingFeatures);
 
-            Radio.trigger("Searchbar", "createRecommendedList", "visibleVector");
+            if (concatedfoundMatchingFeatures.length > 0) {
+                Radio.trigger("Searchbar", "pushHits", "hitList", concatedfoundMatchingFeatures);
+                Radio.trigger("Searchbar", "createRecommendedList", "visibleVector");
+            }
             this.setInUse(false);
         }
     },

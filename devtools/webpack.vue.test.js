@@ -36,7 +36,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: [/\bcore-js\b/, /node_modules/],
+                exclude: /\bcore-js\b|\bvideo.js\b|\bsinon\b|\bturf\b|\bjsts\b/,
                 use: {
                     loader: "babel-loader"
                 }
