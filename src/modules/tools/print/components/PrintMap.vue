@@ -472,7 +472,7 @@ export default {
                 </div>
                 <div
                     v-if="isLegendAvailable"
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 control-label"
