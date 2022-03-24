@@ -1,9 +1,7 @@
 import View from "ol/View";
-import Cluster from "ol/source/Cluster.js";
-import {transformToMapProjection, transformFromMapProjection} from "masterportalapi/src/crs";
+import {transformFromMapProjection} from "masterportalAPI/src/crs";
 
 import mapCollection from "../dataStorage/mapCollection";
-import calculateExtent from "../../utils/calculateExtent";
 import findWhereJs from "../../utils/findWhereJs";
 import store from "../../app-store";
 import defaults from "masterportalapi/src/defaults";
@@ -201,12 +199,12 @@ View.prototype.toggleBackground = function () {
  * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#fit} for more options.
  * @returns {void}
  */
-View.prototype.zoomToExtent = function (extent, options, map = {mapId: "ol", mapMode: "2D"}) {
+/* View.prototype.zoomToExtent = function (extent, options, map = {mapId: "ol", mapMode: "2D"}) {
     this.fit(extent, {
         size: mapCollection.getMap(map.mapId, map.mapMode).getSize(),
         ...Object.assign({duration: 800}, options)
     });
-};
+}; */
 
 /**
  * Zoom to features that are filtered by the ids.
@@ -218,7 +216,7 @@ View.prototype.zoomToExtent = function (extent, options, map = {mapId: "ol", map
  * @param {String} [map.mapMode="2D"] The map mode.
  * @returns {void}
  */
-View.prototype.zoomToFilteredFeatures = function (ids, layerId, zoomOptions, map = {mapId: "ol", mapMode: "2D"}) {
+/* View.prototype.zoomToFilteredFeatures = function (ids, layerId, zoomOptions, map = {mapId: "ol", mapMode: "2D"}) {
     const layer = mapCollection.getMap(map.mapId, map.mapMode).getLayerById(layerId);
 
     if (layer?.getSource()) {
@@ -230,7 +228,7 @@ View.prototype.zoomToFilteredFeatures = function (ids, layerId, zoomOptions, map
             this.zoomToExtent(calculateExtent(filteredFeatures), zoomOptions);
         }
     }
-};
+}; */
 
 /**
  * Zoom to a given extent, this function allows to give projection of extent
@@ -244,7 +242,7 @@ View.prototype.zoomToFilteredFeatures = function (ids, layerId, zoomOptions, map
  * @param {String} [map.mapMode="2D"] The map mode.
  * @returns {void}
  */
-View.prototype.zoomToProjExtent = function (data, map = {mapId: "ol", mapMode: "2D"}) {
+/* View.prototype.zoomToProjExtent = function (data, map = {mapId: "ol", mapMode: "2D"}) {
     if (Object.values(data).every(val => val !== undefined)) {
         const leftBottom = data.extent.slice(0, 2),
             topRight = data.extent.slice(2, 4),
@@ -254,7 +252,7 @@ View.prototype.zoomToProjExtent = function (data, map = {mapId: "ol", mapMode: "
 
         this.zoomToExtent(extentToZoom, data.options, {mapId: map.mapId, mapMode: map.mapMode});
     }
-};
+}; */
 
 /**
  * Sets the Background for the Mapview.

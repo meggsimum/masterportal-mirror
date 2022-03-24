@@ -612,7 +612,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
             store.dispatch("MapMarker/removePointMarker");
             store.dispatch("MapMarker/placingPolygonMarker", getWKTGeom(hit));
             extent = store.getters["MapMarker/markerPolygon"].getSource().getExtent();
-            Radio.trigger("Map", "zoomToExtent", extent, {maxZoom: zoomLevel});
+            Radio.trigger("Maps", "zoomToExtent", {extent: extent, options: {maxZoom: zoomLevel}});
         }
     },
     /**

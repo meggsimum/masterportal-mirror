@@ -256,7 +256,7 @@ function initializeWithoutGUI ({state, commit, dispatch, getters}, {drawType, co
                     state.layer.getSource().addFeatures(featJSON);
                 }
                 if (featJSON.length > 0 && zoomToExtent) {
-                    Radio.trigger("Map", "zoomToExtent", state.layer.getSource().getExtent());
+                    Radio.trigger("Maps", "zoomToExtent", {extent: state.layer.getSource().getExtent()});
                 }
             }
             catch (e) {
