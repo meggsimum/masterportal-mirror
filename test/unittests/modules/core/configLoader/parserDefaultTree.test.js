@@ -25,12 +25,6 @@ describe("core/configLoader/parserDefaultTree", function () {
         return model;
     }
 
-    describe("the \"select all\" checkbox", function () {
-        it("folder should be true in defaulttree on toplevel", function () {
-            expect(Radio.request("Util", "findWhereJs", getDefaultModel({isFolderSelectable: false}).get("itemList"), {"name": "testFolder"}).isFolderSelectable).to.be.equal(true);
-        });
-    });
-
     describe("the number of folders within the test data", function () {
         it("should be one", function () {
             expect(getDefaultModel({isFolderSelectable: false}).get("itemList").filter(item => Object.keys({"name": "testFolder"}).every(key => item[key] === {"name": "testFolder"}[key])).length).to.be.equal(1);
