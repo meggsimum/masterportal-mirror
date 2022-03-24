@@ -27,13 +27,16 @@ const LayerBaseView = Backbone.View.extend(/** @lends LayerBaseView.prototype */
 
     /**
      * Draws the settings (transparency, metainfo, ...)
+     * @param {String} layerId The layer id.
      * @return {void}
      */
-    renderSetting: function () {
+    renderSetting: function (layerId) {
         const attr = this.model.toJSON();
 
-        // Animation Zahnrad
-        this.$(".bi-gear").parent(".bootstrap-icon").toggleClass("rotate rotate-back");
+        // Animation cog
+        if (layerId === attr.id) {
+            this.$(".bi-gear").parent(".bootstrap-icon").toggleClass("rotate rotate-back");
+        }
         // Slide-Animation templateSetting
         if (this.model.get("isSettingVisible") === false) {
             this.$el.find(".layer-settings").slideUp("slow", function () {
