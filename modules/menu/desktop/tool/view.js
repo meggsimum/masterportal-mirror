@@ -185,7 +185,7 @@ const ToolView = Backbone.View.extend(/** @lends ToolView.prototype */{
             // Upgrade to BT5, use JS method instead of class removal
             const dropdown = Dropdown.getInstance("li.dropdown-folder > .dropdown-toggle.show");
 
-            dropdown.hide();
+            dropdown?.hide();
             $(".dropdown-menu.fixed").removeClass("fixed");
             $(".bi-pin-angle-fill").parent(".bootstrap-icon").removeClass("rotate-pin");
             $(".bi-pin-angle-fill").parent(".bootstrap-icon").addClass("rotate-pin-back");
