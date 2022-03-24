@@ -496,7 +496,6 @@ export default {
         width: 10.5rem;
     }
     label {
-        text-transform: capitalize;
         margin: 0;
     }
     .snippetDateRangeContainer > div {

@@ -346,9 +346,6 @@ export default {
         position: absolute;
         right: 0;
     }
-    label {
-        text-transform: capitalize;
-    }
     input[type="date"]::-webkit-calendar-picker-indicator {
         background: transparent;
         bottom: 0;

@@ -649,7 +649,6 @@ export default {
     }
     .snippetDropdownContainer label {
         margin-bottom: 0;
-        text-transform: capitalize;
     }
     .snippetListContainer .snippetListContainerIcon {
         width: 25px;
