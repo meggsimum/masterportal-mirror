@@ -181,7 +181,7 @@ describe("modules/searchbar/elasticSearch", function () {
                     deeperKey: {
                         key: "value",
                         type: "type2",
-                        hitGlyphicon: "glyphicon-cba"
+                        hitIcon: "glyphicon-cba"
                     }
                 },
                 hitMap = {
@@ -203,8 +203,8 @@ describe("modules/searchbar/elasticSearch", function () {
                     name: "name",
                     coordinate: [123456, 456789],
                     key: "value",
-                    type: "type2",
-                    glyphicon: "glyphicon-cba"
+                    type: "type",
+                    icon: "glyphicon-abc"
                 }
             );
         });
