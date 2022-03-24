@@ -74,6 +74,7 @@ describe("src/core/layers/group.js", () => {
             typ: "OAF",
             isChildLayer: true,
             transparent: false,
+            crs: "crs",
             featureNS: "http://www.deegree.org/app",
             featureType: "krankenhaeuser_hh"
         };

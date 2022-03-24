@@ -5,9 +5,6 @@ import * as bridge from "./RadioBridge.js";
 import Cluster from "ol/source/Cluster";
 import {bbox, all} from "ol/loadingstrategy.js";
 import store from "../../app-store";
-import axios from "axios";
-import isObject from "../../utils/isObject";
-
 
 /**
  * Creates a layer of type OAF.
@@ -22,8 +19,7 @@ export default function OAFLayer (attrs) {
         isClustered: false,
         altitudeMode: "clampToGround",
         useProxy: false,
-        sourceUpdated: false,
-        datasets: [{}]
+        sourceUpdated: false
     };
 
     this.createLayer(Object.assign(defaults, attrs));
@@ -48,7 +44,7 @@ OAFLayer.prototype = Object.create(Layer.prototype);
  * @returns {void}
  */
 OAFLayer.prototype.createLayer = function (attrs) {
-    const crs = attrs.crs ? attrs.crs : "EPSG:25832",
+    const crs = attrs.crs ? attrs.crs : store.getters["Map/projection"].getCode(),
         rawLayerAttributes = {
             id: attrs.id,
             url: attrs.url,
@@ -64,7 +60,6 @@ OAFLayer.prototype.createLayer = function (attrs) {
             datetime: attrs.datetime,
             crs,
             bboxCrs: attrs.bboxCrs,
-            cswUrl: attrs.cswUrl,
             params: attrs.params
         },
         layerParams = {
@@ -275,79 +270,4 @@ OAFLayer.prototype.getStyleAsFunction = function (style) {
  */
 OAFLayer.prototype.styling = function () {
     this.layer.setStyle(this.getStyleAsFunction(this.get("style")));
-};
-
-/**
- * Initiates the presentation of layer information.
- * @returns {void}
- */
-OAFLayer.prototype.showLayerInformation = function () {
-    let cswUrl = null,
-        showDocUrl = null,
-        layerMetaId = null;
-
-    const metaID = [],
-        name = this.get("name");
-
-    if (Array.isArray(this.get("datasets")) && this.get("datasets")[0] !== null && typeof this.get("datasets")[0] === "object") {
-        cswUrl = this.get("datasets")[0]?.csw_url ? this.get("datasets")[0].csw_url : null;
-        showDocUrl = this.get("datasets")[0]?.show_doc_url ? this.get("datasets")[0].show_doc_url : null;
-        layerMetaId = this.get("datasets")[0]?.md_id ? this.get("datasets")[0].md_id : null;
-    }
-    if (!cswUrl && !layerMetaId) {
-        const baseUrl = this.get("url") + "?f=json";
-
-        axios({
-            method: "GET",
-            url: baseUrl
-        }).then((response) => {
-            const links = response.data.links,
-                metaLink = links.filter(link => link.rel === "describedBy" && link.type === "application/xml")[0];
-
-            layerMetaId = isObject(metaLink) && Object.prototype.hasOwnProperty.call(metaLink, "href") ? new URLSearchParams(metaLink.href).get("id") : undefined;
-            if (layerMetaId) {
-                this.setLayerinfoActive(this.get("cswUrl"), layerMetaId, metaID, name, showDocUrl);
-            }
-            else {
-                console.warn("OAF Layerinfo: layerMetaId is not set");
-            }
-        });
-    }
-
-    metaID.push(layerMetaId);
-    this.setLayerinfoActive(cswUrl, layerMetaId, metaID, name, showDocUrl);
-};
-
-/**
- * Sets the layer info attributes and activate it.
- * @param {String} cswUrl the csw url
- * @param {String} layerMetaId the layer metadata id
- * @param {String[]} metaID the metadata id array
- * @param {String} name the name of the layer
- * @param {String} showDocUrl the document url
- * @returns {void}
- */
-OAFLayer.prototype.setLayerinfoActive = function (cswUrl, layerMetaId, metaID, name, showDocUrl) {
-    store.dispatch("LayerInformation/layerInfo", {
-        "id": this.get("id"),
-        "metaID": layerMetaId,
-        "metaIdArray": metaID,
-        "layername": name,
-        "url": this.get("url"),
-        "legendURL": this.get("legendURL"),
-        "typ": this.get("typ"),
-        "cswUrl": cswUrl,
-        "showDocUrl": showDocUrl,
-        "urlIsVisible": this.get("urlIsVisible")
-    });
-
-    store.dispatch("LayerInformation/activate", true);
-    store.dispatch("LayerInformation/additionalSingleLayerInfo");
-    store.dispatch("LayerInformation/setMetadataURL", layerMetaId);
-    store.dispatch("Legend/setLayerIdForLayerInfo", this.get("id"));
-    store.dispatch("Legend/setLayerCounterIdForLayerInfo", Date.now());
-    if (typeof this.createLegend === "function") {
-        this.createLegend();
-    }
-    this.setLayerInfoChecked(true);
 };

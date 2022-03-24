@@ -43,7 +43,8 @@ describe("src/core/layers/oaf.js", () => {
             isChildLayer: false,
             transparent: false,
             isSelected: false,
-            featureType: "krankenhaeuser_hh"
+            featureType: "krankenhaeuser_hh",
+            crs: "crs"
         };
         store.getters = {
             treeType: "custom"
