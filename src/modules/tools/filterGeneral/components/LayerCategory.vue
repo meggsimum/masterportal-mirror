@@ -205,7 +205,7 @@ export default {
 </template>
 
 <style>
-    .panel-heading a[tabindex="0"]:focus {
+    #tool-general-filter .panel-heading .panel-title a[tabindex="0"]:focus {
         padding: 5px;
     }
 </style>
