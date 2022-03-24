@@ -201,7 +201,7 @@ export default {
                 resolutions = Radio.request("MapView", "getResolutions"),
                 index = resolutions.indexOf(0.2645831904584105) === -1 ? resolutions.length : resolutions.indexOf(0.2645831904584105);
 
-            Radio.trigger("Map", "zoomToExtent", coordinate, {maxZoom: index});
+            Radio.trigger("Maps", "zoomToExtent", {extent: coordinate, options: {maxZoom: index}});
             this.$emit("hide");
         },
 

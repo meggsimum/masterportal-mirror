@@ -91,9 +91,10 @@ function createLayerIfNotExists (layername) {
 function liveZoom (minScale, featureIds, layerId, callback) {
     const minResolution = Radio.request("MapView", "getResolutionByScale", minScale);
 
-    Radio.trigger("Map", "zoomToFilteredFeatures", featureIds, layerId, {
+    Radio.trigger("Maps", "zoomToFilteredFeatures", {ids: featureIds, layerId: layerId, zoomOptions: {
         minResolution,
         callback
+    }
     });
 }
 

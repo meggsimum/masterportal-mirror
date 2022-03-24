@@ -1,5 +1,6 @@
 import mapCollection from "../dataStorage/mapCollection";
 import mapMode from "./store/actions/actionsMapMode.js";
+import store from "../../../src/app-store/index";
 
 const channel = Radio.channel("Map");
 
@@ -54,13 +55,13 @@ channel.on({
         mapCollection.getMap("ol", "2D").render();
     },
     "zoomToExtent": function (extent, options) {
-        mapCollection.getMapView("ol", "2D").zoomToExtent(extent, options);
+        store.dispatch("Maps/zoomToExtent", {extent: extent, options: options});
     },
     "zoomToProjExtent": function (data) {
-        mapCollection.getMapView("ol", "2D").zoomToProjExtent(data);
+        store.dispatch("Maps/zoomToProjExtent", {data: data});
     },
     "zoomToFilteredFeatures": function (ids, layerId, zoomOptions) {
-        mapCollection.getMapView("ol", "2D").zoomToFilteredFeatures(ids, layerId, zoomOptions);
+        store.dispatch("Maps/zoomToFilteredFeatures", {ids: ids, layerId: layerId, zoomOptions: zoomOptions});
     },
     "registerListener": function (event, callback, context) {
         mapCollection.getMap("ol", "2D").registerListener(event, callback, context);

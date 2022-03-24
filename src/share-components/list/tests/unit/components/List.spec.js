@@ -65,6 +65,6 @@ describe("src/share-components/list/components/ListItem.vue", () => {
         wrapper.vm.setCenter(feature);
 
         expect(trigger.calledOnce).to.be.true;
-        expect(trigger.firstCall.args).to.eql(["Map", "zoomToExtent", feature.getGeometry(), {maxZoom: 5}]);
+        expect(trigger.firstCall.args).to.eql(["Maps", "zoomToExtent", {extent: feature.getGeometry(), options: {maxZoom: 5}}]);
     });
 });

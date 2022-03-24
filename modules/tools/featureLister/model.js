@@ -152,7 +152,7 @@ const FeatureListerModel = Tool.extend(/** @lends FeatureListerModel.prototype *
 
             // Zoom auf Extent
             if (geometry) {
-                Radio.trigger("Map", "zoomToExtent", extractEventCoordinates(geometry));
+                Radio.trigger("Maps", "zoomToExtent", {extent: extractEventCoordinates(geometry)});
             }
             else {
                 Radio.trigger("Alert", "alert", {
