@@ -312,7 +312,7 @@ export default {
                     clazz = "eastingToBottomTwoErrors";
                 }
             }
-            return clazz + " form-group form-group-sm";
+            return clazz + " form-group form-group-sm row";
         },
         /**
          * Returns the className for the northing input field. Special Handling because fields positions are transformed.
@@ -341,7 +341,7 @@ export default {
                     clazz = "northingToTopTwoErrors";
                 }
             }
-            return clazz + " form-group form-group-sm";
+            return clazz + " form-group form-group-sm row";
         },
         /**
          * Returns the className for the labels.
