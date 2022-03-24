@@ -65,6 +65,10 @@ export default [
                         coords.push(coordinate);
                     }
                 });
+                // respect this from ol: Invalid number of points in LineString (found 1 - must be 0 or >= 2)
+                if (coords.length === 1) {
+                    return new LineString([]);
+                }
                 return new LineString(coords);
             }
             if (geom instanceof Polygon) {
