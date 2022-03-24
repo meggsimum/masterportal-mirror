@@ -29,6 +29,7 @@ definitions:
             - find . -maxdepth 2 -name package.json -execdir npm i \;
             - cd ..;
             - npm install
+            - npm ls
             - npm run buildPortal
             - apt-get update && apt-get install unzip
             # make script executable
