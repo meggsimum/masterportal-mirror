@@ -24,7 +24,7 @@ definitions:
             - rm -rf ./addons/readme.txt
             # because of use of "git-ftp" for transfering files every change in repository has to be comittet, see https://git-ftp.github.io/
             - git commit ./addons/readme.txt -m "deleted before add addons in e2e test run"
-            - git clone --branch branchname https://geowerkstatt@bitbucket.org/geowerkstatt-hamburg/addons.git
+            - git clone --branch $branchname https://geowerkstatt@bitbucket.org/geowerkstatt-hamburg/addons.git
             - cd addons
             - find . -maxdepth 2 -name package.json -execdir npm i \;
             - cd ..;
