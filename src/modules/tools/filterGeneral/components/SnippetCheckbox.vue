@@ -177,15 +177,6 @@ export default {
                 class="snippetCheckboxLabel"
             >{{ titleText }}</label>
         </div>
-        <div class="right">
-            <div class="info-icon">
-                <span
-                    :class="['bootstrap-icon', showInfo ? 'opened' : '']"
-                    @click="toggleInfo()"
-                    @keydown.enter="toggleInfo()"
-                ><i class="bi-info-circle-fill" /></span>
-            </div>
-        </div>
         <div
             v-if="info"
             class="right"
