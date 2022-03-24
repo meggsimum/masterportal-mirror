@@ -465,7 +465,7 @@ export default {
                     </div>
                 </div>
                 <div
-                    class="form-group form-group-sm"
+                    class="form-group form-group-sm row"
                 >
                     <label
                         class="col-md-5 control-label"
