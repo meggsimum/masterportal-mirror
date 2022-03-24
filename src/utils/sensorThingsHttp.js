@@ -1,6 +1,6 @@
 import axios from "axios";
 import UrlParser from "url-parse";
-import {transform as transformProjectionToProjection} from "masterportalAPI/src/crs";
+import {transform as transformProjectionToProjection} from "masterportalapi/src/crs";
 
 /**
  * SensorThingsHttp is the software layer to handle the special needs of the SensorThingsAPI regarding http requests.

@@ -1,5 +1,5 @@
 import {Draw} from "ol/interaction.js";
-import {getMapProjection, transform} from "masterportalAPI/src/crs";
+import {getMapProjection, transform} from "masterportalapi/src/crs";
 
 import * as actionsDownload from "./actions/actionsDownload";
 import {drawInteractionOnDrawEvent} from "./actions/drawInteractionOnDrawEvent";

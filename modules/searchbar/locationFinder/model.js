@@ -1,5 +1,5 @@
 import "../model";
-import {transformFromMapProjection as mpapiTransformToMapProjection, getProjection as mpapiGetProjection} from "masterportalAPI/src/crs";
+import {transformFromMapProjection as mpapiTransformToMapProjection, getProjection as mpapiGetProjection} from "masterportalapi/src/crs";
 import getProxyUrl from "../../../src/utils/getProxyUrl";
 import store from "../../../src/app-store";
 

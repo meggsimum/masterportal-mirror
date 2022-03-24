@@ -1,6 +1,6 @@
 import {WFS} from "ol/format.js";
 import {DEVICE_PIXEL_RATIO} from "ol/has.js";
-import {getLayerWhere} from "masterportalAPI/src/rawLayerList";
+import {getLayerWhere} from "masterportalapi/src/rawLayerList";
 import axios from "axios";
 import store from "../../src/app-store/index";
 import calculateExtent from "../../src/utils/calculateExtent";

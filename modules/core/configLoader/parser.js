@@ -1,6 +1,6 @@
 import Backbone from "backbone";
 import ModelList from "../modelList/list";
-import {getLayerList} from "masterportalAPI/src/rawLayerList";
+import {getLayerList} from "masterportalapi/src/rawLayerList";
 import store from "../../../src/app-store/index";
 
 const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{

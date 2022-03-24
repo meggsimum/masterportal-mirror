@@ -3,7 +3,7 @@ import {
     fetchRoutingNominatimGeosearch,
     fetchRoutingNominatimGeosearchReverse
 } from "../utils/geosearch/routing-nominatim-geosearch";
-import {getMapProjection, transform} from "masterportalAPI/src/crs";
+import {getMapProjection, transform} from "masterportalapi/src/crs";
 import {fetchRoutingBkgGeosearch, fetchRoutingBkgGeosearchReverse} from "../utils/geosearch/routing-bkg-geosearch";
 import * as constantsRouting from "./constantsRouting";
 import mapCollection from "../../../../core/dataStorage/mapCollection";

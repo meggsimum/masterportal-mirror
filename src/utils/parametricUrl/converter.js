@@ -1,4 +1,4 @@
-import {getProjections} from "masterportalAPI/src/crs";
+import {getProjections} from "masterportalapi/src/crs";
 
 /**
  *  Converts a boolean string to a boolean.

@@ -1,4 +1,4 @@
-import {getMapProjection} from "masterportalAPI/src/crs";
+import {getMapProjection} from "masterportalapi/src/crs";
 import {toLonLat, transform} from "ol/proj";
 
 const earthRadius = 6378137;

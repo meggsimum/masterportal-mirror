@@ -1,5 +1,5 @@
 import Layer from "./layer";
-import {vectorBase} from "masterportalAPI/src";
+import {vectorBase} from "masterportalapi/src";
 import * as bridge from "./RadioBridge.js";
 import Cluster from "ol/source/Cluster";
 

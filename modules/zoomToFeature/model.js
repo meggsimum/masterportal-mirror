@@ -4,7 +4,7 @@ import Point from "ol/geom/Point.js";
 import {Icon, Style} from "ol/style.js";
 import {Vector as VectorLayer} from "ol/layer.js";
 import VectorSource from "ol/source/Vector.js";
-import {getLayerWhere} from "masterportalAPI/src/rawLayerList";
+import {getLayerWhere} from "masterportalapi/src/rawLayerList";
 import getProxyUrl from "../../src/utils/getProxyUrl";
 import store from "../../src/app-store";
 import mapCollection from "../../src/core/dataStorage/mapCollection";

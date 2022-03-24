@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import {convert, convertToStringArray, convertTransparency, parseQuery} from "../../../parametricUrl/converter";
-import * as crs from "masterportalAPI/src/crs";
+import * as crs from "masterportalapi/src/crs";
 import mapCollection from "../../../../core/dataStorage/mapCollection";
 
 const namedProjections = [

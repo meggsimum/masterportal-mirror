@@ -2,7 +2,7 @@ import {translate} from "./translator";
 import {deepAssignIgnoreCase} from "../deepAssign";
 import {doSpecialBackboneHandling, triggerParametricURLReady, translateToBackbone} from "./ParametricUrlBridge";
 import store from "../../app-store";
-import {transformToMapProjection} from "masterportalAPI/src/crs";
+import {transformToMapProjection} from "masterportalapi/src/crs";
 import mapCollection from "../../core/dataStorage/mapCollection";
 
 /**

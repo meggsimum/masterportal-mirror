@@ -6,7 +6,7 @@ import ToolTemplate from "../../ToolTemplate.vue";
 import mutations from "../store/mutationsAddWMS";
 import {WMSCapabilities} from "ol/format.js";
 import {intersects} from "ol/extent";
-import {transform as transformCoord, getProjection} from "masterportalAPI/src/crs";
+import {transform as transformCoord, getProjection} from "masterportalapi/src/crs";
 import axios from "axios";
 
 export default {

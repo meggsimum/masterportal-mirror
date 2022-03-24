@@ -1,6 +1,6 @@
 import QueryModel from "../model";
 import {intersects} from "ol/extent.js";
-import {getLayerWhere} from "masterportalAPI/src/rawLayerList";
+import {getLayerWhere} from "masterportalapi/src/rawLayerList";
 import moment from "moment";
 import store from "../../../../../src/app-store";
 

@@ -2,7 +2,7 @@ import Vuex from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
-import * as crs from "masterportalAPI/src/crs";
+import * as crs from "masterportalapi/src/crs";
 import SupplyCoordComponent from "../../../components/SupplyCoord.vue";
 import SupplyCoord from "../../../store/indexSupplyCoord";
 

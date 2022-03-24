@@ -351,7 +351,7 @@ Basic example:
 Example to transform a Location from your current projection into "EPSG:4326":
 
 ```js
-import {transform} from "masterportalAPI/src/crs";
+import {transform} from "masterportalapi/src/crs";
 
 const extent = Radio.request("MapView", "getCurrentExtent"),
     projection = Radio.request("MapView", "getProjection").getCode(),
