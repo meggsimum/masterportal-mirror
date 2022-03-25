@@ -20,7 +20,7 @@ export default {
      * @returns {void}
      */
     zoomToExtent ({getters}, {extent, options, map = {mapId: "ol", mapMode: "2D"}}) {
-        return getters.getView.fit(extent, {
+        getters.getView.fit(extent, {
             size: mapCollection.getMap(map.mapId, map.mapMode).getSize(),
             ...Object.assign({duration: 800}, options)
         });
@@ -38,16 +38,17 @@ export default {
      * @param {String} [payload.map.mapMode="2D"] The map mode.
      * @returns {void}
      */
-    zoomToFilteredFeatures (state, {ids, layerId, zoomOptions, map = {mapId: "ol", mapMode: "2D"}}) {
+    async zoomToFilteredFeatures ({dispatch}, {ids, layerId, zoomOptions, map = {mapId: "ol", mapMode: "2D"}}) {
         const layer = mapCollection.getMap(map.mapId, map.mapMode).getLayerById(layerId);
 
         if (layer?.getSource()) {
             const layerSource = layer.getSource(),
                 source = layerSource instanceof Cluster ? layerSource.getSource() : layerSource,
-                filteredFeatures = source.getFeatures().filter(feature => ids.indexOf(feature.getId()) > -1);
+                filteredFeatures = source.getFeatures().filter(feature => ids.indexOf(feature.getId()) > -1),
+                calculatedExtent = await calculateExtent(filteredFeatures);
 
             if (filteredFeatures.length > 0) {
-                this.zoomToExtent(calculateExtent(filteredFeatures), zoomOptions);
+                dispatch("zoomToExtent", {extent: calculatedExtent, options: zoomOptions});
             }
         }
     },
@@ -66,7 +67,7 @@ export default {
      * @param {String} [payload.map.mapMode="2D"] The map mode.
      * @returns {void}
      */
-    zoomToProjExtent (state, {data, map = {mapId: "ol", mapMode: "2D"}}) {
+    zoomToProjExtent ({dispatch}, {data, map = {mapId: "ol", mapMode: "2D"}}) {
         if (Object.values(data).every(val => val !== undefined)) {
             const leftBottom = data.extent.slice(0, 2),
                 topRight = data.extent.slice(2, 4),
@@ -74,7 +75,7 @@ export default {
                 transformedTopRight = transformToMapProjection(mapCollection.getMap(map.mapId, map.mapMode), data.projection, topRight),
                 extentToZoom = transformedLeftBottom.concat(transformedTopRight);
 
-            this.zoomToExtent(extentToZoom, data.options, {mapId: map.mapId, mapMode: map.mapMode});
+            dispatch("Maps/zoomToExtent", {extent: extentToZoom, options: data.options, map: {mapId: map.mapId, mapMode: map.mapMode}});
         }
     }
 };

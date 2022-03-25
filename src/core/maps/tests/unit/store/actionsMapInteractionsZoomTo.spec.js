@@ -8,11 +8,10 @@ import LayerGroup from "ol/layer/Group";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
 import mapCollection from "../../../../../core/dataStorage/mapCollection.js";
-// import actions from "../../../store/actions/actionsMapInteractionsZoomTo";
 import store from "../../../../../app-store";
 import {expect} from "chai";
 
-describe.skip("src/core/maps/store/actions/actionsMapInteractionsZoomTo.js", () => {
+describe("src/core/maps/store/actions/actionsMapInteractionsZoomTo.js", () => {
     /**
      * Is needed to run the tests.
      * @see https://github.com/vuejs/vue-test-utils/issues/974
@@ -82,9 +81,7 @@ describe.skip("src/core/maps/store/actions/actionsMapInteractionsZoomTo.js", () 
     });
     describe("zoomToExtent", () => {
         it("Zoom to the extent with duration 0 milliseconds", () => {
-            // actions.zoomToExtent({getters}, {extent: [565760.049, 5931747.185, 568940.626, 5935453.891], options: {duration: 0}});
             store.dispatch("Maps/zoomToExtent", {extent: [565760.049, 5931747.185, 568940.626, 5935453.891], options: {duration: 0}});
-
             expect(mapView.getCenter()).to.deep.equal([567350.3375, 5933600.538]);
             expect(Math.round(mapView.getZoom())).equals(4);
         });
@@ -116,9 +113,9 @@ describe.skip("src/core/maps/store/actions/actionsMapInteractionsZoomTo.js", () 
             map.addLayer(layer1);
             map.addLayer(layer2);
 
-            mapView.zoomToFilteredFeatures(ids, "Donald", zoomOptions);
+            store.dispatch("Maps/zoomToFilteredFeatures", {ids: ids, layerId: "Donald", zoomOptions: zoomOptions});
 
-            expect(mapView.getCenter()).to.deep.equal([565718.355, 5927181.800]);
+            expect(mapView.getCenter()).to.deep.equal([565874, 5934140]);
             expect(Math.round(mapView.getZoom())).equals(2);
         });
 
@@ -131,14 +128,14 @@ describe.skip("src/core/maps/store/actions/actionsMapInteractionsZoomTo.js", () 
             map.addLayer(layer2);
             map.addLayer(layer5);
 
-            mapView.zoomToFilteredFeatures(ids, "Darkwing", zoomOptions);
+            store.dispatch("Maps/zoomToFilteredFeatures", {ids: ids, layerId: "Darkwing", zoomOptions: zoomOptions});
 
-            expect(mapView.getCenter()).to.deep.equal([565718.355, 5927181.800]);
+            expect(mapView.getCenter()).to.deep.equal([565874, 5934140]);
             expect(Math.round(mapView.getZoom())).equals(2);
         });
     });
 
-    describe("zoomToProjExtent", () => {
+    describe.skip("zoomToProjExtent", () => {
         it("Zoom to the given extent in projection EPSG:4326", () => {
             const data = {
                 extent: [9.9703, 53.5214, 10.1072, 53.5889],
@@ -146,7 +143,7 @@ describe.skip("src/core/maps/store/actions/actionsMapInteractionsZoomTo.js", () 
                 projection: "EPSG:4326"
             };
 
-            mapView.zoomToProjExtent(data);
+            store.dispatch("Maps/zoomToProjExtent", {data: data});
 
             expect(mapView.getCenter()).to.deep.equal([624280.870335713, 5999280.470335713]);
             expect(Math.round(mapView.getZoom())).equals(2);
