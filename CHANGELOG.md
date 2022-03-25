@@ -59,6 +59,7 @@
 - Issue #746: Fix issue with playback function of timeSlider (WMS-T) not properly stopping after it reached the end of the time series.
 - Issue #747: The auto refresh now also works for wms layer again.
 - Issue #731: Printing of measured lines works for all cases.
+- Categories can be changed in the topic tree even if the topic is closed.
 
 ---
 
