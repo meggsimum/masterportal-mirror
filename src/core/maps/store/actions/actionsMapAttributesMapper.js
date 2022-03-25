@@ -9,7 +9,7 @@ export default {
          * @param {module:ol/Map} map map object
          * @returns {void}
          */
-    setMapAttributes ({commit, dispatch, rootState}, {map}) {
+    async setMapAttributes ({commit, dispatch, rootState}, {map}) {
         // discard old listeners
         if (unsubscribes.length) {
             unsubscribes.forEach(unsubscribe => unsubscribe());
@@ -17,7 +17,7 @@ export default {
         }
 
         const mapView = map.getView(),
-            layerIds = dispatch("normalizeLayers", map.getLayers().getArray()),
+            layerIds = await dispatch("normalizeLayers", map.getLayers().getArray()),
             channel = Radio.channel("VectorLayer");
 
         // listen to featuresLoaded event to be able to determine if all features of a layer are completely loaded
@@ -108,7 +108,7 @@ export default {
         }
         else {
             commit("setClickCoordinate", evt.pickedPosition);
-            commit("setClickPixel", [evt.position.x, evt.position.y]);
+            commit("setClickCartesianCoordinate", [evt.position.x, evt.position.y]);
         }
 
         if (rootGetters["Tools/Gfi/active"]) {
@@ -117,43 +117,6 @@ export default {
             dispatch("Maps/collectGfiFeatures", null, {root: true});
         }
 
-<<<<<<< HEAD
-    const mapView = map.getView();
-
-    commit("setResolution", mapView.getResolution());
-    commit("setBoundingBox", mapView.calculateExtent(map.getSize()));
-    commit("setRotation", mapView.getRotation());
-    dispatch("setCenter", mapView);
-}
-/**
- * @param {Object} evt update event
- * @returns {Function} update function for mouse coordinate
- */
-function updatePointer ({commit}, evt) {
-    if (evt.dragging) {
-        return;
-    }
-    commit("setMouseCoordinate", evt.coordinate);
-}
-
-/**
- * Updates the click coordinate and the related pixel depending on the map mode.
- * If Gfi Tool is active, the features of this coordinate/pixel are set.
- *
- * @param {MapBrowserEvent} evt - Click event in 2D, fake click event in 3D
- * @returns {void}
- */
-function updateClick ({getters, commit, dispatch, rootGetters}, evt) {
-
-    if (getters.mode === "2D" || getters.mode === "Oblique") {
-        commit("setClickCoordinate", evt.coordinate);
-        commit("setClickPixel", evt.pixel);
-    }
-    else {
-        commit("setClickCoordinate", evt.pickedPosition);
-        commit("setClickCartesianCoordinate", [evt.position.x, evt.position.y]);
-    }
-=======
         if (!rootGetters["controls/orientation/poiModeCurrentPositionEnabled"]) {
             dispatch("MapMarker/placingPointMarker", evt.coordinate, {root: true});
             commit("controls/orientation/setPosition", evt.coordinate, {root: true});
@@ -168,7 +131,6 @@ function updateClick ({getters, commit, dispatch, rootGetters}, evt) {
      * @property {Number} opacity layer opacity in [0, 1] range
      * @property {module:ol/layer} olLayer openlayers layer object kept for quick access
      */
->>>>>>> d1bdac183... BG-2294 add interactionsZoomTo and WIP unit tests
 
     /**
      * Normalizes layer data of map for easy access.
