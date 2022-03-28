@@ -645,24 +645,22 @@ export default {
      * @param {Object} context actions context object.
      * @returns {void}
      */
-    createDirectionsWaypointsDrawInteraction ({state, dispatch, rootState}) {
+    createDirectionsWaypointsDrawInteraction ({state, dispatch}) {
         dispatch("removeMapInteractions");
         const {
-                directionsWaypointsModifyInteraction,
-                directionsWaypointsSnapInteraction,
-                directionsWaypointsDrawInteraction,
-                directionsRouteModifyInteraction,
-                directionsRouteSnapInteraction
-            } = state,
+            directionsWaypointsModifyInteraction,
+            directionsWaypointsSnapInteraction,
+            directionsWaypointsDrawInteraction,
+            directionsRouteModifyInteraction,
+            directionsRouteSnapInteraction
+        } = state;
 
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
+        dispatch("Maps/addInteraction", directionsRouteModifyInteraction, {root: true});
+        dispatch("Maps/addInteraction", directionsRouteSnapInteraction, {root: true});
 
-        map.addInteraction(directionsRouteModifyInteraction);
-        map.addInteraction(directionsRouteSnapInteraction);
-
-        map.addInteraction(directionsWaypointsDrawInteraction);
-        map.addInteraction(directionsWaypointsModifyInteraction);
-        map.addInteraction(directionsWaypointsSnapInteraction);
+        dispatch("Maps/addInteraction", directionsWaypointsDrawInteraction, {root: true});
+        dispatch("Maps/addInteraction", directionsWaypointsModifyInteraction, {root: true});
+        dispatch("Maps/addInteraction", directionsWaypointsSnapInteraction, {root: true});
     },
     /**
      * Removes the draw interaction. This includes aborting any current
@@ -671,25 +669,23 @@ export default {
      * @param {Object} context actions context object.
      * @returns {void}
      */
-    removeDirectionsWaypointsDrawInteraction ({state, rootState}) {
+    removeDirectionsWaypointsDrawInteraction ({state, dispatch}) {
         const {
-                directionsWaypointsDrawInteraction,
-                directionsWaypointsModifyInteraction,
-                directionsWaypointsSnapInteraction,
-                directionsRouteModifyInteraction,
-                directionsRouteSnapInteraction
-            } = state,
-
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
+            directionsWaypointsDrawInteraction,
+            directionsWaypointsModifyInteraction,
+            directionsWaypointsSnapInteraction,
+            directionsRouteModifyInteraction,
+            directionsRouteSnapInteraction
+        } = state;
 
         directionsWaypointsDrawInteraction.abortDrawing();
 
-        map.removeInteraction(directionsRouteModifyInteraction);
-        map.removeInteraction(directionsRouteSnapInteraction);
+        dispatch("Maps/removeInteraction", directionsRouteModifyInteraction, {root: true});
+        dispatch("Maps/removeInteraction", directionsRouteSnapInteraction, {root: true});
 
-        map.removeInteraction(directionsWaypointsDrawInteraction);
-        map.removeInteraction(directionsWaypointsModifyInteraction);
-        map.removeInteraction(directionsWaypointsSnapInteraction);
+        dispatch("Maps/removeInteraction", directionsWaypointsDrawInteraction, {root: true});
+        dispatch("Maps/removeInteraction", directionsWaypointsModifyInteraction, {root: true});
+        dispatch("Maps/removeInteraction", directionsWaypointsSnapInteraction, {root: true});
     },
 
     /**
@@ -697,38 +693,35 @@ export default {
      * @param {Object} context actions context object.
      * @returns {void}
      */
-    createDirectionsAvoidDrawInteraction ({state, dispatch, rootState}) {
+    createDirectionsAvoidDrawInteraction ({state, dispatch}) {
         dispatch("removeMapInteractions");
         const {
-                directionsAvoidModifyInteraction,
-                directionsAvoidSnapInteraction,
-                directionsAvoidDrawInteraction
-            } = state,
+            directionsAvoidModifyInteraction,
+            directionsAvoidSnapInteraction,
+            directionsAvoidDrawInteraction
+        } = state;
 
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
-
-        map.addInteraction(directionsAvoidDrawInteraction);
-        map.addInteraction(directionsAvoidModifyInteraction);
-        map.addInteraction(directionsAvoidSnapInteraction);
+        dispatch("Maps/addInteraction", directionsAvoidDrawInteraction, {root: true});
+        dispatch("Maps/addInteraction", directionsAvoidModifyInteraction, {root: true});
+        dispatch("Maps/addInteraction", directionsAvoidSnapInteraction, {root: true});
     },
     /**
      * Removes the draw interaction for polygons to avoid.
      * @param {Object} context actions context object.
      * @returns {void}
      */
-    removeDirectionsAvoidDrawInteraction ({state, rootState}) {
+    removeDirectionsAvoidDrawInteraction ({state, dispatch}) {
         const {
-                directionsAvoidModifyInteraction,
-                directionsAvoidSnapInteraction,
-                directionsAvoidDrawInteraction
-            } = state,
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
+            directionsAvoidModifyInteraction,
+            directionsAvoidSnapInteraction,
+            directionsAvoidDrawInteraction
+        } = state;
 
         directionsAvoidDrawInteraction.abortDrawing();
 
-        map.removeInteraction(directionsAvoidModifyInteraction);
-        map.removeInteraction(directionsAvoidSnapInteraction);
-        map.removeInteraction(directionsAvoidDrawInteraction);
+        dispatch("Maps/removeInteraction", directionsAvoidModifyInteraction, {root: true});
+        dispatch("Maps/removeInteraction", directionsAvoidSnapInteraction, {root: true});
+        dispatch("Maps/removeInteraction", directionsAvoidDrawInteraction, {root: true});
     },
 
     /**
@@ -736,23 +729,21 @@ export default {
      * @param {Object} context actions context object.
      * @returns {void}
      */
-    createDirectionsAvoidSelectInteraction ({state, dispatch, rootState}) {
+    createDirectionsAvoidSelectInteraction ({state, dispatch}) {
         dispatch("removeMapInteractions");
-        const {directionsAvoidSelectInteraction} = state,
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
+        const {directionsAvoidSelectInteraction} = state;
 
-        map.addInteraction(directionsAvoidSelectInteraction);
+        dispatch("Maps/addInteraction", directionsAvoidSelectInteraction, {root: true});
     },
     /**
      * Removes the select interaction for deletion of avoid areas.
      * @param {Object} context actions context object.
      * @returns {void}
      */
-    removeDirectionsAvoidSelectInteraction ({state, rootState}) {
-        const {directionsAvoidSelectInteraction} = state,
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
+    removeDirectionsAvoidSelectInteraction ({state, dispatch}) {
+        const {directionsAvoidSelectInteraction} = state;
 
-        map.removeInteraction(directionsAvoidSelectInteraction);
+        dispatch("Maps/removeInteraction", directionsAvoidSelectInteraction, {root: true});
     },
     /**
      * Removes the directions interactions.

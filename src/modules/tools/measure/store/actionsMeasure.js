@@ -55,7 +55,7 @@ export default {
                 featureId => commit("setFeatureId", featureId),
                 tooltipCoord => commit("setTooltipCoord", tooltipCoord)
             );
-            rootGetters["Map/ol2DMap"].addInteraction(interaction);
+            dispatch("Maps/addInteraction", interaction, {root: true});
         }
 
         commit("setInteraction", interaction);
@@ -66,7 +66,7 @@ export default {
      * removing the interaction from the store.
      * @returns {void}
      */
-    removeDrawInteraction ({state, rootGetters, commit}) {
+    removeDrawInteraction ({state, dispatch, commit}) {
         const {interaction} = state;
 
         if (interaction) {
@@ -77,7 +77,7 @@ export default {
                 interaction.stopInteraction();
             }
             else {
-                rootGetters["Map/ol2DMap"].removeInteraction(interaction);
+                dispatch("Maps/removeInteraction", interaction, {root: true});
             }
 
             commit("setInteraction", null);

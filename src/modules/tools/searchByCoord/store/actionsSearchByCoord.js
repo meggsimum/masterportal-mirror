@@ -37,7 +37,7 @@ export default {
         // coordinates come as string and have to be changed to numbers for setCenter from mutations to work.
         const newCoords = [parseFloat(coordinates[0]), parseFloat(coordinates[1])];
 
-        dispatch("Map/setCenter", newCoords, {root: true});
+        dispatch("Maps/setCenter", newCoords, {root: true});
     },
     /**
      * Pushes the formatted coordinates in the selectedCoordinates String[].

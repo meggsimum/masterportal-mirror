@@ -80,7 +80,7 @@ export default {
         commit("setResolution", mapView.getResolution());
         commit("setBoundingBox", mapView.calculateExtent(map.getSize()));
         commit("setRotation", mapView.getRotation());
-        dispatch("setCenter", mapView);
+        dispatch("setCenter", mapView.getCenter());
     },
     /**
      * @param {Object} evt update event
@@ -159,23 +159,5 @@ export default {
             layers,
             layerIds
         ];
-    },
-
-    /**
-     * Sets the center of the current view.
-     * @param {Object} payload parameter object
-     * @param {number[]} mapView view of the the map
-     * @returns {void}
-     */
-    setCenter ({commit, getters}, mapView) {
-        const coords = mapView.getCenter();
-
-        if (Array.isArray(coords) && coords.length === 2 && typeof coords[0] === "number" && typeof coords[1] === "number") {
-            commit("setCenter", coords);
-            getters.getView.setCenter(coords);
-        }
-        else {
-            console.warn("Center was not set. Probably there is a data type error. The format of the coordinate must be an array with two numbers.");
-        }
     }
 };

@@ -81,7 +81,8 @@ function callMutations (state) {
         if (state.urlParams.projection !== undefined) {
             centerCoords = transformToMapProjection(mapCollection.getMap(state.Map.mapId, state.Map.mapMode), state.urlParams.projection, centerCoords);
         }
-        store.commit("Map/setCenter", centerCoords);
+        store.commit("Maps/setInitialCenter", centerCoords);
+        store.dispatch("Maps/setCenter", centerCoords);
     }
 }
 /**
@@ -101,7 +102,9 @@ function callActions (state) {
         }, 500);
     }
     if (typeof state.urlParams["Map/zoomLevel"] === "number") {
-        store.dispatch("Map/setZoomLevel", state.Map.zoomLevel);
+        store.commit("Maps/setInitialZoomLevel", state.urlParams["Map/zoomLevel"]);
+        store.dispatch("Maps/setZoomLevel", state.urlParams["Map/zoomLevel"]);
+        store.commit("Maps/setInitialResolution", store.getters["Maps/getView"].getResolution());
     }
 }
 /**

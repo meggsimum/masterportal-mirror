@@ -7,8 +7,8 @@
 * @property {Number[]} clickCartesianCoordinate Current cartesian 2D coordinate.
 * @property {Number[]} extent Current extent values of the map.
 * @property {Number[]} initialCenter Initial center values of the map.
-* @property {Number} initialResolution Initial resolution values of the map.
-* @property {Number} initialZoomLevel Initial zoom levels of the map.
+* @property {Number} initialResolution Initial resolution value of the map.
+* @property {Number} initialZoomLevel Initial zoom level of the map.
 * @property {String[]} layerIds Current layers of the map by Id.
 * @property {Object[]} gfiFeatures temporary array for features at click has to be moved to gfi module.
 * @property {String} mode Current mode of the map e.g. 2D/3D.

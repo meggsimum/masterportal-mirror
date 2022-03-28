@@ -45,7 +45,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions("Map", ["resetView"]),
+        ...mapActions("Maps", ["resetView"]),
 
         startResetView: function () {
             this.resetView();

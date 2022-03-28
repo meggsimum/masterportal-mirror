@@ -106,7 +106,9 @@ export default {
         ...mapActions("Alerting", ["addSingleAlert"]),
         ...mapActions("Map", {
             addPointerMoveHandlerToMap: "addPointerMoveHandler",
-            removePointerMoveHandlerFromMap: "removePointerMoveHandler",
+            removePointerMoveHandlerFromMap: "removePointerMoveHandler"
+        }),
+        ...mapActions("Maps", {
             addInteractionToMap: "addInteraction",
             removeInteractionFromMap: "removeInteraction"
         }),

@@ -1,5 +1,5 @@
 import {PluggableMap} from "ol";
-import {unByKey as unlistenByKey} from "ol/Observable.js";
+// import {unByKey as unlistenByKey} from "ol/Observable.js";
 import {Group as LayerGroup} from "ol/layer.js";
 /* import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
@@ -115,30 +115,30 @@ PluggableMap.prototype.getLayerByName = function (layerName) {
     return this.getLayers().getArray().find(layer => layer.get("name") === layerName);
 };
 
-/**
-* Registered listener for certain events on the map.
-* @see https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
-* @param {String} event The Eventtype.
-* @param {Function} callback The callback function.
-* @param {Object} context The context.
-* @returns {void}
-*/
-PluggableMap.prototype.registerListener = function (event, callback, context) {
-    this.on(event, callback, context);
-};
+// /**
+// * Registered listener for certain events on the map.
+// * @see https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
+// * @param {String} event The Eventtype.
+// * @param {Function} callback The callback function.
+// * @param {Object} context The context.
+// * @returns {void}
+// */
+// PluggableMap.prototype.registerListener = function (event, callback, context) {
+//     this.on(event, callback, context);
+// };
 
-/**
-* Unsubscribes listener to certain events.
-* @param {String | Object} event The event type or an object used as a key.
-* @param {Function} callback The callback function.
-* @param {Object} context The context.
-* @returns {void}
-*/
-PluggableMap.prototype.unregisterListener = function (event, callback, context) {
-    if (typeof event === "string") {
-        this.un(event, callback, context);
-    }
-    else {
-        unlistenByKey(event);
-    }
-};
+// /**
+// * Unsubscribes listener to certain events.
+// * @param {String | Object} event The event type or an object used as a key.
+// * @param {Function} callback The callback function.
+// * @param {Object} context The context.
+// * @returns {void}
+// */
+// PluggableMap.prototype.unregisterListener = function (event, callback, context) {
+//     if (typeof event === "string") {
+//         this.un(event, callback, context);
+//     }
+//     else {
+//         unlistenByKey(event);
+//     }
+// };

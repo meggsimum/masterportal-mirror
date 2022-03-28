@@ -4,7 +4,7 @@ import {transformFromMapProjection} from "masterportalAPI/src/crs";
 import mapCollection from "../dataStorage/mapCollection";
 import findWhereJs from "../../utils/findWhereJs";
 import store from "../../app-store";
-import defaults from "masterportalAPI/src/defaults";
+// import defaults from "masterportalAPI/src/defaults";
 
 /**
  * @description initializes store and listeners
@@ -23,7 +23,7 @@ View.prototype.initStore = function () {
     const params = findWhereJs(this.get("options"), {resolution: this.getConstrainedResolution(this.getResolution())});
 
     if (document.getElementById("map") !== null) {
-        this.setBackground(document.getElementById("map").style.backgroundImage);
+        store.dispatch("Maps/setBackground", document.getElementById("map").style.backgroundImage);
     }
 
     // triggers the function checkForScale modules\core\modelList\layer\model.js
@@ -96,18 +96,18 @@ View.prototype.getResolutionByScale = function (scale, scaleType) {
     return null;
 };
 
-/**
- * Sets center and resolution to initial values
- * @returns {void}
- */
-View.prototype.resetView = function () {
-    const center = store.state.urlParams["Map/center"] || this.get("center") || defaults.startCenter,
-        resolution = this.get("resolution") || defaults.startResolution;
+// /**
+//  * Sets center and resolution to initial values
+//  * @returns {void}
+//  */
+// View.prototype.resetView = function () {
+//     const center = store.state.urlParams["Map/center"] || this.get("center") || defaults.startCenter,
+//         resolution = this.get("resolution") || defaults.startResolution;
 
-    this.setCenterCoord(center);
-    this.setResolution(resolution);
-    store.dispatch("MapMarker/removePointMarker");
-};
+//     this.setCenterCoord(center);
+//     this.setResolution(resolution);
+//     store.dispatch("MapMarker/removePointMarker");
+// };
 
 /**
  * Sets the bounding box for the map view.
@@ -123,26 +123,26 @@ View.prototype.setBBox = function (bbox, map = {mapId: "ol", mapMode: "2D"}) {
     }
 };
 
-/**
- * @description sets the  center of the map and zoom level if defined
- * @param  {array} coords Coordinates
- * @param  {number} zoomLevel Zoom Level
- * @return {void}
- */
-View.prototype.setCenterCoord = function (coords, zoomLevel) {
-    let first2Coords = [coords[0], coords[1]];
+// /**
+//  * @description sets the  center of the map and zoom level if defined
+//  * @param  {array} coords Coordinates
+//  * @param  {number} zoomLevel Zoom Level
+//  * @return {void}
+//  */
+// View.prototype.setCenterCoord = function (coords, zoomLevel) {
+//     let first2Coords = [coords[0], coords[1]];
 
-    if (first2Coords.some(coord => typeof coord !== "number")) {
-        console.warn("Given coordinates must be of type integer! Although it might not break, something went wrong and needs to be checked!");
-        first2Coords = first2Coords.map(singleCoord => parseInt(singleCoord, 10));
-    }
+//     if (first2Coords.some(coord => typeof coord !== "number")) {
+//         console.warn("Given coordinates must be of type integer! Although it might not break, something went wrong and needs to be checked!");
+//         first2Coords = first2Coords.map(singleCoord => parseInt(singleCoord, 10));
+//     }
 
-    this.setCenter(first2Coords);
+//     this.setCenter(first2Coords);
 
-    if (zoomLevel !== undefined) {
-        this.setZoom(zoomLevel);
-    }
-};
+//     if (zoomLevel !== undefined) {
+//         this.setZoom(zoomLevel);
+//     }
+// };
 
 /**
  * finds the right resolution for the scale and sets it for this view
@@ -157,36 +157,36 @@ View.prototype.setResolutionByScale = function (scale) {
     }
 };
 
-/**
- * Reduces the zoomlevel by one.
- * @return {void}
- */
-View.prototype.setZoomLevelDown = function () {
-    this.setZoom(this.getZoom() - 1);
-};
+// /**
+//  * Reduces the zoomlevel by one.
+//  * @return {void}
+//  */
+// View.prototype.setZoomLevelDown = function () {
+//     this.setZoom(this.getZoom() - 1);
+// };
 
-/**
- * Increases the zoomlevel by one.
- * @return {void}
- */
-View.prototype.setZoomLevelUp = function () {
-    this.setZoom(this.getZoom() + 1);
-};
+// /**
+//  * Increases the zoomlevel by one.
+//  * @return {void}
+//  */
+// View.prototype.setZoomLevelUp = function () {
+//     this.setZoom(this.getZoom() + 1);
+// };
 
-/**
- * @description toggles the maps background
- * @returns {void}
- */
-View.prototype.toggleBackground = function () {
-    if (this.background === "white") {
-        this.setBackground(this.get("backgroundImage"));
-        document.getElementById("map").style.background = `url(${this.get("backgroundImage")}) repeat scroll 0 0 rgba(0, 0, 0, 0)`;
-    }
-    else {
-        this.setBackground("white");
-        document.getElementById("map").style.background = "white";
-    }
-};
+// /**
+//  * @description toggles the maps background
+//  * @returns {void}
+//  */
+// View.prototype.toggleBackground = function () {
+//     if (this.background === "white") {
+//         this.setBackground(this.get("backgroundImage"));
+//         document.getElementById("map").style.background = `url(${this.get("backgroundImage")}) repeat scroll 0 0 rgba(0, 0, 0, 0)`;
+//     }
+//     else {
+//         this.setBackground("white");
+//         document.getElementById("map").style.background = "white";
+//     }
+// };
 
 /**
  * Zoom to a given extent
@@ -254,11 +254,11 @@ View.prototype.toggleBackground = function () {
     }
 }; */
 
-/**
- * Sets the Background for the Mapview.
- * @param  {string} value Image Url
- * @returns {void}
- */
-View.prototype.setBackground = function (value) {
-    this.background = value;
-};
+// /**
+//  * Sets the Background for the Mapview.
+//  * @param  {string} value Image Url
+//  * @returns {void}
+//  */
+// View.prototype.setBackground = function (value) {
+//     this.background = value;
+// };

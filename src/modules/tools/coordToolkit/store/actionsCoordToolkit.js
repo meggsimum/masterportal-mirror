@@ -442,7 +442,7 @@ export default {
      * @returns {void}
      */
     setZoom: function ({dispatch}, zoomLevel) {
-        dispatch("Map/setZoomLevel", zoomLevel, {root: true});
+        dispatch("Maps/setZoomLevel", zoomLevel, {root: true});
     },
     /**
      * Takes the selected coordinates and centers the map to the new position.
@@ -454,6 +454,6 @@ export default {
         // coordinates come as string and have to be changed to numbers for setCenter from mutations to work.
         const newCoords = [parseFloat(coordinates[0]), parseFloat(coordinates[1])];
 
-        dispatch("Map/setCenter", newCoords, {root: true});
+        dispatch("Maps/setCenter", newCoords, {root: true});
     }
 };

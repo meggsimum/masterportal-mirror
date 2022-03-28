@@ -102,7 +102,7 @@ const actions = {
         commit("setMinResolution", mapView.getMinResolution());
         commit("setBbox", mapView.calculateExtent(map.getSize()));
         commit("setRotation", mapView.getRotation());
-        dispatch("setCenter", mapView.getCenter());
+        dispatch("Maps/setCenter", mapView.getCenter(), {root: true});
     },
     /**
      * @param {Object} evt update event
@@ -193,26 +193,26 @@ const actions = {
             });
     },
 
-    /**
-     * Sets a new zoom level to map and store. All other fields will be updated onmoveend.
-     *
-     * @param {number} zoomLevel The zoomLevel to zoom to.
-     * @returns {void}
-     */
-    setZoomLevel ({getters, commit}, zoomLevel) {
-        const {maxZoomLevel, minZoomLevel} = getters;
+    // /**
+    //  * Sets a new zoom level to map and store. All other fields will be updated onmoveend.
+    //  *
+    //  * @param {number} zoomLevel The zoomLevel to zoom to.
+    //  * @returns {void}
+    //  */
+    // setZoomLevel ({getters, commit}, zoomLevel) {
+    //     const {maxZoomLevel, minZoomLevel} = getters;
 
-        if (zoomLevel <= maxZoomLevel && zoomLevel >= minZoomLevel) {
-            getters.ol2DMap.getView().setZoom(zoomLevel);
-            commit("setZoomLevel", zoomLevel);
-        }
-    },
-    increaseZoomLevel ({dispatch, getters}) {
-        dispatch("setZoomLevel", getters.zoomLevel + 1);
-    },
-    decreaseZoomLevel ({dispatch, getters}) {
-        dispatch("setZoomLevel", getters.zoomLevel - 1);
-    },
+    //     if (zoomLevel <= maxZoomLevel && zoomLevel >= minZoomLevel) {
+    //         getters.ol2DMap.getView().setZoom(zoomLevel);
+    //         commit("setZoomLevel", zoomLevel);
+    //     }
+    // },
+    // increaseZoomLevel ({dispatch, getters}) {
+    //     dispatch("setZoomLevel", getters.zoomLevel + 1);
+    // },
+    // decreaseZoomLevel ({dispatch, getters}) {
+    //     dispatch("setZoomLevel", getters.zoomLevel - 1);
+    // },
     /**
      * Turns a visible layer invisible and the other way around.
      *
@@ -251,19 +251,19 @@ const actions = {
         layer.olLayer.setOpacity(value);
         commit("setLayerOpacity", {layerId, opacity: value});
     },
-    /**
-     * Sets center and resolution to initial values.
-     * @returns {void}
-     */
-    resetView ({state, dispatch, getters}) {
-        const {initialCenter, initialResolution} = state,
-            mapView = getters.ol2DMap.getView();
+    // /**
+    //  * Sets center and resolution to initial values.
+    //  * @returns {void}
+    //  */
+    // resetView ({state, dispatch, getters}) {
+    //     const {initialCenter, initialResolution} = state,
+    //         mapView = getters.ol2DMap.getView();
 
-        mapView.setCenter(initialCenter);
-        mapView.setResolution(initialResolution);
+    //     mapView.setCenter(initialCenter);
+    //     mapView.setResolution(initialResolution);
 
-        dispatch("MapMarker/removePointMarker", null, {root: true});
-    },
+    //     dispatch("MapMarker/removePointMarker", null, {root: true});
+    // },
     /**
      * Sets the resolution by the given index of available resolutions.
      * NOTE: is used by scaleSwitcher tutorial.
@@ -303,30 +303,30 @@ const actions = {
 
         map.un("pointermove", e => callback(e));
     },
-    /**
-     * Adds an interaction to the map.
-     *
-     * @param {*} _ empty store
-     * @param {module:ol/interaction/Interaction} interaction - Interaction to be added to map.
-     * @returns {void}
-     */
-    addInteraction ({getters}, interaction) {
-        const map = getters.ol2DMap;
+    // /**
+    //  * Adds an interaction to the map.
+    //  *
+    //  * @param {*} _ empty store
+    //  * @param {module:ol/interaction/Interaction} interaction - Interaction to be added to map.
+    //  * @returns {void}
+    //  */
+    // addInteraction ({getters}, interaction) {
+    //     const map = getters.ol2DMap;
 
-        map.addInteraction(interaction);
-    },
-    /**
-     * Removes an interaction from the map.
-     *
-     * @param {*} _ empty store
-     * @param {module:ol/interaction/Interaction} interaction - Interaction to be removed from map.
-     * @returns {void}
-     */
-    removeInteraction ({getters}, interaction) {
-        const map = getters.ol2DMap;
+    //     map.addInteraction(interaction);
+    // },
+    // /**
+    //  * Removes an interaction from the map.
+    //  *
+    //  * @param {*} _ empty store
+    //  * @param {module:ol/interaction/Interaction} interaction - Interaction to be removed from map.
+    //  * @returns {void}
+    //  */
+    // removeInteraction ({getters}, interaction) {
+    //     const map = getters.ol2DMap;
 
-        map.removeInteraction(interaction);
-    },
+    //     map.removeInteraction(interaction);
+    // },
     /**
      * Zoom to the given geometry or extent based on the current map size.
      * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#fit|ol.view.fit}
@@ -372,21 +372,21 @@ const actions = {
         getters.ol2DMap.addLayer(resultLayer);
         return resultLayer;
     },
-    /**
-     * Sets the center of the current view.
-     * @param {Object} payload parameter object
-     * @param {number[]} coords An array of numbers representing a xy-coordinate.
-     * @returns {void}
-     */
-    setCenter ({commit, getters}, coords) {
-        if (Array.isArray(coords) && coords.length === 2 && typeof coords[0] === "number" && typeof coords[1] === "number") {
-            commit("setCenter", coords);
-            getters.ol2DMap.getView().setCenter(coords);
-        }
-        else {
-            console.warn("Center was not set. Probably there is a data type error. The format of the coordinate must be an array with two numbers.");
-        }
-    },
+    // /**
+    //  * Sets the center of the current view.
+    //  * @param {Object} payload parameter object
+    //  * @param {number[]} coords An array of numbers representing a xy-coordinate.
+    //  * @returns {void}
+    //  */
+    // setCenter ({commit, getters}, coords) {
+    //     if (Array.isArray(coords) && coords.length === 2 && typeof coords[0] === "number" && typeof coords[1] === "number") {
+    //         commit("setCenter", coords);
+    //         getters.ol2DMap.getView().setCenter(coords);
+    //     }
+    //     else {
+    //         console.warn("Center was not set. Probably there is a data type error. The format of the coordinate must be an array with two numbers.");
+    //     }
+    // },
     ...highlightFeature,
     ...removeHighlightFeature
 };
