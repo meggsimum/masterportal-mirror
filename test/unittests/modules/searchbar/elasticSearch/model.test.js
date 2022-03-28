@@ -190,7 +190,7 @@ describe("modules/searchbar/elasticSearch", function () {
                     coordinate: ["x", "y"],
                     key: "deeperKey.key",
                     type: "deeperKey.type",
-                    glyphicon: "deeperKey.hitGlyphicon"
+                    icon: "deeperKey.hitGlyphicon"
                 },
                 hitType = "type",
                 hitGlyphicon = "glyphicon-abc",
