@@ -25,7 +25,7 @@ export default {
      * @param {String} name The name and the id for the layer.
      * @returns {module:ol/layer} The created or the already existing layer.
      */
-    createLayer ({state, getters}, name) {
+    createLayer ({state, dispatch}, name) {
         const layerList = state.layerList;
 
         let resultLayer = layerList.find(layer => {
@@ -42,7 +42,7 @@ export default {
             source: new VectorSource(),
             zIndex: 999
         });
-        getters.ol2DMap.addLayer(resultLayer);
+        dispatch("addLayer", resultLayer);
         return resultLayer;
     },
     /**
@@ -108,7 +108,7 @@ export default {
      * @returns {module:ol/layer/Base~BaseLaye}  the found layer or a new layer with the given name.
      */
     addNewLayerIfNotExists ({dispatch}, {layerName, alwaysOnTop = true}) {
-        let resultLayer = this.getLayerByName(layerName);
+        let resultLayer = dispatch("getLayerByName", layerName);
 
         if (!resultLayer) {
             resultLayer = new VectorLayer({
@@ -146,7 +146,6 @@ export default {
 
         return returnLayer;
     },
-
     /**
     * Returns a layer by a given layer name.
     * @param {Object} context parameter object.
@@ -156,7 +155,5 @@ export default {
     getLayerByName ({getters}, layerName) {
         return getters.get2DMap.getLayers().getArray().find(layer => layer.get("name") === layerName);
     }
-
-
 };
 
