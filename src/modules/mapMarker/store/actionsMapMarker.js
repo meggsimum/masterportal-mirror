@@ -25,7 +25,7 @@ export default {
      * @param {String[]} value The array with the markable coordinate pair.
      * @returns {void}
      */
-    placingPointMarker ({state, rootState, rootGetters, commit, dispatch}, value) {
+    placingPointMarker ({state, rootState, commit, dispatch}, value) {
         const styleListModel = Radio.request("StyleList", "returnModelById", state.pointStyleId);
         let coordValues = [];
 
@@ -72,7 +72,7 @@ export default {
      * @param {ol/Feature} feature The ol feature that is added to the map.
      * @returns {void}
      */
-    placingPolygonMarker ({state, rootGetters, commit, dispatch}, feature) {
+    placingPolygonMarker ({state, commit, dispatch}, feature) {
         const styleListModel = Radio.request("StyleList", "returnModelById", state.polygonStyleId);
 
         dispatch("removePolygonMarker");
@@ -98,7 +98,7 @@ export default {
      * @param {module:ol/geom/SimpleGeometry} geometry - The given geometry.
      * @returns {void}
      */
-    placingPolygonMarkerByGeom ({state, rootGetters, commit, dispatch}, geometry) {
+    placingPolygonMarkerByGeom ({state, commit, dispatch}, geometry) {
         const styleListModel = Radio.request("StyleList", "returnModelById", state.polygonStyleId);
 
         dispatch("removePolygonMarker");
