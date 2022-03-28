@@ -1,6 +1,6 @@
 import mapCollection from "../dataStorage/mapCollection";
 import mapMode from "./store/actions/actionsMapMode.js";
-import store from "../../../src/app-store/index";
+import store from "../../app-store";
 
 const channel = Radio.channel("Map");
 
@@ -9,7 +9,7 @@ channel.reply({
         return mapCollection.getMap("ol", "2D").getLayers();
     },
     "createLayerIfNotExists": function (name) {
-        return mapCollection.getMap("ol", "2D").addNewLayerIfNotExists(name);
+        return store.dispatch("addNewLayerIfNotExists", name);
     },
     "getSize": function () {
         return mapCollection.getMap("ol", "2D").getSize();
@@ -28,10 +28,10 @@ channel.reply({
 
 channel.on({
     "addLayerToIndex": function (args) {
-        mapCollection.getMap("ol", "2D").addLayerToIndex(args[0], args[1]);
+        store.dispatch("Maps/addLayerToIndex", {layer: args[0], zIndex: args[1]});
     },
     "addLayerOnTop": function (layer) {
-        mapCollection.getMap("ol", "2D").addLayer(layer);
+        store.dispatch("Maps/addLayer", layer);
     },
     "addOverlay": function (overlay) {
         mapCollection.getMap("ol", "2D").addOverlay(overlay);

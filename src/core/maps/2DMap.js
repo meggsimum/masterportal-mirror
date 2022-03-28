@@ -1,10 +1,10 @@
 import {PluggableMap} from "ol";
 import {unByKey as unlistenByKey} from "ol/Observable.js";
 import {Group as LayerGroup} from "ol/layer.js";
-import VectorLayer from "ol/layer/Vector.js";
+/* import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
 
-const originalAddLayer = PluggableMap.prototype.addLayer;
+const originalAddLayer = PluggableMap.prototype.addLayer; */
 
 /**
  * Pushes layers with the attribute: "alwaysOnTop" to the top of the layer collection.
@@ -25,12 +25,12 @@ function setLayersAlwaysOnTop (layers) {
  * @param {module:ol/layer/Base~BaseLayer} layer The layer to add.
  * @returns {void}
  */
-PluggableMap.prototype.addLayer = function (layer) {
+/* PluggableMap.prototype.addLayer = function (layer) {
     layer.setZIndex(this.getLayers().getLength());
     originalAddLayer.call(this, layer);
 
     setLayersAlwaysOnTop(this.getLayers());
-};
+}; */
 
 /**
  * Adds a layer with a zIndex to the map.
@@ -55,9 +55,9 @@ PluggableMap.prototype.addLayerToIndex = function (layer, zIndex) {
  * @param {module:ol/layer/Base~BaseLayer} layer The layer to add.
  * @returns {void}
  */
-PluggableMap.prototype.addLayerOnTop = function (layer) {
+/* PluggableMap.prototype.addLayerOnTop = function (layer) {
     this.addLayerToIndex(layer, this.getLayers().getLength());
-};
+}; */
 
 /**
  * Checks if the layer with the given name already exists and uses it,
@@ -66,7 +66,7 @@ PluggableMap.prototype.addLayerOnTop = function (layer) {
  * @param {Boolean} [alwaysOnTop=true] Layers with the attribute "alwaysOnTop": true are set on top of the map.
  * @returns {module:ol/layer/Base~BaseLaye}  the found layer or a new layer with the given name.
  */
-PluggableMap.prototype.addNewLayerIfNotExists = function (layerName, alwaysOnTop = true) {
+/* PluggableMap.prototype.addNewLayerIfNotExists = function (layerName, alwaysOnTop = true) {
     let resultLayer = this.getLayerByName(layerName);
 
     if (!resultLayer) {
@@ -81,7 +81,7 @@ PluggableMap.prototype.addNewLayerIfNotExists = function (layerName, alwaysOnTop
     }
 
     return resultLayer;
-};
+}; */
 
 /**
 * Returns a layer or a child layer of a layer group by id.
