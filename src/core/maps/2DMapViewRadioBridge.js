@@ -1,5 +1,6 @@
 import mapCollection from "../dataStorage/mapCollection";
 import findWhereJs from "../../utils/findWhereJs";
+import store from "../../app-store";
 
 const channel = Radio.channel("MapView");
 
@@ -32,21 +33,24 @@ channel.reply({
 
 channel.on({
     "resetView": function () {
-        mapCollection.getMapView("ol", "2D").resetView();
+        store.dispatch("Maps/resetView");
     },
     "setCenter": function (coords, zoomLevel) {
-        mapCollection.getMapView("ol", "2D").setCenterCoord(coords, zoomLevel);
+        store.dispatch("Maps/setCenter", {coords: coords});
+        if (zoomLevel !== undefined) {
+            store.dispatch("setZoomLevel", zoomLevel);
+        }
     },
     "setScale": function (scale) {
         mapCollection.getMapView("ol", "2D").setResolutionByScale(scale);
     },
     "setZoomLevelDown": function () {
-        mapCollection.getMapView("ol", "2D").setZoomLevelDown();
+        store.dispatch("Maps/decreaseZoomLevel");
     },
     "setZoomLevelUp": function () {
-        mapCollection.getMapView("ol", "2D").setZoomLevelUp();
+        store.dispatch("Maps/increaseZoomLevel");
     },
     "toggleBackground": function () {
-        mapCollection.getMapView("ol", "2D").toggleBackground();
+        store.dispatch("Maps/toggleBackground");
     }
 });

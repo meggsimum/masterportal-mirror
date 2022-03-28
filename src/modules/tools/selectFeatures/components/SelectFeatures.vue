@@ -37,7 +37,7 @@ export default {
     },
     methods: {
         ...mapMutations("Tools/SelectFeatures", Object.keys(mutations)),
-        ...mapActions("Map", {
+        ...mapActions("Maps", {
             addInteractionToMap: "addInteraction",
             removeInteractionFromMap: "removeInteraction"
         }),

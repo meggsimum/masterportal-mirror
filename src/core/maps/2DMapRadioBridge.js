@@ -15,7 +15,7 @@ channel.reply({
         return mapCollection.getMap("ol", "2D").getSize();
     },
     "registerListener": function (event, callback, context) {
-        mapCollection.getMap("ol", "2D").registerListener(event, callback, context);
+        store.dispatch("Maps/registerListener", {event: event, callback: callback, context: context});
     },
     "getMap": function () {
         return mapCollection.getMap("ol", "2D");
@@ -37,7 +37,7 @@ channel.on({
         mapCollection.getMap("ol", "2D").addOverlay(overlay);
     },
     "addInteraction": function (interaction) {
-        mapCollection.getMap("ol", "2D").addInteraction(interaction);
+        store.dispatch("Maps/addInteraction", interaction);
     },
     "removeLayer": function (layer) {
         mapCollection.getMap("ol", "2D").removeLayer(layer);
@@ -46,7 +46,7 @@ channel.on({
         mapCollection.getMap("ol", "2D").removeOverlay(overlay);
     },
     "removeInteraction": function (interaction) {
-        mapCollection.getMap("ol", "2D").removeInteraction(interaction);
+        store.dispatch("Maps/removeInteraction", interaction);
     },
     "setBBox": function (bbox) {
         mapCollection.getMapView("ol", "2D").setBBox(bbox);
@@ -64,10 +64,10 @@ channel.on({
         store.dispatch("Maps/zoomToFilteredFeatures", {ids: ids, layerId: layerId, zoomOptions: zoomOptions});
     },
     "registerListener": function (event, callback, context) {
-        mapCollection.getMap("ol", "2D").registerListener(event, callback, context);
+        store.dispatch("Maps/registerListener", {event: event, callback: callback, context: context});
     },
     "unregisterListener": function (event, callback, context) {
-        mapCollection.getMap("ol", "2D").unregisterListener(event, callback, context);
+        store.dispatch("Maps/unregisterListener", {event: event, callback: callback, context: context});
     },
     "updateSize": function () {
         mapCollection.getMap("ol", "2D").updateSize();

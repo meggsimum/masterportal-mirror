@@ -72,8 +72,8 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          * @param {module:ol/interaction/Interaction} interaction interaction with the map.
          * @returns {void}
          */
-        addInteraction ({rootState}, interaction) {
-            mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode).addInteraction(interaction);
+        addInteraction ({dispatch}, interaction) {
+            dispatch("Maps/addInteraction", interaction, {root: true});
         },
         /**
          * Removes all features from the layer.
@@ -162,7 +162,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             commit("setDrawInteraction", drawInteraction);
             dispatch("manipulateInteraction", {interaction: "draw", active: active});
             dispatch("createDrawInteractionListener", {isOuterCircle: false, drawInteraction: "", maxFeatures});
-            dispatch("addInteraction", drawInteraction);
+            dispatch("Maps/addInteraction", drawInteraction, {root: true});
 
             // NOTE: This leads to the creation of a second (the outer) circle instead of a MultiPolygon right now.
             if (state.drawType.id === "drawDoubleCircle") {
@@ -171,7 +171,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                 commit("setDrawInteractionTwo", drawInteractionTwo);
                 dispatch("manipulateInteraction", {interaction: "draw", active: active});
                 dispatch("createDrawInteractionListener", {isOuterCircle: true, drawInteraction: "Two", maxFeatures});
-                dispatch("addInteraction", drawInteractionTwo);
+                dispatch("Maps/addInteraction", drawInteractionTwo, {root: true});
             }
         },
         /**
@@ -252,11 +252,11 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             commit("setModifyInteraction", modifyInteraction);
             dispatch("manipulateInteraction", {interaction: "modify", active: active});
             dispatch("createModifyInteractionListener");
-            dispatch("addInteraction", modifyInteraction);
+            dispatch("Maps/addInteraction", modifyInteraction, {root: true});
 
             commit("setSelectInteractionModify", selectInteractionModify);
             dispatch("createSelectInteractionModifyListener");
-            dispatch("addInteraction", selectInteractionModify);
+            dispatch("Maps/addInteraction", selectInteractionModify, {root: true});
         },
         /**
          * Listener to change the features through the modify interaction.
@@ -361,7 +361,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
             commit("setSelectInteraction", selectInteraction);
             dispatch("manipulateInteraction", {interaction: "delete", active: active});
             dispatch("createSelectInteractionListener");
-            dispatch("addInteraction", selectInteraction);
+            dispatch("Maps/addInteraction", selectInteraction, {root: true});
         },
         /**
          * Listener to select (for deletion) the features through the select interaction.
@@ -452,8 +452,8 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          * @param {module:ol/interaction/Interaction} interaction interaction with the map.
          * @returns {void}
          */
-        removeInteraction ({rootState}, interaction) {
-            mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode).removeInteraction(interaction);
+        removeInteraction ({dispatch}, interaction) {
+            dispatch("Maps/removeInteraction", interaction, {root: true});
         },
         /**
          * Resets the Draw Tool.
