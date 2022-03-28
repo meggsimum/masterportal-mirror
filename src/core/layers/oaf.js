@@ -49,13 +49,9 @@ OAFLayer.prototype.createLayer = function (attrs) {
             id: attrs.id,
             url: attrs.url,
             clusterDistance: attrs.clusterDistance,
-            featureNS: attrs.featureNS,
-            featureType: attrs.featureType,
-            version: attrs.version,
-            outputFormat: attrs.outputFormat,
             limit: attrs.limit,
+            collection: attrs.collection,
             offset: attrs.offset,
-            bulk: attrs.bulk,
             bbox: attrs.bbox,
             datetime: attrs.datetime,
             crs,
@@ -189,7 +185,7 @@ OAFLayer.prototype.createLegend = function () {
         this.setLegend(legend);
     }
     else if (styleModel && legend === true) {
-        styleModel.getGeometryTypeFromOAF(this.get("url"), this.get("featureType"), this.get("styleGeometryType"), this.get("useProxy"));
+        styleModel.getGeometryTypeFromOAF(this.get("url"), this.get("collection"), this.get("useProxy"));
         this.setLegend(styleModel.getLegendInfos());
     }
     else if (typeof legend === "string") {

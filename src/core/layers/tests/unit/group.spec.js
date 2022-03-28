@@ -75,8 +75,7 @@ describe("src/core/layers/group.js", () => {
             isChildLayer: true,
             transparent: false,
             crs: "crs",
-            featureNS: "http://www.deegree.org/app",
-            featureType: "krankenhaeuser_hh"
+            collection: "krankenhaeuser_hh"
         };
         groupAttributes = {
             name: "groupTestLayer",
