@@ -50,7 +50,9 @@ const Map3dModel = Backbone.Model.extend(/** @lends Map3dModel.prototype*/{
             "setCameraParameter": this.setCameraParameter
         }, this);
         if (Config.startingMap3D) {
-            this.activateMap3d();
+            setTimeout(() => {
+                this.activateMap3d();
+            }, 200);
         }
     },
 
