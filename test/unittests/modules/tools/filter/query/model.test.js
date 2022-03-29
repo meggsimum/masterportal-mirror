@@ -50,7 +50,7 @@ describe("modules/tools/filter/query/model", function () {
             expect(returnedFeatureAttributesMap).to.have.lengthOf(3);
         });
 
-        it.skip("should have 'preselectedValues' with the value 'Altona'", function () {
+        it("should have 'preselectedValues' with the value 'Altona'", function () {
             const returnedFeatureAttributesMap = model.mapRules(featureAttributesMap, rules);
 
             expect(returnedFeatureAttributesMap[0].preselectedValues).to.have.members(["Altona"]);

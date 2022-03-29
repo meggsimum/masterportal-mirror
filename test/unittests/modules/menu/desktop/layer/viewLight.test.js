@@ -132,7 +132,7 @@ describe("menu/desktop/layer/viewLight", function () {
         });
     });
     describe("the layer checkbox", function () {
-        it.skip("should react to key events", function () {
+        it("should react to key events", function () {
 
             const layerView = new CustomLayerView({model: fakeModel}),
                 keyEvent = new $.Event("keydown", {which: 13});

@@ -9,7 +9,7 @@ import {Vector as VectorSource} from "ol/source.js";
 import sinon from "sinon";
 import mapCollection from "../../../../../../src/core/dataStorage/mapCollection";
 
-describe.skip("core/modelList/layer/sensor", function () {
+describe("core/modelList/layer/sensor", function () {
     let sensorLayer;
 
     before(() => {

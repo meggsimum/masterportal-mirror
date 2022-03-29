@@ -131,8 +131,14 @@ describe("modules/tools/filter/model", function () {
     });
 
     describe("createQueries", function () {
-        it("queryCollection should be empty, if not called (before the tool is opened)", function () {
+        beforeEach(function () {
             fakeRadio();
+        });
+        afterEach(function () {
+            sinon.restore();
+            sinon.resetHistory();
+        });
+        it("queryCollection should be empty, if not called (before the tool is opened)", function () {
             expect(model.get("queryCollection").length).to.equal(0);
         });
         it("queryCollection should have one entry, if called once", function () {
