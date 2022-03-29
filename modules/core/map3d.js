@@ -85,7 +85,7 @@ const Map3dModel = Backbone.Model.extend(/** @lends Map3dModel.prototype*/{
                 return ["Oblique", "TileSet3D", "Terrain3D"].indexOf(layerModel.get("typ")) === -1;
             });
             allLayerModels.forEach(layerWrapper => {
-                if (layerWrapper.get("isSelected") === false) {
+                if (layerWrapper.get("isSelected") !== true) {
                     layerWrapper.removeLayer();
                 }
             });
