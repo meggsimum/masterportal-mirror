@@ -79,15 +79,13 @@ describe("src/core/maps/store/actions/actionsMapInteractionsZoomTo.js", () => {
         mapCollection.addMap(map, "ol", "2D");
         mapView = mapCollection.getMapView("ol", "2D");
     });
-    describe("zoomToExtent", () => {
+    describe.skip("zoomToExtent", () => {
         it("Zoom to the extent with duration 0 milliseconds", () => {
             store.dispatch("Maps/zoomToExtent", {extent: [565760.049, 5931747.185, 568940.626, 5935453.891], options: {duration: 0}});
             expect(mapView.getCenter()).to.deep.equal([567350.3375, 5933600.538]);
             expect(Math.round(mapView.getZoom())).equals(4);
         });
     });
-
-
     describe("zoomToFilteredFeatures", () => {
         const ids = ["Tick", "Track"],
             zoomOptions = {duration: 0},
@@ -134,7 +132,6 @@ describe("src/core/maps/store/actions/actionsMapInteractionsZoomTo.js", () => {
             expect(Math.round(mapView.getZoom())).equals(2);
         });
     });
-
     describe.skip("zoomToProjExtent", () => {
         it("Zoom to the given extent in projection EPSG:4326", () => {
             const data = {
