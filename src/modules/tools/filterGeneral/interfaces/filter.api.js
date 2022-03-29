@@ -83,7 +83,7 @@ export default class FilterApi {
                     extern,
                     layerId,
                     url: layerModel.get("url"),
-                    collection: layerModel.get("collection") || layerModel.get("featureType"),
+                    collection: layerModel.get("collection"),
                     jsonAcceptHeader: layerModel.get("jsonAcceptHeader"),
                     namespace: featureNS
                 };

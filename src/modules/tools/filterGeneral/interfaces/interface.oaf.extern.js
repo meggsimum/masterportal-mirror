@@ -1,5 +1,6 @@
 import isObject from "../../../../utils/isObject.js";
 import {getOafAttributeTypes} from "../utils/getOafAttributeTypes.js";
+import {fetchAllOafProperties, getUniqueValuesFromFetchedFeatures, getMinMaxFromFetchedFeatures} from "../utils/fetchAllOafProperties.js";
 
 /**
  * InterfaceOafExtern is the filter interface for Oaf services
@@ -11,6 +12,8 @@ export default class InterfaceOafExtern {
      */
     constructor () {
         this.axiosCancelTokenSources = {};
+        this.allFetchedProperties = false;
+        this.waitingListForFeatures = [];
     }
 
     /**
@@ -39,22 +42,31 @@ export default class InterfaceOafExtern {
      * @param {Function} onerror a function(errorMsg)
      * @param {Boolean} [minOnly=false] if only min is of interest
      * @param {Boolean} [maxOnly=false] if only max is of interest
-     * @param {Function|Boolean} [axiosMock=false] false to use axios, an object with get function(url, {params}) if mock is needed
      * @returns {void}
      */
-    getMinMax (service, attrName, onsuccess, onerror, minOnly = false, maxOnly = false, axiosMock = false) {
-        if (axiosMock) {
-            onerror(new Error("tbd: InterfaceOafExtern getMinMax not implemented yet for testing"));
+    getMinMax (service, attrName, onsuccess, onerror, minOnly = false, maxOnly = false) {
+        if (Array.isArray(this.allFetchedProperties)) {
+            if (typeof onsuccess === "function") {
+                onsuccess(getMinMaxFromFetchedFeatures(this.allFetchedProperties, attrName, minOnly, maxOnly));
+            }
+            return;
         }
-        else if (minOnly) {
-            onerror(new Error("tbd: InterfaceOafExtern getMinMax not implemented yet for minOnly"));
+
+        if (this.allFetchedProperties === false) {
+            this.allFetchedProperties = true;
+            fetchAllOafProperties(service.url, service.collection, service.limit, allProperties => {
+                this.allFetchedProperties = allProperties;
+                while (this.waitingListForFeatures.length) {
+                    this.waitingListForFeatures.shift()();
+                }
+            }, onerror);
         }
-        else if (maxOnly) {
-            onerror(new Error("tbd: InterfaceOafExtern getMinMax not implemented yet for maxOnly"));
-        }
-        else {
-            onerror(new Error("tbd: InterfaceOafExtern getMinMax not implemented yet"));
-        }
+
+        this.waitingListForFeatures.push(() => {
+            if (typeof onsuccess === "function") {
+                onsuccess(getMinMaxFromFetchedFeatures(this.allFetchedProperties, attrName, minOnly, maxOnly));
+            }
+        });
     }
 
     /**
@@ -63,16 +75,35 @@ export default class InterfaceOafExtern {
      * @param {String} attrName the attribute to receive unique values from
      * @param {Function} onsuccess a function([]) with the received unique values as Array of values
      * @param {Function} onerror a function(errorMsg)
-     * @param {Function|Boolean} [axiosMock=false] false to use axios, an object with get function(url, {params}) if mock is needed
      * @returns {void}
      */
-    getUniqueValues (service, attrName, onsuccess, onerror, axiosMock = false) {
-        if (axiosMock) {
-            onerror(new Error("tbd: InterfaceOafExtern getUniqueValues not implemented yet for testing"));
+    getUniqueValues (service, attrName, onsuccess, onerror) {
+        if (Array.isArray(this.allFetchedProperties)) {
+            if (typeof onsuccess === "function") {
+                const uniqueValue = getUniqueValuesFromFetchedFeatures(this.allFetchedProperties, attrName);
+
+                onsuccess(Array.isArray(uniqueValue) ? uniqueValue : []);
+            }
+            return;
         }
-        else {
-            onerror(new Error("tbd: InterfaceOafExtern getUniqueValues not implemented yet"));
+
+        if (this.allFetchedProperties === false) {
+            this.allFetchedProperties = true;
+            fetchAllOafProperties(service.url, service.collection, service.limit, allProperties => {
+                this.allFetchedProperties = allProperties;
+                while (this.waitingListForFeatures.length) {
+                    this.waitingListForFeatures.shift()();
+                }
+            }, onerror);
         }
+
+        this.waitingListForFeatures.push(() => {
+            if (typeof onsuccess === "function") {
+                const uniqueValue = getUniqueValuesFromFetchedFeatures(this.allFetchedProperties, attrName);
+
+                onsuccess(Array.isArray(uniqueValue) ? uniqueValue : []);
+            }
+        });
     }
 
     /**
