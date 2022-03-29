@@ -15,6 +15,15 @@ export default {
             unsubscribes.forEach(unsubscribe => unsubscribe());
             unsubscribes = [];
         }
+        else {
+            // register listeners with state update functions
+            unsubscribes = [
+                map.on("moveend", evt => dispatch("updateAttributes", evt)),
+                map.on("pointermove", evt => dispatch("updatePointer", evt)),
+                map.on("click", evt => dispatch("updateClick", evt)),
+                map.on("change:size", evt => commit("setSize", evt.target.getSize()))
+            ];
+        }
 
         const mapView = map.getView(),
             layerIds = await dispatch("normalizeLayers", map.getLayers().getArray()),
@@ -35,15 +44,6 @@ export default {
 
 
         dispatch("setViewAttributes", mapView);
-
-        // register listeners with state update functions
-        unsubscribes = [
-            map.on("moveend", evt => dispatch("updateAttributes", evt)),
-            map.on("pointermove", evt => dispatch("updatePointer", evt)),
-            map.on("click", evt => dispatch("updateClick", evt)),
-            map.on("change:size", evt => commit("setSize", evt.target.getSize()))
-        ];
-
     },
 
     /**
