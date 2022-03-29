@@ -10,7 +10,7 @@ import mapCollection from "../../../../../../core/dataStorage/mapCollection.js";
 
 
 describe("src/modules/tools/draw/store/actionsDraw.js", () => {
-    let commit, dispatch, state, addInteraction;
+    let commit, state, dispatch, addInteraction;
 
     beforeEach(() => {
         commit = sinon.spy();
@@ -34,20 +34,12 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
 
     describe("addInteraction", () => {
         it("calls map's addInteraction function with a given interaction", () => {
-            const rootState = {
-                    Map: {
-                        mapId: "ol",
-                        mapMode: "2D"
-                    }
-                },
-                interactionSymbol = Symbol();
+            const interactionSymbol = Symbol();
 
-            actions.addInteraction({
-                rootState: rootState
-            }, interactionSymbol);
+            actions.addInteraction({dispatch}, interactionSymbol);
 
-            expect(addInteraction.calledOnce).to.be.true;
-            expect(addInteraction.args[0][0]).to.equal(interactionSymbol);
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[1]).to.equal(interactionSymbol);
         });
     });
     describe("clearLayer", () => {
@@ -84,12 +76,18 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
         it("should return the center point of a polygon with the projection EPSG:4326", () => {
             centerPoint = actions.createCenterPoint({rootState}, {feature: polygonFeat, targetProjection});
 
-            expect(centerPoint).to.eql([9.987132463729269, 53.55569205016286]);
+            centerPoint[0] = Math.round(centerPoint[0] * 1000) / 1000;
+            centerPoint[1] = Math.round(centerPoint[1] * 1000) / 1000;
+
+            expect(centerPoint).to.eql([9.987, 53.556]);
         });
         it("should return the center point of a line with the projection EPSG:4326", () => {
             centerPoint = actions.createCenterPoint({rootState}, {feature: lineFeat, targetProjection});
 
-            expect(centerPoint).to.eql([9.996919156243193, 53.55803037141494]);
+            centerPoint[0] = Math.round(centerPoint[0] * 1000) / 1000;
+            centerPoint[1] = Math.round(centerPoint[1] * 1000) / 1000;
+
+            expect(centerPoint).to.eql([9.997, 53.558]);
         });
         it("should return the center point of a polygon in the map's projection", () => {
             centerPoint = actions.createCenterPoint({rootState}, {feature: polygonFeat});
@@ -151,7 +149,7 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
             expect(dispatch.calledThrice).to.be.true;
             expect(dispatch.firstCall.args).to.eql(["manipulateInteraction", {interaction: "draw", active: activeSymbol}]);
             expect(dispatch.secondCall.args).to.eql(["createDrawInteractionListener", {isOuterCircle: false, drawInteraction: "", maxFeatures: maxFeaturesSymbol}]);
-            expect(dispatch.thirdCall.args[0]).to.eql("addInteraction");
+            expect(dispatch.thirdCall.args[0]).to.eql("Maps/addInteraction");
             expect(typeof dispatch.thirdCall.args[1]).to.eql("object");
         });
 
@@ -169,11 +167,11 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
             expect(dispatch.callCount).to.equal(6);
             expect(dispatch.args[0]).to.eql(["manipulateInteraction", {interaction: "draw", active: activeSymbol}]);
             expect(dispatch.args[1]).to.eql(["createDrawInteractionListener", {isOuterCircle: false, drawInteraction: "", maxFeatures: maxFeaturesSymbol}]);
-            expect(dispatch.args[2][0]).to.eql("addInteraction");
+            expect(dispatch.args[2][0]).to.eql("Maps/addInteraction");
             expect(typeof dispatch.args[2][1]).to.eql("object");
             expect(dispatch.args[3]).to.eql(["manipulateInteraction", {interaction: "draw", active: activeSymbol}]);
             expect(dispatch.args[4]).to.eql(["createDrawInteractionListener", {isOuterCircle: true, drawInteraction: "Two", maxFeatures: maxFeaturesSymbol}]);
-            expect(dispatch.args[5][0]).to.eql("addInteraction");
+            expect(dispatch.args[5][0]).to.eql("Maps/addInteraction");
             expect(typeof dispatch.args[5][1]).to.eql("object");
         });
     });
@@ -325,11 +323,11 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
             expect(dispatch.callCount).to.equal(5);
             expect(dispatch.args[0]).to.eql(["manipulateInteraction", {interaction: "modify", active: activeSymbol}]);
             expect(dispatch.args[1]).to.eql(["createModifyInteractionListener"]);
-            expect(dispatch.args[2][0]).to.eql("addInteraction");
+            expect(dispatch.args[2][0]).to.eql("Maps/addInteraction");
             expect(typeof dispatch.args[2][1]).to.eql("object");
 
             expect(dispatch.args[3]).to.eql(["createSelectInteractionModifyListener"]);
-            expect(dispatch.args[4][0]).to.eql("addInteraction");
+            expect(dispatch.args[4][0]).to.eql("Maps/addInteraction");
             expect(typeof dispatch.args[4][1]).to.eql("object");
         });
     });
@@ -421,7 +419,7 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
             expect(dispatch.calledThrice).to.be.true;
             expect(dispatch.firstCall.args).to.eql(["manipulateInteraction", {interaction: "delete", active: activeSymbol}]);
             expect(dispatch.secondCall.args).to.eql(["createSelectInteractionListener"]);
-            expect(dispatch.thirdCall.args[0]).to.eql("addInteraction");
+            expect(dispatch.thirdCall.args[0]).to.eql("Maps/addInteraction");
             expect(typeof dispatch.thirdCall.args[1]).to.eql("object");
         });
     });
@@ -614,31 +612,17 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
         });
     });
     describe("removeInteraction", () => {
-        let interactionSymbol, removeInteraction, rootState;
+        let interactionSymbol;
 
         beforeEach(() => {
             interactionSymbol = Symbol();
-            removeInteraction = sinon.spy();
-            rootState = {
-                Map: {
-                    mapId: "ol",
-                    mapMode: "2D"
-                }};
-            mapCollection.clear();
-            const map = {
-                id: "ol",
-                mode: "2D",
-                removeInteraction: removeInteraction
-            };
-
-            mapCollection.addMap(map, "ol", "2D");
         });
 
         it("should call the 'removeInteration' method of the map of the rootState", () => {
-            actions.removeInteraction({rootState}, interactionSymbol);
+            actions.removeInteraction({dispatch}, interactionSymbol);
 
-            expect(removeInteraction.calledOnce).to.be.true;
-            expect(removeInteraction.firstCall.args).to.eql([interactionSymbol]);
+            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.firstCall.args[1]).to.eql(interactionSymbol);
         });
     });
     describe("resetModule", () => {

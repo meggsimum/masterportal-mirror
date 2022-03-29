@@ -14,6 +14,6 @@ export function getStateAsUrlParams (rootState, rootGetters) {
         "?Map/layerIds=" + layerIds +
         "&visibility=" + layerVisibilities +
         "&transparency=" + layerTransparencies +
-        "&Map/center=[" + rootGetters["Maps/getView"].getCenter() +
+        "&Map/center=[" + rootGetters["Maps/center"] +
         "]&Map/zoomLevel=" + rootGetters["Maps/getView"].getZoom();
 }

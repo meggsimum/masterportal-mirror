@@ -3,8 +3,6 @@ import {unByKey as unlistenByKey} from "ol/Observable.js";
 export default {
     /**
      * Adds an interaction to the map.
-     *
-     * @param {*} _ empty store
      * @param {module:ol/interaction/Interaction} interaction - Interaction to be added to map.
      * @returns {void}
      */
@@ -14,38 +12,38 @@ export default {
         map.addInteraction(interaction);
     },
     /**
-     *
+     * Reduces the zoomlevel by one.
      * @returns {void}
      */
     decreaseZoomLevel ({dispatch, getters}) {
         dispatch("setZoomLevel", getters.getView.getZoom() - 1);
     },
     /**
-     *
+     * Increases the zoomlevel by one.
      * @returns {void}
      */
     increaseZoomLevel ({dispatch, getters}) {
         dispatch("setZoomLevel", getters.getView.getZoom() + 1);
     },
     /**
-    * Registered listener for certain events on the map.
-    * @see https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
-    * @param {Object} payload parameter object
-    * @param {String | Object} payload.event The event type or an object used as a key.
-    * @param {Function} payload.callback The callback function.
-    * @param {Object} payload.context The context.
-    * @returns {void}
-    */
+     * Registered listener for certain events on the map.
+     * @see https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
+     * @param {Object} payload parameter object
+     * @param {String | Object} payload.event The event type or an object used as a key.
+     * @param {Function} payload.callback The callback function.
+     * @param {Object} payload.context The context.
+     * @returns {void}
+     */
     registerListener ({getters}, payload) {
         const view = getters.getView;
 
         view.on(payload.event, payload.callback, payload.context);
     },
     /**
-         * Removes an interaction from the map.
-         * @param {module:ol/interaction/Interaction} interaction - Interaction to be removed from map.
-         * @returns {void}
-         */
+     * Removes an interaction from the map.
+     * @param {module:ol/interaction/Interaction} interaction - Interaction to be removed from map.
+     * @returns {void}
+     */
     removeInteraction ({getters}, interaction) {
         const map = getters.get2DMap;
 
@@ -94,7 +92,6 @@ export default {
     },
     /**
      * Sets a new zoom level to map and store. All other fields will be updated onmoveend.
-     *
      * @param {Object} view The map view.
      * @param {number} zoomLevel The zoomLevel to zoom to.
      * @returns {void}
@@ -107,7 +104,7 @@ export default {
         }
     },
     /**
-     * @description toggles the maps background
+     * toggles the maps background
      * @returns {void}
      */
     toggleBackground ({state, dispatch, getters}) {
@@ -123,13 +120,13 @@ export default {
         }
     },
     /**
-    * Unsubscribes listener to certain events.
-    * @param {Object} payload parameter object
-    * @param {String | Object} payload.event The event type or an object used as a key.
-    * @param {Function} payload.callback The callback function.
-    * @param {Object} payload.context The context.
-    * @returns {void}
-    */
+     * Unsubscribes listener to certain events.
+     * @param {Object} payload parameter object
+     * @param {String | Object} payload.event The event type or an object used as a key.
+     * @param {Function} payload.callback The callback function.
+     * @param {Object} payload.context The context.
+     * @returns {void}
+     */
     unregisterListener ({getters}, payload) {
         const view = getters.getView;
 

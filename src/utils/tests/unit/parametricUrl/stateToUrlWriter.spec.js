@@ -14,8 +14,12 @@ describe("src/utils/parametricUrl/stateToUrlWriter.js", () => {
                 }
             },
             rootGetters = {
-                "Map/center": [123, 456],
-                "Map/zoomLevel": "7"
+                "Maps/center": [123, 456],
+                "Maps/getView": {
+                    getZoom: () => {
+                        return "7";
+                    }
+                }
             },
             expected = "?Map/layerIds=1,2&visibility=true,true&transparency=0,50&Map/center=[123,456]&Map/zoomLevel=7",
             actual = getStateAsUrlParams(rootState, rootGetters);

@@ -62,6 +62,12 @@ describe("src/modules/tools/routing/store/isochrones/actionsIsochrones.js", () =
             else if (args[0] === "Tools/Routing/fetchTextByCoordinates") {
                 return new RoutingGeosearchResult(args[1].coordinates[0], args[1].coordinates[1], "test");
             }
+            else if (args[0] === "Maps/removeInteraction") {
+                return state.isochronesPointDrawInteraction;
+            }
+            else if (args[0] === "Maps/addInteraction") {
+                return state.isochronesPointDrawInteraction;
+            }
             return dispatchMocks[args[0]];
         };
         getters = {
@@ -93,6 +99,16 @@ describe("src/modules/tools/routing/store/isochrones/actionsIsochrones.js", () =
             waypoint: waypoint,
             isochronesAreaSource: isochronesAreaSource,
             isochronesPointDrawInteraction: new Draw({
+                source: "",
+                type: "Point",
+                geometryFunction: undefined
+            }),
+            isochronesPointModifyInteraction: new Draw({
+                source: "",
+                type: "Point",
+                geometryFunction: undefined
+            }),
+            isochronesPointSnapInteraction: new Draw({
                 source: "",
                 type: "Point",
                 geometryFunction: undefined
@@ -180,7 +196,8 @@ describe("src/modules/tools/routing/store/isochrones/actionsIsochrones.js", () =
 
         expect(dispatchSpy.args).to.deep.equal([
             ["Tools/Routing/transformCoordinatesLocalToWgs84Projection", [10, 10], {root: true}],
-            ["Tools/Routing/fetchTextByCoordinates", {coordinates: [10, 10]}, {root: true}]
+            ["Tools/Routing/fetchTextByCoordinates", {coordinates: [10, 10]}, {root: true}],
+            ["Maps/removeInteraction", state.isochronesPointDrawInteraction, {root: true}]
         ]);
 
         expect(waypoint.getDisplayName()).equal("test");
@@ -193,7 +210,9 @@ describe("src/modules/tools/routing/store/isochrones/actionsIsochrones.js", () =
         expect(commitSpy.args).to.deep.equal([]);
 
         expect(dispatchSpy.args).to.deep.equal([
-            ["removeIsochronesPointDrawInteraction"]
+            ["removeIsochronesPointDrawInteraction"],
+            ["Maps/addInteraction", state.isochronesPointModifyInteraction, {root: true}],
+            ["Maps/addInteraction", state.isochronesPointSnapInteraction, {root: true}]
         ]);
     });
 });
