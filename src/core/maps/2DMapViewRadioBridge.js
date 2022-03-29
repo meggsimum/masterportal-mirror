@@ -36,9 +36,9 @@ channel.on({
         store.dispatch("Maps/resetView");
     },
     "setCenter": function (coords, zoomLevel) {
-        store.dispatch("Maps/setCenter", {coords: coords});
+        store.dispatch("Maps/setCenter", coords);
         if (zoomLevel !== undefined) {
-            store.dispatch("setZoomLevel", zoomLevel);
+            store.dispatch("Maps/setZoomLevel", zoomLevel);
         }
     },
     "setScale": function (scale) {
