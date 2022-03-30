@@ -553,10 +553,14 @@
         "isInitOpen": false
       },
       "mousePosition": true,
-      "button3d": true,
-      "buttonOblique": true,
       "freeze": true,
-      "backForward": true
+      "backForward": true,
+      "button3d": true,
+      "obliqueControl": {
+        "title": "additional:modules.controls.oblique.title",
+        "hiddenMobile": true,
+        "bottomControl": false
+      }
     },
     "layersRemovable": true
   },

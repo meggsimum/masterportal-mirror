@@ -9,7 +9,7 @@ export default {
      * @param {Boolean} [bottomControlsFlag=false] whether component is to be shown at lower end of the page
      * @returns {void}
      */
-    registerModule (state, name, control, hiddenMobile = false, bottomControlsFlag = false) {
+    registerModule (state, {name, control, hiddenMobile = false, bottomControlsFlag = false}) {
         state.componentMap = {
             ...state.componentMap,
             [name]: control

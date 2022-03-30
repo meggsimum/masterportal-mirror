@@ -1,5 +1,6 @@
 import getters from "./gettersControls";
 import mutations from "./mutationsControls";
+import actions from "./actionsControls";
 import attributions from "./attributions/store/indexAttributions";
 import backForward from "./backForward/store/indexBackForward";
 import orientation from "./orientation/store/indexOrientation";
@@ -11,7 +12,6 @@ import OverviewMap from "./overviewMap/components/OverviewMap.vue";
 import TotalView from "./totalView/components/TotalView.vue";
 import ZoomInAndOut from "./zoom/components/ZoomInAndOut.vue";
 import FreezeScreen from "./freeze/components/FreezeScreen.vue";
-import OpenAddonTool from "./openAddonTool/components/OpenAddonTool.vue";
 
 /**
  * controls-Module is required to be able to nest controls
@@ -37,8 +37,7 @@ export default {
             overviewMap: OverviewMap,
             totalView: TotalView,
             zoom: ZoomInAndOut,
-            freeze: FreezeScreen,
-            openAddonTool: OpenAddonTool
+            freeze: FreezeScreen
         },
         // config.json.md control keys where the matching element is to be hidden in mobile mode
         mobileHiddenControls: [
@@ -52,5 +51,6 @@ export default {
         bottomControls: ["attributions", "overviewMap"]
     },
     mutations,
-    getters
+    getters,
+    actions
 };

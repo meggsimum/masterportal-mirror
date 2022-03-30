@@ -12,7 +12,7 @@ const allAddons = VUE_ADDONS || {};
 export default async function (config) {
     Vue.prototype.$toolAddons = []; // add .$toolAddons to store tools in
     Vue.prototype.$gfiThemeAddons = []; // add .$gfiThemeAddons to store themes in
-    Vue.prototype.$controls = []; // add .$gfiThemeAddons to store themes in
+    Vue.prototype.$controlAddons = []; // add .$controlAddons to store controls in
     if (config) {
         const addons = config.map(async addonKey => {
             try {
@@ -26,7 +26,7 @@ export default async function (config) {
                         await loadGfiThemes(addonKey);
                     }
                     else if (addonConf.type === "control") {
-                        // await loadGfiThemes(addonKey);
+                        await loadControl(addonKey);
                     }
                 }
             }
@@ -38,6 +38,22 @@ export default async function (config) {
 
         await Promise.all(addons);
     }
+}
+/**
+ * Loads the control and creates the Vue component and adds it to Vue instance globally
+ * @param {String} addonKey specified in config.js
+ * @returns {void}
+ */
+async function loadControl (addonKey) {
+    const addon = await loadAddon(addonKey);
+
+    Vue.component(addon.component.name, addon.component);
+    if (addon.store) {
+        // register the vuex store module
+        store.registerModule(["controls", addon.component.name], addon.store);
+    }
+    store.dispatch("controls/addControl", addon.component);
+    Vue.prototype.$controlAddons.push(addon.component.name);
 }
 
 /**
