@@ -1,6 +1,5 @@
-import {PluggableMap} from "ol";
+
 // import {unByKey as unlistenByKey} from "ol/Observable.js";
-import {Group as LayerGroup} from "ol/layer.js";
 /* import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
 
@@ -11,13 +10,13 @@ const originalAddLayer = PluggableMap.prototype.addLayer; */
  * @param {module:ol/Collection~Collection} layers Layer Collection.
  * @returns {void}
  */
-function setLayersAlwaysOnTop (layers) {
+/* function setLayersAlwaysOnTop (layers) {
     layers.forEach(layer => {
         if (layer.get("alwaysOnTop") === true) {
             layer.setZIndex(layers.getLength());
         }
     });
-}
+} */
 
 /**
  * Adds a layer to the map.
@@ -40,14 +39,14 @@ function setLayersAlwaysOnTop (layers) {
  * @param {Number} zIndex The zIndex of the layer.
  * @returns {void}
  */
-PluggableMap.prototype.addLayerToIndex = function (layer, zIndex) {
+/* PluggableMap.prototype.addLayerToIndex = function (layer, zIndex) {
     layer.setZIndex(zIndex);
     if (!this.getLayers().getArray().includes(layer)) {
         this.addLayer(layer);
     }
 
     setLayersAlwaysOnTop(this.getLayers());
-};
+}; */
 
 /**
  * Adds a layer on top of the map
@@ -89,7 +88,7 @@ PluggableMap.prototype.addLayerToIndex = function (layer, zIndex) {
 * @param  {Boolean} searchInGroupLayers Specifies whether to search for the id in the childLayers of groupLayers.
 * @return {module:ol/layer/Base~BaseLayer} The layer found by id.
 */
-PluggableMap.prototype.getLayerById = function (layerId, searchInGroupLayers = true) {
+/* PluggableMap.prototype.getLayerById = function (layerId, searchInGroupLayers = true) {
     let returnLayer = null;
 
     this.getLayers().getArray().forEach(layer => {
@@ -104,16 +103,16 @@ PluggableMap.prototype.getLayerById = function (layerId, searchInGroupLayers = t
     });
 
     return returnLayer;
-};
+}; */
 
 /**
 * Returns a layer by a given layer name.
 * @param  {String} layerName Name of the Layer.
 * @return {module:ol/layer/Base~BaseLayer} The layer found by name.
 */
-PluggableMap.prototype.getLayerByName = function (layerName) {
+/* PluggableMap.prototype.getLayerByName = function (layerName) {
     return this.getLayers().getArray().find(layer => layer.get("name") === layerName);
-};
+}; */
 
 // /**
 // * Registered listener for certain events on the map.

@@ -45,11 +45,10 @@ const mutations = {
     /**
      * Sets the scales for the map.
      * @param {Object} state state object
-     * @param {Object} payload parameter object
-     * @param {String} payload.scales list of scales
+     * @param {String} scales list of scales
      * @returns {void}
      */
-    setScales (state, {scales}) {
+    setScales (state, scales) {
         state.scales = scales;
     },
 

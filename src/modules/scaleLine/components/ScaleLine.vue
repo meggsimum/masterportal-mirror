@@ -4,10 +4,10 @@ import {mapGetters} from "vuex";
 export default {
     name: "ScaleLine",
     computed: {
-        ...mapGetters("Map", ["scaleToOne", "scaleWithUnit", "mapMode"]),
+        ...mapGetters("Maps", ["scaleToOne", "scaleWithUnit", "mode"]),
         ...mapGetters(["mobile", "scaleLineConfig"]),
         showScale () {
-            return this.scaleLineConfig && !this.mobile && this.mapMode === "2D";
+            return this.scaleLineConfig && !this.mobile && this.mode === "2D";
         }
     }
 

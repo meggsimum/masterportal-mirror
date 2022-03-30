@@ -9,7 +9,7 @@ channel.reply({
         return mapCollection.getMap("ol", "2D").getLayers();
     },
     "createLayerIfNotExists": function (name) {
-        return store.dispatch("addNewLayerIfNotExists", name);
+        return store.dispatch("Maps/addNewLayerIfNotExists", name);
     },
     "getSize": function () {
         return mapCollection.getMap("ol", "2D").getSize();
@@ -21,7 +21,7 @@ channel.reply({
         return mapCollection.getMap("ol", "2D");
     },
     "getLayerByName": function (name) {
-        return mapCollection.getMap("ol", "2D").getLayerByName(name);
+        return store.dispatch("Maps/getLayerByName", name);
     },
     "getMapMode": mapMode.getMapMode()
 });
