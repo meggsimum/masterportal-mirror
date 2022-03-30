@@ -24,7 +24,7 @@ channel.reply({
         return mapCollection.getMapView("ol", "2D").getResolutionByScale(scale, scaleType);
     },
     "getCurrentExtent": function () {
-        return mapCollection.getMapView("ol", "2D").getCurrentExtent();
+        return store.getters.getCurrentExtent;
     },
     "getBackgroundImage": function () {
         return mapCollection.getMapView("ol", "2D").get("backgroundImage");

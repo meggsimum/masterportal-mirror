@@ -10,7 +10,7 @@ import defaults from "masterportalapi/src/defaults";
  * @description initializes store and listeners
  * @returns {void}
  */
-View.prototype.initStore = function () {
+/* View.prototype.initStore = function () {
     // Listener for ol.View
     this.on("change:resolution", (evt) => {
         this.changedResolutionCallback(evt);
@@ -31,13 +31,13 @@ View.prototype.initStore = function () {
     store.commit("Map/setScale", params.scale);
     // NOTE: used for scaleSwitcher-tutorial
     store.commit("Map/setScales", {scales: this.get("options").map(option => option.scale)});
-};
+}; */
 /**
  * @description is called when the view resolution is changed triggers the map view options
  * @param {ObjectEvent} evt - openlayers event object
  * @returns {void}
  */
-View.prototype.changedResolutionCallback = function (evt) {
+/* View.prototype.changedResolutionCallback = function (evt) {
     const mapView = evt.target,
         constrainResolution = this.getConstrainedResolution(mapView.get(evt.key)),
         params = findWhereJs(this.get("options"), {resolution: constrainResolution});
@@ -45,17 +45,17 @@ View.prototype.changedResolutionCallback = function (evt) {
     Radio.trigger("MapView", "changedOptions", params);
     store.commit("Map/setScale", params.scale);
     Radio.trigger("RemoteInterface", "postMessage", {"zoomLevel": this.getZoom()});
-};
+}; */
 
 /**
  * calculate the extent for the current view state and the passed size
  * @return {ol.extent} extent
  */
-View.prototype.getCurrentExtent = function () {
+/* View.prototype.getCurrentExtent = function () {
     const mapSize = Radio.request("Map", "getSize");
 
     return this.calculateExtent(mapSize);
-};
+}; */
 
 /**
  * Returns the bounding box in a given coordinate system (EPSG code).

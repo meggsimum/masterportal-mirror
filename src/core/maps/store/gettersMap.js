@@ -4,6 +4,7 @@ import {createGfiFeature} from "../../../api/gfi/getWmsFeaturesByMimeType";
 import {getGfiFeaturesByTileFeature} from "../../../api/gfi/getGfiFeaturesByTileFeature";
 import thousandsSeparator from "../../../utils/thousandsSeparator.js";
 import mapCollection from "../../../core/dataStorage/mapCollection.js";
+import {transformFromMapProjection} from "masterportalAPI/src/crs";
 
 const getters = {
     ...generateSimpleGetters(initialState),
@@ -119,11 +120,16 @@ const getters = {
     },
     /**
      * Returns a projected boundingbox of a provided coordinate system.
-     * @param {String} crs for the target projection of the bbox.
+     * @param {String} epsgCode for the target projection of the bbox.
      * @returns {Array} Returns the projected bbox.
      */
-    getProjectedBBox: () => (crs) => {
-        return mapCollection.getMapView("ol", "2D").getProjectedBBox(crs);
+    getProjectedBBox: () => (epsgCode) => {
+        const map = getters.get2DMap,
+            bbox = getters.getView.calculateExtent(map.getSize()),
+            firstCoordTransform = transformFromMapProjection(map, epsgCode, [bbox[0], bbox[1]]),
+            secondCoordTransform = transformFromMapProjection(map, epsgCode, [bbox[2], bbox[3]]);
+
+        return [firstCoordTransform[0], firstCoordTransform[1], secondCoordTransform[0], secondCoordTransform[1]];
     },
     /**
      * Returns the camera of the 3D map
@@ -293,6 +299,16 @@ const getters = {
         return visibleWmsLayerList.filter(layer => {
             return resolution <= layer.get("maxResolution") && resolution >= layer.get("minResolution");
         });
+    },
+    /**
+     * calculate the extent for the current view state and the passed size
+     * @param {Object} getters - the map getters
+     * @return {ol.extent} extent
+     */
+    getCurrentExtent: () => {
+        const mapSize = getters.getSize;
+
+        return getters.getView.calculateExtent(mapSize);
     }
 };
 

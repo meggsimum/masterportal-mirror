@@ -38,8 +38,8 @@ export default {
      * @param {String} [payload.map.mapMode="2D"] The map mode.
      * @returns {void}
      */
-    async zoomToFilteredFeatures ({dispatch}, {ids, layerId, zoomOptions, map = {mapId: "ol", mapMode: "2D"}}) {
-        const layer = mapCollection.getMap(map.mapId, map.mapMode).getLayerById(layerId);
+    async zoomToFilteredFeatures ({dispatch}, {ids, layerId, zoomOptions}) {
+        const layer = dispatch("getLayerById", {layerId: layerId});
 
         if (layer?.getSource()) {
             const layerSource = layer.getSource(),

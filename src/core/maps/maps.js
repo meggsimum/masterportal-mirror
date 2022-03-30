@@ -25,7 +25,7 @@ function create2DMap (mapViewSettings) {
         }, "2D", {});
 
     mapCollection.addMap(map, "ol", "2D");
-    mapCollection.getMapView("ol", "2D").initStore();
+    store.dispatch("Maps/initStore");
 
     // Remove later "Map/setMapAttributes"
 
