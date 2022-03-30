@@ -34,10 +34,10 @@ export default {
      * @param {Object} payload.context The context.
      * @returns {void}
      */
-    registerListener ({getters}, payload) {
+    registerListener ({getters}, {event, callback, context}) {
         const view = getters.getView;
 
-        view.on(payload.event, payload.callback, payload.context);
+        view.on(event, callback, context);
     },
     /**
      * Removes an interaction from the map.
@@ -92,8 +92,7 @@ export default {
     },
     /**
      * Sets a new zoom level to map and store. All other fields will be updated onmoveend.
-     * @param {Object} view The map view.
-     * @param {number} zoomLevel The zoomLevel to zoom to.
+     * @param {Number} zoomLevel The zoomLevel to zoom to.
      * @returns {void}
      */
     setZoomLevel ({getters}, zoomLevel) {
@@ -127,14 +126,14 @@ export default {
      * @param {Object} payload.context The context.
      * @returns {void}
      */
-    unregisterListener ({getters}, payload) {
+    unregisterListener ({getters}, {event, callback, context}) {
         const view = getters.getView;
 
-        if (typeof payload.event === "string") {
-            view.un(payload.event, payload.callback, payload.context);
+        if (typeof event === "string") {
+            view.un(event, callback, context);
         }
         else {
-            unlistenByKey(payload.vent);
+            unlistenByKey(event);
         }
     }
 };
