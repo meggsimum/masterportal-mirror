@@ -18,6 +18,7 @@
 - Searchbar: Added a `showGeographicIdentifier` attribute to be able to use the `geographicIdentifier` to display the gazetteer search result.
 - Added new layer type OAF (OGCApiFeatures)
 - Added "application/json" as supported WMS *GetFeatureInfo* response format
+- Added the possibility to load controls as addons, see [description](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/addOnsVue.md).
 
 ### Changed
 - Issue #674, #676: addWMS tool and orientation control are now using the CRS of the map instead of hard coded CRS
