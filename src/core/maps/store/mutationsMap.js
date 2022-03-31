@@ -3,6 +3,7 @@ import initialState from "./stateMap";
 import getters from "./gettersMap";
 import BaseLayer from "ol/layer/Base";
 import mapCollection from "../../../core/dataStorage/mapCollection.js";
+import findWhereJs from "../../../utils/findWhereJs";
 
 const mutations = {
     ...generateSimpleMutations(initialState),
@@ -83,6 +84,33 @@ const mutations = {
      */
     addLoadedLayerId (state, layerId) {
         state.layerIds.push(layerId);
+    },
+    /**
+     * Sets the bounding box for the map view.
+     * @param {Object} state The state object.
+     * @param {Number[]} bbox The Boundingbox to fit the map.
+     * @param {Object} [map] The parameter to get the map from the map collection
+     * @param {String} [map.mapId="ol"] The map id.
+     * @param {String} [map.mapMode="2D"] The map mode.
+     * @returns {void}
+     */
+    setBBox (state, {bbox, map = {mapId: "ol", mapMode: "2D"}}) {
+        if (bbox) {
+            getters.getView().fit(bbox, mapCollection.getMap(map.mapId, map.mapMode).getSize());
+        }
+    },
+    /**
+     * finds the right resolution for the scale and sets it for this view
+     * @param {Object} state The state object.
+     * @param {Number} scale - map view scale
+     * @returns {void}
+     */
+    setResolutionByScale (state, scale) {
+        const params = findWhereJs(getters.getView().get("options"), {scale: scale});
+
+        if (getters.getView() !== undefined) {
+            getters.getView().setResolution(params.resolution);
+        }
     }
 };
 
