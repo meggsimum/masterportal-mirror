@@ -45,15 +45,16 @@ export default async function (config) {
  * @returns {void}
  */
 async function loadControl (addonKey) {
-    const addon = await loadAddon(addonKey);
+    const addon = await loadAddon(addonKey),
+        name = addon.component.name.charAt(0).toLowerCase() + addon.component.name.slice(1);
 
     Vue.component(addon.component.name, addon.component);
     if (addon.store) {
         // register the vuex store module
         store.registerModule(["controls", addon.component.name], addon.store);
     }
-    store.dispatch("controls/addControl", addon.component);
-    Vue.prototype.$controlAddons.push(addon.component.name);
+    store.commit("controls/registerControl", {name: name, control: addon.component});
+    Vue.prototype.$controlAddons.push(name);
 }
 
 /**

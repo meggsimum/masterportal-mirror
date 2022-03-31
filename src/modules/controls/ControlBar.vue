@@ -54,15 +54,14 @@ export default {
                 };
             }
             this.$controlAddons.forEach(controlName => {
-                const nameLower = controlName.charAt(0).toLowerCase() + controlName.slice(1),
-                    addonControlConfig = this.controlsConfig[nameLower];
+                const addonControlConfig = this.controlsConfig[controlName];
 
                 if (addonControlConfig) {
                     if (addonControlConfig.hiddenMobile) {
-                        this.mobileHiddenControls.push(nameLower);
+                        this.mobileHiddenControls.push(controlName);
                     }
                     if (addonControlConfig.bottomControl) {
-                        this.bottomControls.push(nameLower);
+                        this.bottomControls.push(controlName);
                     }
                 }
             }, this);

@@ -1,6 +1,5 @@
 import getters from "./gettersControls";
 import mutations from "./mutationsControls";
-import actions from "./actionsControls";
 import attributions from "./attributions/store/indexAttributions";
 import backForward from "./backForward/store/indexBackForward";
 import orientation from "./orientation/store/indexOrientation";
@@ -51,6 +50,5 @@ export default {
         bottomControls: ["attributions", "overviewMap"]
     },
     mutations,
-    getters,
-    actions
+    getters
 };
