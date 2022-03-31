@@ -228,6 +228,8 @@ export default {
                     return "dropdown";
                 case "number":
                     return "sliderRange";
+                case "dateTime":
+                    return "dateRange";
                 default:
                     return "text";
             }
