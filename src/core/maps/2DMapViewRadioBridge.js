@@ -21,10 +21,11 @@ channel.reply({
         return mapCollection.getMapView("ol", "2D").getResolutions();
     },
     "getResolutionByScale": function (scale, scaleType) {
-        return mapCollection.getMapView("ol", "2D").getResolutionByScale(scale, scaleType);
+        // eslint-disable-next-line new-cap
+        return store.getters["Maps/getResolutionByScale"](scale, scaleType);
     },
     "getCurrentExtent": function () {
-        return store.getters.getCurrentExtent;
+        return store.getters["Maps/getCurrentExtent"];
     },
     "getBackgroundImage": function () {
         return mapCollection.getMapView("ol", "2D").get("backgroundImage");
@@ -42,7 +43,7 @@ channel.on({
         }
     },
     "setScale": function (scale) {
-        mapCollection.getMapView("ol", "2D").setResolutionByScale(scale);
+        store.commit("Maps/setResolutionByScale", scale);
     },
     "setZoomLevelDown": function () {
         store.dispatch("Maps/decreaseZoomLevel");

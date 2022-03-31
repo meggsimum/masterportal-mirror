@@ -49,7 +49,7 @@ channel.on({
         store.dispatch("Maps/removeInteraction", interaction);
     },
     "setBBox": function (bbox) {
-        mapCollection.getMapView("ol", "2D").setBBox(bbox);
+        store.commit("Maps/setBBox", {bbox: bbox});
     },
     "render": function () {
         mapCollection.getMap("ol", "2D").render();

@@ -7,7 +7,6 @@ import VectorSource from "ol/source/Vector.js";
 import {getLayerWhere} from "masterportalapi/src/rawLayerList";
 import getProxyUrl from "../../src/utils/getProxyUrl";
 import store from "../../src/app-store";
-import mapCollection from "../../src/core/dataStorage/mapCollection";
 import calculateExtent from "../../src/utils/calculateExtent";
 
 const ZoomToFeature = Backbone.Model.extend({
@@ -236,7 +235,7 @@ const ZoomToFeature = Backbone.Model.extend({
                 filteredFeatures = filteredFeatures.concat(feature);
             });
 
-            mapCollection.getMapView("ol", "2D").setBBox(calculateExtent(filteredFeatures));
+            store.commit("Maps/setBBox", {bbox: calculateExtent(filteredFeatures)});
         }
     },
 

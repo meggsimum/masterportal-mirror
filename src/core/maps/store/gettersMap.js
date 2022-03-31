@@ -124,8 +124,8 @@ const getters = {
      * @returns {Array} Returns the projected bbox.
      */
     getProjectedBBox: () => (epsgCode) => {
-        const map = getters.get2DMap,
-            bbox = getters.getView.calculateExtent(map.getSize()),
+        const map = getters.get2DMap(),
+            bbox = getters.getView().calculateExtent(map.getSize()),
             firstCoordTransform = transformFromMapProjection(map, epsgCode, [bbox[0], bbox[1]]),
             secondCoordTransform = transformFromMapProjection(map, epsgCode, [bbox[2], bbox[3]]);
 
