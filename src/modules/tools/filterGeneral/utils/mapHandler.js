@@ -81,7 +81,6 @@ export default class MapHandler {
 
         if (layerModel?.layer instanceof LayerGroup) {
             const layerSource = layerModel.get("layerSource"),
-                isVisible = layerModel.get("visible") || layerModel.get("isSelected"),
                 isVisibleInMap = layerModel.get("isVisibleInMap");
 
             layerSource.forEach(layer => {
@@ -90,7 +89,6 @@ export default class MapHandler {
                 }
             });
 
-            layerModel.set("isVisible", isVisible);
             layerModel.set("isVisibleInMap", isVisibleInMap);
         }
 
@@ -144,7 +142,7 @@ export default class MapHandler {
         const layerModel = this.getLayerModelByFilterId(filterId);
 
         if (isObject(layerModel)) {
-            return layerModel.get("isVisible") ? layerModel.get("isVisible") : false;
+            return layerModel.get("isSelected") ? layerModel.get("isSelected") : false;
         }
         return false;
     }
@@ -183,11 +181,9 @@ export default class MapHandler {
                 }
             });
             layerModel.set("isSelected", true);
-            layerModel.set("isVisible", true);
         }
         else if (!this.isLayerVisibleInMap(filterId)) {
             layerModel.set("isSelected", true);
-            layerModel.set("isVisible", true);
             if (typeof onActivated === "function") {
                 onActivated();
             }
@@ -207,7 +203,6 @@ export default class MapHandler {
 
         if (isObject(layerModel)) {
             layerModel.set("isSelected", false);
-            layerModel.set("isVisible", false);
         }
     }
 

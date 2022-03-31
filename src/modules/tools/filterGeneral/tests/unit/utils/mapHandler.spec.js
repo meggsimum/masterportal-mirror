@@ -212,7 +212,7 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
             }, onerror.call);
 
             map.layers.filterId = {
-                get: command => command === "isVisible"
+                get: command => command === "isSelected"
             };
             expect(map.isLayerActivated("filterId")).to.be.true;
         });
@@ -253,10 +253,9 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
             });
             expect(called_onActivated).to.be.false;
         });
-        it("should set featuresloadend event once, set isSelected and isVisible to true if layer is not activated yet", () => {
+        it("should set featuresloadend event once, set isSelected to true if layer is not activated yet", () => {
             let called_onceEvent = false,
-                called_setIsSelected = false,
-                called_setIsVisible = false;
+                called_setIsSelected = false;
             const map = new MapHandler({
                 getLayerByLayerId: () => false,
                 showFeaturesByIds: () => false,
@@ -269,16 +268,13 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
 
             map.layers.filterId = {
                 get: command => {
-                    if (command === "isVisible") {
+                    if (command === "isSelected") {
                         return false;
                     }
                     return true;
                 },
                 set: (command, value) => {
-                    if (command === "isVisible") {
-                        called_setIsVisible = value;
-                    }
-                    else if (command === "isSelected") {
+                    if (command === "isSelected") {
                         called_setIsSelected = value;
                     }
                 },
@@ -297,7 +293,6 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
 
             expect(called_onceEvent).to.equal("featuresloadend");
             expect(called_setIsSelected).to.be.true;
-            expect(called_setIsVisible).to.be.true;
         });
         it("should call onActivated with once event if the layer is not activated yet", () => {
             let called_onActivated = false;
@@ -331,10 +326,9 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
 
             expect(called_onActivated).to.be.true;
         });
-        it("should call onActivated and set isVisible and isSelected to true if layer is activated but not visible on the map yet", () => {
+        it("should call onActivated and isSelected to true if layer is activated but not visible on the map yet", () => {
             let called_onActivated = false,
-                called_setIsSelected = false,
-                called_setIsVisible = false;
+                called_setIsSelected = false;
             const map = new MapHandler({
                 getLayerByLayerId: () => false,
                 showFeaturesByIds: () => false,
@@ -347,7 +341,7 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
 
             map.layers.filterId = {
                 get: command => {
-                    if (command === "isVisible") {
+                    if (command === "isSelected") {
                         return true;
                     }
                     else if (command === "isVisibleInMap") {
@@ -356,10 +350,7 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
                     return true;
                 },
                 set: (command, value) => {
-                    if (command === "isVisible") {
-                        called_setIsVisible = value;
-                    }
-                    else if (command === "isSelected") {
+                    if (command === "isSelected") {
                         called_setIsSelected = value;
                     }
                 }
@@ -371,12 +362,10 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
 
             expect(called_onActivated).to.be.true;
             expect(called_setIsSelected).to.be.true;
-            expect(called_setIsVisible).to.be.true;
         });
-        it("should call onActivated if layer is activated and visible on map, should not set isVisible or iSelected as they already are", () => {
+        it("should call onActivated if layer is activated and visible on map, should not set iSelected as they already are", () => {
             let called_onActivated = false,
-                called_setIsSelected = false,
-                called_setIsVisible = false;
+                called_setIsSelected = false;
             const map = new MapHandler({
                 getLayerByLayerId: () => false,
                 showFeaturesByIds: () => false,
@@ -389,7 +378,7 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
 
             map.layers.filterId = {
                 get: command => {
-                    if (command === "isVisible") {
+                    if (command === "isSelected") {
                         return true;
                     }
                     else if (command === "isVisibleInMap") {
@@ -398,10 +387,7 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
                     return false;
                 },
                 set: (command, value) => {
-                    if (command === "isVisible") {
-                        called_setIsVisible = value;
-                    }
-                    else if (command === "isSelected") {
+                    if (command === "isSelected") {
                         called_setIsSelected = value;
                     }
                 }
@@ -413,13 +399,11 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
 
             expect(called_onActivated).to.be.true;
             expect(called_setIsSelected).to.be.false;
-            expect(called_setIsVisible).to.be.false;
         });
     });
     describe("deactivateLayer", () => {
         it("should set isSelected and isVisible to false", () => {
-            let called_setIsSelected = true,
-                called_setIsVisible = true;
+            let called_setIsSelected = true;
             const map = new MapHandler({
                 getLayerByLayerId: () => false,
                 showFeaturesByIds: () => false,
@@ -433,10 +417,7 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
             map.layers.filterId = {
                 get: () => false,
                 set: (command, value) => {
-                    if (command === "isVisible") {
-                        called_setIsVisible = value;
-                    }
-                    else if (command === "isSelected") {
+                    if (command === "isSelected") {
                         called_setIsSelected = value;
                     }
                 }
@@ -445,7 +426,6 @@ describe("src/module/tools/filterGeneral/utils/mapHandler.js", () => {
             map.deactivateLayer("filterId");
 
             expect(called_setIsSelected).to.be.false;
-            expect(called_setIsVisible).to.be.false;
         });
     });
     describe("clearLayer", () => {
