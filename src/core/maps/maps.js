@@ -1,8 +1,6 @@
 import api from "masterportalAPI/src/maps/api";
 import {getLayerList} from "masterportalAPI/src/rawLayerList";
 
-import "./2DMap";
-import "./2DMapView";
 import "./2DMapRadioBridge";
 import "./2DMapViewRadioBridge";
 import "./3DMapRadioBridge";

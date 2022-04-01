@@ -102,7 +102,7 @@ const getters = {
      * @return {Number} resolution
      */
     getResolutionByScale: () => (scale, scaleType) => {
-        const scales = mapCollection.getMapView("ol", "2D").get("options").map(option => option.scale);
+        const scales = getters.getView().get("options").map(option => option.scale);
 
         let index = "",
             unionScales = scales.concat([parseInt(scale, 10)].filter(item => scales.indexOf(item) < 0));
@@ -111,10 +111,10 @@ const getters = {
 
         index = unionScales.indexOf(parseInt(scale, 10));
         if (unionScales.length === scales.length || scaleType === "max") {
-            return mapCollection.getMapView("ol", "2D").getResolutions()[index];
+            return getters.getView().getResolutions()[index];
         }
         else if (scaleType === "min") {
-            return mapCollection.getMapView("ol", "2D").getResolutions()[index - 1];
+            return getters.getView().getResolutions()[index - 1];
         }
         return null;
     },
@@ -125,7 +125,7 @@ const getters = {
      */
     getProjectedBBox: () => (epsgCode) => {
         const map = getters.get2DMap(),
-            bbox = getters.getView().calculateExtent(map.getSize()),
+            bbox = getters.getView().calculateExtent(map.getSize),
             firstCoordTransform = transformFromMapProjection(map, epsgCode, [bbox[0], bbox[1]]),
             secondCoordTransform = transformFromMapProjection(map, epsgCode, [bbox[2], bbox[3]]);
 
@@ -302,13 +302,12 @@ const getters = {
     },
     /**
      * calculate the extent for the current view state and the passed size
-     * @param {Object} getters - the map getters
      * @return {ol.extent} extent
      */
     getCurrentExtent: () => {
         const mapSize = getters.getSize;
 
-        return getters.getView.calculateExtent(mapSize);
+        return getters.getView().calculateExtent(mapSize);
     }
 };
 

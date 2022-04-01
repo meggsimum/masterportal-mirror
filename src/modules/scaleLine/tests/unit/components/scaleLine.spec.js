@@ -68,7 +68,7 @@ describe("src/modules/scaleLine/components/ScaleLine.vue", () => {
             },
             computed: {
                 mobile: () => mobile,
-                mapMode: () => mapMode,
+                mode: () => mapMode,
                 scaleToOne: () => scaleToOne,
                 scaleWithUnit: () => scaleWithUnit,
                 scaleLineConfig: () => scaleLineConfig
