@@ -253,4 +253,67 @@ describe("src/core/maps/store/gettersMap.js", () => {
             expect(getters.scaleToOne(false, {scale: 10250})).to.equal("1 : 10.500");
         });
     });
+    describe("test getters from mapView", () => {
+        /**
+         * Is needed to run the tests.
+         * @see https://github.com/vuejs/vue-test-utils/issues/974
+         * @returns {void}
+         */
+        global.requestAnimationFrame = () => "";
+
+        let map;
+
+        beforeEach(() => {
+            mapCollection.clear();
+            map = new Map({
+                id: "ol",
+                mode: "2D",
+                view: new View({
+                    extent: [510000.0, 5850000.0, 625000.4, 6000000.0],
+                    center: [565874, 5934140],
+                    zoom: 2,
+                    options: [
+                        {resolution: 66.14579761460263, scale: 250000, zoomLevel: 0},
+                        {resolution: 26.458319045841044, scale: 100000, zoomLevel: 1},
+                        {resolution: 15.874991427504629, scale: 60000, zoomLevel: 2},
+                        {resolution: 10.583327618336419, scale: 40000, zoomLevel: 3},
+                        {resolution: 5.2916638091682096, scale: 20000, zoomLevel: 4},
+                        {resolution: 2.6458319045841048, scale: 10000, zoomLevel: 5},
+                        {resolution: 1.3229159522920524, scale: 5000, zoomLevel: 6},
+                        {resolution: 0.6614579761460262, scale: 2500, zoomLevel: 7},
+                        {resolution: 0.2645831904584105, scale: 1000, zoomLevel: 8},
+                        {resolution: 0.1322915952292052, scale: 500, zoomLevel: 9}
+                    ],
+                    resolution: 15.874991427504629,
+                    resolutions: [66.14579761460263, 26.458319045841044, 15.874991427504629, 10.583327618336419, 5.2916638091682096, 2.6458319045841048, 1.3229159522920524, 0.6614579761460262, 0.2645831904584105, 0.13229159522920522]
+                })
+            });
+
+            map.setSize([1059, 887]);
+
+            mapCollection.addMap(map, "ol", "2D");
+        });
+
+        it("getCurrentExtent - calculate the extent for the current view state and the passed size", function () {
+            expect(getters.getCurrentExtent()).to.deep.equal([
+                565080.2504286248,
+                5933346.250428624,
+                566667.7495713752,
+                5934933.749571376
+            ]);
+        });
+
+        it.skip("Returns the bounding box with the projection EPSG:4326", function () {
+            expect(getters.getProjectedBBox, "EPSG:4326").to.deep.equal([
+                5.0078219731923275,
+                46.908179219825406,
+                5.158843288524674,
+                46.99452561170306
+            ]);
+        });
+
+        it.skip("getResolutionByScale - returns the resolution for the given scale", function () {
+            expect(getters.getResolutionByScale(5000, "max")).to.deep.equal(1.3229159522920524);
+        });
+    });
 });

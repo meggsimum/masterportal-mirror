@@ -1,5 +1,3 @@
-import "../../../2DMap";
-import "../../../2DMapView";
 import Map from "ol/Map";
 import View from "ol/View";
 import VectorLayer from "ol/layer/Vector";
