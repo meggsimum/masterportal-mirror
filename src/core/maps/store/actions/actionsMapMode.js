@@ -2,6 +2,19 @@ import mapCollection from "../../../dataStorage/mapCollection";
 import api from "masterportalAPI/src/maps/api";
 import store from "../../../../app-store";
 
+/**
+ * Callback function for the 3D click event.
+ * @param {Object} clickObject contains the attributes for the callback function .
+ * @fires Core#RadioRequestMapClickedWindowPosition
+ * @fires Core#RadioRequestMapGetMap
+ * @returns {void}
+ */
+function clickEventCallback (clickObject) {
+    store.dispatch("Maps/updateClick", {map3D: clickObject.map3D, position: clickObject.position, pickedPosition: clickObject.pickedPosition, coordinate: clickObject.coordinate, latitude: clickObject.latitude, longitude: clickObject.longitude, resolution: clickObject.resolution, originalEvent: clickObject.originalEvent, map: Radio.request("Map", "getMap")});
+    store.dispatch("Map/updateClick", {map3D: clickObject.map3D, position: clickObject.position, pickedPosition: clickObject.pickedPosition, coordinate: clickObject.coordinate, latitude: clickObject.latitude, longitude: clickObject.longitude, resolution: clickObject.resolution, originalEvent: clickObject.originalEvent, map: Radio.request("Map", "getMap")});
+    Radio.trigger("Map", "clickedWindowPosition", {position: clickObject.position, pickedPosition: clickObject.pickedPosition, coordinate: clickObject.coordinate, latitude: clickObject.latitude, longitude: clickObject.longitude, resolution: clickObject.resolution, originalEvent: clickObject.originalEvent, map: Radio.request("Map", "getMap")});
+}
+
 export default {
     /**
      * Deactivates oblique mode and listens to change event to activate 3d mode.
@@ -28,9 +41,8 @@ export default {
      */
     async activateMap3D ({getters, dispatch, commit}) {
         const mapMode = getters.mode;
-        let map3D = getters.get3DMap,
-            scene,
-            camera;
+        let map3D = mapCollection.getMap("olcs", "3D"),
+            scene;
 
         if (Radio.request("Map", "isMap3d")) {
             return;
@@ -55,13 +67,11 @@ export default {
             map3D = await dispatch("createMap3D");
             await mapCollection.addMap(map3D, "olcs", "3D");
             scene = map3D.getCesiumScene();
-            api.map.olcsMap.prepareScene({scene: scene, map3D: map3D, callback: dispatch("clickEventCallback")}, Config);
-            camera = api.map.olcsMap.prepareCamera(scene, store, map3D, Config, Cesium);
-            camera.changed.addEventListener(dispatch("reactToCameraChanged"));
+            api.map.olcsMap.prepareScene({scene: scene, map3D: map3D, callback: clickEventCallback}, Config);
         }
         map3D.setEnabled(true);
-        // Radio.trigger("Map", "change", "3D");
         commit("setMode", "3D");
+        Radio.trigger("Map", "change", "3D");
         store.commit("Map/setMapId", map3D.id);
         store.commit("Map/setMapMode", "3D");
         store.dispatch("MapMarker/removePointMarker");
@@ -96,9 +106,9 @@ export default {
                     view.setResolution(resolutions[resolutions.length - 1]);
                 }
                 Radio.trigger("Alert", "alert:remove");
-                // Radio.trigger("Map", "change", "2D");
-                store.commit("Map/setMapId", map.get("id"));
                 commit("setMode", "2D");
+                Radio.trigger("Map", "change", "2D");
+                store.commit("Map/setMapId", map.get("id"));
                 store.commit("Map/setMapMode", "2D");
             });
         }

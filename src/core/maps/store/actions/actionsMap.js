@@ -1,4 +1,3 @@
-import actions3DMap from "./actions3DMap.js";
 import actionsMapAttributesMapper from "./actionsMapAttributesMapper.js";
 import actionsMapInteractions from "./actionsMapInteractions.js";
 import actionsMapInteractionsZoomTo from "./actionsMapInteractionsZoomTo.js";
@@ -7,6 +6,7 @@ import actionsMapMode from "./actionsMapMode.js";
 import highlightFeature from "./highlightFeature.js";
 import findWhereJs from "../../../../utils/findWhereJs";
 
+import api from "masterportalAPI/src/maps/api";
 import {getWmsFeaturesByMimeType} from "../../../../api/gfi/getWmsFeaturesByMimeType";
 import getProxyUrl from "../../../../utils/getProxyUrl";
 
@@ -100,7 +100,19 @@ export default {
         commit("setScale", params.scale);
         Radio.trigger("RemoteInterface", "postMessage", {"zoomLevel": mapView.getZoom()});
     },
-    ...actions3DMap,
+    /**
+     * Creates the olcesium  3D map.
+     * @fires Core#RadioRequestMapGetMap
+     * @returns {OLCesium} - ol cesium map.
+     */
+    createMap3D ({getters}) {
+        return api.map.createMap({
+            map2D: getters.get2DMap,
+            shadowTime: function () {
+                return this.time || Cesium.JulianDate.fromDate(new Date());
+            }
+        }, "3D");
+    },
     ...actionsMapAttributesMapper,
     ...actionsMapInteractions,
     ...actionsMapInteractionsZoomTo,

@@ -45,7 +45,14 @@ export default {
 
         dispatch("setViewAttributes", mapView);
     },
-
+    /**
+     * Setter for 3D map attribute "shadowTime".
+     * @param {Cesium.JulianDate} time Shadow time in julian date format.
+     * @returns {void}
+     */
+    setShadowTime ({getters}, time) {
+        getters.get3DMap.time = time;
+    },
     /**
      * Sets mapView values to the store.
      * @param {module:ol/MapView} mapView map object

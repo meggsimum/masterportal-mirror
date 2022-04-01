@@ -160,6 +160,15 @@ const getters = {
         return mapCollection.getMap("olcs", "3D").getCesiumScene().shadowMap;
     },
     /**
+     * Cesium time function.
+     * @param {Object} _ state
+     * @param {Object} g getters
+     * @returns {Cesium.JulianDate} - shadow time in julian date format.
+     */
+    getShadowTime: (_, g) => {
+        return g.get3DMap().time || Cesium.JulianDate.fromDate(new Date());
+    },
+    /**
      * Reverse the gfi features
      * @param {object} state - the map state
      * @returns {Array} reversed gfiFeatures Array from state
@@ -176,7 +185,7 @@ const getters = {
      * @param {Object} mode of the map
      * @return {boolean} whether the portal is currently in 3D mode
      */
-    is3d ({mode}) {
+    is3D: ({mode}) => {
         return mode === "3D";
     },
     /**

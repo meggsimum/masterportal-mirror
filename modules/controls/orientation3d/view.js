@@ -29,7 +29,7 @@ const Orientation3DView = Backbone.View.extend({
 
         this.render();
         this.$el.hide();
-        this.mapChange(Radio.request("Map", "getMapMode"));
+        this.mapChange(Radio.request("Maps", "getMapMode"));
         channel.on({
             "change": this.mapChange
         }, this);
