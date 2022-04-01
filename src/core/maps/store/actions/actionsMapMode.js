@@ -71,6 +71,8 @@ export default {
         map3D.setEnabled(true);
         commit("setMode", "3D");
         Radio.trigger("Map", "change", "3D");
+        store.commit("Map/setMapId", map3D.id);
+        store.commit("Map/setMapMode", "3D");
         store.dispatch("MapMarker/removePointMarker");
     },
 

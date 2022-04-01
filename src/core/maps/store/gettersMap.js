@@ -169,6 +169,15 @@ const getters = {
         return g.get3DMap().time || Cesium.JulianDate.fromDate(new Date());
     },
     /**
+     * Cesium time function.
+     * @param {Object} _ state
+     * @param {Object} g getters
+     * @returns {Cesium.JulianDate} - shadow time in julian date format.
+     */
+    getShadowTime: (_, g) => {
+        return g.get3DMap().time || Cesium.JulianDate.fromDate(new Date());
+    },
+    /**
      * Reverse the gfi features
      * @param {object} state - the map state
      * @returns {Array} reversed gfiFeatures Array from state
