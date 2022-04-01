@@ -6,7 +6,7 @@ import Point from "ol/geom/Point.js";
 import Feature from "ol/Feature.js";
 import axios from "axios";
 import {Radio} from "backbone";
-import {getLayerList} from "masterportalAPI/src/rawLayerList";
+import {getLayerList} from "masterportalapi/src/rawLayerList";
 
 /**
  * User type definition
