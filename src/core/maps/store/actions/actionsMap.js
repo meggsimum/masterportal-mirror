@@ -58,10 +58,10 @@ export default {
             });
     },
     /**
-     * @description initializes store and listeners
+     * @description initializes view listeners and sets store values
      * @returns {void}
      */
-    initStore ({dispatch, getters, commit}) {
+    initView ({dispatch, getters, commit}) {
         const mapView = getters.getView,
             params = findWhereJs(mapView.get("options"), {resolution: mapView.getConstrainedResolution(mapView.getResolution())});
 
