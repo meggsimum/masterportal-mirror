@@ -236,7 +236,7 @@ import getters from "../store/gettersScaleSwitcher";
                     return this.$store.state.Map.scale;
                 },
                 set (value) {
-                    this.$store.commit("Map/setScale", value);
+                    this.$store.commit("Maps/setScale", value);
                 }
             }
         },

@@ -32,7 +32,7 @@ Radio.channel("GFI").reply({
 Radio.channel("GFI").on({
     "setIsVisible": function (isVisible) {
         if (!isVisible) {
-            store.commit("Map/setGfiFeatures", null);
+            store.commit("Maps/setGfiFeatures", null);
         }
     }
 });

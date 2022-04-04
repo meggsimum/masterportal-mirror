@@ -23,7 +23,7 @@ function create2DMap (mapViewSettings) {
         }, "2D", {});
 
     mapCollection.addMap(map, "ol", "2D");
-    store.dispatch("Maps/initStore");
+    store.dispatch("Maps/initView");
 
     // Remove later "Map/setMapAttributes"
 

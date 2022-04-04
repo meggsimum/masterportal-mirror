@@ -52,7 +52,7 @@ describe("src/core/maps/mutationsMap.js", () => {
 
         expect(mapView.getResolution()).to.deep.equal(0.2645831904584105);
     });
-    it("Sets the bbox", function () {
+    it.only("Sets the bbox", function () {
         mutations.setBBox({}, {bbox: [565760.049, 5931747.185, 568940.626, 5935453.891]});
 
         expect(getters.getView().getCenter()).to.deep.equal([567350.3375, 5933600.538]);

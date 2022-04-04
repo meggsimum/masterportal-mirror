@@ -6,7 +6,7 @@ import actionsMapMode from "./actionsMapMode.js";
 import highlightFeature from "./highlightFeature.js";
 import findWhereJs from "../../../../utils/findWhereJs";
 
-import api from "masterportalAPI/src/maps/api";
+import api from "masterportalapi/src/maps/api";
 import {getWmsFeaturesByMimeType} from "../../../../api/gfi/getWmsFeaturesByMimeType";
 import getProxyUrl from "../../../../utils/getProxyUrl";
 
