@@ -331,6 +331,7 @@ export default {
         border-radius: 4px;
         border: none;
         height: 12px;
+        min-height: 12px;
         margin-top: 19px;
         background: #cbcbcb;
     }
@@ -343,7 +344,7 @@ export default {
             border-width: 1px;
             border-color: white;
             width: 22px;
-            height:22px;
+            height: 12px;
             border-radius: 50%;
         }
 
