@@ -205,7 +205,7 @@ const ObliqueMap = Backbone.Model.extend({
 
         if (this.isActive() && this.currentCollection && this.currentDirection?.currentImage) {
             Radio.trigger("Map", "beforeChange", "2D");
-            store.commit("Map/setMapMode", "2D");
+            store.commit("Maps/setMode", "2D");
             this.deactivateOpenTreeOnTopicSearch();
             this.getCenter().then(function (center) {
                 const resolutionFactor = this.currentLayer.get("resolution"),
@@ -406,7 +406,7 @@ const ObliqueMap = Backbone.Model.extend({
 
             this.setActiveToolToFalse();
             map2D = Radio.request("Map", "getMap");
-            store.commit("Map/setMapMode", "Oblique");
+            store.commit("Maps/setMode", "Oblique");
 
             if (!this.container) {
                 this.container = this.createAndInsertTargetContainer(map2D);

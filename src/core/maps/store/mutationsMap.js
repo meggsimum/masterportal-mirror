@@ -2,7 +2,6 @@ import {generateSimpleMutations} from "../../../app-store/utils/generators";
 import initialState from "./stateMap";
 import getters from "./gettersMap";
 import BaseLayer from "ol/layer/Base";
-import mapCollection from "../../../core/dataStorage/mapCollection.js";
 import findWhereJs from "../../../utils/findWhereJs";
 
 const mutations = {
@@ -61,7 +60,7 @@ const mutations = {
      */
     addLayerToMap (state, layer) {
         if (layer instanceof BaseLayer) {
-            mapCollection.getMap("ol", "2D").addLayer(layer);
+            getters.get2DMap().addLayer(layer);
         }
     },
 
@@ -72,8 +71,8 @@ const mutations = {
      * @returns {void}
      */
     removeLayerFromMap (state, layer) {
-        if (mapCollection.getMap("ol", "2D") && layer instanceof BaseLayer) {
-            mapCollection.getMap("ol", "2D").removeLayer(layer);
+        if (getters.get2DMap() && layer instanceof BaseLayer) {
+            getters.get2DMap().removeLayer(layer);
         }
     },
     /**
@@ -89,14 +88,11 @@ const mutations = {
      * Sets the bounding box for the map view.
      * @param {Object} state The state object.
      * @param {Number[]} bbox The Boundingbox to fit the map.
-     * @param {Object} [map] The parameter to get the map from the map collection
-     * @param {String} [map.mapId="ol"] The map id.
-     * @param {String} [map.mapMode="2D"] The map mode.
      * @returns {void}
      */
-    setBBox (state, {bbox, map = {mapId: "ol", mapMode: "2D"}}) {
+    setBBox (state, {bbox}) {
         if (bbox) {
-            getters.getView().fit(bbox, mapCollection.getMap(map.mapId, map.mapMode).getSize());
+            getters.getView().fit(bbox, getters.get2DMap().getSize());
         }
     },
     /**

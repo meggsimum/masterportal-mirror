@@ -4,7 +4,7 @@ import {createGfiFeature} from "../../../api/gfi/getWmsFeaturesByMimeType";
 import {getGfiFeaturesByTileFeature} from "../../../api/gfi/getGfiFeaturesByTileFeature";
 import thousandsSeparator from "../../../utils/thousandsSeparator.js";
 import mapCollection from "../../../core/dataStorage/mapCollection.js";
-import {transformFromMapProjection} from "masterportalAPI/src/crs";
+import {transformFromMapProjection} from "masterportalapi/src/crs";
 
 const getters = {
     ...generateSimpleGetters(initialState),

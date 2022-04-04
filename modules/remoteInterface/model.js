@@ -62,7 +62,7 @@ const RemoteInterface = Backbone.Model.extend({
             Radio.trigger("Maps", "zoomToExtent", {extent: event.data.zoomToExtent});
         }
         else if (event.data?.highlightfeature) {
-            store.commit("Map/setVectorFeaturesLoaded", {type: "viaLayerAndLayerId", layerAndLayerId: event.data.highlightfeature});
+            store.dispatch("Maps/highlightFeature", {type: "viaLayerAndLayerId", layerAndLayerId: event.data.highlightfeature});
         }
         else if (event.data === "hidePosition") {
             store.dispatch("MapMarker/removePointMarker");

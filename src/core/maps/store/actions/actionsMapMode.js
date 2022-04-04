@@ -1,5 +1,5 @@
 import mapCollection from "../../../dataStorage/mapCollection";
-import api from "masterportalAPI/src/maps/api";
+import api from "masterportalapi/src/maps/api";
 import store from "../../../../app-store";
 
 /**
@@ -72,8 +72,6 @@ export default {
         map3D.setEnabled(true);
         commit("setMode", "3D");
         Radio.trigger("Map", "change", "3D");
-        store.commit("Map/setMapId", map3D.id);
-        store.commit("Map/setMapMode", "3D");
         store.dispatch("MapMarker/removePointMarker");
     },
 
@@ -108,8 +106,6 @@ export default {
                 Radio.trigger("Alert", "alert:remove");
                 commit("setMode", "2D");
                 Radio.trigger("Map", "change", "2D");
-                store.commit("Map/setMapId", map.get("id"));
-                store.commit("Map/setMapMode", "2D");
             });
         }
     },

@@ -274,7 +274,7 @@ const actions = {
             const channel = Radio.channel("VectorLayer");
 
             channel.on({"featuresLoaded": id => {
-                commit("Map/addLoadedLayerId", id, {root: true});
+                commit("Maps/addLoadedLayerId", id, {root: true});
                 if (id === layerId) {
                     resolve();
                 }
