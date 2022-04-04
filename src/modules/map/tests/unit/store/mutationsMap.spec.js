@@ -12,7 +12,7 @@ describe("src/modules/map/store/mutationsMap.js", () => {
             const layers = [],
                 state = {
                     mapId: "ol",
-                    mapMode: "2D"
+                    mode: "2D"
                 },
                 map = {
                     id: "ol",
@@ -41,7 +41,7 @@ describe("src/modules/map/store/mutationsMap.js", () => {
         it("should only be added if given parameter is a instance of BaseLayer", () => {
             const state = {
                     mapId: "ol",
-                    mapMode: "2D"
+                    mode: "2D"
                 },
                 layers = [],
                 map = {
@@ -73,7 +73,7 @@ describe("src/modules/map/store/mutationsMap.js", () => {
         it("should remove a layer from the map", () => {
             const state = {
                     mapId: "ol",
-                    mapMode: "2D"
+                    mode: "2D"
                 },
                 layers = [],
                 layer = new VectorLayer({
@@ -106,7 +106,7 @@ describe("src/modules/map/store/mutationsMap.js", () => {
         it("should only be remove if given parameter is a instance of BaseLayer", () => {
             const state = {
                     mapId: "ol",
-                    mapMode: "2D"
+                    mode: "2D"
                 },
                 layer = new VectorLayer({
                     name: "layer123",

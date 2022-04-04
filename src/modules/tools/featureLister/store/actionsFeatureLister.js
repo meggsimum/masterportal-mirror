@@ -11,7 +11,7 @@ export default {
         commit("setLayer", layer);
         if (state.layer) {
             commit("setLayerId", layer.id);
-            commit("setGfiFeaturesOfLayer", rootGetters["Map/visibleLayerList"]);
+            commit("setGfiFeaturesOfLayer", rootGetters["Maps/visibleLayerList"]);
             commit("setFeatureCount", state.gfiFeaturesOfLayer.length);
             commit("setShownFeatures", state.gfiFeaturesOfLayer.length < state.maxFeatures ? state.gfiFeaturesOfLayer.length : state.maxFeatures);
             commit("setLayerListView", false);
@@ -65,7 +65,7 @@ export default {
     highlightFeature ({state, rootGetters, dispatch}, featureId) {
         dispatch("Maps/removeHighlightFeature", "decrease", {root: true});
         let featureGeometryType = "";
-        const layer = rootGetters["Map/visibleLayerList"].find((l) => l.values_.id === state.layer.id),
+        const layer = rootGetters["Maps/visibleLayerList"].find((l) => l.values_.id === state.layer.id),
             layerFeatures = state.nestedFeatures ? state.rawFeaturesOfLayer : layer.getSource().getFeatures(),
             featureWrapper = layerFeatures.find(feat => {
                 featureGeometryType = feat.getGeometry().getType();

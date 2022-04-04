@@ -13,7 +13,7 @@ const getters = {
      * @returns {String[]} options for geometry selection
      */
     geometryValues ({geometryValues3d, geometryValues}, _, __, rootGetters) {
-        return rootGetters["Map/is3d"]
+        return rootGetters["Maps/is3D"]
             ? geometryValues3d
             : geometryValues;
     },
@@ -25,7 +25,7 @@ const getters = {
      * @returns {String} selected geometry selection option
      */
     selectedGeometry ({geometryValues3d, selectedGeometry}, _, __, rootGetters) {
-        return rootGetters["Map/is3d"]
+        return rootGetters["Maps/is3D"]
             ? geometryValues3d[0] // 3D mode only has one option
             : selectedGeometry;
     },
@@ -37,7 +37,7 @@ const getters = {
      * @returns {String[]} options for measurement units
      */
     currentUnits ({selectedGeometry, lineStringUnits, polygonUnits}, _, __, rootGetters) {
-        return rootGetters["Map/is3d"] || selectedGeometry === "LineString"
+        return rootGetters["Maps/is3D"] || selectedGeometry === "LineString"
             ? lineStringUnits
             : polygonUnits;
     },

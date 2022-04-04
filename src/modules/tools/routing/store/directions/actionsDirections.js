@@ -15,7 +15,7 @@ export default {
             return;
         }
         const {waypoints, directionsRouteSource, routingAvoidFeaturesOptions, settings, directionsAvoidSource} = state,
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode),
+            map = mapCollection.getMap(rootState.Maps.mode),
             wgs84Coords = await dispatch("getDirectionsCoordinatesWgs84"),
             lineStringFeature = await dispatch("getRouteFeature");
 
@@ -169,7 +169,7 @@ export default {
      */
     async zoomToRoute ({dispatch, state, rootState}, {fromWaypointIndex, toWaypointIndex, coordsIndex}) {
         const {waypoints} = state,
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode),
+            map = mapCollection.getMap(rootState.Maps.mode),
             routeFeature = await dispatch("getRouteFeature"),
             lineIndex = coordsIndex ? coordsIndex.slice(0) : [
                 waypoints[fromWaypointIndex].getIndexDirectionsLineString(),
@@ -250,7 +250,7 @@ export default {
                 directionsAvoidSelectInteraction,
                 mapListenerAdded
             } = state,
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
+            map = mapCollection.getMap(rootState.Maps.mode);
 
         dispatch("initWaypoints");
 
@@ -297,7 +297,7 @@ export default {
      */
     closeDirections ({rootState, state, dispatch}) {
         const {directionsWaypointsLayer, directionsRouteLayer, directionsAvoidLayer} = state,
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
+            map = mapCollection.getMap(rootState.Maps.mode);
 
         map.removeLayer(directionsRouteLayer);
         map.removeLayer(directionsWaypointsLayer);

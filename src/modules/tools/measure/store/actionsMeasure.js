@@ -32,10 +32,10 @@ export default {
 
         let interaction = null;
 
-        if (rootGetters["Map/is3d"]) {
+        if (rootGetters["Maps/is3D"]) {
             dispatch("deleteFeatures");
             interaction = makeDraw3d(
-                rootGetters["Map/map3d"],
+                rootGetters["Maps/get3DMap"],
                 rootGetters["Map/projectionCode"],
                 unlistener => commit("addUnlistener", unlistener),
                 rootState._store

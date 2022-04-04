@@ -116,7 +116,7 @@ describe("tools/featureLister/store/actionsFeatureLister", () => {
             }
         };
 
-        rootGetters = {"Map/visibleLayerList": [
+        rootGetters = {"Maps/visibleLayerList": [
             {name: "ersterLayer", values_: {id: "123"}, getSource: () => state.source, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
             {name: "zweiterLayer", values_: {id: "456"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"},
             {name: "dritterLayer", values_: {id: "789"}, features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]};

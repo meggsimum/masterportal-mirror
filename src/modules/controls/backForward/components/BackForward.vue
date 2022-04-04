@@ -25,13 +25,13 @@ export default {
     },
     computed: {
         ...mapGetters("controls/backForward", ["forthAvailable", "backAvailable"]),
-        ...mapGetters("Map", ["ol2DMap"])
+        ...mapGetters("Maps", ["get2DMap"])
     },
     mounted () {
-        this.ol2DMap.on("moveend", this.memorizeMap);
+        this.get2DMap.on("moveend", this.memorizeMap);
     },
     beforeDestroy () {
-        this.ol2DMap.un("moveend", this.memorizeMap);
+        this.get2DMap.un("moveend", this.memorizeMap);
     },
     methods: {
         ...mapMutations(
@@ -39,13 +39,13 @@ export default {
             ["forward", "backward", "memorize"]
         ),
         memorizeMap () {
-            this.memorize(this.ol2DMap.getView());
+            this.memorize(this.get2DMap.getView());
         },
         moveForward () {
-            this.forward(this.ol2DMap);
+            this.forward(this.get2DMap);
         },
         moveBackward () {
-            this.backward(this.ol2DMap);
+            this.backward(this.get2DMap);
         }
     }
 };

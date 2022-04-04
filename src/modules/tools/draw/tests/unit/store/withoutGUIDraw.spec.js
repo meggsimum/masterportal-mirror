@@ -58,9 +58,8 @@ describe("src/modules/tools/draw/store/actions/withoutGUIDraw.js", () => {
                 geometry: new Polygon(coordinates)
             });
             rootState = {
-                Map: {
-                    mapId: "ol",
-                    mapMode: "2D"
+                Maps: {
+                    mode: "2D"
                 }
             };
             state = {

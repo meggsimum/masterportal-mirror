@@ -129,9 +129,9 @@ WMSLayer.prototype.updateSource = function () {
  */
 WMSLayer.prototype.getGfiUrl = function () {
     const mapView = mapCollection.getMapView("ol", "2D"),
-        resolution = store.getters["Map/resolution"],
+        resolution = store.getters["Maps/resolution"],
         projection = mapView.getProjection(),
-        coordinate = store.getters["Map/clickCoord"];
+        coordinate = store.getters["Maps/clickCoordinate"];
 
     return this.get("layerSource").getFeatureInfoUrl(coordinate, resolution, projection, {INFO_FORMAT: this.get("infoFormat"), FEATURE_COUNT: this.get("featureCount")});
 };

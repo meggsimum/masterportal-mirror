@@ -9,7 +9,7 @@ channel.reply({
         return store.getters["Maps/is3D"];
     },
     "getMap3d": function () {
-        return mapCollection.getMap("olcs", "3D");
+        return mapCollection.getMap("3D");
     }
 });
 
@@ -18,6 +18,6 @@ channel.on({
         store.dispatch("Maps/setShadowTime", shadowTime, {root: true});
     },
     "setCameraParameter": function (cameraParams) {
-        api.map.olcsMap.setCameraParameter(cameraParams, mapCollection.getMap("olcs", "3D"), Cesium);
+        api.map.olcsMap.setCameraParameter(cameraParams, mapCollection.getMap("3D"), Cesium);
     }
 });

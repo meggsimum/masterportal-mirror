@@ -40,7 +40,7 @@ export default {
      */
     async activateMap3D ({getters, dispatch, commit}) {
         const mapMode = getters.mode;
-        let map3D = mapCollection.getMap("olcs", "3D"),
+        let map3D = mapCollection.getMap("3D"),
             scene;
 
         if (Radio.request("Map", "isMap3d")) {
@@ -83,7 +83,7 @@ export default {
      * @returns {void}
      */
     deactivateMap3D ({commit}) {
-        const map3D = mapCollection.getMap("olcs", "3D"),
+        const map3D = mapCollection.getMap("3D"),
             map = Radio.request("Map", "getMap"),
             view = map.getView();
         let resolution,

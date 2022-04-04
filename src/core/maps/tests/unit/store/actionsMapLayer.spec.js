@@ -72,7 +72,7 @@ describe("src/core/maps/actions/actionsMapLayer.js", () => {
             store.dispatch("Maps/addLayer", layer2, 1);
             store.dispatch("Maps/addLayer", layer3, 2);
 
-            mapCollection.getMap("ol", "2D").getLayers().forEach((layer, index) => {
+            mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
                 expect(layer.getZIndex()).equals(zIndexes[index]);
                 expect(layer.get("id")).equals(ids[index]);
             });
@@ -88,7 +88,7 @@ describe("src/core/maps/actions/actionsMapLayer.js", () => {
             store.dispatch("Maps/addLayerToIndex", {layer: layer2, zIndex: 1});
             store.dispatch("Maps/addLayerToIndex", {layer: layer3, zIndex: 2});
 
-            mapCollection.getMap("ol", "2D").getLayers().forEach((layer, index) => {
+            mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
                 expect(layer.getZIndex()).equals(zIndexes[index]);
                 expect(layer.get("id")).equals(ids[index]);
             });
@@ -104,7 +104,7 @@ describe("src/core/maps/actions/actionsMapLayer.js", () => {
             store.dispatch("Maps/addLayer", layer2);
             store.dispatch("Maps/addLayer", layer3);
 
-            mapCollection.getMap("ol", "2D").getLayers().forEach((layer, index) => {
+            mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
                 expect(layer.getZIndex()).equals(zIndexes[index]);
                 expect(layer.get("id")).equals(ids[index]);
             });
@@ -119,7 +119,7 @@ describe("src/core/maps/actions/actionsMapLayer.js", () => {
             store.dispatch("Maps/addNewLayerIfNotExists", {layerName: "Tick, Trick und Track"});
             store.dispatch("Maps/addLayer", layer1);
 
-            mapCollection.getMap("ol", "2D").getLayers().forEach((layer, index) => {
+            mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
                 expect(layer.getZIndex()).equals(zIndexes[index]);
                 expect(layer.get("id")).equals(ids[index]);
             });
@@ -132,7 +132,7 @@ describe("src/core/maps/actions/actionsMapLayer.js", () => {
             store.dispatch("Maps/addLayer", layer1);
             store.dispatch("Maps/addNewLayerIfNotExists", {layerName: "Tick, Trick und Track", alwaysOnTop: false});
 
-            mapCollection.getMap("ol", "2D").getLayers().forEach((layer, index) => {
+            mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
                 expect(layer.getZIndex()).equals(zIndexes[index]);
                 expect(layer.get("id")).equals(ids[index]);
             });

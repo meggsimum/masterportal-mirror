@@ -163,7 +163,7 @@ export default {
     changedPosition ({dispatch, state, rootGetters, getters}) {
         if (state.mode === "supply") {
             const targetProjectionName = state.currentProjection?.name,
-                position = getters.getTransformedPosition(rootGetters["Map/ol2DMap"], targetProjectionName);
+                position = getters.getTransformedPosition(rootGetters["Maps/get2DMap"], targetProjectionName);
 
             if (position) {
                 dispatch("adjustPosition", {position: position, targetProjection: state.currentProjection});
@@ -177,7 +177,7 @@ export default {
     setFirstSearchPosition ({dispatch, commit, state, rootState, rootGetters, getters}) {
         if (state.mode === "search" && state.active) {
             const targetProjectionName = state.currentProjection?.name,
-                position = getters.getTransformedPosition(rootGetters["Map/ol2DMap"], targetProjectionName);
+                position = getters.getTransformedPosition(rootGetters["Maps/get2DMap"], targetProjectionName);
 
             if (position && position[0] === 0 && position[1] === 0 && rootState.Map.center) {
                 commit("setCoordinatesEasting", {id: "easting", value: String(rootState.Map.center[0])});

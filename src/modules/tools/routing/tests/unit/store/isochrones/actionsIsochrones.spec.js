@@ -75,9 +75,8 @@ describe("src/modules/tools/routing/store/isochrones/actionsIsochrones.js", () =
         };
 
         rootState = {
-            Map: {
-                mapId: "ol",
-                mapMode: "2D"
+            Maps: {
+                mode: "2D"
             }
         };
 

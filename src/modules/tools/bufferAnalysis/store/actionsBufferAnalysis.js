@@ -63,7 +63,7 @@ const actions = {
             newFeature.set("originFeature", feature);
             vectorSource.addFeature(newFeature);
         });
-        mapCollection.getMap(rootGetters["Map/mapId"], rootGetters["Map/mapMode"]).addLayer(bufferLayer);
+        mapCollection.getMap(rootGetters["Maps/mode"]).addLayer(bufferLayer);
     },
     /**
      * Removes generated result layer and buffer layer
@@ -72,9 +72,9 @@ const actions = {
      * @return {void}
      */
     removeGeneratedLayers ({commit, rootState, getters: {resultLayer, bufferLayer}}) {
-        mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode).removeLayer(resultLayer);
+        mapCollection.getMap(rootState.Maps.mode).removeLayer(resultLayer);
         commit("setResultLayer", {});
-        mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode).removeLayer(bufferLayer);
+        mapCollection.getMap(rootState.Maps.mode).removeLayer(bufferLayer);
         commit("setBufferLayer", {});
         commit("setIntersections", []);
         commit("setResultFeatures", []);
@@ -229,7 +229,7 @@ const actions = {
 
             vectorSource.addFeatures(resultFeatures);
             resultLayer.set("gfiAttributes", gfiAttributes);
-            mapCollection.getMap(rootGetters["Map/mapId"], rootGetters["Map/mapMode"]).addLayer(resultLayer);
+            mapCollection.getMap(rootGetters["Maps/mode"]).addLayer(resultLayer);
         }
         const targetOlLayer = selectedTargetLayer.get("layer"),
             sourceOlLayer = selectedSourceLayer.get("layer");

@@ -19,7 +19,7 @@ export default {
                 waypoint.getCoordinates(),
                 {root: true}
             ),
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
+            map = mapCollection.getMap(rootState.Maps.mode);
 
         commit("setIsLoadingIsochrones", true);
         await dispatch("resetIsochronesResult");
@@ -60,7 +60,7 @@ export default {
      * @returns {void}
      */
     zoomOnWaypoint ({state, rootState}) {
-        const map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
+        const map = mapCollection.getMap(rootState.Maps.mode);
 
         map.getView().fit(state.waypoint.getFeature().getGeometry(), {maxZoom: 7});
     },
@@ -112,7 +112,7 @@ export default {
      */
     initIsochrones ({rootState, state, commit, dispatch}) {
         const {isochronesPointLayer, isochronesAreaLayer, isochronesPointDrawInteraction, mapListenerAdded} = state,
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
+            map = mapCollection.getMap(rootState.Maps.mode);
 
         if (!mapListenerAdded) {
             isochronesPointDrawInteraction.on("drawend", event => dispatch("onIsochronesPointDrawEnd", event));
@@ -133,7 +133,7 @@ export default {
      */
     closeIsochrones ({rootState, state, dispatch}) {
         const {isochronesPointLayer, isochronesAreaLayer} = state,
-            map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
+            map = mapCollection.getMap(rootState.Maps.mode);
 
         map.removeLayer(isochronesPointLayer);
         map.removeLayer(isochronesAreaLayer);

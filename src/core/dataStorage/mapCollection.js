@@ -24,13 +24,12 @@ export default {
     },
 
     /**
-     * Gets a map by the given id and mode.
-     * @param {String} id The map id.
+     * Gets a map by the given mode.
      * @param {String} mode The map mode.
      * @returns {module:ol/PluggableMap~PluggableMap} The map.
      */
-    getMap: function (id, mode) {
-        return mapCollection.find(map => map?.id === id && map?.mode === mode);
+    getMap: function (mode) {
+        return mapCollection.find(map => map?.mode === mode);
     },
 
     /**
@@ -48,6 +47,6 @@ export default {
      * @returns {module:ol/PluggableMap~PluggableMap} The mapview.
      */
     getMapView: function (id, mode) {
-        return this.getMap(id, mode).getView();
+        return this.getMap(mode).getView();
     }
 };

@@ -47,15 +47,13 @@ describe("src/core/layers/terrain.js", () => {
         };
         cesiumTerrainProviderSpy = sinon.spy(global.Cesium, "CesiumTerrainProvider");
         cesiumEllipsoidTerrainProviderSpy = sinon.spy(global.Cesium, "EllipsoidTerrainProvider");
-        store.state.Map.mapId = "map3D_0";
-        store.state.Map.mapMode = "3D";
+        store.state.Maps.mode = "3D";
     });
 
     afterEach(() => {
         sinon.restore();
         global.Cesium = null;
-        store.state.Map.mapId = "ol";
-        store.state.Map.mapMode = "2D";
+        store.state.Maps.mode = "2D";
     });
 
     /**

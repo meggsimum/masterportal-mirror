@@ -14,14 +14,13 @@ export default {
      * @param {Object} payload.options Options for zoom.
      * @param {Number} [payload.options.duration=800] The duration of the animation in milliseconds.
      * @param {Object} [payload.map] The parameter to get the map from the map collection
-     * @param {String} [payload.map.mapId="ol"] The map id.
      * @param {String} [payload.map.mapMode="2D"] The map mode.
      * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#fit} for more options.
      * @returns {void}
      */
-    zoomToExtent ({getters}, {extent, options, map = {mapId: "ol", mapMode: "2D"}}) {
+    zoomToExtent ({getters}, {extent, options, map = {mapMode: "2D"}}) {
         getters.getView.fit(extent, {
-            size: mapCollection.getMap(map.mapId, map.mapMode).getSize(),
+            size: mapCollection.getMap(map.mapMode).getSize(),
             ...Object.assign({duration: 800}, options)
         });
     },
@@ -34,7 +33,6 @@ export default {
      * @param {String} payload.layerId The layer id.
      * @param {Object} payload.zoomOptions The options for zoom to extent.
      * @param {Object} [payload.map] The parameter to get the map from the map collection
-     * @param {String} [payload.map.mapId="ol"] The map id.
      * @param {String} [payload.map.mapMode="2D"] The map mode.
      * @returns {void}
      */
@@ -63,19 +61,18 @@ export default {
      * @param {Object} payload.data.options Options for zoom.
      * @param {string} payload.data.projection The projection from RUL parameter.
      * @param {Object} [payload.map] The parameter to get the map from the map collection
-     * @param {String} [payload.map.mapId="ol"] The map id.
      * @param {String} [payload.map.mapMode="2D"] The map mode.
      * @returns {void}
      */
-    zoomToProjExtent ({dispatch}, {data, map = {mapId: "ol", mapMode: "2D"}}) {
+    zoomToProjExtent ({dispatch}, {data, map = {mapMode: "2D"}}) {
         if (Object.values(data).every(val => val !== undefined)) {
             const leftBottom = data.extent.slice(0, 2),
                 topRight = data.extent.slice(2, 4),
-                transformedLeftBottom = transformToMapProjection(mapCollection.getMap(map.mapId, map.mapMode), data.projection, leftBottom),
-                transformedTopRight = transformToMapProjection(mapCollection.getMap(map.mapId, map.mapMode), data.projection, topRight),
+                transformedLeftBottom = transformToMapProjection(mapCollection.getMap(map.mapMode), data.projection, leftBottom),
+                transformedTopRight = transformToMapProjection(mapCollection.getMap(map.mapMode), data.projection, topRight),
                 extentToZoom = transformedLeftBottom.concat(transformedTopRight);
 
-            dispatch("Maps/zoomToExtent", {extent: extentToZoom, options: data.options, map: {mapId: map.mapId, mapMode: map.mapMode}});
+            dispatch("Maps/zoomToExtent", {extent: extentToZoom, options: data.options, map: {mapMode: map.mapMode}});
         }
     }
 };

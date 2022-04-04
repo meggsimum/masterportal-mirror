@@ -24,7 +24,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Map", ["clickCoord"]),
+        ...mapGetters("Maps", ["clickCoordinate"]),
         ...mapGetters("Tools/Gfi", ["centerMapToClickPoint", "showMarker", "highlightVectorRules", "currentFeature"]),
 
         /**
@@ -82,10 +82,10 @@ export default {
         setMarker () {
             if (this.showMarker) {
                 if (this.centerMapToClickPoint) {
-                    this.setCenter(this.clickCoord);
+                    this.setCenter(this.clickCoordinate);
                 }
 
-                this.placingPointMarker(this.clickCoord);
+                this.placingPointMarker(this.clickCoordinate);
             }
         },
         /**

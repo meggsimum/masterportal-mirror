@@ -66,9 +66,8 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
 
         beforeEach(() => {
             rootState = {
-                Map: {
-                    mapId: "ol",
-                    mapMode: "2D"
+                Maps: {
+                    mode: "2D"
                 }
             };
         });
@@ -486,9 +485,8 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
 
             mapCollection.addMap(map, "ol", "2D");
             rootState = {
-                Map: {
-                    mapId: "ol",
-                    mapMode: "2D"
+                Maps: {
+                    mode: "2D"
                 }};
             state = {deactivatedDrawInteractions: []};
         });

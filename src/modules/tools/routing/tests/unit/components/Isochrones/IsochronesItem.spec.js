@@ -60,11 +60,10 @@ describe("src/modules/tools/routing/components/Isochrones/IsochronesItem.vue", (
                         Routing
                     }
                 },
-                Map: {
+                Maps: {
                     namespaced: true,
                     state: {
-                        mapId: "ol",
-                        mapMode: "2D"
+                        mode: "2D"
                     }
                 }
             },

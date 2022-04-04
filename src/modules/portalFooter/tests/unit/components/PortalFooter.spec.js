@@ -61,7 +61,7 @@ describe("src/modules/portalFooter/components/PortalFooter.vue", () => {
                 Map: {
                     namespaced: true,
                     getters: {
-                        is3d: () => false
+                        is3D: () => false
                     }
                 }
             },
@@ -168,7 +168,7 @@ describe("src/modules/portalFooter/components/PortalFooter.vue", () => {
                 footerConfig: () => sinon.stub(),
                 masterPortalVersionNumber: () => sinon.stub(),
                 mobile: () => false,
-                is3d: () => true
+                is3D: () => true
             },
             localVue
         });
@@ -192,7 +192,7 @@ describe("src/modules/portalFooter/components/PortalFooter.vue", () => {
                 footerConfig: () => sinon.stub(),
                 masterPortalVersionNumber: () => sinon.stub(),
                 mobile: () => false,
-                is3d: () => true
+                is3D: () => true
             },
             localVue
         });

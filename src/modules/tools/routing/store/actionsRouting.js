@@ -139,7 +139,7 @@ export default {
      */
     transformCoordinatesLocalToWgs84Projection ({rootState}, coordinates) {
         return transform(
-            getMapProjection(mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode)),
+            getMapProjection(mapCollection.getMap(rootState.Maps.mode)),
             "EPSG:4326",
             coordinates
         );
@@ -153,7 +153,7 @@ export default {
     transformCoordinatesWgs84ToLocalProjection ({rootState}, coordinates) {
         return transform(
             "EPSG:4326",
-            getMapProjection(mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode)),
+            getMapProjection(mapCollection.getMap(rootState.Maps.mode)),
             coordinates
         );
     }

@@ -62,7 +62,7 @@ export default {
      * @returns {void}
      */
     removePointMarker ({state, rootGetters, commit}) {
-        rootGetters["Map/ol2DMap"].removeLayer(state.markerPoint);
+        rootGetters["Maps/get2DMap"].removeLayer(state.markerPoint);
         commit("clearMarker", "markerPoint");
         commit("setVisibilityMarker", {visbility: false, marker: "markerPoint"});
     },
@@ -144,7 +144,7 @@ export default {
      * @returns {void}
      */
     removePolygonMarker: function ({state, rootGetters, commit}) {
-        rootGetters["Map/ol2DMap"].removeLayer(state.markerPolygon);
+        rootGetters["Maps/get2DMap"].removeLayer(state.markerPolygon);
         commit("clearMarker", "markerPolygon");
         commit("setVisibilityMarker", {visbility: false, marker: "markerPolygon"});
     }

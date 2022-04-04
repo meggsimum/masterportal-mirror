@@ -15,7 +15,7 @@ const mutations = {
     setCenter (state, coord) {
         if (Array.isArray(coord) && coord.length === 2 && typeof coord[0] === "number" && typeof coord[1] === "number") {
             state.center = coord;
-            mapCollection.getMap("ol", "2D").getView().setCenter(coord);
+            mapCollection.getMap("2D").getView().setCenter(coord);
         }
         else {
             console.warn("Center was not set. Probably there is a data type error. The format of the coordinate must be an array with two numbers.");
@@ -62,7 +62,7 @@ const mutations = {
      */
     addLayerToMap (state, layer) {
         if (layer instanceof BaseLayer) {
-            mapCollection.getMap("ol", "2D").addLayer(layer);
+            mapCollection.getMap("2D").addLayer(layer);
         }
     },
 
@@ -73,8 +73,8 @@ const mutations = {
      * @returns {void}
      */
     removeLayerFromMap (state, layer) {
-        if (mapCollection.getMap("ol", "2D") && layer instanceof BaseLayer) {
-            mapCollection.getMap("ol", "2D").removeLayer(layer);
+        if (mapCollection.getMap("2D") && layer instanceof BaseLayer) {
+            mapCollection.getMap("2D").removeLayer(layer);
         }
     },
 

@@ -26,7 +26,7 @@ export default {
     },
     computed: {
         ...mapGetters("Tools/FeatureLister", Object.keys(getters)),
-        ...mapGetters("Map", [
+        ...mapGetters("Maps", [
             "visibleLayerList"
         ]),
         visibleVectorLayers: function () {

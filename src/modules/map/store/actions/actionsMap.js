@@ -124,7 +124,7 @@ const actions = {
      */
     updateClick ({getters, commit, dispatch, rootGetters}, evt) {
 
-        if (getters.mapMode === "2D" || getters.mapMode === "Oblique") {
+       /*  if (getters.mapMode === "2D" || getters.mapMode === "Oblique") {
             commit("setClickCoord", evt.coordinate);
             commit("setClickPixel", evt.pixel);
         }
@@ -144,7 +144,7 @@ const actions = {
             dispatch("MapMarker/placingPointMarker", evt.coordinate, {root: true});
             commit("controls/orientation/setPosition", evt.coordinate, {root: true});
             commit("controls/orientation/setShowPoi", true, {root: true});
-        }
+        } */
     },
 
     /**
@@ -152,9 +152,9 @@ const actions = {
      *
      * @returns {void}
      */
-    collectGfiFeatures ({getters, commit, dispatch}) {
-        const {clickCoord, visibleWmsLayerListAtResolution, resolution, projection, gfiFeaturesAtPixel} = getters,
-            gfiWmsLayerList = visibleWmsLayerListAtResolution.filter(layer => {
+    collectGfiFeatures ({getters, commit, dispatch, rootGetters}) {
+        const {clickCoord, resolution, projection} = getters,
+            gfiWmsLayerList = rootGetters["Maps/visibleWmsLayerListAtResolution"].filter(layer => {
                 return layer.get("gfiAttributes") !== "ignore";
             });
 
@@ -183,8 +183,8 @@ const actions = {
         }))
             .then(gfiFeatures => {
                 // only commit if features found
-                if (gfiFeaturesAtPixel.concat(...gfiFeatures).length > 0) {
-                    commit("setGfiFeatures", gfiFeaturesAtPixel.concat(...gfiFeatures));
+                if (rootGetters["Maps/gfiFeaturesAtPixel"].concat(...gfiFeatures).length > 0) {
+                    commit("setGfiFeatures", rootGetters["Maps/gfiFeaturesAtPixel"].concat(...gfiFeatures));
                 }
             })
             .catch(error => {
@@ -273,7 +273,7 @@ const actions = {
      * @returns {void}
      */
     setResolutionByIndex ({getters}, index) {
-        const map = getters.ol2DMap,
+        const map = getters["Maps/get2DMap"],
             view = map.getView();
 
         view.setResolution(view.getResolutions()[index]);
@@ -287,7 +287,7 @@ const actions = {
      */
     addPointerMoveHandler ({getters}, callback) {
         if (callback) {
-            getters.ol2DMap.on("pointermove", e => callback(e));
+            getters["Maps/get2DMap"].on("pointermove", e => callback(e));
         }
 
     },
@@ -299,7 +299,7 @@ const actions = {
      * @returns {void}
      */
     removePointerMoveHandler ({getters}, callback) {
-        const map = getters.ol2DMap;
+        const map = getters["Maps/get2DMap"];
 
         map.un("pointermove", e => callback(e));
     },
@@ -335,7 +335,7 @@ const actions = {
      * @returns {void}
      */
     zoomTo ({commit, getters}, {geometryOrExtent, options = {}}) {
-        const mapView = getters.ol2DMap.getView();
+        const mapView = getters.get2DMap.getView();
 
         mapView.fit(geometryOrExtent, {
             duration: options?.duration ? options.duration : 800,
@@ -369,7 +369,7 @@ const actions = {
             source: new VectorSource(),
             zIndex: 999
         });
-        getters.ol2DMap.addLayer(resultLayer);
+        getters.get2DMap.addLayer(resultLayer);
         return resultLayer;
     },
     // /**

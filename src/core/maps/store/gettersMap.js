@@ -13,21 +13,21 @@ const getters = {
      * @returns {module:ol/PluggableMap~PluggableMap} ol 2D map
      */
     get2DMap: () => {
-        return mapCollection.getMap("ol", "2D");
+        return mapCollection.getMap("2D");
     },
     /**
      * Returns the 3D olcs map from the map collection.
      * @returns {module:ol/PluggableMap~PluggableMap} ol 2D map
      */
     get3DMap: () => {
-        return mapCollection.getMap("olcs", "3D");
+        return mapCollection.getMap("3D");
     },
     /**
      * Returns the layer collection of the map
      * @returns {Object} layer collection of the map.
      */
     getLayers: () => {
-        return mapCollection.getMap("ol", "2D").getLayers();
+        return mapCollection.getMap("2D").getLayers();
     },
     /**
      * Gets the features at the given pixel for the gfi
@@ -40,7 +40,7 @@ const getters = {
             map3D = getters.get3DMap();
 
         if (clickPixel) {
-            mapCollection.getMap("ol", "2D").forEachFeatureAtPixel(clickPixel, (feature, layer) => {
+            mapCollection.getMap("2D").forEachFeatureAtPixel(clickPixel, (feature, layer) => {
                 if (layer?.getVisible() && layer?.get("gfiAttributes") && layer?.get("gfiAttributes") !== "ignore") {
                     if (feature.getProperties().features) {
                         feature.get("features").forEach(function (clusteredFeature) {
@@ -136,28 +136,28 @@ const getters = {
      * @returns {Object} Returns the camera of the 3D map
      */
     getCamera: () => {
-        return mapCollection.getMap("olcs", "3D").getCamera();
+        return mapCollection.getMap("3D").getCamera();
     },
     /**
      * Returns the globe of Cesium scene
      * @returns {Object} Returns the 3D globe object.
      */
     getGlobe: () => {
-        return mapCollection.getMap("olcs", "3D").getCesiumScene().globe;
+        return mapCollection.getMap("3D").getCesiumScene().globe;
     },
     /**
      * Returns the Cesium scene
      * @returns {Object} Returns the cesium scene.
      */
     getCesiumScene: () => {
-        return mapCollection.getMap("olcs", "3D").getCesiumScene();
+        return mapCollection.getMap("3D").getCesiumScene();
     },
     /**
      * Returns the shadowMap of the cesium scene
      * @returns {Object} Returns the shadowMap.
      */
     getShadowMap: () => {
-        return mapCollection.getMap("olcs", "3D").getCesiumScene().shadowMap;
+        return mapCollection.getMap("3D").getCesiumScene().shadowMap;
     },
     /**
      * Cesium time function.
@@ -240,12 +240,6 @@ const getters = {
      * @returns {String} pretty-printed mouse coordinate
      */
     prettyMouseCoord: (_, {mouseCoordinate}) => mouseCoordinate ? `${mouseCoordinate[0].toString().substr(0, 9)}, ${mouseCoordinate[1].toString().substr(0, 10)}` : "",
-    /**
-     * @param {Object} _ state
-     * @param {Object} g getters
-     * @returns {String} projection code
-     */
-    projectionCode: (_, g) => g.projection?.getCode(),
 
     /*
      * Layerlist

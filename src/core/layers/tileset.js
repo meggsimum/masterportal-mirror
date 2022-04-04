@@ -60,7 +60,7 @@ TileSetLayer.prototype.setVisible = function (newValue) {
  * @returns {void}
  */
 TileSetLayer.prototype.onMapModeChanged = function () {
-    store.watch((state, getters) => getters["Map/mapMode"], mode => {
+    store.watch((state, getters) => getters["Maps/mode"], mode => {
         if (mode === "3D") {
             this.setIsSelected(this.get("isVisibleInMap"));
         }
@@ -74,7 +74,7 @@ TileSetLayer.prototype.onMapModeChanged = function () {
  * @returns {void}
  */
 TileSetLayer.prototype.setIsSelected = function (newValue, attr) {
-    const map = mapCollection.getMap(store.state.Map.mapId, store.state.Map.mapMode),
+    const map = mapCollection.getMap(store.state.Maps.mode),
         treeType = store.getters.treeType;
 
     if (map && map.mode === "3D") {

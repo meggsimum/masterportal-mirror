@@ -60,9 +60,8 @@ describe("src/modules/tools/bufferAnalysis/components/BufferAnalysis.vue", () =>
             },
             state: {
                 configJson: mockConfigJson,
-                Map: {
-                    mapId: "ol",
-                    mapMode: "2D"
+                Maps: {
+                    mode: "2D"
                 }
             }
         });

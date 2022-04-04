@@ -76,7 +76,7 @@ describe("src/modules/map/store/actions/actionsMap.js", () => {
         });
     });
 
-    describe("collectGfiFeatures", () => {
+    /*  describe("collectGfiFeatures", () => {
         it("commits setGfiFeature", async () => {
             const getters = {
                     clickCoord: sinon.spy(),
@@ -123,7 +123,7 @@ describe("src/modules/map/store/actions/actionsMap.js", () => {
             expect(commit.calledThrice).to.be.true;
             expect(commit.args[1]).to.include.members(["setClickPixel"]);
         });
-    });
+    }); */
 
     // describe("setCenter", () => {
     //     let commit,

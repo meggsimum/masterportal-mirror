@@ -93,8 +93,8 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          */
         clearTooltip ({rootState}, tooltip) {
             tooltip.getElement().parentNode.removeChild(tooltip.getElement());
-            mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode).un("pointermove", tooltip.get("mapPointerMoveEvent"));
-            mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode).removeOverlay(tooltip);
+            mapCollection.getMap(rootState.Maps.mode).un("pointermove", tooltip.get("mapPointerMoveEvent"));
+            mapCollection.getMap(rootState.Maps.mode).removeOverlay(tooltip);
         },
         /**
          * Returns the center point of a Line or Polygon or a point itself.
@@ -110,7 +110,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                 centerPointCoords = [];
 
             const featureType = feature.getGeometry().getType(),
-                map = mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode);
+                map = mapCollection.getMap(rootState.Maps.mode);
 
             if (featureType === "LineString") {
                 if (targetProjection !== undefined) {
@@ -194,8 +194,8 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
 
                 if (!tooltip && state?.drawType?.id === "drawCircle" || state?.drawType?.id === "drawDoubleCircle") {
                     tooltip = createTooltipOverlay({getters, commit, dispatch});
-                    mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode).addOverlay(tooltip);
-                    mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
+                    mapCollection.getMap(rootState.Map.mode).addOverlay(tooltip);
+                    mapCollection.getMap(rootState.Map.mode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
                     event.feature.getGeometry().on("change", tooltip.get("featureChangeEvent"));
                 }
             });
@@ -292,8 +292,8 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                             if (!tooltip && (state.drawType.id === "drawCircle" || state.drawType.id === "drawDoubleCircle")) {
                                 if (center === JSON.stringify(feature.getGeometry().getCenter())) {
                                     tooltip = createTooltipOverlay({getters, commit, dispatch});
-                                    mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode).addOverlay(tooltip);
-                                    mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
+                                    mapCollection.getMap(rootState.Maps.mode).addOverlay(tooltip);
+                                    mapCollection.getMap(rootState.Maps.mode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
                                     state.selectedFeature.getGeometry().on("change", tooltip.get("featureChangeEvent"));
                                 }
                             }
@@ -385,7 +385,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          * @returns {void}
          */
         deactivateDrawInteractions ({state, rootState}) {
-            mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode).getInteractions().forEach(int => {
+            mapCollection.getMap(rootState.Maps.mode).getInteractions().forEach(int => {
                 if (int instanceof Draw) {
                     int.setActive(false);
                     if (state.deactivatedDrawInteractions.indexOf(int) === -1) {
@@ -600,7 +600,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
                 const feature = state.selectedFeature,
                     circleCenter = feature.getGeometry().getCenter();
 
-                calculateCircle({feature}, circleCenter, radius, mapCollection.getMap(rootState.Map.mapId, rootState.Map.mapMode));
+                calculateCircle({feature}, circleCenter, radius, mapCollection.getMap(rootState.Maps.mode));
 
                 dispatch("addDrawStateToFeature", state.selectedFeature);
             }

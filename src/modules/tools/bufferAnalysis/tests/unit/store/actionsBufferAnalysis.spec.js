@@ -38,13 +38,11 @@ describe("src/modules/tools/bufferAnalysis/store/actionsBufferAnalysis.js", () =
         commit = sinon.spy();
         dispatch = sinon.stub().resolves(true);
         rootGetters = {
-            "Map/mapId": "ol",
-            "Map/mapMode": "2D"
+            "Maps/mode": "2D"
         };
         rootState = {
-            Map: {
-                mapId: "ol",
-                mapMode: "2D"
+            Maps: {
+                mode: "2D"
             }
         };
         state = {...stateBufferAnalysis};
@@ -161,7 +159,7 @@ describe("src/modules/tools/bufferAnalysis/store/actionsBufferAnalysis.js", () =
             actions.showBuffer({commit, getters: state, dispatch, rootGetters});
 
             expect(commit.calledOnce).to.be.true;
-            expect(mapCollection.getMap("ol", "2D").addLayer.callCount).to.equal(1);
+            expect(mapCollection.getMap("2D").addLayer.callCount).to.equal(1);
         });
     });
     describe("removeGeneratedLayers", () => {
@@ -171,7 +169,7 @@ describe("src/modules/tools/bufferAnalysis/store/actionsBufferAnalysis.js", () =
             actions.removeGeneratedLayers({commit, rootState, getters: state});
 
             expect(commit.callCount).to.equal(4);
-            expect(mapCollection.getMap("ol", "2D").removeLayer.calledTwice).to.be.true;
+            expect(mapCollection.getMap("2D").removeLayer.calledTwice).to.be.true;
         });
     });
     describe("resetModule", () => {

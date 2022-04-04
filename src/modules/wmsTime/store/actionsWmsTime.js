@@ -50,7 +50,7 @@ const actions = {
                 Radio.trigger("ModelList", "setModelAttributesById", id, {transparency});
                 commit("setTimeSliderDefaultValue", TIME);
             }
-            mapCollection.getMap("ol", "2D").removeLayer(layerModel.get("layer"));
+            mapCollection.getMap("2D").removeLayer(layerModel.get("layer"));
             Radio.trigger("ModelList", "removeModelsById", secondId);
             Radio.trigger("Parser", "removeItem", secondId);
         }
@@ -77,9 +77,9 @@ const actions = {
      */
     updateMap ({state, rootGetters}) {
         if (!state.timeSlider.playing) {
-            mapCollection.getMap(rootGetters["Map/mapId"], rootGetters["Map/mapMode"]).render();
+            mapCollection.getMap(rootGetters["Maps/mode"]).render();
         }
-        state.layerSwiper.targetLayer.once("prerender", renderEvent => drawLayer(mapCollection.getMap(rootGetters["Map/mapId"], rootGetters["Map/mapMode"]).getSize(), renderEvent, state.layerSwiper.valueX));
+        state.layerSwiper.targetLayer.once("prerender", renderEvent => drawLayer(mapCollection.getMap(rootGetters["Maps/mode"]).getSize(), renderEvent, state.layerSwiper.valueX));
         state.layerSwiper.targetLayer.once("postrender", ({context}) => {
             context.restore();
         });

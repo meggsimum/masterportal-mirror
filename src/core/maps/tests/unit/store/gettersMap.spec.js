@@ -79,8 +79,7 @@ describe("src/core/maps/store/gettersMap.js", () => {
                     source: new VectorSource()
                 }),
                 state = {
-                    mapId: "ol",
-                    mapMode: "2D"
+                    mode: "2D"
                 };
 
             mapCollection.clear();
@@ -101,8 +100,7 @@ describe("src/core/maps/store/gettersMap.js", () => {
                     forEachFeatureAtPixel: sinon.spy()
                 },
                 state = {
-                    mapId: "ol",
-                    mapMode: "2D"
+                    mode: "2D"
                 };
 
             mapCollection.clear();
@@ -137,8 +135,7 @@ describe("src/core/maps/store/gettersMap.js", () => {
                     layers: [layer1, layer2]
                 }),
                 state = {
-                    mapId: "ol",
-                    mapMode: "2D"
+                    mode: "2D"
                 };
 
             mapCollection.clear();
@@ -167,8 +164,7 @@ describe("src/core/maps/store/gettersMap.js", () => {
                     getVisible: () => true
                 },
                 state = {
-                    mapId: "ol",
-                    mapMode: "2D"
+                    mode: "2D"
                 };
 
             mapCollection.clear();
@@ -197,8 +193,7 @@ describe("src/core/maps/store/gettersMap.js", () => {
                     layers: [layer1, layer2, layer3]
                 }),
                 state = {
-                    mapId: "ol",
-                    mapMode: "2D"
+                    mode: "2D"
                 };
 
             mapCollection.clear();

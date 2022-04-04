@@ -52,12 +52,11 @@ describe("src/modules/controls/backForward/components/BackForward.vue", () => {
                         backForward: BackForwardModule
                     }
                 },
-                Map: {
+                Maps: {
                     namespaced: true,
                     getters: {
-                        mapId: () => "ol_bf",
-                        mapMode: () => "2D",
-                        ol2DMap: () => {
+                        mode: () => "2D",
+                        get2DMap: () => {
                             return map;
                         }
                     }

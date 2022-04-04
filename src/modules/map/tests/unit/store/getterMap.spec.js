@@ -1,4 +1,4 @@
-import {expect} from "chai";
+/* import {expect} from "chai";
 import sinon from "sinon";
 import getters from "../../../store/gettersMap";
 import stateMap from "../../../store/stateMap";
@@ -116,3 +116,4 @@ describe("src/modules/map/store/gettersMap.js", () => {
         });
     });
 });
+ */

@@ -60,7 +60,7 @@ export default function Layer (attrs, layer, initialize = true) {
         this.setIsVisibleInMap(attrs.isSelected);
     }
     this.setMinMaxResolutions();
-    this.checkForScale({scale: store.getters["Map/scale"]});
+    this.checkForScale({scale: store.getters["Maps/scale"]});
     this.registerInteractionMapViewListeners();
     this.onMapModeChanged(this);
     bridge.onLanguageChanged(this);
@@ -111,7 +111,7 @@ Layer.prototype.createLegend = function () {
 * @returns {void}
 */
 Layer.prototype.registerInteractionMapViewListeners = function () {
-    store.watch((state, getters) => getters["Map/scale"], scale => {
+    store.watch((state, getters) => getters["Maps/scale"], scale => {
         this.checkForScale({scale: scale});
     });
 };
@@ -120,7 +120,7 @@ Layer.prototype.registerInteractionMapViewListeners = function () {
  * @returns {void}
  */
 Layer.prototype.onMapModeChanged = function () {
-    store.watch((state, getters) => getters["Map/mapMode"], mode => {
+    store.watch((state, getters) => getters["Maps/mode"], mode => {
         if (this.get("supported").indexOf(mode) >= 0) {
             if (this.get("isVisibleInMap")) {
                 this.get("layer").setVisible(true);
@@ -152,10 +152,10 @@ Layer.prototype.setMinResolution = function (value) {
  * @returns {void}
  */
 Layer.prototype.removeLayer = function () {
-    let map = mapCollection.getMap(store.state.Map.mapId, store.state.Map.mapMode);
+    let map = mapCollection.getMap(store.state.Maps.mode);
 
     if (!map) { // is the case, if starting by urlParam in mode 3D
-        map = mapCollection.getMap("ol", "2D");
+        map = mapCollection.getMap("2D");
     }
     this.setIsVisibleInMap(false);
     bridge.removeLayerByIdFromModelList(this.get("id"));
@@ -331,7 +331,7 @@ Layer.prototype.toggleIsSettingVisible = function () {
  * @returns {void}
  */
 Layer.prototype.setIsSelected = function (newValue) {
-    const map = mapCollection.getMap("ol", "2D"),
+    const map = mapCollection.getMap("2D"),
         treeType = store.getters.treeType,
         autoRefresh = this.get("autoRefresh");
 
@@ -481,7 +481,7 @@ function handleSingleBaseLayer (isSelected, layer) {
     if (isSelected) {
         // This only works for treeType 'custom', otherwise the parentId is not set on the layer
         if (singleBaselayer) {
-            const map2D = mapCollection.getMap("ol", "2D");
+            const map2D = mapCollection.getMap("2D");
 
             layerGroup.forEach(aLayer => {
                 // folders parentId is baselayer too, but they have not a function checkForScale
@@ -493,7 +493,7 @@ function handleSingleBaseLayer (isSelected, layer) {
                     }
                     map2D?.removeLayer(aLayer.get("layer"));
                     // This makes sure that the Oblique Layer, if present in the layerList, is not selectable if switching between baseLayers
-                    aLayer.checkForScale({scale: store.getters["Map/scale"]});
+                    aLayer.checkForScale({scale: store.getters["Maps/scale"]});
                 }
             });
             bridge.renderMenu();
@@ -514,7 +514,7 @@ function handleSingleTimeLayer (isSelected, layer) {
     if (timeLayer) {
         if (isSelected) {
             const selectedLayers = bridge.getLayerModelsByAttributes({isSelected: true, type: "layer", typ: "WMS"}),
-                map2D = mapCollection.getMap("ol", "2D");
+                map2D = mapCollection.getMap("2D");
 
             selectedLayers.forEach(sLayer => {
                 if (sLayer.get("time") && sLayer.get("id") !== id) {

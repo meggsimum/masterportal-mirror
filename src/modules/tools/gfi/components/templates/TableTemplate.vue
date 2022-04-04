@@ -26,7 +26,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Map", ["clickCoord"]),
+        ...mapGetters("Maps", ["clickCoordinate"]),
         ...mapGetters("Tools/Gfi", Object.keys(getters)),
         /**
          * Returns the title of the gfi.
@@ -46,7 +46,7 @@ export default {
         }
     },
     mounted: function () {
-        this.placingPointMarker(this.clickCoord);
+        this.placingPointMarker(this.clickCoordinate);
         if (typeof this.currentRotation === "number") {
             this.rotateAngle = this.currentRotation;
             this.rotate();

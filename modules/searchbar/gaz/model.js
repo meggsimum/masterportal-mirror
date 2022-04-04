@@ -73,7 +73,7 @@ const GazetteerModel = Backbone.Model.extend({
      */
     startSearch: function (searchInput) {
         search(searchInput, {
-            map: store.getters["Map/ol2DMap"],
+            map: store.getters["Maps/get2DMap"],
             searchAddress: this.get("searchAddress"),
             searchStreets: this.get("searchStreets"),
             searchDistricts: this.get("searchDistricts"),

@@ -48,7 +48,7 @@ export default {
     },
     computed: {
         ...mapGetters(["uiStyle"]),
-        ...mapGetters("Map", ["ol2DMap"]),
+        ...mapGetters("Maps", ["get2DMap"]),
 
         component () {
             return Radio.request("Util", "getUiStyle") === "TABLE" ? TableStyleControl : ControlIcon;
@@ -67,7 +67,7 @@ export default {
     mounted () {
         const id = this.layerId || this.baselayer,
             layer = getOverviewMapLayer(id),
-            map = this.ol2DMap,
+            map = this.get2DMap,
             view = getOverviewMapView(map, this.resolution);
 
         if (layer) {
@@ -93,7 +93,7 @@ export default {
         toggleOverviewMapFlyout () {
             this.open = !this.open;
             if (this.overviewMap !== null) {
-                this.ol2DMap[`${this.open ? "add" : "remove"}Control`](this.overviewMap);
+                this.get2DMap[`${this.open ? "add" : "remove"}Control`](this.overviewMap);
             }
         },
         /**

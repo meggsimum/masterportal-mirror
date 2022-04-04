@@ -26,15 +26,13 @@ describe("src/modules/tools/measure/components/MeasureInMap.vue", () => {
                 Map: {
                     namespaced: true,
                     state: {
-                        mapId: "ol",
-                        mapMode: "2D"
+                        mode: "2D"
                     },
                     getters: {
                         layerById: () => id => ({})[id],
-                        is3d: () => false,
-                        mapId: () => "ol",
-                        mapMode: () => "2D",
-                        ol2DMap: () => {
+                        is3D: () => false,
+                        mode: () => "2D",
+                        get2DMap: () => {
                             return map;
                         }
                     },

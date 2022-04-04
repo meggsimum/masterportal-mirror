@@ -25,7 +25,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters("Map", ["clickCoord"]),
+        ...mapGetters("Maps", ["clickCoordinate"]),
         /**
          * Returns the title of the gfi.
          * @returns {String} the title
@@ -52,7 +52,7 @@ export default {
          */
         feature () {
             this.$nextTick(() => {
-                this.overlay.setPosition(this.clickCoord);
+                this.overlay.setPosition(this.clickCoordinate);
                 $(this.overlay.getElement()).popover("show");
             });
         }
@@ -85,7 +85,7 @@ export default {
             document.body.appendChild(gfipopup);
             this.overlay.setElement(document.getElementById("gfipopup"));
             Radio.trigger("Map", "addOverlay", this.overlay);
-            this.overlay.setPosition(this.clickCoord);
+            this.overlay.setPosition(this.clickCoordinate);
         },
 
         /**

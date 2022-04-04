@@ -26,7 +26,7 @@ export default function GeoJSONLayer (attrs) {
     if (!attrs.isChildLayer) {
         // call the super-layer
         Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
-        this.checkForScale({scale: store.getters["Map/scale"]});
+        this.checkForScale({scale: store.getters["Maps/scale"]});
     }
 
     if (attrs.clusterDistance) {
@@ -63,7 +63,7 @@ GeoJSONLayer.prototype.createLayer = function (attrs) {
         styleFn = this.getStyleFunction(attrs),
         options = {
             layerStyle: styleFn,
-            map: mapCollection.getMap("ol", "2D"),
+            map: mapCollection.getMap("2D"),
             clusterGeometryFunction: (feature) => {
                 // do not cluster invisible features; can't rely on style since it will be null initially
                 if (feature.get("hideInClustering") === true) {

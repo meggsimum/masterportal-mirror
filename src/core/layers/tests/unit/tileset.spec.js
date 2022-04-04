@@ -52,15 +52,13 @@ describe("src/core/layers/tileset.js", () => {
             isSelected: false
         };
         cesium3DTilesetSpy = sinon.spy(global.Cesium, "Cesium3DTileset");
-        store.state.Map.mapId = "map3D_0";
-        store.state.Map.mapMode = "3D";
+        store.state.Maps.mode = "3D";
     });
 
     afterEach(() => {
         sinon.restore();
         global.Cesium = null;
-        store.state.Map.mapId = "ol";
-        store.state.Map.mapMode = "2D";
+        store.state.Maps.mode = "2D";
     });
 
     /**

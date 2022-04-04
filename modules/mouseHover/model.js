@@ -80,7 +80,7 @@ const MouseHoverPopupModel = Backbone.Model.extend(/** @lends MouseHoverPopupMod
      * @returns {void}
      */
     toggle: function (id) {
-        if (mapCollection.getMap("ol", "2D").getOverlayById(id)) {
+        if (mapCollection.getMap("2D").getOverlayById(id)) {
             Radio.trigger("Map", "removeOverlay", this.get("overlay"));
             Radio.trigger("Map", "unregisterListener", this.get("pointerMoveListener"));
         }

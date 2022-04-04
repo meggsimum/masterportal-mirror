@@ -25,7 +25,7 @@ export default {
     },
     computed: {
         ...mapGetters(
-            "Map",
+            "Maps",
             ["maximumZoomLevelActive", "minimumZoomLevelActive"]
         )
     },

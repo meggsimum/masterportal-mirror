@@ -129,7 +129,7 @@ export default {
      */
     getGfiForPrint: async function ({rootGetters, commit}) {
         if (rootGetters["Tools/Gfi/currentFeature"] !== null) {
-            commit("setGfiForPrint", [rootGetters["Tools/Gfi/currentFeature"].getMappedProperties(), rootGetters["Tools/Gfi/currentFeature"].getTitle(), rootGetters["Map/clickCoord"]]);
+            commit("setGfiForPrint", [rootGetters["Tools/Gfi/currentFeature"].getMappedProperties(), rootGetters["Tools/Gfi/currentFeature"].getTitle(), rootGetters["Maps/clickCoordinate"]]);
         }
         else {
             commit("setGfiForPrint", []);

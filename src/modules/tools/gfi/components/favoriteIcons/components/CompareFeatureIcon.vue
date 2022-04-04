@@ -23,7 +23,7 @@ export default {
     },
     computed: {
         ...mapGetters("Tools/CompareFeatures", ["isFeatureSelected"]),
-        ...mapGetters("Map", ["mapMode"]),
+        ...mapGetters("Maps", ["mode"]),
         /**
          * Returns Boolean after checking if feature is on comparison list.
          * @returns {String} Title for the comparelist.

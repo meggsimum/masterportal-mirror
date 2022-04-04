@@ -36,7 +36,7 @@ describe("src/modules/mapMarker/store/actionsMapMarker.js", () => {
             style: new Style()
         });
         rootGetters = {
-            "Map/ol2DMap": {
+            "Maps/get2DMap": {
                 removeLayer: sinon.spy(),
                 addLayer: sinon.spy()
             }

@@ -33,7 +33,7 @@ export default {
             ignoredKeys: "ignoredKeys"
         }),
         ...mapGetters("Tools/Gfi", Object.keys(getters)),
-        ...mapGetters("Map", {
+        ...mapGetters("Maps", {
             gfiFeatures: "gfiFeaturesReverse",
             mapSize: "size"
         }),

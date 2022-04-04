@@ -267,7 +267,7 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
                         targetProjection: proj2
                     },
                     rootGetters = {
-                        "Map/ol2DMap": {
+                        "Maps/get2DMap": {
                             removeLayer: sinon.spy(),
                             addLayer: sinon.spy()
                         }
@@ -317,7 +317,7 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
                 const payloadEasting = {id: "easting", value: String(center[0])},
                     payloadNorthing = {id: "northing", value: String(center[1])},
                     rootGetters = {
-                        "Map/ol2DMap": {
+                        "Maps/get2DMap": {
                             removeLayer: sinon.spy(),
                             addLayer: sinon.spy()
                         }
@@ -333,7 +333,7 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
             });
             it("setFirstSearchPosition will do nothing if position is set", done => {
                 const rootGetters = {
-                    "Map/ol2DMap": {
+                    "Maps/get2DMap": {
                         removeLayer: sinon.spy(),
                         addLayer: sinon.spy()
                     }

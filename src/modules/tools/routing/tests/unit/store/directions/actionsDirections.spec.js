@@ -81,9 +81,8 @@ describe("src/modules/tools/routing/store/directions/actionsDirections.js", () =
         };
 
         rootState = {
-            Map: {
-                mapId: "ol",
-                mapMode: "2D"
+            Maps: {
+                mode: "2D"
             }
         };
 

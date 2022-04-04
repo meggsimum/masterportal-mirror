@@ -18,7 +18,7 @@ export default {
      * @returns {void}
      */
     collectGfiFeatures ({getters, commit, dispatch}) {
-        const {clickCoord, visibleWmsLayerListAtResolution, resolution, projection, gfiFeaturesAtPixel} = getters,
+        const {clickCoordinate, visibleWmsLayerListAtResolution, resolution, projection, gfiFeaturesAtPixel} = getters,
             gfiWmsLayerList = visibleWmsLayerListAtResolution.filter(layer => {
                 return layer.get("gfiAttributes") !== "ignore";
             });
@@ -28,7 +28,7 @@ export default {
                 INFO_FORMAT: layer.get("infoFormat"),
                 FEATURE_COUNT: layer.get("featureCount")
             };
-            let url = layer.getSource().getFeatureInfoUrl(clickCoord, resolution, projection, gfiParams);
+            let url = layer.getSource().getFeatureInfoUrl(clickCoordinate, resolution, projection, gfiParams);
 
             // this part is needed if a Url contains a style which seems to mess up the getFeatureInfo call
             if (url.indexOf("STYLES") && url.indexOf("STYLES=&") === -1) {

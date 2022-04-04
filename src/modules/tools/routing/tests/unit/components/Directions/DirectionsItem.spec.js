@@ -57,8 +57,7 @@ describe("src/modules/tools/routing/components/Directions/DirectionsItem.vue", (
                 Map: {
                     namespaced: true,
                     state: {
-                        mapId: "ol",
-                        mapMode: "2D"
+                        mode: "2D"
                     }
                 }
             },

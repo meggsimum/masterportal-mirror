@@ -6,19 +6,19 @@ const channel = Radio.channel("Map");
 
 channel.reply({
     "getLayers": function () {
-        return mapCollection.getMap("ol", "2D").getLayers();
+        return mapCollection.getMap("2D").getLayers();
     },
     "createLayerIfNotExists": function (name) {
         return store.dispatch("Maps/addNewLayerIfNotExists", name);
     },
     "getSize": function () {
-        return mapCollection.getMap("ol", "2D").getSize();
+        return mapCollection.getMap("2D").getSize();
     },
     "registerListener": function (event, callback, context) {
         store.dispatch("Maps/registerListener", {event: event, callback: callback, context: context});
     },
     "getMap": function () {
-        return mapCollection.getMap("ol", "2D");
+        return mapCollection.getMap("2D");
     },
     "getLayerByName": function (name) {
         return store.dispatch("Maps/getLayerByName", name);
@@ -34,16 +34,16 @@ channel.on({
         store.dispatch("Maps/addLayer", layer);
     },
     "addOverlay": function (overlay) {
-        mapCollection.getMap("ol", "2D").addOverlay(overlay);
+        mapCollection.getMap("2D").addOverlay(overlay);
     },
     "addInteraction": function (interaction) {
         store.dispatch("Maps/addInteraction", interaction);
     },
     "removeLayer": function (layer) {
-        mapCollection.getMap("ol", "2D").removeLayer(layer);
+        mapCollection.getMap("2D").removeLayer(layer);
     },
     "removeOverlay": function (overlay) {
-        mapCollection.getMap("ol", "2D").removeOverlay(overlay);
+        mapCollection.getMap("2D").removeOverlay(overlay);
     },
     "removeInteraction": function (interaction) {
         store.dispatch("Maps/removeInteraction", interaction);
@@ -52,7 +52,7 @@ channel.on({
         store.commit("Maps/setBBox", {bbox: bbox});
     },
     "render": function () {
-        mapCollection.getMap("ol", "2D").render();
+        mapCollection.getMap("2D").render();
     },
     "zoomToExtent": function (extent, options) {
         store.dispatch("Maps/zoomToExtent", {extent: extent, options: options});
@@ -70,6 +70,6 @@ channel.on({
         store.dispatch("Maps/unregisterListener", {event: event, callback: callback, context: context});
     },
     "updateSize": function () {
-        mapCollection.getMap("ol", "2D").updateSize();
+        mapCollection.getMap("2D").updateSize();
     }
 });
