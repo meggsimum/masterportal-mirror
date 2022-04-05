@@ -35,7 +35,7 @@ export default {
             commit("setSelectedFeature", feature);
 
             dispatch("switchToDetails");
-            dispatch("Map/zoomTo", {
+            dispatch("Maps/zoomTo", {
                 geometryOrExtent: featureGeometry,
                 options: {duration: 800, zoom: 9}
             }, {root: true});
@@ -63,7 +63,7 @@ export default {
      * @returns {void}
      */
     highlightFeature ({state, rootGetters, dispatch}, featureId) {
-        dispatch("Map/removeHighlightFeature", "decrease", {root: true});
+        dispatch("Maps/removeHighlightFeature", "decrease", {root: true});
         let featureGeometryType = "";
         const layer = rootGetters["Map/visibleLayerList"].find((l) => l.values_.id === state.layer.id),
             layerFeatures = state.nestedFeatures ? state.rawFeaturesOfLayer : layer.getSource().getFeatures(),
@@ -89,7 +89,7 @@ export default {
                 image: styleObj.image
             };
         }
-        dispatch("Map/highlightFeature", highlightObject, {root: true});
+        dispatch("Maps/highlightFeature", highlightObject, {root: true});
     },
     /**
      * Switches to the themes list of all visibile layers and resets the featureList and the selectedFeature.

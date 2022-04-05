@@ -25,7 +25,7 @@ export default {
      * @returns {void}
      */
     setZoom: function ({dispatch}, zoomLevel) {
-        dispatch("Map/setZoomLevel", zoomLevel, {root: true});
+        dispatch("Maps/setZoomLevel", zoomLevel, {root: true});
     },
     /**
      * Takes the selected coordinates and centers the map to the new position.

@@ -1,7 +1,7 @@
 import state from "./stateMap";
-import mutations from "./mutationsMap";
+// import mutations from "./mutationsMap";
 import getters from "./gettersMap";
-import actions from "./actions/actionsMap";
+// import actions from "./actions/actionsMap";
 
 /**
  * Module that abstracts ol/Map and makes access reactive.
@@ -31,7 +31,7 @@ import actions from "./actions/actionsMap";
 export default {
     namespaced: true,
     state,
-    actions,
-    mutations,
+    // actions,
+    // mutations,
     getters
 };

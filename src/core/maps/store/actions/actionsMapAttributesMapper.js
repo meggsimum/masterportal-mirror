@@ -24,9 +24,9 @@ export default {
                 map.on("change:size", evt => commit("setSize", evt.target.getSize()))
             ];
         }
+        dispatch("setViewAttributes", map.getView());
 
-        const mapView = map.getView(),
-            layerIds = await dispatch("normalizeLayers", map.getLayers().getArray()),
+        const layerIds = await dispatch("normalizeLayers", map.getLayers().getArray()),
             channel = Radio.channel("VectorLayer");
 
         // listen to featuresLoaded event to be able to determine if all features of a layer are completely loaded
@@ -41,9 +41,6 @@ export default {
         // update state once initially to get initial settings
         dispatch("updateAttributes", {map: map});
         commit("setLayerIds", layerIds[1]);
-
-
-        dispatch("setViewAttributes", mapView);
     },
     /**
      * Setter for 3D map attribute "shadowTime".

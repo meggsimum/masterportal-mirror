@@ -24,10 +24,6 @@ function create2DMap (mapViewSettings) {
 
     mapCollection.addMap(map, "ol", "2D");
     store.dispatch("Maps/initView");
-
-    // Remove later "Map/setMapAttributes"
-
-    store.dispatch("Map/setMapAttributes", {map: map});
     store.dispatch("Maps/setMapAttributes", {map: map});
     Radio.trigger("ModelList", "addInitiallyNeededModels");
 }

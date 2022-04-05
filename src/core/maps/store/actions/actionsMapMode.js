@@ -11,7 +11,6 @@ import store from "../../../../app-store";
  */
 function clickEventCallback (clickObject) {
     store.dispatch("Maps/updateClick", {map3D: clickObject.map3D, position: clickObject.position, pickedPosition: clickObject.pickedPosition, coordinate: clickObject.coordinate, latitude: clickObject.latitude, longitude: clickObject.longitude, resolution: clickObject.resolution, originalEvent: clickObject.originalEvent, map: Radio.request("Map", "getMap")});
-    store.dispatch("Map/updateClick", {map3D: clickObject.map3D, position: clickObject.position, pickedPosition: clickObject.pickedPosition, coordinate: clickObject.coordinate, latitude: clickObject.latitude, longitude: clickObject.longitude, resolution: clickObject.resolution, originalEvent: clickObject.originalEvent, map: Radio.request("Map", "getMap")});
     Radio.trigger("Map", "clickedWindowPosition", {position: clickObject.position, pickedPosition: clickObject.pickedPosition, coordinate: clickObject.coordinate, latitude: clickObject.latitude, longitude: clickObject.longitude, resolution: clickObject.resolution, originalEvent: clickObject.originalEvent, map: Radio.request("Map", "getMap")});
 }
 
