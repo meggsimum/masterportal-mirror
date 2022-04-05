@@ -616,7 +616,7 @@
         {
           "id": "16100",
           "name": "Hauptkirchen",
-          "visibility": false,
+          "visibility": true,
           "isVisibleInTree": false,
           "hiddenFeatures": [
             "DEHH_8aeaf0d5-9f1a-4331-80fd-93b5dd5d8893",
@@ -756,7 +756,7 @@
         {
           "id": "1711",
           "styleId": "1711",
-          "visibility": false,
+          "visibility": true,
           "layerAttribution": "<span>Attributierung für Fachlayer</span>",
           "mouseHoverField": [
             "name",
@@ -768,7 +768,7 @@
         },
         {
           "id": "8712",
-          "visibility": false,
+          "visibility": true,
           "name": "Schulinfosystem",
           "styleId": "8712",
           "searchField": "schulname",
