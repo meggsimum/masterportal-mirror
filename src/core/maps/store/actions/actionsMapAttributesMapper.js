@@ -118,7 +118,7 @@ export default {
         if (rootGetters["Tools/Gfi/active"]) {
             commit("setGfiFeatures", null);
             dispatch("MapMarker/removePolygonMarker", null, {root: true});
-            dispatch("Maps/collectGfiFeatures", null, {root: true});
+            dispatch("collectGfiFeatures");
         }
 
         if (!rootGetters["controls/orientation/poiModeCurrentPositionEnabled"]) {

@@ -33,7 +33,7 @@ Radio.channel("VisibleVector").on({
                 hit.feature
             );
 
-        store.commit("Maps/setClickCoord", [hit.coordinate[0], hit.coordinate[1]]);
+        store.commit("Maps/setClickCoordinate", [hit.coordinate[0], hit.coordinate[1]]);
         store.commit("Maps/setGfiFeatures", [feature]);
     }
 });

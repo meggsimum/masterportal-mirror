@@ -125,18 +125,18 @@ describe("tools/featureLister/store/actionsFeatureLister", () => {
             const featureId = "123";
 
             actions.highlightFeature({state, rootGetters, dispatch}, featureId);
-            expect(dispatch.firstCall.args[0]).to.equal("Map/removeHighlightFeature");
+            expect(dispatch.firstCall.args[0]).to.equal("Maps/removeHighlightFeature");
             expect(dispatch.firstCall.args[1]).to.equal("decrease");
-            expect(dispatch.secondCall.args[0]).to.equal("Map/highlightFeature");
+            expect(dispatch.secondCall.args[0]).to.equal("Maps/highlightFeature");
         });
         it("highlights a nested feature depending on its geometryType", () => {
             const featureId = "123";
 
             state.nestedFeatures = true;
             actions.highlightFeature({state, rootGetters, dispatch}, featureId);
-            expect(dispatch.firstCall.args[0]).to.equal("Map/removeHighlightFeature");
+            expect(dispatch.firstCall.args[0]).to.equal("Maps/removeHighlightFeature");
             expect(dispatch.firstCall.args[1]).to.equal("decrease");
-            expect(dispatch.secondCall.args[0]).to.equal("Map/highlightFeature");
+            expect(dispatch.secondCall.args[0]).to.equal("Maps/highlightFeature");
         });
     });
 
