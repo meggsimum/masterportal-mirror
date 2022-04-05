@@ -617,14 +617,13 @@ describe("core/modelList/layer/sensor", function () {
             expect(sensorLayer.get("moveendListener")).to.not.be.null;
         });
 
-        // it("should unset moveendListener", function () {
-        //     sensorLayer.set("isSubscribed", true, {silent: true});
-        //     sensorLayer.set("isOutOfRange", true, {silent: true});
-        //     sensorLayer.set("isSelected", true, {silent: true});
-        //     sensorLayer.changedConditions();
-        //     console.log(sensorLayer.get("moveendListener"));
-        //     // expect(sensorLayer.get("moveendListener")).to.be.null;
-        // });
+        it("should unset moveendListener", function () {
+            sensorLayer.set("isSubscribed", true, {silent: true});
+            sensorLayer.set("isOutOfRange", true, {silent: true});
+            sensorLayer.set("isSelected", true, {silent: true});
+            sensorLayer.changedConditions();
+            expect(sensorLayer.get("moveendListener")).to.be.null;
+        });
     });
 
     describe("subscribeToSensorThings", function () {
