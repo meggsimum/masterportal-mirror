@@ -12,6 +12,7 @@
 * @property {String[]} layerIds Current layers of the map by Id.
 * @property {Object[]} gfiFeatures temporary array for features at click has to be moved to gfi module.
 * @property {String[]} highlightedFeatureStyles list of original styles for highlighted features, indices correspond to "highlightedFeatures". temporary array for features at click has to be moved to gfi module.
+* @property {String[]} loadedLayers list of ready loaded layers IDs
 * @property {String} mode Current mode of the map e.g. 2D/3D.
 * @property {Number[]} mouseCoordinate Current mouse coordinate values of the map.
 * @property {String[]} overlayIds Current overlays of the map by Id.
@@ -38,6 +39,7 @@ const state = {
     gfiFeatures: [],
     highlightedFeatures: [],
     highlightedFeatureStyles: [],
+    loadedLayers: [],
     mode: "2D",
     mouseCoordinate: null,
     overlayIds: null,

@@ -36,7 +36,7 @@ export default {
             dispatch("deleteFeatures");
             interaction = makeDraw3d(
                 rootGetters["Maps/get3DMap"],
-                rootGetters["Map/projectionCode"],
+                rootGetters["Maps/projectionCode"],
                 unlistener => commit("addUnlistener", unlistener),
                 rootState._store
             );

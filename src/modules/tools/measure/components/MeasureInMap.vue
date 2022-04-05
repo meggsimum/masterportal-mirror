@@ -49,7 +49,7 @@ export default {
     },
     created () {
         this.$on("close", this.close);
-        this.get2DMap.addLayer(this.layer);
+        this.$store.dispatch("Maps/addLayer", this.layer);
     },
     mounted () {
         if (this.active) {

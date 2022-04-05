@@ -240,7 +240,9 @@ const getters = {
      * @returns {String} pretty-printed mouse coordinate
      */
     prettyMouseCoord: (_, {mouseCoordinate}) => mouseCoordinate ? `${mouseCoordinate[0].toString().substr(0, 9)}, ${mouseCoordinate[1].toString().substr(0, 10)}` : "",
-
+    projectionCode: (_, g) => g.projection?.getCode(),
+    projectionMetersPerUnit: (_, g) => g.projection?.getMetersPerUnit(),
+    projectionUnits: (_, g) => g.projection?.getUnits(),
     /*
      * Layerlist
      *

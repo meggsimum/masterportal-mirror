@@ -180,11 +180,11 @@ function transformCoordinates ({dispatch, rootGetters}, geometry) {
 
     switch (type) {
         case "LineString":
-            return transform(rootGetters["Map/projectionCode"], coords, false);
+            return transform(rootGetters["Maps/projectionCode"], coords, false);
         case "Point":
-            return transformPoint(rootGetters["Map/projectionCode"], coords);
+            return transformPoint(rootGetters["Maps/projectionCode"], coords);
         case "Polygon":
-            return transform(rootGetters["Map/projectionCode"], coords, true);
+            return transform(rootGetters["Maps/projectionCode"], coords, true);
         default:
             dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.download.unknownGeometry", {geometry: type}), {root: true});
             return [];

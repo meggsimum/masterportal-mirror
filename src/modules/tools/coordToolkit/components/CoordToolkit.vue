@@ -54,7 +54,7 @@ export default {
             if (value) {
                 this.initProjections();
                 this.setExample();
-                if (this.mapMode === "2D") {
+                if (this.mode === "2D") {
                     this.setMode("supply");
                     this.setSupplyCoordActive();
                 }
@@ -69,7 +69,7 @@ export default {
                 this.setSupplyCoordInactive();
             }
         },
-        mapMode (value) {
+        mode (value) {
             if (value === "3D") {
                 this.changeMode("search");
             }
@@ -275,7 +275,7 @@ export default {
                 this.setSupplyCoordInactive();
                 this.setFirstSearchPosition();
             }
-            else if (this.mapMode !== "3D") {
+            else if (this.mode !== "3D") {
                 this.setMode(newMode);
                 this.resetErrorMessages("all");
                 this.setSupplyCoordActive();
@@ -360,18 +360,18 @@ export default {
             return this.showCopyButtons ? "col-md-6 col-sm-6" : "col-md-7 col-sm-7";
         },
         /**
-         * Returns true, if mapMode is 2D.
-         * @returns {boolean} true, if mapMode is 2D.
+         * Returns true, if mode is 2D.
+         * @returns {boolean} true, if mode is 2D.
          */
         isSupplyCoordDisabled () {
-            return this.mapMode === "3D";
+            return this.mode === "3D";
         },
         /**
          * Returns true, if supplyCoord is active.
          * @returns {boolean} true, true, if supplyCoord is active
          */
         isSupplyCoordChecked () {
-            if (this.mapMode === "3D") {
+            if (this.mode === "3D") {
                 return false;
             }
             return this.mode === "supply";

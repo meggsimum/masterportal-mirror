@@ -268,7 +268,7 @@ const actions = {
      */
     async areLayerFeaturesLoaded ({commit, rootGetters}, layerId) {
         await new Promise(resolve => {
-            if (rootGetters["Map/loadedLayers"].find(id => id === layerId)) {
+            if (rootGetters["Maps/loadedLayers"].find(id => id === layerId)) {
                 resolve();
             }
             const channel = Radio.channel("VectorLayer");

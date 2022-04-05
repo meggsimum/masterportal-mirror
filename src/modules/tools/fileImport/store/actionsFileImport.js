@@ -261,7 +261,7 @@ export default {
                         mappedCrsPropName = "EPSG:3857";
                     }
 
-                    geometry.transform(mappedCrsPropName, rootGetters["Map/projectionCode"]);
+                    geometry.transform(mappedCrsPropName, rootGetters["Maps/projectionCode"]);
                 });
             }
         });
