@@ -41,7 +41,7 @@ export default {
     },
     methods: {
         // actions take preference over mutations (e.g. setMap should always be the action from UI perspective)
-        ...mapMutations("Map", keyStore.mutations),
+        ...mapMutations("Maps", keyStore.mutations),
         ...mapActions("Map", keyStore.actions)
     }
 };

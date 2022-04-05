@@ -92,7 +92,7 @@ export default {
     methods: {
         ...mapMutations("GraphicalSelect", Object.keys(mutations)),
         ...mapActions("GraphicalSelect", Object.keys(actions)),
-        ...mapMutations("Map", ["addLayerToMap", "removeLayerFromMap"]),
+        ...mapMutations("Maps", ["addLayerToMap", "removeLayerFromMap"]),
         ...mapActions("Maps", ["addInteraction", "removeInteraction"]),
         ...mapActions("Alerting", ["addSingleAlert"]),
 

@@ -119,7 +119,7 @@ export default {
         this.createMappedProperties(this.feature);
     },
     methods: {
-        ...mapMutations("Map", ["setGfiFeatures"]),
+        ...mapMutations("Maps", ["setGfiFeatures"]),
         ...mapMutations("Tools/Gfi", ["setCurrentFeature"]),
         /**
          * Reset means to set the gfiFeatures to null.
