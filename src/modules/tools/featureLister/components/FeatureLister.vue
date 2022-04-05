@@ -97,7 +97,7 @@ export default {
             if (model) {
                 model.set("isActive", false);
             }
-            this.$store.dispatch("Map/removeHighlightFeature", "decrease", {root: true});
+            this.$store.dispatch("Maps/removeHighlightFeature", "decrease", {root: true});
             this.resetToThemeChooser();
         },
         /**

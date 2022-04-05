@@ -79,7 +79,7 @@ export default {
 
 <template>
     <span
-        v-if="componentExists('compareFeatures') && mapMode === '2D'"
+        v-if="componentExists('compareFeatures') && mode === '2D'"
         :class="['glyphicon', featureIsOnCompareList ? 'glyphicon-star' : 'glyphicon-star-empty']"
         :title="titleCompareList"
         tabindex="0"

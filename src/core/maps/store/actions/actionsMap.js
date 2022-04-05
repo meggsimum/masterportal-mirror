@@ -4,6 +4,7 @@ import actionsMapInteractionsZoomTo from "./actionsMapInteractionsZoomTo.js";
 import actionsMapLayers from "./actionsMapLayers.js";
 import actionsMapMode from "./actionsMapMode.js";
 import highlightFeature from "./highlightFeature.js";
+import * as removeHighlightFeature from "./removeHighlighting.js";
 import findWhereJs from "../../../../utils/findWhereJs";
 
 import api from "masterportalapi/src/maps/api";
@@ -118,5 +119,6 @@ export default {
     ...actionsMapInteractionsZoomTo,
     ...actionsMapLayers,
     ...actionsMapMode,
-    ...highlightFeature
+    ...highlightFeature,
+    ...removeHighlightFeature
 };
