@@ -98,8 +98,8 @@ export default {
      * @returns {void}
      */
     getHeight ({dispatch, rootGetters, state}, position) {
-        const projection = rootGetters["Map/projection"],
-            resolution = rootGetters["Map/resolution"],
+        const projection = rootGetters["Maps/projection"],
+            resolution = rootGetters["Maps/resolution"],
             gfiParams = {INFO_FORMAT: state.heightInfoFormat, FEATURE_COUNT: 1};
         let url = state.heightLayer.get("layerSource").getFeatureInfoUrl(position, resolution, projection, gfiParams);
 

@@ -51,7 +51,7 @@ const getters = {
      */
     lineLengths ({lines, earthRadius, measurementAccuracy, selectedUnit}, _, __, rootGetters) {
         return calculateLineLengths(
-            rootGetters["Map/projection"].getCode(),
+            rootGetters["Maps/projection"].getCode(),
             lines,
             earthRadius,
             measurementAccuracy,
@@ -68,7 +68,7 @@ const getters = {
      */
     polygonAreas ({polygons, earthRadius, measurementAccuracy, selectedUnit}, _, __, rootGetters) {
         return calculatePolygonAreas(
-            rootGetters["Map/projection"].getCode(),
+            rootGetters["Maps/projection"].getCode(),
             polygons,
             earthRadius,
             measurementAccuracy,

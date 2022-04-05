@@ -62,7 +62,7 @@ describe("src/modules/tools/supplyCoord/components/SupplyCoord.vue", () => {
                         SupplyCoord
                     }
                 },
-                Map: {
+                Maps: {
                     namespaced: true,
                     getters: mockMapGetters,
                     mutations: mockMapMutations,

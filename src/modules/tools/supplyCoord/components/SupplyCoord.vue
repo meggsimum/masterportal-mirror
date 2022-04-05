@@ -14,7 +14,7 @@ export default {
     },
     computed: {
         ...mapGetters("Tools/SupplyCoord", Object.keys(getters)),
-        ...mapGetters("Map", ["projection", "mouseCoord"]),
+        ...mapGetters("Maps", ["projection", "mouseCoordinate"]),
         /**
          * Must be a two-way computed property, because it is used as v-model for select-Element, see https://vuex.vuejs.org/guide/forms.html.
          */
@@ -39,7 +39,7 @@ export default {
             if (value) {
                 this.addPointerMoveHandlerToMap(this.setCoordinates);
                 this.createInteraction();
-                this.setPositionMapProjection(this.mouseCoord);
+                this.setPositionMapProjection(this.mouseCoordinate);
                 this.changedPosition();
                 this.setFocusToFirstControl();
             }
@@ -66,7 +66,7 @@ export default {
         ]),
         ...mapActions("MapMarker", ["removePointMarker"]),
         ...mapActions("Alerting", ["addSingleAlert"]),
-        ...mapActions("Map", {
+        ...mapActions("Maps", {
             addPointerMoveHandlerToMap: "addPointerMoveHandler",
             removePointerMoveHandlerFromMap: "removePointerMoveHandler"
         }),

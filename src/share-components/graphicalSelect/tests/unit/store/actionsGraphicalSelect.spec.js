@@ -97,7 +97,7 @@ describe("src/share-components/graphicalSelect/store/actionsGraphicalSelect", ()
 
         await actions.showTooltipOverlay({state, rootState});
 
-        expect(state.tooltipOverlay.getPosition()).to.eql(rootState.Map.mouseCoord);
+        expect(state.tooltipOverlay.getPosition()).to.eql(rootState.Maps.mouseCoordinate);
 
     });
     it("toggleOverlay adds overlayCircle for type Circle with Radio.trigger", () => {

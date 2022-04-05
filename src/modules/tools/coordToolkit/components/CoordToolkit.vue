@@ -104,7 +104,7 @@ export default {
             "copyCoordinates"
         ]),
         ...mapActions("Alerting", ["addSingleAlert"]),
-        ...mapActions("Map", {
+        ...mapActions("Maps", {
             addPointerMoveHandlerToMap: "addPointerMoveHandler",
             removePointerMoveHandlerFromMap: "removePointerMoveHandler"
         }),

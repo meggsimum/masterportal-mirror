@@ -114,6 +114,31 @@ export default {
             }
         }, "3D");
     },
+    /**
+     * Adds a listener to maps pointermove and calls callback-funktion
+     *
+     * @param {*} _ empty store
+     * @param {Function} callback  to be called on pointermove
+     * @returns {void}
+     */
+    addPointerMoveHandler ({getters}, callback) {
+        if (callback) {
+            getters.get2DMap.on("pointermove", e => callback(e));
+        }
+
+    },
+    /**
+     * Removes a listener from maps pointermove
+     *
+     * @param {*} _ empty store
+     * @param {Function} callback  to be called on pointermove
+     * @returns {void}
+     */
+    removePointerMoveHandler ({getters}, callback) {
+        const map = getters.get2DMap;
+
+        map.un("pointermove", e => callback(e));
+    },
     ...actionsMapAttributesMapper,
     ...actionsMapInteractions,
     ...actionsMapInteractionsZoomTo,
