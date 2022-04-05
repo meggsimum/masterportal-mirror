@@ -25,3 +25,15 @@
     color: $primary_contrast;
     cursor: pointer;
 }
+
+@mixin active-pill($vertical-padding, $horizontal-padding) {
+    .nav-pills {
+        & > li > a {
+            padding: $vertical-padding $horizontal-padding;
+        }
+        & > li.active > a {
+            color: $secondary_focus_contrast;
+            background-color: $secondary_focus;
+        }
+    }
+}
