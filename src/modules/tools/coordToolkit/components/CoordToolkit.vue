@@ -201,7 +201,7 @@ export default {
                 this.addPointerMoveHandlerToMap(this.setCoordinates);
                 this.setMapProjection(this.projection);
                 this.createInteraction();
-                this.setPositionMapProjection(this.mouseCoord);
+                this.setPositionMapProjection(this.mouseCoordinate);
                 this.changedPosition();
             }
         },

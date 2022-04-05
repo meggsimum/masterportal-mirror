@@ -30,7 +30,7 @@ const state = {
     clickPixel: null,
     clickCartesianCoordinate: null,
     extent: null,
-    initialCenter: [],
+    initialCenter: null,
     initialResolution: null,
     initialZoomLevel: null,
     layerIds: [],

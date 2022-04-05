@@ -19,10 +19,10 @@ config.mocks.$t = key => key;
 
 describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
     const mockMapGetters = {
-            map: () => sinon.stub(),
+            // map: () => sinon.stub(),
             projection: () => sinon.stub(),
-            mouseCoord: () => sinon.stub(),
-            mapMode: () => "2D"
+            mouseCoordinate: () => sinon.stub(),
+            mode: () => "2D"
         },
         mockMapMarkerActions = {
             removePointMarker: sinon.stub()
@@ -83,7 +83,7 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
                         CoordToolkit
                     }
                 },
-                Map: {
+                Maps: {
                     namespaced: true,
                     getters: mockMapGetters,
                     mutations: mockMapMutations,
