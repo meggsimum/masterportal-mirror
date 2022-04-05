@@ -1,5 +1,11 @@
 {
     "masterPortalVersion": "Masterportal V. {{masterPortalVersionNumber}}",
+    "general": {
+        "opened": "Open",
+        "cancelled": "Cancelled",
+        "error": "Error",
+        "success": "Success"
+    },
     "button": {
         "back": "Back",
         "download": "Download",
@@ -7,6 +13,13 @@
         "close": "Close",
         "minimize": "Minimize",
         "confirm": "Confirm",
+        "edit": "Edit",
+        "delete": "Delete",
+        "save": "Save",
+        "cancel": "Cancel",
+        "open": "Open",
+        "load": "Load",
+        "reset": "Reset",
         "stop": "Stop"
     },
     "colors": {
@@ -342,6 +355,7 @@
                 "formatLabel": "Format",
                 "scaleLabel": "Printing scale",
                 "withLegendLabel": "With legend",
+                "autoAdjustScale": "Adjust printing scale automatically",
                 "printLabel": "Create file",
                 "downloadFile": "Download file",
                 "createDownloadFile": "Will be created...",
@@ -394,7 +408,7 @@
                 "more": "More...",
                 "detailsOfSelected": "Details of the selected feature",
                 "alert": "The attempt to show the selected feature failed because it has no geometry.",
-                "key": "{{shownFeatures.x}} of {{shownFeatures.y}} features listed"
+                "key": "{{shownFeatures}} of {{featureCount}} features listed"
             },
             "layerSlider": {
                 "displayLayers": "Display of various layers.",
@@ -409,6 +423,7 @@
                 "filterButton": "Filter",
                 "searchInMapExtent": "Search in current map extent",
                 "snippetTags": {
+                    "selectionText": "Your selection:",
                     "resetAll": "Reset all"
                 },
                 "info": {
@@ -426,6 +441,22 @@
                     "defaultLabel": "Choose an Option",
                     "emptyList": "List is empty",
                     "noElements": "No elements found"
+                },
+                "ariaLabel": {
+                    "input": "Input for {{param}}",
+                    "checkbox": "Checkbox for {{param}}",
+                    "radio": "Radio for {{param}}",
+                    "dropdown": "SelectBox for {{param}}",
+                    "sliderRange": {
+                        "min": "Slider min for {{param}}",
+                        "max": "Slider max for {{param}}"
+                    },
+                    "slider": "Slider range for {{param}}",
+                    "date": "Date for {{param}}",
+                    "dateRange": {
+                        "from": "Start date from {{param}}",
+                        "to": "End date from {{param}}"
+                    }
                 },
                 "filterResult": {
                     "label": "All filtered Counts",
@@ -1015,7 +1046,9 @@
         "vectorStyle": {
             "styleModel": {
                 "getGeometryTypeFromWFSFetchfailed": "The legend could not be created in the layer information!",
-                "getGeometryTypeFromWFSFetchfailedMessage": "Details: A required service is not responding."
+                "getGeometryTypeFromWFSFetchfailedMessage": "Details: A required service is not responding.",
+                "getGeometryTypeFromOAFFetchfailed": "The legend could not be created in the layer information!",
+                "getGeometryTypeFromOAFFetchfailedMessage": "Details: The API is not available."
             }
         },
         "wmsTime": {
@@ -1130,7 +1163,8 @@
               "true": "yes",
               "No": "no"
             },
-            "zoomToResult": "Zoom to result"
+            "zoomToResult": "Zoom to result",
+            "pagination": "Pagination"
         }
     }
 }

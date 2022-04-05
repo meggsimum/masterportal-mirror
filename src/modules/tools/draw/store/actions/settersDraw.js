@@ -24,6 +24,7 @@ function setActive ({state, commit, dispatch, rootState}, active) {
     commit("setActive", active);
 
     if (active) {
+        commit("setSymbol", state.iconList[0]);
         commit("setLayer", Radio.request("Map", "createLayerIfNotExists", "import_draw_layer"));
         commit("setImgPath", rootState?.configJs?.wfsImgPath);
 

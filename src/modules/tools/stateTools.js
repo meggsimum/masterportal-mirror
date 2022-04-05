@@ -4,6 +4,7 @@ import CompareFeatures from "./compareFeatures/components/CompareFeatures.vue";
 import ContactFormular from "./contact/components/ContactFormular.vue";
 import CoordToolkit from "./coordToolkit/components/CoordToolkit.vue";
 import DrawItem from "./draw/components/DrawItem.vue";
+import FeatureLister from "./featureLister/components/FeatureLister.vue";
 import FileImport from "./fileImport/components/FileImport.vue";
 import FilterGeneral from "./filterGeneral/components/FilterGeneral.vue";
 import GetFeatureInfo from "./gfi/components/GetFeatureInfo.vue";
@@ -34,6 +35,7 @@ const state = {
         contact: ContactFormular,
         coordToolkit: CoordToolkit,
         draw: DrawItem,
+        featureLister: FeatureLister,
         fileImport: FileImport,
         gfi: GetFeatureInfo,
         filterGeneral: FilterGeneral,

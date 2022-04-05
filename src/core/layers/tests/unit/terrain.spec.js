@@ -86,7 +86,7 @@ describe("src/core/layers/terrain.js", () => {
             layer = terrainLayer.get("layer");
 
         checkLayer(layer, terrainLayer, attributes);
-        expect(cesiumTerrainProviderSpy.calledOnce).to.equal(true);
+        expect(cesiumTerrainProviderSpy.calledTwice).to.equal(true);
         expect(cesiumTerrainProviderSpy.calledWithMatch({requestVertexNormals: true})).to.equal(true);
         expect(cesiumEllipsoidTerrainProviderSpy.notCalled).to.equal(true);
     });

@@ -6,3 +6,8 @@ scripte/
 jsdoc/
 lib/
 examples/
+/portal/*
+!/portal/basic
+!/portal/master
+!/portal/masterCustom
+!/portal/masterDefault

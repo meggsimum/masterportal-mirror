@@ -23,7 +23,9 @@ const state = {
     showMarker: true,
     highlightVectorRules: null,
     isVisibleInMenu: true,
-    renderToWindow: true
+    renderToWindow: true,
+    currentPosition: null,
+    currentRotation: null
 };
 
 export default state;

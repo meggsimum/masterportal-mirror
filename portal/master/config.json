@@ -10,35 +10,34 @@
       "gazetteer": {
         "minchars": 3,
         "serviceId": "8",
+        "searchAddress": true,
         "searchStreets": true,
         "searchHouseNumbers": true,
         "searchDistricts": true,
         "searchParcels": true,
         "searchStreetKey": true
       },
-      "osm": {
-        "minChars": 3,
-        "serviceId": "10",
-        "limit": 60,
-        "states": "Hamburg Thüringen Hessen Nordrhein-Westfalen",
-        "classes": "place,highway,building,shop,historic,leisure,county"
-      },
       "elasticSearch": {
         "minChars": 3,
         "serviceId": "elastic",
         "type": "GET",
-        "payload": {
-          "id": "query",
-          "params": {
-            "query_string": ""
-          }
-        },
-        "searchStringAttribute": "query_string",
-        "responseEntryPath": "hits.hits",
         "triggerEvent": {
           "channel": "Parser",
           "event": "addGdiLayer"
         },
+        "payload": {
+          "id": "query",
+          "params": {
+            "query_string": "",
+            "typ": [
+              "sensorthings",
+              "wms"
+            ],
+            "size": 30
+          }
+        },
+        "searchStringAttribute": "query_string",
+        "responseEntryPath": "hits.hits",
         "hitMap": {
           "name": "_source.name",
           "id": "_source.id",
@@ -94,10 +93,10 @@
           }
         ]
       },
-      "visibleWFS": {
+      "tree": {
         "minChars": 3
       },
-      "startZoomLevel": 9,
+      "zoomLevel": 9,
       "placeholder": "translate#common:modules.searchbar.placeholder.addressHospitalBplan"
     },
     "mapView": {
@@ -347,7 +346,7 @@
           "coordToolkit": {
             "name": "translate#common:menu.tools.coordToolkit",
             "glyphicon": "glyphicon-globe",
-            "heightLayerId" : "19173",
+            "heightLayerId": "19173",
             "heightElementName": "value_0",
             "heightValueWater": "-20",
             "heightValueBuilding": "200"
@@ -412,23 +411,38 @@
           "featureLister": {
             "name": "translate#common:menu.tools.featureLister",
             "glyphicon": "glyphicon-menu-hamburger",
-            "lister": 10,
+            "maxFeatures": 10,
             "highlightVectorRulesPolygon": {
               "fill": {
-                "color": [255, 255, 255, 0.9]
-            },
-            "stroke": {
+                "color": [
+                  255,
+                  255,
+                  255,
+                  0.9
+                ]
+              },
+              "stroke": {
                 "width": 4,
-                "color": [0, 0, 204, 0.9]
-            }
-          },
-          "highlightVectorRulesPointLine": {
-            "stroke": {
+                "color": [
+                  0,
+                  0,
+                  204,
+                  0.9
+                ]
+              }
+            },
+            "highlightVectorRulesPointLine": {
+              "stroke": {
                 "width": 8,
-                "color": [255, 0, 255, 0.9]
+                "color": [
+                  255,
+                  0,
+                  255,
+                  0.9
+                ]
               },
               "image": {
-                  "scale": 1.5
+                "scale": 1.5
               }
             }
           },
@@ -539,10 +553,14 @@
         "isInitOpen": false
       },
       "mousePosition": true,
-      "button3d": true,
-      "buttonOblique": true,
       "freeze": true,
-      "backForward": true
+      "backForward": true,
+      "button3d": true,
+      "obliqueControl": {
+        "title": "additional:modules.controls.oblique.title",
+        "hiddenMobile": true,
+        "bottomControl": false
+      }
     },
     "layersRemovable": true
   },
@@ -621,7 +639,9 @@
         {
           "id": "2128",
           "styleId": "2128",
-          "styleGeometryType": ["Point"],
+          "styleGeometryType": [
+            "Point"
+          ],
           "name": "translate#common:tree.trafficCameras"
         },
         {
@@ -710,7 +730,7 @@
           "id": "10882",
           "styleId": "10882",
           "clusterDistance": 40,
-          "searchField": "bezeichnung",
+          "searchField": "haltestelle",
           "styleGeometryType": "Point"
         },
         {
@@ -815,9 +835,9 @@
           "styleId": "18106",
           "clusterDistance": 50,
           "loadThingsOnlyInCurrentExtent": true,
-          "gfiTheme" : {
+          "gfiTheme": {
             "name": "sensor",
-            "params" : {
+            "params": {
               "charts": {
                 "barPercentage": 1.1,
                 "values": {
@@ -832,28 +852,28 @@
                     "noticeText": "common:modules.tools.gfi.themes.sensor.sensorBarChart.noticeTextCharging"
                   },
                   "outoforder": {
-                      "title": "common:modules.tools.gfi.themes.sensor.chargingStations.outoforder",
-                      "color": "rgba(175, 175, 175, 1)",
-                      "noticeText": "common:modules.tools.gfi.themes.sensor.sensorBarChart.noticeTextOutoforder"
+                    "title": "common:modules.tools.gfi.themes.sensor.chargingStations.outoforder",
+                    "color": "rgba(175, 175, 175, 1)",
+                    "noticeText": "common:modules.tools.gfi.themes.sensor.sensorBarChart.noticeTextOutoforder"
                   }
                 }
               }
             }
           },
-          "gfiAttributes" : {
+          "gfiAttributes": {
             "dataStreamPhenomenonTime": "Letze Zustandsänderung",
             "dataStreamValue": "Zustand",
-            "connector" : "Stecker",
-            "steckerTyp" : "SteckerTyp",
-            "authMeth2" : "Authentifizierungsmethode",
-            "dataStreamId" : "DataStreamIds"
+            "connector": "Stecker",
+            "steckerTyp": "SteckerTyp",
+            "authMeth2": "Authentifizierungsmethode",
+            "dataStreamId": "DataStreamIds"
           }
         },
         {
           "id": "13023"
         },
         {
-          "id" : "19173"
+          "id": "19173"
         }
       ]
     }

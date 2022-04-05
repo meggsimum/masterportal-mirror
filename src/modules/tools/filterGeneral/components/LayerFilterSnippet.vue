@@ -112,8 +112,7 @@ export default {
     },
     created () {
         const filterId = this.layerConfig.filterId,
-            layerId = this.getLayerId(filterId, this.layerConfig?.layerId, this.layerConfig?.service?.layerId),
-            service = isObject(this.layerConfig?.service) ? this.layerConfig?.service : false;
+            layerId = this.getLayerId(filterId, this.layerConfig?.layerId, this.layerConfig?.service?.layerId);
 
         if (Array.isArray(this.layerConfig?.snippets)) {
             this.snippets = this.layerConfig?.snippets;
@@ -121,20 +120,12 @@ export default {
         this.setupSnippets(this.snippets);
 
         if (this.api instanceof FilterApi && this.mapHandler instanceof MapHandler) {
-            if (!service) {
-                // tree source
-                this.mapHandler.initializeLayerFromTree(filterId, layerId, error => {
-                    console.warn(error);
-                });
-                this.api.setServiceByLayerModel(layerId, this.mapHandler.getLayerModelByFilterId(filterId));
-            }
-            else {
-                // external source
-                this.mapHandler.initializeLayerFromExtern(filterId, layerId, error => {
-                    console.warn(error);
-                });
-                this.api.setServiceByServiceObject(layerId, service);
-            }
+            this.mapHandler.initializeLayer(filterId, layerId, this.isExtern(), error => {
+                console.warn(error);
+            });
+            this.api.setServiceByLayerModel(layerId, this.mapHandler.getLayerModelByFilterId(filterId), this.isExtern(), error => {
+                console.warn(error);
+            });
 
             if (!this.mapHandler.getLayerModelByFilterId(filterId)) {
                 console.warn(new Error("Please check your filter configuration: The given layerId does not exist in your config.json."));
@@ -148,6 +139,13 @@ export default {
     },
     methods: {
         translateKeyWithPlausibilityCheck,
+        /**
+         * Checks if this layer is supposed to use external filtering.
+         * @returns {Boolean} true if the layer should filter external
+         */
+        isExtern () {
+            return this.layerConfig?.extern;
+        },
         /**
          * Checking if the type of snippet is already defined
          * @param {Object[]} snippets the snippet object in array list
@@ -210,6 +208,7 @@ export default {
                             visible: true
                         });
                     });
+                    this.setupSnippets(this.snippets);
                     this.setPostSnippetKey("rerender");
                 }
             }, err => {
@@ -522,10 +521,10 @@ export default {
                     this.api.filter(filterQuestion, filterAnswer => {
                         this.paging = filterAnswer.paging;
                         if (this.paging?.page === 1) {
-                            this.mapHandler.clearLayer(filterId);
+                            this.mapHandler.clearLayer(filterId, this.isExtern());
                         }
 
-                        this.mapHandler.addItemsToLayer(filterId, filterAnswer.items);
+                        this.mapHandler.addItemsToLayer(filterId, filterAnswer.items, this.isExtern());
                         if (!Object.prototype.hasOwnProperty.call(this.layerConfig, "showHits") || this.layerConfig.showHits) {
                             this.amountOfFilteredItems = this.mapHandler.getAmountOfFilteredItemsByFilterId(filterId);
                         }
@@ -577,6 +576,11 @@ export default {
                 v-show="hasUnfixedRules()"
                 class="snippetTagsWrapper"
             >
+                <div
+                    class="snippetTagText"
+                >
+                    {{ $t("modules.tools.filterGeneral.snippetTags.selectionText") }}
+                </div>
                 <SnippetTag
                     :is-reset-all="true"
                     label=""
@@ -857,6 +861,11 @@ export default {
         margin: 8px 0;
         max-height: 200px;
         overflow-y: auto;
+    }
+    .snippetTagText {
+        font-size: 12px;
+        float: left;
+        padding: 6px 4px 0px 0px;
     }
     .form-group {
         clear: both;

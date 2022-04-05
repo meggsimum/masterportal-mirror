@@ -40,8 +40,7 @@ import {getWKTGeom} from "../../src/utils/getWKTGeom";
 const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */{
     events: {
         "paste input": "controlEvent",
-        "keyup input": "controlEvent",
-        "contextmenu input": "controlEvent",
+        "input input": "controlEvent",
         "focusin input": "toggleStyleForRemoveIcon",
         "focusout input": "toggleStyleForRemoveIcon",
         "click .form-control-feedback": "deleteSearchString",
@@ -111,7 +110,8 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         });
 
         this.listenTo(Radio.channel("ViewZoom"), {
-            "hitSelected": this.hitSelected
+            "hitSelected": this.hitSelected,
+            "setMarkerZoom": this.setMarkerZoom
         });
 
         if (navigator.appVersion.indexOf("MSIE 9.") !== -1) {
@@ -368,7 +368,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
 
         // With only one hit in the recommendedList, the marker is set directly
         // and in case of a Tree-Search the menu folds out.
-        if (this.model.get("initSearchString") !== undefined && this.model.get("finalHitList").length === 1) {
+        if (this.model.get("finalHitList").length === 1 && this.model.get("initSearchString") === this.model.get("finalHitList")[0].name) {
             this.hitSelected();
         }
         this.$("#searchInput + span").show();
@@ -463,6 +463,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         else {
             hit = modelHitList[0];
         }
+
         // 1. Write text in Searchbar
         this.setSearchbarString(hit?.name);
         // 2. hide searchmenuü
@@ -600,7 +601,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
             zoomLevel = resolutions.indexOf(0.2645831904584105) === -1 ? resolutions.length : resolutions.indexOf(0.2645831904584105);
         }
 
-        if (hit.coordinate.length === 2) {
+        if (hit?.coordinate?.length === 2) {
             store.dispatch("MapMarker/removePolygonMarker");
             hit.coordinate = this.sanitizePoint(hit.coordinate);
             store.dispatch("MapMarker/placingPointMarker", hit.coordinate);
@@ -642,7 +643,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
             if (event.keyCode === 40) {
                 this.nextElement(selected);
             }
-            if (event.keyCode === 13 && this.model.get("finalHitList").length > 1) {
+            if (event.keyCode === 13 && this.model.get("finalHitList").length >= 1) {
                 if (this.isFolderElement(selected)) {
                     this.collapseHits(selected);
                 }
@@ -853,44 +854,17 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
      * @returns {void}
      */
     controlEvent: function (evt) {
-        let count = this.model.get("tempCounter");
+        this.model.setInitSearchString(undefined);
 
-        if (evt.type === "contextmenu") {
-            this.model.setTempCounter(0);
-        }
-        else if (evt.type === "paste") {
-            this.handlePasteEvent(evt, count);
-        }
-        else if (evt.type === "keyup") {
-            if (count < 2) {
-                this.model.setTempCounter(++count);
-            }
-            else {
-                clearTimeout(this.model.get("timeoutReference"));
-                this.model.set("timeoutReference", setTimeout(() => {
-                    this.setSearchString(evt);
-                }, 200));
-            }
+        if (evt.type === "paste") {
+            this.model.set("pasted", true);
         }
         else {
-            this.setSearchString(evt);
+            clearTimeout(this.model.get("timeoutReference"));
+            this.model.set("timeoutReference", setTimeout(() => {
+                this.setSearchString(evt);
+            }, 200));
         }
-    },
-
-    /**
-     * handle paste event
-     * @param {event} evt - a keyup, paste or contextmenu event
-     * @param {number} count - temporary counter to control input events
-     * @returns {void}
-     */
-    handlePasteEvent: function (evt, count) {
-        if (count === undefined) {
-            this.model.setTempCounter(0);
-        }
-        else {
-            this.model.setTempCounter(undefined);
-        }
-        this.setSearchString(evt);
     },
 
     /**
@@ -904,8 +878,9 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
             this.deleteSearchString();
         }
         else {
-            if (evt.type === "paste") {
-                this.model.setSearchString(evt.target.value, evt.type);
+            if (this.model.get("pasted")) {
+                this.model.setSearchString(evt.target.value, "paste");
+                this.model.set("pasted", false);
             }
             else if (evt.keyCode !== 37 && evt.keyCode !== 38 && evt.keyCode !== 39 && evt.keyCode !== 40 && !(this.getSelectedElement("#searchInputUL").length > 0 && this.getSelectedElement("#searchInputUL").hasClass("type"))) {
                 if (evt.key === "Enter" || evt.keyCode === 13) {
@@ -1016,7 +991,7 @@ const SearchbarView = Backbone.View.extend(/** @lends SearchbarView.prototype */
         const isEvent = evt instanceof $.Event,
             hitId = isEvent ? evt.currentTarget.id : null,
             hit = isEvent ? this.model.get("finalHitList").find(obj => obj.id === hitId) : null,
-            hitName = isEvent ? hit.name : "undefined";
+            hitName = isEvent ? hit?.name : "undefined";
 
         // with gdi-search no action on mousehover or on GFI onClick
         if (hit && hit?.triggerEvent && hit.type !== i18next.t("common:modules.searchbar.type.subject") && hit.type !== i18next.t("common:modules.searchbar.type.general") && hit.triggerEvent.event !== "gfiOnClick") {

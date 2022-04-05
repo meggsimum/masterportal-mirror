@@ -263,8 +263,14 @@ describe("src/core/layers/layer.js", () => {
         const layerWrapper = new Layer(attributes, olLayer);
 
         expect(layerWrapper.attributes.transparency).to.be.equals(50);
-        expect(layerWrapper.get("layer").getOpacity()).to.be.equals(0);
-        layerWrapper.updateLayerTransparency();
+        expect(layerWrapper.get("layer").getOpacity()).to.be.equals(0.5);
+    });
+    it("updateLayerTransparency shall update layers opacity if selected is false", function () {
+        attributes.isSelected = false;
+        attributes.transparency = 50;
+        const layerWrapper = new Layer(attributes, olLayer);
+
+        expect(layerWrapper.attributes.transparency).to.be.equals(50);
         expect(layerWrapper.get("layer").getOpacity()).to.be.equals(0.5);
     });
     it("setIsVisibleInTree shall trigger menu rerender", function () {
@@ -356,7 +362,7 @@ describe("src/core/layers/layer.js", () => {
         testSetIsSelected("custom", 2, 4, true);
     });
     it("setIsSelected test false with treetype not light", function () {
-        testSetIsSelected("custom", 2, 4, false);
+        testSetIsSelected("custom", 2, 7, false);
     });
     it("toggleIsVisibleInMap is true and treeType light", function () {
         testIsVisibleInMap("light", true, 1);
@@ -368,7 +374,7 @@ describe("src/core/layers/layer.js", () => {
         testIsVisibleInMap("custom", true, 6);
     });
     it("toggleIsVisibleInMap is false and treeType not light", function () {
-        testIsVisibleInMap("custom", false, 3);
+        testIsVisibleInMap("custom", false, 6);
     });
 
     it("updateLayerSource test", function () {
@@ -865,7 +871,6 @@ describe("src/core/layers/layer.js", () => {
      */
     function testSetIsSelected (treetype, selectionIDX, calls, isSelected) {
         let layerWrapper = null,
-            addLayerToIndex = false,
             counter = 0;
 
         store.getters = {
@@ -875,9 +880,6 @@ describe("src/core/layers/layer.js", () => {
             args.forEach(arg => {
                 if (arg === "rerender" || arg === "updateSelection" || arg === "updateLayerView") {
                     counter++;
-                }
-                if (arg === "addLayerToIndex") {
-                    addLayerToIndex = true;
                 }
             });
         });
@@ -895,8 +897,6 @@ describe("src/core/layers/layer.js", () => {
         expect(layerWrapper.attributes.isSelected).to.be.equals(isSelected);
         expect(layerWrapper.attributes.isVisibleInMap).to.be.equals(isSelected);
         expect(layerWrapper.attributes.selectionIDX).to.be.equals(selectionIDX);
-        expect(addLayerToIndex).to.be.equals(isSelected);
-        expect(layerRemoved).to.be.equals(!isSelected);
         expect(counter).to.be.equals(calls);
     }
 

@@ -1,6 +1,6 @@
 import Backbone from "backbone";
 import ModelList from "../modelList/list";
-import {getLayerList} from "masterportalAPI/src/rawLayerList";
+import {getLayerList} from "masterportalapi/src/rawLayerList";
 import store from "../../../src/app-store/index";
 
 const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
@@ -116,16 +116,6 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
 
         this.listenTo(this, {
             "change:category": function () {
-                const modelList = Radio.request("ModelList", "getCollection"),
-                    modelListToRemove = modelList.filter(function (model) {
-                        // Alle Fachdaten Layer
-                        return model.get("type") === "layer" && model.get("parentId") !== "Baselayer";
-                    });
-
-                modelListToRemove.forEach(model => {
-                    model.setIsSelected(false);
-                });
-                modelList.remove(modelListToRemove);
                 this.setItemList([]);
                 this.addTreeMenuItems();
                 this.parseTree(getLayerList());
@@ -448,9 +438,10 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
      * @param {String} [parentId] Id for the correct position of the layer in the layertree.
      * @param {String} [styleId] Id for the styling of the features; should correspond to a style from the style.json.
      * @param {(String | Object)} [gfiAttributes="ignore"] Attributes to be shown when clicking on the feature using the GFI tool.
+     * @param {Object} [opts] additional options to append to the model on initialization
      * @returns {void}
      */
-    addVectorLayer: function (name, id, features, parentId, styleId, gfiAttributes = "ignore") {
+    addVectorLayer: function (name, id, features, parentId, styleId, gfiAttributes = "ignore", opts = {}) {
         const layer = {
             type: "layer",
             name: name,
@@ -468,7 +459,8 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
             isSelected: true,
             cache: false,
             datasets: [],
-            urlIsVisible: false
+            urlIsVisible: false,
+            ...opts
         };
 
         if (styleId !== undefined) {
@@ -750,20 +742,21 @@ const Parser = Backbone.Model.extend(/** @lends Parser.prototype */{
         const enabled = id === "3d_daten" ? !Radio.request("Util", "isViewMobile") : true;
 
         if (enabled && overLayer !== undefined) {
-            const name = overLayer?.name ? overLayer.name : i18next.t(defaultTranslationKey),
-                // If no name and no translation-function was found, the translation of the default value is used
-                i18nextTranslate = overLayer?.name && overLayer?.i18nextTranslate
-                    ? overLayer.i18nextTranslate
-                    : setter => {
-                        if (typeof setter === "function" && i18next.exists(defaultTranslationKey)) {
-                            setter("name", i18next.t(defaultTranslationKey));
-                        }
-                    };
+            const name = overLayer?.name ? overLayer.name : null;
 
             this.addItemByPosition({
                 type: "folder",
-                name,
-                i18nextTranslate,
+                name: name ? name : i18next.t(defaultTranslationKey),
+                i18nextTranslate: (setter) => {
+                    if (typeof setter === "function") {
+                        if (name) {
+                            setter("name", i18next.exists(name) ? i18next.t(name) : name);
+                        }
+                        else if (i18next.exists(defaultTranslationKey)) {
+                            setter("name", i18next.t(defaultTranslationKey));
+                        }
+                    }
+                },
                 id,
                 parentId: "tree",
                 isInThemen: true,

@@ -22,6 +22,8 @@
  * @property {?object} service An object containing information about the WFS service, which will later be filtered.
  * @property {boolean} showResultList Whether the modal containing the results should be shown.
  * @property {boolean} valuesReset If the values are reset, no values should be set on a select element.
+ * @property {number} zoomLevel zoom level to switch to on focusing a result
+ * @property {number} resultsPerPage used for pagination
  */
 const state = {
     active: false,
@@ -46,7 +48,8 @@ const state = {
     service: null,
     showResultList: false,
     valuesReset: false,
-    zoomLevel: 5
+    zoomLevel: 5,
+    resultsPerPage: 0
 };
 
 export default state;

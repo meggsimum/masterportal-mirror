@@ -9,12 +9,15 @@ import Feature from "ol/Feature";
 import Line from "ol/geom/LineString";
 import Point from "ol/geom/Point";
 import Polygon from "ol/geom/Polygon";
+import proj4 from "proj4";
 
 describe("src/modules/tools/draw/store/actions/actionsDownload.js", () => {
-    let dispatch, state;
+    let dispatch, state, rootGetters;
 
     beforeEach(() => {
         dispatch = sinon.spy();
+        rootGetters = {"Map/projectionCode": "EPSG:25832"};
+        proj4.defs("EPSG:25832", "+title=ETRS89/UTM 32N +proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
     });
 
     afterEach(sinon.restore);
@@ -82,8 +85,8 @@ describe("src/modules/tools/draw/store/actions/actionsDownload.js", () => {
         it("should transform point coordinates from EPSG:25832 to EPSG:4326", () => {
             const geometry = new Point([690054.1273707711, 5340593.1785796825]);
 
-            expect(actions.transformCoordinates({dispatch}, geometry)).to.eql(
-                [11.557298950358712, 48.19011266676286]
+            expect(actions.transformCoordinates({dispatch, rootGetters}, geometry)).to.eql(
+                [11.557298950390026, 48.19011285902384]
             );
             expect(dispatch.notCalled).to.be.true;
         });
@@ -94,11 +97,11 @@ describe("src/modules/tools/draw/store/actions/actionsDownload.js", () => {
                 [691848.0014020792, 5340259.803759704]
             ]);
 
-            expect(actions.transformCoordinates({dispatch}, geometry)).to.eql(
+            expect(actions.transformCoordinates({dispatch, rootGetters}, geometry)).to.eql(
                 [
-                    [11.553402467114491, 48.18048612894288],
-                    [11.575007532544808, 48.18114662023035],
-                    [11.581260790292623, 48.18657710798541]
+                    [11.553402467145743, 48.1804863212112],
+                    [11.57500753257633, 48.18114681249815],
+                    [11.581260790324238, 48.18657730024906]
                 ]
             );
             expect(dispatch.notCalled).to.be.true;
@@ -111,12 +114,12 @@ describe("src/modules/tools/draw/store/actions/actionsDownload.js", () => {
                 [689546.127645091, 5338656.429625526]
             ]]);
 
-            expect(actions.transformCoordinates({dispatch}, geometry)).to.eql(
+            expect(actions.transformCoordinates({dispatch, rootGetters}, geometry)).to.eql(
                 [[
-                    [11.549606597773037, 48.17285700012215],
-                    [11.600757126507961, 48.179280978813836],
-                    [11.57613610823175, 48.148267667042006],
-                    [11.549606597773037, 48.17285700012215]
+                    [11.549606597804212, 48.17285719239628],
+                    [11.600757126539783, 48.17928117108303],
+                    [11.57613610826325, 48.1482678593347],
+                    [11.549606597804212, 48.17285719239628]
                 ]]
             );
             expect(dispatch.notCalled).to.be.true;
@@ -124,7 +127,7 @@ describe("src/modules/tools/draw/store/actions/actionsDownload.js", () => {
         it("should not transform the geometry if it is neither a Line, Point or Polygon and return an empty Array", () => {
             const geometry = new Circle([690054.1273707711, 5340593.1785796825], 5);
 
-            expect(actions.transformCoordinates({dispatch}, geometry)).to.eql([]);
+            expect(actions.transformCoordinates({dispatch, rootGetters}, geometry)).to.eql([]);
             expect(dispatch.calledOnce).to.be.true;
             /* NOTE: i18next isn't actually working in tests yet, so here undefined
              * is compared with undefined - works, but has limited meaning */

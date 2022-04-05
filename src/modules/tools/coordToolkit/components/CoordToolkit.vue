@@ -2,7 +2,7 @@
 import ToolTemplate from "../../ToolTemplate.vue";
 import getComponent from "../../../../utils/getComponent";
 import {Pointer} from "ol/interaction.js";
-import {getProjections} from "masterportalAPI/src/crs";
+import {getProjections} from "masterportalapi/src/crs";
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import getters from "../store/gettersCoordToolkit";
 import mutations from "../store/mutationsCoordToolkit";

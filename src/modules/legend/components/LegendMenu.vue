@@ -47,10 +47,10 @@ export default {
             if (root && this.uiStyle !== "TABLE") {
                 const span = root.querySelector("[name=legend]");
 
-                if (this.mobile && span?.parentNode) {
+                if (this.mobile && span?.parentNode && this.element) {
                     root.replaceChild(this.element, span.parentNode);
                 }
-                else if (span?.parentNode?.parentNode) {
+                else if (span?.parentNode?.parentNode && this.childNode) {
                     root.replaceChild(this.childNode, span.parentNode.parentNode);
                 }
             }

@@ -314,7 +314,7 @@
                 "more": "Mais...",
                 "detailsOfSelected": "Detalhes da característica seleccionada",
                 "alert": "A tentativa de mostrar a característica seleccionada falhou porque não tem geometria.",
-                "key": "{{shownFeatures.x}} von {{shownFeatures.y}} Features gelistet"
+                "key": "{{shownFeatures}} von {{featureCount}} Features gelistet"
             },
             "layerSlider": {
                 "displayLayers": "Visualização de várias camadas.",

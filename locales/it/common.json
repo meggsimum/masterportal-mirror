@@ -1,12 +1,26 @@
 {
     "masterPortalVersion": "Masterportal V. {{masterPortalVersionNumber}}",
+    "general": {
+        "opened": "Aperto",
+        "cancelled": "Annullato",
+        "error": "Errore",
+        "success": "Successo"
+    },
     "button": {
         "back": "Indietro",
         "download": "Scarica",
         "search": "Cerca",
         "close": "Chiudi",
         "minimize": "Riduci",
-        "confirm": "Verifica"
+        "confirm": "Verifica",
+        "edit": "Modificare",
+        "delete": "Eliminare",
+        "save": "Salva",
+        "cancel": "Annulla",
+        "open": "Aprire",
+        "load": "Carico",
+        "reset": "Ripristina",
+        "stop": "Fermare"
     },
     "colors": {
         "blue": "Blu",
@@ -299,7 +313,7 @@
                 "more": "Scaria di più",
                 "detailsOfSelected": "Dettagli del elemento selezionato",
                 "alert": "Il tentativo di mostrare la funzione selezionata è fallito perché non ha una geometria.",
-                "key": "{{shownFeatures.x}} di {{shownFeatures.y}} elementi scaricati"
+                "key": "{{shownFeatures}} di {{featureCount}} elementi scaricati"
             },
             "layerSlider": {
                 "displayLayers": "Visualizzazione di vari layer.",

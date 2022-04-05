@@ -50,6 +50,7 @@ export default {
         <div class="info-icon">
             <span
                 :class="['glyphicon glyphicon-info-sign', showInfo ? 'opened' : '']"
+                tabindex="0"
                 @click="toggleInfo()"
                 @keydown.enter="toggleInfo()"
             />
@@ -58,7 +59,11 @@ export default {
             v-show="showInfo"
             class="bottom"
         >
-            <div class="info-text">
+            <div
+                class="info-text"
+                @click="toggleInfo()"
+                @keydown="toggleInfo()"
+            >
                 <span>{{ infoText }}</span>
             </div>
         </div>
@@ -91,6 +96,7 @@ export default {
         border-radius: 5px;
         font-size: 11px;
         padding: 15px 10px;
+        cursor: pointer;
     }
     .glyphicon-info-sign:before {
         content: "\E086";

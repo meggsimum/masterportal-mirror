@@ -77,6 +77,27 @@ const mutations = {
             mapCollection.getMap("ol", "2D").removeLayer(layer);
         }
     },
+
+    /**
+     * Adds the given feature to the highlighted features list.
+     * @param {Object} state - The map state.
+     * @param {module:ol/Feature} feature - The given feature.
+     * @returns {void}
+     */
+    addHighlightedFeature (state, feature) {
+        state.highlightedFeatures.push(feature);
+    },
+
+    /**
+     * Adds the given style to the highlighted feature styles list.
+     * @param {Object} state - The map state.
+     * @param {module:ol/Style} style - The given style.
+     * @returns {void}
+     */
+    addHighlightedFeatureStyle (state, style) {
+        state.highlightedFeatureStyles.push(style);
+    },
+
     /**
      * Adds a layerId to the array of all complete loaded layers.
      * @param {Object} state The state object.

@@ -3,7 +3,7 @@ import testServices from "../../../resources/testServices.json";
 import Util from "@modules/core/util.js";
 
 // import Collection from "@modules/core/rawLayerList.js";
-// import {initializeLayerList} from "masterportalAPI/src/rawLayerList";
+// import {initializeLayerList} from "masterportalapi/src/rawLayerList";
 import {expect} from "chai";
 
 describe("core/configLoader/parserDefaultTree", function () {

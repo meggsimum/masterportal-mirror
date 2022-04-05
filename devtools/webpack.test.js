@@ -68,6 +68,12 @@ module.exports = {
             {
                 test: /\.xml$/i,
                 use: "raw-loader"
+            },
+            {
+                test: /\.worker\.js$/,
+                use: {
+                    loader: "worker-loader"
+                }
             }
         ]
     },

@@ -8,6 +8,7 @@ const Config = {
         layerIDsToIgnore: [
             "1912", "1913", "1914", "1915", "1916", "1917", // UESG
             "2298", // Straßenbaumkataster cache grau
+            "2297", // Straßenbaumkataster cache
             "1791", // nachträgliche Bodenrichtwerte lagetypisch 1964
             "8713" // Layer Schulinfo
         ],

@@ -96,7 +96,7 @@ const TextStyleModel = StyleModel.extend(/** @lends TextStyleModel.prototype */{
             feature = this.get("feature"),
             labelField = this.get("labelField");
 
-        if (isClustered && feature.get("features").length > 1 && this.get("clusterTextType") !== "none") {
+        if (isClustered && feature.get("features")?.length > 1 && this.get("clusterTextType") !== "none") {
             return this.createClusteredTextStyle();
         }
         else if (labelField) {

@@ -1,5 +1,6 @@
 import axios from "axios";
-import {convertAttrTypeXML} from "../convertAttrType.js";
+import isObject from "../../../../utils/isObject";
+import {convertAttrTypeXML} from "./convertAttrType.js";
 
 /**
  * Calls DescribeFeatureType on the given url for the given typename.
@@ -10,13 +11,13 @@ import {convertAttrTypeXML} from "../convertAttrType.js";
  * @param {Function|Boolean} [axiosMock=false] false to use axios, an object with get function(url, {params}) if mock is neaded
  * @returns {void}
  */
-export default function describeFeatureTypeWFS (url, typename, onsuccess, onerror, axiosMock = false) {
+function describeFeatureTypeWFS (url, typename, onsuccess, onerror, axiosMock = false) {
     const params = {
             service: "WFS",
             version: "1.1.0",
             request: "DescribeFeatureType"
         },
-        axiosObject = typeof axiosMock === "object" && axiosMock !== null ? axiosMock : axios;
+        axiosObject = isObject(axiosMock) ? axiosMock : axios;
 
     axiosObject.get(url, {params})
         .then(response => {
@@ -148,3 +149,8 @@ function parseSchemaChildren (schemaChildren, typename, onsuccess, onerror) {
         onsuccess(result);
     }
 }
+
+export {
+    describeFeatureTypeWFS,
+    parseResponse
+};

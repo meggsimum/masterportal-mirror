@@ -2,7 +2,7 @@ import moment from "moment";
 import {transform, get} from "ol/proj.js";
 import store from "../../src/app-store";
 import mapCollection from "../../src/core/dataStorage/mapCollection.js";
-import api from "masterportalAPI/src/maps/api";
+import api from "masterportalapi/src/maps/api";
 
 const Map3dModel = Backbone.Model.extend(/** @lends Map3dModel.prototype*/{
     defaults: {
@@ -50,7 +50,9 @@ const Map3dModel = Backbone.Model.extend(/** @lends Map3dModel.prototype*/{
             "setCameraParameter": this.setCameraParameter
         }, this);
         if (Config.startingMap3D) {
-            this.activateMap3d();
+            setTimeout(() => {
+                this.activateMap3d();
+            }, 200);
         }
     },
 
@@ -83,7 +85,7 @@ const Map3dModel = Backbone.Model.extend(/** @lends Map3dModel.prototype*/{
                 return ["Oblique", "TileSet3D", "Terrain3D"].indexOf(layerModel.get("typ")) === -1;
             });
             allLayerModels.forEach(layerWrapper => {
-                if (layerWrapper.get("isSelected") === false) {
+                if (layerWrapper.get("isSelected") !== true) {
                     layerWrapper.removeLayer();
                 }
             });

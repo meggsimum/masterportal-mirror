@@ -9,7 +9,7 @@ export default {
      * @param {Boolean} [bottomControlsFlag=false] whether component is to be shown at lower end of the page
      * @returns {void}
      */
-    registerModule (state, name, control, hiddenMobile = false, bottomControlsFlag = false) {
+    registerControl (state, {name, control, hiddenMobile = false, bottomControlsFlag = false}) {
         state.componentMap = {
             ...state.componentMap,
             [name]: control
@@ -33,13 +33,13 @@ export default {
      * @param {String} name name of control to remove from state
      * @returns {void}
      */
-    unregisterModule (state, name) {
+    unregisterControl (state, name) {
         const nextMap = {...state.componentMap};
 
         delete nextMap[name];
 
         state.componentMap = nextMap;
-        state.mobileHiddenControls = state.mobileHiddenControls.filter(s => s !== name);
+        state.hiddenMobile = state.hiddenMobile.filter(s => s !== name);
         state.bottomControls = state.bottomControls.filter(s => s !== name);
     }
 };

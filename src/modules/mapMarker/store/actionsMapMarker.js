@@ -66,6 +66,26 @@ export default {
         commit("clearMarker", "markerPoint");
         commit("setVisibilityMarker", {visbility: false, marker: "markerPoint"});
     },
+    /**
+     * Rotates the point marker.
+     * @param {Object} param.commit the commit
+     * @param {Object} param.getters the getters
+     * @param {Number} angle angle to rotate
+     * @returns {void}
+     */
+    rotatePointMarker ({commit, getters}, angle) {
+        const features = getters.markerPoint?.getSource().getFeatures();
+
+        if (features && features.length > 0) {
+            const feature = features[0],
+                icon = feature.getStyle().getImage().clone();
+
+            icon.setRotation(angle * Math.PI / 180);
+            feature.getStyle().setImage(icon);
+            commit("clearMarker", "markerPoint");
+            commit("addFeatureToMarker", {feature: feature, marker: "markerPoint"});
+        }
+    },
 
     /**
      * Converts polygon to the wkt format and add this to the map.

@@ -3,13 +3,16 @@ import sortBy from "../../../../utils/sortBy";
 import store from "../../../../app-store/index";
 /**
  * sets the visible layers and set into variable
- * @param {Object} param.dispatch the dispatch
+ * @param {boolean} [printMapMarker=false] whether layer "markerPoint" should be filtered out
  * @returns {void}
  */
-export default function getVisibleLayer () {
+export default function getVisibleLayer (printMapMarker = false) {
     const layers = Radio.request("Map", "getLayers"),
         visibleLayerList = typeof layers?.getArray !== "function" ? [] : layers.getArray().filter(layer => {
-            return layer.getVisible() === true && layer.get("name") !== "markerPoint";
+            return layer.getVisible() === true &&
+                (
+                    layer.get("name") !== "markerPoint" || printMapMarker
+                );
         });
 
     sortVisibleLayerListByZindex(visibleLayerList);

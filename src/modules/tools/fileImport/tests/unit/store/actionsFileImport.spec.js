@@ -5,7 +5,7 @@ import importedState from "../../../store/stateFileImport";
 import rawSources from "../../resources/rawSources.js";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
-import * as crs from "masterportalAPI/src/crs";
+import * as crs from "masterportalapi/src/crs";
 
 const
     {importKML} = actions,

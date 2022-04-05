@@ -13,6 +13,7 @@ import {
     createLayerIfNotExists,
     liveZoom,
     addLayerByLayerId,
+    setParserAttributeByLayerId,
     getLayers,
     isUiStyleTable,
     setFilterInTableMenu
@@ -37,6 +38,7 @@ export default {
                 createLayerIfNotExists,
                 liveZoom,
                 addLayerByLayerId,
+                setParserAttributeByLayerId,
                 getLayers
             }),
             selectedLayers: [],

@@ -1,11 +1,26 @@
 {
     "masterPortalVersion": "Masterportal V. {{masterPortalVersionNumber}}",
+    "general": {
+        "opened": "Abierto",
+        "cancelled": "Anulado",
+        "error": "Error",
+        "success": "Éxito"
+    },
     "button": {
         "back": "Volver",
         "download": "Descargar",
         "search": "Buscar",
         "close": "Cerrar",
-        "minimize": "Minimizar"
+        "minimize": "Minimizar",
+        "confirm": "Confirmar",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "save": "Salvar",
+        "cancel": "Cancelar",
+        "open": "Abrir",
+        "load": "Carga",
+        "reset": "Reiniciar",
+        "stop": "Detener"
     },
     "colors": {
         "blue": "Azul",
@@ -310,7 +325,7 @@
                 "more": "Más...",
                 "detailsOfSelected": "Detalles de la característica seleccionada",
                 "alert": "El intento de mostrar la característica seleccionada falló, porque no tiene geometría.",
-                "key": "{{shownFeatures.x}} de {{shownFeatures.y}} entidades listadas"
+                "key": "{{shownFeatures}} de {{featureCount}} entidades listadas"
             },
             "layerSlider": {
                 "displayLayers": "Visualización de varias capas.",

@@ -1,4 +1,4 @@
-import {wfs} from "masterportalAPI";
+import {wfs} from "masterportalapi";
 import LoaderOverlay from "../../utils/loaderOverlay";
 import Layer from "./layer";
 import * as bridge from "./RadioBridge.js";
@@ -15,7 +15,6 @@ export default function WFSLayer (attrs) {
         supported: ["2D", "3D"],
         showSettings: true,
         isSecured: false,
-        isClustered: false,
         altitudeMode: "clampToGround",
         useProxy: false,
         sourceUpdated: false
@@ -27,9 +26,6 @@ export default function WFSLayer (attrs) {
     Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
     this.set("style", this.getStyleFunction(attrs));
     this.prepareFeaturesFor3D(this.layer.getSource().getFeatures());
-    if (attrs.clusterDistance) {
-        this.set("isClustered", true);
-    }
     this.createLegend();
 }
 // Link prototypes and add prototype methods, means WFSLayer uses all methods and properties of Layer
@@ -62,6 +58,7 @@ WFSLayer.prototype.createLayer = function (attrs) {
         },
         styleFn = this.getStyleFunction(attrs),
         options = {
+            doNotLoadInitially: attrs.doNotLoadInitially,
             wfsFilter: attrs.wfsFilter,
             clusterGeometryFunction: (feature) => {
                 // do not cluster invisible features; can't rely on style since it will be null initially
@@ -90,8 +87,8 @@ WFSLayer.prototype.createLayer = function (attrs) {
                 console.error("masterportal wfs loading error:", error);
             },
             loadingParams: {
-                xhrParameters: attrs.isSecured ? {credentials: "include"} : null,
-                propertyname: this.getPropertyname(attrs),
+                xhrParameters: attrs.isSecured ? {credentials: "include"} : undefined,
+                propertyname: this.getPropertyname(attrs) || undefined,
                 // only used if loading strategy is all
                 bbox: attrs.bboxGeometry ? attrs.bboxGeometry.getExtent().toString() : undefined
             },

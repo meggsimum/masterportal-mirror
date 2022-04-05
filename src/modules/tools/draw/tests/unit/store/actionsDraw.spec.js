@@ -579,7 +579,8 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
                         getFeatureById: () => ({setStyle})
                     })
                 },
-                redoArray: []
+                redoArray: [],
+                undoArray: []
             };
         });
 
@@ -599,8 +600,9 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
             expect(setStyle.calledOnce).to.be.true;
             expect(setStyle.firstCall.args).to.eql([styleSymbol]);
             expect(getStyle.calledOnce).to.be.true;
-            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args).to.eql(["updateRedoArray", {remove: true}]);
+            expect(dispatch.secondCall.args).to.eql(["updateUndoArray", {remove: false, feature: featureToRestore}]);
         });
         it("should not commit and dispatch if the redoArray doesn't contain a value", () => {
             expect(setId.notCalled).to.be.true;
@@ -745,7 +747,8 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
             state = {
                 layer: {
                     getSource: () => ({getFeatures, removeFeature})
-                }
+                },
+                undoArray: []
             };
         });
 
@@ -756,11 +759,12 @@ describe("src/modules/tools/draw/store/actionsDraw.js", () => {
             expect(removeFeature.notCalled).to.be.true;
         });
         it("should dispatch the correct methods and remove the feature if the type of featureToRemove is not 'undefined'", () => {
-            arr.push(feature);
+            state.undoArray.push(feature);
             actions.undoLastStep({state, dispatch});
 
-            expect(dispatch.calledOnce).to.be.true;
+            expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args).to.eql(["updateRedoArray", {remove: false, feature}]);
+            expect(dispatch.secondCall.args).to.eql(["updateUndoArray", {remove: true}]);
             expect(removeFeature.calledOnce).to.be.true;
             expect(removeFeature.firstCall.args).to.eql([feature]);
         });

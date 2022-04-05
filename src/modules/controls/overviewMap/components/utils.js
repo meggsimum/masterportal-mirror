@@ -1,7 +1,7 @@
 import ImageWMS from "ol/source/ImageWMS.js";
 import Image from "ol/layer/Image.js";
 import View from "ol/View.js";
-import {getLayerWhere} from "masterportalAPI/src/rawLayerList";
+import {getLayerWhere} from "masterportalapi/src/rawLayerList";
 import store from "../../../../app-store/index";
 
 /*

@@ -53,6 +53,18 @@ export default {
                     bottom: [fallbackBottomRight]
                 };
             }
+            this.$controlAddons.forEach(controlName => {
+                const addonControlConfig = this.controlsConfig[controlName];
+
+                if (addonControlConfig) {
+                    if (addonControlConfig.hiddenMobile) {
+                        this.mobileHiddenControls.push(controlName);
+                    }
+                    if (addonControlConfig.bottomControl) {
+                        this.bottomControls.push(controlName);
+                    }
+                }
+            }, this);
 
             Object
                 .keys(this.controlsConfig)

@@ -27,9 +27,9 @@ export default {
         },
         /** the distances in config.json */
         poiDistances: {
-            type: Array,
+            type: [Boolean, Array],
             required: false,
-            default: null
+            default: () => []
         }
     },
     data () {
@@ -48,7 +48,10 @@ export default {
     },
     computed: {
         ...mapGetters("controls/orientation", Object.keys(getters)),
-        ...mapGetters("Map", ["ol2DMap"])
+        ...mapGetters("Map", ["ol2DMap", "projection"]),
+        poiDistancesLocal () {
+            return this.poiDistances === true ? [500, 1000, 2000] : this.poiDistances;
+        }
     },
     watch: {
         tracking () {
@@ -160,12 +163,12 @@ export default {
         checkWFS () {
             const visibleWFSModels = Radio.request("ModelList", "getModelsByAttributes", {isVisibleInMap: true, typ: "WFS"});
 
-            if (Array.isArray(this.poiDistances) && this.poiDistances.length > 0 || this.poiDistances === true) {
+            if (this.poiDistancesLocal.length > 0) {
                 if (!visibleWFSModels.length) {
                     this.setShowPoiIcon(false);
                     this.$store.dispatch("MapMarker/removePointMarker");
                 }
-                else if (Array.isArray(this.poiDistances) && this.poiDistances.length > 0 || this.poiDistances === true) {
+                else {
                     this.setShowPoiIcon(true);
                 }
             }
@@ -232,7 +235,7 @@ export default {
                 position = geolocation.getPosition(),
                 firstGeolocation = this.firstGeolocation,
                 zoomMode = this.zoomMode,
-                centerPosition = proj4(proj4("EPSG:4326"), proj4(this.epsg), position);
+                centerPosition = proj4(proj4("EPSG:4326"), proj4(this.projection.getCode()), position);
 
             // setting the center position
             this.setPosition(centerPosition);
@@ -333,7 +336,7 @@ export default {
                 Radio.trigger("Util", "showLoader");
                 const geolocation = this.geolocation,
                     position = geolocation.getPosition(),
-                    centerPosition = proj4(proj4("EPSG:4326"), proj4(this.epsg), position);
+                    centerPosition = proj4(proj4("EPSG:4326"), proj4(this.projection.getCode()), position);
 
                 // setting the center position
                 this.setPosition(centerPosition);
@@ -479,7 +482,7 @@ export default {
         />
         <PoiOrientation
             v-if="showPoi"
-            :poi-distances="poiDistances"
+            :poi-distances="poiDistancesLocal"
             :get-features-in-circle="getVectorFeaturesInCircle"
             @hide="untrackPOI"
         />

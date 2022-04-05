@@ -90,6 +90,12 @@ export default {
         };
     },
     computed: {
+        ariaLabelDateFrom () {
+            return this.$t("modules.tools.filterGeneral.ariaLabel.dateRange.from", {param: this.attrName});
+        },
+        ariaLabelDateTo () {
+            return this.$t("modules.tools.filterGeneral.ariaLabel.dateRange.to", {param: this.attrName});
+        },
         titleText () {
             if (this.title === true) {
                 if (Array.isArray(this.attrName)) {
@@ -416,11 +422,13 @@ export default {
                 class="date-from-input-container"
             >
                 <label
+                    v-if="title !== false"
                     :for="'inputDateFrom-' + snippetId"
                 >{{ getLabelLeft() }}</label>
                 <input
                     :id="'inputDateFrom-' + snippetId"
                     v-model="inRangeValueLeft"
+                    :aria-label="ariaLabelDateFrom"
                     name="inputDateFrom"
                     class="snippetDateRangeFrom form-control"
                     type="date"
@@ -437,11 +445,13 @@ export default {
                 class="date-to-input-container"
             >
                 <label
+                    v-if="title !== false"
                     :for="'inputDateUntil-' + snippetId"
                 >{{ getLabelRight() }}</label>
                 <input
                     :id="'inputDateUntil-' + snippetId"
                     v-model="inRangeValueRight"
+                    :aria-label="ariaLabelDateTo"
                     name="inputDateUntil"
                     class="snippetDateRangeUntil form-control"
                     type="date"
@@ -486,7 +496,6 @@ export default {
         width: 10.5rem;
     }
     label {
-        text-transform: capitalize;
         margin: 0;
     }
     .snippetDateRangeContainer > div {

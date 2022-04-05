@@ -139,6 +139,7 @@ export default {
                         role="button"
                         data-toggle="collapse"
                         data-parent="#accordion"
+                        tabindex="0"
                     >
                         {{ filter.category }} +
                     </a>
@@ -202,6 +203,12 @@ export default {
         </div>
     </div>
 </template>
+
+<style>
+    #tool-general-filter .panel-heading .panel-title a[tabindex="0"]:focus {
+        padding: 5px;
+    }
+</style>
 
 <style lang="scss" scoped>
     .panel-group .panel + .panel {

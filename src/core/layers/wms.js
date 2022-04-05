@@ -1,4 +1,4 @@
-import {wms} from "masterportalAPI";
+import {wms} from "masterportalapi";
 import store from "../../app-store";
 import Layer from "./layer";
 import mapCollection from "../../core/dataStorage/mapCollection.js";
@@ -16,7 +16,6 @@ export default function WMSLayer (attrs) {
         showSettings: true,
         extent: null,
         isSecured: false,
-        notSupportedFor3D: ["1747", "1749", "1750", "9822", "12600", "9823", "1752", "9821", "1750", "1751", "12599", "2297"],
         useProxy: false
     };
 
@@ -27,7 +26,8 @@ export default function WMSLayer (attrs) {
     bridge.listenToChangeSLDBody(this);
 
     // Hack for services that do not support EPSG:4326
-    if (this.get("notSupportedFor3D").includes(this.get("id"))) {
+    // notSupportedFor3DNeu is a temporary attribute
+    if (this.get("notSupportedFor3DNeu") || this.get("notSupportedIn3D") === true) {
         this.set("supported", ["2D"]);
     }
 }
@@ -72,10 +72,11 @@ WMSLayer.prototype.getRawLayerAttributes = function (attrs) {
         layers: attrs.layers,
         version: attrs.version,
         olAttribution: attrs.olAttribution,
-        transparent: attrs.transparent.toString(),
+        transparent: attrs.transparent?.toString(),
         singleTile: attrs.singleTile,
         minScale: parseInt(attrs.minScale, 10),
-        maxScale: parseInt(attrs.maxScale, 10)
+        maxScale: parseInt(attrs.maxScale, 10),
+        crs: attrs.crs
     };
 
     if (attrs.styles !== "nicht vorhanden") {
@@ -121,13 +122,7 @@ WMSLayer.prototype.updateSourceSLDBody = function () {
 WMSLayer.prototype.updateSource = function () {
     wms.updateSource(this.layer);
 };
-/**
- * Returns the layers of the WMS layer.
- * @returns {*} String or Array of layers
- */
-WMSLayer.prototype.getLayers = function () {
-    return this.get("layers");
-};
+
 /**
  * Gets the gfi url from the layers source.
  * @returns {String} - The created getFeature info url.

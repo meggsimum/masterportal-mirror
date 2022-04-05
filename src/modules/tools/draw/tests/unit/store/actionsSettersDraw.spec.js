@@ -38,7 +38,12 @@ describe("src/modules/tools/draw/store/actions/settersDraw.js", () => {
             trigger = sinon.spy();
             state = {
                 withoutGUI: false,
-                currentInteraction: "draw"
+                currentInteraction: "draw",
+                iconList: [{
+                    id: "iconPoint",
+                    type: "simple_point",
+                    value: "simple_point"
+                }]
             };
             sinon.stub(Radio, "request").callsFake(request);
             sinon.stub(Radio, "trigger").callsFake(trigger);
@@ -58,10 +63,10 @@ describe("src/modules/tools/draw/store/actions/settersDraw.js", () => {
 
             actions.setActive({state, commit, dispatch}, active);
 
-            expect(commit.calledThrice).to.be.true;
+            expect(commit.callCount).to.equal(4);
             expect(commit.firstCall.args).to.eql(["setActive", true]);
-            expect(commit.secondCall.args[0]).to.equal("setLayer");
-            expect(typeof commit.secondCall.args[1]).to.equal("object");
+            expect(commit.thirdCall.args[0]).to.equal("setLayer");
+            expect(typeof commit.thirdCall.args[1]).to.equal("object");
             expect(dispatch.calledThrice).to.be.true;
             expect(dispatch.firstCall.args).to.eql(["createDrawInteractionAndAddToMap", {active: true}]);
             expect(dispatch.secondCall.args).to.eql(["createSelectInteractionAndAddToMap", false]);
@@ -75,10 +80,10 @@ describe("src/modules/tools/draw/store/actions/settersDraw.js", () => {
 
             actions.setActive({state, commit, dispatch}, active);
 
-            expect(commit.calledThrice).to.be.true;
+            expect(commit.callCount).to.equal(4);
             expect(commit.firstCall.args).to.eql(["setActive", true]);
-            expect(commit.secondCall.args[0]).to.equal("setLayer");
-            expect(typeof commit.secondCall.args[1]).to.equal("object");
+            expect(commit.thirdCall.args[0]).to.equal("setLayer");
+            expect(typeof commit.thirdCall.args[1]).to.equal("object");
             expect(dispatch.callCount).to.equal(4);
             expect(dispatch.firstCall.args).to.eql(["createDrawInteractionAndAddToMap", {active: true}]);
             expect(dispatch.secondCall.args).to.eql(["createSelectInteractionAndAddToMap", false]);

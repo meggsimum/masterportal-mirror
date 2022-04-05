@@ -7,6 +7,7 @@ import beautifyKey from "../../../../utils/beautifyKey.js";
 import {isWebLink} from "../../../../utils/urlHelper.js";
 import {isPhoneNumber, getPhoneNumberAsWebLink} from "../../../../utils/isPhoneNumber.js";
 import {isEmailAddress} from "../../../../utils/isEmailAddress.js";
+import toBold from "../../../../utils/toBold.js";
 
 export default {
     name: "ComparisonList",
@@ -43,18 +44,9 @@ export default {
         isPhoneNumber,
         getPhoneNumberAsWebLink,
         isEmailAddress,
+        toBold,
         removeVerticalBar (value) {
             return value.replaceAll("|", "<br>");
-        },
-        makeOberstufenprofileBold (value) {
-            const oldProfiles = value;
-            let newProfiles = "";
-
-            oldProfiles.replaceAll("|", "<br>");
-
-            newProfiles = oldProfiles.split("|").map(teilstring => teilstring.split(";")).map(([first, last]) => [`<b>${first}</b>`, last].join("; ")).join("<br>");
-
-            return newProfiles;
         }
     }
 };
@@ -108,7 +100,7 @@ export default {
                             <p
                                 v-else-if="typeof value === 'string' && value.includes(';') && key.includes('SCHULEN')"
                             >
-                                <span v-html="makeOberstufenprofileBold(value, key)" />
+                                <span v-html="toBold(value, key)" />
                             </p>
                             <p
                                 v-else-if="typeof value === 'string' && value.includes('|')"
@@ -161,7 +153,7 @@ export default {
                             <p
                                 v-else-if="typeof value === 'string' && value.includes(';') && key.includes('SCHULEN')"
                             >
-                                <span v-html="makeOberstufenprofileBold(value, key)" />
+                                <span v-html="toBold(value, key)" />
                             </p>
                             <p
                                 v-else-if="typeof value === 'string' && value.includes('|')"
@@ -225,7 +217,7 @@ export default {
                             <p
                                 v-else-if="typeof value === 'string' && value.includes(';') && key.includes('SCHULEN')"
                             >
-                                <span v-html="makeOberstufenprofileBold(value, key)" />
+                                <span v-html="toBold(value, key)" />
                             </p>
                             <p
                                 v-else-if="typeof value === 'string' && value.includes('|')"
@@ -280,7 +272,7 @@ export default {
                             <p
                                 v-else-if="typeof value === 'string' && value.includes(';') && key.includes('SCHULEN')"
                             >
-                                <span v-html="makeOberstufenprofileBold(value, key)" />
+                                <span v-html="toBold(value, key)" />
                             </p>
                             <p
                                 v-else-if="typeof value === 'string' && value.includes('|')"

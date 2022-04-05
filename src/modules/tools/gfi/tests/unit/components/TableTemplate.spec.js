@@ -42,7 +42,9 @@ describe("src/modules/tools/gfi/components/templates/TableTemplate.vue", () => {
                         placingPointMarker: sinon.stub()
                     }
                 }
-            }
+            },
+            currentPosition: null,
+            currentRotation: null
         });
     });
 
@@ -98,7 +100,7 @@ describe("src/modules/tools/gfi/components/templates/TableTemplate.vue", () => {
         expect(wrapper.emitted().close).to.have.lengthOf(1);
     });
 
-    it("should not emitted close event if clicked inside the content", async () => {
+    it("should not emitt close event if clicked inside the content", async () => {
         const wrapper = mount(TableTemplate, {
                 propsData,
                 components,
@@ -113,7 +115,7 @@ describe("src/modules/tools/gfi/components/templates/TableTemplate.vue", () => {
         expect(wrapper.emitted()).to.be.empty;
     });
 
-    it("should rotates the gfi by 90 degrees if 'rotate-button' is clicked", async () => {
+    it("should rotate the gfi by 90 degrees if 'rotate-button' is clicked", async () => {
         const wrapper = mount(TableTemplate, {
                 propsData,
                 components,
@@ -127,7 +129,7 @@ describe("src/modules/tools/gfi/components/templates/TableTemplate.vue", () => {
         expect(wrapper.vm.rotateAngle).to.be.equal(-90);
     });
 
-    it("should rotates the gfi to the starting position if 'rotate-button' clicked four times", async () => {
+    it("should rotate the gfi to the starting position if 'rotate-button' clicked four times", async () => {
         const wrapper = mount(TableTemplate, {
                 propsData,
                 components,

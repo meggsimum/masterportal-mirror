@@ -183,6 +183,10 @@ export default {
 
         // even if current alert got seeded out, there still might be another one in the pipe
         if (state.alerts.length > 0) {
+            if (findSingleAlertByHash(state.alerts, alertProtoClone.hash) !== false && isInTime && isNotRestricted) {
+                // this is necessary because this action returned false even if the alert was displayed
+                displayAlert = true;
+            }
             commit("setReadyToShow", true);
         }
 

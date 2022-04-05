@@ -1,5 +1,6 @@
 import WMSLayer from "../../../src/core/layers/wms";
 import WFSLayer from "../../../src/core/layers/wfs";
+import OAFLayer from "../../../src/core/layers/oaf";
 import GroupedLayers from "../../../src/core/layers/group";
 import WMSTimeLayer from "../../../src/core/layers/wmsTime";
 import WMTSLayer from "../../../src/core/layers/wmts";
@@ -29,7 +30,6 @@ import TreeFilter from "../../treeFilter/model";
  * @deprecated in 3.0.0
  */
 import ExtendedFilter from "../../tools/extendedFilter/model";
-import FeatureLister from "../../tools/featureLister/model";
 import Shadow from "../../tools/shadow/model";
 import ParcelSearch from "../../tools/parcelSearch/model";
 import StyleWMS from "../../tools/styleWMS/model";
@@ -182,6 +182,9 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
                 }
                 return new WFSLayer(attrs, options);
             }
+            else if (attrs.typ === "OAF") {
+                return new OAFLayer(attrs, options);
+            }
             else if (attrs.typ === "StaticImage") {
                 return new StaticImageLayer(attrs, options);
             }
@@ -250,9 +253,6 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
             else if (attrs.id === "extendedFilter") {
                 console.warn("Tool: 'extendedFilter' is deprecated. Please use 'filter' instead.");
                 return new ExtendedFilter(Object.assign(attrs, Object.prototype.hasOwnProperty.call(Config, "ignoredKeys") ? {ignoredKeys: Config.ignoredKeys} : {}), options);
-            }
-            else if (attrs.id === "featureLister") {
-                return new FeatureLister(attrs, options);
             }
             else if (attrs.id === "wfst") {
                 return new WfstModel(attrs, options);

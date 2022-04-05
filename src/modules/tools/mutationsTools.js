@@ -21,12 +21,16 @@ const mutations = {
         const configPossibilitiesPaths = [
                 "configJson.Portalconfig.menu",
                 "configJson.Portalconfig.menu.tools.children",
-                "configJson.Portalconfig.menu.info.children"
+                "configJson.Portalconfig.menu.info.children",
+                "configJson.Portalconfig.menu.simulation.children",
+                "configJson.Portalconfig.menu.utilities.children"
             ],
             configPossibilities = [
                 menuConfig || {},
                 menuConfig?.tools?.children || {},
-                menuConfig?.info?.children || {}
+                menuConfig?.info?.children || {},
+                menuConfig?.simulation?.children || {},
+                menuConfig?.utilities?.children || {}
             ],
             configuredTools = [];
 

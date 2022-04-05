@@ -87,6 +87,12 @@ export default {
         };
     },
     computed: {
+        ariaLabelSliderRangeMin () {
+            return this.$t("modules.tools.filterGeneral.ariaLabel.slider.min", {param: this.attrName});
+        },
+        ariaLabelSliderRangeMax () {
+            return this.$t("modules.tools.filterGeneral.ariaLabel.slider.max", {param: this.attrName});
+        },
         titleText () {
             if (this.title === true) {
                 return this.attrName;
@@ -290,7 +296,7 @@ export default {
                     <input
                         :id="'snippetSliderInputMin-' + snippetId"
                         v-model="inRangeValueLeft"
-                        :aria-label="'snippetSliderInputMin-' + snippetId"
+                        :aria-label="ariaLabelSliderRangeMin"
                         class="slider-input-min form-control"
                         type="number"
                         :disabled="disable"
@@ -306,7 +312,7 @@ export default {
                     <input
                         :id="'snippetSliderInputMax-' + snippetId"
                         v-model="inRangeValueRight"
-                        :aria-label="'snippetSliderInputMax-' + snippetId"
+                        :aria-label="ariaLabelSliderRangeMax"
                         class="slider-input-max form-control"
                         type="number"
                         :disabled="disable"
@@ -326,7 +332,7 @@ export default {
                 <input
                     :id="'snippetSliderRangeMin-' + snippetId"
                     v-model="inRangeValueLeft"
-                    :aria-label="'snippetSliderRangeMin-' + snippetId"
+                    :aria-label="ariaLabelSliderRangeMin"
                     class="slider-range-min"
                     type="range"
                     :class="disable ? 'disabled':''"
@@ -340,7 +346,7 @@ export default {
                 <input
                     :id="'snippetSliderRangeMax-' + snippetId"
                     v-model="inRangeValueRight"
-                    :aria-label="'snippetSliderRangeMax-' + snippetId"
+                    :aria-label="ariaLabelSliderRangeMax"
                     class="slider-range-max"
                     type="range"
                     :class="disable ? 'disabled':''"

@@ -43,13 +43,15 @@ export default function Layer (attrs, layer, initialize = true) {
         settingsText: i18next.t("common:tree.settings"),
         infosAndLegendText: i18next.t("common:tree.infosAndLegend"),
         isAutoRefreshing: false,
-        intervalAutoRefresh: -1
+        intervalAutoRefresh: -1,
+        isClustered: false
     };
 
     this.layer = layer;
     this.observersAutoRefresh = [];
     this.attributes = {...Object.assign({}, this.layer.values_, defaults, attrs)};
     this.id = attrs.id;
+
     delete this.attributes.source;
     if (initialize) {
         this.initialize(attrs);
@@ -73,10 +75,15 @@ Layer.prototype.initialize = function (attrs) {
     if (store.state.configJson?.Portalconfig.singleBaselayer !== undefined) {
         this.set("singleBaselayer", store.state.configJson?.Portalconfig.singleBaselayer);
     }
+    if (attrs.clusterDistance) {
+        this.set("isClustered", true);
+    }
+
+    this.updateLayerTransparency();
 
     if (attrs.isSelected === true || store.getters.treeType === "light") {
-        this.updateLayerTransparency();
         this.setIsVisibleInMap(attrs.isSelected);
+        this.setIsSelected(attrs.isSelected);
         this.set("isRemovable", store.state.configJson?.Portalconfig.layersRemovable);
     }
     else {
@@ -163,6 +170,7 @@ Layer.prototype.toggleIsSelected = function () {
 
     this.setIsSelected(newValue);
     handleSingleBaseLayer(newValue, this);
+    handleSingleTimeLayer(newValue, this);
 };
 
 
@@ -347,6 +355,7 @@ Layer.prototype.setIsSelected = function (newValue) {
     }
 
     if (typeof autoRefresh === "number" || typeof autoRefresh === "string") {
+        this.set("isAutoRefreshing", true);
         this.activateAutoRefresh(newValue, Math.max(500, autoRefresh));
     }
 };
@@ -393,15 +402,14 @@ Layer.prototype.activateAutoRefresh = function (isLayerSelected, autoRefresh) {
 
     if (isLayerSelected) {
         this.set("intervalAutoRefresh", setInterval(() => {
-            if (!this.get("isVisibleInMap") || this.get("isAutoRefreshing")) {
-                return;
-            }
-            this.setAutoRefreshEvent(layers[0]?.layer ? layers[0].layer : layers[0]);
-            layers.forEach(layer => {
-                const layerSource = layer?.layer ? layer.layer.getSource() : layer.getSource();
+            if (this.get("isVisibleInMap") && this.get("isAutoRefreshing")) {
+                this.setAutoRefreshEvent(layers[0]?.layer ? layers[0].layer : layers[0]);
+                layers.forEach(layer => {
+                    const layerSource = layer?.layer ? layer.layer.getSource() : layer.getSource();
 
-                layerSource.refresh();
-            });
+                    layerSource.refresh();
+                });
+            }
         }, autoRefresh));
     }
 };
@@ -417,15 +425,12 @@ Layer.prototype.setAutoRefreshEvent = function (layer) {
     }
     const layerSource = layer.getSource();
 
-    this.set("isAutoRefreshing", true);
-
     layerSource.once("featuresloadend", () => {
         this.observersAutoRefresh.forEach(handler => {
             if (typeof handler === "function") {
                 handler(layerSource.getFeatures());
             }
         });
-        this.set("isAutoRefreshing", false);
     });
 };
 /**
@@ -463,7 +468,7 @@ Layer.prototype.moveUp = function () {
     bridge.moveModelInTree(this, 1);
 };
 /**
- * Called from setSelected, handles singleBaseLayer and timelayers.
+ * Called from setSelected, handles singleBaseLayer.
  * @param {Boolean} isSelected true, if layer is selected
  * @param {ol.Layer} layer the dedicated layer
  * @returns {void}
@@ -471,8 +476,7 @@ Layer.prototype.moveUp = function () {
 function handleSingleBaseLayer (isSelected, layer) {
     const id = layer.get("id"),
         layerGroup = bridge.getLayerModelsByAttributes({parentId: layer.get("parentId")}),
-        singleBaselayer = layer.get("singleBaselayer") && layer.get("parentId") === "Baselayer",
-        timeLayer = layer.get("typ") === "WMS" && layer.get("time");
+        singleBaselayer = layer.get("singleBaselayer") && layer.get("parentId") === "Baselayer";
 
     if (isSelected) {
         // This only works for treeType 'custom', otherwise the parentId is not set on the layer
@@ -494,12 +498,45 @@ function handleSingleBaseLayer (isSelected, layer) {
             });
             bridge.renderMenu();
         }
-        if (timeLayer) {
-            store.commit("WmsTime/setTimeSliderActive", {active: true, currentLayerId: id});
-        }
     }
-    else if (timeLayer) {
-        layer.removeLayer(layer.get("id"));
+}
+
+/**
+ * Called from setSelected, handles single time layers.
+ * @param {Boolean} isSelected true, if layer is selected
+ * @param {ol.Layer} layer the dedicated layer
+ * @returns {void}
+ */
+function handleSingleTimeLayer (isSelected, layer) {
+    const id = layer.get("id"),
+        timeLayer = layer.get("typ") === "WMS" && layer.get("time");
+
+    if (timeLayer) {
+        if (isSelected) {
+            const selectedLayers = bridge.getLayerModelsByAttributes({isSelected: true, type: "layer", typ: "WMS"}),
+                map2D = mapCollection.getMap("ol", "2D");
+
+            selectedLayers.forEach(sLayer => {
+                if (sLayer.get("time") && sLayer.get("id") !== id) {
+                    if (sLayer.get("id").endsWith(store.getters["WmsTime/layerAppendix"])) {
+                        sLayer.removeLayer(sLayer.get("id"));
+                    }
+                    else {
+                        map2D?.removeLayer(sLayer.get("layer"));
+                        sLayer.set("isSelected", false);
+                    }
+                }
+            });
+
+            store.commit("WmsTime/setTimeSliderActive", {
+                active: true,
+                currentLayerId: id,
+                playbackDelay: layer.get("time")?.playbackDelay || 1
+            });
+        }
+        else {
+            layer.removeLayer(layer.get("id"));
+        }
     }
 }
 
@@ -661,6 +698,7 @@ Layer.prototype.setMinMaxResolutions = function () {
 Layer.prototype.featuresLoaded = function (layerId, features) {
     bridge.featuresLoaded(layerId, features);
 };
+
 /**
  * Get layers as array.
  * @returns {Layer[]} layer as array
@@ -670,6 +708,7 @@ Layer.prototype.getLayers = function () {
 
     return [layer];
 };
+
 // NOTICE: backbone-relevant functions, may be removed if all layers are no longer backbone models.
 // But set, get and has may stay, because they are convenient:)
 Layer.prototype.set = function (arg1, arg2) {

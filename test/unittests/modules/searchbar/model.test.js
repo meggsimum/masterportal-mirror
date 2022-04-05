@@ -182,4 +182,187 @@ describe("modules/searchbar", function () {
             expect(model.sortUniqueTypes(uniqueTypes, searchResultOrder)).to.deep.equal(result);
         });
     });
+
+    describe("recommendedList", () => {
+        const typeList = [
+            {
+                list: [
+                    {
+                        name: "ABC-Straße 1",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "ABC-Straße 2",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "ABC-Straße 3",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "ABC-Straße 4",
+                        type: "Adresse"
+                    }
+                ],
+                type: "Adresse"
+            },
+            {
+                list: [
+                    {
+                        name: "ABC-Straße",
+                        type: "Straße"
+                    }
+                ],
+                type: "Straße"
+            },
+            {
+                list: [
+                    {
+                        name: "Strategisches Straßennetz",
+                        type: "Fachdaten"
+                    },
+                    {
+                        name: "Straßenverkehr Tag Abend Nacht 2017",
+                        type: "Fachdaten"
+                    },
+                    {
+                        name: "Straßenname",
+                        type: "Fachdaten"
+                    },
+                    {
+                        name: "Strassenprojekte",
+                        type: "Fachdaten"
+                    }
+                ],
+                type: "Fachdaten"
+            }
+        ];
+
+        describe("chooseRecommendedHits", () => {
+            it("should choose 3 hits from typeList", () => {
+                expect(model.chooseRecommendedHits(typeList, 3)).to.deep.equals([
+                    {
+                        name: "ABC-Straße 1",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "ABC-Straße",
+                        type: "Straße"
+                    },
+                    {
+                        name: "Strategisches Straßennetz",
+                        type: "Fachdaten"
+                    }
+                ]);
+            });
+
+            it("should choose 5 hits from typeList", () => {
+                expect(model.chooseRecommendedHits(typeList, 5)).to.deep.equals([
+                    {
+                        name: "ABC-Straße 1",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "ABC-Straße",
+                        type: "Straße"
+                    },
+                    {
+                        name: "Strategisches Straßennetz",
+                        type: "Fachdaten"
+                    },
+                    {
+                        name: "ABC-Straße 2",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "Straßenverkehr Tag Abend Nacht 2017",
+                        type: "Fachdaten"
+                    }
+                ]);
+            });
+
+            it("should choose 7 hits from typeList", () => {
+                expect(model.chooseRecommendedHits(typeList, 7)).to.deep.equals([
+                    {
+                        name: "ABC-Straße 1",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "ABC-Straße",
+                        type: "Straße"
+                    },
+                    {
+                        name: "Strategisches Straßennetz",
+                        type: "Fachdaten"
+                    },
+                    {
+                        name: "ABC-Straße 2",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "Straßenverkehr Tag Abend Nacht 2017",
+                        type: "Fachdaten"
+                    },
+                    {
+                        name: "ABC-Straße 3",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "Straßenname",
+                        type: "Fachdaten"
+                    }
+                ]);
+            });
+        });
+
+        describe("sortRecommendedList", () => {
+            it("should sort recommends from typeList by types", () => {
+                const recommendedList = [
+                    {
+                        name: "ABC-Straße 1",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "ABC-Straße",
+                        type: "Straße"
+                    },
+                    {
+                        name: "Strategisches Straßennetz",
+                        type: "Fachdaten"
+                    },
+                    {
+                        name: "ABC-Straße 2",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "Straßenverkehr Tag Abend Nacht 2017",
+                        type: "Fachdaten"
+                    }
+                ];
+
+                expect(model.sortRecommendedList(typeList, recommendedList)).to.deep.equals([
+                    {
+                        name: "ABC-Straße 1",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "ABC-Straße 2",
+                        type: "Adresse"
+                    },
+                    {
+                        name: "ABC-Straße",
+                        type: "Straße"
+                    },
+                    {
+                        name: "Strategisches Straßennetz",
+                        type: "Fachdaten"
+                    },
+                    {
+                        name: "Straßenverkehr Tag Abend Nacht 2017",
+                        type: "Fachdaten"
+                    }
+                ]);
+            });
+        });
+    });
 });

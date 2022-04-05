@@ -101,7 +101,7 @@ function prepareDownload ({state, commit, dispatch}) {
  *
  * @returns {void}
  */
-function setDownloadFeatures ({state, commit, dispatch}) {
+function setDownloadFeatures ({state, commit, dispatch, rootGetters}) {
     const downloadFeatures = [],
         drawnFeatures = state.layer.getSource().getFeatures();
 
@@ -116,7 +116,7 @@ function setDownloadFeatures ({state, commit, dispatch}) {
 
         if (geometry instanceof Circle) {
             feature.set("isGeoCircle", true);
-            transformGeometry(geometry);
+            transformGeometry(rootGetters["Map/projection"], geometry);
             feature.set("geoCircleCenter", geometry.getCenter().join(","));
             feature.set("geoCircleRadius", geometry.getRadius());
             feature.setGeometry(fromCircle(geometry));
@@ -174,17 +174,17 @@ async function setDownloadSelectedFormat ({state, commit, dispatch}, value) {
  * @param {module:ol/geom/Geometry} geometry Geometry to be transformed.
  * @returns {(Array<number>|Array<Array<number>>|Array<Array<Array<number>>>)|[]} The transformed Geometry or an empty array.
  */
-function transformCoordinates ({dispatch}, geometry) {
+function transformCoordinates ({dispatch, rootGetters}, geometry) {
     const coords = geometry.getCoordinates(),
         type = geometry.getType();
 
     switch (type) {
         case "LineString":
-            return transform(coords, false);
+            return transform(rootGetters["Map/projectionCode"], coords, false);
         case "Point":
-            return transformPoint(coords);
+            return transformPoint(rootGetters["Map/projectionCode"], coords);
         case "Polygon":
-            return transform(coords, true);
+            return transform(rootGetters["Map/projectionCode"], coords, true);
         default:
             dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.download.unknownGeometry", {geometry: type}), {root: true});
             return [];

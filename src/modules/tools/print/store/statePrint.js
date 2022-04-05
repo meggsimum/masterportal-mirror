@@ -28,6 +28,7 @@
  * @property {Boolean} isLegendAvailable true if the current layout supports legend
  * @property {Boolean} isLegendSelected true if the legend is to be printed
  * @property {Boolean} isScaleAvailable true if the current layout supports scale
+ * @property {Boolean} isScaleFixed true if the current layout supports scale
  * @property {Boolean} isMapAvailable true if the Map is available
  * @property {Object} mapAttribute Attributes from the Map set from the layout
  * @property {Array} layoutMapInfo width and height of the map
@@ -45,6 +46,7 @@ const state = {
     active: false,
     name: "common:menu.tools.print",
     id: "print",
+    printMapMarker: false,
     isVisibleInMenu: true,
     renderToWindow: false,
     resizableWindow: true,
@@ -77,6 +79,7 @@ const state = {
     legendAttribute: null,
     isLegendSelected: false,
     isScaleAvailable: false,
+    autoAdjustScale: true,
     scaleAttribute: null,
     isMapAvailable: false,
     mapAttribute: null,

@@ -97,6 +97,54 @@ addons
 |   |   |
 |   |   |-- package.json
 
+|-- myControl
+|   index.js
+|   |-- components
+|	|   |-- MyControl.vue
+|   |   |-- ...
+|	|-- locales
+|	|   |-- de
+|   |	|   |-- additional.json
+|	|   |-- en
+|   |	|   |-- additional.json
+|   |
+|	|-- doc
+|	|   |-- config.json.md
+|   |
+|	|-- tests
+|	|   |-- end2end
+|   |	|   |-- MyControl.e2e.js
+|	|   |-- unit
+|   |	|   |-- components
+|   |   |	|   |-- MyControl.spec.js
+|   |
+|   |-- package.json
+
+|-- myControlFolder
+|   |-- myControlSubFolder
+|   |   index.js
+|   |   |-- components
+|   |   |   |-- MyControl.vue
+|   |   |   |-- ...
+|   |   |-- locales
+|   |   |   |-- de
+|   |   |   |   |-- additional.json
+|   |   |   |-- en
+|   |   |   |   |-- additional.json
+|   |   |
+|   |   |-- doc
+|   |   |   |-- config.json.md
+|   |   |
+|   |   |-- tests
+|   |   |   |-- end2end
+|   |   |   |   |-- MyControl.e2e.js
+|   |   |   |-- unit
+|   |   |   |   |-- components
+|   |   |   |   |   |-- MyControl.spec.js
+|   |   |
+|   |   |-- package.json
+
+
 ```
 
 The entry point of each add-on must be a file named `index.js` on add-on folder root level.
@@ -112,6 +160,7 @@ Matching the example above, this would be a fitting configuration.
 Two types of add-ons are supported:
 * tools (`"type": "tool"`)
 * GFI themes (`"type": "gfiTheme"`)
+* Controls (`"type": "control"`)
 
 All entries to the `addonsConf.json` defined by an object are expected to be written in Vue. The deprecated Backbone add-ons are always defined by a string.
 
@@ -128,6 +177,14 @@ By default, an add-on's key is the name of its folder. By using the parameter `p
   "anotherGFITheme": {
     "type": "gfiTheme",
     "path": "myGFIThemesFolder/myGFISubFolder"
+  }
+  },
+  "myControl": {
+    "type": "control"
+  },
+  "anotherControl": {
+    "type": "control",
+    "path": "myControlFolder/myControlSubFolder"
   }
 }
 ```

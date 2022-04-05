@@ -321,7 +321,7 @@
                 "more": "Daha...",
                 "detailsOfSelected": "Seçilen özelliğin ayrıntıları",
                 "alert": "Geometrisi olmadığı için seçilen özelliği gösterme girişimi başarısız oldu.",
-                "key": "{{shownFeatures.x}} von {{shownFeatures.y}} gösterilen özellikler listendi."
+                "key": "{{shownFeatures}} von {{featureCount}} gösterilen özellikler listendi."
             },
             "layerSlider": {
                 "displayLayers": "Çeşitli katmanların gösterimi.",

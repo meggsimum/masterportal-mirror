@@ -93,7 +93,7 @@ const PointStyleModel = StyleModel.extend(/** @lends PointStyleModel.prototype *
             isClustered = this.get("isClustered"),
             feature = this.get("feature");
 
-        if (isClustered && feature.get("features").length > 1) {
+        if (isClustered && feature.get("features")?.length > 1) {
             if (this.get("clusterType") === "circle") {
                 return this.createCircleClusterStyle();
             }

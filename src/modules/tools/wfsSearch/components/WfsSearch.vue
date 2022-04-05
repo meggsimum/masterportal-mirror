@@ -243,6 +243,7 @@ export default {
                     :table-data="results"
                     :on-row-click-callback="setShowResultList.bind(this, false)"
                     :max-zoom="zoomLevel"
+                    :results-per-page="resultsPerPage"
                 />
             </template>
             <template v-else>

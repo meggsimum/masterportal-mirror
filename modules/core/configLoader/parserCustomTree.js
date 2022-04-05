@@ -1,5 +1,5 @@
 import Parser from "./parser";
-import {getLayerWhere, getLayerList} from "masterportalAPI/src/rawLayerList";
+import {getLayerWhere, getLayerList} from "masterportalapi/src/rawLayerList";
 import store from "../../../src/app-store/index";
 
 const CustomTreeParser = Parser.extend(/** @lends CustomTreeParser.prototype */{

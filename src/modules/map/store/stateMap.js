@@ -30,6 +30,8 @@
  * @property {?Object.<String, LayerData>} overlays list of existing overlays
  * @property {?String} [mapMode = "2D"] current map mode
  * @property {String} [mapId = "ol"] current map id
+ * @property {String[]} highlightedFeatures list of highlighted features, indices correspond to "highlightedFeaturesStyles"
+ * @property {String[]} highlightedFeatureStyles list of original styles for highlighted features, indices correspond to "highlightedFeatures"
  * @property {String[]} loadedLayers list of ready loaded layers IDs
  * @property {String[]} featuresLoaded is filled with layerId and features, after features are loaded. Next Load of features will overwrite the content.
  */
@@ -62,8 +64,8 @@ const state = {
     overlays: null,
     mapMode: "2D",
     mapId: "ol",
-    highlightedFeature: null,
-    highlightedFeatureStyle: null,
+    highlightedFeatures: [],
+    highlightedFeatureStyles: [],
     vectorFeaturesLoaded: false,
     loadedLayers: [],
     featuresLoaded: {}

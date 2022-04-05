@@ -252,7 +252,15 @@ describe("src/modules/tools/print/store/actionsPrint", function () {
     });
 
     describe("waitForPrintJobSuccess", function () {
-        it.skip("is not done yet so it should start another print request", done => {
+        let clock;
+
+        before(function () {
+            clock = sinon.useFakeTimers();
+        });
+        after(function () {
+            clock.restore();
+        });
+        it("is not done yet so it should start another print request", done => {
             const state = {
                     serviceUrl: "https://geodienste.hamburg.de/mapfish_print_internet/print/",
                     printAppId: "master"
@@ -266,10 +274,10 @@ describe("src/modules/tools/print/store/actionsPrint", function () {
                     waitingTime: 0
                 },
                 serviceRequest = {
-                    "index": 0,
-                    "serviceUrl": "https://geodienste.hamburg.de/mapfish_print_internet/print/master/status/5dbc66f1-0ff5-4ba6-8257-640c600150d0@a8cb3d11-7c03-48d3-995e-b7734c564164.json",
-                    "requestType": "GET",
-                    "onSuccess": "waitForPrintJobSuccess"
+                    index: 0,
+                    serviceUrl: "https://geodienste.hamburg.de/mapfish_print_internet/print/master/status/5dbc66f1-0ff5-4ba6-8257-640c600150d0@a8cb3d11-7c03-48d3-995e-b7734c564164.json",
+                    requestType: "GET",
+                    onSuccess: "waitForPrintJobSuccess"
                 };
 
             // action, payload, state, rootState, expectedMutationsAndActions, getters = {}, done, rootGetters
@@ -277,7 +285,8 @@ describe("src/modules/tools/print/store/actionsPrint", function () {
                 {type: "setProgressWidth", payload: "width: 80%", commit: true},
                 {type: "sendRequest", payload: serviceRequest, dispatch: true}
             ], {}, done);
-        }).timeout(3000);
+            clock.tick(2001);
+        });
         it("is done so it should activate the download", done => {
             const state = {
                     serviceUrl: "https://geodienste.hamburg.de/mapfish_print_internet/print/",

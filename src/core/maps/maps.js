@@ -1,5 +1,5 @@
-import api from "masterportalAPI/src/maps/api";
-import {getLayerList} from "masterportalAPI/src/rawLayerList";
+import api from "masterportalapi/src/maps/api";
+import {getLayerList} from "masterportalapi/src/rawLayerList";
 
 import "./2DMap";
 import "./2DMapView";

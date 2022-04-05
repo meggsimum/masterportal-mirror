@@ -11,10 +11,7 @@ const FilterView = Backbone.View.extend({
         this.listenTo(this.model, {
             "change:isActive": function (model, isActive) {
                 if (isActive) {
-
-                    if (model.get("queryCollection").length < 1) {
-                        model.createQueries(model.get("predefinedQueries"));
-                    }
+                    model.createQueries(model.get("predefinedQueries"));
                     this.$el.remove();
                     this.render();
                     this.renderDetailView();

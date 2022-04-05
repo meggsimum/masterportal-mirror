@@ -45,7 +45,12 @@ const FilterModel = Tool.extend({
                     return query.layerId === layerId;
                 });
 
-                return predefinedQuery[0].name;
+                return predefinedQuery[0]?.name;
+            },
+            "getFilters": function () {
+                const predefinedQueries = this.get("predefinedQueries");
+
+                return predefinedQueries;
             }
         }, this);
 
@@ -275,7 +280,9 @@ const FilterModel = Tool.extend({
 
                 oneQuery = Object.assign(oneQuery, queryObject);
             }
-            this.createQuery(oneQuery, Radio.request("ModelList", "getModelByAttributes", {id: oneQuery.layerId}));
+            if (!this.isModelInQueryCollection(oneQuery.layerId, this.get("queryCollection"))) {
+                this.createQuery(oneQuery, Radio.request("ModelList", "getModelByAttributes", {id: oneQuery.layerId}));
+            }
         });
     },
 

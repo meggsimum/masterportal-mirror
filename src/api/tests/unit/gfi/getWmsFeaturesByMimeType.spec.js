@@ -1,5 +1,15 @@
 import {expect} from "chai";
-import {createGfiFeature, openFeaturesInNewWindow, getXmlFeatures, handleXmlResponse, getHtmlFeature, handleHTMLResponse} from "../../../gfi/getWmsFeaturesByMimeType.js";
+import {
+    createGfiFeature,
+    openFeaturesInNewWindow,
+    getXmlFeatures,
+    handleXmlResponse,
+    getHtmlFeature,
+    handleHTMLResponse,
+    getJSONFeatures,
+    handleJSONResponse,
+    mergeFeatures
+} from "../../../gfi/getWmsFeaturesByMimeType.js";
 
 describe("src/api/gfi/getWmsFeaturesByMimeType.js", () => {
     const url = "url";
@@ -187,6 +197,85 @@ describe("src/api/gfi/getWmsFeaturesByMimeType.js", () => {
             expect(result[0].getGfiUrl()).to.equal("url");
             expect(result[0].getTitle()).to.equal("layerName");
             expect(result[0].getTheme()).to.equal("gfiTheme");
+            expect(result[0].getAttributesToShow()).to.equal("attributesToShow");
+            expect(result[0].getProperties()).to.deep.equal({});
+        });
+    });
+    describe("getJSONFeatures", () => {
+        it("should call requestGfi and return an empty array, because url is no String", async () => {
+            const result = await getJSONFeatures(layer, {url});
+
+            expect(result).to.be.an("array").to.have.lengthOf(0);
+        });
+
+    });
+    describe("handleJSONResponse", () => {
+        it("handles response with mimeType application/json, empty body and the given url", async () => {
+            const objectMock = null,
+                result = handleJSONResponse(objectMock, layer, url);
+
+            expect(result.length).to.equal(0);
+        });
+        it("handles response with mimeType application/json, filled body and the given url", async () => {
+            const objectMock = {
+                    features: [{
+                        properties: {},
+                        id: "1"
+                    }]
+                },
+                result = handleJSONResponse(objectMock, layer, url);
+
+            expect(result).to.be.an("array").to.have.lengthOf(1);
+            expect(result[0]).to.be.an("object");
+            expect(result[0].getGfiUrl()).to.equal("url");
+            expect(result[0].getTitle()).to.equal("layerName");
+            expect(result[0].getTheme()).to.equal("gfiTheme");
+            expect(result[0].getAttributesToShow()).to.equal("attributesToShow");
+            expect(result[0].getProperties()).to.deep.equal({});
+        });
+    });
+    describe("mergeFeatures", () => {
+        it("creates a merged feature if gfiTheme is DataTable", async () => {
+            const objectMock = {
+                    features: [
+                        {
+                            properties: {},
+                            id: "1"
+                        },
+                        {
+                            properties: {},
+                            id: "1"
+                        }
+                    ]
+                },
+                localLayer = {
+                    gfiTheme: "DataTable",
+                    get: (key) => {
+                        if (key === "name") {
+                            return "layerName";
+                        }
+                        else if (key === "gfiTheme") {
+                            return "DataTable";
+                        }
+                        else if (key === "gfiAttributes") {
+                            return "attributesToShow";
+                        }
+                        else if (key === "infoFormat") {
+                            return "text/xml";
+                        }
+                        return null;
+                    }
+                };
+
+            let result = handleJSONResponse(objectMock, localLayer, url);
+
+            result = mergeFeatures(result, layer, url);
+
+            expect(result).to.be.an("array").to.have.lengthOf(1);
+            expect(result[0]).to.be.an("object");
+            expect(result[0].getGfiUrl()).to.equal("url");
+            expect(result[0].getTitle()).to.equal("layerName");
+            expect(result[0].getTheme()).to.equal("DataTable");
             expect(result[0].getAttributesToShow()).to.equal("attributesToShow");
             expect(result[0].getProperties()).to.deep.equal({});
         });

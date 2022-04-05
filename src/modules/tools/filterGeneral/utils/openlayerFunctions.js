@@ -1,5 +1,14 @@
+import store from "../../../../app-store";
 import {intersects} from "ol/extent.js";
 import LayerGroup from "ol/layer/Group";
+
+/**
+ * Returns the map projection.
+ * @returns {String} the projection
+ */
+function getMapProjection () {
+    return store.getters["Map/projection"].getCode();
+}
 
 /**
  * Returns all features of a layer specified with the given layerId.
@@ -94,7 +103,24 @@ function liveZoom (minScale, featureIds, layerId, callback) {
  * @returns {void}
  */
 function addLayerByLayerId (layerId) {
-    Radio.trigger("ModelList", "addModelsByAttributes", {"id": layerId});
+    Radio.trigger("ModelList", "addModelsByAttributes", {id: layerId});
+}
+
+/**
+ * Sets the given value at the key position of the layer configuration.
+ * This affects only the parser and not the layer if it already exists.
+ * Use this function to manipulate the layer config before layer creation.
+ * @param {String} layerId the layer Id
+ * @param {String} key the config key to change
+ * @param {*} value the value to change the old value to
+ * @returns {void}
+ */
+function setParserAttributeByLayerId (layerId, key, value) {
+    const lightModels = Radio.request("Parser", "getItemsByAttributes", {id: layerId});
+
+    if (Array.isArray(lightModels) && lightModels.length === 1) {
+        lightModels[0][key] = value;
+    }
 }
 
 /**
@@ -123,6 +149,7 @@ function setFilterInTableMenu (element) {
 }
 
 export {
+    getMapProjection,
     createLayerIfNotExists,
     getFeaturesByLayerId,
     getLayerByLayerId,
@@ -130,6 +157,7 @@ export {
     liveZoom,
     showFeaturesByIds,
     addLayerByLayerId,
+    setParserAttributeByLayerId,
     getLayers,
     isUiStyleTable,
     setFilterInTableMenu

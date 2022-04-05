@@ -9,9 +9,9 @@ export default {
     props: {
         /** id of layer to show in mini-map */
         poiDistances: {
-            type: Array,
+            type: [Boolean, Array],
             required: false,
-            default: null
+            default: () => []
         },
 
         getFeaturesInCircle: {
@@ -166,7 +166,7 @@ export default {
                             imagePath = featureStyle?.getImage()?.getSrc() ? featureStyle?.getImage()?.getSrc() : "";
                         }
                         else if (type === "circle") {
-                            imagePath = this.createCircleSVG(style);
+                            imagePath = this.createCircleSVG(legendInfo.styleObject);
                         }
                     }
                     else if (legendInfo.geometryType === "LineString") {

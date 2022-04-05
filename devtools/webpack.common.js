@@ -162,6 +162,12 @@ module.exports = function () {
                             loader: "file-loader"
                         }
                     ]
+                },
+                {
+                    test: /\.worker\.js$/,
+                    use: {
+                        loader: "worker-loader"
+                    }
                 }
             ]
         },

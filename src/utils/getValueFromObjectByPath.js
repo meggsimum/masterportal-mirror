@@ -9,10 +9,18 @@
  * @returns {*} any value found at the end or undefined if nothing was found
  */
 function getValueFromObjectByPath (obj, path, prefix = "@", delimitor = ".", depthBarrier = 20) {
-    if (typeof obj !== "object" || obj === null || typeof path !== "string" || (prefix && path[0] !== prefix)) {
+    if (
+        typeof obj !== "object"
+        || obj === null
+        || typeof path !== "string"
+        || (
+            typeof prefix === "string"
+            && path.substr(0, prefix.length) !== prefix
+        )
+    ) {
         return undefined;
     }
-    const pathParts = getPathPartsFromPath(path.substring(1), delimitor),
+    const pathParts = getPathPartsFromPath(typeof prefix === "string" ? path.substring(prefix.length) : path, delimitor),
         len = pathParts.length;
     let value = obj,
         depth = 0;

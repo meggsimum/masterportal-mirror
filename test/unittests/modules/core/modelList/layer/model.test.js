@@ -5,9 +5,6 @@ import sinon from "sinon";
 describe("core/modelList/layer/model", function () {
     let model;
 
-    before(function () {
-        model = new Layer();
-    });
 
     describe("toggleIsSelected", function () {
         let secondModel;
@@ -15,17 +12,15 @@ describe("core/modelList/layer/model", function () {
         before(function () {
             secondModel = new Layer({channel: Radio.channel("ThisDoesNotExist")});
 
-            // Somehow some errors occur if the attributes for the models are set differently
+            model = new Layer();
             model.set("isSelected", false);
             model.set("id", "model1");
             model.set("parentId", "Baselayer");
             model.set("layerSource", {});
-            model.set("id", "modelOne");
             model.createLayerSource = sinon.stub();
             secondModel.attributes.isSelected = true;
             secondModel.attributes.parentId = "Baselayer";
             secondModel.attributes.layerSource = {};
-            secondModel.attributes.id = "modelTwo";
             secondModel.attributes.id = "model2";
             secondModel.createLayerSource = sinon.stub();
 
@@ -33,33 +28,59 @@ describe("core/modelList/layer/model", function () {
             Radio.trigger("ModelList", "addModel", secondModel);
         });
 
-        after(function () {
-            model = new Layer();
-        });
-
         afterEach(function () {
             model.set("isSelected", false);
             secondModel.attributes.isSelected = true;
+            sinon.restore();
+            sinon.resetHistory();
         });
 
         it("should deselect all other baselayers if the option singleBaselayer is set to true", function () {
-            model.set("singleBaselayer", true);
-            setTimeout(function () {
-                Radio.trigger("Layer", "toggleIsSelected");
+            sinon.stub(Radio, "request").callsFake((...args) => {
+                let ret = null;
 
-                expect(model.attributes.isSelected).to.be.true;
-                expect(secondModel.attributes.isSelected).to.be.false;
-            }, 30000);
+                args.forEach(arg => {
+                    if (arg === "getModelsByAttributes") {
+                        ret = [model, secondModel];
+                    }
+                });
+                return ret;
+            });
+            sinon.stub(Radio, "trigger").callsFake((...args) => {
+                args.forEach(arg => {
+                    if (arg === "addLayerToIndex") {
+                        // do nothing
+                    }
+                });
+            });
+            model.set("singleBaselayer", true);
+            model.toggleIsSelected();
+            expect(model.attributes.isSelected).to.be.true;
+            expect(secondModel.attributes.isSelected).to.be.false;
         });
 
         it("should lead to multiple baselayers being active if the option singleBaselayer is set to false", function () {
-            model.set("singleBaselayer", false);
-            setTimeout(function () {
-                Radio.trigger("Layer", "toggleIsSelected");
+            sinon.stub(Radio, "request").callsFake((...args) => {
+                let ret = null;
 
-                expect(model.attributes.isSelected).to.be.true;
-                expect(secondModel.attributes.isSelected).to.be.true;
-            }, 30000);
+                args.forEach(arg => {
+                    if (arg === "getModelsByAttributes") {
+                        ret = [model, secondModel];
+                    }
+                });
+                return ret;
+            });
+            sinon.stub(Radio, "trigger").callsFake((...args) => {
+                args.forEach(arg => {
+                    if (arg === "addLayerToIndex") {
+                        // do nothing
+                    }
+                });
+            });
+            model.set("singleBaselayer", false);
+            model.toggleIsSelected();
+            expect(model.attributes.isSelected).to.be.true;
+            expect(secondModel.attributes.isSelected).to.be.true;
         });
 
         it("should increase the transparency by 10 percent", function () {

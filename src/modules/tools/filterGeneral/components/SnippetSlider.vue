@@ -87,6 +87,9 @@ export default {
         };
     },
     computed: {
+        ariaLabelSlider () {
+            return this.$t("modules.tools.filterGeneral.ariaLabel.slider", {param: this.attrName});
+        },
         titleText () {
             if (this.title === true) {
                 return this.attrName;
@@ -300,7 +303,7 @@ export default {
     >
         <div
             v-if="info"
-            class="right"
+            :class="title !== false ? 'right' : 'h-right'"
         >
             <SnippetInfo
                 :info="info"
@@ -316,6 +319,7 @@ export default {
             :id="'snippetSlider-' + snippetId"
             ref="inputNumber"
             v-model="inRangeValue"
+            :aria-label="ariaLabelSlider"
             class="input-single form-control"
             type="number"
             :min="minimumValue"
@@ -368,6 +372,9 @@ export default {
     .snippetSliderContainer .right {
         position: absolute;
         right: 0;
+    }
+    .snippetSliderContainer .h-right {
+        min-height: 24px;
     }
     input[type="number"] {
         text-align: center;

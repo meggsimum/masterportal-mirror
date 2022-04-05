@@ -12,6 +12,7 @@ import CompareFeatures from "./compareFeatures/store/indexCompareFeatures";
 import Contact from "./contact/store/indexContact";
 import CoordToolkit from "./coordToolkit/store/indexCoordToolkit";
 import Draw from "./draw/store/indexDraw";
+import FeatureLister from "./featureLister/store/indexFeatureLister";
 import FileImport from "./fileImport/store/indexFileImport";
 import FilterGeneral from "./filterGeneral/store/indexFilterGeneral";
 import Gfi from "./gfi/store/indexGfi";
@@ -41,6 +42,7 @@ export default {
         Contact,
         CoordToolkit,
         Draw,
+        FeatureLister,
         FileImport,
         FilterGeneral,
         Gfi,

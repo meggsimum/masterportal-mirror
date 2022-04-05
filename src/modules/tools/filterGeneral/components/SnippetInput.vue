@@ -67,6 +67,9 @@ export default {
         };
     },
     computed: {
+        ariaLabelInput () {
+            return this.$t("modules.tools.filterGeneral.ariaLabel.input", {param: this.attrName});
+        },
         titleText () {
             if (this.title === true) {
                 return this.attrName;
@@ -181,6 +184,7 @@ export default {
             <input
                 :id="'snippetInput-' + snippetId"
                 v-model="value"
+                :aria-label="ariaLabelInput"
                 class="snippetInput form-control"
                 type="text"
                 name="input"

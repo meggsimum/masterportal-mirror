@@ -36,7 +36,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: [/\bcore-js\b/, /node_modules/],
+                exclude: /\bcore-js\b|\bvideo.js\b|\bsinon\b|\bturf\b|\bjsts\b/,
                 use: {
                     loader: "babel-loader"
                 }
@@ -68,6 +68,20 @@ module.exports = {
             {
                 test: /\.xml$/i,
                 use: "raw-loader"
+            },
+            {
+                test: /\.worker\.js$/,
+                use: {
+                    loader: "worker-loader"
+                }
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: "file-loader"
+                    }
+                ]
             }
         ]
     },

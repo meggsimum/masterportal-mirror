@@ -98,17 +98,17 @@ export default {
         /**
          * Calculates initial width of input parameter.
          * @param {String} inputWidth the width setting
-         * @returns {String}    Width style in px
+         * @returns {String} Width style in px
          */
         getWidth (inputWidth) {
-            let pixelWidth = parseFloat(inputWidth, 10);
+            let pixelWidth = parseFloat(inputWidth);
 
             if (pixelWidth < 0 || isNaN(pixelWidth)) {
                 return "auto";
             }
 
             if (pixelWidth <= 1) {
-                pixelWidth = this.width * window.innerWidth;
+                pixelWidth = pixelWidth * window.innerWidth;
             }
 
             return Math.floor(pixelWidth) + "px";
@@ -136,14 +136,24 @@ export default {
             }
         },
         /**
-         * Updates the size of the map depending on sidebars visibility
-         *  @return {void}
+         * Emits the endResizing event upward
+         * @param {Event} event the dom event
+         * @returns {void}
          */
-        updateMap () {
+        onEndResizing (event) {
+            this.$emit("endResizing", event);
+        },
+        /**
+         * Updates the size of the map depending on sidebars visibility
+         * @param {Event} event the dom event
+         * @return {void}
+         */
+        updateMap (event) {
             if (this.renderToWindow) {
                 return;
             }
             Radio.trigger("Map", "updateSize");
+            this.onEndResizing(event);
         },
         /**
          * Updates size of map and emits event to parent.
@@ -257,6 +267,7 @@ export default {
                 target-sel=".tool-window-vue"
                 :min-w="200"
                 :min-h="100"
+                @endResizing="onEndResizing"
             />
         </div>
     </div>

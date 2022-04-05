@@ -291,7 +291,7 @@ describe("tools/styleWMS/model", function () {
             styleWMS.removeSLDBody();
 
             params = styleWMS.get("model").get("layer").getSource().getParams();
-            expect(Radio.request("Util", "isEqual", {testParam: "yes", SLD_BODY: undefined, STYLES: ""}, params)).to.be.equal(true);
+            expect(params).to.be.deep.equal({testParam: "yes", SLD_BODY: undefined, STYLES: ""});
         });
     });
 });

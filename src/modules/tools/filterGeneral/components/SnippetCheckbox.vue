@@ -69,6 +69,9 @@ export default {
         };
     },
     computed: {
+        ariaLabelCheckbox () {
+            return this.$t("modules.tools.filterGeneral.ariaLabel.checkbox", {param: this.attrName});
+        },
         titleText () {
             if (this.title === true) {
                 return this.attrName;
@@ -161,6 +164,7 @@ export default {
             <input
                 :id="'snippetCheckbox-' + snippetId"
                 v-model="checked"
+                :aria-label="ariaLabelCheckbox"
                 class="snippetCheckbox"
                 type="checkbox"
                 name="checkbox"

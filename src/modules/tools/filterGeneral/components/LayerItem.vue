@@ -76,6 +76,7 @@ export default {
                 role="button"
                 data-toggle="collapse"
                 data-parent="#accordion"
+                tabindex="0"
             >
                 {{ layer.title ? layer.title : layer.layerId }}
                 <span

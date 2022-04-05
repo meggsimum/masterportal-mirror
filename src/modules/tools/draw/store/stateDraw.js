@@ -36,6 +36,7 @@ const symbol = {
      * @property {String} outerBorderColor The color of the border of the dropdown menu for the selection of the outer radius of a circle.
      * @property {Number} pointSize The size of the point.
      * @property {Number[]} redoArray Array of the IDs of features removed through the undo button.
+     * @property {Number[]} undoArray Array of the IDs of features to be removed through the undo button.
      * @property {Boolean} renderToWindow Decides whether the Tool should be displayed as a window or as a sidebar.
      * @property {Boolean} resizableWindow Determines whether the Tool window can be resized.
      * @property {module:ol/interaction/Select} selectInteraction The select interaction of the draw tool.
@@ -134,6 +135,7 @@ const symbol = {
         outerBorderColor: "",
         pointSize: 16,
         redoArray: [],
+        undoArray: [],
         renderToWindow: false,
         resizableWindow: true,
         selectInteraction: null,

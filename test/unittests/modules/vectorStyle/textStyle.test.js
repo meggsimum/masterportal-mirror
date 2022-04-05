@@ -46,6 +46,11 @@ describe("textStyleModel", function () {
         it("should return a style object", function () {
             expect(styleModel.getStyle()).to.be.an.instanceof(Text);
         });
+        it("should not break if a feature on a cluster layer has no 'features' member", function () {
+            styleModel.set("isClustered", true); // while feature is still regular
+
+            expect(styleModel.getStyle()).to.be.an.instanceof(Text);
+        });
     });
 
     describe("createLabeledTextStyle", function () {

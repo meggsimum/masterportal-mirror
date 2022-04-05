@@ -171,5 +171,42 @@ describe("modules/searchbar/elasticSearch", function () {
                 }
             );
         });
+        it("should create hit with Type and Glyphicon from result", function () {
+            const result = {
+                    id: "0815",
+                    name: "name",
+                    x: 123456,
+                    y: 456789,
+                    foo: "bar",
+                    deeperKey: {
+                        key: "value",
+                        type: "type2",
+                        hitGlyphicon: "glyphicon-cba"
+                    }
+                },
+                hitMap = {
+                    id: "id",
+                    name: "name",
+                    coordinate: ["x", "y"],
+                    key: "deeperKey.key",
+                    type: "deeperKey.type",
+                    glyphicon: "deeperKey.hitGlyphicon"
+                },
+                hitType = "type",
+                hitGlyphicon = "glyphicon-abc",
+                triggerEvent = {
+                };
+
+            expect(model.createHit(result, hitMap, hitType, hitGlyphicon, triggerEvent)).to.deep.equal(
+                {
+                    id: "0815",
+                    name: "name",
+                    coordinate: [123456, 456789],
+                    key: "value",
+                    type: "type2",
+                    glyphicon: "glyphicon-cba"
+                }
+            );
+        });
     });
 });

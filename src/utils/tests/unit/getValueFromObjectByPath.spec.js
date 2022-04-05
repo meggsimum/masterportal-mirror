@@ -40,9 +40,6 @@ describe("src/utils/getValueFromObjectByPath.js", () => {
             expect(getValueFromObjectByPath({}, {})).to.be.undefined;
             expect(getValueFromObjectByPath({}, [])).to.be.undefined;
         });
-        it("should return undefined if anything but an @-prefixed path is given", () => {
-            expect(getValueFromObjectByPath({test: 1}, "test")).to.be.undefined;
-        });
         it("should return undefined if the given depthBarrier is reached during walkthrough", () => {
             expect(getValueFromObjectByPath({test: {test: 1}}, "@test.test", "@", ".", 1)).to.be.undefined;
         });
@@ -54,6 +51,12 @@ describe("src/utils/getValueFromObjectByPath.js", () => {
             expect(getValueFromObjectByPath({test: 1}, "@test")).to.equal(1);
             expect(getValueFromObjectByPath({test: {test: 1}}, "@test")).to.deep.equal({test: 1});
             expect(getValueFromObjectByPath({test: {test: {test: 1}}}, "@test.test")).to.deep.equal({test: 1});
+        });
+        it("should be able to handle a path without prefix when no prefix is given", () => {
+            expect(getValueFromObjectByPath({test: 1}, "test", false)).to.equal(1);
+        });
+        it("should be able to handle a path with a complex prefix", () => {
+            expect(getValueFromObjectByPath({test: 1}, "1234test", "1234")).to.equal(1);
         });
     });
 });
