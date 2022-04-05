@@ -122,9 +122,9 @@ const actions = {
      * @param {MapBrowserEvent} evt - Click event in 2D, fake click event in 3D
      * @returns {void}
      */
-    updateClick ({getters, commit, dispatch, rootGetters}, evt) {
+    // updateClick ({getters, commit, dispatch, rootGetters}, evt) {
 
-       /*  if (getters.mapMode === "2D" || getters.mapMode === "Oblique") {
+    /*  if (getters.mapMode === "2D" || getters.mapMode === "Oblique") {
             commit("setClickCoord", evt.coordinate);
             commit("setClickPixel", evt.pixel);
         }
@@ -145,7 +145,7 @@ const actions = {
             commit("controls/orientation/setPosition", evt.coordinate, {root: true});
             commit("controls/orientation/setShowPoi", true, {root: true});
         } */
-    },
+    // },
 
     /**
      * collects features for the gfi.
