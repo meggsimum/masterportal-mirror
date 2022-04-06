@@ -25,7 +25,7 @@ export default {
     },
     computed: {
         ...mapGetters("Tools/AddWMS", Object.keys(getters)),
-        ...mapGetters("Map", ["projection"]),
+        ...mapGetters("Maps", ["projection"]),
 
         placeholder () {
             return i18next.t("common:modules.tools.addWMS.placeholder");

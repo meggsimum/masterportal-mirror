@@ -44,7 +44,7 @@ OAFLayer.prototype = Object.create(Layer.prototype);
  * @returns {void}
  */
 OAFLayer.prototype.createLayer = function (attrs) {
-    const crs = attrs.crs ? attrs.crs : store.getters["Map/projection"].getCode(),
+    const crs = attrs.crs ? attrs.crs : store.getters["Maps/projection"].getCode(),
         rawLayerAttributes = {
             id: attrs.id,
             url: attrs.url,

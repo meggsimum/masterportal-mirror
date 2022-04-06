@@ -16,7 +16,7 @@ describe("src/modules/tools/draw/store/actions/actionsDownload.js", () => {
 
     beforeEach(() => {
         dispatch = sinon.spy();
-        rootGetters = {"Map/projectionCode": "EPSG:25832"};
+        rootGetters = {"Maps/projectionCode": "EPSG:25832"};
         proj4.defs("EPSG:25832", "+title=ETRS89/UTM 32N +proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
     });
 

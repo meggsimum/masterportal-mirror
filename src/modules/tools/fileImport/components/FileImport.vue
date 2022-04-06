@@ -93,8 +93,8 @@ export default {
             files.forEach(file => {
                 const reader = new FileReader();
 
-                reader.onload = f => {
-                    const vectorLayer = Radio.request("Map", "createLayerIfNotExists", "import_draw_layer");
+                reader.onload = async f => {
+                    const vectorLayer = await Radio.request("Map", "createLayerIfNotExists", "import_draw_layer");
 
                     this.importKML({raw: f.target.result, layer: vectorLayer, filename: file.name});
                 };
