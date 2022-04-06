@@ -14,7 +14,7 @@ export default {
     },
     computed: {
         ...mapGetters("Tools/CoordToolkit", Object.keys(getters)),
-        ...mapGetters("Maps", ["projection", "mouseCoordinate", "mode"]),
+        ...mapGetters("Maps", {projection: "projection", mouseCoordinate: "mouseCoordinate", mapMode: "mode"}),
         ...mapGetters(["uiStyle", "mobile"]),
         eastingNoCoordMessage: function () {
             if (this.currentProjection.projName !== "longlat") {
@@ -54,7 +54,7 @@ export default {
             if (value) {
                 this.initProjections();
                 this.setExample();
-                if (this.mode === "2D") {
+                if (this.mapMode === "2D") {
                     this.setMode("supply");
                     this.setSupplyCoordActive();
                 }
@@ -69,7 +69,7 @@ export default {
                 this.setSupplyCoordInactive();
             }
         },
-        mode (value) {
+        mapMode (value) {
             if (value === "3D") {
                 this.changeMode("search");
             }
@@ -275,7 +275,7 @@ export default {
                 this.setSupplyCoordInactive();
                 this.setFirstSearchPosition();
             }
-            else if (this.mode !== "3D") {
+            else if (this.mapMode !== "3D") {
                 this.setMode(newMode);
                 this.resetErrorMessages("all");
                 this.setSupplyCoordActive();
@@ -371,7 +371,7 @@ export default {
          * @returns {boolean} true, true, if supplyCoord is active
          */
         isSupplyCoordChecked () {
-            if (this.mode === "3D") {
+            if (this.mapMode === "3D") {
                 return false;
             }
             return this.mode === "supply";
@@ -511,7 +511,7 @@ export default {
                                 type="text"
                                 :readonly="isEnabled('supply')"
                                 :class="{ inputError: getEastingError, 'form-control': true}"
-                                :placeholder="isEnabled( 'search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesEastingExample : ''"
+                                :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesEastingExample : ''"
                                 @input="onInputEvent(coordinatesEasting)"
                             ><p
                                 v-if="eastingNoCoord"
@@ -578,8 +578,8 @@ export default {
                                 v-model="coordinatesNorthing.value"
                                 type="text"
                                 :class="{ inputError: getNorthingError , 'form-control': true}"
-                                :readonly="isEnabled( 'supply')"
-                                :placeholder="isEnabled( 'search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesNorthingExample : ''"
+                                :readonly="isEnabled('supply')"
+                                :placeholder="isEnabled('search') ? $t('modules.tools.coordToolkit.exampleAcronym') + coordinatesNorthingExample : ''"
                                 @input="onInputEvent(coordinatesNorthing)"
                             ><p
                                 v-if="northingNoCoord"
@@ -615,7 +615,7 @@ export default {
                         </div>
                     </div>
                     <div
-                        v-if="isEnabled( 'supply') && heightLayer !== null"
+                        v-if="isEnabled('supply') && heightLayer !== null"
                         class="form-group form-group-sm inputDiv"
                     >
                         <label
