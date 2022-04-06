@@ -3,7 +3,7 @@ import actionsMapInteractions from "./actionsMapInteractions.js";
 import actionsMapInteractionsZoomTo from "./actionsMapInteractionsZoomTo.js";
 import actionsMapLayers from "./actionsMapLayers.js";
 import actionsMapMode from "./actionsMapMode.js";
-import highlightFeature from "./highlightFeature.js";
+import * as highlightFeature from "./highlightFeature.js";
 import * as removeHighlightFeature from "./removeHighlighting.js";
 import findWhereJs from "../../../../utils/findWhereJs";
 
@@ -83,8 +83,6 @@ export default {
         // triggers the function checkForScale modules\core\modelList\layer\model.js
         Radio.trigger("MapView", "changedOptions", params);
         commit("setScale", params.scale);
-        // NOTE: used for scaleSwitcher-tutorial
-        commit("setScales", {scales: mapView.get("options").map(option => option.scale)});
     },
     /**
      * @description is called when the view resolution is changed triggers the map view options

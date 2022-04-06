@@ -26,13 +26,11 @@ export default {
     },
     computed: {
         ...mapGetters("Tools/FeatureLister", Object.keys(getters)),
-        ...mapGetters("Maps", [
-            "visibleLayerList"
-        ]),
+        ...mapGetters("Maps", ["getVisibleLayerList"]),
         visibleVectorLayers: function () {
             const vectorLayers = [];
 
-            this.visibleLayerList.forEach(layer => {
+            this.getVisibleLayerList.forEach(layer => {
                 if (layer instanceof VectorLayer && layer.get("typ") === "WFS") {
                     const layerSource = layer.getSource();
 

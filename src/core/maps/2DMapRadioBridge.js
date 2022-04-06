@@ -8,8 +8,8 @@ channel.reply({
     "getLayers": function () {
         return mapCollection.getMap("2D").getLayers();
     },
-    "createLayerIfNotExists": function (name) {
-        return store.dispatch("Maps/addNewLayerIfNotExists", name);
+    "createLayerIfNotExists": function (layerName) {
+        return store.dispatch("Maps/addNewLayerIfNotExists", {layerName});
     },
     "getSize": function () {
         return mapCollection.getMap("2D").getSize();

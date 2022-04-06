@@ -93,8 +93,8 @@ export default {
      * @param {Boolean} [alwaysOnTop=true] Layers with the attribute "alwaysOnTop": true are set on top of the map.
      * @returns {module:ol/layer/Base~BaseLaye}  the found layer or a new layer with the given name.
      */
-    addNewLayerIfNotExists ({dispatch}, {layerName, alwaysOnTop = true}) {
-        let resultLayer = dispatch("getLayerByName", layerName);
+    async addNewLayerIfNotExists ({dispatch}, {layerName, alwaysOnTop = true}) {
+        let resultLayer = await dispatch("getLayerByName", layerName);
 
         if (!resultLayer) {
             resultLayer = new VectorLayer({

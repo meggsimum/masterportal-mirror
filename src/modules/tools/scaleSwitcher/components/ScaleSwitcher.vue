@@ -1,5 +1,5 @@
 <script>
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import getComponent from "../../../../utils/getComponent";
 import ToolTemplate from "../../ToolTemplate.vue";
 import getters from "../store/gettersScaleSwitcher";
@@ -15,7 +15,7 @@ export default {
     },
     computed: {
         ...mapGetters("Tools/ScaleSwitcher", Object.keys(getters)),
-        ...mapGetters("Map", ["scales"]),
+        ...mapGetters("Maps", ["getView"]),
         scale: {
             get () {
                 return this.$store.state.Map.scale;
@@ -42,10 +42,10 @@ export default {
      * @returns {void}
      */
     created () {
+        this.scales = this.getView.get("options").map(option => option.scale);
         this.$on("close", this.close);
     },
     methods: {
-        ...mapActions("Map", ["setResolutionByIndex"]),
         ...mapMutations("Tools/ScaleSwitcher", Object.keys(mutations)),
 
         /**
@@ -73,6 +73,11 @@ export default {
                     this.$refs["scale-switcher-select"].focus();
                 }
             });
+        },
+        setResolutionByIndex (index) {
+            const view = this.getView;
+
+            view.setResolution(view.getResolutions()[index]);
         }
     }
 };

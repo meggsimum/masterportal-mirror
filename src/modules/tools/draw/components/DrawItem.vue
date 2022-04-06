@@ -229,9 +229,9 @@ export default {
          * @returns {Boolean} True if there are visible features otherwise false.
          */
         isFromDrawTool () {
-            const visibleFeatures = this.layer.getSource().getFeatures().filter(feature => feature.get("fromDrawTool") && feature.get("isVisible"));
+            const visibleFeatures = this.layer?.getSource()?.getFeatures()?.filter(feature => feature.get("fromDrawTool") && feature.get("isVisible"));
 
-            return visibleFeatures.length > 0;
+            return visibleFeatures?.length > 0;
         },
 
         /**

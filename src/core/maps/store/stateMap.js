@@ -11,7 +11,8 @@
 * @property {Number} initialZoomLevel Initial zoom level of the map.
 * @property {String[]} layerIds Current layers of the map by Id.
 * @property {Object[]} gfiFeatures temporary array for features at click has to be moved to gfi module.
-* @property {String[]} highlightedFeatureStyles list of original styles for highlighted features, indices correspond to "highlightedFeatures". temporary array for features at click has to be moved to gfi module.
+* @property {String[]} highlightedFeatures list of highlighted features, indices correspond to "highlightedFeaturesStyles"
+* @property {String[]} highlightedFeatureStyles list of original styles for highlighted features, indices correspond to "highlightedFeatures"
 * @property {String[]} loadedLayers list of ready loaded layers IDs
 * @property {String} mode Current mode of the map e.g. 2D/3D.
 * @property {Number[]} mouseCoordinate Current mouse coordinate values of the map.
