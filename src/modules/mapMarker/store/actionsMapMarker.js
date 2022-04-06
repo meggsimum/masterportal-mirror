@@ -32,7 +32,7 @@ export default {
         dispatch("removePointMarker");
 
         if (styleListModel) {
-            if (rootState.Map.mapMode === "3D") {
+            if (rootState.Maps.mode === "3D") {
                 // else an error is thrown in proj4/lib/checkSanity: coordinates must be finite numbers
                 value.forEach(val => {
                     coordValues.push(Math.round(val));

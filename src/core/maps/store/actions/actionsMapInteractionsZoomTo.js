@@ -1,5 +1,5 @@
 import Cluster from "ol/source/Cluster.js";
-import transformToMapProjection from "masterportalapi/src/crs";
+import * as transformToMapProjection from "masterportalapi/src/crs";
 
 import mapCollection from "../../../dataStorage/mapCollection";
 import calculateExtent from "../../../../utils/calculateExtent";
