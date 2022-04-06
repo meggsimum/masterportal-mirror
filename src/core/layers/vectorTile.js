@@ -21,7 +21,7 @@ export default function VectorTileLayer (attrs) {
             useMpFonts: true,
             useProxy: false
         },
-        mapEPSG = store.getters["Map/projection"].getCode(),
+        mapEPSG = store.getters["Maps/projection"].getCode(),
         vtEPSG = attrs.epsg,
         layerSource = this.createLayerSource(Object.assign(defaults, attrs));
 
@@ -53,7 +53,7 @@ VectorTileLayer.prototype.createLayerSource = function (attrs) {
      * getProxyUrl()
      */
     const url = attrs.useProxy ? getProxyUrl(attrs.url) : attrs.url,
-        dataEpsg = attrs.epsg || store.getters["Map/projection"].getCode(),
+        dataEpsg = attrs.epsg || store.getters["Maps/projection"].getCode(),
         resolutions = attrs.resolutions,
         params = {
             projection: dataEpsg,

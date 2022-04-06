@@ -11,7 +11,7 @@ export default {
         commit("setLayer", layer);
         if (state.layer) {
             commit("setLayerId", layer.id);
-            commit("setGfiFeaturesOfLayer", rootGetters["Maps/visibleLayerList"]);
+            commit("setGfiFeaturesOfLayer", rootGetters["Maps/getVisibleLayerList"]);
             commit("setFeatureCount", state.gfiFeaturesOfLayer.length);
             commit("setShownFeatures", state.gfiFeaturesOfLayer.length < state.maxFeatures ? state.gfiFeaturesOfLayer.length : state.maxFeatures);
             commit("setLayerListView", false);
@@ -27,18 +27,22 @@ export default {
      * @param {String} featureIndex index of the clicked Feature
      * @returns {void}
      */
-    clickOnFeature ({state, commit, dispatch}, featureIndex) {
+    clickOnFeature ({state, commit, dispatch, rootGetters}, featureIndex) {
         if (featureIndex !== "" && featureIndex >= 0 && featureIndex <= state.shownFeatures) {
             const feature = state.gfiFeaturesOfLayer[featureIndex],
-                featureGeometry = state.rawFeaturesOfLayer[featureIndex].getGeometry();
+                featureGeometry = state.rawFeaturesOfLayer[featureIndex].getGeometry(),
+                mapView = rootGetters["Maps/getView"];
 
             commit("setSelectedFeature", feature);
 
             dispatch("switchToDetails");
-            dispatch("Maps/zoomTo", {
-                geometryOrExtent: featureGeometry,
-                options: {duration: 800, zoom: 9}
-            }, {root: true});
+
+            mapView.fit(featureGeometry, {
+                duration: 800,
+                callback: () => {
+                    commit("Maps/setCenter", mapView.getCenter(), {root: true});
+                }
+            });
         }
     },
     /**
@@ -65,7 +69,7 @@ export default {
     highlightFeature ({state, rootGetters, dispatch}, featureId) {
         dispatch("Maps/removeHighlightFeature", "decrease", {root: true});
         let featureGeometryType = "";
-        const layer = rootGetters["Maps/visibleLayerList"].find((l) => l.values_.id === state.layer.id),
+        const layer = rootGetters["Maps/getVisibleLayerList"].find((l) => l.values_.id === state.layer.id),
             layerFeatures = state.nestedFeatures ? state.rawFeaturesOfLayer : layer.getSource().getFeatures(),
             featureWrapper = layerFeatures.find(feat => {
                 featureGeometryType = feat.getGeometry().getType();

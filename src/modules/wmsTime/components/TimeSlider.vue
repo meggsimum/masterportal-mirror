@@ -14,7 +14,6 @@ export default {
     data: () => ({playing: false, playbackHandle: null, sliderValue: 0}),
     computed: {
         ...mapGetters("WmsTime", Object.keys(getters)),
-        ...mapGetters("Map", ["map"]),
         sliderOptionCount () {
             return this.timeRange.length - 1;
         },

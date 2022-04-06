@@ -8,8 +8,8 @@ channel.reply({
     "getLayers": function () {
         return mapCollection.getMap("2D").getLayers();
     },
-    "createLayerIfNotExists": function (name) {
-        return store.dispatch("Maps/addNewLayerIfNotExists", name);
+    "createLayerIfNotExists": function (layerName) {
+        return store.dispatch("Maps/addNewLayerIfNotExists", {layerName});
     },
     "getSize": function () {
         return mapCollection.getMap("2D").getSize();
@@ -63,11 +63,11 @@ channel.on({
     "zoomToFilteredFeatures": function (ids, layerId, zoomOptions) {
         store.dispatch("Maps/zoomToFilteredFeatures", {ids: ids, layerId: layerId, zoomOptions: zoomOptions});
     },
-    "registerListener": function (event, callback, context) {
-        store.dispatch("Maps/registerListener", {event: event, callback: callback, context: context});
+    "registerListener": function (event, callback) {
+        store.dispatch("Maps/registerListener", {event: event, callback: callback});
     },
-    "unregisterListener": function (event, callback, context) {
-        store.dispatch("Maps/unregisterListener", {event: event, callback: callback, context: context});
+    "unregisterListener": function (event, callback) {
+        store.dispatch("Maps/unregisterListener", {event: event, callback: callback});
     },
     "updateSize": function () {
         mapCollection.getMap("2D").updateSize();

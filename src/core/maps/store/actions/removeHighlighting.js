@@ -7,7 +7,7 @@ import Feature from "ol/Feature";
  * @returns {void}
  */
 function removeAllHighlightedFeatures (state, commit) {
-    state.highlightedFeatureStyles.forEach((style, index) => {
+    state.highlightedFeatureStyles?.forEach((style, index) => {
         state.highlightedFeatures[index].setStyle(style);
     });
 

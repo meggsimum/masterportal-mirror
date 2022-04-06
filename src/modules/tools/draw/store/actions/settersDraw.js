@@ -20,14 +20,13 @@ function setStyleSettings ({getters, commit}, styleSettings) {
  * @param {Boolean} active Value deciding whether the tool gets activated or deactivated.
  * @returns {void}
  */
-function setActive ({state, commit, dispatch, rootState}, active) {
+async function setActive ({state, commit, dispatch, rootState}, active) {
     commit("setActive", active);
 
     if (active) {
         commit("setSymbol", state.iconList[0]);
-        commit("setLayer", Radio.request("Map", "createLayerIfNotExists", "import_draw_layer"));
+        commit("setLayer", await Radio.request("Map", "createLayerIfNotExists", "import_draw_layer"));
         commit("setImgPath", rootState?.configJs?.wfsImgPath);
-
         dispatch("createDrawInteractionAndAddToMap", {active: state.currentInteraction === "draw"});
         dispatch("createSelectInteractionAndAddToMap", state.currentInteraction === "delete");
         dispatch("createModifyInteractionAndAddToMap", state.currentInteraction === "modify");

@@ -7,7 +7,7 @@ import LayerGroup from "ol/layer/Group";
  * @returns {String} the projection
  */
 function getMapProjection () {
-    return store.getters["Map/projection"].getCode();
+    return store.getters["Maps/projection"].getCode();
 }
 
 /**

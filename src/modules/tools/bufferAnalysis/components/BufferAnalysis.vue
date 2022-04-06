@@ -18,7 +18,6 @@ export default {
     data: () => ({resultTypeEnum: ResultType}),
     computed: {
         ...mapGetters("Tools/BufferAnalysis", Object.keys(getters)),
-        ...mapGetters("Map", ["map"]),
         selectedSourceLayer: {
             /**
              * getter for the computed property selectedSourceLayer

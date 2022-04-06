@@ -83,8 +83,6 @@ export default {
         // triggers the function checkForScale modules\core\modelList\layer\model.js
         Radio.trigger("MapView", "changedOptions", params);
         commit("setScale", params.scale);
-        // NOTE: used for scaleSwitcher-tutorial
-        commit("setScales", {scales: mapView.get("options").map(option => option.scale)});
     },
     /**
      * @description is called when the view resolution is changed triggers the map view options

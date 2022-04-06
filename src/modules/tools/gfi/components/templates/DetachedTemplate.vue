@@ -68,8 +68,7 @@ export default {
     methods: {
         ...mapMutations("Tools/Gfi", ["setShowMarker"]),
         ...mapActions("MapMarker", ["removePointMarker", "placingPointMarker"]),
-        ...mapActions("Maps", ["highlightFeature", "removeHighlightFeature"]),
-        ...mapActions("Maps", ["setCenter"]),
+        ...mapActions("Maps", ["highlightFeature", "removeHighlightFeature", "setCenter"]),
         close () {
             this.$emit("close");
         },

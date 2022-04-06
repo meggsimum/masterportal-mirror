@@ -194,8 +194,8 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
 
                 if (!tooltip && state?.drawType?.id === "drawCircle" || state?.drawType?.id === "drawDoubleCircle") {
                     tooltip = createTooltipOverlay({getters, commit, dispatch});
-                    mapCollection.getMap(rootState.Map.mode).addOverlay(tooltip);
-                    mapCollection.getMap(rootState.Map.mode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
+                    mapCollection.getMap(rootState.Maps.mode).addOverlay(tooltip);
+                    mapCollection.getMap(rootState.Maps.mode).on("pointermove", tooltip.get("mapPointerMoveEvent"));
                     event.feature.getGeometry().on("change", tooltip.get("featureChangeEvent"));
                 }
             });

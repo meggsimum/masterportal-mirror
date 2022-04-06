@@ -44,7 +44,7 @@ describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
                     category: i18next.t("common:modules.alerting.categories.info"),
                     content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
                 dispatch: true
-            }], {}, done, {"Map/projectionCode": "EPSG:25832"});
+            }], {}, done, {"Maps/projectionCode": "EPSG:25832"});
         });
 
         it("preset \"auto\", correct kml file, wrong filename", done => {
@@ -95,7 +95,7 @@ describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
                     category: i18next.t("common:modules.alerting.categories.info"),
                     content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
                 dispatch: true
-            }], {}, done, {"Map/projectionCode": "EPSG:25832"});
+            }], {}, done, {"Maps/projectionCode": "EPSG:25832"});
         });
 
         it("preset \"auto\", correct geojson file, correct filename", done => {
@@ -107,7 +107,7 @@ describe("src/modules/tools/fileImport/store/actionsFileImport.js", () => {
                     category: i18next.t("common:modules.alerting.categories.info"),
                     content: i18next.t("common:modules.tools.fileImport.alertingMessages.success", {filename: payload.filename})},
                 dispatch: true
-            }], {}, done, {"Map/projectionCode": "EPSG:25832"});
+            }], {}, done, {"Maps/projectionCode": "EPSG:25832"});
         });
 
         it("preset \"gpx\", correct kml file, correct filename", done => {

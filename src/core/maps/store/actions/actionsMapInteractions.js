@@ -31,13 +31,12 @@ export default {
      * @param {Object} payload parameter object
      * @param {String | Object} payload.event The event type or an object used as a key.
      * @param {Function} payload.callback The callback function.
-     * @param {Object} payload.context The context.
      * @returns {void}
      */
-    registerListener ({getters}, {event, callback, context}) {
-        const view = getters.getView;
+    registerListener ({getters}, {event, callback}) {
+        const map = getters.get2DMap;
 
-        view.on(event, callback, context);
+        map.on(event, callback);
     },
     /**
      * Removes an interaction from the map.
@@ -127,10 +126,10 @@ export default {
      * @returns {void}
      */
     unregisterListener ({getters}, {event, callback, context}) {
-        const view = getters.getView;
+        const map = getters.get2DMap;
 
         if (typeof event === "string") {
-            view.un(event, callback, context);
+            map.un(event, callback, context);
         }
         else {
             unlistenByKey(event);

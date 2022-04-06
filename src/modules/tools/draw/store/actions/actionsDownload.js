@@ -103,9 +103,9 @@ function prepareDownload ({state, commit, dispatch}) {
  */
 function setDownloadFeatures ({state, commit, dispatch, rootGetters}) {
     const downloadFeatures = [],
-        drawnFeatures = state.layer.getSource().getFeatures();
+        drawnFeatures = state.layer?.getSource().getFeatures();
 
-    drawnFeatures.forEach(drawnFeature => {
+    drawnFeatures?.forEach(drawnFeature => {
         const feature = drawnFeature.clone(),
             geometry = feature.getGeometry();
 
@@ -116,7 +116,7 @@ function setDownloadFeatures ({state, commit, dispatch, rootGetters}) {
 
         if (geometry instanceof Circle) {
             feature.set("isGeoCircle", true);
-            transformGeometry(rootGetters["Map/projection"], geometry);
+            transformGeometry(rootGetters["Maps/projection"], geometry);
             feature.set("geoCircleCenter", geometry.getCenter().join(","));
             feature.set("geoCircleRadius", geometry.getRadius());
             feature.setGeometry(fromCircle(geometry));
@@ -161,7 +161,7 @@ function setDownloadFileName ({state, commit, dispatch}, {currentTarget}) {
 async function setDownloadSelectedFormat ({state, commit, dispatch}, value) {
 
     commit("setDownloadSelectedFormat", value);
-    if (state.layer.getSource().getFeatures().length > 0) {
+    if (state.layer?.getSource().getFeatures().length > 0) {
         await dispatch("prepareData");
         dispatch("prepareDownload");
     }
