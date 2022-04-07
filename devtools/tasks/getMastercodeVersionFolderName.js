@@ -17,5 +17,5 @@ module.exports = function getMastercodeVersionFolderName () {
         folderName += `_${gitRevSync.branch()}_last_change_at_${date}`;
     }
 
-    return folderName;
+    return folderName + "_ida";
 };

@@ -52,7 +52,7 @@ function buildSinglePortal (allPortalPaths) {
 module.exports = function buildWebpack (answers) {
     const
         sourcePortalsFolder = path.resolve(rootPath, answers.portalPath),
-        cliExecCommand = "webpack --config devtools/webpack.prod.js";
+        cliExecCommand = "webpack --config devtools/webpack.prod.js --entry masterportal=./portalconfigs/ida/main.js";
 
     let allPortalPaths = [];
 
