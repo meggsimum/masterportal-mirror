@@ -69,7 +69,7 @@ describe("src/core/maps/store/actions/actionsMapAttributesMapper.js", () => {
             expect(commit.calledThrice).to.be.true;
             expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equal("MapMarker/removePolygonMarker");
-            expect(dispatch.secondCall.args[0]).to.equal("Maps/collectGfiFeatures");
+            expect(dispatch.secondCall.args[0]).to.equal("collectGfiFeatures");
         });
     });
 });
