@@ -183,6 +183,10 @@ export default {
                         this.dropdownValue.push(value);
                     }
                 });
+
+                this.dropdownValue.sort((a, b) => {
+                    return String(a).toLowerCase() > String(b).toLowerCase() ? 1 : -1;
+                });
             }
             if (adjusting?.finish) {
                 const selected = [];
