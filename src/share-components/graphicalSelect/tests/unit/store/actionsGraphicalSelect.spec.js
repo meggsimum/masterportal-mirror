@@ -70,7 +70,7 @@ describe("src/share-components/graphicalSelect/store/actionsGraphicalSelect", ()
                 tooltipMessagePolygon: "MessagePolygon"
             },
             rootState = {
-                Map: {
+                Maps: {
                     mouseCoordinate: [11.549606597773037, 48.17285700012215]
                 }
             };
@@ -90,7 +90,7 @@ describe("src/share-components/graphicalSelect/store/actionsGraphicalSelect", ()
                 tooltipMessagePolygon: "MessagePolygon"
             },
             rootState = {
-                Map: {
+                Maps: {
                     mouseCoordinate: [11.549606597773037, 48.17285700012215]
                 }
             };
