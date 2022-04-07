@@ -1,5 +1,4 @@
 import mapCollection from "../dataStorage/mapCollection";
-import mapMode from "./store/actions/actionsMapMode.js";
 import store from "../../app-store";
 
 const channel = Radio.channel("Map");
@@ -23,7 +22,9 @@ channel.reply({
     "getLayerByName": function (name) {
         return store.dispatch("Maps/getLayerByName", name);
     },
-    "getMapMode": mapMode.getMapMode()
+    "getMapMode": function () {
+        return store.getters["Maps/mode"];
+    }
 });
 
 channel.on({

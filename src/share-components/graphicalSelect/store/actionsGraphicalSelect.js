@@ -53,7 +53,7 @@ const actions = {
      * @returns {void}
      */
     showTooltipOverlay: function ({state, rootState}) {
-        const coords = rootState.Map.mouseCoord,
+        const coords = rootState.Maps.mouseCoordinate,
             tooltipOverlay = state.tooltipOverlay,
             currentValue = state.currentValue;
 

@@ -21,7 +21,7 @@ describe("src/modules/tools/supplyCoord/components/SupplyCoord.vue", () => {
     const mockMapGetters = {
             map: () => sinon.stub(),
             projection: () => sinon.stub(),
-            mouseCoord: () => sinon.stub()
+            mouseCoordinate: () => sinon.stub()
         },
         mockMapMarkerActions = {
             removePointMarker: sinon.stub()

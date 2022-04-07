@@ -71,7 +71,7 @@ describe("src/share-components/graphicalSelect/store/actionsGraphicalSelect", ()
             },
             rootState = {
                 Map: {
-                    mouseCoord: [11.549606597773037, 48.17285700012215]
+                    mouseCoordinate: [11.549606597773037, 48.17285700012215]
                 }
             };
 
@@ -91,7 +91,7 @@ describe("src/share-components/graphicalSelect/store/actionsGraphicalSelect", ()
             },
             rootState = {
                 Map: {
-                    mouseCoord: [11.549606597773037, 48.17285700012215]
+                    mouseCoordinate: [11.549606597773037, 48.17285700012215]
                 }
             };
 

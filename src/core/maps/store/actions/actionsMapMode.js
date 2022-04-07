@@ -107,19 +107,5 @@ export default {
                 Radio.trigger("Map", "change", "2D");
             });
         }
-    },
-    /**
-     * Returns the mapmode. Oblique, 3D and 2D are available for selection.
-     * @todo Refactor this function once the 3DMap and ObliqueMap have been migrated.
-     * @returns {String} The current mapMode.
-     */
-    getMapMode () {
-        if (Radio.request("ObliqueMap", "isActive")) {
-            return "Oblique";
-        }
-        else if (Radio.request("Map", "isMap3d")) {
-            return "3D";
-        }
-        return "2D";
     }
 };
