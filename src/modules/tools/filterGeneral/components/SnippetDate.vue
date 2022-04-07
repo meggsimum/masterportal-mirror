@@ -248,7 +248,8 @@ export default {
          */
         resetSnippet (onsuccess) {
             if (this.visible) {
-                this.value = "";
+                this.value = this.precheckedIsValid ?
+                    moment(this.prechecked, this.format).format(this.internalFormat) : "";
             }
             this.$nextTick(() => {
                 if (typeof onsuccess === "function") {
