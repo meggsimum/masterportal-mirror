@@ -12,11 +12,6 @@ export default {
             required: false,
             default: 0
         },
-        label: {
-            type: String,
-            required: false,
-            default: ""
-        },
         value: {
             type: String,
             required: false,

@@ -88,12 +88,26 @@ describe("src/module/tools/filterGeneral/utils/filterConfigConverter.js", () => 
                 attrName: ["name", "attrNameUntil"],
                 title: "displayName",
                 matchingMode: "matchingMode",
-                operator: "EQ",
+                operator: "BETWEEN",
                 format: "format",
                 type: "typeRange"
             };
 
             expect(converter.createSnippetRange("name", "attrNameUntil", "displayName", "matchingMode", "format", "type")).to.deep.equal(expected);
+        });
+    });
+    describe("createSnippetDateRange", () => {
+        it("should create a specific object", () => {
+            const expected = {
+                attrName: ["name", "attrNameUntil"],
+                title: "displayName",
+                matchingMode: "matchingMode",
+                operator: "INTERSECTS",
+                format: "format",
+                type: "dateRange"
+            };
+
+            expect(converter.createSnippetDateRange("name", "attrNameUntil", "displayName", "matchingMode", "format")).to.deep.equal(expected);
         });
     });
     describe("createSnippetStandard", () => {

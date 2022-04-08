@@ -1,5 +1,23 @@
 import isObject from "../../../../utils/isObject.js";
 import InterfaceWfsExtern from "./interface.wfs.extern.js";
+import {
+    between,
+    betweenForArray,
+    endswith,
+    endswithForArray,
+    equals,
+    equalsForArray,
+    ge,
+    gt,
+    inForArray,
+    inc,
+    intersectsForArray,
+    le,
+    lt,
+    ne,
+    startswith,
+    startswithForArray
+} from "../utils/ruleValidation.js";
 
 /**
  * InterfaceWfsIntern is the filter interface for Wfs filtered by OpenLayers
@@ -218,24 +236,24 @@ export default class InterfaceWfsIntern {
         featValueB = this.changeValueToMatchReference(featValueB, ruleValueB);
 
         return Array.isArray(rule.value) && (
-            rule.operator === "INTERSECTS" && featValueA <= ruleValueB && featValueB >= ruleValueA
-            || rule.operator === "BETWEEN" && featValueA >= ruleValueA && featValueB <= ruleValueB
-            || rule.operator === "EQ" && typeof rule.value.find(v => typeof v === "string" && featValueA === v.toLowerCase()) !== "undefined"
-            || rule.operator === "IN" && typeof featValueA === "string" && typeof rule.value.find(v => typeof v === "string" && featValueA.includes(v.toLowerCase())) !== "undefined"
-            || rule.operator === "STARTSWITH" && typeof featValueA === "string" && typeof rule.value.find(v => typeof v === "string" && featValueA.startsWith(v.toLowerCase())) !== "undefined"
-            || rule.operator === "ENDSWITH" && typeof featValueA === "string" && typeof rule.value.find(v => typeof v === "string" && featValueA.endsWith(v.toLowerCase())) !== "undefined"
+            rule.operator === "INTERSECTS" && intersectsForArray(featValueA, featValueB, ruleValueA, ruleValueB, rule.format)
+            || rule.operator === "BETWEEN" && betweenForArray(featValueA, featValueB, ruleValueA, ruleValueB, rule.format)
+            || rule.operator === "EQ" && equalsForArray(featValueA, rule.value, rule.format)
+            || rule.operator === "IN" && inForArray(featValueA, rule.value)
+            || rule.operator === "STARTSWITH" && startswithForArray(featValueA, rule.value)
+            || rule.operator === "ENDSWITH" && endswithForArray(featValueA, rule.value)
         )
         || !Array.isArray(rule.value) && typeof ruleValueA !== "undefined" && (
-            rule.operator === "BETWEEN" && featValueA <= ruleValueA && featValueB >= ruleValueA
-            || rule.operator === "EQ" && featValueA === ruleValueA
-            || rule.operator === "NE" && featValueA !== ruleValueA
-            || rule.operator === "GT" && featValueA > ruleValueA
-            || rule.operator === "GE" && featValueA >= ruleValueA
-            || rule.operator === "LT" && featValueA < ruleValueA
-            || rule.operator === "LE" && featValueA <= ruleValueA
-            || rule.operator === "IN" && typeof featValueA === "string" && featValueA.includes(ruleValueA)
-            || rule.operator === "STARTSWITH" && typeof featValueA === "string" && featValueA.startsWith(ruleValueA)
-            || rule.operator === "ENDSWITH" && typeof featValueA === "string" && featValueA.endsWith(ruleValueA)
+            rule.operator === "BETWEEN" && between(featValueA, featValueB, ruleValueA, rule.format)
+            || rule.operator === "EQ" && equals(featValueA, ruleValueA, rule.format)
+            || rule.operator === "NE" && ne(featValueA, ruleValueA, rule.format)
+            || rule.operator === "GT" && gt(featValueA, ruleValueA, rule.format)
+            || rule.operator === "GE" && ge(featValueA, ruleValueA, rule.format)
+            || rule.operator === "LT" && lt(featValueA, ruleValueA, rule.format)
+            || rule.operator === "LE" && le(featValueA, ruleValueA, rule.format)
+            || rule.operator === "IN" && inc(featValueA, ruleValueA)
+            || rule.operator === "STARTSWITH" && startswith(featValueA, ruleValueA)
+            || rule.operator === "ENDSWITH" && endswith(featValueA, ruleValueA)
         );
     }
 

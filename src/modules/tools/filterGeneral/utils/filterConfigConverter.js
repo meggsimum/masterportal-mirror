@@ -227,18 +227,26 @@ export default class FilterConfigConverter {
             return false;
         }
         else if (typeof attribute.attrNameUntil === "string") {
-            return this.createSnippetRange(
+            if (attribute.type !== "date") {
+                return this.createSnippetRange(
+                    attribute.name,
+                    attribute.attrNameUntil,
+                    attribute.displayName,
+                    attribute.matchingMode,
+                    attribute.format,
+                    attribute.type
+                );
+            }
+            return this.createSnippetDateRange(
                 attribute.name,
                 attribute.attrNameUntil,
                 attribute.displayName,
                 attribute.matchingMode,
-                attribute.format,
-                attribute.type
+                attribute.format
             );
         }
         return this.createSnippetStandard(
             attribute.name,
-            attribute.attrNameUntil,
             attribute.displayName,
             attribute.matchingMode,
             attribute.format,
@@ -281,9 +289,30 @@ export default class FilterConfigConverter {
             attrName: [name, attrNameUntil],
             title: displayName,
             matchingMode,
-            operator: "EQ",
+            operator: "BETWEEN",
             format,
             type: type + "Range"
+        };
+    }
+
+    /**
+     * Create the dateRange Snippet.
+     * @param {String} name the attrName
+     * @param {String} attrNameUntil the attrNameUntil
+     * @param {String} displayName the displayName
+     * @param {String} matchingMode the matchingMode
+     * @param {String} format the format
+     * @param {String} type the type
+     * @returns {Object} the snippet
+     */
+    createSnippetDateRange (name, attrNameUntil, displayName, matchingMode, format) {
+        return {
+            attrName: [name, attrNameUntil],
+            title: displayName,
+            matchingMode,
+            operator: "INTERSECTS",
+            format,
+            type: "dateRange"
         };
     }
 

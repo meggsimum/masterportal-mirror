@@ -326,7 +326,7 @@ export default {
                 || typeof something?.snippetId !== "number"
                 || typeof something?.startup !== "boolean"
                 || typeof something?.fixed !== "boolean"
-                || typeof something?.attrName !== "string"
+                || (typeof something?.attrName !== "string" && !Array.isArray(something.attrName))
                 || typeof something?.operator !== "string"
             );
         },
@@ -589,7 +589,6 @@ export default {
                 </div>
                 <SnippetTag
                     :is-reset-all="true"
-                    label=""
                     :value="snippetTagsResetAllText"
                     @resetAllSnippets="resetAllSnippets"
                     @deleteAllRules="deleteAllRules"
@@ -603,7 +602,6 @@ export default {
                 <SnippetTag
                     v-if="isRule(rule) && rule.fixed === false"
                     :snippet-id="rule.snippetId"
-                    :label="rule.attrName"
                     :value="String(rule.value)"
                     @resetSnippet="resetSnippet"
                     @deleteRule="deleteRule"
