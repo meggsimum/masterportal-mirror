@@ -81,11 +81,11 @@ export default {
                 {{ layer.title ? layer.title : layer.layerId }}
                 <span
                     v-if="!selected"
-                    class="glyphicon glyphicon-chevron-down pull-right"
+                    class="bi bi-chevron-down float-end"
                 />
                 <span
                     v-else
-                    class="glyphicon glyphicon-chevron-up pull-right"
+                    class="bi bi-chevron-up float-end"
                 />
             </a>
         </h2>
