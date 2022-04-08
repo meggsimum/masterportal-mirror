@@ -58,10 +58,10 @@ describe("src/modules/tools/draw/store/actions/settersDraw.js", () => {
             expect(commit.firstCall.args).to.eql(["setActive", false]);
             expect(dispatch.notCalled).to.be.true;
         });
-        it("should commit and dispatch as intended if 'active' is true", () => {
+        it("should commit and dispatch as intended if 'active' is true", async () => {
             active = true;
 
-            actions.setActive({state, commit, dispatch}, active);
+            await actions.setActive({state, commit, dispatch}, active);
 
             expect(commit.callCount).to.equal(4);
             expect(commit.firstCall.args).to.eql(["setActive", true]);
@@ -74,11 +74,11 @@ describe("src/modules/tools/draw/store/actions/settersDraw.js", () => {
             expect(request.calledOnce).to.be.true;
             expect(request.firstCall.args).to.eql(["Map", "createLayerIfNotExists", "import_draw_layer"]);
         });
-        it("should commit and dispatch as intended if 'active' and 'withoutGUI' are true", () => {
+        it("should commit and dispatch as intended if 'active' and 'withoutGUI' are true", async () => {
             active = true;
             state.withoutGUI = true;
 
-            actions.setActive({state, commit, dispatch}, active);
+            await actions.setActive({state, commit, dispatch}, active);
 
             expect(commit.callCount).to.equal(4);
             expect(commit.firstCall.args).to.eql(["setActive", true]);
