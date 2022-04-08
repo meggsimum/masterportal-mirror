@@ -505,7 +505,7 @@ export default {
                 >
                     <a
                         href="#"
-                        class="link-secondary"
+                        class="link-dark"
                         @click="!allSelected ? selectAll() : deselectAll()"
                     >
                         {{ selectAllTitle }}
@@ -652,6 +652,13 @@ export default {
         height: 34px;
         line-height: 14px;
     }
+    .multiselect--active {
+        color: #212529;
+        background-color: #fff;
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
     .select-box-container .multiselect .multiselect__tags {
         min-height: 34px;
         font-size: 14px;
@@ -672,11 +679,11 @@ export default {
 <style lang="scss" scoped>
     @import "~/css/mixins.scss";
     .snippetListContainer .check-box-label {
-        margin-top: 2px;
+        margin: 0;
     }
     .snippetListContainer .subItem {
         padding: 0 5px 0 0;
-        vertical-align: middle;
+        vertical-align: text-bottom;
     }
     .snippetListContainer .grid-container {
         display: grid;

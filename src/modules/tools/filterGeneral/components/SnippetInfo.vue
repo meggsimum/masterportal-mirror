@@ -49,7 +49,7 @@ export default {
     <div v-if="info">
         <div class="info-icon">
             <span
-                :class="['glyphicon glyphicon-info-sign', showInfo ? 'opened' : '']"
+                :class="['bi bi-info-circle-fill', showInfo ? 'opened' : '']"
                 tabindex="0"
                 @click="toggleInfo()"
                 @keydown.enter="toggleInfo()"
@@ -97,8 +97,5 @@ export default {
         font-size: 11px;
         padding: 15px 10px;
         cursor: pointer;
-    }
-    .glyphicon-info-sign:before {
-        content: "\E086";
     }
 </style>
