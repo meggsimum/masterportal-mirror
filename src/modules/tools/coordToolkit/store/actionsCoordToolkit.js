@@ -179,10 +179,10 @@ export default {
             const targetProjectionName = state.currentProjection?.name,
                 position = getters.getTransformedPosition(rootGetters["Maps/get2DMap"], targetProjectionName);
 
-            if (position && position[0] === 0 && position[1] === 0 && rootState.Map.center) {
-                commit("setCoordinatesEasting", {id: "easting", value: String(rootState.Map.center[0])});
-                commit("setCoordinatesNorthing", {id: "northing", value: String(rootState.Map.center[1])});
-                dispatch("moveToCoordinates", rootState.Map.center);
+            if (position && position[0] === 0 && position[1] === 0 && rootState.Maps.center) {
+                commit("setCoordinatesEasting", {id: "easting", value: String(rootState.Maps.center[0])});
+                commit("setCoordinatesNorthing", {id: "northing", value: String(rootState.Maps.center[1])});
+                dispatch("moveToCoordinates", rootState.Maps.center);
             }
         }
     },

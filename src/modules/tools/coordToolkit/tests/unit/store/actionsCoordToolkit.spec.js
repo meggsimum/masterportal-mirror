@@ -297,7 +297,7 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
         describe("setFirstSearchPosition", () => {
             const center = [1000, 2000],
                 rootState = {
-                    Map: {
+                    Maps: {
 
                         center: center
 
