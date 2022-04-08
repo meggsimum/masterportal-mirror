@@ -24,7 +24,7 @@ describe("src/modules/tools/gfi/components/templates/AttachedTemplate.vue", () =
             }
         },
         computed: {
-            clickCoord: () => [],
+            clickCoordinate: () => [],
             styleContent: () => [{
                 "max-width": "",
                 "max-height": ""
@@ -56,7 +56,7 @@ describe("src/modules/tools/gfi/components/templates/AttachedTemplate.vue", () =
                 }
             },
             computed: {
-                clickCoord: () => [],
+                clickCoordinate: () => [],
                 styleContent: () => [{
                     "max-width": "",
                     "max-height": ""
@@ -114,7 +114,7 @@ describe("src/modules/tools/gfi/components/templates/AttachedTemplate.vue", () =
                 }
             },
             computed: {
-                clickCoord: () => [],
+                clickCoordinate: () => [],
                 styleContent: () => [{
                     "max-width": "",
                     "max-height": ""

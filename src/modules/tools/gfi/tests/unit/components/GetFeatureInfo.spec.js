@@ -35,7 +35,7 @@ function getGfiStore () {
                     }
                 }
             },
-            Map: {
+            Maps: {
                 namespaced: true,
                 getters: {
                     gfiFeaturesReverse: () => [{
