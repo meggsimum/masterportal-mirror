@@ -198,7 +198,7 @@ export default {
                 this.isInitializing = false;
                 this.disable = false;
                 console.warn(err);
-            }, typeof this.minValue === "undefined" && typeof this.maxValue !== "undefined", typeof this.minValue !== "undefined" && typeof this.maxValue === "undefined");
+            }, typeof this.minValue === "undefined" && typeof this.maxValue !== "undefined", typeof this.minValue !== "undefined" && typeof this.maxValue === "undefined", true);
         }
         else {
             this.value = this.precheckedIsValid ? momentPrechecked.format(this.internalFormat) : "";

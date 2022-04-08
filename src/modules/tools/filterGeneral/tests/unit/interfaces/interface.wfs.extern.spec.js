@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import InterfaceWfsExtern from "../../../interfaces/interface.wfs.extern.js";
+import responseXML from "../../resources/rawSources.js";
 
 describe("src/modules/tools/filterGeneral/interfaces/utils/interface.wfs.extern.js", () => {
     let interfaceWfsExtern = null;
@@ -209,6 +210,22 @@ describe("src/modules/tools/filterGeneral/interfaces/utils/interface.wfs.extern.
             interfaceWfsExtern.getAttrTypes(false, "onsuccess", () => errorCount++);
             interfaceWfsExtern.getAttrTypes([], "onsuccess", () => errorCount++);
             expect(errorCount).to.equal(7);
+        });
+    });
+
+    describe("parseMinMaxDate", () => {
+        it("should return undefined", () => {
+            expect(interfaceWfsExtern.parseMinMaxDate(new DOMParser().parseFromString({}, "text/xml"), "baubeginn", "min")).to.equal(undefined);
+            expect(interfaceWfsExtern.parseMinMaxDate(new DOMParser().parseFromString({}, "text/xml"), "baubeginn", "min")).to.equal(undefined);
+            expect(interfaceWfsExtern.parseMinMaxDate(new DOMParser().parseFromString({}, "text/xml"), "baubeginn", undefined)).to.equal(undefined);
+        });
+
+        it("should return minimum date", () => {
+            expect(interfaceWfsExtern.parseMinMaxDate(new DOMParser().parseFromString(responseXML[0], "text/xml"), "baubeginn", "min")).to.equal("01.01.2020");
+        });
+
+        it("should return maximum date", () => {
+            expect(interfaceWfsExtern.parseMinMaxDate(new DOMParser().parseFromString(responseXML[0], "text/xml"), "baubeginn", "max")).to.equal("31.01.2022");
         });
     });
 });

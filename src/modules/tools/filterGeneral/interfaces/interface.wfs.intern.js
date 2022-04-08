@@ -38,10 +38,11 @@ export default class InterfaceWfsIntern {
      * @param {Function} onerror a function(errorMsg)
      * @param {Boolean} [minOnly=false] if only min is of interest
      * @param {Boolean} [maxOnly=false] if only max is of interest
+     * @param {Boolean} [isDate=false] if only from date or dateRange
      * @returns {void}
      */
-    getMinMax (service, attrName, onsuccess, onerror, minOnly, maxOnly) {
-        return this.interfaceWfsExtern.getMinMax(service, attrName, onsuccess, onerror, minOnly, maxOnly);
+    getMinMax (service, attrName, onsuccess, onerror, minOnly, maxOnly, isDate) {
+        return this.interfaceWfsExtern.getMinMax(service, attrName, onsuccess, onerror, minOnly, maxOnly, isDate);
     }
 
     /**

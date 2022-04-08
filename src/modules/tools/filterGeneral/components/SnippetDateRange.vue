@@ -318,7 +318,7 @@ export default {
                 if (typeof onsuccess === "function") {
                     onsuccess();
                 }
-            }, onerror, minOnly, maxOnly);
+            }, onerror, minOnly, maxOnly, true);
         },
         /**
          * Emits the current rule to whoever is listening.
