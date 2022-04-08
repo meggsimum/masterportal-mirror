@@ -12,7 +12,7 @@ config.mocks.$t = key => key;
 
 describe("src/modules/tools/featureLister/components/FeatureLister.vue", () => {
     const mockMapGetters = {
-            visibleLayerList: () => [{name: "ersterLayer", id: "123", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "zweiterLayer", id: "456", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "dritterLayer", id: "789", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]
+            getVisibleLayerList: () => [{name: "ersterLayer", id: "123", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "zweiterLayer", id: "456", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "dritterLayer", id: "789", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}]
         },
         mockConfigJson = {
             Portalconfig: {
@@ -48,7 +48,7 @@ describe("src/modules/tools/featureLister/components/FeatureLister.vue", () => {
                         FeatureLister
                     }
                 },
-                Map: {
+                Maps: {
                     namespaced: true,
                     getters: mockMapGetters
                 }
@@ -62,10 +62,10 @@ describe("src/modules/tools/featureLister/components/FeatureLister.vue", () => {
     afterEach(sinon.restore);
 
     it("renders list of visible vector layers", () => {
-
         store.commit("Tools/FeatureLister/setActive", true);
         store.commit("Tools/FeatureLister/setLayerListView", true);
         wrapper = shallowMount(FeatureListerComponent, {store, localVue});
+
 
         expect(wrapper.find("#feature-lister-themes").exists()).to.be.true;
         expect(wrapper.find("#tool-feature-lister").exists()).to.be.true;
