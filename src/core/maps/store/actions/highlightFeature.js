@@ -102,7 +102,7 @@ function highlightLine (commit, dispatch, highlightObject) {
  * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {void}
  */
- function highlightLine (commit, dispatch, highlightObject) {
+function highlightLine (commit, dispatch, highlightObject) {
     if (highlightObject.highlightStyle) {
         const newStyle = highlightObject.highlightStyle,
             feature = highlightObject.feature,
