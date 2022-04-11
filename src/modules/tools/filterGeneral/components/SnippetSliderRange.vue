@@ -57,7 +57,7 @@ export default {
         operator: {
             type: String,
             required: false,
-            default: "BETWEEN"
+            default: undefined
         },
         prechecked: {
             type: Array,

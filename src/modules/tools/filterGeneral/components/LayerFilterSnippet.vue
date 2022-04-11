@@ -117,7 +117,8 @@ export default {
         if (Array.isArray(this.layerConfig?.snippets)) {
             this.snippets = this.layerConfig?.snippets;
         }
-        this.setupSnippets(this.snippets);
+
+        this.addSnippetIdsToSnippets(this.snippets);
 
         if (this.api instanceof FilterApi && this.mapHandler instanceof MapHandler) {
             this.mapHandler.initializeLayer(filterId, layerId, this.isExtern(), error => {
@@ -133,8 +134,15 @@ export default {
         }
     },
     mounted () {
-        if (!this.checkSnippetType(this.snippets)) {
-            this.autoRecognizeSnippetTypes(this.snippets);
+        if (!this.checkSnippetTypeConsistency(this.snippets)) {
+            this.autoRecognizeSnippetTypes(this.snippets, () => {
+                this.addMissingPropertiesToSnippets(this.snippets);
+                this.setPostSnippetKey("rerender");
+            });
+        }
+        else {
+            this.addMissingPropertiesToSnippets(this.snippets);
+            this.setPostSnippetKey("rerender");
         }
     },
     methods: {
@@ -147,31 +155,30 @@ export default {
             return this.layerConfig?.extern;
         },
         /**
-         * Checking if the type of snippet is already defined
-         * @param {Object[]} snippets the snippet object in array list
-         * @returns {Boolean} true if all types are set, false if anything has to be recognized automatically
+         * Checks if all snippets have defined types.
+         * @param {Object[]} snippets an array of snippet
+         * @returns {Boolean} true if all types are set, false if any snippet is missing a type
          */
-        checkSnippetType (snippets) {
-            let isSnippetTypeMissing = false;
-
+        checkSnippetTypeConsistency (snippets) {
             if (!Array.isArray(snippets) || !snippets.length) {
-                isSnippetTypeMissing = true;
+                return false;
             }
-            else {
-                snippets.forEach(snippet => {
-                    if (!snippet.type) {
-                        isSnippetTypeMissing = true;
-                    }
-                });
+            const len = snippets.length;
+
+            for (let i = 0; i < len; i++) {
+                if (!isObject(snippets[i]) || !snippets[i].type) {
+                    return false;
+                }
             }
-            return !isSnippetTypeMissing;
+            return true;
         },
         /**
          * Calls the api to get the attrTypes and dataTypes and creates new or alters present snippets.
          * @param {Object[]} snippets an array list of snippet objects
+         * @param {Function} onfinished callback on finished
          * @returns {void}
          */
-        autoRecognizeSnippetTypes (snippets) {
+        autoRecognizeSnippetTypes (snippets, onfinished) {
             if (!(this.api instanceof FilterApi)) {
                 return;
             }
@@ -181,38 +188,78 @@ export default {
                         if (!snippet.type) {
                             snippet.type = this.getDefaultSnippetTypeByDataType(attrTypes[snippet.attrName]);
                         }
-
-                        if (!Object.prototype.hasOwnProperty.call(snippet, "multiselect")) {
-                            if (snippet.matchingMode === "AND") {
-                                snippet.multiselect = false;
-                                delete snippet.matchingMode;
-                            }
-                            else {
-                                snippet.multiselect = true;
-                                delete snippet.matchingMode;
-                            }
-                        }
-                        if (!Object.prototype.hasOwnProperty.call(snippet, "operator")) {
-                            snippet.operator = this.getDefaultOperatorByDataType(attrTypes[snippet.attrName]);
-                        }
                     });
-
-                    this.setPostSnippetKey("rerender");
                 }
                 else {
                     Object.entries(attrTypes).forEach(([attrName, dataType]) => {
                         snippets.push({
                             type: this.getDefaultSnippetTypeByDataType(dataType),
                             attrName,
-                            operator: this.getDefaultOperatorByDataType(dataType),
                             visible: true
                         });
                     });
-                    this.setupSnippets(this.snippets);
-                    this.setPostSnippetKey("rerender");
+                }
+
+                if (typeof onfinished === "function") {
+                    onfinished();
                 }
             }, err => {
                 console.warn(err);
+            });
+        },
+        /**
+         * Adds the snippetId to the given snippets.
+         * @param {Object[]} snippets the snippets to add missing properties to
+         * @returns {void}
+         */
+        addSnippetIdsToSnippets (snippets) {
+            if (!Array.isArray(snippets)) {
+                return;
+            }
+            snippets.forEach((snippet, snippetId) => {
+                if (typeof snippet === "string") {
+                    snippets[snippetId] = {
+                        snippetId,
+                        attrName: snippet
+                    };
+                    return;
+                }
+                else if (!isObject(snippet)) {
+                    return;
+                }
+
+                snippet.snippetId = snippetId;
+            });
+        },
+        /**
+         * Adds missing default properties to the given snippets.
+         * @param {Object[]} snippets the snippets to add missing properties to
+         * @returns {void}
+         */
+        addMissingPropertiesToSnippets (snippets) {
+            if (!Array.isArray(snippets)) {
+                return;
+            }
+            snippets.forEach(snippet => {
+                if (!isObject(snippet)) {
+                    return;
+                }
+
+                snippet.adjustment = {};
+
+                if (!Object.prototype.hasOwnProperty.call(snippet, "multiselect")) {
+                    if (snippet.matchingMode === "AND") {
+                        snippet.multiselect = false;
+                        delete snippet.matchingMode;
+                    }
+                    else {
+                        snippet.multiselect = true;
+                        delete snippet.matchingMode;
+                    }
+                }
+                if (!Object.prototype.hasOwnProperty.call(snippet, "operator")) {
+                    snippet.operator = this.getDefaultOperatorBySnippetType(snippet.type, snippet.delimitor);
+                }
             });
         },
         /**
@@ -236,16 +283,25 @@ export default {
         },
         /**
          * Returns the default operator for the given data type.
-         * @param {String} dataType the data type e.g. string, number or boolean
+         * @param {String} snippetType the snippet type
+         * @param {Boolean} [hasDelimitorSet=false] true if a delimitor is set in config, false if not
          * @returns {String} the operator to use as default for the given dataType
          */
-        getDefaultOperatorByDataType (dataType) {
-            switch (dataType) {
-                case "boolean":
+        getDefaultOperatorBySnippetType (snippetType, hasDelimitorSet = false) {
+            switch (snippetType) {
+                case "checkbox":
                     return "EQ";
-                case "string":
+                case "date":
                     return "EQ";
-                case "number":
+                case "dateRange":
+                    return "INTERSECTS";
+                case "dropdown":
+                    return hasDelimitorSet ? "IN" : "EQ";
+                case "text":
+                    return "IN";
+                case "slider":
+                    return "EQ";
+                case "sliderRange":
                     return "BETWEEN";
                 default:
                     return "EQ";
@@ -458,30 +514,6 @@ export default {
             this.showStop = value;
         },
         /**
-         * For initialization only: Runs through the snippets and creates layer-unique snippetIds and initializes the adjustments.
-         * @param {Object[]} snippets the snippets to setup
-         * @pre the snippet objects in layerConfig have no snippetIds, adjustments are empty
-         * @post the snippet objects in layerConfig are having snippetIds, adjustments are filled with objects for each snippet
-         * @returns {void}
-         */
-        setupSnippets (snippets) {
-            if (Array.isArray(snippets)) {
-                snippets.forEach((snippet, snippetId) => {
-                    if (typeof snippet === "string") {
-                        snippets[snippetId] = {
-                            snippetId,
-                            attrName: snippet,
-                            adjustment: {}
-                        };
-                    }
-                    else if (typeof snippet === "object" && snippet !== null) {
-                        snippet.snippetId = snippetId;
-                        snippet.adjustment = {};
-                    }
-                });
-            }
-        },
-        /**
          * Returns the layerId based on the given parameters.
          * @param {Number} filterId the unique id of the internal layer filter
          * @param {String} layerId the layer id from configuration (root scope)
@@ -666,6 +698,7 @@ export default {
                     :add-select-all="snippet.addSelectAll"
                     :adjustment="snippet.adjustment"
                     :auto-init="snippet.autoInit"
+                    :delimitor="snippet.delimitor"
                     :disabled="disabled"
                     :display="snippet.display"
                     :info="snippet.info"

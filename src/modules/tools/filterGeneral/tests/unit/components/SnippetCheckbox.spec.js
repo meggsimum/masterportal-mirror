@@ -16,7 +16,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetCheckbox.vue", () =>
 
             expect(wrapper.vm.info).to.be.false;
             expect(wrapper.vm.title).to.be.true;
-            expect(wrapper.vm.operator).to.equal("EQ");
+            expect(wrapper.vm.operator).to.be.undefined;
             expect(wrapper.vm.prechecked).to.be.false;
             expect(wrapper.vm.snippetId).to.equal(0);
             expect(wrapper.vm.value).to.deep.equal([true, false]);

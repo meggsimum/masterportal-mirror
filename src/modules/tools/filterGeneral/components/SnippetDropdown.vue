@@ -2,6 +2,7 @@
 import Multiselect from "vue-multiselect";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
 import {getStyleModel, getIconListFromLegend} from "../utils/getIconListFromLegend.js";
+import splitListWithDelimitor from "../utils/splitListWithDelimitor.js";
 import isObject from "../../../../utils/isObject.js";
 import SnippetInfo from "./SnippetInfo.vue";
 
@@ -37,6 +38,11 @@ export default {
             required: false,
             default: true
         },
+        delimitor: {
+            type: String,
+            required: false,
+            default: undefined
+        },
         disabled: {
             type: Boolean,
             required: false,
@@ -70,7 +76,7 @@ export default {
         operator: {
             type: String,
             required: false,
-            default: "EQ"
+            default: undefined
         },
         placeholder: {
             type: String,
@@ -177,28 +183,16 @@ export default {
                 this.dropdownValue = [];
             }
 
-            if (isObject(adjusting?.adjust) && Array.isArray(adjusting.adjust?.value)) {
-                adjusting.adjust.value.forEach(value => {
-                    if (!this.dropdownValue.includes(value) && (!Array.isArray(this.value) || this.value.includes(value))) {
-                        this.dropdownValue.push(value);
-                    }
-                });
+            this.addDropdownValueForAdjustment(this.dropdownValue, this.value, adjusting?.adjust?.value, this.delimitor);
 
+            if (adjusting?.finish) {
+                this.setDropdownSelectedAfterAdjustment(this.dropdownValue, this.dropdownSelected, selected => {
+                    this.dropdownSelected = selected;
+                });
                 this.dropdownValue.sort((a, b) => {
                     return String(a).toLowerCase() > String(b).toLowerCase() ? 1 : -1;
                 });
-            }
-            if (adjusting?.finish) {
-                const selected = [];
 
-                if (Array.isArray(this.dropdownValue)) {
-                    this.dropdownValue.forEach(value => {
-                        if (this.dropdownSelected.includes(value)) {
-                            selected.push(value);
-                        }
-                    });
-                }
-                this.dropdownSelected = selected;
                 this.$nextTick(() => {
                     this.isAdjusting = false;
                 });
@@ -232,7 +226,7 @@ export default {
         }
         else if (this.api && this.autoInit !== false) {
             this.api.getUniqueValues(this.attrName, list => {
-                this.dropdownValue = list;
+                this.dropdownValue = this.splitListWithDelimitor(list, this.delimitor);
                 this.$nextTick(() => {
                     this.isInitializing = false;
                     this.disable = false;
@@ -274,6 +268,7 @@ export default {
     },
     methods: {
         translateKeyWithPlausibilityCheck,
+        splitListWithDelimitor,
 
         /**
          * Returns true if an icon path exists for the given value.
@@ -368,6 +363,69 @@ export default {
          */
         deselectAll () {
             this.dropdownSelected = [];
+        },
+        /**
+         * Adds a set of new value to dropdownValue.
+         * @param {String[]} dropdownValue the current dropdownValue to adjust
+         * @param {String[]} configValue the value set by configuration, if any
+         * @param {String[]} adjustmentValue the value to adjust dropdownValue with
+         * @param {String} [delimitor=false] the delimitor to use, false if not set
+         * @returns {void}
+         */
+        addDropdownValueForAdjustment (dropdownValue, configValue, adjustmentValue, delimitor = false) {
+            if (!Array.isArray(dropdownValue) || !Array.isArray(adjustmentValue)) {
+                return;
+            }
+            const dropdownValueAssoc = {},
+                configValueAssoc = {};
+
+            dropdownValue.forEach(value => {
+                dropdownValueAssoc[value] = true;
+            });
+            if (Array.isArray(configValue)) {
+                configValue.forEach(value => {
+                    configValueAssoc[value] = true;
+                });
+            }
+
+            adjustmentValue.forEach(value => {
+                if (delimitor && typeof value === "string" && value.indexOf(delimitor)) {
+                    this.addDropdownValueForAdjustment(dropdownValue, configValue, value.split(delimitor), false);
+                }
+                else if (!dropdownValueAssoc[value] && (!Array.isArray(configValue) || configValue[value])) {
+                    dropdownValueAssoc[value] = true;
+                    this.dropdownValue.push(value);
+                }
+            });
+        },
+        /**
+         * Setter by callback for dropdownSelected.
+         * @param {String[]} dropdownValue the current dropdownValue with available data
+         * @param {String[]} dropdownSelected all selected value from before the adjustment
+         * @param {Function} setDropdownSelected a callback function(selected) to set dropdownSelected with
+         * @returns {void}
+         */
+        setDropdownSelectedAfterAdjustment (dropdownValue, dropdownSelected, setDropdownSelected) {
+            if (typeof setDropdownSelected !== "function") {
+                return;
+            }
+            else if (!Array.isArray(dropdownValue) || !Array.isArray(dropdownSelected)) {
+                setDropdownSelected([]);
+                return;
+            }
+            const selected = [],
+                dropdownSelectedAssoc = {};
+
+            dropdownSelected.forEach(value => {
+                dropdownSelectedAssoc[value] = true;
+            });
+            dropdownValue.forEach(value => {
+                if (dropdownSelectedAssoc[value]) {
+                    selected.push(value);
+                }
+            });
+
+            setDropdownSelected(selected);
         }
     }
 };

@@ -36,7 +36,7 @@ export default {
         operator: {
             type: String,
             required: false,
-            default: "EQ"
+            default: undefined
         },
         prechecked: {
             type: Boolean,

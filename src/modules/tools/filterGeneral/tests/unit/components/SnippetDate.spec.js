@@ -20,7 +20,7 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
             expect(wrapper.vm.title).to.be.true;
             expect(wrapper.vm.minValue).to.be.undefined;
             expect(wrapper.vm.maxValue).to.be.undefined;
-            expect(wrapper.vm.operator).to.equal("EQ");
+            expect(wrapper.vm.operator).to.be.undefined;
             expect(wrapper.vm.prechecked).to.be.undefined;
             expect(wrapper.vm.snippetId).to.equal(0);
             expect(wrapper.vm.visible).to.be.true;
