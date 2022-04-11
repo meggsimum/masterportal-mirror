@@ -2,6 +2,7 @@ import Vuex from "vuex";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import ScaleSwitcherComponent from "../../../components/ScaleSwitcher.vue";
 import ScaleSwitcher from "../../../store/indexScaleSwitcher";
+import View from "ol/View";
 import {expect} from "chai";
 import sinon from "sinon";
 
@@ -12,13 +13,24 @@ config.mocks.$t = key => key;
 
 describe("src/modules/tools/scaleSwitcher/components/ScaleSwitcher.vue", () => {
     const scales = ["1000", "5000", "10000"],
+        mapView = new View({
+            extent: [510000.0, 5850000.0, 625000.4, 6000000.0],
+            center: [565874, 5934140],
+            zoom: 2,
+            options: [
+                {resolution: 0.2645831904584105, scale: 1000, zoomLevel: 8},
+                {resolution: 1.3229159522920524, scale: 5000, zoomLevel: 6},
+                {resolution: 26.458319045841044, scale: 10000, zoomLevel: 1}
+
+
+            ],
+            resolution: 15.874991427504629,
+            resolutions: [66.14579761460263, 26.458319045841044, 15.874991427504629, 10.583327618336419, 5.2916638091682096, 2.6458319045841048, 1.3229159522920524, 0.6614579761460262, 0.2645831904584105, 0.13229159522920522]
+        }),
         mockMapGetters = {
             scales: () => scales,
             scale: sinon.stub(),
-            getView: sinon.stub()
-        },
-        mockMapActions = {
-            setResolutionByIndex: sinon.stub()
+            getView: () => mapView
         },
         mockMapMutations = {
             setScale: sinon.stub()
@@ -51,17 +63,18 @@ describe("src/modules/tools/scaleSwitcher/components/ScaleSwitcher.vue", () => {
                         ScaleSwitcher
                     }
                 },
-                Map: {
+                Maps: {
                     namespaced: true,
                     getters: mockMapGetters,
                     mutations: mockMapMutations,
-                    actions: mockMapActions
+                    actions: {}
                 }
             },
             state: {
                 configJson: mockConfigJson
             }
         });
+
         store.commit("Tools/ScaleSwitcher/setActive", true);
     });
 
@@ -112,17 +125,6 @@ describe("src/modules/tools/scaleSwitcher/components/ScaleSwitcher.vue", () => {
         select.setValue(options.at(2).element.value);
         await wrapper.vm.$nextTick();
         expect(wrapper.find("select").element.value).to.equals("10000");
-    });
-
-    it("calls store action setResolutionByIndex when select is changed", async () => {
-        wrapper = shallowMount(ScaleSwitcherComponent, {store, localVue});
-        const select = wrapper.find("select"),
-            options = wrapper.findAll("option");
-
-        mockMapActions.setResolutionByIndex.reset();
-        select.setValue(options.at(2).element.value);
-        await wrapper.vm.$nextTick();
-        expect(mockMapActions.setResolutionByIndex.calledOnce).to.equal(true);
     });
 
     it("sets focus to first input control", async () => {

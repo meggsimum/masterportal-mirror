@@ -18,7 +18,7 @@ export default {
         ...mapGetters("Maps", ["getView"]),
         scale: {
             get () {
-                return this.$store.state.Map.scale;
+                return this.$store.state.Maps.scale;
             },
             set (value) {
                 this.$store.commit("Maps/setScale", value);
