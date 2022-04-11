@@ -32,6 +32,10 @@
 - Added "application/json" as supported WMS *GetFeatureInfo* response format
 - Added the possibility to load controls as addons, see [description](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/addOnsVue.md).
 - Issue #744: It is now possible to assign each feature its own label when printing.
+- The following NPM packages are added:
+    - dependencies:
+        - "bootstrap-sass"
+        - "bootstrap-icons"
 
 ### Changed
 - Migrated the module mouseHover from Backbone to Vue.
@@ -51,6 +55,7 @@
 - Issue #551: Tools `coordToolKit` and `supplyCoord` are no longer usable in 3d mode due to [limitations of ol-cesium](https://openlayers.org/ol-cesium/apidoc/index.html#limitations).
 - The function `makeOberstufenprofileBold` used by the `comparisonList` and `featureLister` is provided as a util named `toBold` now.
 - Issue #636: The WMS layer respects crs code at rawlayer. The WMS request now contains the attribute CRS. If not available, projection of the map is used.
+- Switched Icon Library from Glyphicon to Bootstrap Icons. Edited Webpack Config. Updated icon usage in vue components to use scss. Updated icon usage in backbone modules. Edited docs & tests accordingly.
 
 ### Removed
 - Removed hardcoded LayerIds for 3D support in wms.js. Setting has to be done now via services.json attribute notSupportedIn3D.
@@ -230,10 +235,6 @@
 - Added style.json parameter "rotation" to wfs features with iconPointStyle, if the parameter is not given it will fall back to standard alignment.
 - Added the possibility to configure a predefined order of selected layers.
 - Feature: List component supports onRowClick callback
-- The following NPM packages are added:
-    - dependencies:
-        - "bootstrap-sass"
-        - "bootstrap-icons"
 - Extended CSW processing for download links in layerInformation by CSW 2.0.2 standard.
 - The tool "featureLister" has been extended and now also highlights lines and polygons on mouse-over over the feature name.
 - Added the possibility to use the High Resolution Plot Service
@@ -260,7 +261,6 @@
     - Added Buttons to copy one coordinate or both of them with a configurable delimiter. The visibility of the buttons is also configurable.
     - Removed copy of coordinates if click in input-field.
     - selenium-webdriver: 4.0.0 to version 4.1.0
-- Switched Icon Library from Glyphicon to Bootstrap Icons. Edited Webpack Config. Updated icon usage in vue components to use scss. Updated icon usage in backbone modules. Edited docs & tests accordingly.
 
 ### Deprecated
 - Parametric URL: all deprecation-warnings are removed, besides STARTUPMODUL and BEZIRK.
