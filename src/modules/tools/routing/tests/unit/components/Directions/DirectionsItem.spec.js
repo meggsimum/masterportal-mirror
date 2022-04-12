@@ -63,11 +63,6 @@ describe("src/modules/tools/routing/components/Directions/DirectionsItem.vue", (
             },
             state: {
                 configJson: mockConfigJson
-               /*  settings: {
-                    speedProfile: "HGV",
-                    preference: "SHORTEST",
-                    type: "ORS"
-                } */
             }
         });
         store.commit("Tools/Routing/setActive", true);
