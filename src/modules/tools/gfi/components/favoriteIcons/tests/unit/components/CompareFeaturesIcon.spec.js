@@ -25,7 +25,7 @@ describe("src/modules/tools/gfi/favoriteIcons/components/CompareFeatureIcon.vue"
                 },
                 computed: {
                     featureIsOnCompareList: sinon.fake.returns(false),
-                    mapMode: sinon.fake.returns("2D")
+                    mode: sinon.fake.returns("2D")
                 }
             });
         });
@@ -60,7 +60,7 @@ describe("src/modules/tools/gfi/favoriteIcons/components/CompareFeatureIcon.vue"
                 },
                 computed: {
                     featureIsOnCompareList: sinon.fake.returns(true),
-                    mapMode: sinon.fake.returns("2D")
+                    mode: sinon.fake.returns("2D")
                 }
             });
         });
