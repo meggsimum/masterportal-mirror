@@ -39,6 +39,7 @@ describe("src/modules/tools/routing/components/Directions/DirectionsItem.vue", (
         mapCollection.addMap({
             id: "ol",
             mode: "2D",
+            mapMode: "2D",
             addLayer: sinon.spy(),
             removeLayer: sinon.spy(),
             addInteraction: sinon.spy(),
@@ -54,15 +55,19 @@ describe("src/modules/tools/routing/components/Directions/DirectionsItem.vue", (
                         Routing
                     }
                 },
-                Map: {
+                Maps: {
                     namespaced: true,
-                    state: {
-                        mode: "2D"
-                    }
+                    mode: "2D",
+                    removeLayer: sinon.spy()
                 }
             },
             state: {
                 configJson: mockConfigJson
+               /*  settings: {
+                    speedProfile: "HGV",
+                    preference: "SHORTEST",
+                    type: "ORS"
+                } */
             }
         });
         store.commit("Tools/Routing/setActive", true);

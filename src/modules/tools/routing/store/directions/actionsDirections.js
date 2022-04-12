@@ -15,7 +15,7 @@ export default {
             return;
         }
         const {waypoints, directionsRouteSource, routingAvoidFeaturesOptions, settings, directionsAvoidSource} = state,
-            map = mapCollection.getMap(rootState.Maps.mode),
+            map = await mapCollection.getMap(rootState.Maps.mode),
             wgs84Coords = await dispatch("getDirectionsCoordinatesWgs84"),
             lineStringFeature = await dispatch("getRouteFeature");
 
@@ -240,7 +240,7 @@ export default {
      * @param {Object} context actions context object.
      * @returns {void}
      */
-    initDirections ({rootState, state, dispatch, commit}) {
+    async initDirections ({rootState, state, dispatch, commit}) {
         const {
                 directionsWaypointsLayer,
                 directionsRouteLayer,
@@ -250,7 +250,7 @@ export default {
                 directionsAvoidSelectInteraction,
                 mapListenerAdded
             } = state,
-            map = mapCollection.getMap(rootState.Maps.mode);
+            map = await mapCollection.getMap(rootState.Maps.mode);
 
         dispatch("initWaypoints");
 
@@ -295,9 +295,9 @@ export default {
      * @param {Object} context actions context object.
      * @returns {void}
      */
-    closeDirections ({rootState, state, dispatch}) {
+    async closeDirections ({rootState, state, dispatch}) {
         const {directionsWaypointsLayer, directionsRouteLayer, directionsAvoidLayer} = state,
-            map = mapCollection.getMap(rootState.Maps.mode);
+            map = await mapCollection.getMap(rootState.Maps.mode);
 
         map.removeLayer(directionsRouteLayer);
         map.removeLayer(directionsWaypointsLayer);
