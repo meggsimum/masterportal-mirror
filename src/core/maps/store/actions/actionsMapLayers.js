@@ -38,9 +38,9 @@ export default {
      * @param {module:ol/layer/Base~BaseLayer} layer The layer to add.
      * @returns {void}
      */
-    addLayer ({dispatch, getters}, layer) {
-        layer.setZIndex(getters.get2DMap.getLayers().getLength());
-        getters.get2DMap.addLayer(layer);
+    async addLayer ({dispatch, getters}, layer) {
+        await layer.setZIndex(getters.get2DMap.getLayers().getLength());
+        await getters.get2DMap.addLayer(layer);
 
         dispatch("setLayersAlwaysOnTop", getters.get2DMap.getLayers());
     },
@@ -93,8 +93,8 @@ export default {
      * @param {Boolean} [alwaysOnTop=true] Layers with the attribute "alwaysOnTop": true are set on top of the map.
      * @returns {module:ol/layer/Base~BaseLaye}  the found layer or a new layer with the given name.
      */
-    async addNewLayerIfNotExists ({dispatch}, {layerName, alwaysOnTop = true}) {
-        let resultLayer = await dispatch("getLayerByName", layerName);
+    addNewLayerIfNotExists ({dispatch}, {layerName, alwaysOnTop = true}) {
+        let resultLayer = dispatch("getLayerByName", layerName);
 
         if (!resultLayer) {
             resultLayer = new VectorLayer({
@@ -106,7 +106,6 @@ export default {
 
             dispatch("addLayer", resultLayer);
         }
-
         return resultLayer;
     },
     /**

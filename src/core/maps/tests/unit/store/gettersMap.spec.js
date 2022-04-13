@@ -297,18 +297,5 @@ describe("src/core/maps/store/gettersMap.js", () => {
                 5934933.749571376
             ]);
         });
-
-        it.skip("Returns the bounding box with the projection EPSG:4326", function () {
-            expect(getters.getProjectedBBox, "EPSG:4326").to.deep.equal([
-                5.0078219731923275,
-                46.908179219825406,
-                5.158843288524674,
-                46.99452561170306
-            ]);
-        });
-
-        it.skip("getResolutionByScale - returns the resolution for the given scale", function () {
-            expect(getters.getResolutionByScale(5000, "max")).to.deep.equal(1.3229159522920524);
-        });
     });
 });

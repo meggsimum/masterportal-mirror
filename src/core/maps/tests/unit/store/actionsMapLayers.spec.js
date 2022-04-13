@@ -100,37 +100,10 @@ describe("src/core/maps/actions/actionsMapLayer.js", () => {
             const zIndexes = [0, 3, 2],
                 ids = ["Donald", "Dagobert", "Darkwing"];
 
-            store.dispatch("Maps/addLayer", layer1);
-            store.dispatch("Maps/addLayer", layer2);
-            store.dispatch("Maps/addLayer", layer3);
 
-            mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
-                expect(layer.getZIndex()).equals(zIndexes[index]);
-                expect(layer.get("id")).equals(ids[index]);
-            });
-        });
-    });
-
-    describe("addNewLayerIfNotExists", () => {
-        it("create new layer with alwaysOnTop: true", () => {
-            const zIndexes = [2, 1],
-                ids = ["Tick, Trick und Track", "Donald"];
-
-            store.dispatch("Maps/addNewLayerIfNotExists", {layerName: "Tick, Trick und Track"});
-            store.dispatch("Maps/addLayer", layer1);
-
-            mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
-                expect(layer.getZIndex()).equals(zIndexes[index]);
-                expect(layer.get("id")).equals(ids[index]);
-            });
-        });
-
-        it("create new layer with alwaysOnTop: false", () => {
-            const zIndexes = [0, 1, 2],
-                ids = ["Donald", "Tick, Trick und Track"];
-
-            store.dispatch("Maps/addLayer", layer1);
-            store.dispatch("Maps/addNewLayerIfNotExists", {layerName: "Tick, Trick und Track", alwaysOnTop: false});
+            store.dispatch("Maps/addLayer", layer1, 0);
+            store.dispatch("Maps/addLayer", layer2, 3);
+            store.dispatch("Maps/addLayer", layer3, 2);
 
             mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
                 expect(layer.getZIndex()).equals(zIndexes[index]);
@@ -173,17 +146,4 @@ describe("src/core/maps/actions/actionsMapLayer.js", () => {
         });
     });
 
-    /*  describe("getLayerByName", () => {
-        it("Returns the layer with the correct name", () => {
-            store.dispatch("Maps/addLayer", layer1);
-            store.dispatch("Maps/addLayer", layer2);
-            store.dispatch("Maps/addLayer", layer3);
-            store.dispatch("Maps/addLayer", layer4);
-
-            expect(store.dispatch("Maps/getLayerByName", "Duck1")).equals(layer1);
-            expect(store.dispatch("Maps/getLayerByName", {layerName: "Duck2"})).equals(layer2);
-            expect(store.dispatch("Maps/getLayerByName", {layerName: "Duck3"})).equals(layer3);
-            expect(store.dispatch("Maps/getLayerByName", {layerName: "Duck4"})).equals(layer4);
-        });
-    }); */
 });

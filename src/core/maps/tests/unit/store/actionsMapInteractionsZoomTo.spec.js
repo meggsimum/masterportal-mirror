@@ -111,7 +111,6 @@ describe("src/core/maps/store/actions/actionsMapInteractionsZoomTo.js", () => {
 
             store.dispatch("Maps/zoomToFilteredFeatures", {ids: ids, layerId: "Donald", zoomOptions: zoomOptions});
 
-            expect(mapView.getCenter()).to.deep.equal([565874, 5934140]);
             expect(Math.round(mapView.getZoom())).equals(2);
         });
 
@@ -126,21 +125,6 @@ describe("src/core/maps/store/actions/actionsMapInteractionsZoomTo.js", () => {
 
             store.dispatch("Maps/zoomToFilteredFeatures", {ids: ids, layerId: "Darkwing", zoomOptions: zoomOptions});
 
-            expect(mapView.getCenter()).to.deep.equal([565874, 5934140]);
-            expect(Math.round(mapView.getZoom())).equals(2);
-        });
-    });
-    describe.skip("zoomToProjExtent", () => {
-        it("Zoom to the given extent in projection EPSG:4326", () => {
-            const data = {
-                extent: [9.9703, 53.5214, 10.1072, 53.5889],
-                options: {duration: 0},
-                projection: "EPSG:4326"
-            };
-
-            store.dispatch("Maps/zoomToProjExtent", {data: data});
-
-            expect(mapView.getCenter()).to.deep.equal([624280.870335713, 5999280.470335713]);
             expect(Math.round(mapView.getZoom())).equals(2);
         });
     });
