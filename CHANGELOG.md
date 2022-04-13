@@ -16,6 +16,7 @@
 ### Removed
 
 ### Fixed
+- Issue #760: Features can now again be created with information directly from query parameters.
 
 ---
 
