@@ -23,7 +23,6 @@ export default {
             size: mapCollection.getMap(map.mapMode).getSize(),
             ...Object.assign({duration: 800}, options)
         });
-
     },
 
     /**
