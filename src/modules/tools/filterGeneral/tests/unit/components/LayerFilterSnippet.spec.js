@@ -225,22 +225,22 @@ describe("src/modules/tools/filterGeneral/components/LayerFilterSnippet.vue", ()
         });
         it("should add missing properties to the given snippets", () => {
             const snippets = [
-                    {test: "snippet with set snippetId - should be overriden"},
                     {test: "snippet with set adjustment - should be overriden", adjustment: "something"},
                     {test: "snippet with set multiselect", multiselect: "multiselect"},
                     {test: "snippet with matchingMode AND", matchingMode: "AND"},
                     {test: "snippet with any other matchingMode", matchingMode: "anything"},
                     {test: "snippet with dropdown type but without delimitor", type: "dropdown"},
-                    {test: "snippet with dropdown type and delimitor", type: "dropdown", delimitor: "delimitor"}
+                    {test: "snippet with dropdown type and delimitor", type: "dropdown", delimitor: "delimitor"},
+                    {test: "snippet with visible set to false", visible: false}
                 ],
                 expected = [
-                    {test: "snippet with set snippetId - should be overriden", adjustment: {}, multiselect: true, operator: "EQ"},
-                    {test: "snippet with set adjustment - should be overriden", adjustment: {}, multiselect: true, operator: "EQ"},
-                    {test: "snippet with set multiselect", multiselect: "multiselect", adjustment: {}, operator: "EQ"},
-                    {test: "snippet with matchingMode AND", adjustment: {}, multiselect: false, operator: "EQ"},
-                    {test: "snippet with any other matchingMode", adjustment: {}, multiselect: true, operator: "EQ"},
-                    {test: "snippet with dropdown type but without delimitor", type: "dropdown", adjustment: {}, multiselect: true, operator: "EQ"},
-                    {test: "snippet with dropdown type and delimitor", type: "dropdown", delimitor: "delimitor", adjustment: {}, multiselect: true, operator: "IN"}
+                    {test: "snippet with set adjustment - should be overriden", adjustment: {}, visible: true, multiselect: true, operator: "EQ"},
+                    {test: "snippet with set multiselect", multiselect: "multiselect", adjustment: {}, visible: true, operator: "EQ"},
+                    {test: "snippet with matchingMode AND", adjustment: {}, visible: true, multiselect: false, operator: "EQ"},
+                    {test: "snippet with any other matchingMode", adjustment: {}, visible: true, multiselect: true, operator: "EQ"},
+                    {test: "snippet with dropdown type but without delimitor", type: "dropdown", adjustment: {}, visible: true, multiselect: true, operator: "EQ"},
+                    {test: "snippet with dropdown type and delimitor", type: "dropdown", delimitor: "delimitor", adjustment: {}, visible: true, multiselect: true, operator: "IN"},
+                    {test: "snippet with visible set to false", adjustment: {}, visible: false, multiselect: true, operator: "EQ"}
                 ];
 
             wrapper.vm.addMissingPropertiesToSnippets(snippets);

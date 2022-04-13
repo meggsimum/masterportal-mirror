@@ -67,8 +67,7 @@ export default {
             searchInMapExtent: false,
             snippets: [],
             postSnippetKey: "",
-            amountOfFilteredItems: false,
-            precheckedSnippets: []
+            amountOfFilteredItems: false
         };
     },
     computed: {
@@ -91,21 +90,6 @@ export default {
                     this.mapHandler.zoomToFilteredFeature(this.layerConfig?.filterId, this.minScale, error => {
                         console.warn("map error", error);
                     });
-                }
-            }
-        },
-        precheckedSnippets (val) {
-            if (this.isStrategyActive() && val.length === this.layerConfig?.snippets.length) {
-                const snippetIds = [];
-
-                val.forEach((v, index) => {
-                    if (v) {
-                        snippetIds.push(index);
-                    }
-                });
-
-                if (snippetIds.length) {
-                    this.handleActiveStrategy(snippetIds);
                 }
             }
         }
@@ -137,16 +121,27 @@ export default {
         if (!this.checkSnippetTypeConsistency(this.snippets)) {
             this.autoRecognizeSnippetTypes(this.snippets, () => {
                 this.addMissingPropertiesToSnippets(this.snippets);
-                this.setPostSnippetKey("rerender");
+                this.$nextTick(() => {
+                    if (this.isStrategyActive()) {
+                        this.doAdjustmentsForPrecheckedSnippets(this.snippets);
+                    }
+                    this.setPostSnippetKey("rerender");
+                });
             });
         }
         else {
             this.addMissingPropertiesToSnippets(this.snippets);
-            this.setPostSnippetKey("rerender");
+            this.$nextTick(() => {
+                if (this.isStrategyActive()) {
+                    this.doAdjustmentsForPrecheckedSnippets(this.snippets);
+                }
+                this.setPostSnippetKey("rerender");
+            });
         }
     },
     methods: {
         translateKeyWithPlausibilityCheck,
+        getSnippetAdjustments,
         /**
          * Checks if this layer is supposed to use external filtering.
          * @returns {Boolean} true if the layer should filter external
@@ -246,6 +241,7 @@ export default {
                 }
 
                 snippet.adjustment = {};
+                snippet.visible = snippet.visible === false ? snippet.visible : true;
 
                 if (!Object.prototype.hasOwnProperty.call(snippet, "multiselect")) {
                     if (snippet.matchingMode === "AND") {
@@ -261,6 +257,30 @@ export default {
                     snippet.operator = this.getDefaultOperatorBySnippetType(snippet.type, snippet.delimitor);
                 }
             });
+        },
+        /**
+         * Runs adjustments for any visible snippet with prechecked value.
+         * @info should be called only for when strategy is active
+         * @param {Object[]} snippets all snippets
+         * @returns {void}
+         */
+        doAdjustmentsForPrecheckedSnippets (snippets) {
+            if (!Array.isArray(snippets)) {
+                return;
+            }
+            const precheckedSnippetIds = [];
+
+            snippets.forEach(snippet => {
+                if (!isObject(snippet) || !snippet.visible || !Array.isArray(snippet.prechecked) || !snippet.prechecked.length) {
+                    return;
+                }
+                precheckedSnippetIds.push(snippet.snippetId);
+                this.emitCurrentRuleOfSnippet(snippet.snippetId, snippet.prechecked);
+            });
+
+            if (precheckedSnippetIds.length) {
+                this.handleActiveStrategy(precheckedSnippetIds);
+            }
         },
         /**
          * Returns the default snippet type for the given data type.
@@ -339,6 +359,20 @@ export default {
             this.searchInMapExtent = value;
         },
         /**
+         * Calls the emitCurrentRule function of the component matching with the given snippetId.
+         * @param {Number} snippetId the snippetId of the component
+         * @param {*} value the value to put into the rule
+         * @param {Boolean} [startup=false] true if the call comes on startup, false if a user actively changed a snippet
+         * @returns {void}
+         */
+        emitCurrentRuleOfSnippet (snippetId, value, startup = false) {
+            const comp = this.$refs["snippet-" + snippetId];
+
+            if (Array.isArray(comp) && typeof comp[0]?.emitCurrentRule === "function") {
+                comp[0].emitCurrentRule(value, startup);
+            }
+        },
+        /**
          * Resets a snippet by its snippetId.
          * @param {Number} snippetId the snippetId of the snippet to reset
          * @param {Function} onsuccess the function to call on success
@@ -408,7 +442,7 @@ export default {
          */
         handleActiveStrategy (snippetId) {
             this.filter(snippetId, filterAnswer => {
-                const adjustments = getSnippetAdjustments(this.layerConfig.snippets, filterAnswer?.items, filterAnswer?.paging?.page, filterAnswer?.paging?.total),
+                const adjustments = this.getSnippetAdjustments(this.layerConfig.snippets, filterAnswer?.items, filterAnswer?.paging?.page, filterAnswer?.paging?.total),
                     start = typeof adjustments?.start === "boolean" ? adjustments.start : false,
                     finish = typeof adjustments?.finish === "boolean" ? adjustments.finish : false;
 
@@ -423,14 +457,6 @@ export default {
                     };
                 });
             });
-        },
-        /**
-         * Pushing the value if there are prechecked value in snippet
-         * @param {Boolean} value true/false for prechecked value
-         * @returns {void}
-         */
-        setSnippetPrechecked (value) {
-            this.precheckedSnippets.push(value);
         },
         /**
          * Triggered when a rule changed at a snippet.
@@ -684,7 +710,6 @@ export default {
                     :visible="snippet.visible"
                     @changeRule="changeRule"
                     @deleteRule="deleteRule"
-                    @setSnippetPrechecked="setSnippetPrechecked"
                 />
             </div>
             <div
@@ -714,7 +739,6 @@ export default {
                     :visible="snippet.visible"
                     @changeRule="changeRule"
                     @deleteRule="deleteRule"
-                    @setSnippetPrechecked="setSnippetPrechecked"
                 />
             </div>
             <div
@@ -734,7 +758,6 @@ export default {
                     :visible="snippet.visible"
                     @changeRule="changeRule"
                     @deleteRule="deleteRule"
-                    @setSnippetPrechecked="setSnippetPrechecked"
                 />
             </div>
             <div
@@ -758,7 +781,6 @@ export default {
                     :visible="snippet.visible"
                     @changeRule="changeRule"
                     @deleteRule="deleteRule"
-                    @setSnippetPrechecked="setSnippetPrechecked"
                 />
             </div>
             <div
@@ -782,7 +804,6 @@ export default {
                     :visible="snippet.visible"
                     @changeRule="changeRule"
                     @deleteRule="deleteRule"
-                    @setSnippetPrechecked="setSnippetPrechecked"
                 />
             </div>
             <div
@@ -806,7 +827,6 @@ export default {
                     :visible="snippet.visible"
                     @changeRule="changeRule"
                     @deleteRule="deleteRule"
-                    @setSnippetPrechecked="setSnippetPrechecked"
                 />
             </div>
             <div
@@ -830,7 +850,6 @@ export default {
                     :visible="snippet.visible"
                     @changeRule="changeRule"
                     @deleteRule="deleteRule"
-                    @setSnippetPrechecked="setSnippetPrechecked"
                 />
             </div>
         </div>

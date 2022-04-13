@@ -1,5 +1,5 @@
 <script>
-import Multiselect from "vue-multiselect";
+import VueMultiselectComponent from "vue-multiselect";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
 import {getStyleModel, getIconListFromLegend} from "../utils/getIconListFromLegend.js";
 import splitListWithDelimitor from "../utils/splitListWithDelimitor.js";
@@ -9,7 +9,7 @@ import SnippetInfo from "./SnippetInfo.vue";
 export default {
     name: "SnippetDropdown",
     components: {
-        Multiselect,
+        VueMultiselectComponent,
         SnippetInfo
     },
     props: {
@@ -244,10 +244,6 @@ export default {
                 this.disable = false;
             });
         }
-
-        if (this.visible && Array.isArray(this.prechecked) && this.prechecked.length) {
-            this.emitCurrentRule(this.prechecked, true);
-        }
     },
     mounted () {
         if (this.renderIcons === "fromLegend") {
@@ -263,8 +259,6 @@ export default {
         else if (isObject(this.renderIcons)) {
             this.iconList = this.renderIcons;
         }
-
-        this.$emit("setSnippetPrechecked", this.visible && Array.isArray(this.prechecked) && this.prechecked.length);
     },
     methods: {
         translateKeyWithPlausibilityCheck,
@@ -462,7 +456,7 @@ export default {
                 ref="selectBoxContainer"
                 class="select-box-container"
             >
-                <Multiselect
+                <VueMultiselectComponent
                     :id="'snippetSelectBox-' + snippetId"
                     v-model="dropdownSelected"
                     :aria-label="ariaLabelDropdown"
@@ -483,7 +477,7 @@ export default {
                 >
                     <span slot="noOptions">{{ emptyList }}</span>
                     <span slot="noResult">{{ noElements }}</span>
-                </Multiselect>
+                </VueMultiselectComponent>
             </div>
         </div>
         <div
