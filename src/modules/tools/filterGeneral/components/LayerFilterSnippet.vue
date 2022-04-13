@@ -105,7 +105,7 @@ export default {
                 });
 
                 if (snippetIds.length) {
-                    this.handleActiveStrategy(snippetIds);
+                    this.handleActiveStrategy(snippetIds, "precheckedSnippets");
                 }
             }
         }
@@ -406,20 +406,19 @@ export default {
          * @param {Number|Number[]} snippetId the snippet Id(s)
          * @returns {void}
          */
-        handleActiveStrategy (snippetId) {
+        handleActiveStrategy (snippetId, test = false) {
+            console.log("handleActiveStrategy", test);
             this.filter(snippetId, filterAnswer => {
                 const adjustments = getSnippetAdjustments(this.layerConfig.snippets, filterAnswer?.items, filterAnswer?.paging?.page, filterAnswer?.paging?.total),
                     start = typeof adjustments?.start === "boolean" ? adjustments.start : false,
                     finish = typeof adjustments?.finish === "boolean" ? adjustments.finish : false;
 
                 this.layerConfig.snippets.forEach(snippet => {
-                    if (filterAnswer?.snippetId === snippet.snippetId || Array.isArray(filterAnswer?.snippetId) && filterAnswer?.snippetId.includes(snippet.snippetId)) {
-                        return;
-                    }
                     snippet.adjustment = {
                         start,
                         finish,
-                        adjust: isObject(adjustments[snippet.snippetId]) ? adjustments[snippet.snippetId] : false
+                        adjust: isObject(adjustments[snippet.snippetId]) ? adjustments[snippet.snippetId] : false,
+                        snippetId: filterAnswer?.snippetId
                     };
                 });
             });
@@ -442,7 +441,7 @@ export default {
                 this.$set(this.rules, rule.snippetId, rule);
                 if (!rule.startup && this.isStrategyActive()) {
                     this.$nextTick(() => {
-                        this.handleActiveStrategy(rule.snippetId);
+                        this.handleActiveStrategy(rule.snippetId, "changeRule");
                     });
                 }
             }
@@ -456,7 +455,7 @@ export default {
             this.$set(this.rules, snippetId, false);
             if (this.isStrategyActive()) {
                 this.$nextTick(() => {
-                    this.handleActiveStrategy(snippetId);
+                    this.handleActiveStrategy(snippetId, "deleteRule");
                 });
             }
         },
@@ -546,7 +545,7 @@ export default {
                     },
                     rules: this.getCleanArrayOfRules()
                 };
-
+console.log("filterQuestion", filterQuestion);
             this.setFormDisable(true);
             this.showStopButton(true);
 

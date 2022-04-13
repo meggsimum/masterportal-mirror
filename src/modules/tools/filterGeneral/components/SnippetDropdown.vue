@@ -174,13 +174,15 @@ export default {
             this.allSelected = this.dropdownValue.length !== 0 && this.dropdownValue.length === this.dropdownSelected.length;
         },
         adjustment (adjusting) {
-            if (!isObject(adjusting) || this.visible === false) {
+            if (this.visible === false || !isObject(adjusting)) {
                 return;
             }
 
             if (adjusting?.start) {
                 this.isAdjusting = true;
-                this.dropdownValue = [];
+                if (!this.hasTriggeredAdjustment(this.snippetId, adjusting.snippetId)) {
+                    this.dropdownValue = [];
+                }
             }
 
             this.addDropdownValueForAdjustment(this.dropdownValue, this.value, adjusting?.adjust?.value, this.delimitor);
@@ -291,6 +293,21 @@ export default {
          */
         getTitle () {
             return this.title || this.attrName;
+        },
+        /**
+         * Checks if the given snippetId has triggered the adjustment.
+         * @param {Number} snippetId the snippetId to check
+         * @param {Number|Number[]} adjustmentSnippetId the snippetId or an array of snippetIds that triggered the adjustment
+         * @returns {Boolean} true if the given snippetId checks with adjustmentSnippetId, false if not
+         */
+        hasTriggeredAdjustment (snippetId, adjustmentSnippetId) {
+            if (adjustmentSnippetId === snippetId) {
+                return true;
+            }
+            else if (Array.isArray(adjustmentSnippetId) && adjustmentSnippetId.includes(snippetId)) {
+                return true;
+            }
+            return false;
         },
         /**
          * Emits the current rule to whoever is listening.
