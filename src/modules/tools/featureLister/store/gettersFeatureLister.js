@@ -21,11 +21,12 @@ const getters = {
      */
     featureDetails: state => {
         const attributesToShow = state.selectedFeature.getAttributesToShow(),
-            featureProperties = state.selectedFeature.getProperties();
+            featureProperties = state.selectedFeature.getProperties(),
+            ignoredKeys = Config.ignoredKeys ? Config.ignoredKeys : Radio.request("Util", "getIgnoredKeys");
 
         return attributesToShow === "showAll"
             ? Object.entries(featureProperties)
-                .filter(([key, value]) => value && !Config.ignoredKeys.includes(key.toUpperCase()))
+                .filter(([key, value]) => value && !ignoredKeys.includes(key.toUpperCase()))
             : Object.entries(attributesToShow)
                 .filter(([key]) => featureProperties[key])
                 .map(([key, value]) => [value, featureProperties[key]]);
@@ -36,7 +37,8 @@ const getters = {
      * @returns {Array} [key, value] for each property
      */
     headers: state => {
-        const headers = Object.entries(state.gfiFeaturesOfLayer
+        const ignoredKeys = Config.ignoredKeys ? Config.ignoredKeys : Radio.request("Util", "getIgnoredKeys"), 
+          headers = Object.entries(state.gfiFeaturesOfLayer
             .reduce((acc, it) => {
                 let keys = it.getAttributesToShow();
 
@@ -44,7 +46,7 @@ const getters = {
                     ? Object.keys(it.getProperties()).map(prop => [prop, prop])
                     : Object.entries(keys);
                 keys.forEach(([key, value]) => {
-                    if (!Config.ignoredKeys.includes(key.toUpperCase())) {
+                    if (!ignoredKeys.includes(key.toUpperCase())) {
                         acc[key] = value;
                     }
                 });
