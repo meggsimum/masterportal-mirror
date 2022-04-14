@@ -16,6 +16,7 @@
 ### Removed
 
 ### Fixed
+- Issue #758: featureLister threw a JavaScript exception when building the list of layers.
 
 ---
 
