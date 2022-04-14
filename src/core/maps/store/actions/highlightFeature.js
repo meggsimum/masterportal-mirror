@@ -95,40 +95,6 @@ function highlightLine (commit, dispatch, highlightObject) {
 
 }
 /**
- * highlights a line feature
- * @param {Function} commit commit function
- * @param {Function} dispatch dispatch function
- * @param {Object} highlightObject contains several parameters for feature highlighting
- * @fires VectorStyle#RadioRequestStyleListReturnModelById
- * @returns {void}
- */
-function highlightLine (commit, dispatch, highlightObject) {
-    if (highlightObject.highlightStyle) {
-        const newStyle = highlightObject.highlightStyle,
-            feature = highlightObject.feature,
-            originalStyle = styleObject(highlightObject, feature) ? styleObject(highlightObject, feature) : undefined;
-
-        if (originalStyle) {
-            const clonedStyle = Array.isArray(originalStyle) ? originalStyle[0].clone() : originalStyle.clone();
-
-            commit("addHighlightedFeature", feature);
-            commit("addHighlightedFeatureStyle", feature.getStyle());
-
-            if (newStyle.stroke?.width) {
-                clonedStyle.getStroke().setWidth(newStyle.stroke.width);
-            }
-            if (newStyle.stroke?.color) {
-                clonedStyle.getStroke().setColor(newStyle.stroke.color);
-            }
-            feature.setStyle(clonedStyle);
-        }
-    }
-    else {
-        dispatch("MapMarker/placingPolygonMarker", highlightObject.feature, {root: true});
-    }
-
-}
-/**
  * highlights a feature via layerid and featureid
  * @param {Object} dispatch the dispatch
  * @param {Object} getters the getters
@@ -218,4 +184,3 @@ function styleObject (highlightObject, feature) {
 }
 
 export {highlightFeature};
-
