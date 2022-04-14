@@ -1,3 +1,5 @@
+import {getLayerWhere} from "masterportalapi/src/rawLayerList";
+
 export default {
     /**
      * Highlights a feature depending on its geometryType.
@@ -18,12 +20,15 @@ export default {
                 layer: layer,
                 feature: featureId,
                 scale: styleObj.image?.scale
-            };
+            },
+            rawLayer = getLayerWhere({id: layerId});
 
         if (featureGeometryType === "LineString") {
             highlightObject.type = "highlightLine";
         }
         layer.id = layerId;
+        highlightObject.zoom = styleObj.zoom;
+        highlightObject.styleId = rawLayer.styleId;
 
         if (highlightObject.type === "highlightPolygon") {
             highlightObject.highlightStyle = {

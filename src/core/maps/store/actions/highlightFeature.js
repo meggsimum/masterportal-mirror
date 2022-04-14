@@ -9,16 +9,16 @@
  */
 function highlightFeature ({commit, dispatch, getters}, highlightObject) {
     if (highlightObject.type === "increase") {
-        increaseFeature(commit, getters, highlightObject);
+        increaseFeature(commit, dispatch, getters, highlightObject);
     }
     else if (highlightObject.type === "viaLayerIdAndFeatureId") {
         highlightViaParametricUrl(dispatch, getters, highlightObject.layerIdAndFeatureId);
     }
     else if (highlightObject.type === "highlightPolygon") {
-        highlightPolygon(commit, dispatch, highlightObject);
+        highlightPolygon(commit, getters, dispatch, highlightObject);
     }
     else if (highlightObject.type === "highlightLine") {
-        highlightLine(commit, dispatch, highlightObject);
+        highlightLine(commit, getters, dispatch, highlightObject);
     }
 }
 /**
@@ -29,7 +29,7 @@ function highlightFeature ({commit, dispatch, getters}, highlightObject) {
  * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {void}
  */
-function highlightPolygon (commit, dispatch, highlightObject) {
+function highlightPolygon (commit, getters, dispatch, highlightObject) {
     if (highlightObject.highlightStyle) {
         const newStyle = highlightObject.highlightStyle,
             feature = highlightObject.feature,
@@ -52,6 +52,14 @@ function highlightPolygon (commit, dispatch, highlightObject) {
             }
             feature.setStyle(clonedStyle);
 
+            dispatch("Map/zoomTo", {
+                geometryOrExtent: feature.getGeometry(),
+                options: {duration: 500}
+            }, {root: true});
+
+            if (highlightObject.zoom) {
+                getters.ol2DMap.getView().setZoom(highlightObject.zoom);
+            }
         }
     }
     else {
@@ -67,7 +75,7 @@ function highlightPolygon (commit, dispatch, highlightObject) {
  * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {void}
  */
-function highlightLine (commit, dispatch, highlightObject) {
+function highlightLine (commit, getters, dispatch, highlightObject) {
     if (highlightObject.highlightStyle) {
         const newStyle = highlightObject.highlightStyle,
             feature = highlightObject.feature,
@@ -86,6 +94,15 @@ function highlightLine (commit, dispatch, highlightObject) {
                 clonedStyle.getStroke().setColor(newStyle.stroke.color);
             }
             feature.setStyle(clonedStyle);
+
+            dispatch("Map/zoomTo", {
+                geometryOrExtent: feature.getGeometry(),
+                options: {duration: 500}
+            }, {root: true});
+
+            if (highlightObject.zoom) {
+                getters.ol2DMap.getView().setZoom(highlightObject.zoom);
+            }
         }
     }
     else {
@@ -140,7 +157,7 @@ function getHighlightFeature (layerId, featureId, getters) {
  * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {void}
  */
-function increaseFeature (commit, getters, highlightObject) {
+function increaseFeature (commit, dispatch, getters, highlightObject) {
     const scaleFactor = highlightObject.scale ? highlightObject.scale : 1.5,
         features = highlightObject.layer ? highlightObject.layer.features : undefined, // use list of features provided if given
         feature = features?.find(feat => feat.id.toString() === highlightObject.id)?.feature // retrieve from list of features provided by id, if both are given
@@ -159,7 +176,16 @@ function increaseFeature (commit, getters, highlightObject) {
         }
         clonedImage.setScale(clonedImage.getScale() * scaleFactor);
         feature.setStyle(clonedStyle);
-    }
+
+        dispatch("Map/zoomTo", {
+            geometryOrExtent: feature.getGeometry(),
+            options: {duration: 500}
+        }, {root: true});
+
+        if (highlightObject.zoom) {
+            getters.ol2DMap.getView().setZoom(highlightObject.zoom);
+        }
+}
 }
 /**
  * Get style via styleList
@@ -173,7 +199,12 @@ function styleObject (highlightObject, feature) {
         style;
 
     if (!styleModel) {
-        styleModel = Radio.request("StyleList", "returnModelById", highlightObject.layer.styleId);
+        if (highlightObject.styleId) {
+            styleModel = Radio.request("StyleList", "returnModelById", highlightObject.styleId);
+        }
+        else {
+            styleModel = Radio.request("StyleList", "returnModelById", highlightObject.layer.styleId);
+        }
     }
     if (styleModel) {
         style = styleModel.createStyle(feature, false);
