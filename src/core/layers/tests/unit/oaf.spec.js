@@ -38,12 +38,11 @@ describe("src/core/layers/oaf.js", () => {
             name: "oafTestLayer",
             id: "id",
             typ: "oaf",
-            version: "2.0.0",
             gfiTheme: "gfiTheme",
             isChildLayer: false,
             transparent: false,
             isSelected: false,
-            featureType: "krankenhaeuser_hh",
+            collection: "krankenhaeuser_hh",
             crs: "crs"
         };
         store.getters = {

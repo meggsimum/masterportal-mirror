@@ -506,7 +506,7 @@ const BuildSpecModel = {
                             [])
                         );
                     }
-                    this.addFeatureToGeoJsonList(clonedFeature, geojsonList);
+                    this.addFeatureToGeoJsonList(clonedFeature, geojsonList, style);
 
                     // do nothing if we already have a style object for this CQL rule
                     if (Object.prototype.hasOwnProperty.call(mapfishStyleObject, stylingRules)) {
@@ -671,7 +671,10 @@ const BuildSpecModel = {
 
         return {
             type: "text",
-            label: style.getText() !== undefined ? style.getText() : "",
+            // tell MapFish that each feature has a property "_label" which contains the label-string
+            // it is necessary to "add/fill" the "_label"-property when we call convertFeatureToGeoJson()
+            // before we add it to the geoJSONList
+            label: "[_label]",
             fontColor: convertColor(fontColor, "hex"),
             fontOpacity: fontColor[0] !== "#" ? fontColor[3] : 1,
             labelOutlineColor: stroke ? convertColor(stroke.getColor(), "hex") : undefined,
@@ -871,14 +874,15 @@ const BuildSpecModel = {
      * adds the feature to the geojson list
      * @param {ol.Feature} feature - the feature can be clustered
      * @param {GeoJSON[]} geojsonList -
+     * @param {ol.style.Style[]} style - the feature-style
      * @returns {void}
      */
-    addFeatureToGeoJsonList: function (feature, geojsonList) {
+    addFeatureToGeoJsonList: function (feature, geojsonList, style) {
         let convertedFeature;
 
         if (feature.get("features") && feature.get("features").length === 1) {
             feature.get("features").forEach((clusteredFeature) => {
-                convertedFeature = this.convertFeatureToGeoJson(clusteredFeature);
+                convertedFeature = this.convertFeatureToGeoJson(clusteredFeature, style);
 
                 if (convertedFeature) {
                     geojsonList.push(convertedFeature);
@@ -886,7 +890,7 @@ const BuildSpecModel = {
             });
         }
         else {
-            convertedFeature = this.convertFeatureToGeoJson(feature);
+            convertedFeature = this.convertFeatureToGeoJson(feature, style);
 
             if (convertedFeature) {
                 geojsonList.push(convertedFeature);
@@ -897,11 +901,13 @@ const BuildSpecModel = {
     /**
      * converts an openlayers feature to a GeoJSON feature object
      * @param {ol.Feature} feature - the feature to convert
+     * @param {ol.style.Style[]} style - the feature-style
      * @returns {object} GeoJSON object
      */
-    convertFeatureToGeoJson: function (feature) {
+    convertFeatureToGeoJson: function (feature, style) {
         const clonedFeature = feature.clone(),
-            geojsonFormat = new GeoJSON();
+            geojsonFormat = new GeoJSON(),
+            labelText = style.getText()?.getText() || "";
         let convertedFeature;
 
         // remove all object and array properties except geometry. Otherwise mapfish runs into an error
@@ -913,6 +919,9 @@ const BuildSpecModel = {
 
         // take over id from feature because the feature id is not set in the clone.
         clonedFeature.setId(feature.getId() || feature.ol_uid);
+        // set "_label"-Propterty.
+        // This is necessary because the *label* of the *text-Style* (buildTextStyle()) now referrs to it.
+        clonedFeature.set("_label", labelText);
         // circle is not suppported by geojson
         if (clonedFeature.getGeometry().getType() === "Circle") {
             clonedFeature.setGeometry(fromCircle(clonedFeature.getGeometry()));

@@ -21,7 +21,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetDropdown.vue", () =>
             expect(wrapper.vm.info).to.be.false;
             expect(wrapper.vm.title).to.be.true;
             expect(wrapper.vm.multiselect).to.be.false;
-            expect(wrapper.vm.operator).to.equal("EQ");
+            expect(wrapper.vm.operator).to.be.undefined;
             expect(wrapper.vm.prechecked).to.be.undefined;
             expect(wrapper.vm.renderIcons).to.be.undefined;
             expect(wrapper.vm.snippetId).to.equal(0);

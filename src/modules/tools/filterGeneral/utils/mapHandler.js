@@ -207,6 +207,23 @@ export default class MapHandler {
     }
 
     /**
+     * Add the external Layer into Tree under the category Subject data
+     * @param {Number} filterId the filter id
+     * @returns {void}
+     */
+    addExternalLayerToTree (filterId) {
+        const layerModel = this.getLayerModelByFilterId(filterId),
+            features = layerModel.get("layer").getSource().getFeatures();
+
+        if (!Array.isArray(features) || !features.length) {
+            return;
+        }
+
+        layerModel.set("isNeverVisibleInTree", false);
+        Radio.trigger("ModelList", "renderTree");
+    }
+
+    /**
      * Empties the currently filteredIds and removes all features from the map.
      * @info do not use layer.getSource().clear() here, as this would destroy all features and thereby any map handling
      * @param {Number} filterId the filter id

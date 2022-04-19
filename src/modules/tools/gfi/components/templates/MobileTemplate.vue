@@ -81,16 +81,15 @@ export default {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button
+                    <span
                         type="button"
-                        class="close"
+                        class="close bootstrap-icon"
                         aria-label="Close"
                         @click="close"
+                        @keydown.enter="close"
                     >
-                        <span class="bootstrap-icon">
-                            <i class="bi-x-lg" />
-                        </span>
-                    </button>
+                        <i class="bi-x-lg" />
+                    </span>
                     <h5 class="modal-title">
                         {{ $t(title) }}
                     </h5>

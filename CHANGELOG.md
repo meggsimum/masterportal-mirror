@@ -6,9 +6,25 @@
 ## Known Issues
 - 3D: The position indicator inside of a 3D object vanishes when clicking on the object.
 
+## Unreleased - in development
+### Added
+- The following NPM packages are added:
+    - dependencies:
+        - "bootstrap-sass"
+        - "bootstrap-icons"
+- Added a mixin for changing the colour and padding of an active pill inside the css class `nav-pills`.
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
 ---
 
-## Unreleased - in development
+## v2.20.0 - 2022-04-06
 ### Added
 - Issue #530: New checkbox for the print module to disable the auto adjustment of the print mask scale
 - WfsSearch result list can now use pagination by filling the resultsPerPage parameter.
@@ -19,13 +35,10 @@
 - Added new layer type OAF (OGCApiFeatures)
 - Added "application/json" as supported WMS *GetFeatureInfo* response format
 - Added the possibility to load controls as addons, see [description](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/addOnsVue.md).
-- Added a mixin for changing the colour and padding of an active pill inside the css class `nav-pills`.
-- The following NPM packages are added:
-    - dependencies:
-        - "bootstrap-sass"
-        - "bootstrap-icons"
+- Issue #744: It is now possible to assign each feature its own label when printing.
 
 ### Changed
+- Migrated the module mouseHover from Backbone to Vue.
 - Issue #674, #676: addWMS tool and orientation control are now using the CRS of the map instead of hard coded CRS
 - Migrated the tool featureLister from Backbone to Vue.
 - Issue #684: The download of the draw tool now supports the projection of the map
@@ -43,8 +56,6 @@
 - The function `makeOberstufenprofileBold` used by the `comparisonList` and `featureLister` is provided as a util named `toBold` now.
 - Issue #636: The WMS layer respects crs code at rawlayer. The WMS request now contains the attribute CRS. If not available, projection of the map is used.
 - Switched Icon Library from Glyphicon to Bootstrap Icons. Edited Webpack Config. Updated icon usage in vue components to use scss. Updated icon usage in backbone modules. Edited docs & tests accordingly.
-
-### Deprecated
 
 ### Removed
 - Removed hardcoded LayerIds for 3D support in wms.js. Setting has to be done now via services.json attribute notSupportedIn3D.

@@ -20,6 +20,7 @@
     opacity: 1;
     &.btn-select, &:active, &.active, &:checked, &::selection, &.show, &[aria-expanded="true"] {
         background-color: darken($accent_hover, 10%);
+        border-radius: .25rem;
     }
     background-color: $accent_hover;
     color: $primary_contrast;

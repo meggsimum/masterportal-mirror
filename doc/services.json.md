@@ -1195,8 +1195,7 @@ If the gfiAttributes are given as an object, a key's value may also be an object
 |Name|Required|Type|Default|Description|Example|
 |----|--------|----|-------|-----------|-------|
 |datasets|yes|**[datasets](#markdown-header-wms_wfs_oaf_datasets)**[]/Boolean||Metadata specification. All metadata of the layer data is referenced here. By clicking the "i" button in the layer tree, the information is retrieved by the CSW interface and shown to the user. For this, the **[rest-services.json](rest-services.json.md)** has to provide the URL of the metadata catalog resp. its CSW interface. The values *kategorie_opendata*, *kategorie_inspire*, and *kategorie_organisation* are used for layer categorization if the **[config.json](config.json.md)** has `treeType` set to `"default"`. To remove the "i" button altogether, explicitly set `"datasets": false`.||
-|featureNS|yes|String||Usually referenced in the OAF appschema. Used to resolve the namespace given in *FeatureType/Name*.|`"http://www.deegree.org/app"`|
-|featureType|yes|String||Feature type to load. Must match a value of *FeatureTypeList/FeatureType/Name* in the *appschema* response. Provide without namespace.|`"bab_vkl"`|
+|collection|yes|String||Collection to load.|`"bab_vkl"`|
 |gfiAttributes|yes|String/**[gfiAttributes](#markdown-header-gfi_attributes)**||GFI attributes to be shown.|`"ignore"`|
 |id|yes|String/**[wfs_id](#markdown-header-wfs_id)**||Arbitrary id or an object with id and suffix|`"44"`|
 |layerAttribution|no|String|`"nicht vorhanden"`|Additional layer information to be shown in the portal's control element *LayerAttribution*, if configured to appear. If `"nicht vorhanden"` (technical key meaning "not available") is chosen, no layer attribution is shown.|`"nicht vorhanden"`|
@@ -1204,21 +1203,13 @@ If the gfiAttributes are given as an object, a key's value may also be an object
 |name|yes|String||Arbitrary display name used in the layer tree.|`"Traffic situation on freeways"`|
 |typ|yes|String||Service type; in this case, "OAF".|`"OAF"`|
 |url|yes|String||Service URL|`"https://api.hamburg.de/datasets/v1/schulen"`|
-|version|no|String||Service version to use if outputFormat is `"xml"`. This is based on WFS.|`"1.1.0"`|
 |altitudeMode|no|enum["clampToGround","absolute","relativeToGround"]|`"clampToGround"`|Height mode in 3D mode.|`"absolute"`|
 |altitude|no|Number||Display height in 3D mode in meters. If an altitude is given, any existing z coordinate is overwritten. If no z coordinate exists, altitude is used as its value.|`527`|
 |altitudeOffset|no|Number||Height offset for display in 3D mode in meters. If given, any existing z coordinates will be increased by this value. If no z coordinate exists, this value is used as z coordinate.|`10`|
 |gfiTheme|yes|String/Object||Display style of GFI information for this layer. Unless `"default"` is chosen, custom templates may be used to show GFI information in another format than the default table style.|`"default"`|
-|useProxy|no|Boolean|`false`|_Deprecated in the next major release. *[GDI-DE](https://www.gdi-de.org/en)* recommends setting CORS headers on the required services instead._ The request will contain the requested URL as path, with dots replaced by underscores.|`false`|
 |isSecured|no|Boolean|false|Displays whether the layer belongs to a secured service. (**[see below](#markdown-header-wms-layerissecured)**)|false|
 |authenticationUrl|no|String||Additional url called to trigger basic authentication in the browser.|"https://api.hamburg.de/datasets/v1/schulen/collections/staatliche_schulen/appschema"|
-|outputFormat|false|String|"json"|The oaf response format.|`"json"`|
-|bulk|false|Boolean|true|The bulk parameter is used to download all items of the collection. LIMIT and OFFSET are ignored if bulk is `true`.|`false`|
 |limit|false|Number||Limits the number of items presented in the response document. Ignored if bulk is `true`.|`10`|
-|offset|false|Number||The start index of the items presented in the response document. Ignored if bulk is `true`.|`0`|
-|bbox|false|Number[]||The bounding boxes that describe the spatial extent of the dataset [minx, miny, maxx, maxy].|`"567190,5934330,567200,5934360"`|
-|bboxCrs|false|String|`"EPSG:25832"`|The coordinate reference system of the value of the bbox parameter.|`"EPSG:25832"`|
-|datetime|false|String||Either a date-time or a period string that adheres to RFC 3339.|`"2018-02-12T00:00:00Z/2018-03-18T12:31:12Z" or "2018-02-12T00:00:00Z/P1M6DT12H31M12S"`|
 |crs|false|String|EPSG:25832|The coordinate reference system of the response geometries.|`"EPSG:25832"`|
 |jsonAcceptHeader|false|String|application/vnd.oai.openapi+json|The mediatype to use for all non feature requests if the server requires other than specified.|`"application/json"`|
 
@@ -1229,15 +1220,9 @@ If the gfiAttributes are given as an object, a key's value may also be an object
     "id": "5001",
     "name": "Schulen",
     "url": "https://api.hamburg.de/datasets/v1/schulen",
-    "featureType" : "staatliche_schulen",
+    "collection" : "staatliche_schulen",
     "typ": "OAF",
-    "outputFormat": "json",
-    "bulk": false,
     "limit": 10,
-    "offset": 0,
-    "bbox": "567190,5934330,567200,5934360",
-    "bboxCrs": "EPSG:25832",
-    "datetime": "2018-02-12T00:00:00Z/P1M6DT12H31M12S",
     "crs": "EPSG:25832",
     "styleId": "8712",
     "gfiAttributes": "showAll",

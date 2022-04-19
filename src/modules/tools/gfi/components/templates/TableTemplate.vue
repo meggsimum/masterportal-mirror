@@ -200,7 +200,6 @@ $background_color_2: #646262;
         color: $background_color_1;
         position: relative;
         display: inline-block;
-        bottom: 20px;
         right: 25px;
         margin: 6px 0 0 10px;
         cursor: pointer;

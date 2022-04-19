@@ -19,10 +19,10 @@ export default {
     renderToWindow: false,
     resizableWindow: true,
     deactivateGFI: false,
-    configs: true,
     layerSelectorVisible: true,
     multiLayerSelector: true,
     liveZoomToFeatures: true,
     minScale: 5000,
+    saveTo: "void",
     layers: []
 };

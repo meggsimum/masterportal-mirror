@@ -17,7 +17,6 @@ import FeatureViaURL from "../modules/featureViaURL/model";
 import SliderView from "../modules/snippets/slider/view";
 import SliderRangeView from "../modules/snippets/slider/range/view";
 import DropdownView from "../modules/snippets/dropdown/view";
-import MouseHoverPopupView from "../modules/mouseHover/view";
 import WindowView from "../modules/window/view";
 import SidebarView from "../modules/sidebar/view";
 import ShadowView from "../modules/tools/shadow/view";
@@ -154,10 +153,6 @@ async function loadApp () {
     new SliderView();
     new SliderRangeView();
     new DropdownView();
-
-    if (Object.prototype.hasOwnProperty.call(Config, "mouseHover")) {
-        new MouseHoverPopupView(Config.mouseHover);
-    }
 
     // Module laden
     // Tools

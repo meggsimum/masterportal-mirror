@@ -5,7 +5,6 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 import getters from "../store/gettersFilterGeneral";
 import mutations from "../store/mutationsFilterGeneral";
 import LayerFilterSnippet from "./LayerFilterSnippet.vue";
-import {convertToNewConfig} from "../utils/convertToNewConfig";
 import MapHandler from "../utils/mapHandler.js";
 import {
     getLayerByLayerId,
@@ -67,6 +66,7 @@ export default {
     mounted () {
         this.$nextTick(() => {
             this.initialize();
+            this.convertConfig();
             this.replaceStringWithObjectLayers();
             this.setFilterId();
             this.initializeFilterApiList();
@@ -75,14 +75,11 @@ export default {
                 setFilterInTableMenu(this.$el.querySelector("#tool-general-filter"));
                 this.$el.remove();
             }
-            // console.log("Alte Config", this.configs);
-            // console.log("Neue Config", this.convertToNewConfig(this.configs));
         });
     },
     methods: {
         ...mapMutations("Tools/FilterGeneral", Object.keys(mutations)),
-        ...mapActions("Tools/FilterGeneral", ["initialize"]),
-        convertToNewConfig,
+        ...mapActions("Tools/FilterGeneral", ["initialize", "convertConfig"]),
 
         close () {
             this.setActive(false);

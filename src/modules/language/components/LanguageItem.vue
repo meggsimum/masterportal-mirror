@@ -46,28 +46,26 @@ export default {
             v-if="showWindow"
             class="popup-language"
         >
-            <div class="language-header">
-                <div>
+            <div class="language-header row">
+                <div class="col-10 col-md-11">
                     {{ $t("modules.language.languageTitle") }}
                 </div>
-                <a
-                    role="button"
-                    class="buttons float-end"
+                <span
+                    type="button"
+                    class="col-1 bootstrap-icon d-flex justify-content-center"
                     tabindex="0"
                     @click="toggleLanguageWindow"
                     @keydown.enter="toggleLanguageWindow"
                 >
-                    <span class="bootstrap-icon">
-                        <i class="bi-x-lg" />
-                    </span>
+                    <i class="bi-x-lg" />
                     <span class="screenreader">$t("modules.language.toggleWindow"</span>
-                </a>
+                </span>
             </div>
-            <div class="form-group form-group-sm">
+            <div class="container row row-cols-2">
                 <div
                     v-for="(value, key) in $i18n.i18next.options.getLanguages()"
                     :key="key"
-                    class="col-12 col-md-6"
+                    class="col"
                 >
                     <button
                         class="lng btn"
@@ -86,10 +84,14 @@ export default {
     @import "~/css/mixins.scss";
 
     #language-bar {
-        a {
+        a, span {
             color: darken($secondary_focus, 10%);
             &:hover{
                 @include primary_action_hover;
+            }
+            &.bootstrap-icon{
+                padding: 5px;
+                width: auto;
             }
         }
 
@@ -126,10 +128,6 @@ export default {
                 width: 100%;
                 border-bottom: 1px solid #e5e5e5;
                 padding: 0 0 3px 10px;
-                span {
-                    width: 30px;
-                    cursor: pointer;
-                }
             }
             .form-group {
                 display: inline-block;
@@ -138,11 +136,6 @@ export default {
                 padding: 20px 0 0;
                 a {
                     font-size: 12px;
-                    &:hover{
-                        // @include primary_action_hover;
-                        // background-color: #08589e;
-                        // color: #ffffff;
-                    }
                     &.disabled {
                         background-color: #e7e7e7;
                     }

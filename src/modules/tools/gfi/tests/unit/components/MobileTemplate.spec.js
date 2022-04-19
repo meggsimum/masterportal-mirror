@@ -60,7 +60,7 @@ describe("src/modules/tools/gfi/components/templates/MobileTemplate.vue", () => 
             localVue
         });
 
-        expect(wrapper.find("button.close").exists()).to.be.true;
+        expect(wrapper.find("span.close").exists()).to.be.true;
     });
 
 

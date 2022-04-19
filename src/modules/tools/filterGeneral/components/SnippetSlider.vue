@@ -57,7 +57,7 @@ export default {
         operator: {
             type: String,
             required: false,
-            default: "EQ"
+            default: undefined
         },
         prechecked: {
             type: Number,
@@ -380,7 +380,7 @@ export default {
         text-align: center;
         font-size: 12px;
         -moz-appearance: textfield;
-        width: 60px;
+        width: 80px;
         float: right;
         margin-bottom: 10px;
         padding-top: 5px;

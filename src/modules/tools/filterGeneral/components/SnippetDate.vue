@@ -58,7 +58,7 @@ export default {
         operator: {
             type: String,
             required: false,
-            default: "EQ"
+            default: undefined
         },
         prechecked: {
             type: String,
@@ -198,7 +198,7 @@ export default {
                 this.isInitializing = false;
                 this.disable = false;
                 console.warn(err);
-            }, typeof this.minValue === "undefined" && typeof this.maxValue !== "undefined", typeof this.minValue !== "undefined" && typeof this.maxValue === "undefined");
+            }, typeof this.minValue === "undefined" && typeof this.maxValue !== "undefined", typeof this.minValue !== "undefined" && typeof this.maxValue === "undefined", true);
         }
         else {
             this.value = this.precheckedIsValid ? momentPrechecked.format(this.internalFormat) : "";
@@ -248,7 +248,8 @@ export default {
          */
         resetSnippet (onsuccess) {
             if (this.visible) {
-                this.value = "";
+                this.value = this.precheckedIsValid ?
+                    moment(this.prechecked, this.format).format(this.internalFormat) : "";
             }
             this.$nextTick(() => {
                 if (typeof onsuccess === "function") {

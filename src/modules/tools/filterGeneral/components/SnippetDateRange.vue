@@ -58,7 +58,7 @@ export default {
         operator: {
             type: String,
             required: false,
-            default: "BETWEEN"
+            default: undefined
         },
         prechecked: {
             type: Array,
@@ -318,7 +318,7 @@ export default {
                 if (typeof onsuccess === "function") {
                     onsuccess();
                 }
-            }, onerror, minOnly, maxOnly);
+            }, onerror, minOnly, maxOnly, true);
         },
         /**
          * Emits the current rule to whoever is listening.
@@ -351,7 +351,18 @@ export default {
          */
         resetSnippet (onsuccess) {
             if (this.visible) {
-                this.value = ["", ""];
+                if (this.precheckedIsValid) {
+                    const left = moment(this.getValueWithinBorders(this.prechecked[0], this.minimumValue, this.maximumValue, this.format), this.format),
+                        right = moment(this.getValueWithinBorders(this.prechecked[1], this.minimumValue, this.maximumValue, this.format), this.format);
+
+                    this.value = [left.format(this.internalFormat), right.format(this.internalFormat)];
+                }
+                else if (this.minimumValue && this.maximumValue) {
+                    this.value = [this.minimumValue, this.maximumValue];
+                }
+                else {
+                    this.value = ["", ""];
+                }
             }
             this.$nextTick(() => {
                 if (typeof onsuccess === "function") {
