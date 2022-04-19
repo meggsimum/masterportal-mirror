@@ -9,6 +9,10 @@
 ## Unreleased - in development
 ### Added
 - A control has been added to create buttons for any tools. These can be used to open and close the configured tools.
+- The following NPM packages are added:
+    - dependencies:
+        - "bootstrap-sass"
+        - "bootstrap-icons"
 
 ### Changed
 - Migrated the module featureViaURL from Backbone to Vue as a util. E2E tests were fixed and re-enabled.
@@ -50,10 +54,6 @@
 - Added "application/json" as supported WMS *GetFeatureInfo* response format
 - Added the possibility to load controls as addons, see [description](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/addOnsVue.md).
 - Issue #744: It is now possible to assign each feature its own label when printing.
-- The following NPM packages are added:
-    - dependencies:
-        - "bootstrap-sass"
-        - "bootstrap-icons"
 
 ### Changed
 - Issue #674, #676: addWMS tool and orientation control are now using the CRS of the map instead of hard coded CRS
