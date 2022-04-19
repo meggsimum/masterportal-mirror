@@ -19,6 +19,7 @@
 - Added new layer type OAF (OGCApiFeatures)
 - Added "application/json" as supported WMS *GetFeatureInfo* response format
 - Added the possibility to load controls as addons, see [description](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/addOnsVue.md).
+- Added a mixin for changing the colour and padding of an active pill inside the css class `nav-pills`.
 - The following NPM packages are added:
     - dependencies:
         - "bootstrap-sass"
