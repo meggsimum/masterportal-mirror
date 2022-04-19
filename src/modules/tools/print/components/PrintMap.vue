@@ -598,7 +598,7 @@ export default {
                 top: 25px;
                 width: 100%;
                 z-index: 10;
-                background: #fff;
+                background: $white;
                 border: 1px solid #555;
                 padding: 5px;
             }
