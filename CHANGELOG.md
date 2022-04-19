@@ -8,6 +8,10 @@
 
 ## Unreleased - in development
 ### Added
+- The following NPM packages are added:
+    - dependencies:
+        - "bootstrap-sass"
+        - "bootstrap-icons"
 
 ### Changed
 
@@ -32,10 +36,6 @@
 - Added "application/json" as supported WMS *GetFeatureInfo* response format
 - Added the possibility to load controls as addons, see [description](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/addOnsVue.md).
 - Issue #744: It is now possible to assign each feature its own label when printing.
-- The following NPM packages are added:
-    - dependencies:
-        - "bootstrap-sass"
-        - "bootstrap-icons"
 
 ### Changed
 - Migrated the module mouseHover from Backbone to Vue.
