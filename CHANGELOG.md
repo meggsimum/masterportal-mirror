@@ -14,6 +14,7 @@
         - "bootstrap-icons"
 
 ### Changed
+- `default`-gfiTheme: If a `|`-character is part of the response, every element separated by the character will be displayed in a separate paragraph.
 
 ### Deprecated
 
