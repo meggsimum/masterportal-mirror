@@ -16,7 +16,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetInput.vue", () => {
 
             expect(wrapper.vm.info).to.be.false;
             expect(wrapper.vm.title).to.be.true;
-            expect(wrapper.vm.operator).to.equal("IN");
+            expect(wrapper.vm.operator).to.be.undefined;
             expect(wrapper.vm.prechecked).to.equal("");
             expect(wrapper.vm.snippetId).to.equal(0);
             expect(wrapper.vm.visible).to.be.true;

@@ -131,9 +131,10 @@ export default class FilterApi {
      * @param {Function} onerror a function(Error)
      * @param {Boolean} [minOnly=false] if only min is of interest
      * @param {Boolean} [maxOnly=false] if only max is of interest
+     * @param {Boolean} [isDate=false] if only from date or dateRange
      * @returns {void}
      */
-    getMinMax (attrName, onsuccess, onerror, minOnly, maxOnly) {
+    getMinMax (attrName, onsuccess, onerror, minOnly, maxOnly, isDate) {
         if (!isObject(this.service)) {
             if (typeof onerror === "function") {
                 onerror(new Error("FilterApi.getMinMax: You have to set a default service first before using this function."));
@@ -152,7 +153,7 @@ export default class FilterApi {
                 if (typeof onsuccess === "function") {
                     onsuccess(result);
                 }
-            }, onerror, minOnly, maxOnly);
+            }, onerror, minOnly, maxOnly, isDate);
         }
     }
     /**

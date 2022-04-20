@@ -69,16 +69,16 @@ export default {
                             v-for="(value, key) in column"
                             :key="'tool-compareFeatures-td' + key"
                         >
-                            <button
+                            <span
                                 v-if="index === 0 && key !== 'col-1'"
-                                class="close"
-                                :title="titleRemoveButton"
-                                @click="removeFeatureFromPreparedList({features: listOfFeatures, featureId: key})"
+                                class="close bootstrap-icon remove-feature"
+                                type="button"
+                                :title="$t('common:modules.tools.compareFeatures.removeFromList')"
+                                @click="removeFeatureFromPreparedList({features: listOfFeatures, featureId: key, selectedLayer: selectedLayer})"
+                                @keydown.enter="removeFeatureFromPreparedList({features: listOfFeatures, featureId: key, selectedLayer: selectedLayer})"
                             >
-                                <span class="bootstrap-icon remove-feature">
-                                    <i class="bi-x-lg" />
-                                </span>
-                            </button>
+                                <i class="bi-x-lg" />
+                            </span>
                             <p v-if="isWebLink(value)">
                                 <a
                                     :href="value"
@@ -122,18 +122,16 @@ export default {
                             v-for="(value, key) in column"
                             :key="'tool-compareFeatures-td' + key"
                         >
-                            <button
-                                class="close"
-                                :title="titleRemoveButton"
-                                @click="removeFeatureFromPreparedList({features: listOfFeatures, featureId: key})"
+                            <span
+                                v-if="index === 0 && key !== 'col-1'"
+                                class="close bootstrap-icon remove-feature"
+                                type="button"
+                                :title="$t('common:modules.tools.compareFeatures.removeFromList')"
+                                @click="removeFeatureFromPreparedList({features: listOfFeatures, featureId: key, selectedLayer: selectedLayer})"
+                                @keydown.enter="removeFeatureFromPreparedList({features: listOfFeatures, featureId: key, selectedLayer: selectedLayer})"
                             >
-                                <span
-                                    v-if="index === 0 && key !== 'col-1'"
-                                    class="bootstrap-icon remove-feature"
-                                >
-                                    <i class="bi-x-lg" />
-                                </span>
-                            </button>
+                                <i class="bi-x-lg" />
+                            </span>
                             <p v-if="isWebLink(value)">
                                 <a
                                     :href="value"
@@ -188,18 +186,16 @@ export default {
                             v-for="(value, key) in column"
                             :key="'tool-compareFeatures-td' + key"
                         >
-                            <button
-                                class="close"
+                            <span
+                                v-if="index === 0 && key !== 'col-1'"
+                                class="close bootstrap-icon remove-feature"
+                                type="button"
                                 :title="$t('common:modules.tools.compareFeatures.removeFromList')"
                                 @click="removeFeatureFromPreparedList({features: listOfFeatures, featureId: key, selectedLayer: selectedLayer})"
+                                @keydown.enter="removeFeatureFromPreparedList({features: listOfFeatures, featureId: key, selectedLayer: selectedLayer})"
                             >
-                                <span
-                                    v-if="index === 0 && key !== 'col-1'"
-                                    class="bootstrap-icon remove-feature"
-                                >
-                                    <i class="bi-x-lg" />
-                                </span>
-                            </button>
+                                <i class="bi-x-lg" />
+                            </span>
                             <p v-if="isWebLink(value)">
                                 <a
                                     :href="value"
@@ -245,18 +241,16 @@ export default {
                             v-for="(value, key) in column"
                             :key="'tool-compareFeatures-td' + key"
                         >
-                            <button
-                                class="close"
+                            <span
+                                v-if="index === 0 && key !== 'col-1'"
+                                class="close bootstrap-icon remove-feature"
+                                type="button"
                                 :title="$t('common:modules.tools.compareFeatures.removeFromList')"
                                 @click="removeFeatureFromPreparedList({features: listOfFeatures, featureId: key, selectedLayer: selectedLayer})"
+                                @keydown.enter="removeFeatureFromPreparedList({features: listOfFeatures, featureId: key, selectedLayer: selectedLayer})"
                             >
-                                <span
-                                    v-if="index === 0 && key !== 'col-1'"
-                                    class="bootstrap-icon remove-feature"
-                                >
-                                    <i class="bi-x-lg" />
-                                </span>
-                            </button>
+                                <i class="bi-x-lg" />
+                            </span>
                             <p v-if="isWebLink(value)">
                                 <a
                                     :href="value"
@@ -362,5 +356,6 @@ export default {
     }
     .close {
         float: right;
+        padding: 5px;
     }
 </style>

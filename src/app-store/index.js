@@ -10,6 +10,7 @@ import LayerInformation from "../modules/layerInformation/store/indexLayerInform
 import Legend from "../modules/legend/store/indexLegend";
 import Map from "../modules/map/store/indexMap";
 import MapMarker from "../modules/mapMarker/store/indexMapMarker";
+import MouseHover from "../modules/mouseHover/store/indexMouseHover";
 import QuickHelp from "../modules/quickHelp/store/indexQuickHelp";
 import PortalTitle from "../modules/portalTitle/store/indexPortalTitle";
 import WmsTime from "../modules/wmsTime/store/indexWmsTime";
@@ -37,6 +38,7 @@ const store = new Vuex.Store({
         Legend,
         Map,
         MapMarker,
+        MouseHover,
         QuickHelp,
         PortalTitle,
         WmsTime,

@@ -1,6 +1,7 @@
-import FeatureViaURL from "@modules/featureViaURL/model";
+import {createGeoJSON, getFeatureIds} from "../../../featureViaURL";
 import {expect} from "chai";
 import sinon from "sinon";
+import {transform} from "masterportalapi/src/crs";
 
 describe("featureViaURL", function () {
     const spy = sinon.spy();
@@ -13,8 +14,7 @@ describe("featureViaURL", function () {
         spy.resetHistory();
     });
     describe("createGeoJSON", function () {
-        const {createGeoJSON} = FeatureViaURL.prototype,
-            geometryType = "Point",
+        const geometryType = "Point",
             regExp = /\d+/;
         let features = [{coordinates: [10, 53.5], label: "TestPunktEins"}, {coordinates: [10.5, 53.5], label: "TestPunktZwei"}],
             geoJSON;
@@ -24,8 +24,8 @@ describe("featureViaURL", function () {
 
             geoJSON = createGeoJSON(features, geometryType, epsg);
             geoJSON.features.forEach((feature, index) => {
-                expect(feature.geometry.coordinates).to.eql(features[index].coordinates);
-                expect(feature.properties.coordLabel).to.eql(features[index].coordinates);
+                expect(feature.geometry.coordinates).to.eql(transform("EPSG:" + epsg, "EPSG:4326", features[index].coordinates));
+                expect(feature.properties.coordLabel).to.eql(transform("EPSG:" + epsg, "EPSG:4326", features[index].coordinates));
                 expect(feature.properties.featureLabel).to.equal(features[index].label);
                 expect(feature.geometry.type).to.equal(geometryType);
                 expect(feature.properties.typeLabel).to.equal(geometryType);
@@ -96,8 +96,7 @@ describe("featureViaURL", function () {
             },
             fakeFunction = sinon.fake.returns({
                 getArray: () => [fakeLayer]
-            }),
-            {getFeatureIds} = FeatureViaURL.prototype;
+            });
 
         beforeEach(function () {
             sinon.stub(Radio, "request").callsFake(fakeFunction);

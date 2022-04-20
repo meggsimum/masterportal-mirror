@@ -55,10 +55,11 @@ export default class InterfaceWfsExtern {
      * @param {Function} onerror a function(errorMsg)
      * @param {Boolean} [minOnly=false] if only min is of interest
      * @param {Boolean} [maxOnly=false] if only max is of interest
+     * @param {Boolean} [isDate=false] if only from date or dateRange
      * @param {Function|Boolean} [axiosMock=false] false to use axios, an object with get function(url, {params}) if mock is needed
      * @returns {void}
      */
-    getMinMax (service, attrName, onsuccess, onerror, minOnly = false, maxOnly = false, axiosMock = false) {
+    getMinMax (service, attrName, onsuccess, onerror, minOnly = false, maxOnly = false, isDate = false, axiosMock = false) {
         const url = service?.url,
             params = {
                 service: "WFS",
@@ -71,11 +72,13 @@ export default class InterfaceWfsExtern {
             result = {};
 
         if (!maxOnly) {
+            const minParams = !isDate ? Object.assign({}, params, {maxfeatures: 1, sortby: attrName + " A"}) : params;
+
             axiosObject.get(url, {
-                params: Object.assign({}, params, {maxfeatures: 1, sortby: attrName + " A"})
+                params: minParams
             })
                 .then(response => {
-                    this.parseResponseMinMax(service?.typename, attrName, response?.request?.responseXML, min => {
+                    this.parseResponseMinMax(service?.typename, attrName, response?.request?.responseXML, isDate ? "min" : undefined, min => {
                         result.min = min;
                         if ((minOnly || result.max !== undefined) && typeof onsuccess === "function") {
                             onsuccess(result);
@@ -89,11 +92,13 @@ export default class InterfaceWfsExtern {
                 });
         }
         if (!minOnly) {
+            const maxParams = !isDate ? Object.assign({}, params, {sortby: attrName + " D"}) : params;
+
             axiosObject.get(url, {
-                params: Object.assign({}, params, {sortby: attrName + " D"})
+                params: maxParams
             })
                 .then(response => {
-                    this.parseResponseMinMax(service?.typename, attrName, response?.request?.responseXML, max => {
+                    this.parseResponseMinMax(service?.typename, attrName, response?.request?.responseXML, isDate ? "max" : "", max => {
                         result.max = max;
                         if ((maxOnly || result.min !== undefined) && typeof onsuccess === "function") {
                             onsuccess(result);
@@ -260,15 +265,85 @@ export default class InterfaceWfsExtern {
         return node;
     }
     /**
+     * Parsing the minimum and maximum value of date
+     * @param {Object} responseXML the node
+     * @param {String} attrName the attribute name
+     * @param {String} dateParam the date parameter min or max
+     * @returns {Object} the node with the given tagname
+     */
+    parseMinMaxDate (responseXML, attrName, dateParam) {
+        let node = responseXML,
+            nodeName,
+            nodeValues = [];
+
+        while (node) {
+            if (node?.tagName?.split(":")[1] !== attrName) {
+                node = node.firstElementChild;
+                continue;
+            }
+            nodeName = node.tagName;
+            break;
+        }
+
+        Array.prototype.slice.call(responseXML.getElementsByTagName(nodeName)).forEach(value => {
+            nodeValues.push(value.textContent);
+        });
+
+        if (!nodeValues.length) {
+            return undefined;
+        }
+
+        nodeValues = this.getSortedDate(nodeValues);
+
+        if (dateParam === "min") {
+            return nodeValues[0];
+        }
+        else if (dateParam === "max") {
+            return nodeValues.slice(-1)[0];
+        }
+
+        return undefined;
+    }
+    /**
+     * Getting the sorted ascending date in an array format
+     * @param {String[]} dateValue the date value in an array
+     * @returns {String[]} sortedDateValue the sorted date value
+     */
+    getSortedDate (dateValue) {
+        if (!Array.isArray(dateValue) || !dateValue.length) {
+            return dateValue;
+        }
+
+        return dateValue.sort((a, b) => {
+            let dateA = new Date(a),
+                dateB = new Date(b);
+
+            if (a.indexOf(".") !== -1) {
+                const [day, month, year] = a.split(".");
+
+                dateA = new Date(Number(year), month - 1, Number(day));
+            }
+
+            if (b.indexOf(".") !== -1) {
+                const [day, month, year] = b.split(".");
+
+                dateB = new Date(Number(year), month - 1, Number(day));
+            }
+
+            return dateA > dateB ? 1 : -1;
+        });
+    }
+    /**
      * Finds the content of the given typename and attrName in responseXML.
      * @param {String} typename the feature type of the service
      * @param {String} attrName the attribute to lookup
      * @param {Object} responseXML the node
+     * @param {String} dateParam the date parameter min or max
      * @param {Function} onsuccess a function(value)
      * @param {Function} onerror a function(Error) called on error
      * @returns {void}
      */
-    parseResponseMinMax (typename, attrName, responseXML, onsuccess, onerror) {
+    parseResponseMinMax (typename, attrName, responseXML, dateParam, onsuccess, onerror) {
         let node = this.getNodeByTagname(responseXML, typename);
 
         if (!node) {
@@ -279,7 +354,10 @@ export default class InterfaceWfsExtern {
         }
 
         node = node.getElementsByTagNameNS(node.namespaceURI, attrName)[0];
-        if (node && typeof onsuccess === "function") {
+        if (dateParam !== "") {
+            onsuccess(this.parseMinMaxDate(responseXML, attrName, dateParam));
+        }
+        else if (node && typeof onsuccess === "function") {
             onsuccess(node.textContent);
         }
         else if (typeof onerror === "function") {

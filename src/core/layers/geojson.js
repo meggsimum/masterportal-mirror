@@ -49,6 +49,7 @@ GeoJSONLayer.prototype.createLayer = function (attrs) {
     const rawLayerAttributes = {
             id: attrs.id,
             url: attrs.url,
+            features: attrs.geojson,
             clusterDistance: attrs.clusterDistance
         },
         layerParams = {

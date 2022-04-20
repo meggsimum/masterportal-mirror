@@ -6,9 +6,25 @@
 ## Known Issues
 - 3D: The position indicator inside of a 3D object vanishes when clicking on the object.
 
+## Unreleased - in development
+### Added
+- The following NPM packages are added:
+    - dependencies:
+        - "bootstrap-sass"
+        - "bootstrap-icons"
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Issue #758: featureLister threw a JavaScript exception when building the list of layers.
+
 ---
 
-## Unreleased - in development
+## v2.20.0 - 2022-04-06
 ### Added
 - Issue #530: New checkbox for the print module to disable the auto adjustment of the print mask scale
 - WfsSearch result list can now use pagination by filling the resultsPerPage parameter.
@@ -19,12 +35,10 @@
 - Added new layer type OAF (OGCApiFeatures)
 - Added "application/json" as supported WMS *GetFeatureInfo* response format
 - Added the possibility to load controls as addons, see [description](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/addOnsVue.md).
-- The following NPM packages are added:
-    - dependencies:
-        - "bootstrap-sass"
-        - "bootstrap-icons"
+- Issue #744: It is now possible to assign each feature its own label when printing.
 
 ### Changed
+- Migrated the module mouseHover from Backbone to Vue.
 - Issue #674, #676: addWMS tool and orientation control are now using the CRS of the map instead of hard coded CRS
 - Migrated the tool featureLister from Backbone to Vue.
 - Issue #684: The download of the draw tool now supports the projection of the map
@@ -43,13 +57,12 @@
 - Issue #636: The WMS layer respects crs code at rawlayer. The WMS request now contains the attribute CRS. If not available, projection of the map is used.
 - Switched Icon Library from Glyphicon to Bootstrap Icons. Edited Webpack Config. Updated icon usage in vue components to use scss. Updated icon usage in backbone modules. Edited docs & tests accordingly.
 
-### Deprecated
-
 ### Removed
 - Removed hardcoded LayerIds for 3D support in wms.js. Setting has to be done now via services.json attribute notSupportedIn3D.
 - Searchbar: Configuration option of `namespace` was removed from gazetteer search, because masterportalAPI removes namespace from search hits.
 
 ### Fixed
+- Migrated the module featureViaURL from Backbone to Vue as a util. E2E tests were fixed and re-enabled.
 - Issue #714: The configuration for the orientation control now accepts "poiDistances":true again. Also fixed a bug with features which have geometry type circle.
 - Issue #605: Draw Tool fixed to support not using simple_point as first item of iconList.
 - Issue #733, #680, #683: transparency setting has no visible effect in treeType custom

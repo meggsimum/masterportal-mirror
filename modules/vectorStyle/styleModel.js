@@ -62,30 +62,31 @@ const VectorStyleModel = Backbone.Model.extend(/** @lends VectorStyleModel.proto
         return styleObject;
     },
     /**
-     * Requests the DescribeFeatureType of the oaf layer and starts the function to parse the xml and creates the legend info
-     * @param   {string} wfsURL url from layer
-     * @param   {string} featureType oaf feature type from layer
-     * @param   {string[] | string} styleGeometryType The configured geometry type of the layer
-     * @param   {Boolean} useProxy Attribute to request the URL via a reverse proxy
+     * Requests the geometry type of the OAF collection and creates the legend info
+     * @param   {string} oafURL url from layer
+     * @param   {String} collection the collection name to fetch geometry type for
      * @returns {void}
      */
-    getGeometryTypeFromOAF: function (wfsURL, featureType, styleGeometryType, useProxy) {
+    getGeometryTypeFromOAF: function (oafURL, collection) {
         /**
          * @deprecated in the next major-release!
          * useProxy
          * getProxyUrl()
          */
-        const url = useProxy ? getProxyUrl(wfsURL) : wfsURL + "/collections/" + featureType + "/appschema";
+        const url = oafURL + "/collections/" + collection + "/items?limit=1";
 
         axios({
             method: "get",
             url: url,
-            responseType: "document"
+            headers: {
+                accept: "application/geo+json"
+            }
         }).then(response => {
-            const subElements = this.getSubelementsFromXML(response.data, featureType),
-                geometryTypes = this.getTypeAttributesFromSubelements(subElements, styleGeometryType);
+            const geometryType = response.data?.features[0]?.geometry?.type;
 
-            this.createLegendInfo(geometryTypes);
+            if (geometryType) {
+                this.createLegendInfo([geometryType]);
+            }
         }).catch(error => {
             console.warn("The fetch of the data failed with the following error message: " + error);
             Radio.trigger("Alert", "alert", {

@@ -14,6 +14,7 @@ import FilterApi from "../interfaces/filter.api.js";
 import MapHandler from "../utils/mapHandler.js";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
 import {getSnippetAdjustments} from "../utils/getSnippetAdjustments.js";
+import {getLayerByLayerId} from "../utils/openlayerFunctions";
 
 export default {
     name: "LayerFilterSnippet",
@@ -117,7 +118,8 @@ export default {
         if (Array.isArray(this.layerConfig?.snippets)) {
             this.snippets = this.layerConfig?.snippets;
         }
-        this.setupSnippets(this.snippets);
+
+        this.addSnippetIdsToSnippets(this.snippets);
 
         if (this.api instanceof FilterApi && this.mapHandler instanceof MapHandler) {
             this.mapHandler.initializeLayer(filterId, layerId, this.isExtern(), error => {
@@ -133,8 +135,15 @@ export default {
         }
     },
     mounted () {
-        if (!this.checkSnippetType(this.snippets)) {
-            this.autoRecognizeSnippetTypes(this.snippets);
+        if (!this.checkSnippetTypeConsistency(this.snippets)) {
+            this.autoRecognizeSnippetTypes(this.snippets, () => {
+                this.addMissingPropertiesToSnippets(this.snippets);
+                this.setPostSnippetKey("rerender");
+            });
+        }
+        else {
+            this.addMissingPropertiesToSnippets(this.snippets);
+            this.setPostSnippetKey("rerender");
         }
     },
     methods: {
@@ -147,31 +156,30 @@ export default {
             return this.layerConfig?.extern;
         },
         /**
-         * Checking if the type of snippet is already defined
-         * @param {Object[]} snippets the snippet object in array list
-         * @returns {Boolean} true if all types are set, false if anything has to be recognized automatically
+         * Checks if all snippets have defined types.
+         * @param {Object[]} snippets an array of snippet
+         * @returns {Boolean} true if all types are set, false if any snippet is missing a type
          */
-        checkSnippetType (snippets) {
-            let isSnippetTypeMissing = false;
-
+        checkSnippetTypeConsistency (snippets) {
             if (!Array.isArray(snippets) || !snippets.length) {
-                isSnippetTypeMissing = true;
+                return false;
             }
-            else {
-                snippets.forEach(snippet => {
-                    if (!snippet.type) {
-                        isSnippetTypeMissing = true;
-                    }
-                });
+            const len = snippets.length;
+
+            for (let i = 0; i < len; i++) {
+                if (!isObject(snippets[i]) || !snippets[i].type) {
+                    return false;
+                }
             }
-            return !isSnippetTypeMissing;
+            return true;
         },
         /**
          * Calls the api to get the attrTypes and dataTypes and creates new or alters present snippets.
          * @param {Object[]} snippets an array list of snippet objects
+         * @param {Function} onfinished callback on finished
          * @returns {void}
          */
-        autoRecognizeSnippetTypes (snippets) {
+        autoRecognizeSnippetTypes (snippets, onfinished) {
             if (!(this.api instanceof FilterApi)) {
                 return;
             }
@@ -181,38 +189,79 @@ export default {
                         if (!snippet.type) {
                             snippet.type = this.getDefaultSnippetTypeByDataType(attrTypes[snippet.attrName]);
                         }
-
-                        if (!Object.prototype.hasOwnProperty.call(snippet, "multiselect")) {
-                            if (snippet.matchingMode === "AND") {
-                                snippet.multiselect = false;
-                                delete snippet.matchingMode;
-                            }
-                            else {
-                                snippet.multiselect = true;
-                                delete snippet.matchingMode;
-                            }
-                        }
-                        if (!Object.prototype.hasOwnProperty.call(snippet, "operator")) {
-                            snippet.operator = this.getDefaultOperatorByDataType(attrTypes[snippet.attrName]);
-                        }
                     });
-
-                    this.setPostSnippetKey("rerender");
                 }
                 else {
                     Object.entries(attrTypes).forEach(([attrName, dataType]) => {
                         snippets.push({
                             type: this.getDefaultSnippetTypeByDataType(dataType),
                             attrName,
-                            operator: this.getDefaultOperatorByDataType(dataType),
+                            title: true,
                             visible: true
                         });
                     });
-                    this.setupSnippets(this.snippets);
-                    this.setPostSnippetKey("rerender");
+                }
+
+                if (typeof onfinished === "function") {
+                    onfinished();
                 }
             }, err => {
                 console.warn(err);
+            });
+        },
+        /**
+         * Adds the snippetId to the given snippets.
+         * @param {Object[]} snippets the snippets to add missing properties to
+         * @returns {void}
+         */
+        addSnippetIdsToSnippets (snippets) {
+            if (!Array.isArray(snippets)) {
+                return;
+            }
+            snippets.forEach((snippet, snippetId) => {
+                if (typeof snippet === "string") {
+                    snippets[snippetId] = {
+                        snippetId,
+                        attrName: snippet
+                    };
+                    return;
+                }
+                else if (!isObject(snippet)) {
+                    return;
+                }
+
+                snippet.snippetId = snippetId;
+            });
+        },
+        /**
+         * Adds missing default properties to the given snippets.
+         * @param {Object[]} snippets the snippets to add missing properties to
+         * @returns {void}
+         */
+        addMissingPropertiesToSnippets (snippets) {
+            if (!Array.isArray(snippets)) {
+                return;
+            }
+            snippets.forEach(snippet => {
+                if (!isObject(snippet)) {
+                    return;
+                }
+
+                snippet.adjustment = {};
+
+                if (!Object.prototype.hasOwnProperty.call(snippet, "multiselect")) {
+                    if (snippet.matchingMode === "AND") {
+                        snippet.multiselect = false;
+                        delete snippet.matchingMode;
+                    }
+                    else {
+                        snippet.multiselect = true;
+                        delete snippet.matchingMode;
+                    }
+                }
+                if (!Object.prototype.hasOwnProperty.call(snippet, "operator")) {
+                    snippet.operator = this.getDefaultOperatorBySnippetType(snippet.type, snippet.delimitor);
+                }
             });
         },
         /**
@@ -228,22 +277,33 @@ export default {
                     return "dropdown";
                 case "number":
                     return "sliderRange";
+                case "dateTime":
+                    return "dateRange";
                 default:
                     return "text";
             }
         },
         /**
          * Returns the default operator for the given data type.
-         * @param {String} dataType the data type e.g. string, number or boolean
+         * @param {String} snippetType the snippet type
+         * @param {Boolean} [hasDelimitorSet=false] true if a delimitor is set in config, false if not
          * @returns {String} the operator to use as default for the given dataType
          */
-        getDefaultOperatorByDataType (dataType) {
-            switch (dataType) {
-                case "boolean":
+        getDefaultOperatorBySnippetType (snippetType, hasDelimitorSet = false) {
+            switch (snippetType) {
+                case "checkbox":
                     return "EQ";
-                case "string":
+                case "date":
                     return "EQ";
-                case "number":
+                case "dateRange":
+                    return "INTERSECTS";
+                case "dropdown":
+                    return hasDelimitorSet ? "IN" : "EQ";
+                case "text":
+                    return "IN";
+                case "slider":
+                    return "EQ";
+                case "sliderRange":
                     return "BETWEEN";
                 default:
                     return "EQ";
@@ -324,7 +384,7 @@ export default {
                 || typeof something?.snippetId !== "number"
                 || typeof something?.startup !== "boolean"
                 || typeof something?.fixed !== "boolean"
-                || typeof something?.attrName !== "string"
+                || typeof something?.attrName !== "string" && !Array.isArray(something.attrName)
                 || typeof something?.operator !== "string"
             );
         },
@@ -456,30 +516,6 @@ export default {
             this.showStop = value;
         },
         /**
-         * For initialization only: Runs through the snippets and creates layer-unique snippetIds and initializes the adjustments.
-         * @param {Object[]} snippets the snippets to setup
-         * @pre the snippet objects in layerConfig have no snippetIds, adjustments are empty
-         * @post the snippet objects in layerConfig are having snippetIds, adjustments are filled with objects for each snippet
-         * @returns {void}
-         */
-        setupSnippets (snippets) {
-            if (Array.isArray(snippets)) {
-                snippets.forEach((snippet, snippetId) => {
-                    if (typeof snippet === "string") {
-                        snippets[snippetId] = {
-                            snippetId,
-                            attrName: snippet,
-                            adjustment: {}
-                        };
-                    }
-                    else if (typeof snippet === "object" && snippet !== null) {
-                        snippet.snippetId = snippetId;
-                        snippet.adjustment = {};
-                    }
-                });
-            }
-        },
-        /**
          * Returns the layerId based on the given parameters.
          * @param {Number} filterId the unique id of the internal layer filter
          * @param {String} layerId the layer id from configuration (root scope)
@@ -532,6 +568,10 @@ export default {
                         if (typeof onsuccess === "function") {
                             onsuccess(filterAnswer);
                         }
+
+                        if (this.isExtern()) {
+                            this.mapHandler.addExternalLayerToTree(filterId);
+                        }
                     }, error => {
                         console.warn(error);
                     });
@@ -553,6 +593,29 @@ export default {
             err => {
                 console.warn(err);
             });
+        },
+        /**
+         * Get the title or if no title is set get the matching gfiAttribute.
+         * @param {Object} snippet the snippet to fetch the title for
+         * @param {Number} layerId the layerId
+         * @returns {String|Boolean} the title - true if no title is set and no gfiAttribute is found
+         */
+        getTitle (snippet, layerId) {
+            if (!isObject(snippet) || typeof layerId === "undefined") {
+                return true;
+            }
+            if (Object.prototype.hasOwnProperty.call(snippet, "title")) {
+                return snippet.title;
+            }
+            const model = getLayerByLayerId(layerId),
+                title = isObject(model) ? model.get("gfiAttributes")[
+                    Array.isArray(snippet.attrName) ? snippet.attrName[0] : snippet.attrName
+                ] : undefined;
+
+            if (typeof title !== "undefined") {
+                return title;
+            }
+            return true;
         }
     }
 };
@@ -583,7 +646,6 @@ export default {
                 </div>
                 <SnippetTag
                     :is-reset-all="true"
-                    label=""
                     :value="snippetTagsResetAllText"
                     @resetAllSnippets="resetAllSnippets"
                     @deleteAllRules="deleteAllRules"
@@ -597,7 +659,6 @@ export default {
                 <SnippetTag
                     v-if="isRule(rule) && rule.fixed === false"
                     :snippet-id="rule.snippetId"
-                    :label="rule.attrName"
                     :value="String(rule.value)"
                     @resetSnippet="resetSnippet"
                     @deleteRule="deleteRule"
@@ -638,7 +699,7 @@ export default {
                     :attr-name="snippet.attrName"
                     :disabled="disabled"
                     :info="snippet.info"
-                    :title="snippet.title"
+                    :title="getTitle(snippet, layerConfig.layerId)"
                     :operator="snippet.operator"
                     :prechecked="snippet.prechecked"
                     :snippet-id="snippet.snippetId"
@@ -660,10 +721,11 @@ export default {
                     :add-select-all="snippet.addSelectAll"
                     :adjustment="snippet.adjustment"
                     :auto-init="snippet.autoInit"
+                    :delimitor="snippet.delimitor"
                     :disabled="disabled"
                     :display="snippet.display"
                     :info="snippet.info"
-                    :title="snippet.title"
+                    :title="getTitle(snippet, layerConfig.layerId)"
                     :layer-id="layerConfig.layerId"
                     :multiselect="snippet.multiselect"
                     :operator="snippet.operator"
@@ -687,7 +749,7 @@ export default {
                     :attr-name="snippet.attrName"
                     :disabled="disabled"
                     :info="snippet.info"
-                    :title="snippet.title"
+                    :title="getTitle(snippet, layerConfig.layerId)"
                     :operator="snippet.operator"
                     :placeholder="snippet.placeholder"
                     :prechecked="snippet.prechecked"
@@ -710,7 +772,7 @@ export default {
                     :disabled="disabled"
                     :info="snippet.info"
                     :format="snippet.format"
-                    :title="snippet.title"
+                    :title="getTitle(snippet, layerConfig.layerId)"
                     :max-value="snippet.maxValue"
                     :min-value="snippet.minValue"
                     :operator="snippet.operator"
@@ -734,7 +796,7 @@ export default {
                     :disabled="disabled"
                     :info="snippet.info"
                     :format="snippet.format"
-                    :title="snippet.title"
+                    :title="getTitle(snippet, layerConfig.layerId)"
                     :max-value="snippet.maxValue"
                     :min-value="snippet.minValue"
                     :operator="snippet.operator"
@@ -758,7 +820,7 @@ export default {
                     :decimal-places="snippet.decimalPlaces"
                     :disabled="disabled"
                     :info="snippet.info"
-                    :title="snippet.title"
+                    :title="getTitle(snippet, layerConfig.layerId)"
                     :min-value="snippet.minValue"
                     :max-value="snippet.maxValue"
                     :operater="snippet.operator"
@@ -782,7 +844,7 @@ export default {
                     :decimal-places="snippet.decimalPlaces"
                     :disabled="disabled"
                     :info="snippet.info"
-                    :title="snippet.title"
+                    :title="getTitle(snippet, layerConfig.layerId)"
                     :min-value="snippet.minValue"
                     :max-value="snippet.maxValue"
                     :operater="snippet.operator"

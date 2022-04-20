@@ -5,6 +5,7 @@ import ControlBar from "./modules/controls/ControlBar.vue";
 import LayerInformation from "./modules/layerInformation/components/LayerInformation.vue";
 import LegendWindow from "./modules/legend/components/LegendWindow.vue";
 import MapMarker from "./modules/mapMarker/components/MapMarker.vue";
+import MouseHover from "./modules/mouseHover/components/MouseHover.vue";
 import QuickHelp from "./modules/quickHelp/components/QuickHelp.vue";
 import ToolManager from "./modules/tools/ToolManager.vue";
 import WmsTime from "./modules/wmsTime/components/WmsTime.vue";
@@ -19,6 +20,7 @@ export default {
         LayerInformation,
         LegendWindow,
         MapMarker,
+        MouseHover,
         QuickHelp,
         ToolManager,
         WmsTime
@@ -83,6 +85,7 @@ export default {
             v-if="getConfigObject()"
             :quick-help-config-js-object="typeof getConfigObject().quickHelp === 'object' || typeof getConfigObject().quickHelp === 'boolean' ? getConfigObject().quickHelp : false"
         />
+        <MouseHover />
 
         <template v-if="i18NextInitialized">
             <component

@@ -42,49 +42,82 @@ describe("src/modules/tools/filterGeneral/interfaces/utils/interface.wfs.intern.
             expect(interfaceWfsIntern.checkRule({})).to.be.false;
             expect(interfaceWfsIntern.checkRule({operator: "OR"})).to.be.false;
         });
-        it("should check the operator BETWEEN for a single value", () => {
+        it("should check the operator BETWEEN for a single number value", () => {
             expect(interfaceWfsIntern.checkRule({operator: "BETWEEN", value: -0.00001}, 0, 10)).to.be.false;
             expect(interfaceWfsIntern.checkRule({operator: "BETWEEN", value: 0}, 0, 10)).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "BETWEEN", value: 10}, 0, 10)).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "BETWEEN", value: 10.00001}, 0, 10)).to.be.false;
         });
-        it("should check the operator EQ for a single value", () => {
+        it("should check the operator BETWEEN for a single date value", () => {
+            expect(interfaceWfsIntern.checkRule({operator: "BETWEEN", value: "02.01.2022", format: "DD.MM.YYYY"}, "01.01.2022", "03.01.2022")).to.be.true;
+            expect(interfaceWfsIntern.checkRule({operator: "BETWEEN", value: "02.01.2022", format: "DD.MM.YYYY"}, "01.01.2022", "02.01.2022")).to.be.true;
+            expect(interfaceWfsIntern.checkRule({operator: "BETWEEN", value: "04.01.2022", format: "DD.MM.YYYY"}, "01.01.2022", "03.01.2022")).to.be.false;
+        });
+        it("should check the operator EQ for a single boolean value", () => {
             expect(interfaceWfsIntern.checkRule({operator: "EQ", value: true}, true)).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "EQ", value: false}, false)).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "EQ", value: true}, false)).to.be.false;
             expect(interfaceWfsIntern.checkRule({operator: "EQ", value: false}, true)).to.be.false;
-
+        });
+        it("should check the operator EQ for a single string value", () => {
             expect(interfaceWfsIntern.checkRule({operator: "EQ", value: "string"}, "string")).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "EQ", value: "string"}, "!string")).to.be.false;
         });
-        it("should check the operator NE for a single value", () => {
+        it("should check the operator EQ for a single date value", () => {
+            expect(interfaceWfsIntern.checkRule({operator: "EQ", value: "01.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.true;
+            expect(interfaceWfsIntern.checkRule({operator: "EQ", value: "01.02.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.false;
+        });
+        it("should check the operator NE for a single boolean value", () => {
             expect(interfaceWfsIntern.checkRule({operator: "NE", value: true}, true)).to.be.false;
             expect(interfaceWfsIntern.checkRule({operator: "NE", value: false}, false)).to.be.false;
             expect(interfaceWfsIntern.checkRule({operator: "NE", value: true}, false)).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "NE", value: false}, true)).to.be.true;
-
+        });
+        it("should check the operator NE for a single string value", () => {
             expect(interfaceWfsIntern.checkRule({operator: "NE", value: "string"}, "string")).to.be.false;
             expect(interfaceWfsIntern.checkRule({operator: "NE", value: "string"}, "!string")).to.be.true;
+        });
+        it("should check the operator NE for a single date value", () => {
+            expect(interfaceWfsIntern.checkRule({operator: "NE", value: "01.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRule({operator: "NE", value: "01.02.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.true;
         });
         it("should check the operator GT for a single value", () => {
             expect(interfaceWfsIntern.checkRule({operator: "GT", value: 4.9999}, 5)).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "GT", value: 5}, 5)).to.be.false;
             expect(interfaceWfsIntern.checkRule({operator: "GT", value: 5.0001}, 5)).to.be.false;
         });
+        it("should check the operator GT for a single date value", () => {
+            expect(interfaceWfsIntern.checkRule({operator: "GT", value: "01.01.2022", format: "DD.MM.YYYY"}, "02.01.2022")).to.be.true;
+            expect(interfaceWfsIntern.checkRule({operator: "GT", value: "01.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.false;
+        });
         it("should check the operator GE for a single value", () => {
             expect(interfaceWfsIntern.checkRule({operator: "GE", value: 4.9999}, 5)).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "GE", value: 5}, 5)).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "GE", value: 5.0001}, 5)).to.be.false;
+        });
+        it("should check the operator GE for a single date value", () => {
+            expect(interfaceWfsIntern.checkRule({operator: "GE", value: "01.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.true;
+            expect(interfaceWfsIntern.checkRule({operator: "GE", value: "01.01.2022", format: "DD.MM.YYYY"}, "02.01.2022")).to.be.true;
+            expect(interfaceWfsIntern.checkRule({operator: "GE", value: "02.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.false;
         });
         it("should check the operator LT for a single value", () => {
             expect(interfaceWfsIntern.checkRule({operator: "LT", value: 4.9999}, 5)).to.be.false;
             expect(interfaceWfsIntern.checkRule({operator: "LT", value: 5}, 5)).to.be.false;
             expect(interfaceWfsIntern.checkRule({operator: "LT", value: 5.0001}, 5)).to.be.true;
         });
+        it("should check the operator LT for a single date value", () => {
+            expect(interfaceWfsIntern.checkRule({operator: "LT", value: "01.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRule({operator: "LT", value: "02.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.true;
+        });
         it("should check the operator LE for a single value", () => {
             expect(interfaceWfsIntern.checkRule({operator: "LE", value: 4.9999}, 5)).to.be.false;
             expect(interfaceWfsIntern.checkRule({operator: "LE", value: 5}, 5)).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "LE", value: 5.0001}, 5)).to.be.true;
+        });
+        it("should check the operator LE for a single value", () => {
+            expect(interfaceWfsIntern.checkRule({operator: "LE", value: "01.01.2022", format: "DD.MM.YYYY"}, "02.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRule({operator: "LE", value: "01.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.true;
+            expect(interfaceWfsIntern.checkRule({operator: "LE", value: "02.01.2022", format: "DD.MM.YYYY"}, "01.01.2022")).to.be.true;
         });
         it("should check the operator IN for a single value", () => {
             expect(interfaceWfsIntern.checkRule({operator: "IN", value: "bar"}, "foobarbaz")).to.be.true;
@@ -118,11 +151,20 @@ describe("src/modules/tools/filterGeneral/interfaces/utils/interface.wfs.intern.
             expect(interfaceWfsIntern.checkRule({operator: "BETWEEN", value: [0, 10]}, 0, 10)).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "BETWEEN", value: [0, 10]}, -1, 11)).to.be.false;
         });
+        it("should check the operator BETWEEN for multi date values", () => {
+            expect(interfaceWfsIntern.checkRule({operator: "BETWEEN", value: ["01.01.2022", "10.01.2022"], format: "DD.MM.YYYY"}, "31.11.2021", "02.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRule({operator: "BETWEEN", value: ["01.01.2022", "10.01.2022"], format: "DD.MM.YYYY"}, "02.01.2022", "05.01.2022")).to.be.true;
+        });
         it("should check the operator EQ for multi values", () => {
             expect(interfaceWfsIntern.checkRule({operator: "EQ", value: ["foo", "bar", "baz"]}, "foobar")).to.be.false;
             expect(interfaceWfsIntern.checkRule({operator: "EQ", value: ["foo", "bar", "baz"]}, "foo")).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "EQ", value: ["foo", "bar", "baz"]}, "bar")).to.be.true;
             expect(interfaceWfsIntern.checkRule({operator: "EQ", value: ["foo", "bar", "baz"]}, "baz")).to.be.true;
+        });
+        it("should check the operator EQ for multi date values", () => {
+            expect(interfaceWfsIntern.checkRule({operator: "EQ", value: ["01.01.2022", "10.01.2022"], format: "DD.MM.YYYY"}, "31.11.2021", "02.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRule({operator: "EQ", value: ["01.01.2022", "10.01.2022"], format: "DD.MM.YYYY"}, "31.11.2021", "10.01.2022")).to.be.false;
+            expect(interfaceWfsIntern.checkRule({operator: "EQ", value: ["01.01.2022", "10.01.2022"], format: "DD.MM.YYYY"}, "01.01.2022", "10.01.2022")).to.be.true;
         });
         it("should check the operator IN for multi values", () => {
             expect(interfaceWfsIntern.checkRule({operator: "IN", value: ["foo", "bar", "baz"]}, "test qux test")).to.be.false;

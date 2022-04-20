@@ -111,9 +111,8 @@ function callActions (state) {
  *  @returns {void}
  */
 export async function setValuesToState (state, params) {
-    await params.forEach(function (value, key) {
-        setValueToState(state, key, value);
-    });
+    await params.forEach(async (value, key) => setValueToState(state, key, value));
+    state.urlParams = JSON.parse(JSON.stringify(state.urlParams));
     triggerParametricURLReady();
     Object.keys(state.urlParams).forEach(key => {
         const value = state.urlParams[key];

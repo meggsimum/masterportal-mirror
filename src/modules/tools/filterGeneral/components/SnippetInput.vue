@@ -36,7 +36,7 @@ export default {
         operator: {
             type: String,
             required: false,
-            default: "IN"
+            default: undefined
         },
         placeholder: {
             type: String,

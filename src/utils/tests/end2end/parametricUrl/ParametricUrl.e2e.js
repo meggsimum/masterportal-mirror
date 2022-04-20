@@ -727,16 +727,16 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     ]), 20000);
                 });
 
-                it.skip("?featureViaURL test point", async function () {
-                    await loadUrl(driver, `${url}?featureViaURL=[{"layerId":"42","features":[{"coordinates":[566331.53,5928359.43],"label":"TestPunkt"}]}]`, mode);
+                it("?featureViaURL test point", async function () {
+                    await loadUrl(driver, `${url}?featureViaURL=[{"layerId":"42","features":[{"coordinates":[10,53.57],"label":"TestPunkt"}]}]`, mode);
 
                     await driver.wait(until.elementLocated(By.css(".navbar")), 12000);
                     await driver.wait(async () => driver.executeScript(doesLayerWithFeaturesExist, [
-                        {coordinate: [566331.53, 5928359.43], image: "https://geodienste.hamburg.de/lgv-config/img/location_eventlotse.svg"}
+                        {coordinate: [566222.2125816707, 5936146.366705798], image: "https://geodienste.hamburg.de/lgv-config/img/location_eventlotse.svg"}
                     ]), 20000);
                 });
 
-                it.skip("?featureViaURL test line", async function () {
+                it("?featureViaURL test line", async function () {
                     await loadUrl(driver, `${url}?featureViaURL=[{"layerId":"4200","features":[{"coordinates":[[10.15,53.5],[10.05,53.5],[10.05,53.55]],"label":"TestLinie"}]}]`, mode);
                     await driver.wait(until.elementLocated(By.css(".navbar")), 12000);
                     await driver.executeScript(isLayerVisible, "4200");

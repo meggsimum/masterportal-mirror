@@ -20,7 +20,7 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
             expect(wrapper.vm.title).to.be.true;
             expect(wrapper.vm.minValue).to.be.undefined;
             expect(wrapper.vm.maxValue).to.be.undefined;
-            expect(wrapper.vm.operator).to.equal("EQ");
+            expect(wrapper.vm.operator).to.be.undefined;
             expect(wrapper.vm.prechecked).to.be.undefined;
             expect(wrapper.vm.snippetId).to.equal(0);
             expect(wrapper.vm.visible).to.be.true;
@@ -256,7 +256,7 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
     });
 
     describe("resetSnippet", () => {
-        it("should reset the snippet value and call the given onsuccess handler", async () => {
+        it("should reset the snippet to prechecked value if prechecked is set", async () => {
             const wrapper = shallowMount(SnippetDate, {
                 propsData: {
                     format: "DD_YYYY_MM",
@@ -266,6 +266,23 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
             });
             let called = false;
 
+            await wrapper.vm.resetSnippet(() => {
+                called = true;
+            });
+            expect(wrapper.vm.value).to.equal("2021-12-24");
+            expect(called).to.be.true;
+            wrapper.destroy();
+        });
+        it("should reset the snippet value and call the given onsuccess handler", async () => {
+            const wrapper = shallowMount(SnippetDate, {
+                propsData: {
+                    format: "DD_YYYY_MM"
+                },
+                localVue
+            });
+            let called = false;
+
+            wrapper.vm.inRangeValue = "2021-12-24";
             expect(wrapper.vm.value).to.equal("2021-12-24");
             await wrapper.vm.resetSnippet(() => {
                 called = true;

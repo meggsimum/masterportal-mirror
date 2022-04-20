@@ -13,11 +13,10 @@ import WFSTransactionModel from "../modules/wfsTransaction/model";
 import MenuLoader from "../modules/menu/menuLoader";
 import ZoomToGeometry from "../modules/zoomToGeometry/model";
 import ZoomToFeature from "../modules/zoomToFeature/model";
-import FeatureViaURL from "../modules/featureViaURL/model";
+import featureViaURL from "../src/utils/featureViaURL";
 import SliderView from "../modules/snippets/slider/view";
 import SliderRangeView from "../modules/snippets/slider/range/view";
 import DropdownView from "../modules/snippets/dropdown/view";
-import MouseHoverPopupView from "../modules/mouseHover/view";
 import WindowView from "../modules/window/view";
 import SidebarView from "../modules/sidebar/view";
 import ShadowView from "../modules/tools/shadow/view";
@@ -148,16 +147,12 @@ async function loadApp () {
         new ZoomToFeature(Config.zoomToFeature);
     }
     if (Object.prototype.hasOwnProperty.call(Config, "featureViaURL")) {
-        new FeatureViaURL(Config.featureViaURL);
+        featureViaURL(Config.featureViaURL);
     }
 
     new SliderView();
     new SliderRangeView();
     new DropdownView();
-
-    if (Object.prototype.hasOwnProperty.call(Config, "mouseHover")) {
-        new MouseHoverPopupView(Config.mouseHover);
-    }
 
     // Module laden
     // Tools

@@ -1905,8 +1905,8 @@ An object defining a single snippet.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|attrName|yes|String||The attribute name used for filtering. Can be an array of two strings also if a range with start and end point should be filtered (array only for types: `sliderRange` and `dateRange` - see example).|false|
-|title|no|String||The title of the snippet. Can be a translation key. If left away the attrName is used. Set to `false` to avoid displaying at all.|false|
+|attrName|yes|String||The attribute name used for filtering. Can be an array of two strings also if a range with start and end point should be filtered (array only for type: `dateRange` - see example).|false|
+|title|no|String||The title of the snippet. Can be a translation key. If not set, the title is taken from the gfiAttributes and if they are not present, then the attrName is used. Can be set to `false` to disable the display of a title. Can be set to `true` to force the display of the attrName.|false|
 |info|no|String||An info text or translation key. If set, a little icon will shown right hand side of the snippet. Can be set to `true` to display a default text for the snippet type.|false|
 |type|no|String||The type of this snippet. Can be one of the following: `checkbox`, `dropdown`, `text`, `slider`, `sliderRange`, `date`, `dateRange`. Will be indentified automatically if left away, following a data type rule: boolean becomes `checkbox`, string becomes `dropdown`, number becomes `sliderRange`, unknown becomes `text`.|false|
 |operator|no|String||The operator to connect the set value to the value in the database. Can be one of the following - depending if it makes sense for the type and is available for the used interface: `INTERSECTS`, `BETWEEN`, `EQ`, `IN`, `STARTSWITH`, `ENDSWITH`, `NE`, `GT`, `GE`, `LT`, `LE`. If left away, defaults are: boolean becomes `EQ`, string becomes `EQ`, number becomes `BETWEEN`, unknown becomes `EQ`.|false|
@@ -1921,6 +1921,7 @@ An object defining a single snippet.
 |placeholder|no|String|""|For type `dropdown` only: The placeholder to use. Can be a translation key.|false|
 |multiselect|no|Boolean|true|For type `dropdown` only: Selection of multiple entries. Set to `false` to switch to single select.|false|
 |addSelectAll|no|Boolean|false|For type `dropdown` with `multiselect: true` only: Adds an additional entry on top of the list to select/deselect all entries.|false|
+|delimitor|no|String||For type `dropdown` only: If feature attributes are themselfs again seperated by a delimitor to act as pseudo array, setting delimitor to the sign that seperates the terms, will result in the expected outcome.|false|
 |renderIcons|no|String|"none"|For type `dropdown` with `display: "list"` only: If set to `fromLegend` icons will be placed left hand side of each entry. Icons are taken from legend. Use an object with attrNames as keys and imagePath as value {attrName: imagePath} to manually set images (see example).|false|
 
 **Example**
@@ -2031,12 +2032,12 @@ Example for a slider range snippet. A slider range without minValue and maxValue
 
 **Example**
 
-Example for a slider range snippet. A slider range with two attrName for min and max. With minValue and max Value to avoid automatic identification of boundaries.
+Example for a slider range snippet. With minValue and max Value to avoid automatic identification of boundaries.
 
 ```json
 {
     "title": "Angle d'inclinaison du toit du garage",
-    "attrName": ["angle_minimal", "angle_maximal"],
+    "attrName": "angle",
     "type": "sliderRange",
     "operator": "BETWEEN",
     "minValue": 0,

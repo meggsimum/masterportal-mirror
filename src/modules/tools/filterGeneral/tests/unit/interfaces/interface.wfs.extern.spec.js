@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import InterfaceWfsExtern from "../../../interfaces/interface.wfs.extern.js";
+import responseXML from "../../resources/rawSources.js";
 
 describe("src/modules/tools/filterGeneral/interfaces/utils/interface.wfs.extern.js", () => {
     let interfaceWfsExtern = null;
@@ -209,6 +210,37 @@ describe("src/modules/tools/filterGeneral/interfaces/utils/interface.wfs.extern.
             interfaceWfsExtern.getAttrTypes(false, "onsuccess", () => errorCount++);
             interfaceWfsExtern.getAttrTypes([], "onsuccess", () => errorCount++);
             expect(errorCount).to.equal(7);
+        });
+    });
+
+    describe("parseMinMaxDate", () => {
+        it("should return undefined if there are no response xml", () => {
+            expect(interfaceWfsExtern.parseMinMaxDate(new DOMParser().parseFromString({}, "text/xml"), "baubeginn", "min")).to.equal(undefined);
+            expect(interfaceWfsExtern.parseMinMaxDate(new DOMParser().parseFromString({}, "text/xml"), "baubeginn", "min")).to.equal(undefined);
+            expect(interfaceWfsExtern.parseMinMaxDate(new DOMParser().parseFromString({}, "text/xml"), "baubeginn", undefined)).to.equal(undefined);
+        });
+
+        it("should return minimum date if the dateParam is min", () => {
+            expect(interfaceWfsExtern.parseMinMaxDate(new DOMParser().parseFromString(responseXML[0], "text/xml"), "baubeginn", "min")).to.equal("01.01.2020");
+        });
+
+        it("should return maximum date if the dateParam is max", () => {
+            expect(interfaceWfsExtern.parseMinMaxDate(new DOMParser().parseFromString(responseXML[0], "text/xml"), "baubeginn", "max")).to.equal("31.01.2022");
+        });
+    });
+
+    describe("getSortedDate", () => {
+        it("should return original value if the parameter is not array or an empty array", () => {
+            expect(interfaceWfsExtern.getSortedDate("")).to.equal("");
+            expect(interfaceWfsExtern.getSortedDate(null)).to.equal(null);
+            expect(interfaceWfsExtern.getSortedDate(true)).to.equal(true);
+            expect(interfaceWfsExtern.getSortedDate({})).to.deep.equal({});
+            expect(interfaceWfsExtern.getSortedDate([])).to.deep.equal([]);
+        });
+
+        it("should return sorted ascending value if the parameter is not an empty array with date", () => {
+            expect(interfaceWfsExtern.getSortedDate(["07.03.2022", "08.03.2022", "04.01.2021", "14.03.2022"])).to.deep.equal(["04.01.2021", "07.03.2022", "08.03.2022", "14.03.2022"]);
+            expect(interfaceWfsExtern.getSortedDate(["07.03.2022", "08.03.2022", "14.03.2022", "04.01.2021"])).to.deep.equal(["04.01.2021", "07.03.2022", "08.03.2022", "14.03.2022"]);
         });
     });
 });
