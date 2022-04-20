@@ -38,20 +38,20 @@ const getters = {
      */
     headers: state => {
         const ignoredKeys = Config.ignoredKeys ? Config.ignoredKeys : Radio.request("Util", "getIgnoredKeys"), 
-          headers = Object.entries(state.gfiFeaturesOfLayer
-            .reduce((acc, it) => {
-                let keys = it.getAttributesToShow();
+            headers = Object.entries(state.gfiFeaturesOfLayer
+                .reduce((acc, it) => {
+                    let keys = it.getAttributesToShow();
 
-                keys = keys === "showAll"
-                    ? Object.keys(it.getProperties()).map(prop => [prop, prop])
-                    : Object.entries(keys);
-                keys.forEach(([key, value]) => {
-                    if (!ignoredKeys.includes(key.toUpperCase())) {
-                        acc[key] = value;
-                    }
-                });
-                return acc;
-            }, {})).map(([key, value]) => ({key, value}));
+                    keys = keys === "showAll"
+                        ? Object.keys(it.getProperties()).map(prop => [prop, prop])
+                        : Object.entries(keys);
+                    keys.forEach(([key, value]) => {
+                        if (!ignoredKeys.includes(key.toUpperCase())) {
+                            acc[key] = value;
+                        }
+                    });
+                    return acc;
+                }, {})).map(([key, value]) => ({key, value}));
 
         state.headers = headers;
         return headers;
