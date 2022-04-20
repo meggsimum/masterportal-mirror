@@ -37,7 +37,7 @@ const getters = {
      * @returns {Array} [key, value] for each property
      */
     headers: state => {
-        const ignoredKeys = Config.ignoredKeys ? Config.ignoredKeys : Radio.request("Util", "getIgnoredKeys"), 
+        const ignoredKeys = Config.ignoredKeys ? Config.ignoredKeys : Radio.request("Util", "getIgnoredKeys"),
             headers = Object.entries(state.gfiFeaturesOfLayer
                 .reduce((acc, it) => {
                     let keys = it.getAttributesToShow();
