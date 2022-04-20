@@ -1,19 +1,19 @@
 <!DOCTYPE html>
  <% if (isExpanded === true) { %>
-<div class="menu-row header <%= id %>" >
-    <a class="<%= id %> tabable" tabindex="0">
+<div class="menu-row header row <%= id %>" >
+    <a class="<%= id %> tabable col-7" tabindex="0">
         <span class="bootstrap-icon minimize-icon"><i class="bi-dash-circle-fill"></i></span>
  <% } else {%>
-<div class="menu-row header <%= id %> closed" >
-    <a class="<%= id %> tabable" tabindex="0">
+<div class="menu-row header row <%= id %> closed" >
+    <a class="<%= id %> tabable col-7" tabindex="0">
         <span class="bootstrap-icon maximize-icon"><i class="bi-plus-circle-fill"></i></span>
 <% } %>
-        <span class="form-label"><%= name %></span>
+        <span class="form-label pt-1"><%= name %></span>
     </a>
 
-    <div class="last-item">
+    <div class="col-5 px-0">
     <% if (id === "Baselayer") { %>
-        <span class="catalog_buttons d-flex gap-1">
+        <span class="catalog_buttons d-flex gap-1 justify-content-end">
             <% if (this.model.get("quickHelp") === true) { %>
                 <span class="bootstrap-icon question-icon tabable" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<%= topicsHelpText%>"><i class="bi-question-circle-fill"></i></span>
             <% } %>
@@ -24,10 +24,10 @@
         <span>
     <% } %>
     <% if (id === "Overlayer" && treeType === "default") { %>
-            <form class="form-inline">
-                <div class="form-group catalog-selection">
-                    <span class="form-label"><%= categoryText %></span>
-                    <select class="form-select tabable" tabindex="0">
+            <form>
+                <div class="form-group catalog-selection d-flex">
+                    <span class="form-label flex-fill pt-1"><%= categoryText %></span>
+                    <select class="form-select form-select-sm tabable flex-fill" tabindex="0">
                         <% categories.forEach(function (cat) { %>
                             <% if (cat === category) { %>
                                 <option <% print ("SELECTED") %>><%= cat %></option>
@@ -39,8 +39,8 @@
             </form>
     <% } %>
     <% if (id === "SelectedLayer" && this.model.collection.has("saveSelection")) { %>
-        <div class="layer-selection-save d-flex gap-1 tabable" tabindex="0">
-            <span class="text-nowrap"><%= saveSelectionText %></span>
+        <div class="layer-selection-save d-flex gap-1 tabable justify-content-end" tabindex="0">
+            <span class="text-nowrap pt-1"><%= saveSelectionText %></span>
             <span class="bootstrap-icon"><i class="bi-box-arrow-up-right"></i></span>
         </div>
     <% } %>
