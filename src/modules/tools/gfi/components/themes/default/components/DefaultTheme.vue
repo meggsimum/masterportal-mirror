@@ -110,7 +110,7 @@ export default {
          * @returns {boolean} whether the given value includes a pipe.
          */
         hasPipe: function (value) {
-            return value.includes("|");
+            return typeof value === "string" && value.includes("|");
         },
         /**
          * returns the mapped properties of the given feature or parses the properites through getPropertiesWithFullKeys if the component flag showObjectKeysParam is set
