@@ -52,7 +52,6 @@ function highlightPolygon (commit, dispatch, highlightObject) {
             if (newStyle.stroke?.color) {
                 clonedStyle.getStroke().setColor(newStyle.stroke.color);
             }
-            clonedStyle.zIndex = 100;
             feature.setStyle(clonedStyle);
         }
     }
@@ -87,7 +86,6 @@ function highlightLine (commit, dispatch, highlightObject) {
             if (newStyle.stroke?.color) {
                 clonedStyle.getStroke().setColor(newStyle.stroke.color);
             }
-            clonedStyle.zIndex = 100;
             feature.setStyle(clonedStyle);
         }
     }
