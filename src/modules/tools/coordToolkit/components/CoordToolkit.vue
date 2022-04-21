@@ -348,7 +348,7 @@ export default {
          * @returns {String} the className for the labels
          */
         getLabelClass () {
-            return this.showCopyButtons ? "col-md-3 col-sm-3 control-label" : "col-md-5 col-sm-5 control-label";
+            return this.showCopyButtons ? "col-md-3 col-sm-3 col-form-label" : "col-md-5 col-sm-5 col-form-label";
         },
         /**
          * Returns the className for the input elements.
@@ -475,9 +475,9 @@ export default {
                     <div class="form-group form-group-sm row">
                         <label
                             for="coordSystemField"
-                            class="col-md-5 col-form-label"
+                            :class="getLabelClass()"
                         >{{ $t("modules.tools.coordToolkit.coordSystemField") }}</label>
-                        <div class="col-md-7">
+                        <div :class="getInputDivClass()">
                             <select
                                 id="coordSystemField"
                                 ref="coordSystemField"
@@ -501,9 +501,9 @@ export default {
                         <label
                             id="coordinatesEastingLabel"
                             for="coordinatesEastingField"
-                            class="col-md-5 col-form-label"
+                            :class="getLabelClass()"
                         >{{ $t(getLabel("eastingLabel")) }}</label>
-                        <div class="col-md-7">
+                        <div :class="getInputDivClass()">
                             <input
                                 id="coordinatesEastingField"
                                 ref="coordinatesEastingField"
@@ -535,7 +535,7 @@ export default {
                             <button
                                 id="copyEastingBtn"
                                 type="button"
-                                class="btn singleCopy"
+                                class="btn btn-secondary border"
                                 :title="$t(`common:modules.tools.coordToolkit.copyCoordBtn`, {value: $t(getLabel('eastingLabel'))})"
                                 @click="copyCoords(['coordinatesEastingField'])"
                             >
@@ -543,7 +543,7 @@ export default {
                                     class="bootstrap-icon"
                                     aria-hidden="true"
                                 >
-                                    <i class="bi-clipboard-plus" />
+                                    <i class="bi-files" />
                                 </span>
                             </button>
                         </div>
@@ -554,7 +554,7 @@ export default {
                             <button
                                 id="copyCoordsPairBtn"
                                 type="button"
-                                class="btn"
+                                class="btn btn-secondary border"
                                 :title="$t(`common:modules.tools.coordToolkit.copyCoordsBtn`)"
                                 @click="copyCoords(['coordinatesEastingField', 'coordinatesNorthingField'])"
                             >
@@ -562,7 +562,7 @@ export default {
                                     class="bootstrap-icon"
                                     aria-hidden="true"
                                 >
-                                    <i class="bi-clipboard-plus" />
+                                    <i class="bi-files" />
                                 </span>
                             </button>
                         </div>
@@ -573,9 +573,9 @@ export default {
                         <label
                             id="coordinatesNorthingLabel"
                             for="coordinatesNorthingField"
-                            class="col-md-5 col-form-label"
+                            :class="getLabelClass()"
                         >{{ $t(getLabel("northingLabel")) }}</label>
-                        <div class="col-md-7">
+                        <div :class="getInputDivClass()">
                             <input
                                 id="coordinatesNorthingField"
                                 ref="coordinatesNorthingField"
@@ -607,7 +607,7 @@ export default {
                             <button
                                 id="copyNorthingBtn"
                                 type="button"
-                                class="btn singleCopy"
+                                class="btn btn-secondary border"
                                 :title="$t(`common:modules.tools.coordToolkit.copyCoordBtn`, {value: $t(getLabel('northingLabel'))})"
                                 @click="copyCoords(['coordinatesNorthingField'])"
                             >
@@ -615,21 +615,21 @@ export default {
                                     class="bootstrap-icon"
                                     aria-hidden="true"
                                 >
-                                    <i class="bi-clipboard-plus" />
+                                    <i class="bi-files" />
                                 </span>
                             </button>
                         </div>
                     </div>
                     <div
-                        v-if="isEnabled( 'supply') && heightLayer !== null"
-                        class="form-group form-group-sm inputDiv"
+                        v-if="isEnabled('supply') && heightLayer !== null"
+                        class="form-group form-group-sm inputDiv row"
                     >
                         <label
                             id="coordinatesHeightLabel"
                             for="coordinatesHeightField"
-                            class="col-md-5 col-form-label"
+                            :class="getLabelClass()"
                         >{{ $t("modules.tools.coordToolkit.heightLabel") }}</label>
-                        <div class="col-md-7">
+                        <div :class="getInputDivClass()">
                             <input
                                 id="coordinatesHeightField"
                                 :value="$t(height)"
@@ -734,17 +734,13 @@ export default {
         transform: translate(0px, -75px)
     }
     #copyCoordsPairBtn{
-        height: 75px;
+        height: 85px;
         position: absolute;
-        top: 0;
     }
     .copyBtn{
         padding-right: 0;
         padding-left: 0;
         max-width: 50px;
-    }
-    .singleCopy{
-        max-height: 30px
     }
    @media (max-width: 767px) {
         .eastingToBottomNoError{
