@@ -13,6 +13,7 @@
     - dependencies:
         - "bootstrap-sass"
         - "bootstrap-icons"
+- Added a mixin for changing the colour and padding of an active pill inside the css class `nav-pills`.
 
 ### Changed
 - Migrated the module featureViaURL from Backbone to Vue as a util. E2E tests were fixed and re-enabled.
