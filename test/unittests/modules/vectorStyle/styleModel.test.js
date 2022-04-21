@@ -201,6 +201,19 @@ describe("vectorStyleModel", function () {
                     "polygonStrokeColor": [100, 100, 100, 1]
                 }
             }
+        ],
+        rulesWithOneEntry = [
+            {
+                "conditions": {
+                    "sequence": [0, 0],
+                    "properties": {
+                        "@Datastreams.0.Observations.0.result": [81, 101]}},
+                "style": {
+                    "lineStrokeColor": [37, 52, 148, 1],
+                    "lineStrokeDash": [20, 20, 5, 2000],
+                    "lineStrokeDashOffset": 20,
+                    "lineStrokeWidth": 5,
+                    "labelField": ""}}
         ];
 
     let styleModel,
@@ -290,7 +303,7 @@ describe("vectorStyleModel", function () {
         });
     });
 
-    describe("getMultiGeometryStyle", function () {
+    describe.only("getMultiGeometryStyle", function () {
         it("should return style array for multipoint", function () {
             expect(styleModel.getMultiGeometryStyle("MultiPoint", jsonObjects[3], rules, false)).to.be.an("array").to.have.lengthOf(2);
         });
@@ -323,6 +336,9 @@ describe("vectorStyleModel", function () {
             expect(styleModel.getMultiGeometryStyle("GeometryCollection", jsonObjects[6], rules, false)[0].getImage().getStroke()).to.be.an.instanceof(Stroke);
             expect(styleModel.getMultiGeometryStyle("GeometryCollection", jsonObjects[6], rules, false)[0].getImage().getStroke().getColor()).to.be.an("array").to.include.ordered.members([255, 0, 0, 1]);
             expect(styleModel.getMultiGeometryStyle("GeometryCollection", jsonObjects[6], rules, false)[1].getStroke()).to.be.an.instanceof(Stroke);
+        });
+        it("features with more geometries than rules (rules: 1, geometries: 2) should have only style for the amount of rules", function () {
+            expect(styleModel.getMultiGeometryStyle("MultiLineString", jsonObjects[4], rulesWithOneEntry, false)).to.be.an("array").to.have.lengthOf(1);
         });
     });
 

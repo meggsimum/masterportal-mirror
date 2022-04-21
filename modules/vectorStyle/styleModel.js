@@ -413,7 +413,7 @@ const VectorStyleModel = Backbone.Model.extend(/** @lends VectorStyleModel.proto
                 if (this.isMultiGeometry(geometryTypeSimpleGeom)) {
                     console.warn("Multi encapsulated multiGeometries are not supported.");
                 }
-                else {
+                else if (rule) {
                     const simpleStyle = this.getSimpleGeometryStyle(geometryTypeSimpleGeom, feature, rule, isClustered);
 
                     simpleStyle.setGeometry(geometry);
