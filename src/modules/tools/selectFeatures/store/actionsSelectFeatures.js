@@ -1,0 +1,44 @@
+export default {
+    /**
+     * Highlights a feature depending on its geometryType.
+     * @param {Object} param.state the state
+     * @param {Object} param.dispatch the dispatch
+     * @param {String} feature id of the feature to be highlighted.
+     * @returns {void}
+     */
+    highlightFeature ({state, rootGetters, dispatch}, {featureId, layerId}) {
+        dispatch("Map/removeHighlightFeature", "decrease", {root: true});
+        const layer = rootGetters["Map/visibleLayerList"].find((l) => l.values_.id === layerId),
+            featureGeometryType = featureId.getGeometry().getType(),
+            featureIdString = featureId.getId(),
+            styleObj = featureGeometryType.toLowerCase().indexOf("polygon") > -1 ? state.highlightVectorRulesPolygon : state.highlightVectorRulesPointLine,
+            highlightObject = {
+                type: featureGeometryType === "Point" || featureGeometryType === "MultiPoint" ? "increase" : "highlightPolygon",
+                id: featureIdString,
+                layer: layer,
+                feature: featureId,
+                scale: styleObj.image?.scale
+            };
+
+        if (featureGeometryType === "LineString") {
+            highlightObject.type = "highlightLine";
+        }
+        layer.id = layerId;
+
+        if (highlightObject.type === "highlightPolygon") {
+            highlightObject.highlightStyle = {
+                fill: styleObj.fill,
+                stroke: styleObj.stroke,
+                image: styleObj.image
+            };
+        }
+        else if (highlightObject.type === "highlightLine" || highlightObject.type === "increase") {
+            highlightObject.highlightStyle = {
+                stroke: styleObj.stroke,
+                image: styleObj.image
+            };
+        }
+        dispatch("Map/highlightFeature", highlightObject, {root: true});
+    }
+};
+

@@ -41,6 +41,7 @@ export default {
             addInteractionToMap: "addInteraction",
             removeInteractionFromMap: "removeInteraction"
         }),
+        ...mapActions("Tools/SelectFeatures", ["highlightFeature"]),
         isEmailAddress,
         isPhoneNumber,
         getPhoneNumberAsWebLink,
@@ -148,7 +149,8 @@ export default {
                 properties: this.translateGFI(
                     item.getProperties(),
                     layer.get("gfiAttributes")
-                )
+                ),
+                layerId: layer.get("id")
             });
         },
 
@@ -294,9 +296,10 @@ export default {
          */
         featureZoom: function (event) {
             const featureIndex = event.currentTarget.id.split("-")[0],
-                {item} = this.selectedFeaturesWithRenderInformation[featureIndex];
+                selected = this.selectedFeaturesWithRenderInformation[featureIndex];
 
-            Radio.request("Map", "getMap").getView().fit(item.getGeometry());
+            Radio.request("Map", "getMap").getView().fit(selected.item.getGeometry());
+            this.highlightFeature({featureId: selected.item, layerId: selected.layerId});
         },
 
         /**
