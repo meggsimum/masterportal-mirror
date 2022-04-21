@@ -50,6 +50,7 @@ function highlightPolygon (commit, getters, dispatch, highlightObject) {
             if (newStyle.stroke?.color) {
                 clonedStyle.getStroke().setColor(newStyle.stroke.color);
             }
+            clonedStyle.zIndex = 100;
             feature.setStyle(clonedStyle);
 
             dispatch("Map/zoomTo", {
@@ -93,6 +94,7 @@ function highlightLine (commit, getters, dispatch, highlightObject) {
             if (newStyle.stroke?.color) {
                 clonedStyle.getStroke().setColor(newStyle.stroke.color);
             }
+            clonedStyle.zIndex = 100;
             feature.setStyle(clonedStyle);
 
             dispatch("Map/zoomTo", {
