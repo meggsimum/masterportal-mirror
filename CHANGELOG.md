@@ -25,6 +25,7 @@
 - Layer with isNeverVisibleInTree will not be initialized in menu tree.
 - Issue #621: WMTS support for overviewMap implemented.
 - Update print configuration for tiledWMS, layers are printed as tiledwms with tileSize.
+- `default`-gfiTheme: If a `|`-character is part of the response, every element separated by the character will be displayed in a separate paragraph.
 
 ### Deprecated
 

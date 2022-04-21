@@ -105,7 +105,13 @@ export default {
         hasMappedProperties (feature) {
             return Object.keys(feature.getMappedProperties()).length !== 0;
         },
-
+        /**
+         * @param {string} value string to check.
+         * @returns {boolean} whether the given value includes a pipe.
+         */
+        hasPipe: function (value) {
+            return typeof value === "string" && value.includes("|");
+        },
         /**
          * returns the mapped properties of the given feature or parses the properites through getPropertiesWithFullKeys if the component flag showObjectKeysParam is set
          * @param {Object} feature the current feature
@@ -301,6 +307,14 @@ export default {
                         v-else-if="Array.isArray(value)"
                         v-html="value.join('<br>')"
                     />
+                    <td v-else-if="hasPipe(value)">
+                        <p
+                            v-for="(splitValue, splitKey) in value.split('|')"
+                            :key="splitKey"
+                        >
+                            {{ splitValue }}
+                        </p>
+                    </td>
                     <td
                         v-else-if="typeof value === 'string' && value.includes('<br>')"
                         v-html="value"
