@@ -88,14 +88,14 @@ url("../node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2?a74547b2f0
  * Elements: Buttons and button-like elements.
  * Examples: ZoomButtons, MousePosition, ...
  */
-$primary: #E10019;
-$primary_hover: lighten($primary, 5%);
-$primary_focus: lighten($primary, 15%);
-$primary_active: darken($primary, 10%);
-$primary_contrast: #F3F3F3;
-$primary_inactive: grey;
-$primary_inactive_contrast: white;
-$primary_outline: #050505;
+$primary_red: #E10019;
+$primary_red_hover: lighten($primary_red, 5%);
+$primary_red_focus: lighten($primary_red, 15%);
+$primary_red_active: darken($primary_red, 10%);
+$primary_red_contrast: #F3F3F3;
+$primary_red_inactive: grey;
+$primary_red_inactive_contrast: white;
+$primary_red_outline: #050505;
 
 /* SECONDARY: Navigation
  * Used for the nav bar, its children, and going back and forth within elements.

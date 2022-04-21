@@ -84,7 +84,7 @@ ul#tree {
                 flex-grow: 1;
                 &:hover {
                     color: $color_1;
-                    background-color: lighten($primary_inactive, 40%);
+                    background-color: lighten($primary_red_inactive, 40%);
                 }
 
             }
