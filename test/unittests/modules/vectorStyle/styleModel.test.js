@@ -303,7 +303,7 @@ describe("vectorStyleModel", function () {
         });
     });
 
-    describe.only("getMultiGeometryStyle", function () {
+    describe("getMultiGeometryStyle", function () {
         it("should return style array for multipoint", function () {
             expect(styleModel.getMultiGeometryStyle("MultiPoint", jsonObjects[3], rules, false)).to.be.an("array").to.have.lengthOf(2);
         });
