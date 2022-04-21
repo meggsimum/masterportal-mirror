@@ -21,7 +21,7 @@
     top: 0;
     .bootstrap-icon {
         color: $secondary;
-        background-color: $primary;
+        background-color: $primary_red;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
 
         &:hover {
@@ -279,8 +279,8 @@
     font-family: "MasterPortalFont Bold","Arial Narrow",Arial,sans-serif;
     border: 0;
     &:focus {
-        background-color: $primary_focus;
-        outline: 1px solid $primary_outline;
+        background-color: $primary_red_focus;
+        outline: 1px solid $primary_red_outline;
     }
 
 }
@@ -294,8 +294,8 @@
     padding: 6px 7px 3px 7px;
     border: 0;
     &:focus {
-        background-color: $primary_focus;
-        outline: 1px solid $primary_outline;
+        background-color: $primary_red_focus;
+        outline: 1px solid $primary_red_outline;
     }
 
 }

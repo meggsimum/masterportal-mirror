@@ -88,8 +88,8 @@ export default {
     }
 
     .control-icon {
-        background-color: $primary;
-        color: $primary_contrast;
+        background-color: $primary_red;
+        color: $primary_red_contrast;
 
         pointer-events: all;
         cursor: pointer;
@@ -107,19 +107,19 @@ export default {
 
         /* pseudo-class state effects */
         &:hover {
-            background-color: $primary_hover;
+            background-color: $primary_red_hover;
         }
         &:focus {
-            background-color: $primary_focus;
-            outline: 1px solid $primary_outline;
+            background-color: $primary_red_focus;
+            outline: 1px solid $primary_red_outline;
         }
         &:active {
-            background-color: $primary_active;
+            background-color: $primary_red_active;
         }
 
         &:disabled {
-            background-color: $primary_inactive;
-            color: $primary_inactive_contrast;
+            background-color: $primary_red_inactive;
+            color: $primary_red_inactive_contrast;
             cursor: default;
         }
     }

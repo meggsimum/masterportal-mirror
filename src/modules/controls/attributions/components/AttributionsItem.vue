@@ -128,7 +128,7 @@ export default {
                 margin-bottom: 0;
             }
             dt {
-                color: $primary;
+                color: $primary_red;
                 font-size: $font_size_big;
                 font-family: $font_family_narrow;
                 font-weight: 400;
