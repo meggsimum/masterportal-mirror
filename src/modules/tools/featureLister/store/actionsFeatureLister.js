@@ -91,8 +91,12 @@ export default {
             highlightObject.type = "highlightLine";
         }
         layer.id = state.layer.id;
-        highlightObject.zoom = styleObj.zoom;
-        highlightObject.styleId = rawLayer.styleId;
+        if (styleObj.zoom) {
+            highlightObject.zoom = styleObj.zoom;
+        }
+        if (rawLayer && rawLayer.styleId) {
+            highlightObject.styleId = rawLayer.styleId;
+        }
 
         if (highlightObject.type === "highlightPolygon") {
             highlightObject.highlightStyle = {

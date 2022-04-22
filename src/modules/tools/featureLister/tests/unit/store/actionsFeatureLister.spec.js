@@ -92,12 +92,13 @@ describe("tools/featureLister/store/actionsFeatureLister", () => {
             layer: {
                 name: "ersterLayer",
                 id: "123",
+                styleId: "123",
                 geometryType: "Point"
             },
             nestedFeatures: false,
-            rawFeaturesOfLayer: [{name: "ersterLayer", id: "123", getId: () => "123", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point", getGeometry: () => {
+            rawFeaturesOfLayer: [{name: "ersterLayer", id: "123", styleId: "123", getId: () => "123", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point", getGeometry: () => {
                 return state.geometry;
-            }}, {name: "zweiterLayer", id: "456", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "dritterLayer", id: "789", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}],
+            }}, {name: "zweiterLayer", id: "456", styleId: "456", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}, {name: "dritterLayer", id: "789", styleId: "789", features: [{getAttributesToShow: () => "TestAttributes"}], geometryType: "Point"}],
             highlightVectorRulesPolygon: {
                 "fill": {
                     "color": [255, 0, 255, 0.9]
