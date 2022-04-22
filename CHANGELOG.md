@@ -19,6 +19,7 @@
 
 ### Fixed
 - Issue #758: featureLister threw a JavaScript exception when building the list of layers.
+- Issue #766: The performance of opening large folders in the tree of type custom or default has been increased.
 
 ---
 ## v2.20.1 - 2022-04-21

@@ -451,7 +451,6 @@ Layer.prototype.changeLang = function () {
     this.attributes.levelUpText = i18next.t("common:tree.levelUp");
     this.attributes.levelDownText = i18next.t("common:tree.levelDown");
     this.attributes.transparencyText = i18next.t("common:tree.transparency");
-    bridge.renderMenu();
 };
 /**
  * Calls Collection function moveModelDown
