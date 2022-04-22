@@ -351,6 +351,23 @@ Furthermore, all named geometry types may receive a text annotation. See chapter
 
 For individual legend texts, see chapter [Legend](#markdown-header-legend).
 
+### Use Fallback, if no rule available
+
+If the number of child *Features*  of a *MultiGeomtry* feature is higher than the number of rules or no rule can be found, and no fallbacks shall be used you can set the property *styleMultiGeomOnlyWithRule* to true. 
+
+|Name|Required|Type|Default|Description|
+|----|--------|----|-------|-----------|
+|styleMultiGeomOnlyWithRule||Boolean|false| if true, use no fallback for styling
+
+**_style_ example:**
+```json
+{
+    "styleId": "styleId",
+    "styleMultiGeomOnlyWithRule": true,
+}
+```
+
+
 ### Point
 
 The display rules for points are separated in

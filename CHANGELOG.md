@@ -8,6 +8,7 @@
 
 ## Unreleased - in development
 ### Added
+- Added style.json parameter "styleMultiGeomOnlyWithRule". If true, **no** fallback for styling of multiGeometries is used. Default is false, means the the previous behavior.
 
 ### Changed
 - Migrated the module featureViaURL from Backbone to Vue as a util. E2E tests were fixed and re-enabled.
