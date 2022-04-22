@@ -8,6 +8,7 @@
 
 ## Unreleased - in development
 ### Added
+- A control has been added to create buttons for any tools. These can be used to open and close the configured tools.
 
 ### Changed
 - Migrated the module featureViaURL from Backbone to Vue as a util. E2E tests were fixed and re-enabled.
