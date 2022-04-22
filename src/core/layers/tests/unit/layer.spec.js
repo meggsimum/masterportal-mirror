@@ -189,7 +189,7 @@ describe("src/core/layers/layer.js", () => {
         const layerWrapper = new Layer(attributes, olLayer);
 
         expect(layerWrapper.get("isOutOfRange")).to.be.true;
-        expect(calledMenu).to.be.equals(2);
+        expect(calledMenu).to.be.equals(1);
         expect(calledIsOutOfRange).to.be.equals(1);
 
         calledMenu = 0;
@@ -294,7 +294,7 @@ describe("src/core/layers/layer.js", () => {
         layerWrapper.setIsVisibleInTree(true);
         expect(layerWrapper.get("isVisibleInTree")).to.be.true;
         expect(calledIsVisibleInTree).to.be.equals(1);
-        expect(calledMenu).to.be.equals(2);
+        expect(calledMenu).to.be.equals(1);
     });
     it("resetSelectionIDX shall set selectionIDX to 0 and setSelectionIDX test", function () {
         const layerWrapper = new Layer(attributes, olLayer);
@@ -353,28 +353,28 @@ describe("src/core/layers/layer.js", () => {
         expect(counter).to.be.equals(2);
     });
     it("setIsSelected test true with treetype light", function () {
-        testSetIsSelected("light", 2, 1, true);
+        testSetIsSelected("light", 2, 0, true);
     });
     it("setIsSelected test false with treetype light", function () {
-        testSetIsSelected("light", 2, 1, false);
+        testSetIsSelected("light", 2, 0, false);
     });
     it("setIsSelected test true with treetype not light", function () {
-        testSetIsSelected("custom", 2, 4, true);
+        testSetIsSelected("custom", 2, 3, true);
     });
     it("setIsSelected test false with treetype not light", function () {
-        testSetIsSelected("custom", 2, 7, false);
+        testSetIsSelected("custom", 2, 6, false);
     });
     it("toggleIsVisibleInMap is true and treeType light", function () {
-        testIsVisibleInMap("light", true, 1);
+        testIsVisibleInMap("light", true, 0);
     });
     it("toggleIsVisibleInMap is false and treeType light", function () {
-        testIsVisibleInMap("light", false, 1);
+        testIsVisibleInMap("light", false, 0);
     });
     it("toggleIsVisibleInMap is true and treeType not light", function () {
-        testIsVisibleInMap("custom", true, 6);
+        testIsVisibleInMap("custom", true, 5);
     });
     it("toggleIsVisibleInMap is false and treeType not light", function () {
-        testIsVisibleInMap("custom", false, 6);
+        testIsVisibleInMap("custom", false, 5);
     });
 
     it("updateLayerSource test", function () {
