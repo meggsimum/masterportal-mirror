@@ -337,8 +337,13 @@ describe("vectorStyleModel", function () {
             expect(styleModel.getMultiGeometryStyle("GeometryCollection", jsonObjects[6], rules, false)[0].getImage().getStroke().getColor()).to.be.an("array").to.include.ordered.members([255, 0, 0, 1]);
             expect(styleModel.getMultiGeometryStyle("GeometryCollection", jsonObjects[6], rules, false)[1].getStroke()).to.be.an.instanceof(Stroke);
         });
-        it("features with more geometries than rules (rules: 1, geometries: 2) should have only style for the amount of rules", function () {
+        it("features with more geometries than rules (rules: 1, geometries: 2) should have only style for the amount of rules - styleMultiGeomOnlyWithRule=true", function () {
+            styleModel.set("styleMultiGeomOnlyWithRule", true);
             expect(styleModel.getMultiGeometryStyle("MultiLineString", jsonObjects[4], rulesWithOneEntry, false)).to.be.an("array").to.have.lengthOf(1);
+        });
+        it("features with more geometries than rules (rules: 1, geometries: 2) should have style for all geometries - styleMultiGeomOnlyWithRule=false", function () {
+            styleModel.set("styleMultiGeomOnlyWithRule", false);
+            expect(styleModel.getMultiGeometryStyle("MultiLineString", jsonObjects[4], rulesWithOneEntry, false)).to.be.an("array").to.have.lengthOf(2);
         });
     });
 
