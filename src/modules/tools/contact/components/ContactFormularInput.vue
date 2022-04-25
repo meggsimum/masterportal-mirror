@@ -89,7 +89,7 @@ export default {
                 :value="inputValue"
                 :autocomplete="autocomplete"
                 :type="htmlElement === 'input' ? inputType : ''"
-                :class="htmlElement === 'select' ? 'form-select' : 'form-control'"
+                :class="[(htmlElement === 'select' ? 'form-select' : 'form-control'), (validInput ? 'is-valid' : '')]"
                 :aria-describedby="`tool-contact-${inputName}-help`"
                 :placeholder="$t(`common:modules.tools.contact.placeholder.${inputName}`)"
                 :rows="htmlElement === 'textarea' ? rows : ''"
@@ -97,18 +97,7 @@ export default {
             />
         </div>
         <span
-            v-if="validInput"
-            :class="[
-                'bootstrap-icon',
-                'form-control-feedback',
-                htmlElement === 'textarea' ? 'lift-tick' : ''
-            ]"
-            aria-hidden="true"
-        >
-            <i class="bi-check-lg" />
-        </span>
-        <span
-            v-else
+            v-if="!validInput"
             :id="`tool-contact-${inputName}-help`"
             class="help-block"
         >
