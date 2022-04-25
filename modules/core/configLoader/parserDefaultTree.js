@@ -361,6 +361,7 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
             isInThemen: true,
             isVisibleInTree: true,
             icon: "bi-plus-circle-fill",
+            isFolderSelectable: false,
             quickHelp: isQuickHelpSet
         });
         Object.keys(tree).forEach(element => {
@@ -369,7 +370,7 @@ const DefaultTreeParser = Parser.extend(/** @lends DefaultTreeParser.prototype *
             // Unterordner erzeugen
             this.addItems(category.folder, {
                 icon: "bi-plus-circle-fill",
-                isFolderSelectable: this.get("isFolderSelectable"),
+                isFolderSelectable: true,
                 isInThemen: true,
                 level: 1,
                 parentId: category.id,
