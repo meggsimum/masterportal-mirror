@@ -501,4 +501,40 @@ describe("src/module/tools/filterGeneral/utils/filterConfigConverter.js", () => 
             expect(converter.isOldConfig()).to.be.true;
         });
     });
+    describe("addInfosToSnippets", () => {
+        it("should keep the second argument untouched if the first argument is anything but an object", () => {
+            const layers = [{
+                    snippets: [{foo: "bar"}]
+                }],
+                expected = [{
+                    snippets: [{foo: "bar"}]
+                }];
+
+            converter.addInfosToSnippets(undefined, layers);
+            expect(layers).to.deep.equal(expected);
+            converter.addInfosToSnippets(null, layers);
+            expect(layers).to.deep.equal(expected);
+            converter.addInfosToSnippets(1234, layers);
+            expect(layers).to.deep.equal(expected);
+            converter.addInfosToSnippets("string", layers);
+            expect(layers).to.deep.equal(expected);
+            converter.addInfosToSnippets(true, layers);
+            expect(layers).to.deep.equal(expected);
+            converter.addInfosToSnippets(false, layers);
+            expect(layers).to.deep.equal(expected);
+            converter.addInfosToSnippets([], layers);
+            expect(layers).to.deep.equal(expected);
+        });
+        it("should add info keys and value to all snippets where the key equals the attrName", () => {
+            const layers = [{
+                    snippets: [{attrName: "foo"}, {attrName: "bar"}, {attrName: "foobar"}]
+                }],
+                expected = [{
+                    snippets: [{attrName: "foo", info: "infoA"}, {attrName: "bar"}, {attrName: "foobar", info: "infoB"}]
+                }];
+
+            converter.addInfosToSnippets({foo: "infoA", foobar: "infoB"}, layers);
+            expect(layers).to.deep.equal(expected);
+        });
+    });
 });

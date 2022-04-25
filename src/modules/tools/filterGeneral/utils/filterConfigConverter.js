@@ -71,13 +71,17 @@ export default class FilterConfigConverter {
 
     /**
      * Get the list of layers.
+     * @param {Object} snippetInfos an object with key value pairs as attrName and text content
      * @returns {Object[]} a list of layer configurations based on the old predefinedQueries.
      */
-    getLayers () {
+    getLayers (snippetInfos) {
         if (!isObject(this.config) || !Array.isArray(this.config.predefinedQueries)) {
             return [];
         }
-        return this.convertPredefinedQueriesToLayer(this.config.predefinedQueries, this.getDeactivateGfi());
+        const layers = this.convertPredefinedQueriesToLayer(this.config.predefinedQueries, this.getDeactivateGfi());
+
+        this.addInfosToSnippets(snippetInfos, layers);
+        return layers;
     }
 
     /**
@@ -89,6 +93,30 @@ export default class FilterConfigConverter {
             return false;
         }
         return this.config.deactivateGfi ? this.config.deactivateGfi : false;
+    }
+
+    /**
+     * Loads the info.json - if any - and calls the callback.
+     * @param {String|Boolean} snippetInfos the path to the info json or false if none
+     * @param {Object[]} layers a list of layer configurations based on the old predefinedQueries.
+     * @returns {void}
+     */
+    addInfosToSnippets (snippetInfos, layers) {
+        if (!isObject(snippetInfos)) {
+            return;
+        }
+
+        layers.forEach(layer => {
+            if (!isObject(layer) || !Array.isArray(layer?.snippets)) {
+                return;
+            }
+            layer.snippets.forEach(snippet => {
+                if (!isObject(snippet) || !Object.prototype.hasOwnProperty.call(snippetInfos, snippet?.attrName)) {
+                    return;
+                }
+                snippet.info = snippetInfos[snippet.attrName];
+            });
+        });
     }
 
     /**

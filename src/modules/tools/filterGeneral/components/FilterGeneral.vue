@@ -15,7 +15,8 @@ import {
     setParserAttributeByLayerId,
     getLayers,
     isUiStyleTable,
-    setFilterInTableMenu
+    setFilterInTableMenu,
+    getSnippetInfos
 } from "../utils/openlayerFunctions.js";
 import FilterApi from "../interfaces/filter.api.js";
 import LayerCategory from "../components/LayerCategory.vue";
@@ -66,7 +67,9 @@ export default {
     mounted () {
         this.$nextTick(() => {
             this.initialize();
-            this.convertConfig();
+            this.convertConfig({
+                snippetInfos: getSnippetInfos()
+            });
             this.replaceStringWithObjectLayers();
             this.setFilterId();
             this.initializeFilterApiList();

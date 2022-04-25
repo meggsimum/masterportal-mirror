@@ -148,6 +148,14 @@ function setFilterInTableMenu (element) {
     Radio.trigger("TableMenu", "appendFilter", element);
 }
 
+/**
+ * Returns the infos from info.json.
+ * @returns {Object} an object with key value pairs as attrName and text content
+ */
+function getSnippetInfos () {
+    return Radio.request("Parser", "getSnippetInfos");
+}
+
 export {
     getMapProjection,
     createLayerIfNotExists,
@@ -160,5 +168,6 @@ export {
     setParserAttributeByLayerId,
     getLayers,
     isUiStyleTable,
-    setFilterInTableMenu
+    setFilterInTableMenu,
+    getSnippetInfos
 };
