@@ -49,9 +49,10 @@
                     </div>
                     <div class="col-md-2">
                         <label class="range-label">&nbsp;</label>
-                        <div id="style-wms-colorpicker" tabindex="0" class="input-group input-group-sm colorpicker-component">
+                        <div id="style-wms-colorpicker" tabindex="0" class="input-group input-group-sm colorpicker-component btn btn-secondary border">
                             <input class="form-control form-control-sm <%= 'selected-color' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].color)} else { print ('#337ab7')} %>">
-                            <span class="input-group-text"><i></i></span>
+                            <!-- in theory it would have to be input-group-text for bootstrap 5 but then the tool doesn't work anymore so until it is refactored to vue it has to be the old class -->
+                            <span class="input-group-addon"><i></i></span>
                         </div>
                     </div>
                 </div>
