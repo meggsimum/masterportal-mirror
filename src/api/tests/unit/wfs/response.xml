@@ -1,0 +1,25 @@
+<wfs:FeatureCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd https://registry.gdi-de.org/id/de.hh.up https://geodienste.hamburg.de/HH_WFS_Krankenhaeuser?SERVICE=WFS&amp;VERSION=1.1.0&amp;REQUEST=DescribeFeatureType&amp;OUTPUTFORMAT=text%2Fxml%3B+subtype%3Dgml%2F3.1.1&amp;TYPENAME=de.hh.up:krankenhaeuser_hh&amp;NAMESPACE=xmlns(de.hh.up=https%3A%2F%2Fregistry.gdi-de.org%2Fid%2Fde.hh.up)" xmlns:wfs="http://www.opengis.net/wfs" timeStamp="2022-04-26T07:29:15Z" xmlns:gml="http://www.opengis.net/gml">
+  <gml:featureMember>
+    <de.hh.up:krankenhaeuser_hh xmlns:de.hh.up="https://registry.gdi-de.org/id/de.hh.up" gml:id="DE.HH.UP_KRANKENHAEUSER_HH_16">
+      <de.hh.up:kh_nummer>13</de.hh.up:kh_nummer>
+      <de.hh.up:name>Bundeswehrkrankenhaus Hamburg</de.hh.up:name>
+      <de.hh.up:strasse>Lesserstraße 180</de.hh.up:strasse>
+      <de.hh.up:ort>22049  Hamburg</de.hh.up:ort>
+      <de.hh.up:homepage>http://www.bundeswehrkrankenhaus-hamburg.de</de.hh.up:homepage>
+      <de.hh.up:krankenhausverzeichnis>http://www.hamburg.de/krankenhausverzeichnis/1144576/bundeswehrkrankenhaus.html</de.hh.up:krankenhausverzeichnis>
+      <de.hh.up:anzahl_planbetten>150</de.hh.up:anzahl_planbetten>
+      <de.hh.up:hinweiszeile>Das Krankenhaus verfügt über insgesamt 305 Betten. In den Krankenhausplan aufgenommen, sind nur die Betten, die Zivilpatientinnen und -patienten zuzuordnen sind.</de.hh.up:hinweiszeile>
+      <de.hh.up:anzahl_plaetze_teilstationaer>0</de.hh.up:anzahl_plaetze_teilstationaer>
+      <de.hh.up:teilnahme_notversorgung>Ja</de.hh.up:teilnahme_notversorgung>
+      <de.hh.up:teilnahme_geburtsklinik>Nein</de.hh.up:teilnahme_geburtsklinik>
+      <de.hh.up:geburtsklinik_differenziert>Nein</de.hh.up:geburtsklinik_differenziert>
+      <de.hh.up:stand>01.01.2021</de.hh.up:stand>
+      <de.hh.up:geom>
+        <!--Inlined geometry 'DE.HH.UP_KRANKENHAEUSER_HH_16_DE.HH.UP_GEOM'-->
+        <gml:Point gml:id="DE.HH.UP_KRANKENHAEUSER_HH_16_DE.HH.UP_GEOM" srsName="EPSG:25832">
+          <gml:pos>571250.750 5938997.361</gml:pos>
+        </gml:Point>
+      </de.hh.up:geom>
+    </de.hh.up:krankenhaeuser_hh>
+  </gml:featureMember>
+</wfs:FeatureCollection>
