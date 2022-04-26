@@ -93,7 +93,7 @@ export default {
                 :aria-valuemax="layerIds.length"
                 :style="currentProgressBarWidth"
             >
-                <span class="sr-only">{{ $t("modules.tools.layerSlider.displayLayers") }}</span>
+                <span class="visually-hidden">{{ $t("modules.tools.layerSlider.displayLayers") }}</span>
             </div>
         </div>
         <div class="input-group">
@@ -209,7 +209,6 @@ $background_color_1: #eee;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        padding: 16px 12px 17px 12px;
     }
 }
 </style>

@@ -240,7 +240,7 @@ export default {
                             role="progressbar"
                             :style="progressWidth"
                         >
-                            <span class="sr-only">30% Complete</span>
+                            <span class="visually-hidden">30% Complete</span>
                         </div>
                     </div>
                 </div>
