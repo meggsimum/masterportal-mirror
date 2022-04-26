@@ -390,7 +390,7 @@ const BuildSpecModel = {
             mapObject = {
                 baseURL: source.getUrls()[0],
                 opacity: layer.getOpacity(),
-                type: "WMS",
+                type: source.getParams().SINGLETILE ? "WMS" : "tiledwms",
                 layers: source.getParams().LAYERS.split(","),
                 styles: source.getParams().STYLES ? source.getParams().STYLES.split(",") : undefined,
                 imageFormat: source.getParams().FORMAT,
@@ -400,6 +400,9 @@ const BuildSpecModel = {
                 }
             };
 
+        if (!source.getParams().SINGLETILE) {
+            mapObject.tileSize = [source.getParams().WIDTH, source.getParams().HEIGHT];
+        }
         if (Object.prototype.hasOwnProperty.call(source.getParams(), "SLD_BODY") && source.getParams().SLD_BODY !== undefined) {
             mapObject.customParams.SLD_BODY = source.getParams().SLD_BODY;
             mapObject.styles = ["style"];

@@ -1,6 +1,7 @@
 import BuildSpec from "./../../../utils/buildSpec";
 import {Style as OlStyle} from "ol/style.js";
 import WMTSTileGrid from "ol/tilegrid/WMTS";
+import TileGrid from "ol/tilegrid/TileGrid";
 import {TileWMS, ImageWMS, WMTS} from "ol/source.js";
 import {Tile, Vector} from "ol/layer.js";
 import {expect} from "chai";
@@ -419,8 +420,15 @@ describe("src/modules/tools/print/utils/buildSpec", function () {
                 params: {
                     LAYERS: "layer1,layer2",
                     FORMAT: "image/png",
-                    TRANSPARENT: true
-                }
+                    TRANSPARENT: true,
+                    WIDTH: 512,
+                    HEIGHT: 512
+                },
+                tileGrid: new TileGrid({
+                    extent: [510000.0, 5850000.0, 625000.4, 6000000.0],
+                    resolutions: [78271.51696401172, 305.7481131406708, 152.8740565703354, 76.4370282851677, 2.3886571339114906],
+                    tileSize: [512, 512]
+                })
             }),
             opacity: 1
         });
@@ -429,13 +437,14 @@ describe("src/modules/tools/print/utils/buildSpec", function () {
             expect(buildSpec.buildTileWms(tileWmsLayer)).to.deep.own.include({
                 baseURL: "url",
                 opacity: 1,
-                type: "WMS",
+                type: "tiledwms",
                 layers: ["layer1", "layer2"],
                 imageFormat: "image/png",
                 customParams: {
                     TRANSPARENT: true,
                     DPI: 200
-                }
+                },
+                tileSize: [512, 512]
             });
         });
     });
