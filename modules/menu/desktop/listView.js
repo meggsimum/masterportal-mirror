@@ -133,6 +133,11 @@ const ListView = ListViewMain.extend(/** @lends ListView.prototype */{
         }
 
         lightModels = Radio.request("Parser", "getItemsByAttributes", {parentId: parentId});
+
+        lightModels = lightModels.filter(function (model) {
+            return !model.isNeverVisibleInTree;
+        });
+
         models = this.collection.add(lightModels);
 
         // Ordner öffnen, die initial geöffnet sein sollen
