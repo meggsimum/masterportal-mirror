@@ -181,8 +181,6 @@ describe("src/api/wfs/describeFeatureType.js", () => {
 
             expect(response).to.be.an("object");
             expect(axiosStub.calledOnce).to.be.true;
-
-            axiosStub.restore();
         });
         it("should return a reponse if the first, second and third parameter are correct", async () => {
             const url = "https://geodienste.hamburg.de/HH_WFS_Krankenhaeuser",
@@ -194,8 +192,6 @@ describe("src/api/wfs/describeFeatureType.js", () => {
 
             expect(response).to.be.an("object");
             expect(axiosStub.calledOnce).to.be.true;
-
-            axiosStub.restore();
         });
         it("should return undefined if the first paramerter is wrong and the second parameter is not defined", async () => {
             const response = await describeFeatureType("url", undefined);
