@@ -145,11 +145,13 @@ export default {
 <template>
     <div class="gfi-attached">
         <!-- header -->
-        <div class="gfi-header">
+        <div class="gfi-header row">
+            <h5 class="col-11">
+                {{ translate(title) }}
+            </h5>
             <button
                 ref="gfi-close-button"
-                type="button"
-                class="close"
+                class="close btn btn-sm col-1"
                 aria-label="Close"
                 tabindex="0"
                 @click="close"
@@ -159,9 +161,6 @@ export default {
                     <i class="bi-x-lg" />
                 </span>
             </button>
-            <h5>
-                {{ translate(title) }}
-            </h5>
         </div>
         <!-- theme -->
         <div
@@ -191,14 +190,15 @@ export default {
         background-color: #ffffff;
     }
     .gfi-header {
-        font-size: 13px;
-        font-weight: normal;
-        line-height: 17px;
-        color: #646262;
         padding: 0 15px;
         border-bottom: 1px solid #e5e5e5;
+        h5 {
+            font-size: 13px;
+            font-weight: normal;
+            line-height: 17px;
+            color: #646262;
+        }
         button {
-            font-size: 16px;
             opacity: 0.6;
         }
     }
