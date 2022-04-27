@@ -94,7 +94,7 @@ export default {
                     <div class="form-group form-group-sm col-md-12">
                         <label
                             for="tool-styleVT-selectedLayerField"
-                            class="range-label"
+                            class="range-label mb-1"
                         >
                             {{ $t("common:modules.tools.styleVT.theme") }}
                         </label>
