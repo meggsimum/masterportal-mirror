@@ -27,6 +27,7 @@ export default class FilterApi {
         if (!(FilterApi.intervalRegister instanceof IntervalRegister)) {
             FilterApi.intervalRegister = new IntervalRegister();
             FilterApi.cache = {};
+            FilterApi.waitingList = {};
             FilterApi.interfaces = {
                 wfsIntern: new InterfaceWfsIntern(FilterApi.intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent}),
                 wfsExtern: new InterfaceWfsExtern(),
@@ -112,16 +113,36 @@ export default class FilterApi {
         const connector = this.getInterfaceByService(this.service, onerror),
             cacheKey = hash.sha1(["getAttrTypes", JSON.stringify(this.service)].join("."));
 
-        if (Object.prototype.hasOwnProperty.call(FilterApi.cache, cacheKey) && typeof onsuccess === "function") {
-            onsuccess(FilterApi.cache[cacheKey]);
+        if (Object.prototype.hasOwnProperty.call(FilterApi.cache, cacheKey)) {
+            if (typeof onsuccess === "function") {
+                onsuccess(FilterApi.cache[cacheKey]);
+            }
         }
-        else if (isObject(connector) && typeof connector.getAttrTypes === "function") {
+        else if (!isObject(connector) || typeof connector.getAttrTypes !== "function") {
+            if (typeof onerror === "function") {
+                onerror(new Error("FilterApi.getAttrTypes: The connector should be an object and have a function getAttrTypes."));
+            }
+        }
+        else if (!Array.isArray(FilterApi.waitingList[cacheKey])) {
+            FilterApi.waitingList[cacheKey] = [];
+            FilterApi.waitingList[cacheKey].push({onsuccess, onerror});
             connector.getAttrTypes(this.service, result => {
                 FilterApi.cache[cacheKey] = result;
-                if (typeof onsuccess === "function") {
-                    onsuccess(result);
-                }
-            }, onerror);
+                FilterApi.waitingList[cacheKey].forEach(obj => {
+                    if (typeof obj.onsuccess === "function") {
+                        obj.onsuccess(result);
+                    }
+                });
+            }, error => {
+                FilterApi.waitingList[cacheKey].forEach(obj => {
+                    if (typeof obj.onerror === "function") {
+                        obj.onerror(error);
+                    }
+                });
+            });
+        }
+        else {
+            FilterApi.waitingList[cacheKey].push({onsuccess, onerror});
         }
     }
     /**
@@ -144,16 +165,36 @@ export default class FilterApi {
         const connector = this.getInterfaceByService(this.service, onerror),
             cacheKey = hash.sha1(["getMinMax", JSON.stringify(this.service), attrName, minOnly, maxOnly].join("."));
 
-        if (Object.prototype.hasOwnProperty.call(FilterApi.cache, cacheKey) && typeof onsuccess === "function") {
-            onsuccess(FilterApi.cache[cacheKey]);
+        if (Object.prototype.hasOwnProperty.call(FilterApi.cache, cacheKey)) {
+            if (typeof onsuccess === "function") {
+                onsuccess(FilterApi.cache[cacheKey]);
+            }
         }
-        else if (isObject(connector) && typeof connector.getMinMax === "function") {
+        else if (!isObject(connector) || typeof connector.getMinMax !== "function") {
+            if (typeof onerror === "function") {
+                onerror(new Error("FilterApi.getMinMax: The connector should be an object and have a function getMinMax."));
+            }
+        }
+        else if (!Array.isArray(FilterApi.waitingList[cacheKey])) {
+            FilterApi.waitingList[cacheKey] = [];
+            FilterApi.waitingList[cacheKey].push({onsuccess, onerror});
             connector.getMinMax(this.service, attrName, result => {
                 FilterApi.cache[cacheKey] = result;
-                if (typeof onsuccess === "function") {
-                    onsuccess(result);
-                }
-            }, onerror, minOnly, maxOnly, isDate);
+                FilterApi.waitingList[cacheKey].forEach(obj => {
+                    if (typeof obj.onsuccess === "function") {
+                        obj.onsuccess(result);
+                    }
+                });
+            }, error => {
+                FilterApi.waitingList[cacheKey].forEach(obj => {
+                    if (typeof obj.onerror === "function") {
+                        obj.onerror(error);
+                    }
+                });
+            }, minOnly, maxOnly, isDate);
+        }
+        else {
+            FilterApi.waitingList[cacheKey].push({onsuccess, onerror});
         }
     }
     /**
@@ -173,10 +214,19 @@ export default class FilterApi {
         const connector = this.getInterfaceByService(this.service, onerror),
             cacheKey = hash.sha1(["getUniqueValues", JSON.stringify(this.service), attrName].join("."));
 
-        if (Object.prototype.hasOwnProperty.call(FilterApi.cache, cacheKey) && typeof onsuccess === "function") {
-            onsuccess(FilterApi.cache[cacheKey]);
+        if (Object.prototype.hasOwnProperty.call(FilterApi.cache, cacheKey)) {
+            if (typeof onsuccess === "function") {
+                onsuccess(FilterApi.cache[cacheKey]);
+            }
         }
-        else if (isObject(connector) && typeof connector.getUniqueValues === "function") {
+        else if (!isObject(connector) || typeof connector.getUniqueValues !== "function") {
+            if (typeof onerror === "function") {
+                onerror(new Error("FilterApi.getUniqueValues: The connector should be an object and have a function getUniqueValues."));
+            }
+        }
+        else if (!Array.isArray(FilterApi.waitingList[cacheKey])) {
+            FilterApi.waitingList[cacheKey] = [];
+            FilterApi.waitingList[cacheKey].push({onsuccess, onerror});
             connector.getUniqueValues(this.service, attrName, result => {
                 if (Array.isArray(result)) {
                     result.sort((a, b) => {
@@ -184,10 +234,21 @@ export default class FilterApi {
                     });
                 }
                 FilterApi.cache[cacheKey] = result;
-                if (typeof onsuccess === "function") {
-                    onsuccess(result);
-                }
-            }, onerror);
+                FilterApi.waitingList[cacheKey].forEach(obj => {
+                    if (typeof obj.onsuccess === "function") {
+                        obj.onsuccess(result);
+                    }
+                });
+            }, error => {
+                FilterApi.waitingList[cacheKey].forEach(obj => {
+                    if (typeof obj.onerror === "function") {
+                        obj.onerror(error);
+                    }
+                });
+            });
+        }
+        else {
+            FilterApi.waitingList[cacheKey].push({onsuccess, onerror});
         }
     }
     /**

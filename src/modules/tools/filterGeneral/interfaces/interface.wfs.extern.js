@@ -354,7 +354,7 @@ export default class InterfaceWfsExtern {
         }
 
         node = node.getElementsByTagNameNS(node.namespaceURI, attrName)[0];
-        if (dateParam !== "") {
+        if (dateParam) {
             onsuccess(this.parseMinMaxDate(responseXML, attrName, dateParam));
         }
         else if (node && typeof onsuccess === "function") {
