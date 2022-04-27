@@ -229,7 +229,7 @@ export default {
 <template lang="html">
     <ToolTemplate
         :title="$t(name)"
-        :icon="glyphicon"
+        icon="bi-funnel-fill"
         :active="active"
         :render-to-window="renderToWindow"
         :resizable-window="resizableWindow"
@@ -255,7 +255,7 @@ export default {
                         #default="slotProps"
                     >
                         <div
-                            :class="['panel-collapse', 'collapse', showLayerSnippet(slotProps.layer.filterId) ? 'in' : '']"
+                            :class="['accordion-collapse', 'collapse', showLayerSnippet(slotProps.layer.filterId) ? 'show' : '']"
                             role="tabpanel"
                         >
                             <LayerFilterSnippet

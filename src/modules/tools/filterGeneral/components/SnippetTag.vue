@@ -50,8 +50,8 @@ export default {
             @click="removeTag()"
             @keydown.enter="removeTag()"
         >
-            <span class="snippetTagValue pull-left">{{ value }}</span>
-            <span class="glyphicon glyphicon-remove pull-right" />
+            <span class="snippetTagValue float-lg-start">{{ value }}</span>
+            <span class="bi bi-x-lg float-end" />
         </button>
     </div>
 </template>
@@ -82,7 +82,7 @@ export default {
     .snippetTagContainer .snippetTagValue {
         padding-right: 5px;
     }
-    .glyphicon-remove:hover {
+    .bi-x-lg:hover {
         color: #E10019;
     }
 </style>

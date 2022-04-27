@@ -137,7 +137,7 @@ export default {
                 >
                     <a
                         role="button"
-                        data-toggle="collapse"
+                        data-bs-toggle="collapse"
                         data-parent="#accordion"
                         tabindex="0"
                     >
@@ -159,7 +159,7 @@ export default {
                     <div
                         v-for="subFilter in filter.layers"
                         :key="subFilter.filterId"
-                        :class="['panel', 'panel-collapse', 'collapse', selectedCategory.includes(filter.category) ? 'in': '']"
+                        :class="['panel', 'accordion-collapse', 'collapse', selectedCategory.includes(filter.category) ? 'show': '']"
                         role="tabpanel"
                     >
                         <div
@@ -208,9 +208,17 @@ export default {
     #tool-general-filter .panel-heading .panel-title a[tabindex="0"]:focus {
         padding: 5px;
     }
+    h2 {
+        margin: 0;
+    }
 </style>
 
 <style lang="scss" scoped>
+    #tool-general-filter .panel {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 10px;
+    }
     .panel-group .panel + .panel {
         margin-top: 10px;
     }
