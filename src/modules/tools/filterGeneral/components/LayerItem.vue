@@ -67,11 +67,14 @@ export default {
         role="tab"
     >
         <h2
-            :class="['panel-title', disabled ? 'disabled' : '']"
+            :class="['accordion-header', disabled ? 'disabled' : '']"
             @click="updateSelectedLayers(layer.filterId)"
             @keydown.enter="updateSelectedLayers(layer.filterId)"
         >
-            <a
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                {{ layer.title ? layer.title : layer.layerId }}
+            </button>
+            <!--<a
                 :disabled="disabled"
                 role="button"
                 data-toggle="collapse"
@@ -87,7 +90,7 @@ export default {
                     v-else
                     class="bi bi-chevron-up float-end"
                 />
-            </a>
+            </a>-->
         </h2>
         <div
             v-if="layer.shortDescription && !selected"

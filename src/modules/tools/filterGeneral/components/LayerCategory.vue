@@ -185,7 +185,7 @@ export default {
         <div
             v-for="filter in filtersOnly"
             :key="filter.filterId"
-            class="panel panel-default"
+            class="accordion-item"
             @click="setLayerLoaded(filter.filterId)"
             @keydown.enter="setLayerLoaded(filter.filterId)"
         >
