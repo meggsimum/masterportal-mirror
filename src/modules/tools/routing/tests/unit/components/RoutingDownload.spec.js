@@ -1,8 +1,15 @@
 import Vuex from "vuex";
 import {expect} from "chai";
+import sinon from "sinon";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import RoutingDownloadComponent from "../../../components/RoutingDownload.vue";
-import Routing from "../../../store/indexRouting";
+import mutations from "../../../store/mutationsRouting";
+import actions from "../../../store/actionsRouting";
+import getters from "../../../store/gettersRouting";
+import state from "../../../store/stateRouting";
+
+import Directions from "../../../store/directions/indexDirections";
+import Isochrones from "../../../store/isochrones/indexIsochrones";
 import Feature from "ol/Feature";
 import LineString from "ol/geom/LineString";
 
@@ -39,7 +46,24 @@ describe("src/modules/tools/routing/components/RoutingDownload.vue", () => {
                 Tools: {
                     namespaced: true,
                     modules: {
-                        Routing
+                        Routing:
+                        {
+                            namespaced: true,
+                            modules: {
+                                Directions,
+                                Isochrones
+                            },
+                            state: {...state},
+                            mutations,
+                            actions,
+                            getters
+                        }
+                    }
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: {
+                        addSingleAlert: sinon.stub()
                     }
                 }
             },

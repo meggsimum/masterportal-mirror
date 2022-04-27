@@ -1,8 +1,14 @@
 import Vuex from "vuex";
 import {expect} from "chai";
+import sinon from "sinon";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import RoutingLoadingSpinnerComponent from "../../../components/RoutingLoadingSpinner.vue";
-import Routing from "../../../store/indexRouting";
+import mutations from "../../../store/mutationsRouting";
+import actions from "../../../store/actionsRouting";
+import getters from "../../../store/gettersRouting";
+import state from "../../../store/stateRouting";
+import Directions from "../../../store/directions/indexDirections";
+import Isochrones from "../../../store/isochrones/indexIsochrones";
 
 const localVue = createLocalVue();
 
@@ -36,7 +42,24 @@ describe("src/modules/tools/routing/components/RoutingLoadingSpinner.vue", () =>
                 Tools: {
                     namespaced: true,
                     modules: {
-                        Routing
+                        Routing:
+                        {
+                            namespaced: true,
+                            modules: {
+                                Directions,
+                                Isochrones
+                            },
+                            state: {...state},
+                            mutations,
+                            actions,
+                            getters
+                        }
+                    }
+                },
+                Alerting: {
+                    namespaced: true,
+                    actions: {
+                        addSingleAlert: sinon.stub()
                     }
                 }
             },

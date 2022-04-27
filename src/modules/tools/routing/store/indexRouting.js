@@ -12,7 +12,7 @@ export default {
         Directions,
         Isochrones
     },
-    state,
+    state: {...state},
     mutations,
     actions,
     getters

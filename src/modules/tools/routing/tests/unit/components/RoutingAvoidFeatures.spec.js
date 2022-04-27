@@ -1,8 +1,15 @@
 import Vuex from "vuex";
 import {expect} from "chai";
+import sinon from "sinon";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
+import mapCollection from "../../../../../../core/dataStorage/mapCollection.js";
 import RoutingAvoidFeaturesComponent from "../../../components/RoutingAvoidFeatures.vue";
-import Routing from "../../../store/indexRouting";
+import mutations from "../../../store/mutationsRouting";
+import actions from "../../../store/actionsRouting";
+import getters from "../../../store/gettersRouting";
+import state from "../../../store/stateRouting";
+import Directions from "../../../store/directions/indexDirections";
+import Isochrones from "../../../store/isochrones/indexIsochrones";
 
 const localVue = createLocalVue();
 
@@ -30,18 +37,44 @@ describe("src/modules/tools/routing/components/RoutingAvoidFeatures.vue", () => 
         wrapper;
 
     beforeEach(() => {
+        const map = {
+            id: "ol",
+            mode: "2D",
+            addLayer: sinon.spy(),
+            removeLayer: sinon.spy(),
+            addInteraction: sinon.spy(),
+            removeInteraction: sinon.spy()
+        };
+
+        mapCollection.clear();
+        mapCollection.addMap(map, "ol", "2D");
         store = new Vuex.Store({
             namespaced: true,
             modules: {
                 Tools: {
                     namespaced: true,
                     modules: {
-                        Routing
+                        Routing:
+                        {
+                            namespaced: true,
+                            modules: {
+                                Directions,
+                                Isochrones
+                            },
+                            state: {...state},
+                            mutations,
+                            actions,
+                            getters
+                        }
                     }
                 }
             },
             state: {
-                configJson: mockConfigJson
+                configJson: mockConfigJson,
+                Map: {
+                    mapId: "ol",
+                    mapMode: "2D"
+                }
             }
         });
     });
