@@ -535,7 +535,7 @@ export default {
                             <button
                                 id="copyEastingBtn"
                                 type="button"
-                                class="btn btn-secondary border"
+                                class="btn btn-outline-default"
                                 :title="$t(`common:modules.tools.coordToolkit.copyCoordBtn`, {value: $t(getLabel('eastingLabel'))})"
                                 @click="copyCoords(['coordinatesEastingField'])"
                             >
@@ -554,7 +554,7 @@ export default {
                             <button
                                 id="copyCoordsPairBtn"
                                 type="button"
-                                class="btn btn-secondary border"
+                                class="btn btn-outline-default"
                                 :title="$t(`common:modules.tools.coordToolkit.copyCoordsBtn`)"
                                 @click="copyCoords(['coordinatesEastingField', 'coordinatesNorthingField'])"
                             >
@@ -607,7 +607,7 @@ export default {
                             <button
                                 id="copyNorthingBtn"
                                 type="button"
-                                class="btn btn-secondary border"
+                                class="btn btn-outline-default"
                                 :title="$t(`common:modules.tools.coordToolkit.copyCoordBtn`, {value: $t(getLabel('northingLabel'))})"
                                 @click="copyCoords(['coordinatesNorthingField'])"
                             >
