@@ -2,7 +2,7 @@
 <div class="form-horizontal" role="form">
     <div class="form-group form-group-sm row">
         <div class="col-md-12">
-            <label class="range-label"><%=theme%></label>
+            <label class="range-label mb-1"><%=theme%></label>
             <select class="form-select form-select-sm" id="layerField">
                 <option class="float-start" value="" selected="true"><%=chooseTheme%></option>
                 <% styleableLayerList.forEach(function (styleableLayer) { %>
@@ -14,7 +14,7 @@
     <% if ( model !== null && model!== undefined) { %>
         <div class="form-group form-group-sm row">
             <div class="col-md-12">
-                <label class="range-label"><%=attribute%></label>
+                <label class="range-label mb-1"><%=attribute%></label>
                 <select class="form-select form-select-sm" id="attributField">
                     <option class="float-start" value="default" <% if (attributeName === "default") { print ("SELECTED")} %>><%=chooseAttribute%></option>
                     <% model.get("attributesToStyle").forEach(function (attribute) { %>
@@ -26,7 +26,7 @@
         <% if (attributeName !== "default") { %>
             <div class="form-group form-group-sm row">
                 <div class="col-md-12">
-                    <label class="range-label"><%=countOfClasses%></label>
+                    <label class="range-label mb-1"><%=countOfClasses%></label>
                     <select class="form-select form-select-sm" id="numberField">
                         <option class="float-start" value="default" <% if (numberOfClasses === "default") { print ("SELECTED")} %>><%=chooseNumberOfClasses%></option>
                         <% numberOfClassesList.forEach(function (number) { %>
@@ -40,15 +40,15 @@
             <% for (let i = 0; i < numberOfClasses; i++) { %>
                 <div class="form-group row">
                     <div class="col-md-5">
-                        <label class="range-label"><%=rangeOfValues%> <%= i + 1 %></label>
+                        <label class="range-label mb-1"><%=rangeOfValues%> <%= i + 1 %></label>
                         <input class="form-control form-control-sm <%= 'start-range' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].startRange)} %>" placeholder=<%=from%>>
                     </div>
                     <div class="col-md-5">
-                        <label class="range-label">&nbsp;</label>
+                        <label class="range-label mb-1">&nbsp;</label>
                         <input class="form-control form-control-sm <%= 'stop-range' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].stopRange)} %>" placeholder=<%=to%>>
                     </div>
                     <div class="col-md-2">
-                        <label class="range-label">&nbsp;</label>
+                        <label class="range-label mb-1">&nbsp;</label>
                         <div id="style-wms-colorpicker" tabindex="0" class="input-group input-group-sm colorpicker-component btn btn-secondary border">
                             <input class="form-control form-control-sm <%= 'selected-color' + i %>" value="<% if (typeof styleClassAttributes[i] !== 'undefined') { print (styleClassAttributes[i].color)} else { print ('#337ab7')} %>">
                             <!-- in theory it would have to be input-group-text for bootstrap 5 but then the tool doesn't work anymore so until it is refactored to vue it has to be the old class -->
