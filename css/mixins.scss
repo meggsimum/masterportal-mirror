@@ -9,10 +9,10 @@
 
 /* focus styling for actions like menu-entries, buttons, icons, etc */
 @mixin primary_action_focus {
-    outline: 3px solid $accent_focus;
-    outline: 3px auto  Highlight;
-    outline: 3px auto -webkit-focus-ring-color;
-    outline-offset: -2px;
+    outline: 2px solid $accent_focus;
+    outline: 2px auto  Highlight;
+    outline: 2px auto -webkit-focus-ring-color;
+    outline-offset: -1px;
 }
 
 /* hover styling for actions like menu-entries, buttons, icons, etc */

@@ -458,6 +458,7 @@ export default {
                             <input
                                 id="autoAdjustScale"
                                 type="checkbox"
+                                class="form-check-input"
                                 :checked="autoAdjustScale"
                                 @change="setAutoAdjustScale($event.target.checked)"
                             >
