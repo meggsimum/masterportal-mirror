@@ -164,7 +164,8 @@ export default {
             "createMapFishServiceUrl",
             "startPrint",
             "getOptimalResolution",
-            "updateCanvasLayer"
+            "updateCanvasLayer",
+            "getAttributeInLayoutByName"
         ]),
         ...mapActions("Alerting", ["addSingleAlert"]),
 
@@ -231,17 +232,22 @@ export default {
          * @returns {void}
          */
         layoutChanged (value) {
+            this.resetLayoutParameter();
             this.setCurrentLayoutName(value);
+            this.setCurrentLayout(this.layoutList.find(layout => layout.name === value));
+            this.getAttributeInLayoutByName("gfi");
+            this.getAttributeInLayoutByName("legend");
             this.updateCanvasLayer();
             mapCollection.getMap("ol", "2D").render();
         },
 
         /**
-         * returns if gfi is available
-         * @returns {boolean} if gfi is available
-         */
-        showGfiAvailable () {
-            return this.isGfiAvailable;
+        * resets the available attriubtes gfi and legend to the default parameters
+        * @returns {void}
+        */
+        resetLayoutParameter () {
+            this.setIsGfiAvailable(false);
+            this.setIsLegendAvailable(false);
         },
 
         /**
@@ -463,6 +469,7 @@ export default {
                     </div>
                 </div>
                 <div
+                    v-if="isLegendAvailable"
                     class="form-group form-group-sm"
                 >
                     <label
@@ -483,6 +490,7 @@ export default {
                     </div>
                 </div>
                 <div
+                    v-if="isGfiAvailable"
                     class="form-group form-group-sm"
                 >
                     <label
