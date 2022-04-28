@@ -5,6 +5,8 @@ import {getFeatureDescription, describeFeatureType} from "../../../wfs/describeF
 const fs = require("fs");
 
 describe("src/api/wfs/describeFeatureType.js", () => {
+    let xml;
+
     const json = {
         schema: {
             element: [{
@@ -39,6 +41,11 @@ describe("src/api/wfs/describeFeatureType.js", () => {
         }
     };
 
+    before(function () {
+        const data = fs.readFileSync("src/api/tests/unit/wfs/response.xml", "utf8");
+
+        xml = new window.DOMParser().parseFromString(data, "text/xml");
+    });
     beforeEach(function () {
         sinon.spy(console, "error");
     });
@@ -173,9 +180,7 @@ describe("src/api/wfs/describeFeatureType.js", () => {
 
         it("should return a reponse if the first paramerter is correct and the second parameter is not defined and 3. param is given", async () => {
             const url = "https://geodienste.hamburg.de/HH_WFS_Krankenhaeuser",
-                data = fs.readFileSync("src/api/tests/unit/wfs/response.xml", "utf8"),
                 featureTypes = "krankenhaeuser_hh",
-                xml = new window.DOMParser().parseFromString(data, "text/xml"),
                 axiosStub = sinon.stub(axios, "get").returns(Promise.resolve({request: {status: 200, responseXML: xml}})),
                 response = await describeFeatureType(url, undefined, featureTypes);
 
@@ -184,9 +189,7 @@ describe("src/api/wfs/describeFeatureType.js", () => {
         });
         it("should return a reponse if the first, second and third parameter are correct", async () => {
             const url = "https://geodienste.hamburg.de/HH_WFS_Krankenhaeuser",
-                data = fs.readFileSync("src/api/tests/unit/wfs/response.xml", "utf8"),
                 featureTypes = "krankenhaeuser_hh",
-                xml = new window.DOMParser().parseFromString(data, "text/xml"),
                 axiosStub = sinon.stub(axios, "get").returns(Promise.resolve({request: {status: 200, responseXML: xml}})),
                 response = await describeFeatureType(url, "2.0.0", featureTypes);
 
