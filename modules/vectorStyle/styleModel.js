@@ -13,7 +13,8 @@ const VectorStyleModel = Backbone.Model.extend(/** @lends VectorStyleModel.proto
         labelField: null,
         legendInfos: [],
         rules: null,
-        styleId: null
+        styleId: null,
+        styleMultiGeomOnlyWithRule: false
     },
 
     /**
@@ -26,6 +27,7 @@ const VectorStyleModel = Backbone.Model.extend(/** @lends VectorStyleModel.proto
      * @param {Object[]} legendInfos list of used styling rules for legend graphic
      * @param {Object[]} rules Array with styling rules and its conditions.
      * @param {String} styleId styleId is set in style.json
+     * @param {String} styleMultiGeomOnlyWithRule if true, use fallback for styling of multiGeometries
      * @listens i18next#RadioTriggerLanguageChanged
      */
     initialize: function () {
@@ -413,7 +415,7 @@ const VectorStyleModel = Backbone.Model.extend(/** @lends VectorStyleModel.proto
                 if (this.isMultiGeometry(geometryTypeSimpleGeom)) {
                     console.warn("Multi encapsulated multiGeometries are not supported.");
                 }
-                else {
+                else if (!this.get("styleMultiGeomOnlyWithRule") || rule) {
                     const simpleStyle = this.getSimpleGeometryStyle(geometryTypeSimpleGeom, feature, rule, isClustered);
 
                     simpleStyle.setGeometry(geometry);
