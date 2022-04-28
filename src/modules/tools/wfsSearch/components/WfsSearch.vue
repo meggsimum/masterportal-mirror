@@ -69,6 +69,7 @@ export default {
     methods: {
         ...mapMutations("Tools/WfsSearch", Object.keys(mutations)),
         ...mapActions("Tools/WfsSearch", Object.keys(actions)),
+        ...mapActions("MapMarker", ["placingPointMarker"]),
         searchFeatures,
         /**
          * Function called when the window of the tool is closed.
@@ -106,12 +107,19 @@ export default {
 
             LoaderOverlay.hide();
 
-            document.getElementById("tool-wfsSearch-button-showResults").focus();
             this.setResults([]);
             features.forEach(feature => {
                 this.results.push(feature);
             });
-            this.setShowResultList(true);
+
+            if (this.instances[0]?.resultList !== undefined) {
+                document.getElementById("tool-wfsSearch-button-showResults").focus();
+                this.setShowResultList(true);
+            }
+            else {
+                this.placingPointMarker(features[0].getGeometry().getCoordinates());
+                Radio.trigger("MapView", "setCenter", features[0].getGeometry().getCoordinates(), this.zoomLevel);
+            }
         }
     }
 };
@@ -206,7 +214,7 @@ export default {
                             >
                         </div>
                         <div
-                            v-if="searched"
+                            v-if="searched && instances[0].resultList !== undefined"
                             class="col-md-12 col-sm-12"
                         >
                             <button

@@ -265,7 +265,6 @@
               {
                 "title": "translate#common:menu.tools.parcelSearch",
                 "userHelp": "hide",
-                "resultDialogTitle": "Trefferliste",
                 "requestConfig": {
                   "gazetteer": {
                     "namespaces": [
@@ -276,22 +275,6 @@
                   },
                   "restLayerId": "6",
                   "storedQueryId": "Flurstueck"
-                },
-                "resultList": {
-                  "gemarkungsname": "Gemarkungsname",
-                  "gemarkung": "Gemarkung",
-                  "flurstuecksnummer": "Flurstücknummer",
-                  "flurstueck_lang": "Flurstücknummer - lang",
-                  "flurstuecksflaeche": "Flurstückfläche",
-                  "verwaltungsart": "Verwaltungsart",
-                  "gemeindename": "Gemeindename",
-                  "gemeinde": "Gemeinde",
-                  "kreisname": "Kreisname",
-                  "kreis": "Kreis",
-                  "land": "Land",
-                  "regierungsbezirk": "Regierungsbezirk",
-                  "status": "Status",
-                  "geometry": "Geometrie"
                 },
                 "selectSource": "https://geodienste.hamburg.de/lgv-config/gemarkungen_hh.json",
                 "literals": [

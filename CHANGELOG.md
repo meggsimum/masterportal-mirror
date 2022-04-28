@@ -19,6 +19,7 @@
 - Replaced hardcoded EPSG code of map projection by a getter which identifies the projection of the map in withoutGUIDraw
 - Layer with isNeverVisibleInTree will not be initialized in menu tree.
 - Update print configuration for tiledWMS, layers are printed as tiledwms with tileSize.
+- WFSSearch, has been adjusted so that it zooms directly to the first feature found if no `resultList` is configured.
 
 ### Deprecated
 

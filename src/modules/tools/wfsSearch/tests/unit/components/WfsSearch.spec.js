@@ -34,7 +34,16 @@ describe("src/modules/tools/wfsSearch/components/WfsSearch.vue", () => {
                     modules: {
                         WfsSearch: WfsSearchModule
                     }
+                },
+                Language: {
+                    namespaced: true,
+                    getters: {
+                        currentLocale: sinon.stub()
+                    }
                 }
+            },
+            getters: {
+                uiStyle: sinon.stub()
             }
         });
         store.commit("Tools/WfsSearch/setActive", true);
@@ -137,7 +146,7 @@ describe("src/modules/tools/wfsSearch/components/WfsSearch.vue", () => {
         expect(searchButton.text()).to.equal("common:modules.tools.wfsSearch.showResults (0)");
         expect(searchButton.element.disabled).to.be.true;
     });
-    it("renders a disabled button if the user searched but the parameter 'resultList' was not configured", () => {
+    it("renders no button if the user searched but the parameter 'resultList' was not configured", () => {
         store.commit("Tools/WfsSearch/setSearched", true);
         store.commit("Tools/WfsSearch/setResults", [{}]);
         delete instances[0].resultList;
@@ -148,9 +157,7 @@ describe("src/modules/tools/wfsSearch/components/WfsSearch.vue", () => {
             }),
             searchButton = wrapper.find("#tool-wfsSearch-button-showResults");
 
-        expect(searchButton.exists()).to.be.true;
-        expect(searchButton.text()).to.equal("common:modules.tools.wfsSearch.showResults (1)");
-        expect(searchButton.element.disabled).to.be.true;
+        expect(searchButton.exists()).to.be.false;
     });
     it("renders a pagination when more results than are to be shown are available", () => {
         store.commit("Tools/WfsSearch/setSearched", true);
