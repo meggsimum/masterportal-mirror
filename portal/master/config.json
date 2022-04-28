@@ -259,10 +259,12 @@
         "glyphicon": "glyphicon-wrench",
         "children": {
           "wfsSearch": {
-            "name": "WFS Suche",
+            "name": "translate#common:menu.tools.parcelSearch",
+            "zoomLevel": 7,
             "instances": [
               {
-                "title": "Hamburger Flurstücksuche",
+                "title": "translate#common:menu.tools.parcelSearch",
+                "userHelp": "hide",
                 "resultDialogTitle": "Trefferliste",
                 "requestConfig": {
                   "gazetteer": {
