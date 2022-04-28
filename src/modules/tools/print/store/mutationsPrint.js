@@ -31,6 +31,17 @@ const mutations = {
         const index = fileDownload.index;
 
         state.fileDownloads[index] = Object.assign(state.fileDownloads[index], fileDownload);
+    },
+
+    /**
+     * Sets the state values for displaying an auto adjusted scale.
+     * @param {Object} state Context object.
+     * @param {Boolean} checkValue Value of the checkbox.
+     * @returns {void}
+     */
+    setAutoAdjustScale: (state, checkValue) => {
+        state.autoAdjustScale = checkValue;
+        state.isScaleSelectedManually = false;
     }
 };
 

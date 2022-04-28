@@ -7,7 +7,7 @@ const CanvasModel = {
      * @returns {Object} - LayerObject for print mask.
      */
     getCanvasLayer: function (layerList) {
-        const currentResolution = Radio.request("MapView", "getOptions").resolution;
+        const currentResolution = Radio.request("MapView", "getOptions")?.resolution;
         let canvasLayerList = [],
             canvasLayer = {};
 

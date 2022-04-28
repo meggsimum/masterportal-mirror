@@ -134,6 +134,20 @@ export default class MapHandler {
     }
 
     /**
+     * Checks if the layer has been updated at least one time.
+     * @param {Number} filterId the filter id
+     * @returns {Boolean} true if the layer has been updated at least once, false if never updated up to now
+     */
+    isSourceUpdated (filterId) {
+        const layerModel = this.getLayerModelByFilterId(filterId);
+
+        if (isObject(layerModel)) {
+            return layerModel.get("sourceUpdated") ? layerModel.get("sourceUpdated") : false;
+        }
+        return false;
+    }
+
+    /**
      * Checks if the layer for the given filterId exists and is visible in general (may not be visible on map).
      * @param {Number} filterId the filter id
      * @returns {Boolean} true if the layer is ready to use
@@ -174,7 +188,7 @@ export default class MapHandler {
             return;
         }
 
-        if (!this.isLayerActivated(filterId)) {
+        if (!this.isLayerActivated(filterId) && !this.isSourceUpdated(filterId)) {
             layerModel.layer.getSource().once("featuresloadend", () => {
                 if (typeof onActivated === "function") {
                     onActivated();
@@ -182,7 +196,7 @@ export default class MapHandler {
             });
             layerModel.set("isSelected", true);
         }
-        else if (!this.isLayerVisibleInMap(filterId)) {
+        else if (!this.isLayerVisibleInMap(filterId) || !this.isLayerActivated(filterId)) {
             layerModel.set("isSelected", true);
             if (typeof onActivated === "function") {
                 onActivated();
@@ -204,6 +218,35 @@ export default class MapHandler {
         if (isObject(layerModel)) {
             layerModel.set("isSelected", false);
         }
+    }
+
+    /**
+     * Sets the observer for auto interval for the layer referenced by the given filterid.
+     * @param {Number} filterId the filter id
+     * @param {Function} handler a function to call when auto refresh is triggered
+     * @returns {void}
+     */
+    setObserverAutoInterval (filterId, handler) {
+        const layerModel = this.getLayerModelByFilterId(filterId);
+
+        if (!isObject(layerModel)) {
+            return;
+        }
+        layerModel.setObserverAutoInterval(handler);
+    }
+
+    /**
+     * Checks if the layer referenced by filterId has an auto refresh interval.
+     * @param {Number} filterId the filter id
+     * @returns {Boolean} true if autoRefresh is set
+     */
+    hasAutoRefreshInterval (filterId) {
+        const layerModel = this.getLayerModelByFilterId(filterId);
+
+        if (!isObject(layerModel)) {
+            return false;
+        }
+        return layerModel.get("autoRefresh") > 0;
     }
 
     /**

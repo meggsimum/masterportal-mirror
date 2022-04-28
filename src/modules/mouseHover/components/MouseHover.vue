@@ -14,7 +14,7 @@ export default {
         })
     },
     mounted () {
-        if (!this.isMobile) {
+        if (!this.isMobile && Config.mouseHover) {
             this.$nextTick(function () {
                 this.setVisibleLayerList(this.visibleLayerList);
                 this.initialize(this.ol2DMap);

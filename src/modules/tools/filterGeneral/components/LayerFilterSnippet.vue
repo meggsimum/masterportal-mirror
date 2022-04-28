@@ -12,6 +12,7 @@ import SnippetTag from "./SnippetTag.vue";
 import isObject from "../../../../utils/isObject";
 import FilterApi from "../interfaces/filter.api.js";
 import MapHandler from "../utils/mapHandler.js";
+import {compileSnippets} from "../utils/compileSnippets.js";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
 import {getSnippetAdjustments} from "../utils/getSnippetAdjustments.js";
 import {getLayerByLayerId} from "../utils/openlayerFunctions";
@@ -68,6 +69,8 @@ export default {
             searchInMapExtent: false,
             snippets: [],
             postSnippetKey: "",
+            autoRefreshSet: false,
+            isRefreshing: false,
             amountOfFilteredItems: false,
             precheckedSnippets: []
         };
@@ -87,12 +90,12 @@ export default {
         paging (val) {
             if (val.page >= val.total) {
                 this.setFormDisable(false);
-
-                if (!this.getSearchInMapExtent() && this.liveZoomToFeatures) {
+                if (!this.isRefreshing && !this.getSearchInMapExtent() && this.liveZoomToFeatures) {
                     this.mapHandler.zoomToFilteredFeature(this.layerConfig?.filterId, this.minScale, error => {
                         console.warn("map error", error);
                     });
                 }
+                this.isRefreshing = false;
             }
         },
         precheckedSnippets (val) {
@@ -115,12 +118,6 @@ export default {
         const filterId = this.layerConfig.filterId,
             layerId = this.getLayerId(filterId, this.layerConfig?.layerId, this.layerConfig?.service?.layerId);
 
-        if (Array.isArray(this.layerConfig?.snippets)) {
-            this.snippets = this.layerConfig?.snippets;
-        }
-
-        this.addSnippetIdsToSnippets(this.snippets);
-
         if (this.api instanceof FilterApi && this.mapHandler instanceof MapHandler) {
             this.mapHandler.initializeLayer(filterId, layerId, this.isExtern(), error => {
                 console.warn(error);
@@ -135,179 +132,21 @@ export default {
         }
     },
     mounted () {
-        if (!this.checkSnippetTypeConsistency(this.snippets)) {
-            this.autoRecognizeSnippetTypes(this.snippets, () => {
-                this.addMissingPropertiesToSnippets(this.snippets);
-                this.setPostSnippetKey("rerender");
-            });
-        }
-        else {
-            this.addMissingPropertiesToSnippets(this.snippets);
-            this.setPostSnippetKey("rerender");
-        }
+        compileSnippets(this.layerConfig.snippets, this.api, snippets => {
+            this.snippets = snippets;
+        }, error => {
+            console.warn(error);
+        });
     },
     methods: {
         translateKeyWithPlausibilityCheck,
+
         /**
          * Checks if this layer is supposed to use external filtering.
          * @returns {Boolean} true if the layer should filter external
          */
         isExtern () {
             return this.layerConfig?.extern;
-        },
-        /**
-         * Checks if all snippets have defined types.
-         * @param {Object[]} snippets an array of snippet
-         * @returns {Boolean} true if all types are set, false if any snippet is missing a type
-         */
-        checkSnippetTypeConsistency (snippets) {
-            if (!Array.isArray(snippets) || !snippets.length) {
-                return false;
-            }
-            const len = snippets.length;
-
-            for (let i = 0; i < len; i++) {
-                if (!isObject(snippets[i]) || !snippets[i].type) {
-                    return false;
-                }
-            }
-            return true;
-        },
-        /**
-         * Calls the api to get the attrTypes and dataTypes and creates new or alters present snippets.
-         * @param {Object[]} snippets an array list of snippet objects
-         * @param {Function} onfinished callback on finished
-         * @returns {void}
-         */
-        autoRecognizeSnippetTypes (snippets, onfinished) {
-            if (!(this.api instanceof FilterApi)) {
-                return;
-            }
-            this.api.getAttrTypes(attrTypes => {
-                if (Array.isArray(snippets) && snippets.length) {
-                    snippets.forEach(snippet => {
-                        if (!snippet.type) {
-                            snippet.type = this.getDefaultSnippetTypeByDataType(attrTypes[snippet.attrName]);
-                        }
-                    });
-                }
-                else {
-                    Object.entries(attrTypes).forEach(([attrName, dataType]) => {
-                        snippets.push({
-                            type: this.getDefaultSnippetTypeByDataType(dataType),
-                            attrName,
-                            title: true,
-                            visible: true
-                        });
-                    });
-                }
-
-                if (typeof onfinished === "function") {
-                    onfinished();
-                }
-            }, err => {
-                console.warn(err);
-            });
-        },
-        /**
-         * Adds the snippetId to the given snippets.
-         * @param {Object[]} snippets the snippets to add missing properties to
-         * @returns {void}
-         */
-        addSnippetIdsToSnippets (snippets) {
-            if (!Array.isArray(snippets)) {
-                return;
-            }
-            snippets.forEach((snippet, snippetId) => {
-                if (typeof snippet === "string") {
-                    snippets[snippetId] = {
-                        snippetId,
-                        attrName: snippet
-                    };
-                    return;
-                }
-                else if (!isObject(snippet)) {
-                    return;
-                }
-
-                snippet.snippetId = snippetId;
-            });
-        },
-        /**
-         * Adds missing default properties to the given snippets.
-         * @param {Object[]} snippets the snippets to add missing properties to
-         * @returns {void}
-         */
-        addMissingPropertiesToSnippets (snippets) {
-            if (!Array.isArray(snippets)) {
-                return;
-            }
-            snippets.forEach(snippet => {
-                if (!isObject(snippet)) {
-                    return;
-                }
-
-                snippet.adjustment = {};
-
-                if (!Object.prototype.hasOwnProperty.call(snippet, "multiselect")) {
-                    if (snippet.matchingMode === "AND") {
-                        snippet.multiselect = false;
-                        delete snippet.matchingMode;
-                    }
-                    else {
-                        snippet.multiselect = true;
-                        delete snippet.matchingMode;
-                    }
-                }
-                if (!Object.prototype.hasOwnProperty.call(snippet, "operator")) {
-                    snippet.operator = this.getDefaultOperatorBySnippetType(snippet.type, snippet.delimitor);
-                }
-            });
-        },
-        /**
-         * Returns the default snippet type for the given data type.
-         * @param {String} dataType the data type e.g. string, number or boolean
-         * @returns {String} the type of the snippet to use for the given dataType
-         */
-        getDefaultSnippetTypeByDataType (dataType) {
-            switch (dataType) {
-                case "boolean":
-                    return "checkbox";
-                case "string":
-                    return "dropdown";
-                case "number":
-                    return "sliderRange";
-                case "dateTime":
-                    return "dateRange";
-                default:
-                    return "text";
-            }
-        },
-        /**
-         * Returns the default operator for the given data type.
-         * @param {String} snippetType the snippet type
-         * @param {Boolean} [hasDelimitorSet=false] true if a delimitor is set in config, false if not
-         * @returns {String} the operator to use as default for the given dataType
-         */
-        getDefaultOperatorBySnippetType (snippetType, hasDelimitorSet = false) {
-            switch (snippetType) {
-                case "checkbox":
-                    return "EQ";
-                case "date":
-                    return "EQ";
-                case "dateRange":
-                    return "INTERSECTS";
-                case "dropdown":
-                    return hasDelimitorSet ? "IN" : "EQ";
-                case "text":
-                    return "IN";
-                case "slider":
-                    return "EQ";
-                case "sliderRange":
-                    return "BETWEEN";
-                default:
-                    return "EQ";
-            }
         },
         /**
          * Checks if the strategy of this layer is set to active.
@@ -362,9 +201,9 @@ export default {
          * @returns {void}
          */
         resetAllSnippets (onsuccess) {
-            let resetCount = this.layerConfig.snippets.length;
+            let resetCount = this.snippets.length;
 
-            this.layerConfig.snippets.forEach(snippet => {
+            this.snippets.forEach(snippet => {
                 this.resetSnippet(snippet.snippetId, () => {
                     resetCount--;
                     if (resetCount <= 0 && typeof onsuccess === "function") {
@@ -410,11 +249,11 @@ export default {
          */
         handleActiveStrategy (snippetId) {
             this.filter(snippetId, filterAnswer => {
-                const adjustments = getSnippetAdjustments(this.layerConfig.snippets, filterAnswer?.items, filterAnswer?.paging?.page, filterAnswer?.paging?.total),
+                const adjustments = getSnippetAdjustments(this.snippets, filterAnswer?.items, filterAnswer?.paging?.page, filterAnswer?.paging?.total),
                     start = typeof adjustments?.start === "boolean" ? adjustments.start : false,
                     finish = typeof adjustments?.finish === "boolean" ? adjustments.finish : false;
 
-                this.layerConfig.snippets.forEach(snippet => {
+                this.snippets.forEach(snippet => {
                     if (filterAnswer?.snippetId === snippet.snippetId || Array.isArray(filterAnswer?.snippetId) && filterAnswer?.snippetId.includes(snippet.snippetId)) {
                         return;
                     }
@@ -565,12 +404,25 @@ export default {
                             this.amountOfFilteredItems = this.mapHandler.getAmountOfFilteredItemsByFilterId(filterId);
                         }
 
-                        if (typeof onsuccess === "function") {
-                            onsuccess(filterAnswer);
-                        }
-
                         if (this.isExtern()) {
                             this.mapHandler.addExternalLayerToTree(filterId);
+                        }
+
+                        if (!this.autoRefreshSet && this.mapHandler.hasAutoRefreshInterval(filterId)) {
+                            this.autoRefreshSet = true;
+                            this.mapHandler.setObserverAutoInterval(filterId, () => {
+                                this.isRefreshing = true;
+                                if (this.isStrategyActive()) {
+                                    this.handleActiveStrategy();
+                                }
+                                else {
+                                    this.filter();
+                                }
+                            });
+                        }
+
+                        if (typeof onsuccess === "function") {
+                            onsuccess(filterAnswer);
                         }
                     }, error => {
                         console.warn(error);

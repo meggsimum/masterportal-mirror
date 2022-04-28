@@ -58,12 +58,53 @@ describe("src/modules/tools/Print/components/PrintMap.vue", () => {
                     getters: mockMapGetters,
                     actions: mockMapActions
                 }
+            },
+            getters: {
+                uiStyle: sinon.stub()
             }
         });
 
         store.commit("Tools/Print/setActive", true);
 
         wrapper = mount(PrintComponent, {store, localVue});
+    });
+
+    describe("PrintMap.vue methods", () => {
+        it("method layoutChanged sets other print layout", () => {
+            const value = "A0 Querformat",
+                printLayout = {
+                    attributes: [
+                        {
+                            default: "Countries",
+                            name: "title",
+                            type: "String"
+                        },
+                        {
+                            name: "map",
+                            type: "MapAttributeValues"
+                        }
+                    ],
+                    name: "A0 Querformat"
+                },
+                layoutList = [
+                    printLayout
+                ];
+
+            store.commit("Tools/Print/setLayoutList", layoutList);
+            wrapper.vm.layoutChanged(value);
+            expect(store.state.Tools.Print.currentLayoutName).to.be.equals(value);
+            expect(store.state.Tools.Print.currentLayout).to.be.equals(printLayout);
+            expect(store.state.Tools.Print.isGfiAvailable).to.be.equals(false);
+            expect(store.state.Tools.Print.isLegendAvailable).to.be.equals(false);
+        });
+        it("method resetLayoutParameter sets isGfiAvailable and isLegendAvailabe to false", () => {
+            store.commit("Tools/Print/setIsGfiAvailable", true);
+            store.commit("Tools/Print/setIsLegendAvailable", true);
+
+            wrapper.vm.resetLayoutParameter();
+            expect(store.state.Tools.Print.isGfiAvailable).to.be.equals(false);
+            expect(store.state.Tools.Print.isLegendAvailable).to.be.equals(false);
+        });
     });
 
     describe("template", () => {

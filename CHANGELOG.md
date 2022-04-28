@@ -8,6 +8,7 @@
 
 ## Unreleased - in development
 ### Added
+- A control has been added to create buttons for any tools. These can be used to open and close the configured tools.
 
 ### Changed
 - Migrated the module featureViaURL from Backbone to Vue as a util. E2E tests were fixed and re-enabled.
@@ -16,6 +17,7 @@
     - @masterportal/masterportalapi: 2.1.1 to 2.2.0 (masterportalapi was renamed @masterportal/masterportalapi in the process)
 - Replaced hardcoded EPSG code of map projection by a getter which identifies the projection of the map in withoutGUIDraw
 - Layer with isNeverVisibleInTree will not be initialized in menu tree.
+- Update print configuration for tiledWMS, layers are printed as tiledwms with tileSize.
 
 ### Deprecated
 
@@ -24,6 +26,7 @@
 ### Fixed
 - Issue #758: featureLister threw a JavaScript exception when building the list of layers.
 - Issue #766: The performance of opening large folders in the tree of type custom or default has been increased.
+- Print Tool now works as expected when unchecking and checking the auto adjusted scale checkbox or selecting a scale manually.
 - Issue #756: The QuickHelp can now be configured or unconfigured for the SearchBar and the topic tree.
 
 ---

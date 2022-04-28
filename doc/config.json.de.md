@@ -564,6 +564,7 @@ Konfiguration der Suche über die sichtbaren VectorLayer. Bei der Layerdefinitio
 |freeze|nein|Boolean|false|Legt fest, ob ein "Ansicht sperren" Button angezeigt werden soll. Im Style 'TABLE' erscheint dieser im Werkzeug-Fenster.|false|
 |backforward|nein|**[backForward](#markdown-header-portalconfigcontrolsbackforward)**|false|Deprecated in 3.0.0. Bitte "backForward" verwenden.|false|
 |backForward|nein|**[backForward](#markdown-header-portalconfigcontrolsbackforward)**|false|Zeigt Buttons zur Steuerung der letzten und nächsten Kartenansichten an.|false|
+|startTool|nein|**[startTool](#markdown-header-portalconfigcontrolsbackforward)**|false|Zeigt Buttons für die konfigurierten Werkezeuge an. Über diese lassen sich die jeweiligen Werkzeuge öffnen und schließen.|false|
 
 ***
 
@@ -699,6 +700,24 @@ Das Attribut backForward kann vom Typ Boolean oder Object sein. Wenn es vom Typ 
 ```
 #!json
 "backForward": true
+```
+
+***
+
+#### Portalconfig.controls.startTool
+
+Das Attribut startTool muss vom Typ Object sein. Es wird für jedes konfigurierte Werkzeug ein Button angezeigt, über den sich das jeweilige Werkzeug öffen und schließen lässt. Vorraussetzung ist, dass die Werkzeuge ebenfalls unter **[Tools](Portalconfig.menu.tools)** konfiguriert sind.
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|-------------|---|-------|------------|------|
+|tools|ja|String[]||Hier werden die Werkezeuge zu denen jeweils ein Button angeziegt werden soll konfiguriert.|false|
+
+**Beispiel startTool:**
+```
+#!json
+"startTool": {
+    "tools": ["selectFeatures", "draw"]
+}
 ```
 
 ***
