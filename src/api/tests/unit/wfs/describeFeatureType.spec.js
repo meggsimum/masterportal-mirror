@@ -1,8 +1,12 @@
 import {expect} from "chai";
 import sinon from "sinon";
+import axios from "axios";
 import {getFeatureDescription, describeFeatureType} from "../../../wfs/describeFeatureType.js";
+const fs = require("fs");
 
 describe("src/api/wfs/describeFeatureType.js", () => {
+    let xml;
+
     const json = {
         schema: {
             element: [{
@@ -37,12 +41,18 @@ describe("src/api/wfs/describeFeatureType.js", () => {
         }
     };
 
+    before(function () {
+        const data = fs.readFileSync("src/api/tests/unit/wfs/response.xml", "utf8");
+
+        xml = new window.DOMParser().parseFromString(data, "text/xml");
+    });
     beforeEach(function () {
         sinon.spy(console, "error");
     });
 
     afterEach(function () {
         console.error.restore();
+        sinon.restore();
     });
 
     describe("describeFeatureType", () => {
@@ -168,15 +178,23 @@ describe("src/api/wfs/describeFeatureType.js", () => {
             expect(console.error.calledWith("api/wfs/describeFeatureType: Version is [object Object]. Version has to be a string. Default is 1.1.0.")).to.be.true;
         });
 
-        it.skip("should return a reponse if the first paramerter is correct and the second parameter is not defined", async () => {
-            const response = await describeFeatureType("https://geodienste.hamburg.de/HH_WFS_Krankenhaeuser", undefined);
+        it("should return a reponse if the first paramerter is correct and the second parameter is not defined and 3. param is given", async () => {
+            const url = "https://geodienste.hamburg.de/HH_WFS_Krankenhaeuser",
+                featureTypes = "krankenhaeuser_hh",
+                axiosStub = sinon.stub(axios, "get").returns(Promise.resolve({request: {status: 200, responseXML: xml}})),
+                response = await describeFeatureType(url, undefined, featureTypes);
 
             expect(response).to.be.an("object");
+            expect(axiosStub.calledOnce).to.be.true;
         });
-        it.skip("should return a reponse if the first and second parameter are correct", async () => {
-            const response = await describeFeatureType("https://geodienste.hamburg.de/HH_WFS_Krankenhaeuser", "2.0.0");
+        it("should return a reponse if the first, second and third parameter are correct", async () => {
+            const url = "https://geodienste.hamburg.de/HH_WFS_Krankenhaeuser",
+                featureTypes = "krankenhaeuser_hh",
+                axiosStub = sinon.stub(axios, "get").returns(Promise.resolve({request: {status: 200, responseXML: xml}})),
+                response = await describeFeatureType(url, "2.0.0", featureTypes);
 
             expect(response).to.be.an("object");
+            expect(axiosStub.calledOnce).to.be.true;
         });
         it("should return undefined if the first paramerter is wrong and the second parameter is not defined", async () => {
             const response = await describeFeatureType("url", undefined);

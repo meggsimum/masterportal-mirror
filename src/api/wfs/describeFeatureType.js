@@ -22,8 +22,6 @@ export function describeFeatureType (url, version = "1.1.0", featureTypes = unde
     }
 
     const options = {
-        url,
-        method: "GET",
         params: {
             // mandatory parameters
             service: "WFS",
@@ -35,7 +33,7 @@ export function describeFeatureType (url, version = "1.1.0", featureTypes = unde
         }
     };
 
-    return axios(options)
+    return axios.get(url, options)
         .then(response => xml2json(response.request.responseXML))
         .catch(error => errorHandling(error, "api/wfs/describeFeatureType"));
 }
