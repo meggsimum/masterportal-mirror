@@ -26,6 +26,9 @@ describe("src/modules/mouseHover/components/MouseHover.vue", () => {
                     namespaced: true,
                     getters: mockMapGetters
                 }
+            },
+            getters: {
+                mobile: () => false
             }
         });
     });

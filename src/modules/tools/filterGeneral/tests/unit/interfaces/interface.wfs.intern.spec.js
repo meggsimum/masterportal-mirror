@@ -4,6 +4,7 @@ import InterfaceWfsIntern from "../../../interfaces/interface.wfs.intern.js";
 describe("src/modules/tools/filterGeneral/interfaces/utils/interface.wfs.intern.js", () => {
     let interfaceWfsIntern = null;
 
+
     beforeEach(() => {
         interfaceWfsIntern = new InterfaceWfsIntern(false, {
             getFeaturesByLayerId: false,

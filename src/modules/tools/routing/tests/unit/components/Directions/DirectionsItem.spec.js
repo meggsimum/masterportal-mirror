@@ -6,7 +6,14 @@ import DirectionsComponent from "../../../../components/Directions/DirectionsIte
 import DirectionsItemBatchProcessingComponent from "../../../../components/Directions/DirectionsItemBatchProcessing.vue";
 import RoutingBatchProcessingCheckboxComponent from "../../../../components/RoutingBatchProcessingCheckbox.vue";
 import RoutingDownloadComponent from "../../../../components/RoutingDownload.vue";
-import Routing from "../../../../store/indexRouting";
+import mutations from "../../../../store/mutationsRouting";
+import actions from "../../../../store/actionsRouting";
+import getters from "../../../../store/gettersRouting";
+import state from "../../../../store/stateRouting";
+import mutationsDirections from "../../../../store/directions/mutationsDirections";
+import actionsDirections from "../../../../store/directions/actionsDirections";
+import gettersDirections from "../../../../store/directions/gettersDirections";
+import stateDirections from "../../../../store/directions/stateDirections";
 import mapCollection from "../../../../../../../core/dataStorage/mapCollection";
 
 const localVue = createLocalVue();
@@ -51,7 +58,23 @@ describe("src/modules/tools/routing/components/Directions/DirectionsItem.vue", (
                 Tools: {
                     namespaced: true,
                     modules: {
-                        Routing
+                        Routing:
+                        {
+                            namespaced: true,
+                            modules: {
+                                Directions: {
+                                    namespaced: true,
+                                    state: {...stateDirections},
+                                    mutations: mutationsDirections,
+                                    actions: actionsDirections,
+                                    getters: gettersDirections
+                                }
+                            },
+                            state: {...state},
+                            mutations,
+                            actions,
+                            getters
+                        }
                     }
                 },
                 Map: {

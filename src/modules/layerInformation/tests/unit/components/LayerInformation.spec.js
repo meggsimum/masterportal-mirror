@@ -42,7 +42,8 @@ describe("src/modules/LayerInformation.vue", () => {
                         abstractText: () => "Test",
                         noMetadataLoaded: () => "",
                         metaURLs: () => [],
-                        currentLayerName: () => ""
+                        currentLayerName: () => "",
+                        showUrlGlobal: () => false
                     },
                     actions: {
                         activate: () => sinon.stub(),

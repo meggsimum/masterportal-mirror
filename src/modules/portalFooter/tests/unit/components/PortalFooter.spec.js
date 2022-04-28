@@ -92,7 +92,7 @@ describe("src/modules/portalFooter/components/PortalFooter.vue", () => {
     });
 
     it("renders the masterportal version in footer", () => {
-        store.commit("Footer/setShowVersion", true);
+        store.commit("PortalFooter/setShowVersion", true);
         const wrapper = shallowMount(PortalFooterComponent, {
             store,
             computed: {

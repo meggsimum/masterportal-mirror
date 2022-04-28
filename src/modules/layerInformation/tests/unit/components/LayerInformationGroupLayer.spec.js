@@ -12,6 +12,7 @@ config.mocks.$t = key => key;
 describe("src/modules/LayerInformation.vue - GroupLayer", () => {
     let store;
 
+
     beforeEach(() => {
         store = new Vuex.Store({
             namespaced: true,
@@ -42,7 +43,8 @@ describe("src/modules/LayerInformation.vue - GroupLayer", () => {
                         abstractText: () => "Test",
                         noMetadataLoaded: () => "",
                         metaURLs: () => [],
-                        currentLayerName: () => ""
+                        currentLayerName: () => "",
+                        showUrlGlobal: () => false
                     },
                     actions: {
                         activate: () => sinon.stub(),

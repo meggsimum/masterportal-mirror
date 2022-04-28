@@ -56,9 +56,7 @@ describe("src/modules/tools/gfi/components/templates/DetachedTemplate.vue", () =
                     namespaced: true,
                     actions: {
                         removeHighlightFeature: sinon.stub(),
-                        highlightFeature: sinon.stub()
-                    },
-                    mutations: {
+                        highlightFeature: sinon.stub(),
                         setCenter: sinon.stub()
                     },
                     getters: {

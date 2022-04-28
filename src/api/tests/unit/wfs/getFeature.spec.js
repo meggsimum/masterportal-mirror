@@ -7,14 +7,15 @@ describe("src/api/wfs/getFeature.js", () => {
     let spyErrorHandling;
 
     beforeEach(function () {
-        sinon.spy(console, "error");
+        const error = sinon.spy(),
+            warn = sinon.spy();
+
+        sinon.stub(console, "error").callsFake(error);
+        sinon.stub(console, "warn").callsFake(warn);
         spyErrorHandling = sinon.spy(errorHandling, "errorHandling");
     });
 
-    afterEach(function () {
-        console.error.restore();
-        spyErrorHandling.restore();
-    });
+    afterEach(sinon.restore);
 
     describe("getFeatureGET", () => {
         it("should return undefined if the first parameter is not defined", () => {

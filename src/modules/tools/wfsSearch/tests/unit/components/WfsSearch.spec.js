@@ -34,7 +34,16 @@ describe("src/modules/tools/wfsSearch/components/WfsSearch.vue", () => {
                     modules: {
                         WfsSearch: WfsSearchModule
                     }
+                },
+                Language: {
+                    namespaced: true,
+                    getters: {
+                        currentLocale: sinon.stub()
+                    }
                 }
+            },
+            getters: {
+                uiStyle: () => sinon.stub()
             }
         });
         store.commit("Tools/WfsSearch/setActive", true);

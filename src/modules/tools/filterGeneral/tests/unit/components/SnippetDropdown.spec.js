@@ -83,7 +83,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetDropdown.vue", () =>
         it("should have an empty list if autoInit is false and the api may be set", () => {
             const wrapper = shallowMount(SnippetDropdown, {
                 propsData: {
-                    api: true,
+                    api: {},
                     autoInit: false
                 },
                 localVue

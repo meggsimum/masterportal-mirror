@@ -50,7 +50,10 @@ describe("src/modules/tools/featureLister/components/FeatureLister.vue", () => {
                 },
                 Map: {
                     namespaced: true,
-                    getters: mockMapGetters
+                    getters: mockMapGetters,
+                    actions: {
+                        removeHighlightFeature: sinon.stub()
+                    }
                 }
             },
             state: {

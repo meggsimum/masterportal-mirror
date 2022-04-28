@@ -3,7 +3,14 @@ import {expect} from "chai";
 import sinon from "sinon";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import IsochronesItemBatchProcessingComponent from "../../../../components/Isochrones/IsochronesItemBatchProcessing.vue";
-import Routing from "../../../../store/indexRouting";
+import mutations from "../../../../store/mutationsRouting";
+import actions from "../../../../store/actionsRouting";
+import getters from "../../../../store/gettersRouting";
+import state from "../../../../store/stateRouting";
+import mutationsIsochrones from "../../../../store/isochrones/mutationsIsochrones";
+import actionsIsochrones from "../../../../store/isochrones/actionsIsochrones";
+import gettersIsochrones from "../../../../store/isochrones/gettersIsochrones";
+import stateIsochrones from "../../../../store/isochrones/stateIsochrones";
 import {RoutingIsochrones} from "../../../../utils/classes/routing-isochrones";
 import {RoutingIsochronesArea} from "../../../../utils/classes/routing-isochrones-area";
 
@@ -37,7 +44,23 @@ describe("src/modules/tools/routing/components/Isochrones/IsochronesItemBatchPro
                 Tools: {
                     namespaced: true,
                     modules: {
-                        Routing
+                        Routing:
+                        {
+                            namespaced: true,
+                            modules: {
+                                Isochrones: {
+                                    namespaced: true,
+                                    state: {...stateIsochrones},
+                                    mutations: mutationsIsochrones,
+                                    actions: actionsIsochrones,
+                                    getters: gettersIsochrones
+                                }
+                            },
+                            state: {...state},
+                            mutations,
+                            actions,
+                            getters
+                        }
                     }
                 }
             },

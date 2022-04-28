@@ -31,7 +31,10 @@ describe("src/modules/controls/orientation/components/OrientationItem.vue", () =
         },
 
         mockGetters = {
-            showPoiIcon: () => false
+            showPoiIcon: () => false,
+            position: () => null,
+            showPoiChoice: () => false,
+            showPoi: () => false
         };
     let store,
         wrapper;

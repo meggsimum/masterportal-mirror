@@ -1,5 +1,6 @@
 import Vuex from "vuex";
 import {expect} from "chai";
+import sinon from "sinon";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import CompareFeaturesComponent from "../../../components/CompareFeatures.vue";
 import CompareFeatures from "../../../store/indexCompareFeatures";
@@ -36,7 +37,17 @@ describe("src/modules/tools/compareFeatures/components/CompareFeatures.vue", () 
                 Tools: {
                     namespaced: true,
                     modules: {
-                        CompareFeatures
+                        CompareFeatures,
+                        Print: {
+                            namespaced: true,
+                            getters: {
+                                printFileReady: sinon.stub(),
+                                fileDownloadUrl: sinon.stub(),
+                                filename: sinon.stub(),
+                                printStarted: sinon.stub(),
+                                progressWidth: sinon.stub()
+                            }
+                        }
                     }
                 },
                 Map: {

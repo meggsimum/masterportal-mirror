@@ -4,7 +4,14 @@ import sinon from "sinon";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import DirectionsItemBatchProcessingComponent from "../../../../components/Directions/DirectionsItemBatchProcessing.vue";
 import RoutingBatchProcessingComponent from "../../../../components/RoutingBatchProcessing.vue";
-import Routing from "../../../../store/indexRouting";
+import mutations from "../../../../store/mutationsRouting";
+import actions from "../../../../store/actionsRouting";
+import getters from "../../../../store/gettersRouting";
+import state from "../../../../store/stateRouting";
+import mutationsDirections from "../../../../store/directions/mutationsDirections";
+import actionsDirections from "../../../../store/directions/actionsDirections";
+import gettersDirections from "../../../../store/directions/gettersDirections";
+import stateDirections from "../../../../store/directions/stateDirections";
 
 const localVue = createLocalVue();
 
@@ -36,7 +43,23 @@ describe("src/modules/tools/routing/components/Directions/DirectionsItemBatchPro
                 Tools: {
                     namespaced: true,
                     modules: {
-                        Routing
+                        Routing:
+                        {
+                            namespaced: true,
+                            modules: {
+                                Directions: {
+                                    namespaced: true,
+                                    state: {...stateDirections},
+                                    mutations: mutationsDirections,
+                                    actions: actionsDirections,
+                                    getters: gettersDirections
+                                }
+                            },
+                            state: {...state},
+                            mutations,
+                            actions,
+                            getters
+                        }
                     }
                 }
             },

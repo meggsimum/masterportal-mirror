@@ -69,6 +69,8 @@ describe("src/modules/tools/Print/components/PrintMap.vue", () => {
         wrapper = mount(PrintComponent, {store, localVue});
     });
 
+    afterEach(sinon.restore);
+
     describe("PrintMap.vue methods", () => {
         it("method layoutChanged sets other print layout", () => {
             const value = "A0 Querformat",

@@ -10,7 +10,9 @@ import {fetchRoutingOrsDirections} from "../../../../utils/directions/routing-or
 describe("src/modules/tools/routing/utils/directions/routing-ors-directions.js", () => {
     beforeEach(() => {
         sinon.stub(i18next, "t").callsFake((...args) => args);
-        store.getters.getRestServiceById = () => ({url: "tmp"});
+        store.getters = {
+            getRestServiceById: () => ({url: "tmp"})
+        };
     });
 
     afterEach(() => {
