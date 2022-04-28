@@ -81,7 +81,8 @@ describe("src/modules/tools/filterGeneral/utils/getSnippetAdjustments.js", () =>
         it("should return an object of attrNames an their occurrences if valid arguments are given", () => {
             expect(getAttrValuesOfItemsGroupedByAttrNames([
                 {get: attrName => attrName === "attrNameA" ? 1 : 3},
-                {get: attrName => attrName === "attrNameA" ? 2 : 3}
+                {get: attrName => attrName === "attrNameA" ? 2 : 3},
+                {get: () => undefined}
             ], ["attrNameA", "attrNameB"])).deep.equal({
                 "attrNameA": ["1", "2"],
                 "attrNameB": ["3"]
