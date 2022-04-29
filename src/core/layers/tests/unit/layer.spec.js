@@ -362,7 +362,7 @@ describe("src/core/layers/layer.js", () => {
         testSetIsSelected("custom", 2, 3, true);
     });
     it("setIsSelected test false with treetype not light", function () {
-        testSetIsSelected("custom", 2, 6, false);
+        testSetIsSelected("custom", 0, 6, false);
     });
     it("toggleIsVisibleInMap is true and treeType light", function () {
         testIsVisibleInMap("light", true, 0);

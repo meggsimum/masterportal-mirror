@@ -344,6 +344,9 @@ Layer.prototype.setIsSelected = function (newValue) {
     }
     else {
         map.removeLayer(this.layer);
+        if (treeType !== "light") {
+            this.resetSelectionIDX();
+        }
     }
     if (treeType !== "light" || store.state.mobile) {
         bridge.updateLayerView(this);

@@ -31,6 +31,7 @@
 - Print Tool now works as expected when unchecking and checking the auto adjusted scale checkbox or selecting a scale manually.
 - Issue #756: The QuickHelp can now be configured or unconfigured for the SearchBar and the topic tree.
 - Measure Tool print style was erroneous for some situations, where polygon styles would be applied to lines and vice versa. This has been resolved.
+- Issue #763: In the `custom` topic tree, layers are now always set to the top position when they are shown or hidden.
 
 ---
 ## v2.20.1 - 2022-04-21
