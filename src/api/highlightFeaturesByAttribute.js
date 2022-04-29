@@ -77,6 +77,7 @@ function highlightPointFeature (modelId, styleId, name, gfiAttributes, features)
 
         const map = Radio.request("Map", "getMap"),
             mapView = map.getView();
+
         mapView.fit(highlightLayer.getSource().getExtent(), map.getSize());
     }
 }
@@ -118,6 +119,7 @@ function highlightLineOrPolygonFeature (modelId, styleId, name, geometryRequeste
 
         const map = Radio.request("Map", "getMap"),
             mapView = map.getView();
+
         mapView.fit(highlightLayer.getSource().getExtent(), map.getSize());
     }
 }
