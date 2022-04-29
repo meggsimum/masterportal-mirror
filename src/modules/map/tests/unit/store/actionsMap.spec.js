@@ -128,7 +128,6 @@ describe("src/modules/map/store/actions/actionsMap.js", () => {
     describe("setCenter", () => {
         let commit,
             setCenter,
-            warn,
             getters;
 
         beforeEach(() => {
@@ -143,10 +142,14 @@ describe("src/modules/map/store/actions/actionsMap.js", () => {
                     }
                 }
             };
-            warn = sinon.spy();
-            sinon.stub(console, "warn").callsFake(warn);
+            sinon.stub(console, "warn").callsFake(sinon.stub());
         });
-        afterEach(sinon.restore);
+    
+        afterEach(() => {
+            console.warn.restore();
+            sinon.restore();
+        });
+
 
         /**
          * This helper function is called for the test cases in which
@@ -157,8 +160,8 @@ describe("src/modules/map/store/actions/actionsMap.js", () => {
         function expectMutationNotCalled () {
             expect(commit.notCalled).to.be.true;
             expect(setCenter.notCalled).to.be.true;
-            expect(warn.calledOnce).to.be.true;
-            expect(warn.firstCall.args).to.eql(["Center was not set. Probably there is a data type error. The format of the coordinate must be an array with two numbers."]);
+            expect(console.warn.calledOnce).to.be.true;
+            expect(console.warn.firstCall.args).to.eql(["Center was not set. Probably there is a data type error. The format of the coordinate must be an array with two numbers."]);
         }
 
         it("should set the center if the coordinates are given as an array of length two with two numbers", () => {
@@ -170,7 +173,7 @@ describe("src/modules/map/store/actions/actionsMap.js", () => {
             expect(commit.firstCall.args).to.eql(["setCenter", coords]);
             expect(setCenter.calledOnce).to.be.true;
             expect(setCenter.firstCall.args).to.eql([coords]);
-            expect(warn.notCalled).to.be.true;
+            expect(console.warn.notCalled).to.be.true;
         });
         it("should not set the center, if the coordinate (['3', 5]) has the wrong data type", () => {
             actions.setCenter({commit, getters}, ["3", 5]);

@@ -85,11 +85,12 @@ describe("src/modules/controls/startTool/components/StartTool.vue", () => {
 
     describe("getValidToolStates", () => {
         beforeEach(() => {
-            sinon.spy(console, "error");
+            sinon.stub(console, "error").callsFake(sinon.stub());
         });
-
+    
         afterEach(() => {
             console.error.restore();
+            sinon.restore();
         });
 
         it("should return the valid tools", () => {

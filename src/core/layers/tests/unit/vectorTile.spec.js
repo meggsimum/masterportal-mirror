@@ -365,6 +365,15 @@ describe("core/modelList/layer/vectorTile", function () {
             };
         }
 
+        beforeEach(() => {
+            sinon.stub(console, "warn").callsFake(sinon.stub());
+        });
+    
+        afterEach(() => {
+            console.warn.restore();
+            sinon.restore();
+        });
+
         it("uses config.json style first", function (done) {
             const context = makeContext({styleId: "lConfigJson", givenVtStyles: vtStylesDefaultL2, done}),
                 {set} = context;
@@ -402,8 +411,6 @@ describe("core/modelList/layer/vectorTile", function () {
         it("does not apply any style else and warns in console", function () {
             const context = makeContext({givenVtStyles: []}),
                 {set, setStyleById, setStyleByDefinition} = context;
-
-            sinon.stub(console, "warn");
 
             VectorTile.prototype.setConfiguredLayerStyle.call(context);
 

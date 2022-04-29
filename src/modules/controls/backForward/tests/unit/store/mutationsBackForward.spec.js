@@ -140,6 +140,16 @@ describe("src/modules/controls/backForward/store/mutationsBackForward.js", () =>
         });
     });
     describe("forward", () => {
+        beforeEach(() => {
+            sinon.stub(console, "warn").callsFake(sinon.stub());
+            sinon.stub(console, "error").callsFake(sinon.stub());
+        });
+    
+        afterEach(() => {
+            console.warn.restore();
+            console.error.restore();
+            sinon.restore();
+        });
         it("does nothing on initial state", () => {
             const state = {
                 position: null,
@@ -177,11 +187,8 @@ describe("src/modules/controls/backForward/store/mutationsBackForward.js", () =>
                     position: 0,
                     memory: [{center: [2, 2], zoom: 2}]
                 },
-                consoleError = console.error;
-
             center = null;
             zoom = null;
-            console.error = sinon.spy();
 
             forward(state, mockMapZeroState);
 
@@ -190,11 +197,19 @@ describe("src/modules/controls/backForward/store/mutationsBackForward.js", () =>
             expect(state.position).to.equal(0);
             expect(state.memory).to.eql([{center: [2, 2], zoom: 2}]);
             expect(console.error.calledOnce).to.be.true;
-
-            console.error = consoleError;
         });
     });
     describe("backward", () => {
+        beforeEach(() => {
+            sinon.stub(console, "warn").callsFake(sinon.stub());
+            sinon.stub(console, "error").callsFake(sinon.stub());
+        });
+    
+        afterEach(() => {
+            console.warn.restore();
+            console.error.restore();
+            sinon.restore();
+        });
         it("does nothing on initial state; does not change memory", () => {
             const state = {
                 position: null,
@@ -232,11 +247,8 @@ describe("src/modules/controls/backForward/store/mutationsBackForward.js", () =>
                     position: 0,
                     memory: [{center: [2, 2], zoom: 2}]
                 },
-                consoleError = console.error;
-
             center = null;
             zoom = null;
-            console.error = sinon.spy();
 
             backward(state, mockMapZeroState);
 
@@ -245,8 +257,6 @@ describe("src/modules/controls/backForward/store/mutationsBackForward.js", () =>
             expect(state.position).to.equal(0);
             expect(state.memory).to.eql([{center: [2, 2], zoom: 2}]);
             expect(console.error.calledOnce).to.be.true;
-
-            console.error = consoleError;
         });
     });
 });

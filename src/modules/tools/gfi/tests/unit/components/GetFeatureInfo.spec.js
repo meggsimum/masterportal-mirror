@@ -65,9 +65,16 @@ function getGfiStore () {
     });
 }
 
+beforeEach(() => {
+    sinon.stub(console, "error").callsFake(sinon.stub());
+});
+
+afterEach(() => {
+    console.error.restore();
+    sinon.restore();
+});
 
 describe("src/modules/tools/gfi/components/GetFeatureInfo.vue", () => {
-
     it("should find the child component Mobile", () => {
         const wrapper = shallowMount(GfiComponent, {store: getGfiStore, localVue});
 

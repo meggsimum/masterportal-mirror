@@ -7,11 +7,13 @@ describe("tools/contact/utils/httpClient", function () {
     describe("httpClient", function () {
         beforeEach(() => {
             sinon.stub(Radio, "trigger");
-            sinon.stub(console, "error");
+            sinon.stub(console, "error").callsFake(sinon.stub());
         });
 
-        afterEach(sinon.restore);
-
+        afterEach(() => {
+            console.error.restore();
+            sinon.restore();
+        });
         it("calls onSuccess parameter on success", function (done) {
             sinon.stub(axios, "post").returns(
                 Promise.resolve({status: 200, data: {success: true}})

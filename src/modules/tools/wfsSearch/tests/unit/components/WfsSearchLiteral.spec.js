@@ -34,7 +34,11 @@ describe("src/modules/tools/wfsSearch/components/WfsSearchLiteral.vue", () => {
             store,
             propsData: {
                 literal: {
-                    field: "test"
+                    field: {
+                        id: "test",
+                        usesId: false,
+                        fieldName: "fieldName"
+                    }
                 }
             }
         });

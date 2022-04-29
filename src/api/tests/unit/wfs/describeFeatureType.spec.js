@@ -47,8 +47,9 @@ describe("src/api/wfs/describeFeatureType.js", () => {
         xml = new window.DOMParser().parseFromString(data, "text/xml");
     });
     beforeEach(function () {
-        sinon.spy(console, "error");
+        sinon.stub(console, "error").callsFake(sinon.stub());
     });
+    
 
     afterEach(function () {
         console.error.restore();

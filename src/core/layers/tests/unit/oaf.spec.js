@@ -8,7 +8,6 @@ import mapCollection from "../../../../core/dataStorage/mapCollection.js";
 import store from "../../../../app-store";
 
 describe("src/core/layers/oaf.js", () => {
-    const consoleWarn = console.warn;
     let attributes;
 
     before(() => {
@@ -48,12 +47,14 @@ describe("src/core/layers/oaf.js", () => {
         store.getters = {
             treeType: "custom"
         };
-        console.warn = sinon.stub();
+        sinon.stub(console, "warn").callsFake(sinon.stub());
+        sinon.stub(console, "error").callsFake(sinon.stub());
     });
 
     afterEach(() => {
+        console.warn.restore();
+        console.error.restore();
         sinon.restore();
-        console.warn = consoleWarn;
     });
 
     describe("createLayer", () => {

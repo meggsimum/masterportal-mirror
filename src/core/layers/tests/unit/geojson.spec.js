@@ -9,7 +9,6 @@ import mapCollection from "../../../../core/dataStorage/mapCollection.js";
 import store from "../../../../app-store";
 
 describe("src/core/layers/geojson.js", () => {
-    const consoleError = console.error;
     let attributes;
 
     before(() => {
@@ -47,12 +46,12 @@ describe("src/core/layers/geojson.js", () => {
         store.getters = {
             treeType: "custom"
         };
-        console.error = sinon.stub();
+        sinon.stub(console, "error").callsFake(sinon.stub());
     });
 
     afterEach(() => {
+        console.error.restore();
         sinon.restore();
-        console.error = consoleError;
     });
 
     describe("createLayer", () => {
