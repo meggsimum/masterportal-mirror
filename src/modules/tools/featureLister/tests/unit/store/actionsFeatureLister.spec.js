@@ -45,7 +45,10 @@ describe("tools/featureLister/store/actionsFeatureLister", () => {
                 state = {
                     shownFeatures: 20,
                     gfiFeaturesOfLayer: [{erstesFeature: "first"}, {zweitesFeature: "second"}, {drittesFeature: "third"}],
-                    rawFeaturesOfLayer: [{getGeometry: () => "Point"}, {getGeometry: () => "Point"}]
+                    rawFeaturesOfLayer: [{getGeometry: () => "Point"}, {getGeometry: () => "Point"}],
+                    layer: {
+                        geometryType: "Point"
+                    }
                 };
 
             rootGetters = {"Maps/getView": {fit: () => true}};
@@ -106,7 +109,8 @@ describe("tools/featureLister/store/actionsFeatureLister", () => {
                 "stroke": {
                     "width": 4,
                     "color": [0, 0, 204, 0.9]
-                }
+                },
+                "zoom": 5
             },
             highlightVectorRulesPointLine: {
                 "stroke": {
@@ -115,7 +119,8 @@ describe("tools/featureLister/store/actionsFeatureLister", () => {
                 },
                 "image": {
                     "scale": 2
-                }
+                },
+                "zoom": 5
             }
         };
 
