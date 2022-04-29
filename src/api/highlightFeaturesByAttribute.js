@@ -42,7 +42,6 @@ function createVectorLayer (styleId, name, gfiAttributes) {
 
 /**
  * highlight Features for Points
- * @param {Function} getters the getters function
  * @param {String} modelId The model Id
  * @param {String} styleId The style Id
  * @param {String} name Layer name
@@ -137,7 +136,6 @@ function handleGetFeatureError (dispatch, error) {
 /**
  * handles the response from a wfs get feature request
  * @param {Function} dispatch dispatch function
- * @param {Function} getters getters function
  * @param {string} response - XML to be sent as String
  * @param {Object} highlightFeaturesLayer The configuration for the Layer.
  * @returns {void}
@@ -252,7 +250,6 @@ function configHasErrors (layer, wfsId) {
 /**
  * highlight Features by Attributes
  * @param {Object} dispatch dispatch function
- * @param {Object} getters getters function
  * @param {String} wfsId the WFS Id
  * @param {String} propName the queried property name
  * @param {String} propValue the queried property value
