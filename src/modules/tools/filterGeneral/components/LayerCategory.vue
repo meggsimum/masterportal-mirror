@@ -1,11 +1,15 @@
 <script>
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
 import LayerItem from "./LayerItem.vue";
+import Accordion from "./Accordion.vue";
+import AccordionItem from "./AccordionItem.vue";
 
 export default {
     name: "LayerCategory",
     components: {
-        LayerItem
+        LayerItem,
+        Accordion,
+        AccordionItem
     },
     props: {
         multiLayerSelector: {
@@ -116,7 +120,151 @@ export default {
 </script>
 
 <template>
-    <div
+    <div>
+        <!--<div class="accordion" id="FilterCategoryAccordion">
+            <div
+                v-for="filter in filtersOnly"
+                :key="filter.filterId"
+                @click="setLayerLoaded(filter.filterId)"
+                @keydown.enter="setLayerLoaded(filter.filterId)"
+            >
+                <AccordionItem
+                    :layer="filter"
+                    :multi-layer-selector="multiLayerSelector"
+                    :disabled="disabled(filter.filterId)"
+                    :changed-selected-layers="changedSelectedLayers"
+                    @updatetoselectedlayers="updateSelectedLayers"
+                    >
+                    <slot
+                        :layer="filter"
+                    />
+                </AccordionItem>
+            </div>
+        </div>-->
+        <!--<Accordion
+            :categoriesOnly="categoriesOnly"
+            :filtersOnly="filtersOnly"
+        >
+        </Accordion>-->
+        <div class="accordion" id="FilterCategoryAccordion">
+            <div
+                v-for="filter in categoriesOnly"
+                :key="filter.category"
+                class="accordion-item"
+            >
+                <h2
+                    :id="'cat-header-' + filter.category"
+                    class="accordion-header"
+                    @click="updateSelectedCategories(filter.category)"
+                    @keydown.enter="updateSelectedCategories(filter.category)"
+                >
+                    <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        :data-bs-target="'#' + filter.category"
+                        aria-expanded="true"
+                        :aria-controls="filter.category">
+                        {{ filter.category }}
+                    </button>
+                </h2>
+                <div
+                    v-if="filter.shortDescription || filter.description"
+                    class="layerInfoText"
+                >
+                    {{ translateDescription(filter) }}
+                </div>
+                <div :id="filter.category"
+                     class="accordion-collapse collapse"
+                     :aria-labelledby="'cat-header-' + filter.category"
+                     :data-bs-parent="!multiLayerSelector ? '#FilterCategoryAccordion' : ''"
+                >
+                    <div class="accordion-body">
+                        <div
+                            v-for="subFilter in filter.layers"
+                            :key="subFilter.filterId"
+                            class="accordion-item"
+                            @click="setLayerLoaded(subFilter.filterId)"
+                            @keydown.enter="setLayerLoaded(subFilter.filterId)"
+                        >
+                            <h2
+                                :id="'sub-filter-header-' + subFilter.filterId"
+                                class="accordion-header"
+                                @click="updateSelectedLayers(subFilter.filterId)"
+                                @keydown.enter="updateSelectedLayers(subFilter.filterId)"
+                            >
+                                <button
+                                    class="accordion-button"
+                                    :disabled="disabled(filter.filterId)"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    :data-bs-target="'#subFilterCollapse-' + subFilter.filterId"
+                                    aria-expanded="true"
+                                    :aria-controls="'subFilterCollapse-' + subFilter.filterId"
+                                >
+                                    {{ subFilter.title ? subFilter.title : subFilter.layerId }}
+                                </button>
+                            </h2>
+                            <div
+                                :id="'subFilterCollapse-' + subFilter.filterId"
+                                class="accordion-collapse collapse"
+                                :aria-labelledby="'subFilterCollapse-' + subFilter.filterId"
+                            >
+                                <div class="accordion-body">
+                                    <slot
+                                        :layer="subFilter"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                v-for="filter in filtersOnly"
+                :key="filter.filterId"
+                class="accordion-item"
+                @click="setLayerLoaded(filter.filterId)"
+                @keydown.enter="setLayerLoaded(filter.filterId)"
+            >
+                <h2
+                    :id="'filter-header-' + filter.filterId"
+                    class="accordion-header"
+                    @click="updateSelectedLayers(filter.filterId)"
+                    @keydown.enter="updateSelectedLayers(filter.filterId)"
+                >
+                    <button
+                        :disabled="disabled(filter.filterId)"
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        :data-bs-target="'#collapse-' + filter.filterId"
+                        aria-expanded="true"
+                        :aria-controls="'collapse-' + filter.filterId"
+                    >
+                        {{ filter.title ? filter.title : filter.layerId }}
+                    </button>
+                </h2>
+                <div
+                    v-if="filter.shortDescription && !selected"
+                    class="layerInfoText"
+                >
+                    {{ translateKeyWithPlausibilityCheck(layer.shortDescription, key => $t(key)) }}
+                </div>
+                <div :id="'collapse-' + filter.filterId"
+                     class="accordion-collapse collapse"
+                     :aria-labelledby="'filter-header-' + filter.filterId"
+                     :data-bs-parent="!multiLayerSelector ? '#FilterCategoryAccordion' : ''"
+                >
+                    <div class="accordion-body">
+                        <slot
+                            :layer="filter"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--<div
         class="panel-group"
         role="tablist"
         aria-multiselectable="true"
@@ -201,38 +349,12 @@ export default {
                 />
             </LayerItem>
         </div>
+    </div>-->
     </div>
 </template>
 
-<style>
-    #tool-general-filter .panel-heading .panel-title a[tabindex="0"]:focus {
-        padding: 5px;
-    }
-    h2 {
-        margin: 0;
-    }
-</style>
-
 <style lang="scss" scoped>
-    #tool-general-filter .panel {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        padding: 10px;
-    }
-    .panel-group .panel + .panel {
-        margin-top: 10px;
-    }
-    .panel-default > .panel-heading {
-        cursor: default;
-        background-color: white;
-    }
-    .panel-title {
-        cursor: pointer;
-    }
-    .category-layer .panel-title{
-        margin-bottom: 1rem;
-    }
-    .category-layer > .right{
-        right: 30px;
+    .accordion-header {
+        margin: 0;
     }
 </style>
