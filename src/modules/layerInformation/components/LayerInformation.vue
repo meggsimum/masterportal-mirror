@@ -47,7 +47,9 @@ export default {
         },
         showMoreLayers () {
             if (this.layerInfo.metaIdArray) {
-                return this.layerInfo.metaIdArray.length > 1 && !this.layerInfo.metaIdArray.every(item => item === null);
+                const filteredLayers = this.layerInfo.metaIdArray.filter(layer => layer !== null);
+
+                return filteredLayers.length > 1;
             }
             return false;
         },
@@ -202,6 +204,7 @@ export default {
                             :key="name"
                         >
                             <a
+                                v-if="name !== null"
                                 href="#"
                                 class="abstractChange"
                                 :class="{ active: name === currentLayerName }"
