@@ -55,6 +55,9 @@ function getAttrValuesOfItemsGroupedByAttrNames (items, relevantAttrNames) {
             else if (!isObject(assoc[attrName])) {
                 assoc[attrName] = {};
             }
+            if (typeof item.get(attrName) === "undefined") {
+                return;
+            }
             assoc[attrName][item.get(attrName)] = true;
         });
     });
