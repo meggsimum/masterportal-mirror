@@ -218,7 +218,7 @@ Definition of classes to be taken into account for results.
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |name|yes|String||Class name|false|
-|icon|no|String|"bi-signpost-2"|Class visualization by a icon|false|
+|icon|no|String|"bi-signpost-2-fill"|Class visualization by a icon|false|
 |zoom|no|String|"center"|Defines how to zoom to a hit on selection. If `center` is chosen, the center coordinate (`cx`, `cy`) is zoomed to and a marker is placed. If `bbox` is chosen, the LocationFinder's given BoundingBox (`xmin`, `ymin`, `xmax`, `ymax`) is zoomed to, and no marker is shown.|false|
 |zoomLevel|no|Integer||Zoom level which is applied to the result view|false|
 
@@ -355,7 +355,7 @@ Elasticsearch service configuration.
 |triggerEvent|no|**[triggerEvent](#markdown-header-portalconfigsearchbarelasticsearchtriggerevent)**|{}|Radio event triggered on mouse hover and click.|false|
 |hitMap|no|**[hitMap](#markdown-header-portalconfigsearchbarelasticsearchhitmap)**||Object mapping result object attributes to keys.|true|
 |hitType|no|String|"common:modules.searchbar.type.subject"|Search result type shown in the result list after the result name. Set to the translation key.|false|
-|hitIcon|no|String|"bi-signpost-2"|CSS icon class of search results, shown before the result name.|false|
+|hitIcon|no|String|"bi-signpost-2-fill"|CSS icon class of search results, shown before the result name.|false|
 |useProxy|no|Boolean|false|Defines whether the URL should be proxied.|false|
 
 As an additional property, you may add `payload`. It is not required, and matches the **[CustomObject](#markdown-header-datatypescustomobject)** description. By default, it is set to the empty object `{}`. The object describes the payload to be sent as part of the request. It must provide the searchString attribute. For more info on usable attributes, see **[Elasticsearch Guide](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html)**. This object can not be handled in the Admintool, since **[CustomObject](#markdown-header-datatypescustomobject)** is not yet supported.
@@ -3703,7 +3703,7 @@ Routing-tool. Enables user to plan routes between multiple points with multiple 
 {
     "routing": {
         "name": "translate#common:menu.tools.routing",
-        "icon": "bi-signpost-2",
+        "icon": "bi-signpost-2-fill",
         "activeRoutingToolOption": "DIRECTIONS",
         "routingToolOptions": ["DIRECTIONS", "ISOCHRONES"],
         "download": {

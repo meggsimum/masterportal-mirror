@@ -104,7 +104,7 @@ const BKGSearchModel = Backbone.Model.extend(/** @lends BKGSearchModel.prototype
                     metaName: hit.suggestion,
                     type: i18next.t("common:modules.searchbar.type.location"),
                     bkg: true,
-                    icon: "bi-signpost-2",
+                    icon: "bi-signpost-2-fill",
                     id: this.uniqueId("bkgSuggest"),
                     triggerEvent: {
                         channel: "Searchbar",
@@ -158,7 +158,7 @@ const BKGSearchModel = Backbone.Model.extend(/** @lends BKGSearchModel.prototype
                     metaName: hit.suggestion,
                     type: i18next.t("common:modules.searchbar.type.location"),
                     bkg: true,
-                    icon: "bi-signpost-2",
+                    icon: "bi-signpost-2-fill",
                     id: this.uniqueId("bkgSuggest"),
                     triggerEvent: {
                         channel: "Searchbar",

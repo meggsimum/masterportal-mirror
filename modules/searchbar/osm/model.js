@@ -171,7 +171,7 @@ const OsmModel = Backbone.Model.extend(/** @lends OsmModel.prototype */{
                         metaName: metaName,
                         type: "OpenStreetMap",
                         osm: true,
-                        icon: "bi-signpost-2",
+                        icon: "bi-signpost-2-fill",
                         id: Radio.request("Util", "uniqueId", "osmSuggest"),
                         marker: hit.class === "building",
                         coordinate: center

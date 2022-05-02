@@ -4,7 +4,7 @@ const state = {
     id: "routing",
     // mandatory defaults for config.json parameters
     name: "common:menu.tools.routing",
-    icon: "bi-signpost-2-fill-fill",
+    icon: "bi-signpost-2-fill",
     renderToWindow: false,
     resizableWindow: true,
     isVisibleInMenu: true,

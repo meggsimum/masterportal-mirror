@@ -186,7 +186,7 @@ const LocationFinderModel = Backbone.Model.extend(/** @lends LocationFinderModel
                         hit.icon = classDefinition.icon;
                     }
                     else {
-                        hit.icon = "bi-signpost-2";
+                        hit.icon = "bi-signpost-2-fill";
                     }
 
                     if (classDefinition.zoomLevel) {
@@ -206,7 +206,7 @@ const LocationFinderModel = Backbone.Model.extend(/** @lends LocationFinderModel
                     }
                 }
                 else {
-                    hit.icon = "bi-signpost-2";
+                    hit.icon = "bi-signpost-2-fill";
                     hit.coordinate = this.transformToMapProjection(Radio.request("Map", "getMap"), crs, [parseFloat(locationFinderResult.cx), parseFloat(locationFinderResult.cy)]);
                 }
 

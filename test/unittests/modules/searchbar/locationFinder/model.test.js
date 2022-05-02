@@ -113,7 +113,7 @@ describe("modules/searchbar/locationFinder", function () {
                             case "Feuerbacher Heide":
                                 expect(value).to.deep.include({
                                     type: "Straßenname",
-                                    icon: "bi-signpost-2",
+                                    icon: "bi-signpost-2-fill",
                                     coordinate: [511208.97, 5403930.32]
                                 });
                                 numberOfPushedItems++;
@@ -121,7 +121,7 @@ describe("modules/searchbar/locationFinder", function () {
                             case "Feuerbacher Heide 53B":
                                 expect(value).to.deep.include({
                                     type: "Adresse",
-                                    icon: "bi-signpost-2",
+                                    icon: "bi-signpost-2-fill",
                                     coordinate: [511429.4, 5404212.63]
                                 });
                                 numberOfPushedItems++;
@@ -209,7 +209,7 @@ describe("modules/searchbar/locationFinder", function () {
                             case "Feuerbacher Heide":
                                 expect(value).to.deep.include({
                                     type: "Straßenname",
-                                    icon: "bi-signpost-2",
+                                    icon: "bi-signpost-2-fill",
                                     coordinate: [511168.58, 5403876.51, 511480.12, 5403876.51, 511480.12, 5404253.75, 511168.58, 5404253.75, 511168.58, 5403876.51]
                                 });
                                 numberOfPushedItems++;

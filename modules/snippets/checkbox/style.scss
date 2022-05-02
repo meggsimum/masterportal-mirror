@@ -11,6 +11,7 @@
                 float: right;
                 background-color: $whiteColor;
                 .toggle-group {
+                    border: 1px black;
                     label {
                         overflow: visible;
                         &.btn-primary {
@@ -20,6 +21,9 @@
                                 opacity: $hoverOpacity;
                             }
                         }
+                    }
+                    .toggle-handle {
+                        background-color: white;
                     }
                 }
             }

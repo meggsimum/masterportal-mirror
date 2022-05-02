@@ -18,7 +18,7 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
             coordinate: "coordinate"
         },
         hitType: "common:modules.searchbar.type.subject",
-        hitIcon: "bi-signpost-2",
+        hitIcon: "bi-signpost-2-fill",
         async: false,
         useProxy: false
     },
@@ -39,7 +39,7 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
      * @property {String} triggerEvent.event = "" Event of radio event.
      * @property {Object} hitMap = {name: "", id: "id", coordinate: "coordinate"} Mapping object of the response hit to fit the structure of the searchbars hits.
      * @property {String} hitType = "Elastic" Type of the hit to be appended in the recommended list.
-     * @property {String} hitIcon = "bi-signpost-2" Css class of the icon to be prepended in the recommended list.
+     * @property {String} hitIcon = "bi-signpost-2-fill" Css class of the icon to be prepended in the recommended list.
      * @property {Boolean} async = false Flag if request should be asynchronous.
      * @property {Boolean} useProxy = false Flag if request should be proxied.
      * @fires Core#RadioRequestParametricURLGetInitString
