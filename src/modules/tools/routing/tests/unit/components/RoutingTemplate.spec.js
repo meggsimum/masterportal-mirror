@@ -25,7 +25,7 @@ describe("src/modules/tools/routing/components/RoutingTemplate.vue", () => {
                         routing:
                             {
                                 "name": "translate#common:menu.tools.routing",
-                                "icon": "bi-signpost-2",
+                                "icon": "bi-signpost-2-fill",
                                 "renderToWindow": true
                             }
                     }

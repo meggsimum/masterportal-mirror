@@ -172,7 +172,7 @@ export default {
                 >
                 <span
                     v-if="search.length > 0 && search !== waypointDisplayName"
-                    class="bootstrap-icon form-control-feedback"
+                    class="bootstrap-icon pointer form-control-feedback"
                     @click="resetInput()"
                     @keydown.enter="resetInput()"
                 >
@@ -184,7 +184,7 @@ export default {
                     <div class="h-50">
                         <span
                             v-show="waypoint.index !== 0"
-                            class="bootstrap-icon"
+                            class="bootstrap-icon pointer"
                             :title="$t('common:modules.tools.routing.moveWaypointUp')"
                             @click="$emit('moveWaypointUp')"
                             @keydown.enter="$emit('moveWaypointUp')"
@@ -195,7 +195,7 @@ export default {
                     <div class="h-50">
                         <span
                             v-show="waypoint.index !== countWaypoints - 1"
-                            class="bootstrap-icon"
+                            class="bootstrap-icon pointer"
                             :title="$t('common:modules.tools.routing.moveWaypointDown')"
                             @click="$emit('moveWaypointDown')"
                             @keydown.enter="$emit('moveWaypointDown')"
@@ -205,7 +205,7 @@ export default {
                     </div>
                 </div>
                 <span
-                    class="m-2 bootstrap-icon"
+                    class="m-2 bootstrap-icon pointer"
                     :title="$t('common:modules.tools.routing.deleteWaypoint')"
                     @click="$emit('removeWaypoint')"
                     @keydown.enter="$emit('removeWaypoint')"
@@ -244,6 +244,9 @@ label {
     pointer-events: all;
     margin-left: -20px;
     margin-top: 8px;
+}
+.pointer {
+    cursor: pointer;
 }
 
 .dropdown-menu-search {

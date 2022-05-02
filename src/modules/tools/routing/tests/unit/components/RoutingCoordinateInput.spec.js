@@ -26,7 +26,7 @@ describe("src/modules/tools/routing/components/RoutingCoordinateInput.vue", () =
                         routing:
                             {
                                 "name": "translate#common:menu.tools.routing",
-                                "icon": "bi-signpost-2",
+                                "icon": "bi-signpost-2-fill",
                                 "renderToWindow": true
                             }
                     }
@@ -97,32 +97,6 @@ describe("src/modules/tools/routing/components/RoutingCoordinateInput.vue", () =
         expect(wrapper.find(".form-group-sm.mb-4.mx-0").exists()).to.be.true;
     });
 
-    it("renders info text on focus", async () => {
-        wrapper = shallowMount(RoutingCoordinateInputComponent, {
-            store,
-            localVue,
-            propsData: props
-        });
-        wrapper.find("input").element.focus();
-        await wrapper.vm.$nextTick();
-        expect(wrapper.find(".helptext").exists()).to.be.true;
-    });
-
-    it("hides info text on blur", async () => {
-        wrapper = shallowMount(RoutingCoordinateInputComponent, {
-            store,
-            localVue,
-            propsData: props
-        });
-        wrapper.find("input").element.focus();
-        await wrapper.vm.$nextTick();
-        expect(wrapper.find(".helptext").exists()).to.be.true;
-
-        wrapper.find("input").element.blur();
-        await wrapper.vm.$nextTick();
-        expect(wrapper.find(".helptext").exists()).to.be.false;
-    });
-
     it("emits moveWaypointUp", async () => {
         wrapper = shallowMount(RoutingCoordinateInputComponent, {
             store,
@@ -155,7 +129,7 @@ describe("src/modules/tools/routing/components/RoutingCoordinateInput.vue", () =
             localVue,
             propsData: props
         });
-        const input = wrapper.find(".selfAlignCenter.pointer.bootstrap-icon.ml-4 > .bi-x-lg");
+        const input = wrapper.find(".bootstrap-icon.m-2 > .bi-x-lg");
 
         input.element.click();
         await wrapper.vm.$nextTick();
@@ -170,7 +144,7 @@ describe("src/modules/tools/routing/components/RoutingCoordinateInput.vue", () =
         });
         wrapper.setData({search: "testsearch"});
         await wrapper.vm.$nextTick();
-        expect(wrapper.find(".bootstrap-icon.form-control-feedback.pointer > .bi-x-lg").exists()).to.be.true;
+        expect(wrapper.find(".bootstrap-icon.pointer.form-control-feedback > .bi-x-lg").exists()).to.be.true;
     });
 
     it("renders searchResults", async () => {
