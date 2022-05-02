@@ -184,6 +184,11 @@ export default {
                 class="form-horizontal"
                 role="form"
             >
+                <div
+                    class="helptext mb-3"
+                >
+                    <span>{{ $t('common:modules.tools.routing.coordinateInputHelp') }}</span>
+                </div>
                 <RoutingCoordinateInput
                     v-for="(waypoint, index) of waypoints"
                     :key="index"
@@ -201,7 +206,7 @@ export default {
                     <span> {{ $t('common:modules.tools.routing.directions.restrictedAreas') }}:</span>
 
                     <svg
-                        class="ml-2 pointer"
+                        class="m-1 pointer"
                         width="20px"
                         height="20px"
                         viewBox="0 0 30 30"
@@ -255,7 +260,7 @@ export default {
 
 
                     <svg
-                        class="ml-2 pointer"
+                        class="m-1 pointer"
                         width="20px"
                         height="20px"
                         viewBox="0 0 30 30"
@@ -316,7 +321,7 @@ export default {
 
                 <div class="d-flex">
                     <span
-                        class="bootstrap-icon pointer ml-4"
+                        class="bootstrap-icon pointer mt-2"
                         :title="$t('common:modules.tools.routing.resetSettings')"
                         @click="reset()"
                         @keydown.enter="reset()"
@@ -324,12 +329,26 @@ export default {
                         <i class="bi-trash" />
                     </span>
                     <span
-                        class="bootstrap-icon pointer ml-4"
+                        class="bootstrap-icon pointer m-2"
                         :title="$t('common:modules.tools.routing.addWaypoint')"
                         @click="addWaypoint({index: waypoints.length -1})"
                         @keydown.enter="addWaypoint({index: waypoints.length -1})"
                     >
-                        <i class="bi-plus-lg" />
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            fill="currentColor"
+                            class="bi bi-plus-lg"
+                            viewBox="0 0 16 16"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+                                stroke="black"
+                                stroke-width="2"
+                            />
+                        </svg>
                     </span>
                 </div>
             </div>
@@ -418,7 +437,7 @@ export default {
                         </div>
 
                         <div
-                            class="d-flex flex-column ml-2 w-100"
+                            class="d-flex flex-column ms-2 w-100"
                             @click="zoomToRoute({fromWaypointIndex: segmentIndex, toWaypointIndex: segmentIndex + 1})"
                             @keydown.enter="zoomToRoute({fromWaypointIndex: segmentIndex, toWaypointIndex: segmentIndex + 1})"
                         >
@@ -447,7 +466,7 @@ export default {
                             <div
                                 v-if="stepIndex !== segment.steps.length - 1"
                                 :key="'segment_' + segmentIndex + '_step_' + stepIndex"
-                                class="ml-4 d-flex flex-column"
+                                class="ms-4 d-flex flex-column"
                                 @mouseover="highlightRoute({coordsIndex: step.getWaypoints()})"
                                 @focus="highlightRoute({coordsIndex: step.getWaypoints()})"
                                 @mouseout="unHighlightRoute()"
@@ -500,7 +519,7 @@ export default {
                     })"
                 >
                     <span>B</span>
-                    <b class="ml-4">{{ waypoints[waypoints.length - 1].getDisplayName() }}</b>
+                    <b class="ms-2">{{ waypoints[waypoints.length - 1].getDisplayName() }}</b>
                 </div>
 
                 <hr class="mt-0">
@@ -516,87 +535,18 @@ export default {
 #routing-directions {
   min-width: 350px;
 }
-.d-flex {
-  display: flex;
-}
-.flex-column {
-  flex-direction: column;
-}
-.justify-content-end {
-    justify-content: flex-end;
-}
-.justify-content-between {
-    justify-content: space-between;
-}
-.align-self-center {
-    align-self: center;
-}
-
-.m-0 {
-    margin-left: 0;
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-}
-.mt-0 {
-    margin-top: 0;
-}
-.mb-0 {
-    margin-bottom: 0;
-}
-.mb-2 {
-    margin-bottom: 0.5rem;
-}
-
-.mr-4 {
-    margin-right: 1rem;
-}
-
-.ml-2 {
-  margin-left: 0.5rem;
-}
-.ml-4 {
-  margin-left: 1rem;
-}
-.mt-4 {
-    margin-top: 1rem;
+.helptext {
+    max-width: calc(350px - 3rem);
 }
 .pointer {
   cursor: pointer;
 }
-
-.pl-0 {
-    padding-left: 0;
-}
-.pl-2 {
-    padding-left: 0.5rem
-}
-.pr-0 {
-    padding-right: 0;
-}
-.pt-4 {
-    padding-top: 1rem;
-}
-.pb-4 {
-    padding-bottom: 1rem;
-}
-.py-4 {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-.w-100 {
-    width: 100%;
-}
-
 .step {
     border-left: 2px solid transparent;
 }
 .step:hover {
     border-left: 2px solid rgb(255, 44, 0);
 }
-
-
 .opacity-05 {
     opacity: 0.5;
 }

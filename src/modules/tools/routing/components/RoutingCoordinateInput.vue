@@ -154,13 +154,6 @@ export default {
 
 <template>
     <div class="form-group-sm mx-0 mb-4">
-        <div
-            v-if="isFocused"
-            class="mx-6 helptext"
-        >
-            <span>{{ $t('common:modules.tools.routing.coordinateInputHelp') }}</span>
-        </div>
-
         <div class="d-flex justify-content-between">
             <label
                 :id="'routingCoordinateInput_' + waypoint.index"
@@ -179,7 +172,7 @@ export default {
                 >
                 <span
                     v-if="search.length > 0 && search !== waypointDisplayName"
-                    class="bootstrap-icon form-control-feedback pointer"
+                    class="bootstrap-icon form-control-feedback"
                     @click="resetInput()"
                     @keydown.enter="resetInput()"
                 >
@@ -187,11 +180,11 @@ export default {
                 </span>
             </label>
             <div class="d-flex">
-                <div class="d-flex flex-column justify-content-between">
+                <div class="justify-content-between">
                     <div class="h-50">
                         <span
                             v-show="waypoint.index !== 0"
-                            class="pointer bootstrap-icon"
+                            class="bootstrap-icon"
                             :title="$t('common:modules.tools.routing.moveWaypointUp')"
                             @click="$emit('moveWaypointUp')"
                             @keydown.enter="$emit('moveWaypointUp')"
@@ -202,7 +195,7 @@ export default {
                     <div class="h-50">
                         <span
                             v-show="waypoint.index !== countWaypoints - 1"
-                            class="pointer bootstrap-icon"
+                            class="bootstrap-icon"
                             :title="$t('common:modules.tools.routing.moveWaypointDown')"
                             @click="$emit('moveWaypointDown')"
                             @keydown.enter="$emit('moveWaypointDown')"
@@ -212,7 +205,7 @@ export default {
                     </div>
                 </div>
                 <span
-                    class="selfAlignCenter pointer bootstrap-icon ml-4"
+                    class="m-2 bootstrap-icon"
                     :title="$t('common:modules.tools.routing.deleteWaypoint')"
                     @click="$emit('removeWaypoint')"
                     @keydown.enter="$emit('removeWaypoint')"
@@ -241,69 +234,21 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
-.d-flex {
-  display: flex;
-}
-.flex-column {
-  flex-direction: column;
-}
-.justify-content-between {
-  justify-content: space-between;
-}
-.selfAlignCenter {
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-}
-.pointer {
-  cursor: pointer;
-}
-.pl-0 {
-  padding-left: 0;
-}
-.pr-0 {
-    padding-right :0;
-}
-.h-50 {
-  height: 50%;
-}
 
 label {
     width: 300px;
   margin-bottom: 0;
 }
-.form-group {
-    position: relative;
-}
-.ml-4 {
-    margin-left: 1rem;
-}
-.ml-6 {
-    margin-left: 1.5rem;
-}
-.mx-6 {
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-}
-.mx-0 {
-    margin-left: 0;
-    margin-right: 0;
-}
-.mb-4 {
-    margin-bottom: 1rem;
-}
 .bootstrap-icon.form-control-feedback {
     color: #777;
     pointer-events: all;
-}
-
-.helptext {
-    max-width: calc(350px - 3rem);
+    margin-left: -20px;
+    margin-top: 8px;
 }
 
 .dropdown-menu-search {
     width: 300px;
     top: unset;
-    left: unset;
+    left: 20px;
 }
 </style>

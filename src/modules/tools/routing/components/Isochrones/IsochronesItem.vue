@@ -193,6 +193,11 @@ export default {
                 class="form-horizontal"
                 role="form"
             >
+                <div
+                    class="helptext mb-3"
+                >
+                    <span>{{ $t('common:modules.tools.routing.coordinateInputHelp') }}</span>
+                </div>
                 <RoutingCoordinateInput
                     :count-waypoints="1"
                     :waypoint="waypoint"
@@ -293,7 +298,7 @@ export default {
                     <div
                         v-for="(area, index) of routingIsochrones.getAreas()"
                         :key="'result-area-' + index"
-                        class="d-flex mb-2 ml-2"
+                        class="d-flex mb-2 ms-2"
                     >
                         <div
                             class="legendecontainer px-2"
@@ -318,35 +323,9 @@ export default {
 #routing-isochrones {
   min-width: 350px;
 }
-.d-flex {
-  display: flex;
+.helptext {
+    max-width: calc(350px - 3rem);
 }
-.flex-column {
-  flex-direction: column;
-}
-.ml-2 {
-  margin-left: 0.5rem;
-}
-.ml-4 {
-  margin-left: 1rem;
-}
-.mr-4 {
-    margin-right: 1rem;
-}
-.mb-2 {
-    margin-bottom: 0.5rem;
-}
-.px-2 {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-}
-.pointer {
-  cursor: pointer;
-}
-.w-100 {
-    width: 100%;
-}
-
 .legendecontainer {
     width: 56px;
     text-align: center;
@@ -354,5 +333,9 @@ export default {
 
 .opacity-05 {
     opacity: 0.5;
+}
+
+h6 {
+    font-size: 12px;
 }
 </style>

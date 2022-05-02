@@ -120,7 +120,7 @@ export default {
                             width: `calc(100% / ${filteredRoutingToolOptions.length})`,
                         }"
                         :class="[
-                            'routingtooltab d-flex justify-content-center py-4 pointer',
+                            'routingtooltab d-flex justify-content-center py-3 pointer',
                             activeRoutingToolOption === routingToolOption.id ? 'active' : '',
                         ]"
                         @click="changeActiveRoutingToolOption(routingToolOption.id)"
@@ -132,12 +132,12 @@ export default {
                         <span>{{ $t("common:modules.tools.routing.tabs." + routingToolOption.id) }}</span>
                         <RoutingLoadingSpinner
                             v-if="(routingToolOption.id === 'DIRECTIONS' && isLoadingDirections) || (routingToolOption.id === 'ISOCHRONES' && isLoadingIsochrones)"
-                            class="ml-2"
+                            class="ms-2"
                         />
                     </div>
 
                     <div
-                        class="d-flex flex-column justify-content-center ml-2"
+                        class="d-flex flex-column justify-content-center ms-2"
                         :title="$t('common:modules.tools.routing.helpTooltip')"
                         @click="toggleHelp()"
                         @keydown.enter="toggleHelp()"
@@ -159,22 +159,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "~variables";
-.d-flex {
-  display: flex;
-}
-.flex-column {
-    flex-direction: column;
-}
-.justify-content-center {
-  justify-content: center;
-}
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-.ml-2 {
-    margin-left: 0.5rem;
-}
+
 .pointer {
   cursor: pointer;
 }

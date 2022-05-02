@@ -21,7 +21,7 @@ export default {
             type="checkbox"
             @input="$emit('input', $event.target.checked)"
         >
-        <span class="ml-2">
+        <span class="ms-2">
             {{ $t('common:modules.tools.routing.batchProcessing.header') }}
         </span>
     </label>
@@ -30,28 +30,5 @@ export default {
 <style scoped>
 .pointer {
     cursor: pointer;
-}
-
-.mt-0 {
-    margin-top: 0;
-}
-.mb-0 {
-    margin-bottom: 0;
-}
-
-.ml-2 {
-    margin-left: 0.5rem;
-}
-
-.d-flex {
-    display: flex;
-}
-
-.flex-column {
-    flex-direction: column;
-}
-
-.align-self-center {
-    align-self: center;
 }
 </style>

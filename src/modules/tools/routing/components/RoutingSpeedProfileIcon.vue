@@ -25,6 +25,7 @@ export default {
         height="24px"
         viewBox="0 0 24 24"
         width="24px"
+        class="m-1"
         :fill="fillColor"
     >
         <title>{{ tooltip }}</title>
