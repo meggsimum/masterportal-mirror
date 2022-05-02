@@ -209,6 +209,12 @@
                 "defaultTreeNotSupported": "FeatureViaURL: FeatureViaURL is only supported for Treetype custom or light."
             }
         },
+        "highlightFeaturesByAttribute": {
+            "messages": {
+                "requestFailed": "Request failed.",
+                "configurationError": "Configuration error. Please check the console messages."
+            }
+        },
         "quickHelp": {
             "titleTag": "Open/close help",
             "search": {
