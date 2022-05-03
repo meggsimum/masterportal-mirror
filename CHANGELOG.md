@@ -11,6 +11,7 @@
 - A control has been added to create buttons for any tools. These can be used to open and close the configured tools.
 - Added style.json parameter "styleMultiGeomOnlyWithRule". If true, **no** fallback for styling of multiGeometries is used. Default is false, means the the previous behavior.
 - ZoomToFeature: A `setFeature` attribute has been added to zoom only to a feature per ID. A new feature with the specified style is not created in this case.
+- Russian, Ukrainian and Platt is now available as a new language selection.
 
 ### Changed
 - Migrated the module featureViaURL from Backbone to Vue as a util. E2E tests were fixed and re-enabled.
