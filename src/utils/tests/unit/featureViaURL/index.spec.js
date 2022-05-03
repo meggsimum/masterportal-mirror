@@ -7,7 +7,8 @@ describe("featureViaURL", function () {
     const spy = sinon.spy();
 
     beforeEach(function () {
-        sinon.stub(console, "warn").callsFake(sinon.stub());
+        sinon.stub(console, "warn").callsFake(spy);
+        // sinon.stub(console, "warn").callsFake(sinon.stub());
         sinon.stub(console, "error").callsFake(sinon.stub());
     });
     afterEach(function () {
@@ -111,8 +112,8 @@ describe("featureViaURL", function () {
             const wrongId = "402";
 
             expect(getFeatureIds(wrongId)).to.eql([]);
-            expect(console.error.calledOnce).to.be.true;
-            expect(console.error.firstCall.args).to.eql([i18next.t("common:modules.featureViaURL.messages.layerNotFound")]);
+            expect(spy.calledOnce).to.be.true;
+            expect(spy.firstCall.args).to.eql([i18next.t("common:modules.featureViaURL.messages.layerNotFound")]);
         });
         it("should log an error on the console if no layerId was given to the function and return an empty array", function () {
             expect(getFeatureIds()).to.eql([]);

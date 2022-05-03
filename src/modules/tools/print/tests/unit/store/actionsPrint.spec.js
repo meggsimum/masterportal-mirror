@@ -19,7 +19,6 @@ describe("src/modules/tools/print/store/actionsPrint", function () {
         after(function () {
             sinon.restore();
         });
-
         it("should start the print", done => {
             const TileLayer = {},
                 state = {
