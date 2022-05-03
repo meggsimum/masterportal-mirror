@@ -138,7 +138,7 @@ function handleGetFeatureError (dispatch, error) {
 */
 function handleGetFeatureResponse (dispatch, response, highlightFeaturesLayer) {
     if (response.status === 200) {
-        const features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data);
+        const features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data, {dataProjection: "EPSG:25832", featureProjection:"EPSG:25832"});
 
         if (features.length === 0) {
             const parser = new DOMParser(),

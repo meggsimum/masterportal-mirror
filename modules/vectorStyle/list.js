@@ -247,8 +247,9 @@ const StyleList = Backbone.Collection.extend(/** @lends StyleList.prototype */{
                     imagePath: "../../img/",
                     imageScale: 1,
                     imageWidth: 34,
-                    imageHeight: 48,
-                    imageOffsetY: 46,
+                    imageHeight: 34,
+                    imageOffsetX: 0,
+                    imageOffsetY: 0,
                     imageOffsetYUnit: "pixels"
                 }
             }]
