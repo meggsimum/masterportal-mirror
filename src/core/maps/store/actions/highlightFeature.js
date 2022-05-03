@@ -51,17 +51,6 @@ function highlightPolygon (commit, getters, dispatch, highlightObject) {
                 clonedStyle.getStroke().setColor(newStyle.stroke.color);
             }
             feature.setStyle(clonedStyle);
-
-            /*
-            console.log(feature.getGeometry());
-            dispatch("Map/zoomTo", {
-                geometryOrExtent: feature.getGeometry()
-            }, {root: true});
-
-            if (highlightObject.zoom) {
-                dispatch("Map/setZoomLevel", highlightObject.zoom, {root: true})
-            }
-            */
         }
     }
     else {
@@ -97,16 +86,6 @@ function highlightLine (commit, getters, dispatch, highlightObject) {
                 clonedStyle.getStroke().setColor(newStyle.stroke.color);
             }
             feature.setStyle(clonedStyle);
-
-            /*
-            dispatch("Map/zoomTo", {
-                geometryOrExtent: feature.getGeometry()
-            }, {root: true});
-
-            if (highlightObject.zoom) {
-                dispatch("Map/setZoomLevel", highlightObject.zoom, {root: true})
-            }
-            */
         }
     }
     else {
@@ -180,16 +159,6 @@ function increaseFeature (commit, dispatch, getters, highlightObject) {
         }
         clonedImage.setScale(clonedImage.getScale() * scaleFactor);
         feature.setStyle(clonedStyle);
-
-        /*
-        dispatch("Map/zoomTo", {
-            geometryOrExtent: feature.getGeometry()
-        }, {root: true});
-
-        if (highlightObject.zoom) {
-            dispatch("Map/setZoomLevel", highlightObject.zoom, {root: true})
-        }
-        */
     }
 }
 /**

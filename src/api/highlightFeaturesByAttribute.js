@@ -75,10 +75,7 @@ function highlightPointFeature (modelId, styleId, name, gfiAttributes, features)
         highlightLayer.setVisible(true);
         Radio.trigger("Map", "addLayerOnTop", highlightLayer);
 
-        const map = Radio.request("Map", "getMap"),
-            mapView = map.getView();
-
-        mapView.fit(highlightLayer.getSource().getExtent(), map.getSize());
+        Radio.trigger("Map", "zoomToExtent", highlightLayer.getSource().getExtent());
     }
 }
 
@@ -117,10 +114,7 @@ function highlightLineOrPolygonFeature (modelId, styleId, name, geometryRequeste
         highlightLayer.setVisible(true);
         Radio.trigger("Map", "addLayerOnTop", highlightLayer);
 
-        const map = Radio.request("Map", "getMap"),
-            mapView = map.getView();
-
-        mapView.fit(highlightLayer.getSource().getExtent(), map.getSize());
+        Radio.trigger("Map", "zoomToExtent", highlightLayer.getSource().getExtent());
     }
 }
 
@@ -208,7 +202,6 @@ function getWFSQuery (featureType, resultPropName, version, filterSnippet) {
     const result = `<?xml version='1.0' encoding='UTF-8'?>
         <wfs:GetFeature service='WFS' xmlns:wfs='http://www.opengis.net/wfs' xmlns:ogc='http://www.opengis.net/ogc' xmlns:gml='http://www.opengis.net/gml' xmlns:app='http://www.deegree.org/app' traverseXlinkDepth='*' version='${version}'>
             <wfs:Query typeName='${featureType}'>
-                <wfs:PropertyName>${resultPropName}</wfs:PropertyName>
                 <ogc:Filter>
                     ${filterSnippet}
                 </ogc:Filter>
