@@ -44,11 +44,13 @@ export default {
                 options: {duration: 500, zoom: 9}
             }, {root: true});
 
-            if (featureGeometry.getType() === "Point") {
-                Radio.trigger("MapView", "setCenter", featureGeometry.getCoordinates(), styleObj.zoom);
-            }
-            else {
-                Radio.trigger("MapView", "setCenter", getCenter(featureGeometry.getExtent()), styleObj.zoom);
+            if (featureGeometry && typeof featureGeometry.getType === "function") {
+                if (featureGeometry.getType() === "Point") {
+                    Radio.trigger("MapView", "setCenter", featureGeometry.getCoordinates(), styleObj.zoom);
+                }
+                else {
+                    Radio.trigger("MapView", "setCenter", getCenter(featureGeometry.getExtent()), styleObj.zoom);
+                }
             }
         }
     },
