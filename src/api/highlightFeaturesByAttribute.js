@@ -1,12 +1,12 @@
 import {WFS} from "ol/format.js";
 import VectorLayer from "ol/layer/Vector.js";
 import VectorSource from "ol/source/Vector.js";
-import {Style, Circle as CircleStyle, Fill} from "ol/style.js";
+import {Style} from "ol/style.js";
 import Point from "ol/geom/Point.js";
 import Feature from "ol/Feature.js";
 import axios from "axios";
 import {Radio} from "backbone";
-import {getLayerList, getLayerWhere} from "@masterportal/masterportalapi/src/rawLayerList";
+import {getLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
 
 export default {
     /**
