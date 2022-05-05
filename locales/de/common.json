@@ -619,7 +619,6 @@
                 },
                 "hintSupply": "Klicken Sie in die Karte um Koordinaten abzufragen",
                 "hintSearch": "Geben Sie die zu suchenden Koordinaten ein",
-                "disabledTooltip": "Diese Funktion steht nicht in der 3D Ansicht zur Verfügung",
                 "copyCoordsBtn": "Koordinatenpaar kopieren",
                 "copyCoordBtn": " {{value}} kopieren"
             },

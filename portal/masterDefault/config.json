@@ -125,7 +125,7 @@
         }
       },
       "legend": {
-        "name": "translate#common:modules.legend.name",
+        "name": "common:modules.legend.name",
         "icon": "bi-lightbulb",
         "showCollapseAllButton": true
       },

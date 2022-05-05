@@ -53,7 +53,7 @@ const Config = {
         numFeaturesToShow: 2,
         infoText: "common:mouseHover.infoText"
     },
-    startingMap3D: false,
+    startingMap3D: true,
     obliqueMap: true,
     cesiumParameter: {
         tileCacheSize: 20,

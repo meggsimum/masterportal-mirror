@@ -619,7 +619,6 @@
                 },
                 "hintSupply": "Click in the map to request coordinates",
                 "hintSearch": "Enter the coordinates to search for",
-                "disabledTooltip": "This function is not available in the 3D view.",
                 "copyCoordsBtn": "Copy pair of coordinates",
                 "copyCoordBtn": " Copy {{value}}"
             },

@@ -54,24 +54,14 @@ export default {
             if (value) {
                 this.initProjections();
                 this.setExample();
-                if (this.mapMode === "2D") {
-                    this.setMode("supply");
-                    this.setSupplyCoordActive();
-                }
-                else {
-                    this.setMode("search");
-                }
+                this.setMode("supply");
+                this.setSupplyCoordActive();
                 this.setFocusToFirstControl();
             }
             else {
                 this.resetErrorMessages("all");
                 this.resetValues();
                 this.setSupplyCoordInactive();
-            }
-        },
-        mapMode (value) {
-            if (value === "3D") {
-                this.changeMode("search");
             }
         }
     },
@@ -275,7 +265,7 @@ export default {
                 this.setSupplyCoordInactive();
                 this.setFirstSearchPosition();
             }
-            else if (this.mapMode !== "3D") {
+            else {
                 this.setMode(newMode);
                 this.resetErrorMessages("all");
                 this.setSupplyCoordActive();
@@ -360,23 +350,6 @@ export default {
             return this.showCopyButtons ? "col-md-6 col-sm-6" : "col-md-7 col-sm-7";
         },
         /**
-         * Returns true, if mode is 2D.
-         * @returns {boolean} true, if mode is 2D.
-         */
-        isSupplyCoordDisabled () {
-            return this.mode === "3D";
-        },
-        /**
-         * Returns true, if supplyCoord is active.
-         * @returns {boolean} true, true, if supplyCoord is active
-         */
-        isSupplyCoordChecked () {
-            if (this.mapMode === "3D") {
-                return false;
-            }
-            return this.mode === "supply";
-        },
-        /**
          * Returns true, if uiStyle is not SIMPLE or TABLE.
          * @returns {boolean} true, if is default style
          */
@@ -433,13 +406,11 @@ export default {
                                 type="radio"
                                 name="mode"
                                 class="form-check-input"
-                                :checked="isSupplyCoordChecked()"
-                                :disabled="isSupplyCoordDisabled()"
+                                :checked="true"
                                 @click="changeMode('supply')"
                             >
                             <label
                                 for="supplyCoordRadio"
-                                :title="isSupplyCoordDisabled()? $t('modules.tools.coordToolkit.disabledTooltip'): ''"
                                 :class="{ 'form-check-label': true, 'enabled': isEnabled('supply') }"
                                 @click="changeMode('supply')"
                                 @keydown.enter="changeMode('supply')"
@@ -451,7 +422,6 @@ export default {
                                 type="radio"
                                 name="mode"
                                 class="form-check-input"
-                                :checked="!isSupplyCoordChecked()"
                                 @click="changeMode('search')"
                             >
                             <label

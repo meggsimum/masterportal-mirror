@@ -489,8 +489,7 @@
                     "example": "Örnek: "
                 },
                 "hintSupply": "Koordinatları öğrenmek için haritaya tıklayın",
-                "hintSearch": "Bulmak istediğiniz koordinatları girin",
-                "disabledTooltip": "Bu işlev 3D görünümde mevcut değildir"
+                "hintSearch": "Bulmak istediğiniz koordinatları girin"
             },
             "gfi": {
                 "errorMessage": "Bilgi taraması (GetFeatureInfo) sırasında bir hata oluşmuştur. Lütfen sonra tekrar deneyiniz. Sorun devam ederse, lütfen servis operatörüyle iletişime geçin.",
