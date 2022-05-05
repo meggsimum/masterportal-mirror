@@ -7,7 +7,7 @@ import getters from "../store/gettersMouseHover";
 export default {
     name: "MouseHover",
     computed: {
-        ...mapGetters("Maps", ["get2DMap", "visibleLayerList"]),
+        ...mapGetters("Map", ["visibleLayerList"]),
         ...mapGetters("MouseHover", Object.keys(getters)),
         ...mapGetters({
             isMobile: "mobile"
@@ -15,9 +15,9 @@ export default {
     },
     mounted () {
         if (!this.isMobile && Config.mouseHover) {
-            this.$nextTick(function () {
+            this.$nextTick(() => {
                 this.setVisibleLayerList(this.visibleLayerList);
-                this.initialize(this.get2DMap);
+                this.initialize();
             });
         }
     },
@@ -30,13 +30,11 @@ export default {
 
 <template>
     <div
-        v-if="active"
         id="mousehover-overlay"
     >
         <div
             v-if="infoBox"
-            class="tooltip in mouseHover"
-            role="tooltip"
+            class="mouseHover"
         >
             <div>
                 <div
@@ -69,9 +67,7 @@ export default {
 @import "~/css/mixins.scss";
 $color_1: #777;
 $background_color_1: rgb(255, 255, 255);
-.tooltip {
-    pointer-events: none;
-}
+
 .mouseHover {
     font-size: 12px;
     text-align: left;

@@ -16,7 +16,7 @@ const mutations = {
      * @returns {Array} array of all layers with a mouseHoverFild property
      */
     setMouseHoverLayers: (state) => {
-        state.mouseHoverLayers = getLayerList().filter(function (layer) {
+        state.mouseHoverLayers = getLayerList().filter(layer => {
             return layer?.mouseHoverField && layer.mouseHoverField !== "";
         });
     },

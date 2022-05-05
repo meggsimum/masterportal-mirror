@@ -1,8 +1,7 @@
 import Overlay from "ol/Overlay.js";
 /**
  * User type definition
- * @typedef {Object} MouseHoverState
- * @property {Boolean} active If true the overlay gets rendered.
+ * @typedef {Object} MouseHoverStates
  * @property {Object} overlay =new Overlay({}) mouseHover overlay (tooltip) - paramaters get set during initialization.
  * @property {Number} numFeaturesToShow The number of features that will be shown in the popup.
  * @property {Number} infoText The text that will be shown in the popup.
@@ -16,8 +15,11 @@ import Overlay from "ol/Overlay.js";
  * @property {Boolean} pleaseZoom True if more features are being hovered than the configured max in numFeaturesToShow.
  */
 export default {
-    active: false,
     overlay: new Overlay({
+        id: "mousehover-overlay",
+        element: document.createElement("DIV"),
+        offset: [0, -2],
+        positioning: "bottom-left"
     }),
     numFeaturesToShow: 2,
     infoText: "",

@@ -4,22 +4,17 @@ import actions from "../../../store/actionsMouseHover";
 import stateMouseHover from "../../../store/stateMouseHover";
 
 
-describe("tools/mouseHover/store/actionsMouseHover", () => {
-    let commit, dispatch, rootState, state;
+describe("src/modules/mouseHover/store/actionsMouseHover", () => {
+    let commit, dispatch, state, rootGetters;
 
     beforeEach(() => {
         commit = sinon.spy();
         dispatch = sinon.spy();
-        rootState = {
-            configJson: {Themenconfig: {
-                Fachdaten: {
-                    Layer: [
-                        {
-                            name: "TestLayer"
-                        }
-                    ]
-                }
-            }}
+        rootGetters = {
+            "Map/ol2DMap": {
+                addOverlay: sinon.spy(),
+                on: sinon.spy()
+            }
         };
         Config = {
             mouseHover: {
@@ -32,14 +27,9 @@ describe("tools/mouseHover/store/actionsMouseHover", () => {
     afterEach(sinon.restore);
 
     describe("initialize", () => {
-        const map = {
-            id: "ol",
-            mode: "2D",
-            on: () => sinon.stub()
-        };
-
         it("initializes the mouseHover module", () => {
-            actions.initialize({state, rootState, commit, dispatch}, map);
+            actions.initialize({state, commit, dispatch, rootGetters});
+            expect(rootGetters["Map/ol2DMap"].addOverlay.calledOnce).to.be.true;
             expect(commit.firstCall.args[0]).to.equal("setMouseHoverLayers");
             expect(commit.secondCall.args[0]).to.equal("setMouseHoverInfos");
             expect(commit.args[2]).to.eql(["setNumFeaturesToShow", 2]);
@@ -60,7 +50,7 @@ describe("tools/mouseHover/store/actionsMouseHover", () => {
 
         it("filters the infos from each feature", () => {
             state.mouseHoverInfos = [{id: "layerId-1", mouseHoverField: ["name", "id"]}, {id: "layerId-2", mouseHoverField: ["name", "kategorie"]}];
-            actions.filterInfos({state, commit, dispatch}, features);
+            actions.filterInfos({state, commit}, features);
             expect(commit.firstCall.args[0]).to.equal("setPleaseZoom");
             expect(commit.firstCall.args[1]).to.equal(false);
             expect(commit.secondCall.args[0]).to.equal("setInfoBox");
