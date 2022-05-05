@@ -12,7 +12,7 @@ definitions:
             - export FTP_USERNAME="$LGV_TEST_FTP_USERNAME"
             - export FTP_PASSWORD="$LGV_TEST_FTP_PASSWORD"
             - export FTP_SOURCE_PATH="dist"
-            - export FTP_TARGET_URL="ftps://test.geoportal-hamburg.de/"
+            - export FTP_TARGET_URL="ftps://test.geoportal-hamburg.de/portale/"
             - export FTP_GITLOGFILE="testGitLog"
             #replace slashes in branchname with underscores
             - tmp=$BITBUCKET_BRANCH
