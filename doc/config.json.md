@@ -4936,7 +4936,7 @@ List of attributes typically used for *Entities 3D*.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|url|yes|String|""|Model URL, e.g. `"https://hamburg.virtualcitymap.de/gltf/4AQfNWNDHHFQzfBm.glb"`.|false|
+|url|yes|String|""|Model URL, e.g. `"https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb"`.|false|
 |attributes|no|**[Attribute](#markdown-header-themenconfiglayerentities3dattribute)**||Model attributes, e.g. `{"name": "test"}`.|false|
 |latitude|yes|Number||Model origin latitude in degrees. Example: `53.541831`|false|
 |longitude|yes|Number||Model origin longitude in degrees. Example: `9.917963`|false|
@@ -4952,27 +4952,31 @@ List of attributes typically used for *Entities 3D*.
 
 ```json
 {
-    "id": "123456",
-    "name": "EntitiesLayerName",
-    "visibility": true,
-    "entities": [
-       {
-         "url": "https://hamburg.virtualcitymap.de/gltf/4AQfNWNDHHFQzfBm.glb",
-         "attributes": {
-           "name": "Fernsehturm.kmz"
-         },
-         "latitude": 53.541831,
-         "longitude": 9.917963,
-         "height": 10,
-         "heading": -1.2502079000000208,
-         "pitch": 0,
-         "roll": 0,
-         "scale": 5,
-         "allowPicking": true,
-         "show": true
-       }
-    ]
-}
+      "id": "123456",
+      "name": "EntitiesLayerName",
+      "visibility": true,
+      "typ": "Entities3D",
+      "entities": [
+         {
+            "url": "https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb",
+           "attributes": {
+             "name": "simple building in Planten und Blomen"
+           },
+           "latitude": 53.5631,
+           "longitude": 9.9800,
+           "height": 12,
+           "heading": 0,
+           "pitch": 0,
+           "roll": 0,
+           "scale": 5,
+           "allowPicking": true,
+           "show": true
+         }
+       ],
+       "gfiAttributes" : {
+         "name": "Name"
+      }
+  },
 ```
 
 ***

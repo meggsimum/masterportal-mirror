@@ -4855,7 +4855,7 @@ Hier werden Entities3D typische Attribute aufgelistet.
 
 |Name|Verpflichtend|Typ|default|Beschreibung|Expert|
 |----|-------------|---|-------|------------|------|
-|url|ja|String|""|URL zu dem Modell. Beispiel: `"https://hamburg.virtualcitymap.de/gltf/4AQfNWNDHHFQzfBm.glb"`|false|
+|url|ja|String|""|URL zu dem Modell. Beispiel: `"https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb"`|false|
 |attributes|nein|**[Attribute](#markdown-header-themenconfiglayerentities3dattribute)**||Attribute für das Modell. Beispiel: `{"name": "test"}`|false|
 |latitude|ja|Number||Breitengrad des Modell-Origins in Grad. Beispiel: `53.541831`|false|
 |longitude|ja|Number||Längengrad des Modell-Origins in Grad. Beispiel: `9.917963`|false|
@@ -4872,27 +4872,31 @@ Hier werden Entities3D typische Attribute aufgelistet.
 ```
 #!json
 {
-    "id": "123456",
-    "name": "EntitiesLayerName",
-    "visibility": true,
-    "entities": [
-       {
-         "url": "https://hamburg.virtualcitymap.de/gltf/4AQfNWNDHHFQzfBm.glb",
-         "attributes": {
-           "name": "Fernsehturm.kmz"
-         },
-         "latitude": 53.541831,
-         "longitude": 9.917963,
-         "height": 10,
-         "heading": -1.2502079000000208,
-         "pitch": 0,
-         "roll": 0,
-         "scale": 5,
-         "allowPicking": true,
-         "show": true
-       }
-     ]
-}
+      "id": "123456",
+      "name": "EntitiesLayerName",
+      "visibility": true,
+      "typ": "Entities3D",
+      "entities": [
+         {
+            "url": "https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb",
+           "attributes": {
+             "name": "einfaches Haus in Planten und Blomen"
+           },
+           "latitude": 53.5631,
+           "longitude": 9.9800,
+           "height": 12,
+           "heading": 0,
+           "pitch": 0,
+           "roll": 0,
+           "scale": 5,
+           "allowPicking": true,
+           "show": true
+         }
+       ],
+       "gfiAttributes" : {
+         "name": "Name"
+      }
+  },
 ```
 
 ***

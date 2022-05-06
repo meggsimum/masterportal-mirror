@@ -9,7 +9,7 @@ import GeoJSONLayer from "../../../src/core/layers/geojson";
 import SensorLayer from "./layer/sensor";
 import HeatmapLayer from "./layer/heatmap";
 import TerrainLayer from "../../../src/core/layers/terrain";
-import EntitiesLayer from "./layer/entities";
+import EntitiesLayer from "../../../src/core/layers/entities";
 import VectorTileLayer from "../../../src/core/layers/vectorTile";
 import TileSetLayer from "../../../src/core/layers/tileset";
 import VectorBaseLayer from "../../../src/core/layers/vectorBase";
@@ -640,7 +640,7 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
 
         // we dont want to see these layers in the tree
         allLayerModels = allLayerModels.filter(layerModel => {
-            return ["Oblique", "TileSet3D", "Terrain3D"].indexOf(layerModel.get("typ")) === -1;
+            return ["Oblique", "TileSet3D", "Terrain3D", "Entities3D"].indexOf(layerModel.get("typ")) === -1;
         });
 
         // in custom tree, only selected layers are sortable, thus only those may get an index
