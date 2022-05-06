@@ -62,7 +62,6 @@ export default {
             scene = map3D.getCesiumScene();
             api.map.olcsMap.prepareScene({scene: scene, map3D: map3D, callback: (clickObject) => dispatch("clickEventCallback", clickObject)}, Config);
         }
-
         map3D.setEnabled(true);
         commit("setMode", "3D");
         Radio.trigger("Map", "change", "3D");
