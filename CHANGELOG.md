@@ -25,7 +25,7 @@
 
 ### Fixed
 - Issue #737: Fix issue of some items in the layer tree overflowing
-- The attribute `startingMap3D` now ensures that the 3D mode is started by default.
+- The attribute `startingMap3D` in config.js now ensures that the 3D mode is started by default.
 
 
 ## v2.21.0 - 2022-05-04

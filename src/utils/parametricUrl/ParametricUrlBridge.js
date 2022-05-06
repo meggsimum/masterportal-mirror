@@ -103,7 +103,7 @@ export function doSpecialBackboneHandling (key, value) {
         if (value === "3D" || String(value).toLowerCase() === "3d") {
             // set mapMode manually back to '2D', is set to '3D' in activateMap im map3D and 3D-layers watches to that
             // can be removed, if Radio trigger 'mapChangeTo3d' is removed
-            store.state.Maps.mode = "2D";
+            store.commit("Maps/setMode", "2D");
             Radio.trigger("Map", "mapChangeTo3d");
         }
     }

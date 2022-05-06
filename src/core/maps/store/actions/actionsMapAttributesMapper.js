@@ -124,7 +124,6 @@ export default {
      * @returns {void}
      */
     updateClick ({getters, commit, dispatch, rootGetters}, evt) {
-
         if (getters.mode === "2D" || getters.mode === "Oblique") {
             commit("setClickCoordinate", evt.coordinate);
             commit("setClickPixel", evt.pixel);

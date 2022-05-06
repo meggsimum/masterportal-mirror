@@ -33,13 +33,13 @@ function create2DMap (mapViewSettings) {
  * @param {Object} configJs The settings of config.json file.
  * @returns {void}
  */
-function create3DMap (configJs) {
+async function create3DMap (configJs) {
     if (window.Cesium && configJs.startingMap3D) {
-        store.dispatch("Maps/activateMap3D");
+        await store.commit("Maps/setMode", "2D");
+        Radio.trigger("Map", "mapChangeTo3d");
     }
 
 }
-
 
 /**
  * Create the oblique map.

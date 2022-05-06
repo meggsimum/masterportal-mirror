@@ -2,18 +2,6 @@ import mapCollection from "../../../maps/mapCollection";
 import api from "@masterportal/masterportalapi/src/maps/api";
 import store from "../../../../app-store";
 
-/**
- * Callback function for the 3D click event.
- * @param {Object} clickObject contains the attributes for the callback function .
- * @fires Core#RadioRequestMapClickedWindowPosition
- * @fires Core#RadioRequestMapGetMap
- * @returns {void}
- */
-function clickEventCallback (clickObject) {
-    store.dispatch("Maps/updateClick", {map3D: clickObject.map3D, position: clickObject.position, pickedPosition: clickObject.pickedPosition, coordinate: clickObject.coordinate, latitude: clickObject.latitude, longitude: clickObject.longitude, resolution: clickObject.resolution, originalEvent: clickObject.originalEvent, map: Radio.request("Map", "getMap")});
-    Radio.trigger("Map", "clickedWindowPosition", {position: clickObject.position, pickedPosition: clickObject.pickedPosition, coordinate: clickObject.coordinate, latitude: clickObject.latitude, longitude: clickObject.longitude, resolution: clickObject.resolution, originalEvent: clickObject.originalEvent, map: Radio.request("Map", "getMap")});
-}
-
 export default {
     /**
      * Deactivates oblique mode and listens to change event to activate 3d mode.
@@ -69,10 +57,11 @@ export default {
             });
 
             map3D = await dispatch("createMap3D");
-            await mapCollection.addMap(map3D, "3D");
+            mapCollection.addMap(map3D, "3D");
             scene = map3D.getCesiumScene();
-            api.map.olcsMap.prepareScene({scene: scene, map3D: map3D, callback: clickEventCallback}, Config);
+            api.map.olcsMap.prepareScene({scene: scene, map3D: map3D, callback: (clickObject) => dispatch("clickEventCallback", clickObject)}, Config);
         }
+        getters.getView.setZoom(7);
         map3D.setEnabled(true);
         commit("setMode", "3D");
         Radio.trigger("Map", "change", "3D");
@@ -81,11 +70,28 @@ export default {
     },
 
     /**
+     * Callback function for the 3D click event.
+     * @param {Object} param store context.
+     * @param {Object} param.dispatch the dispatch.
+     * @param {Object} param.getters the getters.
+     * @param {Object} clickObject contains the attributes for the callback function .
+     * @fires Core#RadioRequestMapClickedWindowPosition
+     * @returns {void}
+     */
+    clickEventCallback ({dispatch, getters}, clickObject) {
+        if (clickObject) {
+            const extendedClickObject = Object.assign(clickObject, {map: getters.get2DMap});
+
+            dispatch("updateClick", extendedClickObject);
+            Radio.trigger("Map", "clickedWindowPosition", extendedClickObject);
+        }
+    },
+
+    /**
      * Deactivates the 3d mode.
      * @param {Object} param store context.
      * @param {Object} param.commit the commit.
      * @param {Object} param.getters the getters.
-     * @fires Core#RadioRequestMapGetMap
      * @fires Core#RadioTriggerMapBeforeChange
      * @fires Alerting#RadioTriggerAlertAlert
      * @fires Core#RadioTriggerMapChange
@@ -93,14 +99,13 @@ export default {
      */
     deactivateMap3D ({commit, getters}) {
         const map3D = getters.get3DMap,
-            map = Radio.request("Map", "getMap"),
-            view = map.getView();
+            view = getters.getView;
         let resolution,
             resolutions;
 
         if (map3D) {
             Radio.trigger("Map", "beforeChange", "2D");
-            view.animate({rotation: 0}, function () {
+            view.animate({rotation: 0}, () => {
                 map3D.setEnabled(false);
                 view.setRotation(0);
                 resolution = view.getResolution();
@@ -111,7 +116,6 @@ export default {
                 if (resolution < resolutions[resolutions.length - 1]) {
                     view.setResolution(resolutions[resolutions.length - 1]);
                 }
-                Radio.trigger("Alert", "alert:remove");
                 commit("setMode", "2D");
                 Radio.trigger("Map", "change", "2D");
             });
