@@ -259,7 +259,7 @@ export default {
                 layer?.wildCard,
                 layer?.singleChar,
                 layer?.escapeChar,
-                layer?.propNameSearchPrefix,
+                layer?.featurePrefix,
                 propName,
                 propValue),
             requestBody = this.getWFSQuery(layer?.featureType, layer?.version, filterSnippet);

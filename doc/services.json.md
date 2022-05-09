@@ -258,6 +258,9 @@ WMTS layers can be added by
 |isSecured|no|Boolean|false|Displays whether the layer belongs to a secured service. (**[see below](#markdown-header-wms-layerissecured)**)|false|
 |authenticationUrl|no|String||Additional url called to trigger basic authentication in the browser.|"https://geodienste.hamburg.de/HH_WMS_DOP10?SERVICE=WFS&VERSION=1.1.0&REQUEST=DescribeFeatureType"|
 |propertyNames|no|Array||The attributes as PROPERTYNAME parameter to receive response from wfs layer |`["properties"]`|
+|wildCard|no|String||The wildcard parameter for the highlightFeaturesByAttribute property query. Must be one character only.|
+|singleChar|no|String||The singlechar parameter for the highlightFeaturesByAttribute property query. Must be one character only.|
+|escapeChar|no|String||The escapechar parameter for the highlightFeaturesByAttribute property query. Must be one character only.|
 
 **WFS example:**
 

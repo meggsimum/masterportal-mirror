@@ -165,7 +165,7 @@ The attribute *properties* activates a feature property check by comparing the n
 ### attributeObject
 Then it is possible to configure an object instead of an attribute key.
 
-If the *attrName* is given as an object, the following confurations are possible.
+If the *attrName* is given as an object, the following configurations are possible.
 
 |Name|Required|Type|Default|Description|Example|
 |----|--------|----|-------|-----------|-------|
@@ -698,5 +698,48 @@ A SensorLayer example configuration.
             }
         ]
     }
+]
+```
+### HighlightFeaturesByAttribute
+
+The styling of the polygon, line and point features can be overwritten by defining styles for "defaultHighlightFeaturesPolygon", "defaultHighlightFeaturesLine" and "defaultHighlightFeaturesPoint".
+## Example
+
+A highlightFeaturesByAttribute example configuration for all types of features (polygon, line and point).
+
+```json
+[
+  {
+    "styleId": "defaultHighlightFeaturesPoint",
+    "rules": [{
+        "style": {
+            "type": "circle",
+            "circleFillColor": [255, 255, 0, 0.9],
+            "circleRadius": 8,
+            "circleStrokeColor": [0, 0, 0, 1],
+            "circleStrokeWidth": 2
+        }
+    }]
+  },
+  {
+    "styleId": "defaultHighlightFeaturesLine",
+    "rules": [{
+        "style": {
+            "lineStrokeColor": [255, 0, 0, 1],
+            "lineStrokeWidth": 5
+        }
+    }]
+  },
+  {
+    "styleId": "defaultHighlightFeaturesPolygon",
+    "rules": [{
+        "style": {
+            "polygonStrokeColor": [8, 119, 95, 1],
+            "polygonStrokeWidth": 4,
+            "polygonFillColor": [8, 119, 95, 0.3],
+            "polygonStrokeDash": [8]
+        }
+    }]
+  }
 ]
 ```
