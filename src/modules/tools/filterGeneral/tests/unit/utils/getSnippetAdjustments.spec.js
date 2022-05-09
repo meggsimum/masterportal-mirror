@@ -106,15 +106,6 @@ describe("src/modules/tools/filterGeneral/utils/getSnippetAdjustments.js", () =>
     });
     describe("getSnippetAdjustments", () => {
         it("should return false if the first argument is not an array", () => {
-            expect(getSnippetAdjustments(undefined)).to.be.false;
-            expect(getSnippetAdjustments(null)).to.be.false;
-            expect(getSnippetAdjustments("string")).to.be.false;
-            expect(getSnippetAdjustments(1234)).to.be.false;
-            expect(getSnippetAdjustments(true)).to.be.false;
-            expect(getSnippetAdjustments(false)).to.be.false;
-            expect(getSnippetAdjustments({})).to.be.false;
-        });
-        it("should return false if the second argument is not an array", () => {
             expect(getSnippetAdjustments([], undefined)).to.be.false;
             expect(getSnippetAdjustments([], null)).to.be.false;
             expect(getSnippetAdjustments([], "string")).to.be.false;
@@ -123,27 +114,36 @@ describe("src/modules/tools/filterGeneral/utils/getSnippetAdjustments.js", () =>
             expect(getSnippetAdjustments([], false)).to.be.false;
             expect(getSnippetAdjustments([], {})).to.be.false;
         });
-        it("should return false if the third argument is not a number", () => {
+        it("should return false if the second argument is not an array", () => {
             expect(getSnippetAdjustments([], [], undefined)).to.be.false;
             expect(getSnippetAdjustments([], [], null)).to.be.false;
             expect(getSnippetAdjustments([], [], "string")).to.be.false;
+            expect(getSnippetAdjustments([], [], 1234)).to.be.false;
             expect(getSnippetAdjustments([], [], true)).to.be.false;
             expect(getSnippetAdjustments([], [], false)).to.be.false;
             expect(getSnippetAdjustments([], [], {})).to.be.false;
-            expect(getSnippetAdjustments([], [], [])).to.be.false;
+        });
+        it("should return false if the third argument is not a number", () => {
+            expect(getSnippetAdjustments([], [], [], undefined)).to.be.false;
+            expect(getSnippetAdjustments([], [], [], null)).to.be.false;
+            expect(getSnippetAdjustments([], [], [], "string")).to.be.false;
+            expect(getSnippetAdjustments([], [], [], true)).to.be.false;
+            expect(getSnippetAdjustments([], [], [], false)).to.be.false;
+            expect(getSnippetAdjustments([], [], [], {})).to.be.false;
+            expect(getSnippetAdjustments([], [], [], [])).to.be.false;
         });
         it("should return an object with start=true parameter if the third argument is 1", () => {
-            expect(getSnippetAdjustments([], [], 1)).deep.equal({start: true, finish: false});
+            expect(getSnippetAdjustments([], [], [], 1)).deep.equal({start: true, finish: false});
         });
         it("should return an object with start=true parameter if the third argument is anything but 1", () => {
-            expect(getSnippetAdjustments([], [], 0)).deep.equal({start: false, finish: false});
-            expect(getSnippetAdjustments([], [], 2)).deep.equal({start: false, finish: false});
+            expect(getSnippetAdjustments([], [], [], 0)).deep.equal({start: false, finish: false});
+            expect(getSnippetAdjustments([], [], [], 2)).deep.equal({start: false, finish: false});
         });
         it("should return an object with finish=true if the third and fourth parameter are equal", () => {
-            expect(getSnippetAdjustments([], [], 2, 2)).deep.equal({start: false, finish: true});
+            expect(getSnippetAdjustments([], [], [], 2, 2)).deep.equal({start: false, finish: true});
         });
         it("should be able to set both start and finish if the third and fourth parameter are 1", () => {
-            expect(getSnippetAdjustments([], [], 1, 1)).deep.equal({start: true, finish: true});
+            expect(getSnippetAdjustments([], [], [], 1, 1)).deep.equal({start: true, finish: true});
         });
         it("should return an object with values for different snippet types", () => {
             const responses = [
@@ -157,7 +157,7 @@ describe("src/modules/tools/filterGeneral/utils/getSnippetAdjustments.js", () =>
                 page = 1,
                 total = 1;
 
-            expect(getSnippetAdjustments([
+            expect(getSnippetAdjustments([], [
                 {snippetId: 1, type: "dropdown", attrName: "A"},
                 {snippetId: 2, type: "slider", attrName: "B"},
                 {snippetId: 3, type: "sliderRange", attrName: ["C", "D"]},

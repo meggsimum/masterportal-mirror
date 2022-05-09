@@ -3,6 +3,8 @@ import {
     removeInvalidSnippets,
     convertStringSnippetsIntoObjects,
     addSnippetIds,
+    addEmptyChildSnippetValue,
+    addSnippetParentId,
     addSnippetAdjustment,
     addSnippetApi,
     addSnippetMultiselect,
@@ -69,7 +71,39 @@ describe("src/modules/tools/filterGeneral/utils/compileSnippets.js", () => {
                     {snippetId: 1}
                 ];
 
-            addSnippetIds(snippets);
+            addSnippetIds(snippets, 0);
+            expect(snippets).to.deep.equal(expected);
+        });
+    });
+    describe("addEmptyChildSnippetValue", () => {
+        it("should add an empty array to child snippet value", () => {
+            const snippets = [
+                    {snippetId: 0}
+                ],
+                expected = [
+                    {
+                        snippetId: 0,
+                        value: []
+                    }
+                ];
+
+            addEmptyChildSnippetValue(snippets);
+            expect(snippets).to.deep.equal(expected);
+        });
+    });
+    describe("addSnippetParentId", () => {
+        it("should add a parent snippetId in snippet", () => {
+            const snippets = [
+                    {snippetId: 0}
+                ],
+                expected = [
+                    {
+                        snippetId: 0,
+                        parentSnippetId: 2
+                    }
+                ];
+
+            addSnippetParentId(snippets, 2);
             expect(snippets).to.deep.equal(expected);
         });
     });

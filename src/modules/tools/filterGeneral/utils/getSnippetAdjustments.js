@@ -96,13 +96,14 @@ function snippetDateCompareFunction (a, b, format) {
 
 /**
  * Analysis of the filter answer to adjust snippets with.
+ * @param {Object[]} rules the rules to filter
  * @param {Object[]} snippets the list of snippets to build the adjustment for
  * @param {Object[]} items the items of the filter answer
  * @param {Number} page the page of the paging object
  * @param {Number} total the last page to expect
  * @returns {Object|Boolean} an object with snippetIds as keys and expected adjustments as values or false if anything unexpected happend
  */
-function getSnippetAdjustments (snippets, items, page, total) {
+function getSnippetAdjustments (rules, snippets, items, page, total) {
     if (
         !Array.isArray(snippets)
         || !Array.isArray(items)
@@ -110,6 +111,7 @@ function getSnippetAdjustments (snippets, items, page, total) {
     ) {
         return false;
     }
+
     const relevantAttrNames = getListOfRelevantAttrNames(snippets),
         valueByAttrName = getAttrValuesOfItemsGroupedByAttrNames(items, relevantAttrNames),
         result = {
@@ -130,6 +132,12 @@ function getSnippetAdjustments (snippets, items, page, total) {
             result[snippet.snippetId] = {
                 value: valueByAttrName[snippet.attrName]
             };
+
+            if (Object.prototype.hasOwnProperty.call(snippet, "parentSnippetId") && !rules.some(obj => obj.snippetId === snippet.parentSnippetId)) {
+                result[snippet.snippetId] = {
+                    value: undefined
+                };
+            }
         }
         else if (snippet.type === "slider" || snippet.type === "sliderRange") {
             const mergedValue = typeof snippet.attrName === "string" ? valueByAttrName[snippet.attrName] : valueByAttrName[snippet.attrName[0]].concat(valueByAttrName[snippet.attrName[1]]),

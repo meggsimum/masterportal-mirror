@@ -5,26 +5,34 @@ import FilterApi from "../interfaces/filter.api.js";
  * Clones, checks and modifies the given original snippets to match the needs for LayerFilterSnippet.
  * @param {Object[]|String[]} originalSnippets the configured snippets
  * @param {Object} api the api to use for auto recognition of snippet types
+ * @param {Number} numberFirstLevelSnippet the number of first level snippet
+ * @param {Number} parentSnippetId the snippetId of parent snippet
  * @param {Function} onfinish a callback function(snippets) with snippets, resulting snippets to use in LayerFilterSnippet, to be called when ready
  * @param {Function} onerror a callback function(error) with error type of Error to be called on error
  * @returns {void}
  */
-function compileSnippets (originalSnippets, api, onfinish, onerror) {
+function compileSnippets (originalSnippets, api, numberFirstLevelSnippet, parentSnippetId, onfinish, onerror) {
     if (!Array.isArray(originalSnippets)) {
         if (typeof onfinish === "function") {
             onfinish([]);
         }
         return;
     }
+
     const snippets = removeInvalidSnippets(JSON.parse(JSON.stringify(originalSnippets)));
 
     convertStringSnippetsIntoObjects(snippets);
 
     createSnippetsIfNoSnippetsAreGiven(snippets, api, () => {
-        addSnippetIds(snippets);
+        addSnippetIds(snippets, numberFirstLevelSnippet);
         addSnippetAdjustment(snippets);
         addSnippetApi(snippets, () => new FilterApi());
         addSnippetMultiselect(snippets);
+
+        if (numberFirstLevelSnippet > 0) {
+            addEmptyChildSnippetValue(snippets);
+            addSnippetParentId(snippets, parentSnippetId);
+        }
 
         if (typeof api?.getAttrTypes === "function" && !checkSnippetTypeConsistency(snippets)) {
             api.getAttrTypes(attrTypes => {
@@ -121,11 +129,12 @@ function convertStringSnippetsIntoObjects (snippets) {
 /**
  * Adds a unique snippetId to each given snippet.
  * @param {Object[]} snippets the list of snippets
+ * @param {Number} numberFirstLevelSnippet the number of first level snippet
  * @returns {void}
  */
-function addSnippetIds (snippets) {
+function addSnippetIds (snippets, numberFirstLevelSnippet) {
     snippets.forEach((snippet, snippetId) => {
-        snippet.snippetId = snippetId;
+        snippet.snippetId = snippetId + numberFirstLevelSnippet;
     });
 }
 
@@ -156,7 +165,7 @@ function addSnippetApi (snippets, createNewFilterAPI) {
 }
 
 /**
- * Adds multiselect to each snippets.
+ * Adds multiselect to each snippet.
  * @param {Object[]} snippets the list of snippets
  * @returns {void}
  */
@@ -172,6 +181,29 @@ function addSnippetMultiselect (snippets) {
                 delete snippet.matchingMode;
             }
         }
+    });
+}
+
+/**
+ * Adds empty value to each child snippet.
+ * @param {Object[]} snippets the list of snippets
+ * @returns {void}
+ */
+function addEmptyChildSnippetValue (snippets) {
+    snippets.forEach(snippet => {
+        snippet.value = [];
+    });
+}
+
+/**
+ * Adds value to each snippet.
+ * @param {Object[]} snippets the list of snippets
+ * @param {Number} parentSnippetId the snippetId of parent snippet
+ * @returns {void}
+ */
+function addSnippetParentId (snippets, parentSnippetId) {
+    snippets.forEach(snippet => {
+        snippet.parentSnippetId = parentSnippetId;
     });
 }
 
@@ -273,6 +305,8 @@ export {
     removeInvalidSnippets,
     convertStringSnippetsIntoObjects,
     addSnippetIds,
+    addEmptyChildSnippetValue,
+    addSnippetParentId,
     addSnippetAdjustment,
     addSnippetApi,
     addSnippetMultiselect,

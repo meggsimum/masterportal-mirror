@@ -72,7 +72,8 @@ export default {
             autoRefreshSet: false,
             isRefreshing: false,
             amountOfFilteredItems: false,
-            precheckedSnippets: []
+            precheckedSnippets: [],
+            parentSnippetId: []
         };
     },
     computed: {
@@ -132,8 +133,18 @@ export default {
         }
     },
     mounted () {
-        compileSnippets(this.layerConfig.snippets, this.api, snippets => {
+        compileSnippets(this.layerConfig.snippets, this.api, 0, false, snippets => {
             this.snippets = snippets;
+            snippets.forEach(snippet => {
+                if (this.isParentSnippet(snippet)) {
+                    this.parentSnippetId.push(snippet.snippetId);
+                    compileSnippets(snippet.children, this.api, this.snippets.length, snippet.snippetId, childSnippet => {
+                        this.snippets.push(...childSnippet);
+                    }, error => {
+                        console.warn(error);
+                    });
+                }
+            });
         }, error => {
             console.warn(error);
         });
@@ -153,7 +164,37 @@ export default {
          * @returns {Boolean} true if the strategy is active, false if not
          */
         isStrategyActive () {
-            return this.layerConfig?.strategy === "active";
+            const snippets = this.layerConfig?.snippets;
+            let isActive = false;
+
+            if (this.layerConfig?.strategy === "active") {
+                isActive = true;
+            }
+            if (Array.isArray(this.layerConfig?.snippets)) {
+                snippets.forEach(snippet => {
+                    if (this.isParentSnippet(snippet)) {
+                        isActive = true;
+                    }
+                });
+            }
+
+            return isActive;
+        },
+        /**
+         * Checks if the snippet has child snippets
+         * @param {Object} snippet the snippet
+         * @returns {Boolean} true if the snippet has childen snippets
+         */
+        isParentSnippet (snippet) {
+            return Object.prototype.hasOwnProperty.call(snippet, "children") && Array.isArray(snippet.children) && snippet.children.length;
+        },
+        /**
+         * Check if the snippet has child snippets by using snippetId
+         * @param {Number} snippetId the snippetId of the snippet
+         * @returns {Boolean} true if the snippet has child snippets
+         */
+        hasChildSnippets (snippetId) {
+            return this.parentSnippetId.includes(snippetId);
         },
         /**
          * Checking if the snippet type exists.
@@ -249,7 +290,7 @@ export default {
          */
         handleActiveStrategy (snippetId) {
             this.filter(snippetId, filterAnswer => {
-                const adjustments = getSnippetAdjustments(this.snippets, filterAnswer?.items, filterAnswer?.paging?.page, filterAnswer?.paging?.total),
+                const adjustments = getSnippetAdjustments(this.rules, this.snippets, filterAnswer?.items, filterAnswer?.paging?.page, filterAnswer?.paging?.total),
                     start = typeof adjustments?.start === "boolean" ? adjustments.start : false,
                     finish = typeof adjustments?.finish === "boolean" ? adjustments.finish : false;
 
@@ -260,6 +301,10 @@ export default {
                         finish,
                         adjust: isObject(adjustments[snippet.snippetId]) ? adjustments[snippet.snippetId] : false
                     };
+
+                    if (this.hasChildSnippets(snippetId) && snippet.parentSnippetId === snippetId) {
+                        snippet.value = undefined;
+                    }
                 });
             });
         },
@@ -312,6 +357,12 @@ export default {
                 }
                 this.$set(this.rules, i, false);
             }
+
+            this.snippets.forEach(snippet => {
+                if (!Object.prototype.hasOwnProperty.call(snippet, "parentSnippetId")) {
+                    snippet.value = [];
+                }
+            });
         },
         /**
          * Returns an array where every entry is a rule.
@@ -392,18 +443,19 @@ export default {
             if (this.api instanceof FilterApi && this.mapHandler instanceof MapHandler) {
                 this.mapHandler.activateLayer(filterId, () => {
                     this.api.filter(filterQuestion, filterAnswer => {
+                        if (!this.hasChildSnippets(snippetId)) {
+                            this.mapHandler.addItemsToLayer(filterId, filterAnswer.items, this.isExtern());
+                            if (!Object.prototype.hasOwnProperty.call(this.layerConfig, "showHits") || this.layerConfig.showHits) {
+                                this.amountOfFilteredItems = this.mapHandler.getAmountOfFilteredItemsByFilterId(filterId);
+                            }
+
+                            if (this.isExtern()) {
+                                this.mapHandler.addExternalLayerToTree(filterId);
+                            }
+                        }
                         this.paging = filterAnswer.paging;
                         if (this.paging?.page === 1) {
                             this.mapHandler.clearLayer(filterId, this.isExtern());
-                        }
-
-                        this.mapHandler.addItemsToLayer(filterId, filterAnswer.items, this.isExtern());
-                        if (!Object.prototype.hasOwnProperty.call(this.layerConfig, "showHits") || this.layerConfig.showHits) {
-                            this.amountOfFilteredItems = this.mapHandler.getAmountOfFilteredItemsByFilterId(filterId);
-                        }
-
-                        if (this.isExtern()) {
-                            this.mapHandler.addExternalLayerToTree(filterId);
                         }
 
                         if (!this.autoRefreshSet && this.mapHandler.hasAutoRefreshInterval(filterId)) {
