@@ -51,6 +51,7 @@ In the following, all configuration options are described. For all configuration
 |zoomTo|no|**[zoomTo](#markdown-header-zoomto)**[]|Configuration for the URL query parameters `zoomToFeatureId` and `zoomToGeometry`.||
 |layerInformation|no|**[layerInformation](#markdown-header-layerinformation)**||Configuration for the layerInformation window.||
 |vuetify|no|String|undefined|Path to the optional instance of the vuetify UI library. e.g. portal or addon specific.|`addons/cosi/vuetify/index.js`|
+|layerSequence|no|**[layerSequence](#markdown-header-layersequence)**||Configuration for layerSequence.||
 
 ***
 
@@ -726,6 +727,27 @@ Configuration for the layerInformation window.
     "layerInformation": {
         "showUrlGlobal": true
     },
+}
+```
+
+***
+
+## layerSequence
+
+Configuration for the layerSequence.
+
+|Name|Required|Type|Default|Description|
+|----|--------|----|-------|-----------|
+|moveModelInTree|no|Boolean|true|Flag whether it should be possible to move a layer in the topic tree despite a defined LayerSequence.|
+
+
+**Example:**
+
+```json
+{
+    "layerSequence": {
+        "moveModelInTree": true
+    }
 }
 ```
 

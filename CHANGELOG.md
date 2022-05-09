@@ -31,6 +31,7 @@
 - Link in footer will now have white text for better readability.
 - Issue #807: transparency setting for child layers is getting set/initialized now for grouped layers.
 - Print: Polygon representations are now correctly shown in the map and in the legend.
+- layerSequence: fix possibility to move layers in tree despite defined layerSequence
 
 ---
 

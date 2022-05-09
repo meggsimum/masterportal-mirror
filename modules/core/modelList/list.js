@@ -665,7 +665,8 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
     getSortedTreeLayers: function () {
         const combinedLayers = this.getTreeLayers(),
             newLayers = combinedLayers.filter(layer => layer.get("selectionIDX") === 0),
-            treeType = Radio.request("Parser", "getTreeType");
+            treeType = Radio.request("Parser", "getTreeType"),
+            isTreeMove = Config?.layerSequence?.moveModelInTree !== undefined ? Config?.layerSequence?.moveModelInTree : true;
 
         // we need to devide current layers from newly added ones to be able to put the latter ones in
         // at a nice position
@@ -678,7 +679,7 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
         });
 
         // if the treeType is custom, handle sorting according to layerSequence
-        if (treeType === "custom" && combinedLayers.find(layer => layer.get("layerSequence"))) {
+        if (treeType === "custom" && !isTreeMove && combinedLayers.find(layer => layer.get("layerSequence"))) {
             currentLayers = this.handleLayerSequence(combinedLayers, currentLayers, newLayers);
         }
         else {
