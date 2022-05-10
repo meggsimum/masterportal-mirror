@@ -37,14 +37,14 @@ export default {
             this.removePointMarker();
 
             if (value) {
-                this.addPointerMoveHandlerToMap("pointermove", this.setCoordinates);
+                this.addPointerMoveHandlerToMap({type: "pointermove", listener: this.setCoordinates});
                 this.createInteraction();
                 this.setPositionMapProjection(this.mouseCoordinate);
                 this.changedPosition();
                 this.setFocusToFirstControl();
             }
             else {
-                this.removePointerMoveHandlerFromMap("pointermove", this.setCoordinates);
+                this.removePointerMoveHandlerFromMap({type: "pointermove", listener: this.setCoordinates});
                 this.setUpdatePosition(true);
                 this.removeInteraction();
             }

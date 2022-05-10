@@ -13,7 +13,7 @@ channel.reply({
         return store.getters["Maps/get2DMap"].getSize();
     },
     "registerListener": function (event, callback, context) {
-        store.dispatch("Maps/registerListener", {event: event, callback: callback, context: context});
+        store.dispatch("Maps/registerListener", {type: event, listener: callback, context: context});
     },
     "getMap": function () {
         return store.getters["Maps/get2DMap"];
@@ -65,10 +65,10 @@ channel.on({
         store.dispatch("Maps/zoomToFilteredFeatures", {ids: ids, layerId: layerId, zoomOptions: zoomOptions});
     },
     "registerListener": function (event, callback) {
-        store.dispatch("Maps/registerListener", {event: event, callback: callback});
+        store.dispatch("Maps/registerListener", {type: event, listener: callback});
     },
     "unregisterListener": function (event, callback) {
-        store.dispatch("Maps/unregisterListener", {event: event, callback: callback});
+        store.dispatch("Maps/unregisterListener", {type: event, listener: callback});
     },
     "updateSize": function () {
         store.getters["Maps/get2DMap"].updateSize();

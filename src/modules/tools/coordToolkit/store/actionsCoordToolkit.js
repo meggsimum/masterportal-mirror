@@ -1,4 +1,4 @@
-import {toStringHDMS, toStringXY} from "ol/coordinate.js";
+import {toStringHDMS} from "ol/coordinate.js";
 import proj4 from "proj4";
 import isMobile from "../../../../utils/isMobile";
 import {convertSexagesimalFromString, convertSexagesimalToDecimal, convertSexagesimalFromDecimal} from "../../../../utils/convertSexagesimalCoordinates";
@@ -43,22 +43,29 @@ export default {
      * @param {Event} event - pointerdown-event, to get the position from
      * @returns {void}
      */
-    positionClicked: function ({commit, dispatch, state}, event) {
+    positionClicked: function ({commit, dispatch, state, rootGetters}) {
         const updatePosition = isMobile() ? true : state.updatePosition,
-            position = event.coordinate;
+            position = rootGetters["Maps/mouseCoordinate"],
+            mapMode = rootGetters["Maps/mode"];
 
         commit("setPositionMapProjection", position);
         dispatch("changedPosition");
         commit("setUpdatePosition", !updatePosition);
 
-        dispatch("MapMarker/placingPointMarker", position, {root: true});
-        if (state.heightLayer) {
-            if (updatePosition) {
-                dispatch("getHeight", position);
+        if (mapMode === "2D") {
+            dispatch("MapMarker/placingPointMarker", position, {root: true});
+
+            if (state.heightLayer) {
+                if (updatePosition) {
+                    dispatch("getHeight", position);
+                }
+                else {
+                    commit("setHeight", "");
+                }
             }
-            else {
-                commit("setHeight", "");
-            }
+        }
+        else if (mapMode === "3D" && position.length === 3) {
+            commit("setHeight", position[2].toFixed(1));
         }
     },
     /**
@@ -196,12 +203,12 @@ export default {
     adjustPosition ({commit}, {position, targetProjection}) {
         let coord, easting, northing;
 
-        if (targetProjection && Array.isArray(position) && position.length === 2) {
+        if (targetProjection && Array.isArray(position) && position.length >= 2) {
             // geographical coordinates
             if (targetProjection.projName === "longlat") {
                 let converted;
 
-                coord = toStringHDMS(position);
+                coord = toStringHDMS(position.slice(0, 2));
                 if (targetProjection.id === "EPSG:4326-DG") {
                     converted = convertSexagesimalToDecimal(coord);
                 }
@@ -213,9 +220,8 @@ export default {
             }
             // cartesian coordinates
             else {
-                coord = toStringXY(position, 2);
-                easting = Number.parseFloat(coord.split(",")[0].trim()).toFixed(2);
-                northing = Number.parseFloat(coord.split(",")[1].trim()).toFixed(2);
+                easting = position[0].toFixed(2);
+                northing = position[1].toFixed(2);
             }
             commit("setCoordinatesEasting", {id: "easting", value: String(easting)});
             commit("setCoordinatesNorthing", {id: "northing", value: String(northing)});
@@ -239,11 +245,19 @@ export default {
      * @param {Number[]} position contains coordinates of mouse position
      * @returns {void}
      */
-    checkPosition ({state, commit, dispatch}, position) {
-        if (state.updatePosition) {
-            dispatch("MapMarker/placingPointMarker", position, {root: true});
+    checkPosition ({state, commit, dispatch, rootGetters}) {
+        const position = rootGetters["Maps/mouseCoordinate"],
+            mapMode = rootGetters["Maps/mode"];
 
+        if (state.updatePosition) {
+            if (mapMode === "2D") {
+                dispatch("MapMarker/placingPointMarker", position, {root: true});
+            }
+            if (mapMode === "3D" && position.length === 3) {
+                commit("setHeight", position[2].toFixed(1));
+            }
             commit("setPositionMapProjection", position);
+            dispatch("changedPosition");
         }
     },
     /**

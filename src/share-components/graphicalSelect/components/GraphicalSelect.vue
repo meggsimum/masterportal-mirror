@@ -92,7 +92,7 @@ export default {
     methods: {
         ...mapMutations("GraphicalSelect", Object.keys(mutations)),
         ...mapActions("GraphicalSelect", Object.keys(actions)),
-        ...mapActions("Maps", ["addLayerOnTop", "addInteraction", "removeInteraction"]),
+        ...mapActions("Maps", ["addLayerOnTop", "addInteraction", "removeInteraction", "registerListener"]),
         ...mapActions("Alerting", ["addSingleAlert"]),
 
         /**
@@ -256,7 +256,7 @@ export default {
             this.toggleOverlay({type: drawtype, overlayCircle: this.circleOverlay, overlayTool: this.tooltipOverlay});
             this.setDrawInteractionListener({interaction: this.draw, layer: this.layer, vm: this});
             this.setDrawInteraction(this.draw);
-            Radio.trigger("Map", "registerListener", "pointermove", this.showTooltipOverlay.bind(this), this);
+            this.registerListener({type: "pointermove", listener: this.showTooltipOverlay});
         }
     }
 };

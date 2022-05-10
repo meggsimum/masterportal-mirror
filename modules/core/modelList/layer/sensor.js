@@ -145,7 +145,7 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
         else if (state === false) {
             this.setIsSubscribed(false);
             // remove listener of moveend event
-            Radio.trigger("Map", "unregisterListener", this.get("moveendListener"));
+            Radio.trigger("Map", "unregisterListener", "moveend", this.updateSubscription.bind(this));
             this.setMoveendListener(null);
             // remove connection to live update
             this.unsubscribeFromSensorThings();

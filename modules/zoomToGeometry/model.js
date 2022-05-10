@@ -26,7 +26,6 @@ const ZoomToGeometry = Backbone.Model.extend(/** @lends ZoomToGeometry.prototype
      * @listens ZoomToGeometry#RadioTriggerZoomToGeometryZoomToGeometry
      * @listens ZoomToGeometry#RadioTriggerZoomToGeometrySetIsRender
      * @fires Core#RadioRequestParametricURLGetZoomToGeometry
-     * @fires Core#RadioTriggerMapRegisterListener
      * @fires Core#RadioTriggerMapZoomToExtent
      */
     initialize: function () {

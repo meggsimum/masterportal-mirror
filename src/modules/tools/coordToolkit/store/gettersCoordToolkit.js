@@ -22,7 +22,7 @@ const getters = {
             positionTargetProjection = transformFromMapProjection(
                 map,
                 targetProjection,
-                state.positionMapProjection
+                [...state.positionMapProjection]
             );
         }
         return positionTargetProjection;

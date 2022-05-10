@@ -1,5 +1,7 @@
 import {unByKey as unlistenByKey} from "ol/Observable.js";
 
+const registeredActions = {};
+
 export default {
     /**
      * Adds an interaction to the map.
@@ -11,6 +13,7 @@ export default {
 
         map.addInteraction(interaction);
     },
+
     /**
      * Reduces the zoomlevel by one.
      * @returns {void}
@@ -18,6 +21,7 @@ export default {
     decreaseZoomLevel ({dispatch, getters}) {
         dispatch("setZoomLevel", getters.getView.getZoom() - 1);
     },
+
     /**
      * Increases the zoomlevel by one.
      * @returns {void}
@@ -25,21 +29,38 @@ export default {
     increaseZoomLevel ({dispatch, getters}) {
         dispatch("setZoomLevel", getters.getView.getZoom() + 1);
     },
+
     /**
      * Registered listener for certain events on the map.
      * @see https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
      * @param {Object} param store context
      * @param {Object} param.getters the getters
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
      * @param {Object} payload parameter object
-     * @param {String | Object} payload.event The event type or an object used as a key.
-     * @param {Function} payload.callback The callback function.
+     * @param {String} payload.type The event type or array of event types.
+     * @param {Function} payload.listener The listener function.
+     * @param {String | Function} payload.listenerType Type of the listener. Possible are: "function", "commit" and "dispatch".
      * @returns {void}
      */
-    async registerListener ({getters}, {event, callback}) {
-        const map = await getters.get2DMap;
+    registerListener ({getters, commit, dispatch}, {type, listener, listenerType = "function"}) {
+        registeredActions[type] = registeredActions[type] || {};
+        registeredActions[type][listenerType] = registeredActions[type][listenerType] || {};
+        registeredActions[type][listenerType][String(listener)] = evt => {
+            if (listenerType === "function") {
+                listener(evt);
+            }
+            else if (listenerType === "dispatch") {
+                dispatch(listener, evt);
+            }
+            else if (listenerType === "commit") {
+                commit(listener, evt);
+            }
+        };
 
-        map.on(event, callback);
+        getters.get2DMap.on(type, registeredActions[type][listenerType][listener]);
     },
+
     /**
      * Removes an interaction from the map.
      * @param {Object} param store context
@@ -136,24 +157,26 @@ export default {
             document.getElementById("map").style.background = "white";
         }
     },
+
     /**
      * Unsubscribes listener to certain events.
      * @param {Object} param store context
      * @param {Object} param.getters the getters
      * @param {Object} payload parameter object
-     * @param {String | Object} payload.event The event type or an object used as a key
-     * @param {Function} payload.callback The callback function
-     * @param {Object} payload.context The context
+     * @param {String} payload.type The event type or array of event types.
+     * @param {Function} payload.listener The listener function.
+     * @param {String | Function} payload.listenerType Type of the listener. Possible are: "function", "commit" and "dispatch".
      * @returns {void}
      */
-    unregisterListener ({getters}, {event, callback, context}) {
-        const map = getters.get2DMap;
-
-        if (typeof event === "string") {
-            map.un(event, callback, context);
+    unregisterListener ({getters}, {type, listener, listenerType = "function"}) {
+        if (typeof type === "string") {
+            if (registeredActions[type] && registeredActions[type][listenerType] && registeredActions[type][listenerType][String(listener)]) {
+                getters.get2DMap.un(type, registeredActions[type][listenerType][String(listener)]);
+                registeredActions[type][listenerType][String(listener)] = null;
+            }
         }
         else {
-            unlistenByKey(event);
+            unlistenByKey(type);
         }
     }
 };

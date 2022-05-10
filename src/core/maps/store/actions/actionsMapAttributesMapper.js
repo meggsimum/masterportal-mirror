@@ -1,32 +1,23 @@
-let unsubscribes = [];
+import {transform, get} from "ol/proj.js";
 
 export default {
     /**
-         * Sets the map to the store. As a side-effect, map-related functions are registered
-         * to fire changes when required. Each time a new map is registered, all old listeners
-         * are discarded and new ones are registered.
-         * @param {Object} param store context
-         * @param {Object} param.commit the commit
-         * @param {Object} param.dispatch the dispatch
-         * @param {Object} param.rootState the rootState
-         * @param {module:ol/Map} map map object
-         * @returns {void}
-         */
+     * Sets the map to the store. As a side-effect, map-related functions are registered
+     * to fire changes when required. Each time a new map is registered, all old listeners
+     * are discarded and new ones are registered.
+     * @param {Object} param store context
+     * @param {Object} param.commit the commit
+     * @param {Object} param.dispatch the dispatch
+     * @param {Object} param.rootState the rootState
+     * @param {module:ol/Map} map map object
+     * @returns {void}
+     */
     async setMapAttributes ({commit, dispatch, rootState}, {map}) {
-        // discard old listeners
-        if (unsubscribes.length) {
-            unsubscribes.forEach(unsubscribe => unsubscribe());
-            unsubscribes = [];
-        }
-        else {
-            // register listeners with state update functions
-            unsubscribes = [
-                map.on("moveend", evt => dispatch("updateAttributes", evt)),
-                map.on("pointermove", evt => dispatch("updatePointer", evt)),
-                map.on("click", evt => dispatch("updateClick", evt)),
-                map.on("change:size", evt => commit("setSize", evt.target.getSize()))
-            ];
-        }
+        dispatch("registerListener", {type: "change:size", listener: "setSize", listenerType: "commit"});
+        dispatch("registerListener", {type: "pointermove", listener: "updatePointer", listenerType: "dispatch"});
+        dispatch("registerListener", {type: "moveend", listener: "updateAttributes", listenerType: "dispatch"});
+        dispatch("registerListener", {type: "click", listener: "updateClick", listenerType: "dispatch"});
+
         dispatch("setViewAttributes", map.getView());
 
         const layerIds = await dispatch("normalizeLayers", await map.getLayers().getArray()),
@@ -45,6 +36,7 @@ export default {
         dispatch("updateAttributes", {map: map});
         commit("setLayerIds", layerIds[1]);
     },
+
     /**
      * Setter for 3D map attribute "shadowTime".
      * @param {Object} param store context
@@ -102,14 +94,26 @@ export default {
      *  Updates the mouse coordinates
      * @param {Object} param store context
      * @param {Object} param.commit the commit
-     * @param {Object} evt update event
+     * @param {Object} param.getters the getters
+     * @param {Object} event update event
      * @returns {Function} update function for mouse coordinate
      */
-    updatePointer ({commit}, evt) {
-        if (evt.dragging) {
+    updatePointer ({commit, getters}, event) {
+        if (event.dragging) {
             return;
         }
-        commit("setMouseCoordinate", evt.coordinate);
+        if (getters?.mode === "2D") {
+            commit("setMouseCoordinate", event.coordinate);
+        }
+        else if (getters?.mode === "3D" && event?.endPosition && getters.get3DMap?.getCesiumScene()?.pickPosition(event.endPosition)) {
+            const scene = getters.get3DMap.getCesiumScene(),
+                pickedPositionCartesian = scene.pickPosition(event.endPosition),
+                cartographicPickedPosition = scene.globe.ellipsoid.cartesianToCartographic(pickedPositionCartesian),
+                transformedPickedPosition = transform([window.Cesium.Math.toDegrees(cartographicPickedPosition.longitude), window.Cesium.Math.toDegrees(cartographicPickedPosition.latitude)], get("EPSG:4326"), getters.projection);
+
+            transformedPickedPosition.push(cartographicPickedPosition.height);
+            commit("setMouseCoordinate", transformedPickedPosition);
+        }
     },
 
     /**
