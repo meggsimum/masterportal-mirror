@@ -7,7 +7,6 @@ import getters from "../store/gettersMouseHover";
 export default {
     name: "MouseHover",
     computed: {
-        ...mapGetters("Map", ["visibleLayerList"]),
         ...mapGetters("MouseHover", Object.keys(getters)),
         ...mapGetters({
             isMobile: "mobile"
@@ -16,7 +15,6 @@ export default {
     mounted () {
         if (!this.isMobile && Config.mouseHover) {
             this.$nextTick(() => {
-                this.setVisibleLayerList(this.visibleLayerList);
                 this.initialize();
             });
         }
