@@ -260,6 +260,7 @@
         "children": {
           "wfsSearch": {
             "name": "translate#common:menu.tools.parcelSearch",
+            "icon": "bi-search",
             "zoomLevel": 7,
             "instances": [
               {
