@@ -60,7 +60,7 @@ const state = {
             "width": 4,
             "color": [0, 0, 204, 0.9]
         },
-        "zoom": 6
+        "zoomLevel": 7
     },
     highlightVectorRulesPointLine: {
         "stroke": {
@@ -70,7 +70,7 @@ const state = {
         "image": {
             "scale": 2
         },
-        "zoom": 6
+        "zoomLevel": 7
     }
 };
 

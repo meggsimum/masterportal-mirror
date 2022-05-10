@@ -44,12 +44,14 @@ export default {
                 options: {duration: 500, zoom: 9}
             }, {root: true});
 
-            if (featureGeometry && typeof featureGeometry.getType === "function") {
-                if (featureGeometry.getType() === "Point") {
-                    Radio.trigger("MapView", "setCenter", featureGeometry.getCoordinates(), styleObj.zoom);
-                }
-                else {
-                    Radio.trigger("MapView", "setCenter", getCenter(featureGeometry.getExtent()), styleObj.zoom);
+            if (styleObj && styleObj.zoomLevel) {
+                if (featureGeometry && typeof featureGeometry.getType === "function") {
+                    if (featureGeometry.getType() === "Point") {
+                        Radio.trigger("MapView", "setCenter", featureGeometry.getCoordinates(), styleObj.zoomLevel);
+                    }
+                    else {
+                        Radio.trigger("MapView", "setCenter", getCenter(featureGeometry.getExtent()), styleObj.zoomLevel);
+                    }
                 }
             }
         }
@@ -98,8 +100,8 @@ export default {
             highlightObject.type = "highlightLine";
         }
         layer.id = state.layer.id;
-        if (styleObj.zoom) {
-            highlightObject.zoom = styleObj.zoom;
+        if (styleObj.zoomLevel) {
+            highlightObject.zoomLevel = styleObj.zoomLevel;
         }
         if (rawLayer && rawLayer.styleId) {
             highlightObject.styleId = rawLayer.styleId;

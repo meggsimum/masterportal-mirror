@@ -2559,7 +2559,7 @@ A hover event controls highlighting hovered features in the map. By clicking a f
                 "width": 4,
                 "color": [0, 0, 204, 0.9]
             },
-            "zoom": 5
+            "zoomLevel": 5
         },
         "highlightVectorRulesPointLine": {
             "fill": {
@@ -2572,7 +2572,7 @@ A hover event controls highlighting hovered features in the map. By clicking a f
             "image": {
                 "scale": 2
             },
-            "zoom": 5
+            "zoomLevel": 5
         }
     }
 }
@@ -2580,13 +2580,13 @@ A hover event controls highlighting hovered features in the map. By clicking a f
 
 ##### Portalconfig.menu.tool.featureLister.highlightVectorRulesPolygon
 
-Specify the fill color and outline color and stroke width for highlighting the polygon features as well as a zoom factor.
+Specify the fill color and outline color and stroke width for highlighting the polygon features as well as a zoom level.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |fill|no|**[fill](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespolygonfill)**||Possible setting: color|false|
 |stroke|no|**[stroke](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespolygonstroke)**||Possible setting: width|false|
-|zoom|no|Zoom factor||Possible setting: 0-9|false|
+|zoomLevel|no|Integer|7|Zoom level, possible setting: 0-9|false|
 
 ***
 
@@ -2616,14 +2616,14 @@ Specify the fill color and outline color and stroke width for highlighting the p
 
 ##### Portalconfig.menu.tool.featureLister.highlightVectorRulesPointLine
 
-Specify outline color and stroke width for highlighting lines and fill color and scale factor for highlighting points.
+Specify outline color and stroke width for highlighting lines and fill color and scale factor for highlighting points. Also a zoom level.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |fill|no|**[fill](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespointlinefill)**||Possible setting: color|false|
 |stroke|no|**[stroke](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespointlinestroke)**||Possible setting: width|false|
 |image|no|**[image](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespointlineimage)**||Possible setting: scale|false|
-|zoom|no|Zoom factor||Possible setting: 0-9|false|
+|zoomLevel|no|Integer|7|Zoom level, possible setting: 0-9|false|
 
 ***
 ##### Portalconfig.menu.tool.featureLister.highlightVectorRulesPointLine.fill
@@ -2685,7 +2685,7 @@ Allows selecting a set of vector features by letting the user draw a box on the 
                 "width": 4,
                 "color": [0, 0, 204, 0.9]
             },
-            "zoom": 5
+            "zoomLevel": 5
         },
         "highlightVectorRulesPointLine": {
             "fill": {
@@ -2698,7 +2698,7 @@ Allows selecting a set of vector features by letting the user draw a box on the 
             "image": {
                 "scale": 2
             },
-            "zoom": 5
+            "zoomLevel": 5
         }
     }
 }
@@ -2706,13 +2706,13 @@ Allows selecting a set of vector features by letting the user draw a box on the 
 
 ##### Portalconfig.menu.tool.selectFeatures.highlightVectorRulesPolygon
 
-Specify the fill color and stroke width for highlighting the polygon features as well as a zoom factor.
+Specify the fill color and stroke width for highlighting the polygon features as well as a zoom level.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|fill|no|**[fill](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespolygonfill)**||Possible setting: color|false|
-|stroke|no|**[stroke](#markdown-header-portalconfigmenutoolfeaturelisterhighlightvectorrulespolygonstroke)**||Possible setting: width|false|
-|zoom|no|Zoom factor||Possible setting: 0-9|false|
+|fill|no|**[fill](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespolygonfill)**||Possible setting: color|false|
+|stroke|no|**[stroke](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespolygonstroke)**||Possible setting: width|false|
+|zoomLevel|no|Integer|7|Zoom level, possible setting: 0-9|false|
 
 ***
 
@@ -2742,14 +2742,14 @@ Specify the fill color and stroke width for highlighting the polygon features as
 
 ##### Portalconfig.menu.tool.selectFeatures.highlightVectorRulesPointLine
 
-Specify outline color and stroke width for highlighting lines and fill color and scale factor for highlighting points.
+Specify outline color and stroke width for highlighting lines and fill color and scale factor for highlighting points. Also a zoom level.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
 |fill|no|**[fill](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlinefill)**||Possible setting: color|false|
 |stroke|no|**[stroke](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlinestroke)**||Possible setting: width|false|
 |image|no|**[image](#markdown-header-portalconfigmenutoolselectfeatureshighlightvectorrulespointlineimage)**||Possible setting: scale|false|
-|zoom|no|Zoom factor||Possible setting: 0-9|false|
+|zoomLevel|no|Integer|7|Zoom level, possible setting: 0-9|false|
 
 ***
 ##### Portalconfig.menu.tool.selectFeatures.highlightVectorRulesPointLine.fill

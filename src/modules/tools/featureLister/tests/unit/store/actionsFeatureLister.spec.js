@@ -110,7 +110,7 @@ describe("tools/featureLister/store/actionsFeatureLister", () => {
                     "width": 4,
                     "color": [0, 0, 204, 0.9]
                 },
-                "zoom": 5
+                "zoomLevel": 5
             },
             highlightVectorRulesPointLine: {
                 "stroke": {
@@ -120,7 +120,7 @@ describe("tools/featureLister/store/actionsFeatureLister", () => {
                 "image": {
                     "scale": 2
                 },
-                "zoom": 5
+                "zoomLevel": 5
             }
         };
 
