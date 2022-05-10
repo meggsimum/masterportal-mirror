@@ -230,9 +230,16 @@ const getters = {
      * @param {Object} state the state
      * @param {Object} params getter parameters
      * @param {Number[]} params.mouseCoord the mouse coord as array
-     * @returns {String} pretty-printed mouse coordinate
+     * @returns {String} pretty-printed mouse coordinate (in 3d with height).
      */
-    prettyMouseCoord: (state, {mouseCoordinate}) => mouseCoordinate ? `${mouseCoordinate[0].toString().substr(0, 9)}, ${mouseCoordinate[1].toString().substr(0, 10)}` : "",
+    prettyMouseCoord: (state, {mouseCoordinate}) => {
+        let prettyMouseCoord = mouseCoordinate ? `${mouseCoordinate[0].toString().substr(0, 9)}, ${mouseCoordinate[1].toString().substr(0, 10)}` : "";
+
+        prettyMouseCoord = mouseCoordinate?.length === 3 ? `${prettyMouseCoord}, ${mouseCoordinate[2].toFixed(1)}` : prettyMouseCoord;
+
+        return prettyMouseCoord;
+
+    },
     projectionCode: (state, getter) => getter.projection?.getCode(),
     projectionMetersPerUnit: (state, getter) => getter.projection?.getMetersPerUnit(),
     projectionUnits: (state, getter) => getter.projection?.getUnits(),
