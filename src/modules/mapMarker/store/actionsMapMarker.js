@@ -37,7 +37,6 @@ export default {
                 // else an error is thrown in proj4/lib/checkSanity: coordinates must be finite numbers
                 value.forEach(val => {
                     coordValues.push(Math.round(val));
-
                 });
                 // tilt the camera to recognize the mapMarker and set the Cesium heightReference to clampToGround. (The position is clamped to the terrain.)
                 rootGetters["Maps/getCamera"].tilt_ = -200;
@@ -49,7 +48,7 @@ export default {
             const iconfeature = new Feature({
                     geometry: new Point(coordValues)
                 }),
-                featureStyle = styleListModel.createStyle(iconfeature, true);
+                featureStyle = styleListModel.createStyle(iconfeature, false);
 
             iconfeature.setStyle(featureStyle);
             commit("addFeatureToMarker", {feature: iconfeature, marker: "markerPoint"});
