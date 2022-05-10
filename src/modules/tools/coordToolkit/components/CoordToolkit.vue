@@ -107,7 +107,6 @@ export default {
             "changedPosition",
             "setFirstSearchPosition",
             "positionClicked",
-            "setCoordinates",
             "removeMarker",
             "searchCoordinate",
             "validateInput",
@@ -198,7 +197,6 @@ export default {
          */
         setSupplyCoordInactive () {
             if (this.selectPointerMove !== null) {
-                // this.removePointerMoveHandlerFromMap({type: "pointermove", listener: this.setCoordinates});
                 this.setUpdatePosition(true);
                 this.removeInteractionFromMap(this.selectPointerMove);
                 this.setSelectPointerMove(null);
@@ -210,7 +208,6 @@ export default {
          */
         setSupplyCoordActive () {
             if (this.selectPointerMove === null) {
-                // this.addPointerMoveHandlerToMap({type: "pointermove", listener: this.setCoordinates});
                 this.setMapProjection(this.projection);
                 this.createInteraction();
                 this.setPositionMapProjection(this.mouseCoordinate);

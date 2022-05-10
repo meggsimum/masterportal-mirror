@@ -1,6 +1,7 @@
 import {expect} from "chai";
 import sinon from "sinon";
 import actions from "../../../store/actions/actionsMapAttributesMapper.js";
+import testAction from "../../../../../../test/unittests/VueTestUtils";
 
 describe("src/core/maps/store/actions/actionsMapAttributesMapper.js", () => {
     describe("updateClick: Listener for click on the map", () => {
@@ -70,6 +71,21 @@ describe("src/core/maps/store/actions/actionsMapAttributesMapper.js", () => {
             expect(dispatch.calledTwice).to.be.true;
             expect(dispatch.firstCall.args[0]).to.equal("MapMarker/removePolygonMarker");
             expect(dispatch.secondCall.args[0]).to.equal("collectGfiFeatures");
+        });
+    });
+
+    describe("updatePointer: Listener for pointermove on the map", () => {
+        it("set mouse coordinate in 3D mode", done => {
+            const event = {
+                    coordinate: [1, 2]
+                },
+                getters = {
+                    mode: "2D"
+                };
+
+            testAction(actions.updatePointer, event, {}, {}, [
+                {type: "setMouseCoordinate", payload: event.coordinate}
+            ], getters, done);
         });
     });
 });

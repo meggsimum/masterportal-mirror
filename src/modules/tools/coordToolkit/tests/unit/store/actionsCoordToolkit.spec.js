@@ -438,33 +438,6 @@ describe("src/modules/tools/coord/store/actionsCoordToolkit.js", () => {
                 testAction(actions.adjustPosition, payload, {}, rootState, [], {}, done);
             });
         });
-        describe("setCoordinates", () => {
-            it("setCoordinates updates position", done => {
-                const state = {
-                        updatePosition: true
-                    },
-                    position = [100, 200],
-                    payload = {
-                        coordinate: position
-                    };
-
-                testAction(actions.setCoordinates, payload, state, {}, [
-                    {type: "setPositionMapProjection", payload: position},
-                    {type: "changedPosition", payload: undefined, dispatch: true}
-                ], {}, done);
-            });
-            it("setCoordinates not updates position", done => {
-                const state = {
-                        updatePosition: false
-                    },
-                    position = [100, 200],
-                    payload = {
-                        coordinate: position
-                    };
-
-                testAction(actions.setCoordinates, payload, state, {}, [], {}, done);
-            });
-        });
         describe("checkPosition", () => {
             it("checkPosition sets positionMapProjection", done => {
                 const state = {

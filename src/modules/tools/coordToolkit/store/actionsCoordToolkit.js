@@ -228,19 +228,6 @@ export default {
         }
     },
     /**
-     * Sets the coordinates from the maps pointermove-event.
-     * @param {Event} event pointermove-event, to get the position from
-     * @returns {void}
-     */
-    setCoordinates: function ({state, commit, dispatch}, event) {
-        const position = event.coordinate;
-
-        if (state.updatePosition) {
-            commit("setPositionMapProjection", position);
-            dispatch("changedPosition");
-        }
-    },
-    /**
      * Checks the position for update and shows the marker at updated position
      * @param {Number[]} position contains coordinates of mouse position
      * @returns {void}
