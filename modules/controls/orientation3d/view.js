@@ -105,7 +105,7 @@ const Orientation3DView = Backbone.View.extend({
         this.$el.addClass("d-md-block");
     },
     buttonClicked: function (event) {
-        const command = event.target.id;
+        const command = event.currentTarget.id;
         let zoom;
 
         if (this.is3d) {
@@ -142,7 +142,7 @@ const Orientation3DView = Backbone.View.extend({
                 "zoom-out": camera.zoomOut.bind(camera, distance)
             };
 
-        directions[event.target.id]();
+        directions[event.currentTarget.id]();
     },
     newImage: function (image) {
         let rotation = 0;
