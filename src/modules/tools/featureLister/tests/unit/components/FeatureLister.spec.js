@@ -22,7 +22,7 @@ describe("src/modules/tools/featureLister/components/FeatureLister.vue", () => {
                             featureLister:
                             {
                                 "name": "translate#common:menu.tools.featureLister",
-                                "glyphicon": "glyphicon-th-list",
+                                "icon": "bi-list-task",
                                 "renderToWindow": true
                             }
                         }

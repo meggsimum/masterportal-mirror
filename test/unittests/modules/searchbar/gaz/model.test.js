@@ -139,7 +139,7 @@ describe("modules/searchbar/gaz", () => {
                 name: searchResult.name,
                 type: "modules.searchbar.type.street",
                 coordinate: searchResult.geometry.coordinates,
-                glyphicon: "glyphicon-road",
+                icon: "bi-signpost-split-fill",
                 id: searchResult.name.replace(/ /g, "") + "modules.searchbar.type.street"
             }, null]);
         });

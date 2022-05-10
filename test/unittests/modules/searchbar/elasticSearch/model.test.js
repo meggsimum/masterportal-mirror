@@ -171,7 +171,7 @@ describe("modules/searchbar/elasticSearch", function () {
                 }
             );
         });
-        it("should create hit with Type and Glyphicon from result", function () {
+        it("should create hit with Type and Icon from result", function () {
             const result = {
                     id: "0815",
                     name: "name",
@@ -190,14 +190,14 @@ describe("modules/searchbar/elasticSearch", function () {
                     coordinate: ["x", "y"],
                     key: "deeperKey.key",
                     type: "deeperKey.type",
-                    icon: "deeperKey.hitGlyphicon"
+                    icon: "deeperKey.hitIcon"
                 },
                 hitType = "type",
-                hitGlyphicon = "glyphicon-abc",
+                hitIcon = "glyphicon-abc",
                 triggerEvent = {
                 };
 
-            expect(model.createHit(result, hitMap, hitType, hitGlyphicon, triggerEvent)).to.deep.equal(
+            expect(model.createHit(result, hitMap, hitType, hitIcon, triggerEvent)).to.deep.equal(
                 {
                     id: "0815",
                     name: "name",

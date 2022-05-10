@@ -90,7 +90,7 @@ export default {
             <component
                 :is="component"
                 :key="'control-tool-' + tool.id"
-                :icon-name="tool.glyphicon"
+                :icon-name="tool.icon"
                 :class="[component ? 'control' : 'Table']"
                 :title="$t(tool.name)"
                 :disabled="false"

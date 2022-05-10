@@ -4,7 +4,7 @@
  * @property {Boolean} active if true, featureLister will be rendered
  * @property {String} id id of the FeatureLister component
  * @property {String} name displayed as title (config-param)
- * @property {String} glyphicon icon next to title (config-param)
+ * @property {String} icon icon next to title (config-param)
  * @property {Boolean} renderToWindow if true, tool is rendered in a window, else in sidebar (config-param)
  * @property {Boolean} resizableWindow if true, window is resizable (config-param)
  * @property {Boolean} isVisibleInMenu if true, tool is selectable in menu (config-param)
@@ -30,7 +30,7 @@
 const state = {
     // defaults for config.json parameters
     name: "common:modules.tools.featureLister.title",
-    glyphicon: "glyphicon-th-list",
+    icon: "bi-list",
     renderToWindow: true,
     resizableWindow: true,
     isVisibleInMenu: true,

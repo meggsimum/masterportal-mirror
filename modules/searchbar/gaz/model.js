@@ -138,7 +138,7 @@ const GazetteerModel = Backbone.Model.extend({
             name: searchResult.name,
             type: translatedType,
             coordinate: searchResult.geometry.coordinates,
-            glyphicon: "glyphicon-road",
+            icon: "bi-signpost-split-fill",
             id: searchResult.name.replace(/ /g, "") + translatedType
         }, evtType);
     },
