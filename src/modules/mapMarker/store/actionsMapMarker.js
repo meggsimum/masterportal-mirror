@@ -25,7 +25,8 @@ export default {
      * @param {String[]} value The array with the markable coordinate pair.
      * @returns {void}
      */
-    placingPointMarker ({state, rootState, commit, dispatch}, value) {
+    placingPointMarker ({state, rootState, commit, dispatch, rootGetters}, value) {
+
         const styleListModel = Radio.request("StyleList", "returnModelById", state.pointStyleId);
         let coordValues = [];
 
@@ -36,7 +37,11 @@ export default {
                 // else an error is thrown in proj4/lib/checkSanity: coordinates must be finite numbers
                 value.forEach(val => {
                     coordValues.push(Math.round(val));
+
                 });
+                // tilt the camera to recognize the mapMarker and set the Cesium heightReference to clampToGround. (The position is clamped to the terrain.)
+                rootGetters["Maps/getCamera"].tilt_ = -200;
+                state.markerPoint.set("altitudeMode", "clampToGround");
             }
             else {
                 coordValues = value;
@@ -44,7 +49,7 @@ export default {
             const iconfeature = new Feature({
                     geometry: new Point(coordValues)
                 }),
-                featureStyle = styleListModel.createStyle(iconfeature, false);
+                featureStyle = styleListModel.createStyle(iconfeature, true);
 
             iconfeature.setStyle(featureStyle);
             commit("addFeatureToMarker", {feature: iconfeature, marker: "markerPoint"});
