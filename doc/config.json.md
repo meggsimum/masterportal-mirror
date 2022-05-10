@@ -2616,7 +2616,7 @@ Specify the fill color and outline color and stroke width for highlighting the p
 
 ##### Portalconfig.menu.tool.featureLister.highlightVectorRulesPointLine
 
-Specify outline color and stroke width for highlighting lines and scale factor for highlighting points.
+Specify outline color and stroke width for highlighting lines and fill color and scale factor for highlighting points.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
@@ -4870,11 +4870,11 @@ List of typical WFS query attributes for highlightFeaturesByAttribute.
 
 |Name|Required|Type|Default|Description|Expert|
 |----|--------|----|-------|-----------|------|
-|propNameSearchPrefix|yes|String||Search prefix for the WFS query - e.g. app:.|true|
+|styleId|yes|String||Id of the style. Id defined in the **[style.json](style.json.md)**.|false|
+|featurePrefix|yes|String||Search prefix for the WFS query - e.g. app:.|true|
 |wildCard|yes|String||The wildcard character for the WFS query -e.g. %|true|
 |singleChar|yes|String||The single character for the WFS query - e.g. #|true|
-|escapeChar|yes|String||The escape character for the WFS query - e.g. |true|
-|resultPropName|yes|String||The result property name for the WFS query - e.g. app:SHAPE|true|
+|escapeChar|yes|String||The escape character for the WFS query - e.g. \||true|
 
 **Example**
 
@@ -4882,13 +4882,13 @@ List of typical WFS query attributes for highlightFeaturesByAttribute.
 #!json
 {
     "id": "1",
+    "styleId": "1",
     "visibility": false,
     "name": "Tierarten invasiv",
-    "propNameSearchPrefix": "app:",
+    "featurePrefix": "app:",
     "wildCard": "%",
     "singleChar": "#",
-    "escapeChar": "!", 
-    "resultPropName": "app:SHAPE"
+    "escapeChar": "!"
 }
 
 #### Themenconfig.Layer.Tileset
