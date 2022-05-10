@@ -102,17 +102,22 @@ export default {
         if (event.dragging) {
             return;
         }
-        if (getters?.mode === "2D") {
+        if (getters.mode === "2D") {
             commit("setMouseCoordinate", event.coordinate);
         }
-        else if (getters?.mode === "3D" && event?.endPosition && getters.get3DMap?.getCesiumScene()?.pickPosition(event.endPosition)) {
-            const scene = getters.get3DMap.getCesiumScene(),
-                pickedPositionCartesian = scene.pickPosition(event.endPosition),
-                cartographicPickedPosition = scene.globe.ellipsoid.cartesianToCartographic(pickedPositionCartesian),
-                transformedPickedPosition = transform([window.Cesium.Math.toDegrees(cartographicPickedPosition.longitude), window.Cesium.Math.toDegrees(cartographicPickedPosition.latitude)], get("EPSG:4326"), getters.projection);
+        else if (getters.mode === "3D") {
+            try {
+                const scene = getters.get3DMap.getCesiumScene(),
+                    pickedPositionCartesian = scene.pickPosition(event.endPosition),
+                    cartographicPickedPosition = scene.globe.ellipsoid.cartesianToCartographic(pickedPositionCartesian),
+                    transformedPickedPosition = transform([window.Cesium.Math.toDegrees(cartographicPickedPosition.longitude), window.Cesium.Math.toDegrees(cartographicPickedPosition.latitude)], get("EPSG:4326"), getters.projection);
 
-            transformedPickedPosition.push(cartographicPickedPosition.height);
-            commit("setMouseCoordinate", transformedPickedPosition);
+                transformedPickedPosition.push(cartographicPickedPosition.height);
+                commit("setMouseCoordinate", transformedPickedPosition);
+            }
+            catch {
+                // An error is thrown if the scene is not rendered yet.
+            }
         }
     },
 
