@@ -147,7 +147,7 @@ const actions = {
 
         if (model) {
             model.set("name", i18next.t(activeToolState?.name));
-            model.set("icon", activeToolState?.ico);
+            model.set("icon", activeToolState?.icon);
         }
     }
 };
