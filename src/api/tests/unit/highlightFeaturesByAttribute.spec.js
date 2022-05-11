@@ -1,5 +1,7 @@
 import highlightFeaturesByAttribute from "../../highlightFeaturesByAttribute.js";
 import {expect} from "chai";
+import VectorSource from "ol/source/Vector.js";
+import VectorLayer from "ol/layer/Vector.js";
 
 describe("api/highlightFeaturesByAttribute", () => {
     const expectedEqualToOGC = `<ogc:PropertyIsEqualTo matchCase='false' wildCard='%' singleChar='#' escapeChar='!'>
@@ -69,6 +71,21 @@ describe("api/highlightFeaturesByAttribute", () => {
                 version = "1.1.0";
 
             expect(highlightFeaturesByAttribute.getWFSQuery(featureType, version, expectedIsLikeOGC)).to.have.string(expectedWFSQueryIsLike);
+        });
+    });
+
+    describe("createLayer", () => {
+        it("createVectorLayer shall create an ol.VectorLayer with source and style", function () {
+            const styleId = "defaultHighlightFeaturesPoint",
+                layerId = "highlight_point_layer",
+                layerName = "highlight features point layer",
+                gfiAttributes = "showAll",
+                vectorLayer = highlightFeaturesByAttribute.createVectorLayer(styleId, layerId, layerName, gfiAttributes);
+
+            expect(vectorLayer).to.be.an.instanceof(VectorLayer);
+            expect(vectorLayer.getSource()).to.be.an.instanceof(VectorSource);
+            expect(vectorLayer.get("id")).to.be.equals(layerId);
+            expect(vectorLayer.get("name")).to.be.equals(layerName);
         });
     });
 });
