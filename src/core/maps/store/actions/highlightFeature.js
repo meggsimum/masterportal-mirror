@@ -53,6 +53,7 @@ function highlightPolygon (commit, getters, dispatch, highlightObject) {
             }
             feature.setStyle(clonedStyle);
 
+            /*
             console.log(feature.getGeometry());
             dispatch("Map/zoomTo", {
                 geometryOrExtent: feature.getGeometry()
@@ -61,6 +62,7 @@ function highlightPolygon (commit, getters, dispatch, highlightObject) {
             if (highlightObject.zoom) {
                 dispatch("Map/setZoomLevel", highlightObject.zoom, {root: true})
             }
+            */
         }
     }
     else {
@@ -97,6 +99,7 @@ function highlightLine (commit, getters, dispatch, highlightObject) {
             }
             feature.setStyle(clonedStyle);
 
+            /*
             dispatch("Map/zoomTo", {
                 geometryOrExtent: feature.getGeometry()
             }, {root: true});
@@ -104,6 +107,7 @@ function highlightLine (commit, getters, dispatch, highlightObject) {
             if (highlightObject.zoom) {
                 dispatch("Map/setZoomLevel", highlightObject.zoom, {root: true})
             }
+            */
         }
     }
     else {
@@ -178,6 +182,7 @@ function increaseFeature (commit, dispatch, getters, highlightObject) {
         clonedImage.setScale(clonedImage.getScale() * scaleFactor);
         feature.setStyle(clonedStyle);
 
+        /*
         dispatch("Map/zoomTo", {
             geometryOrExtent: feature.getGeometry()
         }, {root: true});
@@ -185,6 +190,7 @@ function increaseFeature (commit, dispatch, getters, highlightObject) {
         if (highlightObject.zoom) {
             dispatch("Map/setZoomLevel", highlightObject.zoom, {root: true})
         }
+        */
     }
 }
 /**
