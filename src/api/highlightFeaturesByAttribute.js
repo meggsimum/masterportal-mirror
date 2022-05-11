@@ -25,13 +25,15 @@ export default {
     /**
      * creates a vector layer
      * @param {String} styleId The style Id
+     * @param {String} layerId The layer Id
      * @param {String} name Layer name
      * @param {Object} gfiAttributes GFI attributes configuration
      * @returns {Object} the created VectorLayer
     */
-    createVectorLayer: function (styleId, name, gfiAttributes) {
+    createVectorLayer: function (styleId, layerId, name, gfiAttributes) {
         return new VectorLayer({
-            id: styleId,
+            id: layerId,
+            styleId: styleId,
             name: name,
             source: new VectorSource(),
             visible: false,
@@ -52,7 +54,7 @@ export default {
     */
     highlightPointFeature: function (modelId, styleId, name, gfiAttributes, features) {
         const styleListModel = Radio.request("StyleList", "returnModelById", modelId),
-            highlightLayer = this.createVectorLayer(styleId, name, gfiAttributes);
+            highlightLayer = this.createVectorLayer(modelId, styleId, name, gfiAttributes);
         let hadPoint = false;
 
         features.forEach(feature => {
@@ -92,7 +94,7 @@ export default {
     */
     highlightLineOrPolygonFeature: function (modelId, styleId, name, geometryRequested, gfiAttributes, features) {
         const styleListModel = Radio.request("StyleList", "returnModelById", modelId),
-            highlightLayer = this.createVectorLayer(styleId, name, gfiAttributes);
+            highlightLayer = this.createVectorLayer(modelId, styleId, name, gfiAttributes);
         let hadGeometry = false;
 
         features.forEach(feature => {

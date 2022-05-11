@@ -353,11 +353,6 @@ const StyleList = Backbone.Collection.extend(/** @lends StyleList.prototype */{
     },
 
     /**
-<<<<<<< HEAD
-=======
->>>>>>> aa5c6868b (BG-1977: building highlightFeatures like MapMaerker)
-=======
->>>>>>> 69bdaab58 (BG-1977 pre-final changes)
      * gets style id from MapMarker
      * @returns {String} - Style id of mapMarker.
      */
