@@ -23,6 +23,7 @@
 * @property {Number} rotation Current rotation value of the map.
 * @property {Number} scale Current scale value of the map.
 * @property {Number} size Current size in pixels of the map in the DOM.
+* @property {Number} changeZoomLevel Last zoom level before switching to another map mode.
 */
 
 const state = {
@@ -49,7 +50,11 @@ const state = {
     resolutions: null,
     rotation: null,
     scale: null,
-    size: null
+    size: null,
+    changeZoomLevel: {
+        "2D": null,
+        "3D": 7
+    }
 };
 
 export default state;

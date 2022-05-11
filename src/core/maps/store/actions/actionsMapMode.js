@@ -37,7 +37,6 @@ export default {
         let map3D = mapCollection.getMap("3D");
 
         dispatch("unregisterListener", {type: "pointermove", listener: "updatePointer", listenerType: "dispatch"});
-        getters.getView.setZoom(7);
         if (getters.is3D) {
             return;
         }
@@ -46,8 +45,15 @@ export default {
             return;
         }
         else if (!map3D) {
+            const zoomLevelmap2D = getters.getView.getZoom();
             let allLayerModels = Radio.request("ModelList", "getModelsByAttributes", {type: "layer"});
 
+            if (zoomLevelmap2D > getters.changeZoomLevel["3D"]) {
+                commit("setChangeZoomLevel", {
+                    "2D": zoomLevelmap2D,
+                    "3D": zoomLevelmap2D
+                });
+            }
             Radio.trigger("Map", "beforeChange", "3D");
             allLayerModels = allLayerModels.filter(layerModel => {
                 return ["Oblique", "TileSet3D", "Terrain3D"].indexOf(layerModel.get("typ")) === -1;
@@ -62,12 +68,30 @@ export default {
             mapCollection.addMap(map3D, "3D");
             api.map.olcsMap.prepareScene({scene: map3D.getCesiumScene(), map3D: map3D, callback: (clickObject) => dispatch("clickEventCallback", clickObject)}, Config);
         }
+        dispatch("controlZoomLevel", {currentMapMode: mapMode, targetMapMode: "3D"});
         map3D.setEnabled(true);
         commit("setMode", "3D");
         Radio.trigger("Map", "change", "3D");
         dispatch("MapMarker/removePointMarker", null, {root: true});
         eventHandler = new window.Cesium.ScreenSpaceEventHandler(map3D.getCesiumScene().canvas);
         eventHandler.setInputAction((evt) => dispatch("updatePointer", evt), window.Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+    },
+
+    /**
+     * Controls the zoom level when switching the map mode.
+     * The last zoom level of a map mode is kept.
+     * @param {Object} param store context.
+     * @param {Object} param.getters the getters.
+     * @param {String} targetMapMode Map mode to which is switched.
+     * @returns {void}
+     */
+    controlZoomLevel ({getters, commit}, {currentMapMode, targetMapMode}) {
+        const view = getters.getView,
+            changeZoomLevel = {...getters.changeZoomLevel};
+
+        changeZoomLevel[currentMapMode] = view.getZoom();
+        view.setZoom(changeZoomLevel[targetMapMode]);
+        commit("setChangeZoomLevel", changeZoomLevel);
     },
 
     /**
@@ -99,28 +123,20 @@ export default {
      * @returns {void}
      */
     deactivateMap3D ({commit, getters, dispatch}) {
-        const map3D = getters.get3DMap,
-            view = getters.getView;
-        let resolution,
-            resolutions;
+        const map3D = getters.get3DMap;
 
         if (map3D) {
+            const view = getters.getView;
+
             eventHandler.destroy();
             dispatch("registerListener", {type: "pointermove", listener: "updatePointer", listenerType: "dispatch"});
             Radio.trigger("Map", "beforeChange", "2D");
             view.animate({rotation: 0}, () => {
                 map3D.setEnabled(false);
                 view.setRotation(0);
-                resolution = view.getResolution();
-                resolutions = view.getResolutions();
-                if (resolution > resolutions[0]) {
-                    view.setResolution(resolutions[0]);
-                }
-                if (resolution < resolutions[resolutions.length - 1]) {
-                    view.setResolution(resolutions[resolutions.length - 1]);
-                }
-                commit("setMode", "2D");
                 Radio.trigger("Map", "change", "2D");
+                dispatch("controlZoomLevel", {currentMapMode: getters.mode, targetMapMode: "2D"});
+                commit("setMode", "2D");
             });
         }
     }

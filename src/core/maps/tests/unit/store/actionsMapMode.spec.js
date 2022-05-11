@@ -5,7 +5,8 @@ import testAction from "../../../../../../test/unittests/VueTestUtils";
 
 const {
     deactivateOblique,
-    clickEventCallback
+    clickEventCallback,
+    controlZoomLevel
 } = actions;
 
 describe("src/core/maps/store/actions/actionsMapMode.js", () => {
@@ -47,5 +48,40 @@ describe("src/core/maps/store/actions/actionsMapMode.js", () => {
             coordinate: [1, 2, 3],
             map: "abcMap"
         });
+    });
+
+    it("commits setClickCoord in MODE_2D", done => {
+        const payload = {
+                currentMapMode: "2D",
+                targetMapMode: "3D"
+            },
+            state = {
+                changeZoomLevel: {
+                    "2D": null,
+                    "3D": 7
+                }
+            },
+            getters = {
+                getView: {
+                    zoom: 4,
+                    getZoom: function () {
+                        return this.zoom;
+                    },
+                    setZoom: function (zoomLevel) {
+                        this.zoom = zoomLevel;
+                    }
+                },
+                changeZoomLevel: state.changeZoomLevel
+            };
+
+
+        testAction(controlZoomLevel, payload, state, {}, [
+            {type: "setChangeZoomLevel", payload: {
+                "2D": 4,
+                "3D": 7
+            }}
+        ], getters, done);
+
+        expect(getters.getView.getZoom()).equals(7);
     });
 });
