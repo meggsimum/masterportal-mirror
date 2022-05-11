@@ -1,4 +1,4 @@
-import {getLayerWhere} from "masterportalapi/src/rawLayerList";
+import {getLayerWhere} from "@masterportal/masterportalapi/src/rawLayerList";
 
 export default {
     /**
@@ -46,6 +46,15 @@ export default {
             };
         }
         dispatch("Map/highlightFeature", highlightObject, {root: true});
+
+        dispatch("Map/zoomTo", {
+            geometryOrExtent: featureId.getGeometry(),
+            options: {duration: 500, zoom: styleObj.zoom}
+        }, {root: true});
+
+        if (styleObj.zoom) {
+            dispatch("Map/setZoomLevel", styleObj.zoom, {root: true})
+        }
     }
 };
 

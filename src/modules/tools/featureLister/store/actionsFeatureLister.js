@@ -1,4 +1,4 @@
-import {getLayerWhere} from "masterportalapi/src/rawLayerList";
+import {getLayerWhere} from "@masterportal/masterportalapi/src/rawLayerList";
 
 export default {
     /**
