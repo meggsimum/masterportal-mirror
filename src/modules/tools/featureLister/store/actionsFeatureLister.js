@@ -1,4 +1,5 @@
 import {getLayerWhere} from "@masterportal/masterportalapi/src/rawLayerList";
+import {getCenter} from 'ol/extent';
 
 export default {
     /**
@@ -35,18 +36,20 @@ export default {
                 featureGeometry = state.rawFeaturesOfLayer[featureIndex].getGeometry(),
                 mapView = rootGetters["Maps/getView"];
 
-            console.log("clickOnFeature");
             commit("setSelectedFeature", feature);
 
-            console.log(featureGeometry);
             dispatch("switchToDetails");
+            dispatch("Map/zoomTo", {
+                geometryOrExtent: featureGeometry,
+                options: {duration: 500, zoom: 9}
+            }, {root: true});
 
-            mapView.fit(featureGeometry, {
-                duration: 800,
-                callback: () => {
-                    dispatch("Maps/setCenter", mapView.getCenter(), {root: true});
-                }
-            });
+            if (featureGeometry.getType() === "Point") {
+                Radio.trigger("MapView", "setCenter", featureGeometry.getCoordinates(), styleObj.zoom);
+            }
+            else {
+                Radio.trigger("MapView", "setCenter", getCenter(featureGeometry.getExtent()), styleObj.zoom);
+            }
         }
     },
     /**

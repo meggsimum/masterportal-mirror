@@ -1,4 +1,5 @@
 import {getLayerWhere} from "@masterportal/masterportalapi/src/rawLayerList";
+import {getCenter} from 'ol/extent';
 
 export default {
     /**
@@ -47,14 +48,12 @@ export default {
         }
         dispatch("Map/highlightFeature", highlightObject, {root: true});
 
-        dispatch("Map/zoomTo", {
-            geometryOrExtent: featureId.getGeometry(),
-            options: {duration: 500, zoom: styleObj.zoom}
-        }, {root: true});
-
-        if (styleObj.zoom) {
-            dispatch("Map/setZoomLevel", styleObj.zoom, {root: true})
+        if (featureGeometryType === "Point") {
+            Radio.trigger("MapView", "setCenter", featureId.getGeometry().getCoordinates(), styleObj.zoom);
         }
-    }
+        else {
+            Radio.trigger("MapView", "setCenter", getCenter(featureId.getGeometry().getExtent()), styleObj.zoom);
+        }
+}
 };
 
