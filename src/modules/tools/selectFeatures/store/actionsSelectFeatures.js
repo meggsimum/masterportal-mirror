@@ -28,7 +28,9 @@ export default {
         }
         layer.id = layerId;
         highlightObject.zoom = styleObj.zoom;
-        highlightObject.styleId = rawLayer.styleId;
+        if (rawLayer && rawLayer.styleId) {
+            highlightObject.styleId = rawLayer.styleId;
+        }
 
         if (highlightObject.type === "highlightPolygon") {
             highlightObject.highlightStyle = {

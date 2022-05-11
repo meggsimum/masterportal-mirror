@@ -31,6 +31,7 @@ function highlightFeature ({commit, dispatch, getters}, highlightObject) {
  */
 function highlightPolygon (commit, getters, dispatch, highlightObject) {
     if (highlightObject.highlightStyle) {
+        console.log("highlightPolygon");
         const newStyle = highlightObject.highlightStyle,
             feature = highlightObject.feature,
             originalStyle = styleObject(highlightObject, feature) ? styleObject(highlightObject, feature) : undefined;
@@ -50,17 +51,15 @@ function highlightPolygon (commit, getters, dispatch, highlightObject) {
             if (newStyle.stroke?.color) {
                 clonedStyle.getStroke().setColor(newStyle.stroke.color);
             }
-            clonedStyle.zIndex = 100;
-            highlightObject.layer.zIndex = 0;
             feature.setStyle(clonedStyle);
 
+            console.log(feature.getGeometry());
             dispatch("Map/zoomTo", {
-                geometryOrExtent: feature.getGeometry(),
-                options: {duration: 500}
+                geometryOrExtent: feature.getGeometry()
             }, {root: true});
 
             if (highlightObject.zoom) {
-                getters.ol2DMap.getView().setZoom(highlightObject.zoom);
+                dispatch("Map/setZoomLevel", highlightObject.zoom, {root: true})
             }
         }
     }
@@ -96,16 +95,14 @@ function highlightLine (commit, getters, dispatch, highlightObject) {
             if (newStyle.stroke?.color) {
                 clonedStyle.getStroke().setColor(newStyle.stroke.color);
             }
-            clonedStyle.zIndex = 100;
             feature.setStyle(clonedStyle);
 
             dispatch("Map/zoomTo", {
-                geometryOrExtent: feature.getGeometry(),
-                options: {duration: 500}
+                geometryOrExtent: feature.getGeometry()
             }, {root: true});
 
             if (highlightObject.zoom) {
-                getters.ol2DMap.getView().setZoom(highlightObject.zoom);
+                dispatch("Map/setZoomLevel", highlightObject.zoom, {root: true})
             }
         }
     }
@@ -182,12 +179,11 @@ function increaseFeature (commit, dispatch, getters, highlightObject) {
         feature.setStyle(clonedStyle);
 
         dispatch("Map/zoomTo", {
-            geometryOrExtent: feature.getGeometry(),
-            options: {duration: 500}
+            geometryOrExtent: feature.getGeometry()
         }, {root: true});
 
         if (highlightObject.zoom) {
-            getters.ol2DMap.getView().setZoom(highlightObject.zoom);
+            dispatch("Map/setZoomLevel", highlightObject.zoom, {root: true})
         }
     }
 }

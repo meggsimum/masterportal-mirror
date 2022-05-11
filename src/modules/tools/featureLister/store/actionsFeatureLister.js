@@ -35,8 +35,10 @@ export default {
                 featureGeometry = state.rawFeaturesOfLayer[featureIndex].getGeometry(),
                 mapView = rootGetters["Maps/getView"];
 
+            console.log("clickOnFeature");
             commit("setSelectedFeature", feature);
 
+            console.log(featureGeometry);
             dispatch("switchToDetails");
 
             mapView.fit(featureGeometry, {
