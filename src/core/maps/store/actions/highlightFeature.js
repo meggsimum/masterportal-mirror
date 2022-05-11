@@ -9,27 +9,27 @@
  */
 function highlightFeature ({commit, dispatch, getters}, highlightObject) {
     if (highlightObject.type === "increase") {
-        increaseFeature(commit, dispatch, getters, highlightObject);
+        increaseFeature(commit, getters, highlightObject);
     }
     else if (highlightObject.type === "viaLayerIdAndFeatureId") {
         highlightViaParametricUrl(dispatch, getters, highlightObject.layerIdAndFeatureId);
     }
     else if (highlightObject.type === "highlightPolygon") {
-        highlightPolygon(commit, getters, dispatch, highlightObject);
+        highlightPolygon(commit, dispatch, highlightObject);
     }
     else if (highlightObject.type === "highlightLine") {
-        highlightLine(commit, getters, dispatch, highlightObject);
+        highlightLine(commit, dispatch, highlightObject);
     }
 }
 /**
  * highlights a polygon feature
- * @param {Object} commit the commit
- * @param {Object} dispatch the dispatch
+ * @param {Function} commit commit function
+ * @param {Function} dispatch dispatch function
  * @param {Object} highlightObject contains several parameters for feature highlighting
  * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {void}
  */
-function highlightPolygon (commit, getters, dispatch, highlightObject) {
+function highlightPolygon (commit, dispatch, highlightObject) {
     if (highlightObject.highlightStyle) {
         const newStyle = highlightObject.highlightStyle,
             feature = highlightObject.feature,
@@ -61,13 +61,12 @@ function highlightPolygon (commit, getters, dispatch, highlightObject) {
 /**
  * highlights a line feature
  * @param {Function} commit commit function
- * @param {Function} getters getters function
  * @param {Function} dispatch dispatch function
  * @param {Object} highlightObject contains several parameters for feature highlighting
  * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {void}
  */
-function highlightLine (commit, getters, dispatch, highlightObject) {
+function highlightLine (commit, dispatch, highlightObject) {
     if (highlightObject.highlightStyle) {
         const newStyle = highlightObject.highlightStyle,
             feature = highlightObject.feature,
@@ -134,13 +133,13 @@ function getHighlightFeature (layerId, featureId, getters) {
 }
 /**
  * increases the icon of the feature
- * @param {Object} commit the commit
- * @param {Object} getters the getters
+ * @param {Function} commit commit function
+ * @param {Function} getters map getters
  * @param {Object} highlightObject contains several parameters for feature highlighting
  * @fires VectorStyle#RadioRequestStyleListReturnModelById
  * @returns {void}
  */
-function increaseFeature (commit, dispatch, getters, highlightObject) {
+function increaseFeature (commit, getters, highlightObject) {
     const scaleFactor = highlightObject.scale ? highlightObject.scale : 1.5,
         features = highlightObject.layer ? highlightObject.layer.features : undefined, // use list of features provided if given
         feature = features?.find(feat => feat.id.toString() === highlightObject.id)?.feature // retrieve from list of features provided by id, if both are given
@@ -158,6 +157,9 @@ function increaseFeature (commit, dispatch, getters, highlightObject) {
             clonedStyle.getText().setScale(scaleFactor);
         }
         clonedImage.setScale(clonedImage.getScale() * scaleFactor);
+        if (highlightObject.highlightStyle.fill && highlightObject.highlightStyle.fill.color) {
+            clonedImage.getFill().setColor(highlightObject.highlightStyle.fill.color);
+        }
         feature.setStyle(clonedStyle);
     }
 }

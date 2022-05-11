@@ -105,13 +105,11 @@ export default {
             highlightObject.styleId = rawLayer.styleId;
         }
 
-        if (highlightObject.type === "highlightPolygon") {
-            highlightObject.highlightStyle = {
-                fill: styleObj.fill,
-                stroke: styleObj.stroke,
-                image: styleObj.image
-            };
-        }
+        highlightObject.highlightStyle = {
+            fill: styleObj.fill,
+            stroke: styleObj.stroke,
+            image: styleObj.image
+        };
         dispatch("Map/highlightFeature", highlightObject, {root: true});
     },
     /**

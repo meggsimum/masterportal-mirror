@@ -242,15 +242,9 @@ const StyleList = Backbone.Collection.extend(/** @lends StyleList.prototype */{
             rules: [{
                 style:
                 {
-                    type: "icon",
-                    imageName: "pointMarker.svg",
-                    imagePath: "../../img/",
-                    imageScale: 1,
-                    imageWidth: 34,
-                    imageHeight: 34,
-                    imageOffsetX: 0,
-                    imageOffsetY: 0,
-                    imageOffsetYUnit: "pixels"
+                    type: "circle",
+                    circleFillColor: [255, 255, 0, 0.9],
+                    circleRadius: 8
                 }
             }]
         };
