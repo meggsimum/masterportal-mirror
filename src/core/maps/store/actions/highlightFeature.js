@@ -1,6 +1,3 @@
-import Select from "ol/interaction/Select";
-import Modify from "ol/interaction/Modify";
-
 /**
  * check how to highlight
  * @param {Object} param store context
@@ -56,8 +53,6 @@ function highlightPolygon (commit, getters, dispatch, highlightObject) {
             clonedStyle.zIndex = 100;
             highlightObject.layer.zIndex = 0;
             feature.setStyle(clonedStyle);
-            let select = new Select({style: clonedStyle});
-            let modify = new Modify({features: select.getFeatures()});
 
             dispatch("Map/zoomTo", {
                 geometryOrExtent: feature.getGeometry(),
@@ -77,6 +72,7 @@ function highlightPolygon (commit, getters, dispatch, highlightObject) {
 /**
  * highlights a line feature
  * @param {Function} commit commit function
+ * @param {Function} getters getters function
  * @param {Function} dispatch dispatch function
  * @param {Object} highlightObject contains several parameters for feature highlighting
  * @fires VectorStyle#RadioRequestStyleListReturnModelById
@@ -193,7 +189,7 @@ function increaseFeature (commit, dispatch, getters, highlightObject) {
         if (highlightObject.zoom) {
             getters.ol2DMap.getView().setZoom(highlightObject.zoom);
         }
-}
+    }
 }
 /**
  * Get style via styleList
