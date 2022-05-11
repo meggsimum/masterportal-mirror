@@ -31,7 +31,6 @@ function highlightFeature ({commit, dispatch, getters}, highlightObject) {
  */
 function highlightPolygon (commit, getters, dispatch, highlightObject) {
     if (highlightObject.highlightStyle) {
-        console.log("highlightPolygon");
         const newStyle = highlightObject.highlightStyle,
             feature = highlightObject.feature,
             originalStyle = styleObject(highlightObject, feature) ? styleObject(highlightObject, feature) : undefined;

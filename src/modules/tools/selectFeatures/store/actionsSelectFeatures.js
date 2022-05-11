@@ -1,5 +1,5 @@
 import {getLayerWhere} from "@masterportal/masterportalapi/src/rawLayerList";
-import {getCenter} from 'ol/extent';
+import {getCenter} from "ol/extent";
 
 export default {
     /**
@@ -54,6 +54,6 @@ export default {
         else {
             Radio.trigger("MapView", "setCenter", getCenter(featureId.getGeometry().getExtent()), styleObj.zoom);
         }
-}
+    }
 };
 

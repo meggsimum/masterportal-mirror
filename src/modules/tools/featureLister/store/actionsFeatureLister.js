@@ -1,5 +1,5 @@
 import {getLayerWhere} from "@masterportal/masterportalapi/src/rawLayerList";
-import {getCenter} from 'ol/extent';
+import {getCenter} from "ol/extent";
 
 export default {
     /**
@@ -74,7 +74,7 @@ export default {
      * @returns {void}
      */
     highlightFeature ({state, rootGetters, dispatch}, featureId) {
-        dispatch("Maps/removeHighlightFeature", "decrease", {root: true});
+        dispatch("Map/removeHighlightFeature", "decrease", {root: true});
         let featureGeometryType = "";
         const layer = rootGetters["Maps/getVisibleLayerList"].find((l) => l.values_.id === state.layer.id),
             layerFeatures = state.nestedFeatures ? state.rawFeaturesOfLayer : layer.getSource().getFeatures(),
@@ -110,7 +110,7 @@ export default {
                 image: styleObj.image
             };
         }
-        dispatch("Maps/highlightFeature", highlightObject, {root: true});
+        dispatch("Map/highlightFeature", highlightObject, {root: true});
     },
     /**
      * Switches to the themes list of all visibile layers and resets the featureList and the selectedFeature.
