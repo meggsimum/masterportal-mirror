@@ -38,9 +38,8 @@ export default {
                 value.forEach(val => {
                     coordValues.push(Math.round(val));
                 });
-                // tilt the camera to recognize the mapMarker and set the Cesium heightReference to clampToGround. (The position is clamped to the terrain.)
+                // tilt the camera to recognize the mapMarker
                 rootGetters["Maps/getCamera"].tilt_ = -200;
-                state.markerPoint.set("altitudeMode", "clampToGround");
             }
             else {
                 coordValues = value;
