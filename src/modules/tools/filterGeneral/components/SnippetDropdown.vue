@@ -78,6 +78,11 @@ export default {
             required: false,
             default: undefined
         },
+        optionsLimit: {
+            type: Number,
+            required: false,
+            default: 20000
+        },
         placeholder: {
             type: String,
             required: false,
@@ -483,6 +488,7 @@ export default {
                     :placeholder="placeholder"
                     :show-labels="false"
                     open-direction="bottom"
+                    :options-limit="optionsLimit"
                     :hide-selected="true"
                     :close-on-select="true"
                     :clear-on-select="false"

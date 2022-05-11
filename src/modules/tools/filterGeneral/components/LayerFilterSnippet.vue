@@ -597,6 +597,7 @@ export default {
                     :snippet-id="snippet.snippetId"
                     :value="snippet.value"
                     :visible="snippet.visible"
+                    :options-limit="snippet.optionsLimit"
                     @changeRule="changeRule"
                     @deleteRule="deleteRule"
                     @setSnippetPrechecked="setSnippetPrechecked"
