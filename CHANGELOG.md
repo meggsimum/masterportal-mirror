@@ -29,6 +29,7 @@
 - Issue #737: Fix issue of some items in the layer tree overflowing
 - The attribute `startingMap3D` in config.js now ensures that the 3D mode is started by default.
 - Issue #736: Fix console error when users forbid their localization.
+- 3D: static display of markerPoint and markerPolygon from mapMarker is now visible during search, coordinateSearch and coordToolkit.
 
 
 ## v2.21.0 - 2022-05-04
