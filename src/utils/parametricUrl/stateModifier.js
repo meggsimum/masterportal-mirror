@@ -3,7 +3,7 @@ import {deepAssignIgnoreCase} from "../deepAssign";
 import {doSpecialBackboneHandling, triggerParametricURLReady, translateToBackbone} from "./ParametricUrlBridge";
 import store from "../../app-store";
 import {transformToMapProjection} from "@masterportal/masterportalapi/src/crs";
-import mapCollection from "../../core/dataStorage/mapCollection";
+import mapCollection from "../../core/maps/mapCollection";
 import highlightFeaturesByAttribute from "../../api/highlightFeaturesByAttribute";
 
 /**
