@@ -1,3 +1,6 @@
+import Select from "ol/interaction/Select";
+import Modify from "ol/interaction/Modify";
+
 /**
  * check how to highlight
  * @param {Object} param store context
@@ -51,7 +54,10 @@ function highlightPolygon (commit, getters, dispatch, highlightObject) {
                 clonedStyle.getStroke().setColor(newStyle.stroke.color);
             }
             clonedStyle.zIndex = 100;
+            highlightObject.layer.zIndex = 0;
             feature.setStyle(clonedStyle);
+            let select = new Select({style: clonedStyle});
+            let modify = new Modify({features: select.getFeatures()});
 
             dispatch("Map/zoomTo", {
                 geometryOrExtent: feature.getGeometry(),
