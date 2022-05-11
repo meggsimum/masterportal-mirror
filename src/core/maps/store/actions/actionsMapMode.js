@@ -56,7 +56,7 @@ export default {
             }
             Radio.trigger("Map", "beforeChange", "3D");
             allLayerModels = allLayerModels.filter(layerModel => {
-                return ["Oblique", "TileSet3D", "Terrain3D"].indexOf(layerModel.get("typ")) === -1;
+                return ["Oblique", "TileSet3D", "Terrain3D", "Entities3D"].indexOf(layerModel.get("typ")) === -1;
             });
             allLayerModels.forEach(layerWrapper => {
                 if (layerWrapper.get("isSelected") === false) {

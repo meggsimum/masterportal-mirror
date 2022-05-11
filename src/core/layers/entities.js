@@ -1,11 +1,11 @@
 import store from "../../app-store";
 import {entities} from "@masterportal/masterportalapi/src";
 import getProxyUrl from "../../utils/getProxyUrl";
-import mapCollection from "../dataStorage/mapCollection.js";
+import mapCollection from "../../core/maps/mapCollection.js";
 import * as bridge from "./RadioBridge.js";
 import Layer from "./layer";
 /**
- * Creates a terrain-layer to display on 3D-map.
+ * Creates an entities-layer to display on 3D-map.
  * @param {Object} attrs  attributes of the layer
  * @returns {void}
  */
@@ -14,7 +14,7 @@ export default function EntitiesLayer (attrs) {
         supported: ["3D"],
         showSettings: false,
         selectionIDX: -1,
-        useProxy: false,
+        useProxy: false
     };
 
     /**
@@ -29,12 +29,12 @@ export default function EntitiesLayer (attrs) {
     }
 
     this.createLayer(Object.assign(defaults, attrs));
-    // // call the super-layer
+    // call the super-layer
     Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
 
-    store.watch((state, getters) => getters["Map/mapMode"], mode => {
+    store.watch((state, getters) => getters["Maps/mode"], mode => {
         if (mode === "3D") {
-            const map = mapCollection.getMap(store.state.Map.mapId, store.state.Map.mapMode);
+            const map = mapCollection.getMap(store.state.Maps.mode);
 
             entities.addEntities(attrs, map);
             this.setIsSelected(attrs.isVisibleInMap);
@@ -45,18 +45,18 @@ export default function EntitiesLayer (attrs) {
 EntitiesLayer.prototype = Object.create(Layer.prototype);
 
 /**
- * Creates the layer by using masterportalAPI's terrain-layer.
+ * Creates the layer by using masterportalAPI's entities-layer.
  * If attribute isSelected is true, setIsSelected is called.
  * @param {Object} attr the attributes for the layer
  * @returns {void}
  */
 EntitiesLayer.prototype.createLayer = function (attr) {
-        const map = mapCollection.getMap(store.state.Map.mapId, store.state.Map.mapMode);
+    const map = mapCollection.getMap(store.state.Maps.mode);
 
-        this.layer = entities.createLayer(attr, map);
-        if (attr.isSelected) {
-            this.setIsSelected(true, attr);
-        }
+    this.layer = entities.createLayer(attr, map);
+    if (attr.isSelected) {
+        this.setIsSelected(true, attr);
+    }
 };
 
 /**
@@ -69,20 +69,17 @@ EntitiesLayer.prototype.setVisible = function (newValue) {
 };
 
 /**
- * Calls masterportalAPI's terrain-layer to set this layer visible.
+ * Calls masterportalAPI's entities-layer to set this layer visible.
  * @param {Boolean} newValue if true, layer is visible
  * @param {Object} attr the attributes for the layer
  * @returns {void}
  */
 EntitiesLayer.prototype.setIsSelected = function (newValue, attr) {
-    const map = mapCollection.getMap(store.state.Map.mapId, store.state.Map.mapMode),
+    const map = mapCollection.getMap(store.state.Maps.mode),
         treeType = store.getters.treeType;
 
     if (map && map.mode === "3D") {
-        let isVisibleInMap = this.attributes ? this.get("isVisibleInMap") : false;
-
         if (!this.attributes && attr) {
-            isVisibleInMap = attr.isVisibleInMap;
             attr.isSelected = newValue;
         }
         else {
@@ -90,18 +87,14 @@ EntitiesLayer.prototype.setIsSelected = function (newValue, attr) {
             this.setIsVisibleInMap(newValue);
         }
         entities.setVisible(newValue, this.attributes ? this.attributes : attr, map);
-        // if (isVisibleInMap) {
-        //     this.createLegend();
-        // }
         if (treeType !== "light" || store.state.mobile) {
             bridge.updateLayerView(this);
             bridge.renderMenu();
-
         }
     }
 };
 /**
- * Setter for isVisibleInMap and setter for layer.setVisible
+ * Setter for isVisibleInMap.
  * @param {Boolean} newValue Flag if layer is visible in map
  * @returns {void}
  */
@@ -115,39 +108,6 @@ EntitiesLayer.prototype.setIsVisibleInMap = function (newValue) {
         bridge.layerVisibilityChanged(this, this.get("isVisibleInMap"));
     }
 };
-
-// /**
-//  * Creates the legend.
-//  * @returns {void}
-//  */
-// EntitiesLayer.prototype.createLegend = function () {
-//     const styleModel = bridge.getStyleModelById(this.get("styleId"));
-//     let legend = this.get("legend");
-
-//     /**
-//      * @deprecated in 3.0.0
-//      */
-//     if (this.get("legendURL")) {
-//         if (this.get("legendURL") === "") {
-//             legend = true;
-//         }
-//         else if (this.get("legendURL") === "ignore") {
-//             legend = false;
-//         }
-//         else {
-//             legend = this.get("legendURL");
-//         }
-//     }
-//     if (Array.isArray(legend)) {
-//         this.setLegend(legend);
-//     }
-//     else if (styleModel && legend === true) {
-//         this.setLegend(styleModel.getLegendInfos());
-//     }
-//     else if (typeof legend === "string") {
-//         this.setLegend([legend]);
-//     }
-// };
 /**
 * Register interaction with map view. Listens to change of scale.
 * @returns {void}
