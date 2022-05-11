@@ -1,5 +1,5 @@
 import axios from "axios";
-import EntitiesLayer from "../../core/modelList/layer/entities";
+import EntitiesLayer from "../../../src/core/layers/entities";
 import TileSetLayer from "../../../src/core/layers/tileset";
 import {parseFlightOptions} from "./flight";
 import StaticImageLayer from "../../core/modelList/layer/staticImage";

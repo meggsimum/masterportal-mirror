@@ -45,11 +45,7 @@ describe("src/modules/tools/routing/components/Directions/DirectionsItem.vue", (
         mapCollection.clear();
         mapCollection.addMap({
             mode: "2D",
-            mapMode: "2D",
-            addLayer: sinon.spy(),
-            removeLayer: sinon.spy(),
-            addInteraction: sinon.spy(),
-            removeInteraction: sinon.spy()
+            mapMode: "2D"
         }, "2D");
 
         store = new Vuex.Store({
@@ -80,7 +76,11 @@ describe("src/modules/tools/routing/components/Directions/DirectionsItem.vue", (
                 Maps: {
                     namespaced: true,
                     mode: "2D",
-                    removeLayer: sinon.spy()
+                    actions: {
+                        addLayerOnTop: sinon.stub(),
+                        removeInteraction: sinon.stub(),
+                        addInteraction: sinon.stub()
+                    }
                 }
             },
             state: {
@@ -91,6 +91,7 @@ describe("src/modules/tools/routing/components/Directions/DirectionsItem.vue", (
     });
 
     afterEach(() => {
+        sinon.restore();
         if (wrapper) {
             wrapper.destroy();
         }

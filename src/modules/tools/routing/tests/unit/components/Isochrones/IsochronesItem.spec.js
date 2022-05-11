@@ -47,10 +47,7 @@ describe("src/modules/tools/routing/components/Isochrones/IsochronesItem.vue", (
         const map = {
             id: "ol",
             mode: "2D",
-            addLayer: sinon.spy(),
-            removeLayer: sinon.spy(),
-            addInteraction: sinon.spy(),
-            removeInteraction: sinon.spy()
+            removeLayer: sinon.spy()
         };
 
         mapCollection.addMap(map, "2D");
@@ -87,6 +84,11 @@ describe("src/modules/tools/routing/components/Isochrones/IsochronesItem.vue", (
                     namespaced: true,
                     state: {
                         mode: "2D"
+                    },
+                    actions: {
+                        addLayerOnTop: sinon.stub(),
+                        removeInteraction: sinon.stub(),
+                        addInteraction: sinon.stub()
                     }
                 }
             },
@@ -98,6 +100,7 @@ describe("src/modules/tools/routing/components/Isochrones/IsochronesItem.vue", (
     });
 
     afterEach(() => {
+        sinon.restore();
         if (wrapper) {
             wrapper.destroy();
         }

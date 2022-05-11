@@ -134,6 +134,26 @@ describe("src/core/layers/terrain.js", () => {
         terrainLayer.createLegend();
         expect(terrainLayer.get("legend")).to.equal(false);
     });
+    it("setIsVisibleInMap to true shall set isVisibleInMap", function () {
+        const terrainLayer = new TerrainLayer(attributes),
+            layer = terrainLayer.get("layer");
+
+        terrainLayer.setIsVisibleInMap(true);
+        checkLayer(layer, terrainLayer, attributes);
+        expect(terrainLayer.get("isVisibleInMap")).to.equal(true);
+        expect(cesiumEllipsoidTerrainProviderSpy.notCalled).to.equal(true);
+        expect(cesiumTerrainProviderSpy.calledOnce).to.equal(true);
+    });
+    it("setIsVisibleInMap to false shall set isVisibleInMap and hide layer", function () {
+        const terrainLayer = new TerrainLayer(attributes),
+            layer = terrainLayer.get("layer");
+
+        checkLayer(layer, terrainLayer, attributes);
+        terrainLayer.setIsVisibleInMap(false);
+        expect(terrainLayer.get("isVisibleInMap")).to.equal(false);
+        expect(cesiumEllipsoidTerrainProviderSpy.calledOnce).to.equal(true);
+        expect(cesiumTerrainProviderSpy.notCalled).to.equal(true);
+    });
 });
 
 

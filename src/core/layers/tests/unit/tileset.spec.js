@@ -139,5 +139,24 @@ describe("src/core/layers/tileset.js", () => {
         tilesetLayer.createLegend();
         expect(setLegendSpy.notCalled).to.equal(true);
     });
+    it("setIsVisibleInMap to true shall set isVisibleInMap", function () {
+        const tilesetLayer = new TileSetLayer(attributes),
+            layer = tilesetLayer.get("layer");
+
+        tilesetLayer.setIsVisibleInMap(true);
+        checkLayer(layer, tilesetLayer, attributes);
+        expect(tilesetLayer.get("isVisibleInMap")).to.equal(true);
+        expect(cesium3DTilesetSpy.calledOnce).to.equal(true);
+        expect(cesium3DTilesetSpy.calledWithMatch({maximumScreenSpaceError: 6})).to.equal(true);
+    });
+    it("setIsVisibleInMap to false shall set isVisibleInMap and hide layer", function () {
+        const tilesetLayer = new TileSetLayer(attributes),
+            layer = tilesetLayer.get("layer");
+
+        checkLayer(layer, tilesetLayer, attributes);
+        tilesetLayer.setIsVisibleInMap(false);
+        expect(tilesetLayer.get("isVisibleInMap")).to.equal(false);
+        expect(layer.tileset.show).to.be.false;
+    });
 });
 

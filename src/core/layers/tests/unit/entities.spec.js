@@ -128,7 +128,7 @@ describe("src/core/layers/entities.js", () => {
         expect(setIsSelectedSpy.calledOnce).to.equal(true);
         expect(setIsSelectedSpy.calledWithMatch(true)).to.equal(true);
     });
-    it("setIsSelected true shall set isVisisbleInMap", function () {
+    it("setIsSelected true shall set isVisibleInMap", function () {
         const entitiesLayer = new EntitiesLayer(attributes),
             layer = entitiesLayer.get("layer");
 
@@ -136,7 +136,7 @@ describe("src/core/layers/entities.js", () => {
         checkLayer(layer, entitiesLayer, attributes);
         expect(entitiesLayer.get("isVisibleInMap")).to.equal(true);
     });
-    it("setIsVisibleInMap ahsll set isVisisbleInMap", function () {
+    it("setIsVisibleInMap shall set isVisibleInMap", function () {
         const entitiesLayer = new EntitiesLayer(attributes),
             layer = entitiesLayer.get("layer");
 

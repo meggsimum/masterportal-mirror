@@ -39,7 +39,7 @@ export default function EntitiesLayer (attrs) {
             entities.addEntities(attrs, map);
             this.setIsSelected(attrs.isVisibleInMap);
         }
-    }).bind(this);
+    });
 }
 // Link prototypes and add prototype methods, means EntitiesLayer uses all methods and properties of Layer
 EntitiesLayer.prototype = Object.create(Layer.prototype);
@@ -75,8 +75,7 @@ EntitiesLayer.prototype.setVisible = function (newValue) {
  * @returns {void}
  */
 EntitiesLayer.prototype.setIsSelected = function (newValue, attr) {
-    const map = mapCollection.getMap(store.state.Maps.mode),
-        treeType = store.getters.treeType;
+    const map = mapCollection.getMap(store.state.Maps.mode);
 
     if (map && map.mode === "3D") {
         if (!this.attributes && attr) {
@@ -87,10 +86,9 @@ EntitiesLayer.prototype.setIsSelected = function (newValue, attr) {
             this.setIsVisibleInMap(newValue);
         }
         entities.setVisible(newValue, this.attributes ? this.attributes : attr, map);
-        if (treeType !== "light" || store.state.mobile) {
-            bridge.updateLayerView(this);
-            bridge.renderMenu();
-        }
+        bridge.updateLayerView(this);
+        bridge.renderMenu();
+        bridge.renderMenuSelection();
     }
 };
 /**
@@ -102,6 +100,13 @@ EntitiesLayer.prototype.setIsVisibleInMap = function (newValue) {
     const lastValue = this.get("isVisibleInMap");
 
     this.set("isVisibleInMap", newValue);
+    if (!newValue) {
+        const map = mapCollection.getMap(store.state.Maps.mode);
+
+        if (map && map.mode === "3D") {
+            entities.setVisible(newValue, this.attributes, map);
+        }
+    }
     if (lastValue !== newValue) {
         // here it is possible to change the layer visibility-info in state and listen to it e.g. in LegendWindow
         // e.g. store.dispatch("Map/toggleLayerVisibility", {layerId: this.get("id")});

@@ -42,9 +42,6 @@ TileSetLayer.prototype = Object.create(Layer.prototype);
  */
 TileSetLayer.prototype.createLayer = function (attr) {
     this.layer = new Tileset(attr);
-    if (attr.isSelected) {
-        this.setIsSelected(true, attr);
-    }
 };
 
 /**
@@ -64,7 +61,7 @@ TileSetLayer.prototype.onMapModeChanged = function () {
         if (mode === "3D") {
             this.setIsSelected(this.get("isVisibleInMap"));
         }
-    }).bind(this);
+    });
 };
 
 /**
@@ -84,12 +81,12 @@ TileSetLayer.prototype.setIsSelected = function (newValue, attr) {
             isVisibleInMap = attr.isVisibleInMap;
             attr.isVisibleInMap = newValue;
             attr.isSelected = newValue;
+            this.layer.setVisible(newValue, map);
         }
         else {
             this.setIsVisibleInMap(newValue);
             this.attributes.isSelected = newValue;
         }
-        this.layer.setVisible(newValue, map);
         if (isVisibleInMap) {
             this.createLegend();
         }
@@ -105,9 +102,13 @@ TileSetLayer.prototype.setIsSelected = function (newValue, attr) {
  * @returns {void}
  */
 TileSetLayer.prototype.setIsVisibleInMap = function (newValue) {
-    const lastValue = this.get("isVisibleInMap");
+    const lastValue = this.get("isVisibleInMap"),
+        map = mapCollection.getMap(store.getters["Maps/mode"]);
 
     this.set("isVisibleInMap", newValue);
+    if (map && map.mode === "3D") {
+        this.layer.setVisible(newValue, map);
+    }
     if (lastValue !== newValue) {
         // here it is possible to change the layer visibility-info in state and listen to it e.g. in LegendWindow
         // e.g. store.dispatch("Map/toggleLayerVisibility", {layerId: this.get("id")});

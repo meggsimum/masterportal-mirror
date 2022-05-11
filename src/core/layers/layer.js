@@ -132,7 +132,7 @@ Layer.prototype.onMapModeChanged = function () {
         else {
             this.get("layer").setVisible(false);
         }
-    }).bind(this);
+    });
 };
 /**
  * Setter for ol/layer.setMaxResolution
@@ -373,6 +373,7 @@ Layer.prototype.setIsSelected = function (newValue) {
 Layer.prototype.toggleIsVisibleInMap = function () {
     if (this.get("isVisibleInMap") === true) {
         this.setIsVisibleInMap(false);
+        // this.setIsSelected(false);
     }
     else {
         this.setIsSelected(true);
