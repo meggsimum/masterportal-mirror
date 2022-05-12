@@ -20,8 +20,11 @@ describe("src/core/layers/entities.js", () => {
             getByName: (name) => {
                 return dataSourcesContent[name] ? [dataSourcesContent[name]] : [];
             },
-            add: (dataSource) => {
+            add: async (dataSource) => {
                 dataSourcesContent[dataSource.name] = dataSource;
+                return Promise.resolve(dataSource).then(function (value) {
+                    return value;
+                });
             }
         };
         map3D = {

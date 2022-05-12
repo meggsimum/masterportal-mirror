@@ -36,7 +36,7 @@ export default function EntitiesLayer (attrs) {
         if (mode === "3D") {
             const map = mapCollection.getMap(store.state.Maps.mode);
 
-            entities.addEntities(attrs, map);
+            entities.createDataSource(attrs, map);
             this.setIsSelected(attrs.isVisibleInMap);
         }
     });
