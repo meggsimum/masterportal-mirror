@@ -35,6 +35,11 @@ export default {
             required: false,
             default: false
         },
+        isParent: {
+            type: Boolean,
+            required: false,
+            default: false
+        },
         format: {
             type: String,
             required: false,
@@ -131,7 +136,7 @@ export default {
             }
         },
         adjustment (adjusting) {
-            if (!isObject(adjusting) || this.visible === false) {
+            if (!isObject(adjusting) || this.visible === false || this.isParent) {
                 return;
             }
 

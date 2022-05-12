@@ -16,9 +16,12 @@ function compileSnippets (originalSnippets, api, onfinish, onerror) {
         }
         return;
     }
-    const snippets = removeInvalidSnippets(JSON.parse(JSON.stringify(originalSnippets)));
+    let snippets = JSON.parse(JSON.stringify(originalSnippets));
 
+    snippets = removeInvalidSnippets(snippets);
     convertStringSnippetsIntoObjects(snippets);
+    addParent(snippets);
+    snippets = getFlatArrayOfParentsAndChildren(snippets);
 
     createSnippetsIfNoSnippetsAreGiven(snippets, api, () => {
         addSnippetIds(snippets);
@@ -99,6 +102,10 @@ function removeInvalidSnippets (snippets) {
             return;
         }
         result.push(snippet);
+
+        if (Array.isArray(snippet.children)) {
+            snippet.children = removeInvalidSnippets(snippet.children);
+        }
     });
     return result;
 }
@@ -115,7 +122,43 @@ function convertStringSnippetsIntoObjects (snippets) {
                 attrName: snippet
             };
         }
+
+        if (Array.isArray(snippet.children)) {
+            convertStringSnippetsIntoObjects(snippet.children);
+        }
     });
+}
+
+/**
+ * Adds the parent snippet as value at the child snippets.
+ * @param {Object[]} children the list of snippets
+ * @param {Object} [parent=null] the parent snippet to set
+ * @returns {void}
+ */
+function addParent (children, parent = null) {
+    children.forEach(child => {
+        child.parent = parent;
+        if (Array.isArray(child.children)) {
+            addParent(child.children, child);
+        }
+    });
+}
+
+/**
+ * Hooks in all children (and childrens children) after their parents into the root node.
+ * @param {Object[]} rootSnippets the list of root snippets
+ * @returns {void}
+ */
+function getFlatArrayOfParentsAndChildren (rootSnippets) {
+    let result = [];
+
+    rootSnippets.forEach(snippet => {
+        result.push(snippet);
+        if (Array.isArray(snippet.children)) {
+            result = result.concat(getFlatArrayOfParentsAndChildren(snippet.children));
+        }
+    });
+    return result;
 }
 
 /**
@@ -272,6 +315,8 @@ export {
     compileSnippets,
     removeInvalidSnippets,
     convertStringSnippetsIntoObjects,
+    addParent,
+    getFlatArrayOfParentsAndChildren,
     addSnippetIds,
     addSnippetAdjustment,
     addSnippetApi,

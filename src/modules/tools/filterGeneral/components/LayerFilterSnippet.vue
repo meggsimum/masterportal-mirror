@@ -142,6 +142,34 @@ export default {
         translateKeyWithPlausibilityCheck,
 
         /**
+         * Getter for a snippet configuration by snippetId.
+         * @param {Number} snippetId the id to return the snippet for
+         * @returns {Object} the snippet
+         */
+        getSnippetById (snippetId) {
+            return this.snippets[snippetId];
+        },
+        /**
+         * Checks if the snippet of the given snippetId is a parent snippet.
+         * @param {Number} snippetId the id to check
+         * @returns {Boolean} true if this is a parent snippet, false if not
+         */
+        isParentSnippet (snippetId) {
+            const snippet = this.getSnippetById(snippetId);
+
+            return isObject(snippet) && Array.isArray(snippet.children);
+        },
+        /**
+         * Checks if the snippet of the given snippetId has a parent snippet.
+         * @param {Number} snippetId the id to check
+         * @returns {Boolean} true if this snippet has a parent snippet, false if not
+         */
+        hasParentSnippet (snippetId) {
+            const snippet = this.getSnippetById(snippetId);
+
+            return isObject(snippet) && isObject(snippet.parent);
+        },
+        /**
          * Checks if this layer is supposed to use external filtering.
          * @returns {Boolean} true if the layer should filter external
          */
@@ -279,7 +307,8 @@ export default {
         changeRule (rule) {
             if (this.isRule(rule)) {
                 this.$set(this.rules, rule.snippetId, rule);
-                if (!rule.startup && this.isStrategyActive()) {
+                this.deleteRulesOfChildren(this.getSnippetById(rule.snippetId));
+                if (!rule.startup && (this.isStrategyActive() || this.isParentSnippet(rule.snippetId))) {
                     this.$nextTick(() => {
                         this.handleActiveStrategy(rule.snippetId);
                     });
@@ -293,11 +322,27 @@ export default {
          */
         deleteRule (snippetId) {
             this.$set(this.rules, snippetId, false);
-            if (this.isStrategyActive()) {
+            this.deleteRulesOfChildren(this.getSnippetById(snippetId));
+            if (this.isStrategyActive() || this.isParentSnippet(snippetId)) {
                 this.$nextTick(() => {
                     this.handleActiveStrategy(snippetId);
                 });
             }
+        },
+        /**
+         * Deletes all rules set by its children.
+         * @info triggers no active strategy
+         * @param {Object} parent the snippet to remove the rules of its children from
+         * @returns {void}
+         */
+        deleteRulesOfChildren (parent) {
+            if (!isObject(parent) || !Array.isArray(parent.children)) {
+                return;
+            }
+            parent.children.forEach(child => {
+                this.$set(this.rules, child?.snippetId, false);
+                this.deleteRulesOfChildren(child);
+            });
         },
         /**
          * Removes all rules.
@@ -397,26 +442,27 @@ export default {
                             this.mapHandler.clearLayer(filterId, this.isExtern());
                         }
 
-                        this.mapHandler.addItemsToLayer(filterId, filterAnswer.items, this.isExtern());
-                        if (!Object.prototype.hasOwnProperty.call(this.layerConfig, "showHits") || this.layerConfig.showHits) {
-                            this.amountOfFilteredItems = this.mapHandler.getAmountOfFilteredItemsByFilterId(filterId);
-                        }
+                        if (!this.isParentSnippet(snippetId)) {
+                            this.mapHandler.addItemsToLayer(filterId, filterAnswer.items, this.isExtern());
+                            if (!Object.prototype.hasOwnProperty.call(this.layerConfig, "showHits") || this.layerConfig.showHits) {
+                                this.amountOfFilteredItems = this.mapHandler.getAmountOfFilteredItemsByFilterId(filterId);
+                            }
 
-                        if (this.isExtern()) {
-                            this.mapHandler.addExternalLayerToTree(filterId);
-                        }
-
-                        if (!this.autoRefreshSet && this.mapHandler.hasAutoRefreshInterval(filterId)) {
-                            this.autoRefreshSet = true;
-                            this.mapHandler.setObserverAutoInterval(filterId, () => {
-                                this.isRefreshing = true;
-                                if (this.isStrategyActive()) {
-                                    this.handleActiveStrategy();
-                                }
-                                else {
-                                    this.filter();
-                                }
-                            });
+                            if (this.isExtern()) {
+                                this.mapHandler.addExternalLayerToTree(filterId);
+                            }
+                            if (!this.autoRefreshSet && this.mapHandler.hasAutoRefreshInterval(filterId)) {
+                                this.autoRefreshSet = true;
+                                this.mapHandler.setObserverAutoInterval(filterId, () => {
+                                    this.isRefreshing = true;
+                                    if (this.isStrategyActive()) {
+                                        this.handleActiveStrategy();
+                                    }
+                                    else {
+                                        this.filter();
+                                    }
+                                });
+                            }
                         }
 
                         if (typeof onsuccess === "function") {
@@ -478,6 +524,20 @@ export default {
             }
 
             return String(rule.value);
+        },
+        /**
+         * Returns the api for the given snippet.
+         * @param {Object} snippet the snippet to return the api for
+         * @returns {FilterApi} the api
+         */
+        getSnippetApi (snippet) {
+            if (!isObject(snippet) || this.hasParentSnippet(snippet.snippetId)) {
+                return null;
+            }
+            if (snippet.api instanceof FilterApi) {
+                return snippet.api;
+            }
+            return this.api;
         }
     }
 };
@@ -578,7 +638,7 @@ export default {
             >
                 <SnippetDropdown
                     :ref="'snippet-' + snippet.snippetId"
-                    :api="snippet.api || api"
+                    :api="getSnippetApi(snippet)"
                     :attr-name="snippet.attrName"
                     :add-select-all="snippet.addSelectAll"
                     :adjustment="snippet.adjustment"
@@ -587,6 +647,7 @@ export default {
                     :disabled="disabled"
                     :display="snippet.display"
                     :info="snippet.info"
+                    :is-parent="isParentSnippet(snippet.snippetId)"
                     :title="getTitle(snippet, layerConfig.layerId)"
                     :layer-id="layerConfig.layerId"
                     :multiselect="snippet.multiselect"
@@ -628,12 +689,13 @@ export default {
             >
                 <SnippetDate
                     :ref="'snippet-' + snippet.snippetId"
-                    :api="snippet.api || api"
+                    :api="getSnippetApi(snippet)"
                     :adjustment="snippet.adjustment"
                     :attr-name="snippet.attrName"
                     :disabled="disabled"
                     :info="snippet.info"
                     :format="snippet.format"
+                    :is-parent="isParentSnippet(snippet.snippetId)"
                     :title="getTitle(snippet, layerConfig.layerId)"
                     :max-value="snippet.maxValue"
                     :min-value="snippet.minValue"
@@ -652,12 +714,13 @@ export default {
             >
                 <SnippetDateRange
                     :ref="'snippet-' + snippet.snippetId"
-                    :api="snippet.api || api"
+                    :api="getSnippetApi(snippet)"
                     :adjustment="snippet.adjustment"
                     :attr-name="snippet.attrName"
                     :disabled="disabled"
                     :info="snippet.info"
                     :format="snippet.format"
+                    :is-parent="isParentSnippet(snippet.snippetId)"
                     :title="getTitle(snippet, layerConfig.layerId)"
                     :max-value="snippet.maxValue"
                     :min-value="snippet.minValue"
@@ -676,12 +739,13 @@ export default {
             >
                 <SnippetSlider
                     :ref="'snippet-' + snippet.snippetId"
-                    :api="snippet.api || api"
+                    :api="getSnippetApi(snippet)"
                     :adjustment="snippet.adjustment"
                     :attr-name="snippet.attrName"
                     :decimal-places="snippet.decimalPlaces"
                     :disabled="disabled"
                     :info="snippet.info"
+                    :is-parent="isParentSnippet(snippet.snippetId)"
                     :title="getTitle(snippet, layerConfig.layerId)"
                     :min-value="snippet.minValue"
                     :max-value="snippet.maxValue"
@@ -700,12 +764,13 @@ export default {
             >
                 <SnippetSliderRange
                     :ref="'snippet-' + snippet.snippetId"
-                    :api="snippet.api || api"
+                    :api="getSnippetApi(snippet)"
                     :adjustment="snippet.adjustment"
                     :attr-name="snippet.attrName"
                     :decimal-places="snippet.decimalPlaces"
                     :disabled="disabled"
                     :info="snippet.info"
+                    :is-parent="isParentSnippet(snippet.snippetId)"
                     :title="getTitle(snippet, layerConfig.layerId)"
                     :min-value="snippet.minValue"
                     :max-value="snippet.maxValue"
