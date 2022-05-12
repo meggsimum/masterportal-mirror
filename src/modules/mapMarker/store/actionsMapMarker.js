@@ -1,7 +1,6 @@
 import {fetchFirstModuleConfig} from "../../../utils/fetchFirstModuleConfig";
 import Point from "ol/geom/Point.js";
 import Feature from "ol/Feature.js";
-import {transform, get} from "ol/proj.js";
 
 /**
  * @const {String} configPaths an array of possible config locations. First one found will be used
@@ -26,7 +25,7 @@ export default {
      * @param {String[]} value The array with the markable coordinate pair.
      * @returns {void}
      */
-    placingPointMarker ({state, getters, rootState, commit, dispatch, rootGetters}, value) {
+    placingPointMarker ({state, rootState, commit, dispatch, rootGetters}, value) {
         const styleListModel = Radio.request("StyleList", "returnModelById", state.pointStyleId);
         let coordValues = [];
 
@@ -53,47 +52,6 @@ export default {
             commit("addFeatureToMarker", {feature: iconfeature, marker: "markerPoint"});
             commit("setVisibilityMarker", {visibility: true, marker: "markerPoint"});
             dispatch("Maps/addLayerOnTop", state.markerPoint, {root: true});
-            if (rootState.Maps.mode === "3D") {
-                let currentMousePosition = null;
-                let myMouseHandler = new Cesium.ScreenSpaceEventHandler(rootGetters["Maps/getCesiumScene"].canvas);
-                let myMouseHandler2 = new Cesium.ScreenSpaceEventHandler(rootGetters["Maps/getCesiumScene"].canvas);
-                myMouseHandler.setInputAction((movement) => {
-                        currentMousePosition = movement.endPosition;
-                        if (currentMousePosition) {
-                            //Turn latitude and longitude
-                const scene = rootGetters["Maps/getCesiumScene"],
-                                    pickedPositionCartesian = scene.pickPosition(currentMousePosition),
-                                    cartographicPickedPosition = scene.globe.ellipsoid.cartesianToCartographic(pickedPositionCartesian),
-                                    transformedPickedPosition = transform([window.Cesium.Math.toDegrees(cartographicPickedPosition.longitude), window.Cesium.Math.toDegrees(cartographicPickedPosition.latitude)], get("EPSG:4326"), rootGetters["Maps/projection"]);
-                                transformedPickedPosition.push(cartographicPickedPosition.height);
-                                console.log(state.markerPoint);
-                                console.log('yah');
-                                console.log(transformedPickedPosition);
-                                iconfeature.getGeometry().setCoordinates(transformedPickedPosition);
-
-                            }
-
-                }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-
-                myMouseHandler2.setInputAction((movement) => {
-                    myMouseHandler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-
-                console.log('click2');
-
-
-                }, Cesium.ScreenSpaceEventType.RIGHT_DOWN);
-
-
-
-                let anything = null;
-                if ( currentMousePosition ) {
-                anything = rootGetters["Maps/getCesiumScene"].pick(currentMousePosition);
-                if ( anything ) {
-                    // react
-                    console.log('yah');
-                }
-                }
-            }
         }
         else {
             dispatch("Alerting/addSingleAlert", i18next.t("common:modules.mapMarker.noStyleModel", {styleId: state.pointStyleId}), {root: true});

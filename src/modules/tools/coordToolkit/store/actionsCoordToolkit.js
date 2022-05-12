@@ -67,6 +67,7 @@ export default {
         else if (mapMode === "3D" && position.length === 3) {
             commit("setHeight", position[2].toFixed(1));
         }
+
     },
     /**
      * Creates a new WMSLayer to get the height from with id stored in state.heightLayerId and sets the layer to state.
@@ -227,6 +228,16 @@ export default {
             commit("setCoordinatesNorthing", {id: "northing", value: String(northing)});
         }
     },
+    mouseMove ({rootGetters}) {
+        const mouseHandler = new Cesium.ScreenSpaceEventHandler(rootGetters["Maps/getCesiumScene"].canvas);
+
+        mouseHandler.setInputAction(() => {
+            if (rootGetters["MapMarker/markerPoint"].source) {
+                rootGetters["MapMarker/markerPoint"].source.getGeometry().setCoordinates(rootGetters["Maps/mouseCoordinate"]);
+            }
+
+        }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+    },
     /**
      * Checks the position for update and shows the marker at updated position
      * @param {Number[]} position contains coordinates of mouse position
@@ -241,7 +252,20 @@ export default {
                 dispatch("MapMarker/placingPointMarker", position, {root: true});
             }
             if (mapMode === "3D" && position.length === 3) {
+                const mouseHandler = new Cesium.ScreenSpaceEventHandler(rootGetters["Maps/getCesiumScene"].canvas);
+
                 commit("setHeight", position[2].toFixed(1));
+                dispatch("MapMarker/placingPointMarker", position, {root: true});
+                dispatch("mouseMove");
+
+                mouseHandler.setInputAction(() => {
+                    if (mouseHandler.getInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE)) {
+                        mouseHandler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+                    }
+                    else {
+                        dispatch("mouseMove");
+                    }
+                }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
             }
             commit("setPositionMapProjection", position);
             dispatch("changedPosition");
