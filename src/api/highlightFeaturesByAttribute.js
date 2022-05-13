@@ -78,7 +78,7 @@ export default {
             highlightLayer.setVisible(true);
             Radio.trigger("Map", "addLayerOnTop", highlightLayer);
 
-            Radio.trigger("Map", "zoomToExtent", highlightLayer.getSource().getExtent());
+            Radio.trigger("Map", "zoomToExtent", {extent: highlightLayer.getSource().getExtent()});
         }
     },
 
@@ -117,7 +117,7 @@ export default {
             highlightLayer.setVisible(true);
             Radio.trigger("Map", "addLayerOnTop", highlightLayer);
 
-            Radio.trigger("Map", "zoomToExtent", highlightLayer.getSource().getExtent());
+            Radio.trigger("Map", "zoomToExtent", {extent: highlightLayer.getSource().getExtent()});
         }
     },
 
@@ -228,15 +228,15 @@ export default {
             console.error("highlightFeaturesByAttribute: Layer with ID " + wfsId + " has no url configured");
             return true;
         }
-        if (layer.wildCard && layer.wildCard.length !== 1) {
+        if (!layer.wildCard || layer.wildCard?.length !== 1) {
             console.error("highlightFeaturesByAttribute: wildCard config setting must exist and be one character");
             return true;
         }
-        if (layer.singleChar && layer.singleChar.length !== 1) {
+        if (!layer.singleChar || layer.singleChar?.length !== 1) {
             console.error("highlightFeaturesByAttribute: singleChar config setting must exist and be one character");
             return true;
         }
-        if (layer.escapeChar && layer.escapeChar.length !== 1) {
+        if (!layer.escapeChar || layer.escapeChar?.length !== 1) {
             console.error("highlightFeaturesByAttribute: escapeChar config setting must exist and be one character");
             return true;
         }

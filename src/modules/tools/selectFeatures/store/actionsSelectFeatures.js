@@ -10,8 +10,8 @@ export default {
      * @returns {void}
      */
     highlightFeature ({state, rootGetters, dispatch}, {featureId, layerId}) {
-        dispatch("Map/removeHighlightFeature", "decrease", {root: true});
-        const layer = rootGetters["Map/visibleLayerList"].find((l) => l.values_.id === layerId),
+        dispatch("Maps/removeHighlightFeature", "decrease", {root: true});
+        const layer = rootGetters["Maps/getVisibleLayerList"].find((l) => l.values_.id === layerId),
             featureGeometryType = featureId.getGeometry().getType(),
             featureIdString = featureId.getId(),
             styleObj = featureGeometryType.toLowerCase().indexOf("polygon") > -1 ? state.highlightVectorRulesPolygon : state.highlightVectorRulesPointLine,
@@ -41,7 +41,7 @@ export default {
             stroke: styleObj.stroke,
             image: styleObj.image
         };
-        dispatch("Map/highlightFeature", highlightObject, {root: true});
+        dispatch("Maps/highlightFeature", highlightObject, {root: true});
 
         if (styleObj && styleObj.zoomLevel) {
             if (featureGeometryType === "Point") {

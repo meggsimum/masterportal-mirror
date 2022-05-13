@@ -39,7 +39,7 @@ function highlightPolygon (commit, dispatch, highlightObject) {
             const clonedStyle = Array.isArray(originalStyle) ? originalStyle[0].clone() : originalStyle.clone();
 
             commit("Maps/setHighlightedFeatures", [feature], {root: true});
-            commit("Maps/setHighlightedFeatureStyles", feature.getStyle(), {root: true});
+            commit("Maps/setHighlightedFeatureStyles", [feature.getStyle()], {root: true});
 
             if (newStyle.fill?.color) {
                 clonedStyle.getFill().setColor(newStyle.fill.color);

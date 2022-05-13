@@ -30,11 +30,11 @@ export default {
      * @param {String} featureIndex index of the clicked Feature
      * @returns {void}
      */
-    clickOnFeature ({state, commit, dispatch, rootGetters}, featureIndex) {
+    clickOnFeature ({state, commit, dispatch}, featureIndex) {
         if (featureIndex !== "" && featureIndex >= 0 && featureIndex <= state.shownFeatures) {
             const feature = state.gfiFeaturesOfLayer[featureIndex],
                 featureGeometry = state.rawFeaturesOfLayer[featureIndex].getGeometry(),
-                mapView = rootGetters["Maps/getView"];
+                styleObj = state.layer.geometryType.toLowerCase().indexOf("polygon") > -1 ? state.highlightVectorRulesPolygon : state.highlightVectorRulesPointLine;
 
             commit("setSelectedFeature", feature);
 
@@ -78,7 +78,7 @@ export default {
      * @returns {void}
      */
     highlightFeature ({state, rootGetters, dispatch}, featureId) {
-        dispatch("Map/removeHighlightFeature", "decrease", {root: true});
+        dispatch("Maps/removeHighlightFeature", "decrease", {root: true});
         let featureGeometryType = "";
         const layer = rootGetters["Maps/getVisibleLayerList"].find((l) => l.values_.id === state.layer.id),
             layerFeatures = state.nestedFeatures ? state.rawFeaturesOfLayer : layer.getSource().getFeatures(),
@@ -112,7 +112,7 @@ export default {
             stroke: styleObj.stroke,
             image: styleObj.image
         };
-        dispatch("Map/highlightFeature", highlightObject, {root: true});
+        dispatch("Maps/highlightFeature", highlightObject, {root: true});
     },
     /**
      * Switches to the themes list of all visibile layers and resets the featureList and the selectedFeature.
