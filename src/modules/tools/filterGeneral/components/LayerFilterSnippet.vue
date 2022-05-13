@@ -374,6 +374,28 @@ export default {
             return result;
         },
         /**
+         * Checks if the rules are only rules of parents.
+         * @returns {Boolean} true if only parents have rules left in rules.
+         */
+        hasOnlyParentRules () {
+            if (!Array.isArray(this.rules)) {
+                return false;
+            }
+            const len = this.rules.length;
+            let hasAnyRules = false;
+
+            for (let i = 0; i < len; i++) {
+                if (this.isRule(this.rules[i])) {
+                    hasAnyRules = true;
+                    if (!this.isParentSnippet(this.rules[i].snippetId)) {
+                        return false;
+                    }
+                }
+
+            }
+            return hasAnyRules;
+        },
+        /**
          * Set the post snippet key to rerender the snippet
          * @param {String} value the post snippet key
          * @returns {void}
@@ -442,7 +464,7 @@ export default {
                             this.mapHandler.clearLayer(filterId, this.isExtern());
                         }
 
-                        if (!this.isParentSnippet(snippetId)) {
+                        if (!this.isParentSnippet(snippetId) && !this.hasOnlyParentRules() && (Array.isArray(filterQuestion.rules) && filterQuestion.rules.length)) {
                             this.mapHandler.addItemsToLayer(filterId, filterAnswer.items, this.isExtern());
                             if (!Object.prototype.hasOwnProperty.call(this.layerConfig, "showHits") || this.layerConfig.showHits) {
                                 this.amountOfFilteredItems = this.mapHandler.getAmountOfFilteredItemsByFilterId(filterId);
@@ -463,6 +485,9 @@ export default {
                                     }
                                 });
                             }
+                        }
+                        else {
+                            this.amountOfFilteredItems = false;
                         }
 
                         if (typeof onsuccess === "function") {
