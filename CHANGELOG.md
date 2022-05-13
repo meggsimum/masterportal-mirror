@@ -41,6 +41,7 @@
 - Issue #760: Features added with FeatureViaUrl are now correctly displayed under Selected Topics
 - Fix Filter of GeoJSON after AutoRefresh by adding ID to each feature of the GeoJSON after AutoRefresh
 - Issue #712: Fix issue of multiple legend menu items in mobile view.
+- WMS layers of type `TileWMS` are now also displayed in 3D.
 
 ## v2.21.0 - 2022-05-04
 ### Added

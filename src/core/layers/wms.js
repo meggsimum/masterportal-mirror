@@ -41,20 +41,10 @@ WMSLayer.prototype = Object.create(Layer.prototype);
  * @returns {void}
  */
 WMSLayer.prototype.createLayer = function (attrs) {
-    const options = this.getOptions(),
-        rawLayerAttributes = this.getRawLayerAttributes(attrs),
+    const rawLayerAttributes = this.getRawLayerAttributes(attrs),
         layerParams = this.getLayerParams(attrs);
 
-    this.layer = wms.createLayer(rawLayerAttributes, layerParams, options);
-};
-
-/**
- * Gets options that contains resolutions and origin to create the TileGrid.
- * @param {Object} attrs Params of the raw layer.
- * @returns {Object} The options.
- */
-WMSLayer.prototype.getOptions = function () {
-    return {resolutions: mapCollection.getMapView("2D").getResolutions(), origin: [442800, 5809000]};
+    this.layer = wms.createLayer(rawLayerAttributes, layerParams);
 };
 
 /**
