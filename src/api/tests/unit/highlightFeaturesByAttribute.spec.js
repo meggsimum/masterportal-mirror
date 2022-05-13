@@ -1,6 +1,6 @@
 import highlightFeaturesByAttribute from "../../highlightFeaturesByAttribute.js";
 import {expect} from "chai";
-import sinon, { stub } from "sinon";
+import sinon from "sinon";
 import {Polygon, LineString} from "ol/geom.js";
 import VectorSource from "ol/source/Vector.js";
 import VectorLayer from "ol/layer/Vector.js";
@@ -101,7 +101,7 @@ describe("api/highlightFeaturesByAttribute", () => {
             sinon.resetHistory();
         });
 
-        beforeEach(function() {
+        beforeEach(function () {
             request = sinon.stub(Radio, "request").callsFake(function (channel, topic) {
                 if (channel === "StyleList" && topic === "returnModelById") {
                     return {
@@ -124,13 +124,13 @@ describe("api/highlightFeaturesByAttribute", () => {
                         createStyle: sinon.stub()
                     };
                 }
-        
+
                 return null;
             });
             highlightVector = new VectorLayer({
                 source: new VectorSource(),
                 style: new Style()
-            })
+            });
             sinon.stub(highlightFeaturesByAttribute, "createVectorLayer").returns(highlightVector);
         });
 
@@ -162,7 +162,7 @@ describe("api/highlightFeaturesByAttribute", () => {
                         getProperties: () => []
                     }
                 ];
-            
+
             highlightFeaturesByAttribute.highlightPointFeature("defaultHighlightFeaturesPoint", "highlight_point_layer", "highlightPoint", layer.gfiAttributes, features);
             expect(request.calledOnce).to.be.true;
             expect(request.firstCall.args).to.deep.equals(["StyleList", "returnModelById", "defaultHighlightFeaturesPoint"]);
@@ -186,7 +186,7 @@ describe("api/highlightFeaturesByAttribute", () => {
                         getProperties: () => []
                     }
                 ];
-            
+
             highlightFeaturesByAttribute.highlightLineOrPolygonFeature("defaultHighlightFeaturesPolygon", "highlight_polygon_layer", "highlightPolygon", "Polygon", layer.gfiAttributes, features);
             expect(request.calledOnce).to.be.true;
             expect(request.firstCall.args).to.deep.equals(["StyleList", "returnModelById", "defaultHighlightFeaturesPolygon"]);
@@ -210,7 +210,7 @@ describe("api/highlightFeaturesByAttribute", () => {
                         getProperties: () => []
                     }
                 ];
-            
+
             highlightFeaturesByAttribute.highlightLineOrPolygonFeature("defaultHighlightFeaturesLine", "highlight_line_layer", "highlightLine", "LineString", layer.gfiAttributes, features);
             expect(request.calledOnce).to.be.true;
             expect(request.firstCall.args).to.deep.equals(["StyleList", "returnModelById", "defaultHighlightFeaturesLine"]);
@@ -227,16 +227,16 @@ describe("api/highlightFeaturesByAttribute", () => {
                 escapeChar: "!",
                 singleChar: "#"
             },
-            wfsId = "123",
             spyErrorHandling,
             error;
+        const wfsId = "123";
 
         beforeEach(function () {
             error = sinon.spy();
             sinon.stub(console, "error").callsFake(error);
             spyErrorHandling = sinon.spy(errorHandling, "errorHandling");
         });
-    
+
         afterEach(function () {
             sinon.restore();
             spyErrorHandling.restore();
@@ -267,7 +267,7 @@ describe("api/highlightFeaturesByAttribute", () => {
                 escapeChar: "!",
                 singleChar: "#"
             };
-            
+
             expect(highlightFeaturesByAttribute.configHasErrors(layer, wfsId)).to.be.true;
             expect(console.error.calledOnce).to.be.true;
         });
@@ -281,7 +281,7 @@ describe("api/highlightFeaturesByAttribute", () => {
                 escapeChar: "!",
                 singleChar: "#"
             };
-            
+
             expect(highlightFeaturesByAttribute.configHasErrors(layer, wfsId)).to.be.true;
             expect(console.error.calledOnce).to.be.true;
         });
@@ -294,7 +294,7 @@ describe("api/highlightFeaturesByAttribute", () => {
                 wildCard: "%",
                 singleChar: "#"
             };
-            
+
             expect(highlightFeaturesByAttribute.configHasErrors(layer, wfsId)).to.be.true;
             expect(console.error.calledOnce).to.be.true;
         });
@@ -308,7 +308,7 @@ describe("api/highlightFeaturesByAttribute", () => {
                 escapeChar: "!!",
                 singleChar: "#"
             };
-            
+
             expect(highlightFeaturesByAttribute.configHasErrors(layer, wfsId)).to.be.true;
             expect(console.error.calledOnce).to.be.true;
         });
@@ -321,7 +321,7 @@ describe("api/highlightFeaturesByAttribute", () => {
                 wildCard: "%",
                 escapeChar: "!"
             };
-            
+
             expect(highlightFeaturesByAttribute.configHasErrors(layer, wfsId)).to.be.true;
             expect(console.error.calledOnce).to.be.true;
         });
@@ -335,7 +335,7 @@ describe("api/highlightFeaturesByAttribute", () => {
                 escapeChar: "!",
                 singleChar: "##"
             };
-            
+
             expect(highlightFeaturesByAttribute.configHasErrors(layer, wfsId)).to.be.true;
             expect(console.error.calledOnce).to.be.true;
         });
