@@ -17,7 +17,11 @@ export default {
      * @returns {Boolean} false, if config does not contain the mapMarker.
      */
     initialize: ({context}) => {
-        return fetchFirstModuleConfig(context, configPaths, "MapMarker", false);
+        if (context) {
+            return fetchFirstModuleConfig(context, configPaths, "MapMarker", false);
+        }
+        return null;
+
     },
 
     /**

@@ -252,7 +252,16 @@ export default {
             else if (this.mapMode === "3D") {
                 this.eventHandler = new Cesium.ScreenSpaceEventHandler(this.get3DMap.getCesiumScene().canvas);
                 this.eventHandler.setInputAction(this.checkPosition, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-                this.eventHandler.setInputAction(this.positionClicked, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+                this.eventHandler.setInputAction(() => {
+                    if (this.eventHandler.getInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE)) {
+                        this.eventHandler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+                    }
+                    else {
+                        this.eventHandler.setInputAction(this.checkPosition, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+                    }
+
+                    this.$store.dispatch("Tools/CoordToolkit/positionClicked");
+                }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
             }
         },
         removeInputActions () {
@@ -295,6 +304,7 @@ export default {
                 this.setMode(newMode);
                 this.setSupplyCoordInactive();
                 this.setFirstSearchPosition();
+
             }
             else {
                 this.setMode(newMode);
