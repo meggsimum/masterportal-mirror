@@ -590,12 +590,12 @@
         {
           "id": "12883",
           "name": "Gelände",
-          "visibility": false
+          "visibility": true
         },
         {
           "id": "12884",
           "name": "Gebäude LoD2",
-          "visibility": false
+          "visibility": true
         },
         {
           "id": "13032",

@@ -67,7 +67,6 @@ export default {
         else if (mapMode === "3D" && position.length === 3) {
             commit("setHeight", position[2].toFixed(1));
         }
-
     },
     /**
      * Creates a new WMSLayer to get the height from with id stored in state.heightLayerId and sets the layer to state.
