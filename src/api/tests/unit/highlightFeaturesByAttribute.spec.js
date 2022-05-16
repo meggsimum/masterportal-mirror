@@ -246,6 +246,10 @@ describe("api/highlightFeaturesByAttribute", () => {
             expect(highlightFeaturesByAttribute.configHasErrors(layer, wfsId)).to.be.false;
         });
 
+        it("configHasErrors should return true when layer is undefined", () => {
+            expect(highlightFeaturesByAttribute.configHasErrors(undefined, wfsId)).to.be.true;
+        });
+
         it("configHasErrors should return true when url is not given", () => {
             layer = {
                 id: "123",
