@@ -37,7 +37,7 @@ export default function EntitiesLayer (attrs) {
             const map = mapCollection.getMap(store.state.Maps.mode);
 
             entities.createDataSource(attrs, map);
-            this.setIsSelected(attrs.isVisibleInMap);
+            this.setIsSelected(this.get("isVisibleInMap"));
         }
     });
 }
