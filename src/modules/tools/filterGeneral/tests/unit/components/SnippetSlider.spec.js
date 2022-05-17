@@ -263,6 +263,16 @@ describe("src/modules/tools/filterGeneral/components/SnippetSlider.vue", () => {
             expect(wrapper.emitted("deleteRule")).to.be.undefined;
             wrapper.destroy();
         });
+        it("should change the operator to the default value if an invalid operator is given", () => {
+            const wrapper = shallowMount(SnippetSlider, {
+                propsData: {
+                    operator: "operator"
+                },
+                localVue
+            });
+
+            expect(wrapper.vm.securedOperator).to.be.equal("EQ");
+        });
     });
 
     describe("emitCurrentRule", () => {
@@ -272,7 +282,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetSlider.vue", () => {
                     snippetId: 1234,
                     visible: false,
                     attrName: "attrName",
-                    operator: "operator"
+                    operator: "EQ"
                 },
                 localVue
             });
@@ -285,7 +295,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetSlider.vue", () => {
                 startup: "startup",
                 fixed: true,
                 attrName: "attrName",
-                operator: "operator",
+                operator: "EQ",
                 value: "value"
             });
             wrapper.destroy();

@@ -1,6 +1,7 @@
 <script>
 import isObject from "../../../../utils/isObject";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
+import {getDefaultOperatorBySnippetType} from "../utils/compileSnippets.js";
 import SnippetInfo from "./SnippetInfo.vue";
 
 export default {
@@ -88,7 +89,11 @@ export default {
             minimumValue: 0,
             maximumValue: 100,
             value: [0, 100],
-            translationKey: "snippetSliderRange"
+            translationKey: "snippetSliderRange",
+            operatorWhitelist: [
+                "BETWEEN",
+                "INTERSECTS"
+            ]
         };
     },
     computed: {
@@ -126,6 +131,12 @@ export default {
             set (value) {
                 this.$set(this.value, 1, Math.min(this.maximumValue, Math.max(this.inRangeValueLeft, value)));
             }
+        },
+        securedOperator () {
+            if (!this.operatorWhitelist.includes(this.operator)) {
+                return getDefaultOperatorBySnippetType("sliderRange");
+            }
+            return this.operator;
         }
     },
     watch: {
@@ -232,7 +243,7 @@ export default {
                 startup,
                 fixed: !this.visible,
                 attrName: this.attrName,
-                operator: this.operator,
+                operator: this.securedOperator,
                 value
             });
         },

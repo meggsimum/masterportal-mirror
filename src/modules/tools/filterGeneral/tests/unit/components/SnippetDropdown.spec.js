@@ -92,6 +92,16 @@ describe("src/modules/tools/filterGeneral/components/SnippetDropdown.vue", () =>
             expect(wrapper.vm.dropdownValue).to.be.an("array").and.to.be.empty;
             wrapper.destroy();
         });
+        it("should change the operator to the default value if an invalid operator is given", () => {
+            const wrapper = shallowMount(SnippetDropdown, {
+                propsData: {
+                    operator: "operator"
+                },
+                localVue
+            });
+
+            expect(wrapper.vm.securedOperator).to.be.equal("EQ");
+        });
     });
 
     describe("emitCurrentRule", () => {
@@ -101,7 +111,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetDropdown.vue", () =>
                     snippetId: 1234,
                     visible: false,
                     attrName: "attrName",
-                    operator: "operator"
+                    operator: "EQ"
                 },
                 localVue
             });
@@ -114,7 +124,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetDropdown.vue", () =>
                 startup: "startup",
                 fixed: true,
                 attrName: "attrName",
-                operator: "operator",
+                operator: "EQ",
                 value: "value"
             });
             wrapper.destroy();
@@ -125,7 +135,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetDropdown.vue", () =>
                     snippetId: 1234,
                     visible: false,
                     attrName: "attrName",
-                    operator: "operator"
+                    operator: "EQ"
                 },
                 localVue
             });
@@ -144,7 +154,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetDropdown.vue", () =>
                 startup: "startup",
                 fixed: true,
                 attrName: "attrName",
-                operator: "operator",
+                operator: "EQ",
                 value: ["value"]
             });
             wrapper.destroy();

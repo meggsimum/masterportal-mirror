@@ -97,6 +97,16 @@ describe("src/modules/tools/filterGeneral/components/SnippetCheckbox.vue", () =>
             expect(wrapper.find(".info-icon").exists()).to.be.false;
             wrapper.destroy();
         });
+        it("should change the operator to the default value if an invalid operator is given", () => {
+            const wrapper = shallowMount(SnippetCheckbox, {
+                propsData: {
+                    operator: "operator"
+                },
+                localVue
+            });
+
+            expect(wrapper.vm.securedOperator).to.be.equal("EQ");
+        });
     });
 
     describe("emitCurrentRule", () => {
@@ -106,7 +116,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetCheckbox.vue", () =>
                     snippetId: 1234,
                     visible: false,
                     attrName: "attrName",
-                    operator: "operator"
+                    operator: "EQ"
                 },
                 localVue
             });
@@ -119,7 +129,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetCheckbox.vue", () =>
                 startup: "startup",
                 fixed: true,
                 attrName: "attrName",
-                operator: "operator",
+                operator: "EQ",
                 value: true,
                 tagTitle: "attrName"
             });

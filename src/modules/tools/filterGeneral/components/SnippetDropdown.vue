@@ -2,6 +2,7 @@
 import Multiselect from "vue-multiselect";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
 import {getStyleModel, getIconListFromLegend} from "../utils/getIconListFromLegend.js";
+import {getDefaultOperatorBySnippetType} from "../utils/compileSnippets.js";
 import splitListWithDelimitor from "../utils/splitListWithDelimitor.js";
 import isObject from "../../../../utils/isObject.js";
 import SnippetInfo from "./SnippetInfo.vue";
@@ -130,7 +131,13 @@ export default {
             legendsInfo: [],
             iconList: {},
             allSelected: false,
-            translationKey: "snippetDropdown"
+            translationKey: "snippetDropdown",
+            operatorWhitelist: [
+                "EQ",
+                "IN",
+                "STARTSWITH",
+                "ENDSWITH"
+            ]
         };
     },
     computed: {
@@ -180,6 +187,12 @@ export default {
         },
         selectAllTitle () {
             return !this.allSelected ? this.$t("modules.tools.filterGeneral.dropdown.selectAll") : this.$t("modules.tools.filterGeneral.dropdown.deselectAll");
+        },
+        securedOperator () {
+            if (!this.operatorWhitelist.includes(this.operator)) {
+                return getDefaultOperatorBySnippetType("dropdown", typeof this.delimitor === "string" && this.delimitor);
+            }
+            return this.operator;
         }
     },
     watch: {
@@ -339,7 +352,7 @@ export default {
                 startup,
                 fixed: !this.visible,
                 attrName: this.attrName,
-                operator: this.operator,
+                operator: this.securedOperator,
                 value: result
             });
         },

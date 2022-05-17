@@ -1,6 +1,7 @@
 <script>
 import isObject from "../../../../utils/isObject";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
+import {getDefaultOperatorBySnippetType} from "../utils/compileSnippets.js";
 import moment from "moment";
 import SnippetInfo from "./SnippetInfo.vue";
 
@@ -91,7 +92,14 @@ export default {
             maximumValue: "",
             value: "",
             precheckedIsValid: false,
-            translationKey: "snippetDate"
+            translationKey: "snippetDate",
+            operatorWhitelist: [
+                "EQ",
+                "GT",
+                "GE",
+                "LT",
+                "LE"
+            ]
         };
     },
     computed: {
@@ -127,6 +135,12 @@ export default {
             set (value) {
                 this.value = value;
             }
+        },
+        securedOperator () {
+            if (!this.operatorWhitelist.includes(this.operator)) {
+                return getDefaultOperatorBySnippetType("date");
+            }
+            return this.operator;
         }
     },
     watch: {
@@ -234,7 +248,7 @@ export default {
                 startup,
                 fixed: !this.visible,
                 attrName: this.attrName,
-                operator: this.operator,
+                operator: this.securedOperator,
                 format: this.format,
                 value
             });

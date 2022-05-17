@@ -1,5 +1,6 @@
 <script>
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
+import {getDefaultOperatorBySnippetType} from "../utils/compileSnippets.js";
 import SnippetInfo from "./SnippetInfo.vue";
 
 export default {
@@ -63,7 +64,13 @@ export default {
         return {
             isInitializing: true,
             value: "",
-            translationKey: "snippetInput"
+            translationKey: "snippetInput",
+            operatorWhitelist: [
+                "EQ",
+                "IN",
+                "STARTSWITH",
+                "ENDSWITH"
+            ]
         };
     },
     computed: {
@@ -78,6 +85,12 @@ export default {
                 return this.translateKeyWithPlausibilityCheck(this.title, key => this.$t(key));
             }
             return "";
+        },
+        securedOperator () {
+            if (!this.operatorWhitelist.includes(this.operator)) {
+                return getDefaultOperatorBySnippetType("text");
+            }
+            return this.operator;
         }
     },
     watch: {
@@ -119,7 +132,7 @@ export default {
                 startup,
                 fixed: !this.visible,
                 attrName: this.attrName,
-                operator: this.operator,
+                operator: this.securedOperator,
                 value
             });
         },

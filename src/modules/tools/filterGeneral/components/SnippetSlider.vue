@@ -1,6 +1,7 @@
 <script>
 import isObject from "../../../../utils/isObject";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
+import {getDefaultOperatorBySnippetType} from "../utils/compileSnippets.js";
 import SnippetInfo from "./SnippetInfo.vue";
 
 export default {
@@ -88,7 +89,14 @@ export default {
             minimumValue: 0,
             maximumValue: 100,
             value: 0,
-            translationKey: "snippetSlider"
+            translationKey: "snippetSlider",
+            operatorWhitelist: [
+                "EQ",
+                "GT",
+                "LT",
+                "GE",
+                "LE"
+            ]
         };
     },
     computed: {
@@ -113,6 +121,12 @@ export default {
             set (value) {
                 this.value = value;
             }
+        },
+        securedOperator () {
+            if (!this.operatorWhitelist.includes(this.operator)) {
+                return getDefaultOperatorBySnippetType("slider");
+            }
+            return this.operator;
         }
     },
     watch: {
@@ -197,7 +211,7 @@ export default {
                 startup,
                 fixed: !this.visible,
                 attrName: this.attrName,
-                operator: this.operator,
+                operator: this.securedOperator,
                 value
             });
         },

@@ -96,6 +96,16 @@ describe("src/modules/tools/filterGeneral/components/SnippetInput.vue", () => {
             expect(wrapper.find(".info-icon").exists()).to.be.false;
             wrapper.destroy();
         });
+        it("should change the operator to the default value if an invalid operator is given", () => {
+            const wrapper = shallowMount(SnippetInput, {
+                propsData: {
+                    operator: "operator"
+                },
+                localVue
+            });
+
+            expect(wrapper.vm.securedOperator).to.be.equal("IN");
+        });
     });
 
     describe("emitCurrentRule", () => {
@@ -105,7 +115,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetInput.vue", () => {
                     snippetId: 1234,
                     visible: false,
                     attrName: "attrName",
-                    operator: "operator"
+                    operator: "IN"
                 },
                 localVue
             });
@@ -118,7 +128,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetInput.vue", () => {
                 startup: "startup",
                 fixed: true,
                 attrName: "attrName",
-                operator: "operator",
+                operator: "IN",
                 value: "value"
             });
             wrapper.destroy();

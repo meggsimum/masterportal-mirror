@@ -209,6 +209,16 @@ describe("src/module/tools/filterGeneral/components/SnippetDateRange.vue", () =>
             expect(wrapper.emitted("deleteRule")).to.be.undefined;
             wrapper.destroy();
         });
+        it("should change the operator to the default value if an invalid operator is given", () => {
+            const wrapper = shallowMount(SnippetDateRange, {
+                propsData: {
+                    operator: "operator"
+                },
+                localVue
+            });
+
+            expect(wrapper.vm.securedOperator).to.be.equal("INTERSECTS");
+        });
     });
 
     describe("emitCurrentRule", () => {
@@ -218,7 +228,7 @@ describe("src/module/tools/filterGeneral/components/SnippetDateRange.vue", () =>
                     snippetId: 1234,
                     visible: false,
                     attrName: "attrName",
-                    operator: "operator",
+                    operator: "INTERSECTS",
                     format: "format"
                 },
                 localVue
@@ -232,7 +242,7 @@ describe("src/module/tools/filterGeneral/components/SnippetDateRange.vue", () =>
                 startup: "startup",
                 fixed: true,
                 attrName: "attrName",
-                operator: "operator",
+                operator: "INTERSECTS",
                 format: "format",
                 value: "value"
             });

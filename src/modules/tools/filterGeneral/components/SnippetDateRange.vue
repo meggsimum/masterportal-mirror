@@ -1,6 +1,7 @@
 <script>
 import isObject from "../../../../utils/isObject";
 import {translateKeyWithPlausibilityCheck} from "../../../../utils/translateKeyWithPlausibilityCheck.js";
+import {getDefaultOperatorBySnippetType} from "../utils/compileSnippets.js";
 import moment from "moment";
 import SnippetInfo from "./SnippetInfo.vue";
 
@@ -91,7 +92,11 @@ export default {
             maximumValue: "",
             value: ["", ""],
             precheckedIsValid: false,
-            translationKey: "snippetDateRange"
+            translationKey: "snippetDateRange",
+            operatorWhitelist: [
+                "BETWEEN",
+                "INTERSECTS"
+            ]
         };
     },
     computed: {
@@ -134,6 +139,12 @@ export default {
             set (value) {
                 this.$set(this.value, 1, value);
             }
+        },
+        securedOperator () {
+            if (!this.operatorWhitelist.includes(this.operator)) {
+                return getDefaultOperatorBySnippetType("dateRange");
+            }
+            return this.operator;
         }
     },
     watch: {
@@ -337,7 +348,7 @@ export default {
                 startup,
                 fixed: !this.visible,
                 attrName: this.attrName,
-                operator: this.operator,
+                operator: this.securedOperator,
                 format: this.format,
                 value
             });

@@ -287,6 +287,16 @@ describe("src/modules/tools/filterGeneral/components/SnippetSliderRange.vue", ()
             expect(wrapper.emitted("deleteRule")).to.be.undefined;
             wrapper.destroy();
         });
+        it("should change the operator to the default value if an invalid operator is given", () => {
+            const wrapper = shallowMount(SnippetSliderRange, {
+                propsData: {
+                    operator: "operator"
+                },
+                localVue
+            });
+
+            expect(wrapper.vm.securedOperator).to.be.equal("BETWEEN");
+        });
     });
 
     describe("emitCurrentRule", () => {
@@ -296,7 +306,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetSliderRange.vue", ()
                     snippetId: 1234,
                     visible: false,
                     attrName: "attrName",
-                    operator: "operator"
+                    operator: "BETWEEN"
                 },
                 localVue
             });
@@ -309,7 +319,7 @@ describe("src/modules/tools/filterGeneral/components/SnippetSliderRange.vue", ()
                 startup: "startup",
                 fixed: true,
                 attrName: "attrName",
-                operator: "operator",
+                operator: "BETWEEN",
                 value: "value"
             });
             wrapper.destroy();
