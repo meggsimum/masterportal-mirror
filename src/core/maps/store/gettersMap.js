@@ -36,11 +36,10 @@ const getters = {
      * @param {Number[]} state.clickPixel - the pixel coordinate of the click event
      * @returns {Object[]} gfi features
      */
-    gfiFeaturesAtPixel: (state, {clickPixel}) => {
-        const featuresAtPixel = [],
-            map3D = getters.get3DMap();
+    gfiFeaturesAtPixel: (state, {clickPixel, clickCartesianCoordinate, mode}) => {
+        const featuresAtPixel = [];
 
-        if (clickPixel) {
+        if (clickPixel && mode === "2D") {
             getters.get2DMap().forEachFeatureAtPixel(clickPixel, (feature, layer) => {
                 if (layer?.getVisible() && layer?.get("gfiAttributes") && layer?.get("gfiAttributes") !== "ignore") {
                     if (feature.getProperties().features) {
@@ -61,24 +60,22 @@ const getters = {
                     }
                 }
             });
-
-            if (map3D && Array.isArray(clickPixel) && clickPixel.length === 2) {
-                // add features from map3d
-                const scene = map3D.getCesiumScene(),
-                    tileFeatures = scene.drillPick({x: clickPixel[0], y: clickPixel[1]});
-
-                tileFeatures.forEach(tileFeature => {
-                    const gfiFeatures = getGfiFeaturesByTileFeature(tileFeature);
-
-                    if (Array.isArray(gfiFeatures)) {
-                        gfiFeatures.forEach(gfiFeature => {
-                            featuresAtPixel.push(gfiFeature);
-                        });
-                    }
-                });
-            }
         }
+        if (mode === "3D" && Array.isArray(clickCartesianCoordinate) && clickCartesianCoordinate.length === 2) {
+            // add features from map3d
+            const scene = getters.getCesiumScene(),
+                tileFeatures = scene.drillPick({x: clickCartesianCoordinate[0], y: clickCartesianCoordinate[1]});
 
+            tileFeatures.forEach(tileFeature => {
+                const gfiFeatures = getGfiFeaturesByTileFeature(tileFeature);
+
+                if (Array.isArray(gfiFeatures)) {
+                    gfiFeatures.forEach(gfiFeature => {
+                        featuresAtPixel.push(gfiFeature);
+                    });
+                }
+            });
+        }
         return featuresAtPixel;
     },
     /**
