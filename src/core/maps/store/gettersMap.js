@@ -33,7 +33,9 @@ const getters = {
     /**
      * Gets the features at the given pixel for the gfi
      * @param {Object} state - the state
-     * @param {Number[]} state.clickPixel - the pixel coordinate of the click event
+     * @param {Number[]} state.clickPixel - the pixel coordinate of the click event in 2D
+     * @param {Number[]} state.clickCartesianCoordinate - the coordinate of the click event in 3D
+     * @param {String} state.mode - the current map mode
      * @returns {Object[]} gfi features
      */
     gfiFeaturesAtPixel: (state, {clickPixel, clickCartesianCoordinate, mode}) => {
