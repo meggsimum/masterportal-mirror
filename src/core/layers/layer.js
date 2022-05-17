@@ -162,7 +162,6 @@ Layer.prototype.removeLayer = function () {
     }
 
     this.setIsVisibleInMap(false);
-    bridge.removeLayerByIdFromModelList(this.get("id"));
     map?.removeLayer(this.layer);
 };
 /**
