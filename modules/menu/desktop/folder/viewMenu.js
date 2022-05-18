@@ -41,25 +41,25 @@ const FolderViewMenu = Backbone.View.extend(/** @lends FolderViewMenu.prototype 
 
         if (this.model.get("isVisibleInMenu")) {
             $("#" + this.model.get("parentId")).append(this.$el.html(this.template(attr)));
-        }
 
-        // .children is only available after preceding lines
-        // eslint-disable-next-line
-        const dropdown = Dropdown.getOrCreateInstance(this.$el.children(".dropdown-toggle").get(0));
+            // .children is only available after preceding lines
+            // eslint-disable-next-line
+            const dropdown = Dropdown.getOrCreateInstance(this.$el.children(".dropdown-toggle").get(0));
 
-        if (this.model.get("isInitOpen")) {
-            // Upgrade to BT5, use JS method instead of class addition
-            dropdown.show();
-        }
-        else {
-            // Upgrade to BT5, use JS method instead of class removal
-            dropdown.hide();
-            $(".dropdown-menu.fixed").removeClass("fixed");
-            $(".bi-pin-angle-fill").parent(".bootstrap-icon").removeClass("rotate-pin");
-            $(".bi-pin-angle-fill").parent(".bootstrap-icon").addClass("rotate-pin-back");
-        }
+            if (this.model.get("isInitOpen")) {
+                // Upgrade to BT5, use JS method instead of class addition
+                dropdown.show();
+            }
+            else {
+                // Upgrade to BT5, use JS method instead of class removal
+                dropdown.hide();
+                $(".dropdown-menu.fixed").removeClass("fixed");
+                $(".bi-pin-angle-fill").parent(".bootstrap-icon").removeClass("rotate-pin");
+                $(".bi-pin-angle-fill").parent(".bootstrap-icon").addClass("rotate-pin-back");
+            }
 
-        this.clearFixedTree();
+            this.clearFixedTree();
+        }
         return this;
     },
 
