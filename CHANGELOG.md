@@ -31,6 +31,7 @@
 ### Removed
 
 ### Fixed
+- Issue #663: Fixed tool Buffer Analysis where layer activity updates would not be recognized anymore.
 - Issue #686: Add logging and documentation regarding manual WMTS configuration's limitations
 - The order of printed features from the draw and measure layer is now corrected.
 - Issue #737: Fix issue of some items in the layer tree overflowing
