@@ -589,7 +589,7 @@
         {
           "id": "12883",
           "name": "Gelände",
-          "visibility": false
+          "visibility": true
         },
         {
           "id": "12884",
