@@ -260,7 +260,6 @@
         "children": {
           "wfsSearch": {
             "name": "translate#common:menu.tools.parcelSearch",
-            "icon": "bi-search",
             "zoomLevel": 7,
             "instances": [
               {
@@ -590,7 +589,7 @@
         {
           "id": "12883",
           "name": "Gelände",
-          "visibility": true
+          "visibility": false
         },
         {
           "id": "12884",
@@ -601,7 +600,33 @@
           "id": "13032",
           "name": "Oblique",
           "visibility": true
-        }
+        },
+        {
+          "id": "57",
+          "name": "3D-Entities Testlayer",
+          "visibility": true,
+          "typ": "Entities3D",
+          "entities": [
+             {
+               "url": "https://daten-hamburg.de/gdi3d/datasource-data/Simple_Building.glb",
+               "attributes": {
+                 "name": "einfaches Haus in Planten und Blomen"
+               },
+               "latitude": 53.5631,
+               "longitude": 9.9800,
+               "height": 12,
+               "heading": 0,
+               "pitch": 0,
+               "roll": 0,
+               "scale": 5,
+               "allowPicking": true,
+               "show": true
+             }
+           ],
+           "gfiAttributes" : {
+             "name": "Name"
+          }
+      }
       ]
     },
     "Fachdaten": {
