@@ -5,6 +5,9 @@
 
 ## Known Issues
 - 3D: The position indicator inside of a 3D object vanishes when clicking on the object.
+
+---
+
 ## Unreleased - in development
 ### Added
 - The following NPM packages are added:
@@ -16,6 +19,7 @@
 - FilterModule:
   - new option optionsLimit for dropdown snippet
   - Parent-child Filter Mode in Dropdown snippet
+- Added possibility to display a legend for a layer of type 'StaticImage'.
 
 ### Changed
 - `default`-gfiTheme: If a `|`-character is part of the response, every element separated by the character will be displayed in a separate paragraph.
@@ -44,6 +48,8 @@
 - Fix Filter of GeoJSON after AutoRefresh by adding ID to each feature of the GeoJSON after AutoRefresh
 - Issue #712: Fix issue of multiple legend menu items in mobile view.
 
+---
+
 ## v2.21.0 - 2022-05-04
 ### Added
 - A control has been added to create buttons for any tools. These can be used to open and close the configured tools.
@@ -64,8 +70,6 @@
 
 ### Deprecated
 - Configuration (`config.js`) parameters `zoomToFeature` and `zoomToGeometry` have been marked as deprecated in an upcoming major release.
-
-### Removed
 
 ### Fixed
 - Issue #758: featureLister threw a JavaScript exception when building the list of layers.

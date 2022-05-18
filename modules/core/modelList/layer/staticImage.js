@@ -1,8 +1,8 @@
 import Layer from "./model";
 import ImageLayer from "ol/layer/Image.js";
-import Projection from "ol/proj/Projection.js";
 import StaticImageSource from "ol/source/ImageStatic.js";
 import getProxyUrl from "../../../../src/utils/getProxyUrl";
+import store from "../../../../src/app-store";
 
 const StaticImageLayer = Layer.extend({
 
@@ -21,18 +21,12 @@ const StaticImageLayer = Layer.extend({
          * useProxy
          * getProxyUrl()
          */
-        const url = this.get("useProxy") ? getProxyUrl(this.get("url")) : this.get("url"),
-            extent = this.get("extent"),
-            projection = new Projection({
-                code: "static-image",
-                units: "pixels",
-                extent: extent
-            });
+        const url = this.get("useProxy") ? getProxyUrl(this.get("url")) : this.get("url");
 
         this.setLayerSource(new StaticImageSource({
             url: url,
-            projection: projection,
-            imageExtent: extent
+            projection: store.getters["Maps/projection"],
+            imageExtent: this.get("extent")
         }));
     },
 
@@ -48,9 +42,35 @@ const StaticImageLayer = Layer.extend({
             legendURL: this.get("legendURL"),
             transparency: this.get("transparency")
         }));
+
+        this.createLegend();
     },
-    createLegendURL: function () {
-        // this is a comment
+
+    /**
+     * Creates the legend.
+     * @returns {void}
+     */
+    createLegend: function () {
+        let legend = this.get("legend");
+
+        if (this.get("legendURL")) {
+            if (this.get("legendURL") === "") {
+                legend = true;
+            }
+            else if (this.get("legendURL") === "ignore") {
+                legend = false;
+            }
+            else {
+                legend = this.get("legendURL");
+            }
+        }
+
+        if (Array.isArray(legend)) {
+            this.setLegend(legend);
+        }
+        else if (typeof legend === "string") {
+            this.setLegend([legend]);
+        }
     }
 });
 

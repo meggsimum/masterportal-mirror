@@ -873,6 +873,14 @@
         },
         {
           "id": "19173"
+        },
+        {
+          "id": "46",
+          "typ": "StaticImage",
+          "url": "https://geodienste.hamburg.de/lgv-config/img/Laerm-Test_300dpi.png",
+          "name": "Lärmberechnung",
+          "extent": [568426.27, 5931985.58, 569614.86, 5933174.11],
+          "legend": ["https://geodienste.hamburg.de/lgv-config/img/Legende_Laermberechnung_Tag.png", "https://geodienste.hamburg.de/lgv-config/img/Legende_Laermberechnung_Nacht.png"]
         }
       ]
     }
