@@ -4,6 +4,7 @@ import getComponent from "../../../../utils/getComponent";
 import {Pointer} from "ol/interaction.js";
 import {getProjections} from "@masterportal/masterportalapi/src/crs";
 import {mapGetters, mapActions, mapMutations} from "vuex";
+import mapCollection from "../../../../core/maps/mapCollection.js";
 import getters from "../store/gettersCoordToolkit";
 import mutations from "../store/mutationsCoordToolkit";
 

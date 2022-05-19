@@ -1,4 +1,5 @@
 import {transform, get} from "ol/proj.js";
+import mapCollection from "../../../../core/maps/mapCollection.js";
 
 export default {
     /**

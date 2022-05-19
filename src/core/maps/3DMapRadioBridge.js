@@ -1,4 +1,5 @@
 import api from "@masterportal/masterportalapi/src/maps/api";
+import mapCollection from "../../../src/core/maps/mapCollection.js";
 import store from "../../../src/app-store";
 
 const channel = Radio.channel("Map");
