@@ -1,6 +1,7 @@
 import source from "../utils/measureSource";
 import makeDraw2d from "../utils/measureDraw";
 import makeDraw3d from "../utils/measureDraw3d";
+import mapCollection from "../../../../core/maps/mapCollection.js";
 
 export default {
     /**
@@ -35,7 +36,7 @@ export default {
         if (rootGetters["Maps/is3D"]) {
             dispatch("deleteFeatures");
             interaction = makeDraw3d(
-                rootGetters["Maps/get3DMap"],
+                mapCollection.getMap("3D"),
                 rootGetters["Maps/projectionCode"],
                 unlistener => commit("addUnlistener", unlistener),
                 rootState._store

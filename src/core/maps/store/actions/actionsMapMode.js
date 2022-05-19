@@ -123,7 +123,7 @@ export default {
      * @returns {void}
      */
     deactivateMap3D ({commit, getters, dispatch}) {
-        const map3D = getters.get3DMap;
+        const map3D = mapCollection.getMap("3D");
 
         if (map3D) {
             const view = getters.getView;

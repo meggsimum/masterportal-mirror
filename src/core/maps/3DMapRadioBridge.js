@@ -1,4 +1,5 @@
 import api from "@masterportal/masterportalapi/src/maps/api";
+import mapCollection from "../../../src/core/maps/mapCollection.js";
 import store from "../../../src/app-store";
 
 const channel = Radio.channel("Map");
@@ -8,7 +9,7 @@ channel.reply({
         return store.getters["Maps/is3D"];
     },
     "getMap3d": function () {
-        return store.getters["Maps/get3DMap"];
+        return mapCollection.getMap("3D");
     }
 });
 
@@ -17,6 +18,6 @@ channel.on({
         store.dispatch("Maps/setShadowTime", shadowTime, {root: true});
     },
     "setCameraParameter": function (cameraParams) {
-        api.map.olcsMap.setCameraParameter(cameraParams, store.getters["Maps/get3DMap"], Cesium);
+        api.map.olcsMap.setCameraParameter(cameraParams, mapCollection.getMap("3D"), Cesium);
     }
 });

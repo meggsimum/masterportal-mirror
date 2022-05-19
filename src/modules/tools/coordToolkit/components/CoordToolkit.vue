@@ -4,6 +4,7 @@ import getComponent from "../../../../utils/getComponent";
 import {Pointer} from "ol/interaction.js";
 import {getProjections} from "@masterportal/masterportalapi/src/crs";
 import {mapGetters, mapActions, mapMutations} from "vuex";
+import mapCollection from "../../../../core/maps/mapCollection.js";
 import getters from "../store/gettersCoordToolkit";
 import mutations from "../store/mutationsCoordToolkit";
 
@@ -22,7 +23,6 @@ export default {
         ...mapGetters("Maps", {
             projection: "projection",
             mouseCoordinate: "mouseCoordinate",
-            get3DMap: "get3DMap",
             mapMode: "mode"
         }),
         ...mapGetters(["uiStyle", "mobile"]),
@@ -250,7 +250,7 @@ export default {
                 this.addInteractionToMap(pointerMove);
             }
             else if (this.mapMode === "3D") {
-                this.eventHandler = new Cesium.ScreenSpaceEventHandler(this.get3DMap.getCesiumScene().canvas);
+                this.eventHandler = new Cesium.ScreenSpaceEventHandler(mapCollection.getMap("3D").getCesiumScene().canvas);
                 this.eventHandler.setInputAction(this.checkPosition, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
                 this.eventHandler.setInputAction(this.positionClicked, Cesium.ScreenSpaceEventType.LEFT_CLICK);
             }

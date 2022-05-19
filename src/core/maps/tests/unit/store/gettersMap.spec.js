@@ -60,7 +60,7 @@ describe("src/core/maps/store/gettersMap.js", () => {
 
             mapCollection.addMap(map, "3D");
 
-            expect(getters.get3DMap()).to.deep.equal({id: "olcs", mode: "3D"});
+            expect(mapCollection.getMap("3D")).to.deep.equal({id: "olcs", mode: "3D"});
         });
         it("returns the map layers", () => {
             const layers = [],

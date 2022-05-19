@@ -1,4 +1,5 @@
 import {transform, get} from "ol/proj.js";
+import mapCollection from "../../../../core/maps/mapCollection.js";
 
 export default {
     /**
@@ -39,13 +40,12 @@ export default {
 
     /**
      * Setter for 3D map attribute "shadowTime".
-     * @param {Object} param store context
-     * @param {Object} param.getters the getters
+     * @param {Object} state store state
      * @param {Cesium.JulianDate} time Shadow time in julian date format.
      * @returns {void}
      */
-    setShadowTime ({getters}, time) {
-        getters.get3DMap.time = time;
+    setShadowTime (state, time) {
+        mapCollection.getMap("3D").time = time;
     },
     /**
      * Sets mapView values to the store.
@@ -107,7 +107,7 @@ export default {
         }
         else if (getters.mode === "3D") {
             try {
-                const scene = getters.get3DMap.getCesiumScene(),
+                const scene = mapCollection.getMap("3D").getCesiumScene(),
                     pickedPositionCartesian = scene.pickPosition(event.endPosition),
                     cartographicPickedPosition = scene.globe.ellipsoid.cartesianToCartographic(pickedPositionCartesian),
                     transformedPickedPosition = transform([Cesium.Math.toDegrees(cartographicPickedPosition.longitude), Cesium.Math.toDegrees(cartographicPickedPosition.latitude)], get("EPSG:4326"), getters.projection);
