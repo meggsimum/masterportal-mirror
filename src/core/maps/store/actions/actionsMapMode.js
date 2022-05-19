@@ -73,8 +73,8 @@ export default {
         commit("setMode", "3D");
         Radio.trigger("Map", "change", "3D");
         dispatch("MapMarker/removePointMarker", null, {root: true});
-        eventHandler = new window.Cesium.ScreenSpaceEventHandler(map3D.getCesiumScene().canvas);
-        eventHandler.setInputAction((evt) => dispatch("updatePointer", evt), window.Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+        eventHandler = new Cesium.ScreenSpaceEventHandler(map3D.getCesiumScene().canvas);
+        eventHandler.setInputAction((evt) => dispatch("updatePointer", evt), Cesium.ScreenSpaceEventType.MOUSE_MOVE);
     },
 
     /**

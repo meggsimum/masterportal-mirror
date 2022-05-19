@@ -110,7 +110,7 @@ export default {
                 const scene = getters.get3DMap.getCesiumScene(),
                     pickedPositionCartesian = scene.pickPosition(event.endPosition),
                     cartographicPickedPosition = scene.globe.ellipsoid.cartesianToCartographic(pickedPositionCartesian),
-                    transformedPickedPosition = transform([window.Cesium.Math.toDegrees(cartographicPickedPosition.longitude), window.Cesium.Math.toDegrees(cartographicPickedPosition.latitude)], get("EPSG:4326"), getters.projection);
+                    transformedPickedPosition = transform([Cesium.Math.toDegrees(cartographicPickedPosition.longitude), Cesium.Math.toDegrees(cartographicPickedPosition.latitude)], get("EPSG:4326"), getters.projection);
 
                 transformedPickedPosition.push(cartographicPickedPosition.height);
                 commit("setMouseCoordinate", transformedPickedPosition);

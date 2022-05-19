@@ -34,7 +34,7 @@ function create2DMap (mapViewSettings) {
  * @returns {void}
  */
 async function create3DMap (configJs) {
-    if (window.Cesium && configJs.startingMap3D) {
+    if (Cesium && configJs.startingMap3D) {
         await store.commit("Maps/setMode", "2D");
         Radio.trigger("Map", "mapChangeTo3d");
     }

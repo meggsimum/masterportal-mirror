@@ -233,7 +233,7 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
 
         describe("createInteraction for 3D", () => {
             before(() => {
-                window.Cesium = {
+                Cesium = {
                     ScreenSpaceEventHandler: () => {
                         return {
                             setInputAction: () => sinon.stub(),

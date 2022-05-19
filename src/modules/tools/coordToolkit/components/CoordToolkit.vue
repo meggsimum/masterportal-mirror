@@ -250,9 +250,9 @@ export default {
                 this.addInteractionToMap(pointerMove);
             }
             else if (this.mapMode === "3D") {
-                this.eventHandler = new window.Cesium.ScreenSpaceEventHandler(this.get3DMap.getCesiumScene().canvas);
-                this.eventHandler.setInputAction(this.checkPosition, window.Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-                this.eventHandler.setInputAction(this.positionClicked, window.Cesium.ScreenSpaceEventType.LEFT_CLICK);
+                this.eventHandler = new Cesium.ScreenSpaceEventHandler(this.get3DMap.getCesiumScene().canvas);
+                this.eventHandler.setInputAction(this.checkPosition, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+                this.eventHandler.setInputAction(this.positionClicked, Cesium.ScreenSpaceEventType.LEFT_CLICK);
             }
         },
         removeInputActions () {
