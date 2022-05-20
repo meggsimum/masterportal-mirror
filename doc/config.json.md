@@ -1875,12 +1875,12 @@ Example for a slider range snippet. A slider range without minValue and maxValue
 
 **Example**
 
-Example for a slider range snippet. With minValue and max Value to avoid automatic identification of boundaries.
+Example for a slider range snippet. A slider range with two attrName for min and max. With minValue and max Value to avoid automatic identification of boundaries.
 
 ```json
 {
     "title": "Angle d'inclinaison du toit du garage",
-    "attrName": "angle",
+    "attrName": ["angle_minimal", "angle_maximal"],
     "type": "sliderRange",
     "operator": "BETWEEN",
     "minValue": 0,
@@ -4717,6 +4717,34 @@ For such cases, define `gfiAsNewWindow` manually as described above.
 ```
 
 ***
+#### Themenconfig.Layer.WFS
+
+[inherits]: # (Themenconfig.Layer)
+
+List of typical WFS query attributes for highlightFeaturesByAttribute.
+
+|Name|Required|Type|Default|Description|Expert|
+|----|--------|----|-------|-----------|------|
+|propNameSearchPrefix|yes|String||Search prefix for the WFS query - e.g. app:.|true|
+|wildCard|yes|String||The wildcard character for the WFS query -e.g. %|true|
+|singleChar|yes|String||The single character for the WFS query - e.g. #|true|
+|escapeChar|yes|String||The escape character for the WFS query - e.g. |true|
+|resultPropName|yes|String||The result property name for the WFS query - e.g. app:SHAPE|true|
+
+**Example**
+
+```
+#!json
+{
+    "id": "1",
+    "visibility": false,
+    "name": "Tierarten invasiv",
+    "propNameSearchPrefix": "app:",
+    "wildCard": "%",
+    "singleChar": "#",
+    "escapeChar": "!", 
+    "resultPropName": "app:SHAPE"
+}
 
 #### Themenconfig.Layer.Tileset
 

@@ -37,7 +37,8 @@ const state = {
         "stroke": {
             "width": 4,
             "color": [255, 255, 0, 0.9]
-        }
+        },
+        "zoom": 6
     },
     highlightVectorRulesPointLine: {
         "stroke": {
@@ -46,7 +47,8 @@ const state = {
         },
         "image": {
             "scale": 2
-        }
+        },
+        "zoom": 6
     }
 };
 

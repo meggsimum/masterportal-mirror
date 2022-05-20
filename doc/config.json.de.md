@@ -1808,12 +1808,12 @@ Beispiel für ein SliderRange-Snippet. Eine SliderRange die ihre Grenzwerte auto
 
 **Beispiel**
 
-Beispiel für ein SliderRange-Snippet. Mit gesetztem minValue und maxValue, was die automatische Wertermittlung abschaltet.
+Beispiel für ein SliderRange-Snippet. Ein SliderRange mit zwei attrName-Angaben für min und max. Mit gesetztem minValue und maxValue, was die automatische Wertermittlung abschaltet.
 
 ```json
 {
     "title": "Angle d'inclinaison du toit du garage",
-    "attrName": "angle",
+    "attrName": ["angle_minimal", "angle_maximal"],
     "type": "sliderRange",
     "operator": "BETWEEN",
     "minValue": 0,
@@ -4648,6 +4648,35 @@ Beispiel:
 ```
 
 ***
+
+#### Themenconfig.Layer.WFS
+
+[inherits]: # (Themenconfig.Layer)
+
+Attribute für die WFS Suche bei highlighFeaturesByAttribute
+
+|Name|Verpflichtend|Typ|Default|Beschreibung|Expert|
+|----|--------|----|-------|-----------|------|
+|propNameSearchPrefix|ja|String||Suchprefix für den typename bei der WFS Suche - z.Bsp. app:.|true|
+|wildCard|ja|String||Das zu verwendende Zeichen für das Jokerzeichen - z.Bsp. %|true|
+|singleChar|ja|String||Das Zeichen für den singleChar WFS parameter - z.Bsp. #|true|
+|escapeChar|ja|String||Das Zeichen für den escapeChar WFS parameter - z.Bsp. |true|
+|resultPropName|ja|String||Der Name des zurück zu liefernden Ergebnis Typs - z.Bsp. app:SHAPE|true|
+
+**Example**
+
+```
+#!json
+{
+    "id": "1",
+    "visibility": false,
+    "name": "Tierarten invasiv",
+    "propNameSearchPrefix": "app:",
+    "wildCard": "%",
+    "singleChar": "#",
+    "escapeChar": "!", 
+    "resultPropName": "app:SHAPE"
+}
 
 #### Themenconfig.Layer.Tileset
 

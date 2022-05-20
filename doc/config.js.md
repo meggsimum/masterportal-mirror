@@ -251,6 +251,7 @@ For more attributes see **[Scene](https://cesium.com/learn/cesiumjs/ref-doc/Glob
 
 |Name|Required|Type|Default|Description|
 |----|--------|----|-------|-----------|
+|minShift|no|Integer|`5`|Minimum mouse position movement required to render a new tooltip; in pixels.|
 |numFeaturesToShow|no|Integer|`2`|Maximum amount of element information per tooltip; when exceeded, an information text informs the user of cut content.|
 |infoText|no|String|`"(Further objects. Please zoom.)"`|Information text shown when `numFeaturesToShow` is exceeded.|
 

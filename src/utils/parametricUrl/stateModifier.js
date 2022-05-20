@@ -109,6 +109,19 @@ function callActions (state) {
         store.dispatch("ZoomTo/zoomToFeatures");
     }
 
+    if (state.urlParams["Maps/highlightFeaturesByAttribute"]) {
+        const propName = state.urlParams?.attributeName,
+            propValue = state.urlParams?.attributeValue,
+            queryType = state.urlParams?.attributeQuery,
+            wfsId = state.urlParams?.wfsId;
+
+        if (propName && propValue && wfsId) {
+            highlightFeaturesByAttribute(store.dispatch, wfsId, propName, propValue, queryType);
+        }
+        else {
+            console.warn("Not all required URL parameters given for highlightFeaturesByAttribute.");
+        }
+    }
 }
 /**
  * Sets the url params at state and produces desired reaction.
