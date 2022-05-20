@@ -58,7 +58,7 @@ const getters = {
         }
         if (mode === "3D" && Array.isArray(clickCartesianCoordinate) && clickCartesianCoordinate.length === 2) {
             // add features from map3d
-            const scene = getters.getCesiumScene(),
+            const scene = mapCollection.getMap("3D").getCesiumScene(),
                 clickFeatures = scene.drillPick({x: clickCartesianCoordinate[0], y: clickCartesianCoordinate[1]});
 
             clickFeatures.forEach(clickFeature => {
@@ -127,42 +127,6 @@ const getters = {
             secondCoordTransform = transformFromMapProjection(map, epsgCode, [bbox[2], bbox[3]]);
 
         return [firstCoordTransform[0], firstCoordTransform[1], secondCoordTransform[0], secondCoordTransform[1]];
-    },
-    /**
-     * Returns the camera of the 3D map
-     * @returns {Object} Returns the camera of the 3D map
-     */
-    getCamera: () => {
-        return mapCollection.getMap("3D").getCamera();
-    },
-    /**
-     * Returns the globe of Cesium scene
-     * @returns {Object} Returns the 3D globe object.
-     */
-    getGlobe: () => {
-        return mapCollection.getMap("3D").getCesiumScene().globe;
-    },
-    /**
-     * Returns the Cesium scene
-     * @returns {Object} Returns the cesium scene.
-     */
-    getCesiumScene: () => {
-        return mapCollection.getMap("3D").getCesiumScene();
-    },
-    /**
-     * Returns the shadowMap of the cesium scene
-     * @returns {Object} Returns the shadowMap.
-     */
-    getShadowMap: () => {
-        return mapCollection.getMap("3D").getCesiumScene().shadowMap;
-    },
-    /**
-     * Cesium time function.
-     * @param {Object} getter getters
-     * @returns {Cesium.JulianDate} - shadow time in julian date format.
-     */
-    getShadowTime: () => {
-        return mapCollection.getMap("3D").time || Cesium.JulianDate.fromDate(new Date());
     },
     /**
      * Reverse the gfi features

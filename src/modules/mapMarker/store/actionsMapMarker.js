@@ -1,6 +1,7 @@
 import {fetchFirstModuleConfig} from "../../../utils/fetchFirstModuleConfig";
 import Point from "ol/geom/Point.js";
 import Feature from "ol/Feature.js";
+import mapCollection from "../../../core/maps/mapCollection.js";
 
 /**
  * @const {String} configPaths an array of possible config locations. First one found will be used
@@ -25,7 +26,7 @@ export default {
      * @param {String[]} value The array with the markable coordinate pair.
      * @returns {void}
      */
-    placingPointMarker ({state, rootState, commit, dispatch, rootGetters}, value) {
+    placingPointMarker ({state, rootState, commit, dispatch}, value) {
 
         const styleListModel = Radio.request("StyleList", "returnModelById", state.pointStyleId);
         let coordValues = [];
@@ -39,7 +40,7 @@ export default {
                     coordValues.push(Math.round(val));
                 });
                 // tilt the camera to recognize the mapMarker
-                rootGetters["Maps/getCamera"].tilt_ = -200;
+                mapCollection.getMap("3D").getCamera().tilt_ = -200;
             }
             else {
                 coordValues = value;
