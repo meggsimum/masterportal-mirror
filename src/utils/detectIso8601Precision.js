@@ -4,14 +4,15 @@ export const validIso8601Precisions = [
     "YYYY",
     "YYYY-MM",
     "YYYY-MM-DD",
-    "YYYY-MM-DD[T]HH",
-    "YYYY-MM-DD[T]HH:mm",
-    "YYYY-MM-DD[T]HH:mm:ss",
-    "YYYY-MM-DD[T]HH:mm:ss.SSS"
+    "YYYY-MM-DDTHH",
+    "YYYY-MM-DDTHH:mm",
+    "YYYY-MM-DDTHH:mm:ss",
+    "YYYY-MM-DDTHH:mm:ss.SSS"
 ];
 
 /**
  * Precision will be returned as format string.
+ * @link https://datatracker.ietf.org/doc/html/rfc3339#section-5.6
  * @param {String} timestamp timestamp to detect precision of
  * @returns {String} format value for precision
  * @throws
