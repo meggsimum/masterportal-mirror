@@ -25,12 +25,7 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
         mockMapGetters = {
             projection: () => sinon.stub(),
             mouseCoordinate: () => sinon.stub(),
-            mode: (state) => state.mode,
-            get3DMap: () => {
-                return {
-                    getCesiumScene: () => sinon.stub()
-                };
-            }
+            mode: (state) => state.mode
         },
         mockMapMarkerActions = {
             removePointMarker: sinon.stub()
