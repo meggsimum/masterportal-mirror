@@ -5,6 +5,7 @@ import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import * as crs from "@masterportal/masterportalapi/src/crs";
 import CoordToolkitComponent from "../../../components/CoordToolkit.vue";
 import CoordToolkit from "../../../store/indexCoordToolkit";
+import mapCollection from "../../../../../../core/maps/mapCollection.js";
 
 const localVue = createLocalVue(),
     namedProjections = [
@@ -253,6 +254,13 @@ describe("src/modules/tools/coordToolkit/components/CoordToolkit.vue", () => {
 
             it("createInteraction for 3D and the eventHandler is not null", () => {
                 wrapper = shallowMount(CoordToolkitComponent, {store, localVue});
+                const canvas = {},
+                    map3D = {
+                        mode: "3D",
+                        getCesiumScene: () => canvas
+                    };
+
+                mapCollection.addMap(map3D, "3D");
 
                 expect(wrapper.vm.eventHandler).to.be.null;
 
