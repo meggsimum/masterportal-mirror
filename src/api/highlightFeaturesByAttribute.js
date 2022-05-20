@@ -1,11 +1,11 @@
 import {WFS} from "ol/format.js";
-import VectorLayer from "ol/layer/Vector.js";
+//import VectorLayer from "ol/layer/Vector.js";
+import VectorBaseLayer from "../core/layers/vectorBase";
 import VectorSource from "ol/source/Vector.js";
 import {Style} from "ol/style.js";
 import Point from "ol/geom/Point.js";
 import Feature from "ol/Feature.js";
 import axios from "axios";
-import {Radio} from "backbone";
 import {getLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
 
 export default {
@@ -30,6 +30,7 @@ export default {
      * @param {Object} gfiAttributes GFI attributes configuration
      * @returns {Object} the created VectorLayer
     */
+   /*
     createVectorLayer: function (styleId, layerId, name, gfiAttributes) {
         return new VectorLayer({
             id: layerId,
@@ -42,6 +43,7 @@ export default {
             gfiAttributes: gfiAttributes
         });
     },
+    */
 
     /**
      * highlight Features for Points
@@ -53,9 +55,18 @@ export default {
      * @returns {void} nothing
     */
     highlightPointFeature: function (modelId, styleId, name, gfiAttributes, features) {
-        const styleListModel = Radio.request("StyleList", "returnModelById", modelId),
-            highlightLayer = this.createVectorLayer(modelId, styleId, name, gfiAttributes);
+        const vectorAttrs = {
+                id: modelId,
+                styleId: styleId,
+                name: name,
+                typ: "VectorBase",
+                isSelected: false,
+                gfiAttributes: gfiAttributes
+            },
+            styleListModel = Radio.request("StyleList", "returnModelById", modelId),
+            highlightLayer = new VectorBaseLayer(vectorAttrs);
         let hadPoint = false;
+        console.log(highlightLayer);
 
         features.forEach(feature => {
             const geometry = feature.getGeometry();
@@ -93,8 +104,14 @@ export default {
      * @returns {void} nothing
     */
     highlightLineOrPolygonFeature: function (modelId, styleId, name, geometryRequested, gfiAttributes, features) {
-        const styleListModel = Radio.request("StyleList", "returnModelById", modelId),
-            highlightLayer = this.createVectorLayer(modelId, styleId, name, gfiAttributes);
+        const vectorAttrs = {
+                id: modelId,
+                styleId: styleId,
+                name: name,
+                gfiAttributes: gfiAttributes
+            },
+            styleListModel = Radio.request("StyleList", "returnModelById", modelId),
+            highlightLayer = new VectorBaseLayer(vectorAttrs);
         let hadGeometry = false;
 
         features.forEach(feature => {
