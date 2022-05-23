@@ -24,6 +24,7 @@ import RemoteInterfaceVue from "../src/plugins/remoteInterface/RemoteInterface";
 import {initiateVueI18Next} from "./vueI18Next";
 import {handleUrlParamsBeforeVueMount, readUrlParamEarly} from "../src/utils/parametricUrl/ParametricUrlBridge";
 import {createMaps} from "../src/core/maps/maps.js";
+import mapCollection from "../src/core/maps/mapCollection.js";
 
 /**
  * Vuetify
@@ -61,6 +62,8 @@ let sbconfig,
 if (process.env.NODE_ENV === "development") {
     Vue.config.devtools = true;
 }
+
+global.mapCollection = mapCollection;
 
 Vue.config.productionTip = false;
 

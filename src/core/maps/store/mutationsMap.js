@@ -15,7 +15,7 @@ const mutations = {
      */
     addLayerToMap (state, layer) {
         if (layer instanceof BaseLayer) {
-            getters.get2DMap().addLayer(layer);
+            mapCollection.getMap("2D").addLayer(layer);
         }
     },
 
@@ -36,8 +36,8 @@ const mutations = {
      * @returns {void}
      */
     removeLayerFromMap (state, layer) {
-        if (getters.get2DMap() && layer instanceof BaseLayer) {
-            getters.get2DMap().removeLayer(layer);
+        if (mapCollection.getMap("2D") && layer instanceof BaseLayer) {
+            mapCollection.getMap("2D").removeLayer(layer);
         }
     },
 
@@ -49,7 +49,7 @@ const mutations = {
      */
     setBBox (state, {bbox}) {
         if (bbox) {
-            getters.getView().fit(bbox, getters.get2DMap().getSize());
+            getters.getView().fit(bbox, mapCollection.getMap("2D").getSize());
         }
     },
 

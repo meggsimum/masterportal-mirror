@@ -158,7 +158,7 @@ Layer.prototype.removeLayer = function () {
     let map = mapCollection.getMap(store.state.Maps.mode);
 
     if (!map) { // is the case, if starting by urlParam in mode 3D
-        map = store.getters["Maps/get2DMap"];
+        map = mapCollection.getMap("2D");
     }
 
     this.setIsVisibleInMap(false);
@@ -335,7 +335,7 @@ Layer.prototype.toggleIsSettingVisible = function () {
  * @returns {void}
  */
 Layer.prototype.setIsSelected = function (newValue) {
-    const map = store.getters["Maps/get2DMap"],
+    const map = mapCollection.getMap("2D"),
         treeType = store.getters.treeType,
         autoRefresh = this.get("autoRefresh");
 
@@ -500,7 +500,7 @@ function handleSingleBaseLayer (isSelected, layer) {
     if (isSelected) {
         // This only works for treeType 'custom', otherwise the parentId is not set on the layer
         if (singleBaselayer) {
-            const map2D = store.getters["Maps/get2DMap"];
+            const map2D = mapCollection.getMap("2D");
 
             layerGroup.forEach(aLayer => {
                 // folders parentId is baselayer too, but they have not a function checkForScale
@@ -535,7 +535,7 @@ export function handleSingleTimeLayer (isSelected, layer, model) {
 
     if (isTimeLayer) {
         if (isSelected) {
-            const map2D = store.getters["Maps/get2DMap"];
+            const map2D = mapCollection.getMap("2D");
 
             selectedLayers.forEach(sLayer => {
                 if (sLayer.get("time") && sLayer.get("id") !== id) {

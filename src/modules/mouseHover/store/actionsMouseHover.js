@@ -8,7 +8,7 @@ export default {
      */
     initialize ({state, commit, dispatch, rootGetters}) {
         const {numFeaturesToShow, infoText} = Config.mouseHover,
-            map = rootGetters["Maps/get2DMap"];
+            map = mapCollection.getMap("2D");
         let featuresAtPixel = [];
 
         commit("setMouseHoverLayers");

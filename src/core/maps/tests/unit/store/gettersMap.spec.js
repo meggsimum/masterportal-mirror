@@ -50,7 +50,7 @@ describe("src/core/maps/store/gettersMap.js", () => {
             mapCollection.clear();
             mapCollection.addMap(map, "2D");
 
-            expect(getters.get2DMap()).to.deep.equal({id: "ol", mode: "2D"});
+            expect(mapCollection.getMap("2D")).to.deep.equal({id: "ol", mode: "2D"});
         });
         it("returns the 3D map", () => {
             const map = {

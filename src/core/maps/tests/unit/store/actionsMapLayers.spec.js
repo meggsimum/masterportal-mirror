@@ -73,7 +73,7 @@ describe("src/core/maps/actions/actionsMapLayers.js", () => {
             store.dispatch("Maps/addLayer", layer2, 1);
             store.dispatch("Maps/addLayer", layer3, 2);
 
-            mapGetters.get2DMap().getLayers().forEach((layer, index) => {
+            mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
                 expect(layer.getZIndex()).equals(zIndexes[index]);
                 expect(layer.get("id")).equals(ids[index]);
             });
@@ -89,7 +89,7 @@ describe("src/core/maps/actions/actionsMapLayers.js", () => {
             store.dispatch("Maps/addLayerToIndex", {layer: layer2, zIndex: 1});
             store.dispatch("Maps/addLayerToIndex", {layer: layer3, zIndex: 2});
 
-            mapGetters.get2DMap().getLayers().forEach((layer, index) => {
+            mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
                 expect(layer.getZIndex()).equals(zIndexes[index]);
                 expect(layer.get("id")).equals(ids[index]);
             });
@@ -106,7 +106,7 @@ describe("src/core/maps/actions/actionsMapLayers.js", () => {
             store.dispatch("Maps/addLayer", layer2, 3);
             store.dispatch("Maps/addLayer", layer3, 2);
 
-            mapGetters.get2DMap().getLayers().forEach((layer, index) => {
+            mapCollection.getMap("2D").getLayers().forEach((layer, index) => {
                 expect(layer.getZIndex()).equals(zIndexes[index]);
                 expect(layer.get("id")).equals(ids[index]);
             });

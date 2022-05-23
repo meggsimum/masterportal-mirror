@@ -29,7 +29,7 @@ describe("src/modules/mouseHover/store/actionsMouseHover", () => {
     describe("initialize", () => {
         it("initializes the mouseHover module", () => {
             actions.initialize({state, commit, dispatch, rootGetters});
-            expect(rootGetters["Maps/get2DMap"].addOverlay.calledOnce).to.be.true;
+            expect(mapCollection.getMap("2D").addOverlay.calledOnce).to.be.true;
             expect(commit.firstCall.args[0]).to.equal("setMouseHoverLayers");
             expect(commit.secondCall.args[0]).to.equal("setMouseHoverInfos");
             expect(commit.args[2]).to.eql(["setNumFeaturesToShow", 2]);

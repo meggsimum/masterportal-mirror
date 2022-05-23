@@ -63,7 +63,7 @@ GeoJSONLayer.prototype.createLayer = function (attrs) {
         styleFn = this.getStyleFunction(attrs),
         options = {
             layerStyle: styleFn,
-            map: store.getters["Maps/get2DMap"],
+            map: mapCollection.getMap("2D"),
             clusterGeometryFunction: (feature) => {
                 // do not cluster invisible features; can't rely on style since it will be null initially
                 if (feature.get("hideInClustering") === true) {

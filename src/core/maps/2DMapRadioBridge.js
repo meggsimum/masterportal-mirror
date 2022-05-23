@@ -4,19 +4,19 @@ const channel = Radio.channel("Map");
 
 channel.reply({
     "getLayers": function () {
-        return store.getters["Maps/get2DMap"].getLayers();
+        return mapCollection.getMap("2D").getLayers();
     },
     "createLayerIfNotExists": function (layerName) {
         return store.dispatch("Maps/addNewLayerIfNotExists", {layerName});
     },
     "getSize": function () {
-        return store.getters["Maps/get2DMap"].getSize();
+        return mapCollection.getMap("2D").getSize();
     },
     "registerListener": function (event, callback, context) {
         store.dispatch("Maps/registerListener", {type: event, listener: callback, context: context});
     },
     "getMap": function () {
-        return store.getters["Maps/get2DMap"];
+        return mapCollection.getMap("2D");
     },
     "getLayerByName": function (name) {
         // eslint-disable-next-line new-cap
@@ -35,16 +35,16 @@ channel.on({
         store.dispatch("Maps/addLayer", layer);
     },
     "addOverlay": async function (overlay) {
-        await store.getters["Maps/get2DMap"].addOverlay(overlay);
+        await mapCollection.getMap("2D").addOverlay(overlay);
     },
     "addInteraction": function (interaction) {
         store.dispatch("Maps/addInteraction", interaction);
     },
     "removeLayer": function (layer) {
-        store.getters["Maps/get2DMap"].removeLayer(layer);
+        mapCollection.getMap("2D").removeLayer(layer);
     },
     "removeOverlay": async function (overlay) {
-        await store.getters["Maps/get2DMap"].removeOverlay(overlay);
+        await mapCollection.getMap("2D").removeOverlay(overlay);
     },
     "removeInteraction": function (interaction) {
         store.dispatch("Maps/removeInteraction", interaction);
@@ -53,7 +53,7 @@ channel.on({
         store.commit("Maps/setBBox", {bbox: bbox});
     },
     "render": function () {
-        store.getters["Maps/get2DMap"].render();
+        mapCollection.getMap("2D").render();
     },
     "zoomToExtent": function (extentOptions) {
         store.dispatch("Maps/zoomToExtent", {extent: extentOptions.extent, options: extentOptions.options});
@@ -71,6 +71,6 @@ channel.on({
         store.dispatch("Maps/unregisterListener", {type: event, listener: callback});
     },
     "updateSize": function () {
-        store.getters["Maps/get2DMap"].updateSize();
+        mapCollection.getMap("2D").updateSize();
     }
 });

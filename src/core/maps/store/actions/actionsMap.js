@@ -111,12 +111,10 @@ export default {
     },
     /**
      * Creates the olcesium  3D map.
-     * @param {Object} param store context
-     * @param {Object} param.getters the getter
      * @fires Core#RadioRequestMapGetMap
      * @returns {OLCesium} - ol cesium map.
      */
-    createMap3D ({getters}) {
+    createMap3D () {
         const backwardsConfigCesiumParameter = {...Config?.cesiumParameter};
 
         /**
@@ -141,7 +139,7 @@ export default {
 
         return api.map.createMap({
             cesiumParameter: backwardsConfigCesiumParameter,
-            map2D: getters.get2DMap,
+            map2D: mapCollection.getMap("2D"),
             shadowTime: function () {
                 return this.time || Cesium.JulianDate.fromDate(new Date());
             }

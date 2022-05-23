@@ -66,7 +66,7 @@ export default {
 
             map3D = await dispatch("createMap3D");
             mapCollection.addMap(map3D, "3D");
-            api.map.olcsMap.handle3DEvents({scene: map3D.getCesiumScene(), map3D: map3D, callback: (clickObject) => dispatch("clickEventCallback", clickObject)});
+            api.map.olcsMap.handle3DEvents({scene: map3D.getCesiumScene(), map3D: map3D, callback: (clickObject) => dispatch("clickEventCallback", Object.freeze(clickObject))});
         }
         dispatch("controlZoomLevel", {currentMapMode: mapMode, targetMapMode: "3D"});
         map3D.setEnabled(true);
@@ -98,14 +98,13 @@ export default {
      * Callback function for the 3D click event.
      * @param {Object} param store context.
      * @param {Object} param.dispatch the dispatch.
-     * @param {Object} param.getters the getters.
      * @param {Object} clickObject contains the attributes for the callback function .
      * @fires Core#RadioRequestMapClickedWindowPosition
      * @returns {void}
      */
-    clickEventCallback ({dispatch, getters}, clickObject) {
+    clickEventCallback ({dispatch}, clickObject) {
         if (clickObject) {
-            const extendedClickObject = Object.assign(clickObject, {map: getters.get2DMap});
+            const extendedClickObject = Object.assign(clickObject, {map: mapCollection.getMap("2D")});
 
             dispatch("updateClick", extendedClickObject);
             Radio.trigger("Map", "clickedWindowPosition", extendedClickObject);

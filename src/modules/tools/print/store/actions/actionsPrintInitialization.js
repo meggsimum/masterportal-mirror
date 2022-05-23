@@ -196,7 +196,7 @@ export default {
                 commit("setHintInfo", "");
             }
         }
-        rootGetters["Maps/get2DMap"].render();
+        mapCollection.getMap("2D").render();
     },
 
     /**

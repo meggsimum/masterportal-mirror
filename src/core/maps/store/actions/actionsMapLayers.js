@@ -42,10 +42,10 @@ export default {
      * @returns {void}
      */
     addLayer ({dispatch, getters}, layer) {
-        layer.setZIndex(getters.get2DMap.getLayers().getLength());
-        getters.get2DMap.addLayer(layer);
+        layer.setZIndex(mapCollection.getMap("2D").getLayers().getLength());
+        mapCollection.getMap("2D").addLayer(layer);
 
-        dispatch("setLayersAlwaysOnTop", getters.get2DMap.getLayers());
+        dispatch("setLayersAlwaysOnTop", mapCollection.getMap("2D").getLayers());
     },
     /**
      * Pushes layers with the attribute: "alwaysOnTop" to the top of the layer collection.
@@ -74,11 +74,11 @@ export default {
      */
     addLayerToIndex ({dispatch, getters}, {layer, zIndex}) {
         layer.setZIndex(zIndex);
-        if (!getters.get2DMap.getLayers().getArray().includes(layer)) {
+        if (!mapCollection.getMap("2D").getLayers().getArray().includes(layer)) {
             dispatch("addLayer", layer);
         }
 
-        dispatch("setLayersAlwaysOnTop", getters.get2DMap.getLayers());
+        dispatch("setLayersAlwaysOnTop", mapCollection.getMap("2D").getLayers());
     },
     /**
      * Adds a layer on top of the map
@@ -90,7 +90,7 @@ export default {
      * @returns {void}
      */
     addLayerOnTop ({dispatch, getters}, layer) {
-        dispatch("addLayerToIndex", {layer: layer, zIndex: getters.get2DMap.getLayers().getLength()});
+        dispatch("addLayerToIndex", {layer: layer, zIndex: mapCollection.getMap("2D").getLayers().getLength()});
     },
     /**
      * Checks if the layer with the given name already exists and uses it,

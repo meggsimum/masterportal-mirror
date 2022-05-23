@@ -13,16 +13,16 @@ const getters = {
      * Returns the 2D ol map from the map collection.
      * @returns {module:ol/PluggableMap~PluggableMap} ol 2D map
      */
-    get2DMap: () => {
-        return mapCollection.getMap("2D");
-    },
+    // get2DMap: () => {
+    //     return mapCollection.getMap("2D");
+    // },
     /**
      * Returns the layer collection of the map
      * @returns {Object} layer collection of the map.
      */
-    getLayers: () => {
-        return getters.get2DMap().getLayers();
-    },
+    // getLayers: () => {
+    //     return mapCollection.getMap("2D").getLayers();
+    // },
     /**
      * Gets the features at the given pixel for the gfi
      * @param {Object} state - the state
@@ -32,7 +32,7 @@ const getters = {
      * @returns {Object[]} gfi features
      */
     gfiFeaturesAtPixel: (state, {clickPixel, clickCartesianCoordinate, mode}) => {
-        const featuresAtPixel = [];
+        // const featuresAtPixel = [];
 
         if (clickPixel && mode === "2D") {
             getters.get2DMap().forEachFeatureAtPixel(clickPixel, (feature, layer) => {
@@ -121,7 +121,7 @@ const getters = {
      * @returns {Array} Returns the projected bbox.
      */
     getProjectedBBox: () => (epsgCode) => {
-        const map = getters.get2DMap(),
+        const map = mapCollection.getMap("2D"),
             bbox = getters.getView().calculateExtent(map.getSize),
             firstCoordTransform = transformFromMapProjection(map, epsgCode, [bbox[0], bbox[1]]),
             secondCoordTransform = transformFromMapProjection(map, epsgCode, [bbox[2], bbox[3]]);
@@ -220,14 +220,14 @@ const getters = {
      * @returns {Object} Returns the layerlist.
      */
     getLayerList: () => {
-        return getters.get2DMap().getLayers().getArray();
+        return [];//mapCollection.getMap("2D").getLayers().getArray();
     },
     /**
      * Gets all visible layers from map
      * @returns {Object[]} all visible layers
      */
     getVisibleLayerList: () => {
-        return getters.getLayerList().filter(layer => layer.getVisible());
+        return [];//getters.getLayerList().filter(layer => layer.getVisible());
     },
     /**
      * Gets all visible layers with children from group layers.
@@ -290,7 +290,7 @@ const getters = {
     getLayerById: () => ({layerId, searchInGroupLayers = true}) => {
         let returnLayer = null;
 
-        getters.get2DMap().getLayers().getArray().forEach(layer => {
+        mapCollection.getMap("2D").getLayers().getArray().forEach(layer => {
             if (searchInGroupLayers && layer instanceof LayerGroup) {
                 const groupLayer = layer.getLayers().getArray().find(childLayer => childLayer.get("id") === layerId);
 
@@ -309,7 +309,7 @@ const getters = {
     * @return {module:ol/layer/Base~BaseLayer} The layer found by name.
     */
     getLayerByName: () => (layerName) => {
-        return getters.get2DMap().getLayers().getArray().find(layer => layer.get("name") === layerName);
+        return mapCollection.getMap("2D").getLayers().getArray().find(layer => layer.get("name") === layerName);
     }
 };
 

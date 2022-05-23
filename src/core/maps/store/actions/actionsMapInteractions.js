@@ -5,11 +5,12 @@ const registeredActions = {};
 export default {
     /**
      * Adds an interaction to the map.
+     * @param {Object} _ not used
      * @param {module:ol/interaction/Interaction} interaction - Interaction to be added to map.
      * @returns {void}
      */
-    async addInteraction ({getters}, interaction) {
-        const map = await getters.get2DMap;
+    async addInteraction (_, interaction) {
+        const map = await mapCollection.getMap("2D");
 
         map.addInteraction(interaction);
     },
@@ -58,7 +59,7 @@ export default {
             }
         };
 
-        getters.get2DMap.on(type, registeredActions[type][listenerType][listener]);
+        mapCollection.getMap("2D").on(type, registeredActions[type][listenerType][listener]);
     },
 
     /**
@@ -69,7 +70,7 @@ export default {
      * @returns {void}
      */
     async removeInteraction ({getters}, interaction) {
-        const map = await getters.get2DMap;
+        const map = await mapCollection.getMap("2D");
 
         map.removeInteraction(interaction);
     },
@@ -171,7 +172,7 @@ export default {
     unregisterListener ({getters}, {type, listener, listenerType = "function"}) {
         if (typeof type === "string") {
             if (registeredActions[type] && registeredActions[type][listenerType] && registeredActions[type][listenerType][String(listener)]) {
-                getters.get2DMap.un(type, registeredActions[type][listenerType][String(listener)]);
+                mapCollection.getMap("2D").un(type, registeredActions[type][listenerType][String(listener)]);
                 registeredActions[type][listenerType][String(listener)] = null;
             }
         }
