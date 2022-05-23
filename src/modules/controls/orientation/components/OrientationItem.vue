@@ -42,13 +42,12 @@ export default {
             tracking: false,
             isGeolocationDenied: false,
             isGeoLocationPossible: false,
-            modelListChannel: Radio.channel("ModelList"),
             storePath: this.$store.state.controls.orientation
         };
     },
     computed: {
         ...mapGetters("controls/orientation", Object.keys(getters)),
-        ...mapGetters("Maps", ["get2DMap", "projection"]),
+        ...mapGetters("Maps", ["projection"]),
         poiDistancesLocal () {
             return this.poiDistances === true ? [500, 1000, 2000] : this.poiDistances;
         }
@@ -70,7 +69,7 @@ export default {
     },
     created () {
         this.setIsGeoLocationPossible();
-        this.modelListChannel.on("updateVisibleInMapList", this.checkWFS);
+        Radio.channel("ModelList").on("updateVisibleInMapList", this.checkWFS);
     },
     mounted () {
         this.addElement();
@@ -100,7 +99,7 @@ export default {
             let geolocation = null;
 
             if (this.isGeolocationDenied === false) {
-                this.get2DMap.addOverlay(this.marker);
+                mapCollection.getMap("2D").addOverlay(this.marker);
                 if (this.geolocation === null) {
                     geolocation = new Geolocation({tracking: true, projection: Proj.get("EPSG:4326")});
                     this.setGeolocation(geolocation);
@@ -153,7 +152,7 @@ export default {
          * @returns {void}
          */
         removeOverlay () {
-            this.get2DMap.removeOverlay(this.marker);
+            mapCollection.getMap("2D").removeOverlay(this.marker);
         },
 
         /**
@@ -297,7 +296,7 @@ export default {
 
             if (this.poiModeCurrentPositionEnabled) {
                 this.$store.dispatch("MapMarker/removePointMarker");
-                this.get2DMap.addOverlay(this.marker);
+                mapCollection.getMap("2D").addOverlay(this.marker);
                 if (this.geolocation === null) {
                     geolocation = new Geolocation({tracking: true, projection: Proj.get("EPSG:4326")});
                     this.setGeolocation(geolocation);

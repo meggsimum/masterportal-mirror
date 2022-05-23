@@ -531,7 +531,17 @@
       }
     },
     "controls": {
+      "fullScreen": true,
       "orientation3d": true,
+      "zoom": true,
+      "orientation": {
+        "zoomMode": "once",
+        "poiDistances": [
+          500,
+          1000,
+          2000
+        ]
+      },
       "mousePosition": true,
       "button3d": true
     },

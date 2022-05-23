@@ -19,22 +19,17 @@ export default {
     props: {},
     data () {
         return {
-            mapChannel: Radio.channel("Map"),
             visibleInMapMode: null // set in .created
         };
     },
     computed: {
         ...mapGetters(
             "Maps",
-            ["maximumZoomLevelActive", "minimumZoomLevelActive"]
+            ["maximumZoomLevelActive", "minimumZoomLevelActive", "mode"]
         )
     },
     created () {
         this.checkModeVisibility();
-        this.mapChannel.on("change", this.checkModeVisibility);
-    },
-    beforeDestroy () {
-        this.mapChannel.off("change", this.checkModeVisibility);
     },
     methods: {
         ...mapActions("Maps", ["increaseZoomLevel", "decreaseZoomLevel"]),
@@ -45,7 +40,7 @@ export default {
          * @returns {void}
          */
         checkModeVisibility () {
-            this.visibleInMapMode = Radio.request("Map", "getMapMode") === "2D";
+            this.visibleInMapMode = this.mode === "2D";
         }
     }
 };
