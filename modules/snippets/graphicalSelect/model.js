@@ -5,7 +5,6 @@ import {fromCircle} from "ol/geom/Polygon.js";
 import {Draw} from "ol/interaction.js";
 import {createBox} from "ol/interaction/Draw.js";
 import {Circle} from "ol/geom.js";
-import store from "../../../src/app-store";
 
 const GraphicalSelectModel = SnippetDropdownModel.extend(/** @lends GraphicalSelectModel.prototype */{
     defaults: {

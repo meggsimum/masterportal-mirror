@@ -3,7 +3,6 @@ import {expect} from "chai";
 import {config, shallowMount, createLocalVue, mount} from "@vue/test-utils";
 import RoutingComponent from "../../../components/RoutingTemplate.vue";
 import sinon from "sinon";
-import mapCollection from "../../../../../../core/maps/mapCollection.js";
 import mutations from "../../../store/mutationsRouting";
 import actions from "../../../store/actionsRouting";
 import getters from "../../../store/gettersRouting";

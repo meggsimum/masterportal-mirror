@@ -5,7 +5,6 @@ import {expect} from "chai";
 
 import actions from "../../../store/actionsWmsTime";
 import initialState from "../../../store/stateWmsTime";
-import mapCollection from "../../../../../core/maps/mapCollection.js";
 
 const localVue = createLocalVue(),
     layerString = "When I grow up I will be a real layer!";

@@ -1,7 +1,6 @@
 import {expect} from "chai";
 import {convert, convertToStringArray, convertTransparency, parseQuery} from "../../../parametricUrl/converter";
 import * as crs from "@masterportal/masterportalapi/src/crs";
-import mapCollection from "../../../../core/maps/mapCollection";
 
 const namedProjections = [
     ["EPSG:31467", "+title=Bessel/Gauß-Krüger 3 +proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs"],

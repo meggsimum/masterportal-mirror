@@ -1,7 +1,6 @@
 import {expect} from "chai";
 import sinon from "sinon";
 import WMSLayer from "../../wms";
-import mapCollection from "../../../../core/maps/mapCollection.js";
 import store from "../../../../app-store";
 
 describe("src/core/layers/wms.js", () => {

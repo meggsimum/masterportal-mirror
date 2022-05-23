@@ -37,11 +37,10 @@ export default {
      * Layers with the attribute "alwaysOnTop": true are set on top of the map.
      * @param {Object} param store context.
      * @param {Object} param.dispatch the dispatch.
-     * @param {Object} param.getters the getters.
      * @param {module:ol/layer/Base~BaseLayer} layer The layer to add.
      * @returns {void}
      */
-    addLayer ({dispatch, getters}, layer) {
+    addLayer ({dispatch}, layer) {
         layer.setZIndex(mapCollection.getMap("2D").getLayers().getLength());
         mapCollection.getMap("2D").addLayer(layer);
 
@@ -66,13 +65,12 @@ export default {
      * Layers with the attribute "alwaysOnTop": true are set on top of the map.
      * @param {Object} param store context.
      * @param {Object} param.dispatch the dispatch.
-     * @param {Object} param.getters the getters.
      * @param {Object} payload parameter object.
      * @param {module:ol/layer/Base~BaseLayer} payload.layer The layer to add.
      * @param {Number} payload.zIndex The zIndex of the layer.
      * @returns {void}
      */
-    addLayerToIndex ({dispatch, getters}, {layer, zIndex}) {
+    addLayerToIndex ({dispatch}, {layer, zIndex}) {
         layer.setZIndex(zIndex);
         if (!mapCollection.getMap("2D").getLayers().getArray().includes(layer)) {
             dispatch("addLayer", layer);
@@ -85,11 +83,10 @@ export default {
      * Layers with the attribute "alwaysOnTop": true are set on top of the map.
      * @param {Object} param store context.
      * @param {Object} param.dispatch the dispatch.
-     * @param {Object} param.getters the getters.
      * @param {module:ol/layer/Base~BaseLayer} layer The layer to add.
      * @returns {void}
      */
-    addLayerOnTop ({dispatch, getters}, layer) {
+    addLayerOnTop ({dispatch}, layer) {
         dispatch("addLayerToIndex", {layer: layer, zIndex: mapCollection.getMap("2D").getLayers().getLength()});
     },
     /**

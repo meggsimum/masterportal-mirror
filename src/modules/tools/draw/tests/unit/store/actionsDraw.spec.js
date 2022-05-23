@@ -6,7 +6,6 @@ import Draw from "ol/interaction/Draw";
 import Feature from "ol/Feature";
 import Polygon from "ol/geom/Polygon";
 import LineString from "ol/geom/LineString";
-import mapCollection from "../../../../../../core/maps/mapCollection.js";
 
 
 describe("src/modules/tools/draw/store/actionsDraw.js", () => {

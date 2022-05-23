@@ -7,7 +7,6 @@ import IsochronesItemBatchProcessingComponent from "../../../../components/Isoch
 import RoutingBatchProcessingCheckboxComponent from "../../../../components/RoutingBatchProcessingCheckbox.vue";
 import RoutingSliderInputComponent from "../../../../components/RoutingSliderInput.vue";
 import RoutingDownloadComponent from "../../../../components/RoutingDownload.vue";
-import mapCollection from "../../../../../../../core/maps/mapCollection.js";
 import mutations from "../../../../store/mutationsRouting";
 import actions from "../../../../store/actionsRouting";
 import getters from "../../../../store/gettersRouting";

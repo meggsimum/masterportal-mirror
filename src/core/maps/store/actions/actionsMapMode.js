@@ -1,4 +1,3 @@
-import mapCollection from "../../../maps/mapCollection";
 import api from "@masterportal/masterportalapi/src/maps/api";
 
 let eventHandler;
@@ -37,6 +36,8 @@ export default {
         let map3D = mapCollection.getMap("3D");
 
         dispatch("unregisterListener", {type: "pointermove", listener: "updatePointer", listenerType: "dispatch"});
+        dispatch("unregisterListener", {type: "click", listener: "updateClick", listenerType: "dispatch"});
+        dispatch("unregisterListener", {type: "moveend", listener: "updateAttributes", listenerType: "dispatch"});
         if (getters.is3D) {
             return;
         }
@@ -99,15 +100,13 @@ export default {
      * @param {Object} param store context.
      * @param {Object} param.dispatch the dispatch.
      * @param {Object} clickObject contains the attributes for the callback function .
-     * @fires Core#RadioRequestMapClickedWindowPosition
      * @returns {void}
      */
     clickEventCallback ({dispatch}, clickObject) {
         if (clickObject) {
-            const extendedClickObject = Object.assign(clickObject, {map: mapCollection.getMap("2D")});
-
-            dispatch("updateClick", extendedClickObject);
-            Radio.trigger("Map", "clickedWindowPosition", extendedClickObject);
+            dispatch("updateClick", clickObject);
+            // todo 3d, soll das für externe addons noch drin bleiben?
+            // Radio.trigger("Map", "clickedWindowPosition", extendedClickObject);
         }
     },
 
@@ -129,6 +128,8 @@ export default {
 
             eventHandler.destroy();
             dispatch("registerListener", {type: "pointermove", listener: "updatePointer", listenerType: "dispatch"});
+            dispatch("registerListener", {type: "click", listener: "updateClick", listenerType: "dispatch"});
+            dispatch("registerListener", {type: "moveend", listener: "updateAttributes", listenerType: "dispatch"});
             Radio.trigger("Map", "beforeChange", "2D");
             view.animate({rotation: 0}, () => {
                 map3D.setEnabled(false);

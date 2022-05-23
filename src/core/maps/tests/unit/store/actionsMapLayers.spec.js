@@ -3,9 +3,7 @@ import View from "ol/View";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import LayerGroup from "ol/layer/Group";
-import mapCollection from "../../../../../core/maps/mapCollection.js";
 import store from "../../../../../app-store";
-import mapGetters from "../../../store/gettersMap.js";
 import {expect} from "chai";
 
 describe("src/core/maps/actions/actionsMapLayers.js", () => {

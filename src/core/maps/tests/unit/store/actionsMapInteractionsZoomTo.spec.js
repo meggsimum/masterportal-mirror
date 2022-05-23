@@ -5,7 +5,6 @@ import VectorSource from "ol/source/Vector";
 import LayerGroup from "ol/layer/Group";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
-import mapCollection from "../../../../../core/maps/mapCollection.js";
 import store from "../../../../../app-store";
 import {expect} from "chai";
 

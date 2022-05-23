@@ -167,7 +167,7 @@ export default {
      * Delegates the calculation and transformation of the position according to the projection
      * @returns {void}
      */
-    changedPosition ({dispatch, state, rootGetters, getters}) {
+    changedPosition ({dispatch, state, getters}) {
         if (state.mode === "supply") {
             const targetProjectionName = state.currentProjection?.name,
                 position = getters.getTransformedPosition(mapCollection.getMap("2D"), targetProjectionName);
@@ -181,7 +181,7 @@ export default {
      * Sets the position to map's center, if coordinates are  not set.
      * @returns {void}
      */
-    setFirstSearchPosition ({dispatch, commit, state, rootState, rootGetters, getters}) {
+    setFirstSearchPosition ({dispatch, commit, state, rootState, getters}) {
         if (state.mode === "search" && state.active) {
             const targetProjectionName = state.currentProjection?.name,
                 position = getters.getTransformedPosition(mapCollection.getMap("2D"), targetProjectionName);

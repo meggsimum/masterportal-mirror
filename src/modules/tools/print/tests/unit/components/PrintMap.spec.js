@@ -4,7 +4,6 @@ import {expect} from "chai";
 import PrintComponent from "../../../components/PrintMap.vue";
 import Print from "../../../store/indexPrint";
 import sinon from "sinon";
-import mapCollection from "../../../../../../core/maps/mapCollection.js";
 
 const localVue = createLocalVue();
 

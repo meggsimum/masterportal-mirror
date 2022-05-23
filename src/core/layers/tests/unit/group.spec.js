@@ -4,7 +4,6 @@ import WMSLayer from "../../wms";
 import WFSLayer from "../../wfs";
 import OAFLayer from "../../oaf";
 import GroupedLayers from "../../group";
-import mapCollection from "../../../../core/maps/mapCollection.js";
 import store from "../../../../app-store";
 
 describe("src/core/layers/group.js", () => {

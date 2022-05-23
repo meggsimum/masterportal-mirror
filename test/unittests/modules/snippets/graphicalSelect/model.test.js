@@ -1,7 +1,6 @@
 import {expect} from "chai";
 import Model from "@modules/snippets/graphicalSelect/model.js";
 import sinon from "sinon";
-import mapCollection from "../../../../../src/core/maps/mapCollection";
 
 describe("snippets/graphicalSelect/model", function () {
     let model;

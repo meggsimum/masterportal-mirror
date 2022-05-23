@@ -5,7 +5,6 @@ import {WFS} from "ol/format.js";
 import {expect} from "chai";
 import sinon from "sinon";
 import WfsLayer from "../../wfs";
-import mapCollection from "../../../../core/maps/mapCollection.js";
 import store from "../../../../app-store";
 
 describe("src/core/layers/wfs.js", () => {

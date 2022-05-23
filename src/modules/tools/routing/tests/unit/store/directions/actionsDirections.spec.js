@@ -11,7 +11,6 @@ import Select from "ol/interaction/Select";
 import {RoutingWaypoint} from "../../../../utils/classes/routing-waypoint";
 import {RoutingDirections} from "../../../../utils/classes/routing-directions";
 import {RoutingGeosearchResult} from "../../../../utils/classes/routing-geosearch-result";
-import mapCollection from "../../../../../../../core/maps/mapCollection";
 
 describe("src/modules/tools/routing/store/directions/actionsDirections.js", () => {
     let state, commitSpy, commit, dispatchSpy, dispatch, dispatchMocks, getters, rootState, waypoints, wgs84Coordinates, routingDirectionsWaypointSource, routingDirectionsAvoidSource, routingDirectionsResult, routeFeature, highlightFeature, startWaypoint, endWaypoint, avoidPolygonCoordinates;

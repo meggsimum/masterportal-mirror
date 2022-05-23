@@ -1,7 +1,6 @@
 import {expect} from "chai";
 import sinon from "sinon";
 import TileSetLayer from "../../tileset";
-import mapCollection from "../../../maps/mapCollection.js";
 import store from "../../../../app-store";
 
 describe("src/core/layers/tileset.js", () => {

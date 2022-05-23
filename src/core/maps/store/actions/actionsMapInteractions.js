@@ -35,7 +35,6 @@ export default {
      * Registered listener for certain events on the map.
      * @see https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
      * @param {Object} param store context
-     * @param {Object} param.getters the getters
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
      * @param {Object} payload parameter object
@@ -44,7 +43,7 @@ export default {
      * @param {String | Function} payload.listenerType Type of the listener. Possible are: "function", "commit" and "dispatch".
      * @returns {void}
      */
-    registerListener ({getters, commit, dispatch}, {type, listener, listenerType = "function"}) {
+    registerListener ({commit, dispatch}, {type, listener, listenerType = "function"}) {
         registeredActions[type] = registeredActions[type] || {};
         registeredActions[type][listenerType] = registeredActions[type][listenerType] || {};
         registeredActions[type][listenerType][String(listener)] = evt => {
@@ -64,12 +63,11 @@ export default {
 
     /**
      * Removes an interaction from the map.
-     * @param {Object} param store context
-     * @param {Object} param.getters the getters
+     * @param {Object} _ not used
      * @param {module:ol/interaction/Interaction} interaction - Interaction to be removed from map.
      * @returns {void}
      */
-    async removeInteraction ({getters}, interaction) {
+    async removeInteraction (_, interaction) {
         const map = await mapCollection.getMap("2D");
 
         map.removeInteraction(interaction);
@@ -161,15 +159,14 @@ export default {
 
     /**
      * Unsubscribes listener to certain events.
-     * @param {Object} param store context
-     * @param {Object} param.getters the getters
+     * @param {Object} _ not used
      * @param {Object} payload parameter object
      * @param {String} payload.type The event type or array of event types.
      * @param {Function} payload.listener The listener function.
      * @param {String | Function} payload.listenerType Type of the listener. Possible are: "function", "commit" and "dispatch".
      * @returns {void}
      */
-    unregisterListener ({getters}, {type, listener, listenerType = "function"}) {
+    unregisterListener (_, {type, listener, listenerType = "function"}) {
         if (typeof type === "string") {
             if (registeredActions[type] && registeredActions[type][listenerType] && registeredActions[type][listenerType][String(listener)]) {
                 mapCollection.getMap("2D").un(type, registeredActions[type][listenerType][String(listener)]);

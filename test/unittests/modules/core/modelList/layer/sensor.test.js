@@ -7,7 +7,6 @@ import {expect} from "chai";
 import VectorLayer from "ol/layer/Vector.js";
 import {Vector as VectorSource} from "ol/source.js";
 import sinon from "sinon";
-import mapCollection from "../../../../../../src/core/maps/mapCollection";
 
 describe("core/modelList/layer/sensor", function () {
     let sensorLayer;

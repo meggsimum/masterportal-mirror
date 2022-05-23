@@ -4,7 +4,6 @@ import Util from "@testUtil";
 import {Draw} from "ol/interaction.js";
 import sinon from "sinon";
 import VectorSource from "ol/source/Vector";
-import mapCollection from "../../../../../src/core/maps/mapCollection";
 
 describe("WfstModel", function () {
     let model,

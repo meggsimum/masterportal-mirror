@@ -9,7 +9,6 @@ import {buffer, containsExtent} from "ol/extent";
 import {GeoJSON} from "ol/format.js";
 import changeTimeZone from "../../../../src/utils/changeTimeZone.js";
 import getProxyUrl from "../../../../src/utils/getProxyUrl";
-import mapCollection from "../../../../src/core/maps/mapCollection";
 import store from "../../../../src/app-store";
 import {
     resetVectorLayerFeatures,

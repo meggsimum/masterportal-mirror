@@ -1,6 +1,5 @@
 import {createStyle} from "../../utils/style/createStyle";
 import {calculateCircle} from "../../utils/circleCalculations";
-import mapCollection from "../../../../../core/maps/mapCollection";
 
 const errorBorder = "#E10019";
 

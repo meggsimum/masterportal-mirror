@@ -264,6 +264,7 @@ function makeDraw (map, projectionCode, addUnlistener, _store) {
     const mapChannel = Radio.channel("Map"),
         handle = handle3DClicked.bind(null, map, projectionCode, addUnlistener);
 
+    // todo 3d: auf click aus dem state hören:
     mapChannel.on("clickedWindowPosition", handle);
 
     return {

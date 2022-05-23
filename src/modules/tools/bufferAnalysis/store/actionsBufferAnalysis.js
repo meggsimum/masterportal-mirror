@@ -5,7 +5,6 @@ import Feature from "ol/Feature";
 import {ResultType} from "./enums";
 import * as setters from "./settersBufferAnalysis";
 import * as initializers from "./initializersBufferAnalysis";
-import mapCollection from "../../../../core/maps/mapCollection.js";
 
 const actions = {
     ...initializers,

@@ -15,7 +15,6 @@ import getDrawTypeByGeometryType from "../utils/getDrawTypeByGeometryType";
 import postDrawEnd from "../utils/postDrawEnd";
 
 import stateDraw from "./stateDraw";
-import mapCollection from "../../../../core/maps/mapCollection";
 
 // NOTE: The Update and the Redo Buttons weren't working with the select and modify interaction in Backbone and are not yet working in Vue too.
 

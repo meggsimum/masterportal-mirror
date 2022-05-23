@@ -1,7 +1,6 @@
 import {fetchRoutingOrsIsochrones} from "../../utils/isochrones/routing-ors-isochrones";
 import Polygon from "ol/geom/Polygon";
 import Feature from "ol/Feature";
-import mapCollection from "../../../../../core/maps/mapCollection";
 
 export default {
     /**

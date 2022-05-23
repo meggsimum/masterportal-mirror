@@ -9,7 +9,6 @@ import {RoutingWaypoint} from "../../../../utils/classes/routing-waypoint";
 import {RoutingGeosearchResult} from "../../../../utils/classes/routing-geosearch-result";
 import {RoutingIsochrones} from "../../../../utils/classes/routing-isochrones";
 import {RoutingIsochronesArea} from "../../../../utils/classes/routing-isochrones-area";
-import mapCollection from "../../../../../../../core/maps/mapCollection";
 
 describe("src/modules/tools/routing/store/isochrones/actionsIsochrones.js", () => {
     let state, commitSpy, commit, dispatchSpy, dispatch, dispatchMocks, getters, rootState, waypoint, isochronesAreaSource, isochronesResult;

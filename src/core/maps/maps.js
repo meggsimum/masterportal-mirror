@@ -6,7 +6,6 @@ import "./2DMapViewRadioBridge";
 import "./3DMapRadioBridge";
 
 import ObliqueMap from "../../../modules/core/obliqueMap";
-import mapCollection from "../maps/mapCollection";
 import store from "../../app-store";
 
 /**

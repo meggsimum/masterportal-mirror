@@ -1,7 +1,6 @@
 import {expect} from "chai";
 import sinon from "sinon";
 import TerrainLayer from "../../terrain";
-import mapCollection from "../../../maps/mapCollection.js";
 import store from "../../../../app-store";
 
 describe("src/core/layers/terrain.js", () => {

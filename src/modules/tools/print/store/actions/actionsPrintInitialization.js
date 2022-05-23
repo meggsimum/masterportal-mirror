@@ -162,12 +162,11 @@ export default {
      * if the tool is activated and there is a layout,
      * a callback function is registered to the postrender event of the map
      * @param {Object} param.state the state
-     * @param {Object} param.getters the getters
      * @param {Object} param.commit the commit
      * @param {Object} param.dispatch the dispatch
      * @returns {void}
      */
-    togglePostrenderListener: function ({state, dispatch, commit, rootGetters}) {
+    togglePostrenderListener: function ({state, dispatch, commit}) {
         const foundVectorTileLayers = [];
 
         getVisibleLayer(state.printMapMarker);

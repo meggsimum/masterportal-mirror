@@ -6,7 +6,6 @@ import {
 import {getMapProjection, transform} from "@masterportal/masterportalapi/src/crs";
 import {fetchRoutingBkgGeosearch, fetchRoutingBkgGeosearchReverse} from "../utils/geosearch/routing-bkg-geosearch";
 import * as constantsRouting from "./constantsRouting";
-import mapCollection from "../../../../core/maps/mapCollection";
 
 /**
  * @const {String} configPath an array of possible config locations. First one found will be used

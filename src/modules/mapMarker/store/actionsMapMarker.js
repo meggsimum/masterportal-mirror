@@ -1,7 +1,6 @@
 import {fetchFirstModuleConfig} from "../../../utils/fetchFirstModuleConfig";
 import Point from "ol/geom/Point.js";
 import Feature from "ol/Feature.js";
-import mapCollection from "../../../core/maps/mapCollection.js";
 
 /**
  * @const {String} configPaths an array of possible config locations. First one found will be used
@@ -65,7 +64,7 @@ export default {
      * This is necessary / triggered if the MapMarker should be removed.
      * @returns {void}
      */
-    removePointMarker ({state, rootGetters, commit}) {
+    removePointMarker ({state, commit}) {
         mapCollection.getMap("2D").removeLayer(state.markerPoint);
         commit("clearMarker", "markerPoint");
         commit("setVisibilityMarker", {visbility: false, marker: "markerPoint"});
@@ -147,7 +146,7 @@ export default {
      * Removes the polygon map marker from the map.
      * @returns {void}
      */
-    removePolygonMarker: function ({state, rootGetters, commit}) {
+    removePolygonMarker: function ({state, commit}) {
         mapCollection.getMap("2D").removeLayer(state.markerPolygon);
         commit("clearMarker", "markerPolygon");
         commit("setVisibilityMarker", {visbility: false, marker: "markerPolygon"});

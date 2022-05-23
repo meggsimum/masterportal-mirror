@@ -2,7 +2,6 @@ import Vuex from "vuex";
 import {expect} from "chai";
 import sinon from "sinon";
 import {config, shallowMount, createLocalVue} from "@vue/test-utils";
-import mapCollection from "../../../../../../core/maps/mapCollection.js";
 import RoutingAvoidFeaturesComponent from "../../../components/RoutingAvoidFeatures.vue";
 import mutations from "../../../store/mutationsRouting";
 import actions from "../../../store/actionsRouting";

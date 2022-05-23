@@ -1,6 +1,5 @@
 import Map from "ol/Map";
 import View from "ol/View";
-import mapCollection from "../../../../../core/maps/mapCollection.js";
 import mutations from "../../../store/mutationsMap";
 import getters from "../../../store/gettersMap";
 import {expect} from "chai";

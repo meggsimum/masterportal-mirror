@@ -4,7 +4,6 @@ import Cluster from "ol/source/Cluster.js";
 import {expect} from "chai";
 import sinon from "sinon";
 import OAFLayer from "../../oaf";
-import mapCollection from "../../../../core/maps/mapCollection.js";
 import store from "../../../../app-store";
 
 describe("src/core/layers/oaf.js", () => {

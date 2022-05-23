@@ -6,7 +6,6 @@ import DirectionsComponent from "../../../../components/Directions/DirectionsIte
 import DirectionsItemBatchProcessingComponent from "../../../../components/Directions/DirectionsItemBatchProcessing.vue";
 import RoutingBatchProcessingCheckboxComponent from "../../../../components/RoutingBatchProcessingCheckbox.vue";
 import RoutingDownloadComponent from "../../../../components/RoutingDownload.vue";
-import mapCollection from "../../../../../../../core/maps/mapCollection";
 import mutations from "../../../../store/mutationsRouting";
 import actions from "../../../../store/actionsRouting";
 import getters from "../../../../store/gettersRouting";

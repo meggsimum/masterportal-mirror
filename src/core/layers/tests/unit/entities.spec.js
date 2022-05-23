@@ -1,7 +1,6 @@
 import {expect} from "chai";
 import sinon from "sinon";
 import EntitiesLayer from "../../entities";
-import mapCollection from "../../../maps/mapCollection.js";
 import store from "../../../../app-store";
 
 describe("src/core/layers/entities.js", () => {

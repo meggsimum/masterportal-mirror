@@ -7,7 +7,6 @@ import MultiLine from "ol/geom/MultiLineString.js";
 import MultiPoint from "ol/geom/MultiPoint.js";
 import MultiPolygon from "ol/geom/MultiPolygon.js";
 import * as setters from "./settersDraw";
-import mapCollection from "../../../../../core/maps/mapCollection";
 
 /**
  * Resets and deactivates the Draw Tool.

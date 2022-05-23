@@ -4,7 +4,6 @@ import actions from "../../../store/actionsDraw";
 import Feature from "ol/Feature";
 import Polygon from "ol/geom/Polygon";
 import MultiPolygon from "ol/geom/MultiPolygon";
-import mapCollection from "../../../../../../core/maps/mapCollection.js";
 
 describe("src/modules/tools/draw/store/actions/withoutGUIDraw.js", () => {
     let commit, dispatch, state, getters;

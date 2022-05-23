@@ -5,7 +5,6 @@ import {Point, MultiPoint} from "ol/geom.js";
 import Feature from "ol/Feature.js";
 import Layer from "../../layer";
 import Group from "../../group";
-import mapCollection from "../../../../core/maps/mapCollection.js";
 
 
 describe("src/core/layers/layer.js", () => {

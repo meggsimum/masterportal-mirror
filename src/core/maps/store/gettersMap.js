@@ -3,19 +3,11 @@ import initialState from "./stateMap";
 import {createGfiFeature} from "../../../api/gfi/getWmsFeaturesByMimeType";
 import {getGfiFeaturesByTileFeature} from "../../../api/gfi/getGfiFeaturesByTileFeature";
 import thousandsSeparator from "../../../utils/thousandsSeparator.js";
-import mapCollection from "../../../core/maps/mapCollection.js";
 import {transformFromMapProjection} from "@masterportal/masterportalapi/src/crs";
 import {Group as LayerGroup} from "ol/layer.js";
 
 const getters = {
     ...generateSimpleGetters(initialState),
-    /**
-     * Returns the 2D ol map from the map collection.
-     * @returns {module:ol/PluggableMap~PluggableMap} ol 2D map
-     */
-    // get2DMap: () => {
-    //     return mapCollection.getMap("2D");
-    // },
     /**
      * Returns the layer collection of the map
      * @returns {Object} layer collection of the map.
@@ -32,10 +24,10 @@ const getters = {
      * @returns {Object[]} gfi features
      */
     gfiFeaturesAtPixel: (state, {clickPixel, clickCartesianCoordinate, mode}) => {
-        // const featuresAtPixel = [];
+        const featuresAtPixel = [];
 
         if (clickPixel && mode === "2D") {
-            getters.get2DMap().forEachFeatureAtPixel(clickPixel, (feature, layer) => {
+            mapCollection.getMap("2D").forEachFeatureAtPixel(clickPixel, (feature, layer) => {
                 if (layer?.getVisible() && layer?.get("gfiAttributes") && layer?.get("gfiAttributes") !== "ignore") {
                     if (feature.getProperties().features) {
                         feature.get("features").forEach(function (clusteredFeature) {
@@ -220,14 +212,14 @@ const getters = {
      * @returns {Object} Returns the layerlist.
      */
     getLayerList: () => {
-        return [];//mapCollection.getMap("2D").getLayers().getArray();
+        return mapCollection.getMap("2D").getLayers().getArray();
     },
     /**
      * Gets all visible layers from map
      * @returns {Object[]} all visible layers
      */
     getVisibleLayerList: () => {
-        return [];//getters.getLayerList().filter(layer => layer.getVisible());
+        return getters.getLayerList().filter(layer => layer.getVisible());
     },
     /**
      * Gets all visible layers with children from group layers.

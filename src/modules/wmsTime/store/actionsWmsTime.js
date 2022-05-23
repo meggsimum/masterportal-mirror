@@ -1,6 +1,5 @@
 import drawLayer from "../utils/drawLayer";
 import getPosition from "../utils/getPosition";
-import mapCollection from "../../../core/maps/mapCollection.js";
 
 const actions = {
     windowWidthChanged ({commit, dispatch, state, getters}) {

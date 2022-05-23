@@ -6,7 +6,7 @@ export default {
      * Adds the overlay and eventListener for the map.
      * @returns {void}
      */
-    initialize ({state, commit, dispatch, rootGetters}) {
+    initialize ({state, commit, dispatch}) {
         const {numFeaturesToShow, infoText} = Config.mouseHover,
             map = mapCollection.getMap("2D");
         let featuresAtPixel = [];

@@ -5,7 +5,6 @@ import {config, shallowMount, createLocalVue} from "@vue/test-utils";
 import * as crs from "@masterportal/masterportalapi/src/crs";
 import CoordToolkitComponent from "../../../components/CoordToolkit.vue";
 import CoordToolkit from "../../../store/indexCoordToolkit";
-import mapCollection from "../../../../../../core/maps/mapCollection.js";
 
 const localVue = createLocalVue(),
     namedProjections = [
