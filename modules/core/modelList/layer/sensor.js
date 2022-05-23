@@ -126,28 +126,44 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
      * @returns {void}
      */
     toggleSubscriptionsOnMapChanges: function () {
-        const features = this.get("layer").getSource().getFeatures(),
-            state = this.getLayerState(this.get("isOutOfRange"), this.get("isSelected"), this.get("isSubscribed"));
+        const state = this.getLayerState(this.get("isOutOfRange"), this.get("isSelected"), this.get("isSubscribed"));
 
         if (state === true) {
-            this.setIsSubscribed(true);
-            if (!this.get("loadThingsOnlyInCurrentExtent") && Array.isArray(features) && !features.length) {
-                this.initializeConnection(function () {
-                    this.updateSubscription();
-                    this.setMoveendListener(store.dispatch("Maps/registerListener", {event: "moveend", callback: this.updateSubscription.bind(this)}));
-                }.bind(this));
-            }
-            else {
-                this.updateSubscription();
-                this.setMoveendListener(store.dispatch("Maps/registerListener", {event: "moveend", callback: this.updateSubscription.bind(this)}));
-            }
+            this.startsSubscription(this.get("layer").getSource().getFeatures());
         }
         else if (state === false) {
-            this.setIsSubscribed(false);
-            store.dispatch("Maps/unregisterListener", {event: "moveend", callback: this.updateSubscription.bind(this)});
-            this.setMoveendListener(null);
-            this.unsubscribeFromSensorThings();
+            this.stopsSubscription();
         }
+    },
+
+    /**
+     * Starts subscription
+     * @param {ol/Feature[]} features all features of the Layer
+     * @returns {void}
+     */
+    startsSubscription: function (features) {
+        this.setIsSubscribed(true);
+        if (!this.get("loadThingsOnlyInCurrentExtent") && Array.isArray(features) && !features.length) {
+            this.initializeConnection(function () {
+                this.updateSubscription();
+                this.setMoveendListener(store.dispatch("Maps/registerListener", {event: "moveend", callback: this.updateSubscription.bind(this)}));
+            }.bind(this));
+        }
+        else {
+            this.updateSubscription();
+            this.setMoveendListener(store.dispatch("Maps/registerListener", {event: "moveend", callback: this.updateSubscription.bind(this)}));
+        }
+    },
+
+    /**
+     * Stops subscription
+     * @returns {void}
+     */
+    stopsSubscription () {
+        this.setIsSubscribed(false);
+        store.dispatch("Maps/unregisterListener", {event: "moveend", callback: this.updateSubscription.bind(this)});
+        this.setMoveendListener(null);
+        this.unsubscribeFromSensorThings();
     },
 
     /**
@@ -417,21 +433,8 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
              * @returns {void}
              */
             httpOnSuccess = function (result) {
-                let allThings;
-
-                if (urlParams?.root === "Datastreams") {
-                    allThings = this.getThingsFromSensorData(result, this.get("datastreamAttributes"), this.get("thingAttributes"));
-                }
-                else {
-                    allThings = this.flattenArray(result);
-                }
-
-                allThings = this.createPropertiesOfDatastreams(allThings, this.get("showNoDataValue"), this.get("noDataValue"));
-
-                allThings = this.aggregatePropertiesOfThings(allThings);
-
                 if (typeof onsuccess === "function") {
-                    onsuccess(allThings);
+                    onsuccess(this.getAllThings(result, urlParams));
                 }
             }.bind(this);
 
@@ -441,6 +444,28 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
         else {
             http.getInExtent(requestUrl, currentExtent, intersect, httpOnSuccess, null, null, onerror);
         }
+    },
+
+    /**
+     * Prepares and Returns all things
+     * @param {Object[]} result response of called sensorAPI
+     * @param {String} urlParams The url parameters
+     * @returns {Object[]} all prepared things
+     */
+    getAllThings: function (result, urlParams) {
+        let allThings;
+
+        if (urlParams?.root === "Datastreams") {
+            allThings = this.getThingsFromSensorData(result, this.get("datastreamAttributes"), this.get("thingAttributes"));
+        }
+        else {
+            allThings = this.flattenArray(result);
+        }
+
+        allThings = this.createPropertiesOfDatastreams(allThings);
+        allThings = this.aggregatePropertiesOfThings(allThings);
+
+        return allThings;
     },
 
     /**
