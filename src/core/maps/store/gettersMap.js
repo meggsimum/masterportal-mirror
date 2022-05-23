@@ -66,15 +66,24 @@ const getters = {
         if (mode === "3D" && Array.isArray(clickCartesianCoordinate) && clickCartesianCoordinate.length === 2) {
             // add features from map3d
             const scene = getters.getCesiumScene(),
-                tileFeatures = scene.drillPick({x: clickCartesianCoordinate[0], y: clickCartesianCoordinate[1]});
+                clickFeatures = scene.drillPick({x: clickCartesianCoordinate[0], y: clickCartesianCoordinate[1]});
 
-            tileFeatures.forEach(tileFeature => {
-                const gfiFeatures = getGfiFeaturesByTileFeature(tileFeature);
+            clickFeatures.forEach(clickFeature => {
+                if (clickFeature instanceof Cesium.Cesium3DTileFeature) {
+                    const gfiFeatures = getGfiFeaturesByTileFeature(clickFeature);
 
-                if (Array.isArray(gfiFeatures)) {
-                    gfiFeatures.forEach(gfiFeature => {
-                        featuresAtPixel.push(gfiFeature);
-                    });
+                    if (Array.isArray(gfiFeatures)) {
+                        gfiFeatures.forEach(gfiFeature => {
+                            featuresAtPixel.push(gfiFeature);
+                        });
+                    }
+                }
+                else if (clickFeature?.primitive instanceof Cesium.Billboard) {
+                    featuresAtPixel.push(createGfiFeature(
+                        clickFeature?.primitive?.olLayer,
+                        "",
+                        clickFeature?.primitive?.olFeature
+                    ));
                 }
             });
         }
