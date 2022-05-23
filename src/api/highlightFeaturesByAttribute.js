@@ -23,36 +23,13 @@ export default {
     },
 
     /**
-     * creates a vector layer
-     * @param {String} styleId The style Id
-     * @param {String} layerId The layer Id
-     * @param {String} name Layer name
-     * @param {Object} gfiAttributes GFI attributes configuration
-     * @returns {Object} the created VectorLayer
-    */
-   /*
-    createVectorLayer: function (styleId, layerId, name, gfiAttributes) {
-        return new VectorLayer({
-            id: layerId,
-            styleId: styleId,
-            name: name,
-            source: new VectorSource(),
-            visible: false,
-            style: new Style(),
-            alwaysOnTop: true,
-            gfiAttributes: gfiAttributes
-        });
-    },
-    */
-
-    /**
      * highlight Features for Points
      * @param {String} modelId The model Id
      * @param {String} styleId The style Id
      * @param {String} name Layer name
      * @param {Object} gfiAttributes GFI attributes configuration
      * @param {Array} features The loaded WFS features
-     * @returns {void} nothing
+     * @returns {void}
     */
     highlightPointFeature: function (modelId, styleId, name, gfiAttributes, features) {
         const vectorAttrs = {
@@ -81,15 +58,15 @@ export default {
 
                 iconFeature.setProperties(feature.getProperties());
                 iconFeature.setStyle(featureStyle);
-                highlightLayer.getSource().addFeature(iconFeature);
+                highlightLayer.layer.getSource().addFeature(iconFeature);
             }
         });
 
         if (hadPoint) {
-            highlightLayer.setVisible(true);
-            Radio.trigger("Map", "addLayerOnTop", highlightLayer);
+            highlightLayer.layer.setVisible(true);
+            Radio.trigger("Map", "addLayerOnTop", highlightLayer.layer);
 
-            Radio.trigger("Map", "zoomToExtent", {extent: highlightLayer.getSource().getExtent()});
+            Radio.trigger("Map", "zoomToExtent", {extent: highlightLayer.layer.getSource().getExtent()});
         }
     },
 
@@ -101,13 +78,15 @@ export default {
      * @param {String} geometryRequested Polygon or LineString
      * @param {Object} gfiAttributes GFI attributes configuration
      * @param {Array} features The loaded WFS features
-     * @returns {void} nothing
+     * @returns {void}
     */
     highlightLineOrPolygonFeature: function (modelId, styleId, name, geometryRequested, gfiAttributes, features) {
         const vectorAttrs = {
                 id: modelId,
                 styleId: styleId,
                 name: name,
+                typ: "VectorBase",
+                isSelected: false,
                 gfiAttributes: gfiAttributes
             },
             styleListModel = Radio.request("StyleList", "returnModelById", modelId),
@@ -126,15 +105,15 @@ export default {
 
                 newFeature.setProperties(feature.getProperties());
                 newFeature.setStyle(featureStyle);
-                highlightLayer.getSource().addFeature(newFeature);
+                highlightLayer.layer.getSource().addFeature(newFeature);
             }
         });
 
         if (hadGeometry) {
-            highlightLayer.setVisible(true);
-            Radio.trigger("Map", "addLayerOnTop", highlightLayer);
+            highlightLayer.layer.setVisible(true);
+            Radio.trigger("Map", "addLayerOnTop", highlightLayer.layer);
 
-            Radio.trigger("Map", "zoomToExtent", {extent: highlightLayer.getSource().getExtent()});
+            Radio.trigger("Map", "zoomToExtent", {extent: highlightLayer.layer.getSource().getExtent()});
         }
     },
 
@@ -168,6 +147,7 @@ export default {
                 if (exceptionText) {
                     console.error("highlightFeaturesByAttribute: service exception: " + exceptionText);
                     dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
+                    return;
                 }
             }
 
@@ -176,7 +156,7 @@ export default {
             this.highlightLineOrPolygonFeature(this.settings.lineStyleId, "highlight_line_layer", "highlightLine", "LineString", highlightFeaturesLayer.gfiAttributes, features);
         }
         else {
-            console.warn(status);
+            console.warn(response.status);
             dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
         }
     },
