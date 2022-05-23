@@ -467,7 +467,7 @@
           "print": {
             "name": "translate#common:menu.tools.print",
             "icon": "bi-printer-fill",
-            "mapfishServiceId": "mapfish",
+            "printServiceId": "mapfish",
             "printAppId": "master",
             "filename": "Ausdruck",
             "title": "Mein Titel",

@@ -32,6 +32,7 @@
     - The Measure tool is no longer available in 3D mode.
     - The 3D entities layer is refactored. It is no longer a Backbone-model. The entities layer uses the masterportalAPI's entities layer on creation.
     - Decouple Cesium from window object.
+    - The Get Feature Info (GFI) for WFS features can now be displayed in 3D mode.
 - renamed FilterGeneral to Filter and removed old Filter Files.
 
 ### Deprecated
