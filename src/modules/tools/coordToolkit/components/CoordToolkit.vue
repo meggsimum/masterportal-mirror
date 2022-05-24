@@ -299,7 +299,6 @@ export default {
                 this.setMode(newMode);
                 this.setSupplyCoordInactive();
                 this.setFirstSearchPosition();
-
             }
             else {
                 this.setMode(newMode);
