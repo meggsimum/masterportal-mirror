@@ -65,6 +65,7 @@ export default {
             }
         }
         else if (mapMode === "3D" && position.length === 3) {
+            dispatch("MapMarker/placingPointMarker", position, {root: true});
             commit("setHeight", position[2].toFixed(1));
         }
     },
