@@ -28,11 +28,12 @@
 - Issue #764: Using parameters in WfsSearch as defined in [Filter Encoding Implementation Specification](https://portal.ogc.org/files/?artifact_id=8340); the default name for the like filter escape character is now `escapeChar` rather than `escape`. This requires a change of configuration for services deviating from the standard implementation, see docs.
 - map moved with new structure from src/modules/map to src/core/maps.
 - 3D Mode:
-    - The tool `coordTookit` can now be used in 3D mode again. A height is now also displayed in 3D mode.
+    - The tool `coordTookit` can now be used in 3D mode again. A height and mapMarker is now also displayed in 3D mode.
     - The Measure tool is no longer available in 3D mode.
     - The 3D entities layer is refactored. It is no longer a Backbone-model. The entities layer uses the masterportalAPI's entities layer on creation.
     - Decouple Cesium from window object.
 - renamed FilterGeneral to Filter and removed old Filter Files.
+
 
 ### Deprecated
 - Switched Icon Library from Glyphicon to Bootstrap Icons. Edited Webpack Config. Updated icon usage in vue components to use scss. Updated icon usage in backbone modules. Edited docs & tests accordingly.
