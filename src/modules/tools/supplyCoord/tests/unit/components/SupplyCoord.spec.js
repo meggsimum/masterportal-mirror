@@ -30,7 +30,9 @@ describe("src/modules/tools/supplyCoord/components/SupplyCoord.vue", () => {
             addPointerMoveHandler: sinon.stub(),
             removePointerMoveHandler: sinon.stub(),
             removeInteraction: sinon.stub(),
-            addInteraction: sinon.stub()
+            addInteraction: sinon.stub(),
+            unregisterListener: sinon.stub(),
+            registerListener: sinon.stub()
         },
         mockMapMutations = {
         },

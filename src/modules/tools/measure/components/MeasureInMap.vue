@@ -19,7 +19,7 @@ export default {
     computed: {
         ...mapGetters("Tools/Measure", Object.keys(getters)),
         ...mapGetters(["uiStyle"]),
-        ...mapGetters("Maps", ["is3D"])
+        ...mapGetters("Maps", ["mode"])
     },
     watch: {
         /**
@@ -105,6 +105,9 @@ export default {
         },
         isDefaultStyle () {
             return this.uiStyle !== "SIMPLE" && this.uiStyle !== "TABLE";
+        },
+        is3DMode () {
+            return this.mode === "3D";
         }
     }
 };
@@ -141,7 +144,7 @@ export default {
                                 id="measure-tool-geometry-select"
                                 ref="measure-tool-geometry-select"
                                 class="font-arial form-select form-select-sm float-start"
-                                :disabled="is3d"
+                                :disabled="is3DMode()"
                                 :value="selectedGeometry"
                                 @change="setSelectedGeometry($event.target.value)"
                             >
@@ -150,7 +153,7 @@ export default {
                                     :key="'measure-tool-geometry-select-' + geometryValue"
                                     :value="geometryValue"
                                 >
-                                    {{ is3D
+                                    {{ is3DMode()
                                         ? selectedGeometry
                                         : $t("modules.tools.measure." +
                                             (geometryValue === "LineString" ? "stretch" : "area"))

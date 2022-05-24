@@ -16,6 +16,16 @@ describe("src/modules/tools/gfi/components/templates/TableTemplate.vue", () => {
         computed,
         store;
 
+    before(() => {
+        mapCollection.clear();
+        const map = {
+            id: "ol",
+            mode: "2D"
+        };
+
+        mapCollection.addMap(map, "2D");
+    });
+
     beforeEach(() => {
         propsData = {
             feature: {
@@ -46,6 +56,20 @@ describe("src/modules/tools/gfi/components/templates/TableTemplate.vue", () => {
                             },
                             getters: getters
                         }
+                    }
+                },
+                Maps: {
+                    namespaced: true,
+                    state: {
+                        mode: "2D"
+                    },
+                    getters: {
+                        clickCoordinate: sinon.stub()
+                    },
+                    actions: {
+                        addLayerOnTop: sinon.stub(),
+                        removeInteraction: sinon.stub(),
+                        addInteraction: sinon.stub()
                     }
                 },
                 MapMarker: {

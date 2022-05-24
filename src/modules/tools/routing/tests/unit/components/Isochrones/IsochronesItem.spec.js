@@ -96,6 +96,7 @@ describe("src/modules/tools/routing/components/Isochrones/IsochronesItem.vue", (
             }
         });
         store.commit("Tools/Routing/setActive", true);
+
     });
 
     afterEach(() => {

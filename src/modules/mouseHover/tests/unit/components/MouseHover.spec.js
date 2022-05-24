@@ -22,7 +22,7 @@ describe("src/modules/mouseHover/components/MouseHover.vue", () => {
             namespaced: true,
             modules: {
                 MouseHover,
-                Map: {
+                Maps: {
                     namespaced: true,
                     getters: mockMapGetters
                 }

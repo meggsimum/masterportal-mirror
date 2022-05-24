@@ -371,7 +371,8 @@ describe("src/utils/parametricUrl/stateModifier.js", () => {
         it("test param featureid", async () => {
             let key = "featureid";
             const state = {
-                    urlParams: {}
+                    urlParams: {},
+                    ZoomTo: {}
                 },
                 valueAsString = "1,2",
                 result = [1, 2];
@@ -448,7 +449,8 @@ describe("src/utils/parametricUrl/stateModifier.js", () => {
         it("test param Map/zoomToGeometry", async () => {
             let key = "Map/zoomToGeometry";
             const state = {
-                    urlParams: {}
+                    urlParams: {},
+                    ZoomTo: {}
                 },
                 valueAsString = "altona";
 

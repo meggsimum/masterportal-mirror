@@ -47,7 +47,7 @@ describe("src/modules/tools/selectFeatures/components/SelectFeatures.vue", () =>
         store = new Vuex.Store({
             namespaces: true,
             modules: {
-                Map: {
+                Maps: {
                     namespaced: true,
                     actions: mockMapActions
                 },

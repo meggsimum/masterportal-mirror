@@ -38,6 +38,16 @@ describe("src/modules/tools/gfi/components/templates/DetachedTemplate.vue", () =
 
     let store;
 
+    before(() => {
+        mapCollection.clear();
+        const map = {
+            id: "ol",
+            mode: "2D"
+        };
+
+        mapCollection.addMap(map, "2D");
+    });
+
     beforeEach(() => {
         store = new Vuex.Store({
             namespaced: true,
@@ -52,7 +62,7 @@ describe("src/modules/tools/gfi/components/templates/DetachedTemplate.vue", () =
                         }
                     }
                 },
-                Map: {
+                Maps: {
                     namespaced: true,
                     actions: {
                         removeHighlightFeature: sinon.stub(),
@@ -60,7 +70,7 @@ describe("src/modules/tools/gfi/components/templates/DetachedTemplate.vue", () =
                         setCenter: sinon.stub()
                     },
                     getters: {
-                        clickCoord: sinon.stub()
+                        clickCoordinate: sinon.stub()
                     }
                 },
                 MapMarker: {

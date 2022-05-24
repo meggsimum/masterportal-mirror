@@ -58,7 +58,7 @@ describe("src/modules/portalFooter/components/PortalFooter.vue", () => {
                         initialize: sinon.stub()
                     }
                 },
-                Map: {
+                Maps: {
                     namespaced: true,
                     getters: {
                         is3D: () => false
