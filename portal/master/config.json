@@ -543,8 +543,23 @@
         ]
       },
       "totalView": true,
+      "attributions": {
+        "isInitOpenDesktop": true,
+        "isInitOpenMobile": true
+      },
+      "overviewMap": {
+        "layerId": "452",
+        "isInitOpen": false
+      },
       "mousePosition": true,
-      "button3d": true
+      "freeze": true,
+      "backForward": true,
+      "button3d": true,
+      "obliqueControl": {
+        "title": "additional:modules.controls.oblique.title",
+        "hiddenMobile": true,
+        "bottomControl": false
+      }
     },
     "layersRemovable": true
   },

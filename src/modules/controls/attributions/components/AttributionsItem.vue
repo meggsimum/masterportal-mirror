@@ -35,27 +35,21 @@ export default {
             default: false
         }
     },
-    data () {
-        return {
-            attributionsChannel: Radio.channel("Attributions"),
-            modelListChannel: Radio.channel("ModelList")
-        };
-    },
     computed: {
         ...mapGetters("controls/attributions", ["attributionList", "open", "openable"]),
         ...mapGetters(["mobile"])
     },
     created () {
-        this.attributionsChannel.on("createAttribution", this.addAttribution);
-        this.attributionsChannel.on("removeAttribution", this.removeAttribution);
-        this.modelListChannel.on("updateVisibleInMapList", this.updateAttributions);
+        Radio.channel("Attributions").on("createAttribution", this.addAttribution);
+        Radio.channel("Attributions").on("removeAttribution", this.removeAttribution);
+        Radio.channel("ModelList").on("updateVisibleInMapList", this.updateAttributions);
         this.updateAttributions();
         this.setOpen(this.mobile ? this.isInitOpenMobile : this.isInitOpenDesktop);
     },
     beforeDestroy () {
-        this.attributionsChannel.off("createAttribution", this.addAttribution);
-        this.attributionsChannel.off("removeAttribution", this.removeAttribution);
-        this.modelListChannel.off("updateVisibleInMapList", this.updateAttributions);
+        Radio.channel("Attributions").off("createAttribution", this.addAttribution);
+        Radio.channel("Attributions").off("removeAttribution", this.removeAttribution);
+        Radio.channel("ModelList").off("updateVisibleInMapList", this.updateAttributions);
     },
     methods: {
         ...mapMutations("controls/attributions", ["setOpen"]),

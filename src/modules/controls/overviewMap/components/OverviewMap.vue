@@ -42,7 +42,6 @@ export default {
         return {
             open: this.isInitOpen,
             overviewMap: null,
-            mapChannel: Radio.channel("Map"),
             visibleInMapMode: null // set in .created
         };
     },
@@ -57,12 +56,18 @@ export default {
             return Radio.request("Util", "getUiStyle") === "TABLE" ? "Table" : "Control";
         }
     },
+    watch: {
+        /**
+         * Checks the mapMode for 2D or 3D.
+         * @param {Boolean} value mode of the map
+         * @returns {void}
+         */
+        mode (value) {
+            this.visibleInMapMode = value !== "3D";
+        }
+    },
     created () {
         this.checkModeVisibility();
-        this.mapChannel.on("change", this.checkModeVisibility);
-    },
-    beforeDestroy () {
-        this.mapChannel.off("change", this.checkModeVisibility);
     },
     mounted () {
         const id = this.layerId || this.baselayer,
