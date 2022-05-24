@@ -542,6 +542,7 @@
           2000
         ]
       },
+      "totalView": true,
       "mousePosition": true,
       "button3d": true
     },

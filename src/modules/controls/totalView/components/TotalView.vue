@@ -22,7 +22,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("Maps", ["initialCenter", "initialZoomLevel", "get2DMap"]),
+        ...mapGetters("Maps", ["initialCenter", "initialZoomLevel"]),
 
         component () {
             return Radio.request("Util", "getUiStyle") === "TABLE" ? TableStyleControl : ControlIcon;
@@ -36,7 +36,7 @@ export default {
          * @returns {Boolean} true if map is not in initial zoom/center.
          */
         mapMoved: function () {
-            const view = this.get2DMap.getView(),
+            const view = mapCollection.getMapView("2D"),
                 center = view.getCenter();
 
             return this.initialCenter[0] !== center[0] ||

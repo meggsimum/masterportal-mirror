@@ -25,7 +25,7 @@ export default {
     },
     computed: {
         ...mapGetters("Tools/Print", Object.keys(getters)),
-        ...mapGetters("Maps", ["scales, size", "scale", "get2DMap"]),
+        ...mapGetters("Maps", ["scales, size", "scale"]),
         ...mapGetters("Tools/Gfi", ["currentFeature"]),
         currentScale: {
             get () {
@@ -222,7 +222,7 @@ export default {
             this.setIsScaleSelectedManually(true);
             this.getOptimalResolution(resolution);
             this.updateCanvasLayer();
-            await this.get2DMap.render();
+            await mapCollection.getMap("2D").render();
         },
 
         /**
@@ -237,7 +237,7 @@ export default {
             this.getAttributeInLayoutByName("gfi");
             this.getAttributeInLayoutByName("legend");
             this.updateCanvasLayer();
-            await this.get2DMap.render();
+            await mapCollection.getMap("2D").render();
         },
 
         /**

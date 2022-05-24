@@ -24,14 +24,13 @@ export default {
         }
     },
     computed: {
-        ...mapGetters("controls/backForward", ["forthAvailable", "backAvailable"]),
-        ...mapGetters("Maps", ["get2DMap"])
+        ...mapGetters("controls/backForward", ["forthAvailable", "backAvailable"])
     },
     mounted () {
-        this.get2DMap.on("moveend", this.memorizeMap);
+        mapCollection.getMap("2D").on("moveend", this.memorizeMap);
     },
     beforeDestroy () {
-        this.get2DMap.un("moveend", this.memorizeMap);
+        mapCollection.getMap("2D").un("moveend", this.memorizeMap);
     },
     methods: {
         ...mapMutations(
@@ -39,13 +38,13 @@ export default {
             ["forward", "backward", "memorize"]
         ),
         memorizeMap () {
-            this.memorize(this.get2DMap.getView());
+            this.memorize(mapCollection.getMap("2D").getView());
         },
         moveForward () {
-            this.forward(this.get2DMap);
+            this.forward(mapCollection.getMap("2D"));
         },
         moveBackward () {
-            this.backward(this.get2DMap);
+            this.backward(mapCollection.getMap("2D"));
         }
     }
 };

@@ -48,7 +48,7 @@ export default {
     },
     computed: {
         ...mapGetters(["uiStyle"]),
-        ...mapGetters("Maps", ["get2DMap"]),
+        ...mapGetters("Maps", ["mode"]),
 
         component () {
             return Radio.request("Util", "getUiStyle") === "TABLE" ? TableStyleControl : ControlIcon;
@@ -67,7 +67,7 @@ export default {
     mounted () {
         const id = this.layerId || this.baselayer,
             layer = getOverviewMapLayer(id),
-            map = this.get2DMap,
+            map = mapCollection.getMap("2D"),
             view = getOverviewMapView(map, this.resolution);
 
         // try to display overviewMap layer in all available resolutions
@@ -97,7 +97,7 @@ export default {
         toggleOverviewMapFlyout () {
             this.open = !this.open;
             if (this.overviewMap !== null) {
-                this.get2DMap[`${this.open ? "add" : "remove"}Control`](this.overviewMap);
+                mapCollection.getMap("2D")[`${this.open ? "add" : "remove"}Control`](this.overviewMap);
             }
         },
         /**
@@ -105,7 +105,7 @@ export default {
          * @returns {void}
          */
         checkModeVisibility () {
-            this.visibleInMapMode = Radio.request("Map", "getMapMode") !== "3D";
+            this.visibleInMapMode = this.mode !== "3D";
         }
     }
 };

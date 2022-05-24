@@ -23,7 +23,7 @@ const actions = {
      * @fires Core.ConfigLoader#RadioTriggerParserRemoveItem
      * @returns {void}
      */
-    toggleSwiper ({commit, getters, state}, id) {
+    toggleSwiper ({commit, state}, id) {
         commit("setLayerSwiperActive", !state.layerSwiper.active);
 
         const secondId = id.endsWith(state.layerAppendix) ? id : id + state.layerAppendix,
@@ -50,7 +50,7 @@ const actions = {
                 commit("setTimeSliderDefaultValue", TIME);
             }
 
-            getters["Maps/get2DMap"].removeLayer(layerModel.get("layer"));
+            mapCollection.getMap("2D").removeLayer(layerModel.get("layer"));
             Radio.trigger("ModelList", "removeModelsById", secondId);
             Radio.trigger("Parser", "removeItem", secondId);
         }
