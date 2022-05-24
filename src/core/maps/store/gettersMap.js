@@ -12,9 +12,9 @@ const getters = {
      * Returns the layer collection of the map
      * @returns {Object} layer collection of the map.
      */
-    // getLayers: () => {
-    //     return mapCollection.getMap("2D").getLayers();
-    // },
+    getLayers: () => {
+        return mapCollection.getMap("2D").getLayers();
+    },
     /**
      * Gets the features at the given pixel for the gfi
      * @param {Object} state - the state

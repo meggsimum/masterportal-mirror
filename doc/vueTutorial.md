@@ -230,7 +230,7 @@ import getters from "../store/gettersScaleSwitcher";
     ...
     computed: {
             ...mapGetters("Tools/ScaleSwitcher", Object.keys(getters)),
-            ...mapGetters("Map", ["scales"]),
+            ...mapGetters("Maps", ["scales"]),
             scale: {
                 get () {
                     return this.$store.state.Map.scale;
@@ -374,7 +374,7 @@ import {mapGetters, mapActions, mapMutations} from "vuex";
 
     ...
     methods: {
-        ...mapActions("Map", ["setResolutionByIndex"]),
+        ...mapActions("Maps", ["setResolutionByIndex"]),
         ...
     }
     ...

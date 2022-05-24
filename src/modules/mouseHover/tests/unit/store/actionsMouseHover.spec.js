@@ -2,20 +2,17 @@ import {expect} from "chai";
 import sinon from "sinon";
 import actions from "../../../store/actionsMouseHover";
 import stateMouseHover from "../../../store/stateMouseHover";
+import Map from "ol/Map";
 
 
 describe("src/modules/mouseHover/store/actionsMouseHover", () => {
-    let commit, dispatch, state, rootGetters;
+    let commit, dispatch, state, olMap;
 
     beforeEach(() => {
+        olMap = new Map();
+        olMap.addOverlay = sinon.spy();
         commit = sinon.spy();
         dispatch = sinon.spy();
-        rootGetters = {
-            "Maps/get2DMap": {
-                addOverlay: sinon.spy(),
-                on: sinon.spy()
-            }
-        };
         Config = {
             mouseHover: {
                 numFeaturesToShow: 2,
@@ -23,12 +20,14 @@ describe("src/modules/mouseHover/store/actionsMouseHover", () => {
             }
         };
         state = {...stateMouseHover};
+        mapCollection.clear();
+        mapCollection.addMap(olMap, "2D");
     });
     afterEach(sinon.restore);
 
     describe("initialize", () => {
         it("initializes the mouseHover module", () => {
-            actions.initialize({state, commit, dispatch, rootGetters});
+            actions.initialize({state, commit, dispatch});
             expect(mapCollection.getMap("2D").addOverlay.calledOnce).to.be.true;
             expect(commit.firstCall.args[0]).to.equal("setMouseHoverLayers");
             expect(commit.secondCall.args[0]).to.equal("setMouseHoverInfos");

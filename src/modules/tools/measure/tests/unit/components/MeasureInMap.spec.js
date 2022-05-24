@@ -23,14 +23,13 @@ describe("src/modules/tools/measure/components/MeasureInMap.vue", () => {
         store = new Vuex.Store({
             namespaces: true,
             modules: {
-                Map: {
+                Maps: {
                     namespaced: true,
                     state: {
                         mode: "2D"
                     },
                     getters: {
                         layerById: () => id => ({})[id],
-                        is3D: () => false,
                         mode: () => "2D",
                         get2DMap: () => {
                             return map;
@@ -39,6 +38,11 @@ describe("src/modules/tools/measure/components/MeasureInMap.vue", () => {
                     mutations: {
                         addLayerToMap: sinon.spy(),
                         setActive: sinon.spy()
+                    },
+                    actions: {
+                        addInteraction: sinon.spy(),
+                        removeInteraction: sinon.spy(),
+                        addLayer: sinon.spy()
                     }
                 },
                 Tools: {
@@ -52,13 +56,9 @@ describe("src/modules/tools/measure/components/MeasureInMap.vue", () => {
                 uiStyle: () => ""
             }
         });
-
         map = {
             id: "ol",
-            mode: "2D",
-            addInteraction: sinon.spy(),
-            removeInteraction: sinon.spy(),
-            addLayer: sinon.spy()
+            mode: "2D"
         };
 
         store.commit("Tools/Measure/setActive", true);

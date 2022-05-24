@@ -243,7 +243,7 @@ function initializeWithoutGUI ({state, commit, dispatch, getters, rootGetters}, 
                     // read GeoJSON and transform the coordiantes from WGS84 to the projection of the map
                     featJSON = format.readFeatures(initialJSON, {
                         dataProjection: "EPSG:4326",
-                        featureProjection: rootGetters["Map/projectionCode"]
+                        featureProjection: rootGetters["Maps/projectionCode"]
                     });
                 }
                 else {

@@ -63,6 +63,8 @@ describe("src/modules/controls/backForward/components/BackForward.vue", () => {
                 }
             }
         });
+        mapCollection.clear();
+        mapCollection.addMap(map, "2D");
     });
 
     it("renders the forward/backward buttons", () => {

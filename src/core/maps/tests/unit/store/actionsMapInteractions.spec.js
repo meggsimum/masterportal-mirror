@@ -24,6 +24,8 @@ describe("src/core/maps/store/actions/actionsMapInteractions.js", () => {
             getters = {
                 get2DMap: olMap
             };
+            mapCollection.clear();
+            mapCollection.addMap(olMap, "2D");
         });
 
         it("register pointermove listener to ol map", () => {

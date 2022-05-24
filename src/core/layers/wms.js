@@ -186,5 +186,5 @@ WMSLayer.prototype.getExtent = function () {
     if (this.has("extent")) {
         return this.get("extent");
     }
-    return store.getters["Map/bbox"];
+    return store.getters["Maps/bbox"];
 };
