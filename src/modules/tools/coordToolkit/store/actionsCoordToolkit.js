@@ -87,7 +87,8 @@ export default {
                     Radio.trigger("Layer", "prepareLayerObject", layer);
                 }
                 if (layer.has("layerSource")) {
-                    commit("setHeightLayer", layer);
+                    // freeze the layer, else vuex is observing it in mode 3D
+                    commit("setHeightLayer", Object.freeze(layer));
                 }
                 else {
                     console.warn("CoordToolkit: Layer with id " + state.heightLayerId + " to retrieve height from has no layerSource. Heights are not available!");

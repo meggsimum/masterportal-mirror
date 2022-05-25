@@ -105,8 +105,7 @@ export default {
     clickEventCallback ({dispatch}, clickObject) {
         if (clickObject) {
             dispatch("updateClick", clickObject);
-            // todo 3d, soll das für externe addons noch drin bleiben?
-            // Radio.trigger("Map", "clickedWindowPosition", extendedClickObject);
+            Radio.trigger("Map", "clickedWindowPosition", clickObject);
         }
     },
 

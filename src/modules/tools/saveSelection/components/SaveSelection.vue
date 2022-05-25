@@ -19,17 +19,12 @@ export default {
          * @returns {void}
          */
         active (isActive) {
-            this.filterExternalLayer(Radio.request("ModelList", "getModelsByAttributes", {isSelected: true, type: "layer"}));
             if (isActive) {
                 this.setFocusToFirstControl();
             }
         }
     },
     created () {
-        Backbone.Events.listenTo(Radio.channel("ModelList"), {
-            "updatedSelectedLayerList": this.filterExternalLayer
-        });
-
         if (Object.prototype.hasOwnProperty.call(Config, "simpleMap")) {
             console.warn("The Parameter 'simpleMap' in the config.js is deprecated in the next major release. Please use the parameter 'simpleMap' as part of the configuration of the 'saveSelection' tool in the config.json.");
             this.setSimpleMap(Config.simpleMap);

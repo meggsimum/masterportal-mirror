@@ -14,6 +14,7 @@ import EntitiesLayer from "../../../src/core/layers/entities";
 import VectorTileLayer from "../../../src/core/layers/vectorTile";
 import TileSetLayer from "../../../src/core/layers/tileset";
 import VectorBaseLayer from "../../../src/core/layers/vectorBase";
+import filterAndReduceLayerList from "../../../src/modules/tools/saveSelection/utils/filterAndReduceLayerList";
 import ObliqueLayer from "./layer/oblique";
 import Folder from "./folder/model";
 import Tool from "./tool/model";
@@ -133,6 +134,7 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
             "change:isVisibleInMap": function () {
                 channel.trigger("updateVisibleInMapList");
                 channel.trigger("updatedSelectedLayerList", this.where({isSelected: true, type: "layer"}));
+                store.dispatch("Tools/SaveSelection/createUrlParams", filterAndReduceLayerList(this.where({isSelected: true, type: "layer"})));
                 // this.sortLayersAndSetIndex();
             },
             "change:isExpanded": function (model) {
@@ -147,6 +149,7 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
             "change:isSelected": this.selectedChanged,
             "change:transparency": function () {
                 channel.trigger("updatedSelectedLayerList", this.where({isSelected: true, type: "layer"}));
+                store.dispatch("Tools/SaveSelection/createUrlParams", filterAndReduceLayerList(this.where({isSelected: true, type: "layer"})));
             },
             "change:selectionIDX": function () {
                 channel.trigger("updatedSelectedLayerList", this.where({isSelected: true, type: "layer"}));
@@ -1292,6 +1295,8 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
         this.trigger("updateSelection");
         Radio.channel("ModelList").trigger("updateVisibleInMapList");
         Radio.channel("ModelList").trigger("updatedSelectedLayerList", this.where({isSelected: true, type: "layer"}));
+
+        store.dispatch("Tools/SaveSelection/createUrlParams", filterAndReduceLayerList(this.where({isSelected: true, type: "layer"})));
     }
 });
 
