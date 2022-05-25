@@ -78,7 +78,10 @@ const getters = {
                         });
                     }
                 }
-                else if (clickFeature?.primitive instanceof Cesium.Billboard) {
+                else if (clickFeature?.primitive instanceof Cesium.Billboard
+                    && clickFeature.primitive.olLayer?.get("gfiAttributes")
+                    && clickFeature.primitive.olLayer?.get("gfiAttributes") !== "ignore"
+                ) {
                     featuresAtPixel.push(createGfiFeature(
                         clickFeature?.primitive?.olLayer,
                         "",
