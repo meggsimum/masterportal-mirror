@@ -46,6 +46,8 @@ const state = {
     resultType: ResultType.OUTSIDE,
     bufferRadius: 0,
     inputBufferRadius: 0,
+    layersFromConfig: [],
+    layerIdsFromConfig: [],
     bufferLayer: {},
     resultLayer: {},
     selectOptions: [],

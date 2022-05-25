@@ -217,6 +217,10 @@
             "name": "translate#common:menu.tools.measure",
             "icon": "bi-rulers"
           },
+          "bufferAnalysis": {
+            "name": "bufferAnalysis",
+            "icon": "bi-record-circle"
+          },
           "supplyCoord": {
             "name": "translate#common:menu.tools.supplyCoord",
             "icon": "bi-bullseye"
@@ -837,37 +841,29 @@
               "name": "Kita und Krankenhäuser"
             },
             {
-              "id": "schUk",
-              "layerAttribution": "<span>Attributierung für Gruppenlayer</span>",
-              "children": [
-                {
-                  "id": "1711",
-                  "styleId": "1711",
-                  "visibility": false,
-                  "layerAttribution": "<span>Attributierung für Fachlayer</span>",
-                  "mouseHoverField": [
-                    "name",
-                    "strasse"
-                  ],
-                  "searchField": "name",
-                  "extendedFilter": true
-                },
-                {
-                  "id": "8712",
-                  "visibility": false,
-                  "name": "Schulinfosystem",
-                  "styleId": "8712",
-                  "searchField": "schulname",
-                  "mouseHoverField": [
-                    "schulname",
-                    "kapitelbezeichnung"
-                  ],
-                  "gfiTheme": "schulinfo",
-                  "additionalInfoField": "adresse_strasse_hausnr"
-                }
+              "id": "1711",
+              "styleId": "1711",
+              "visibility": false,
+              "layerAttribution": "<span>Attributierung für Fachlayer</span>",
+              "mouseHoverField": [
+                "name",
+                "strasse"
               ],
-              "name": "Krankenhäuser und Schulen",
-              "visibility": true
+              "searchField": "name",
+              "extendedFilter": true
+            },
+            {
+              "id": "8712",
+              "visibility": false,
+              "name": "Schulinfosystem",
+              "styleId": "8712",
+              "searchField": "schulname",
+              "mouseHoverField": [
+                "schulname",
+                "kapitelbezeichnung"
+              ],
+              "gfiTheme": "schulinfo",
+              "additionalInfoField": "adresse_strasse_hausnr"
             }
           ]
         }

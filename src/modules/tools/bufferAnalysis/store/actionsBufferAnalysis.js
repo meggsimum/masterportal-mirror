@@ -1,3 +1,5 @@
+import store from "../../../../app-store";
+import WfsLayer from "../../../../core/layers/wfs";
 import VectorSource from "ol/source/Vector";
 import {Vector as VectorLayer} from "ol/layer";
 import {GeoJSON} from "ol/format";
@@ -305,6 +307,64 @@ const actions = {
             commit("setResultType", resultTypeFromUrl);
             dispatch("applySelectedTargetLayer", selectedTargetLayerFromUrl);
         }
+    },
+    async findLayers ({state, commit}) {
+        const extractedWfsLayers = [];
+
+        console.log(state.layersFromConfig);
+        await fetch(Config.layerConf)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(layer => {
+                    if (state.layerIdsFromConfig.includes(layer.id) && layer.typ === "WFS") {
+                        const layerFromConfig = state.layersFromConfig.find(configuredLayer => configuredLayer.id === layer.id),
+                            attrs = {
+                                url: layer.url,
+                                name: layer.name,
+                                id: layer.id,
+                                typ: layer.typ,
+                                version: layer.version,
+                                gfiTheme: layer.gfiTheme,
+                                isChildLayer: layer.isChildLayer,
+                                transparent: layer.transparent,
+                                isSelected: layer.isSelected,
+                                featureNS: layer.featureNS,
+                                featureType: layer.featureType,
+                                styleId: layerFromConfig.styleId
+                            };
+
+                        extractedWfsLayers.push(new WfsLayer(attrs));
+                    }
+                });
+            });
+        commit("setSelectOptions", extractedWfsLayers);
+    },
+    vectorLayers ({commit}) {
+        const vectorLayers = [],
+            vectorLayerIds = [];
+
+        store.getters.configJson.Themenconfig.Fachdaten.Ordner.forEach(Ordner => {
+            if (Ordner.Layer) {
+                Ordner.Layer.forEach(layer => {
+                    vectorLayers.push(layer);
+                    vectorLayerIds.push(layer.id);
+                    // if (layer instanceof VectorLayer && layer.get("typ") === "WFS") {
+                    //     const layerSource = layer.getSource();
+
+                    //     vectorLayers.push(
+                    //         {
+                    //             name: layer.get("name"),
+                    //             id: layer.get("id"),
+                    //             features: layerSource.getFeatures(),
+                    //             geometryType: layerSource.getFeatures()[0] ? layerSource.getFeatures()[0].getGeometry().getType() : null
+                    //         }
+                    //     );
+                    // }
+                });
+            }
+        });
+        commit("setLayersFromConfig", vectorLayers);
+        commit("setLayerIdsFromConfig", vectorLayerIds);
     }
 };
 

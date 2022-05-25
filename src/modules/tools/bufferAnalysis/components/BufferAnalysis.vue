@@ -137,6 +137,10 @@ export default {
         this.initJSTSParser();
         this.loadSelectOptions();
         this.$on("close", this.close);
+        if (this.$store.getters.treeType === "custom") {
+            this.vectorLayers();
+            this.findLayers();
+        }
     },
     mounted () {
         this.$nextTick(() => {
