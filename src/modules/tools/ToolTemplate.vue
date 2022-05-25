@@ -94,6 +94,11 @@ export default {
 
         }
     },
+    mounted () {
+        if (this.active) {
+            this.updateMap();
+        }
+    },
     methods: {
         /**
          * Calculates initial width of input parameter.
