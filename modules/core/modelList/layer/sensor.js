@@ -315,8 +315,8 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
                     feature.set("gfiParams", gfiTheme?.params, true);
                 }
                 feature.set("utc", utc, true);
-                feature = this.aggregateDataStreamValue(feature);
-                feature = this.aggregateDataStreamPhenomenonTime(feature);
+                // feature = this.aggregateDataStreamValue(feature);
+                // feature = this.aggregateDataStreamPhenomenonTime(feature);
                 features.push(feature);
             });
 
@@ -330,8 +330,9 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
      * Aggregates the value and adds them as property "dataStreamValues".
      * @param {ol/Feature} feature The ol feature.
      * @returns {ol/Feature} The feature with new attribute "dataStreamValues".
+     * @TODO to be delete
      */
-    aggregateDataStreamValue: function (feature) {
+    /* aggregateDataStreamValue: function (feature) {
         const modifiedFeature = feature,
             dataStreamValues = [];
 
@@ -350,15 +351,16 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
                 modifiedFeature.set("dataStreamValue", dataStreamValues.join(" | "), true);
             }
         }
-        return modifiedFeature;
-    },
+        return feature;
+    },*/
 
     /**
      * Aggregates the phenomenonTimes and adds them as property "dataStreamPhenomenonTime".
      * @param {ol/Feature} feature The ol feature.
      * @returns {ol/Feature} The feature with new attribute "dataStreamPhenomenonTime".
+     * @TODO to delete
      */
-    aggregateDataStreamPhenomenonTime: function (feature) {
+    /* aggregateDataStreamPhenomenonTime: function (feature) {
         const modifiedFeature = feature,
             dataStreamPhenomenonTimes = [];
 
@@ -376,7 +378,7 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
             modifiedFeature.set("dataStreamPhenomenonTime", dataStreamPhenomenonTimes.join(" | "), true);
         }
         return modifiedFeature;
-    },
+    },*/
 
     /**
      * Some sensors deliver a time interval like "2020-04-02T14:00:01.000Z/2020-04-02T14:15:00.000Z".
@@ -1069,7 +1071,7 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
      * @param {String} result the new value
      * @returns {String} the updated property
      */
-    replaceValueInPipedProperty: function (feature, property, dataStreamId, result) {
+    /* replaceValueInPipedProperty: function (feature, property, dataStreamId, result) {
         const dataStreamIds = feature.get("dataStreamId").split(" | "),
             dataStreamProperty = feature.get(property).split(" | ");
 
@@ -1080,7 +1082,7 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
         });
 
         return dataStreamProperty.join(" | ");
-    },
+    },*/
 
     /**
      * Helper function for getDatastreamIds: Pushes the datastream ids into the given array.
