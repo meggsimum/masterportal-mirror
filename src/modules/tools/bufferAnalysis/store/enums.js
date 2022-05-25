@@ -1,8 +1,4 @@
 /**
- * @typedef {String} ResultType
- **/
-
-/**
  * Enum for map mode.
  * @readonly
  * @enum {Number}

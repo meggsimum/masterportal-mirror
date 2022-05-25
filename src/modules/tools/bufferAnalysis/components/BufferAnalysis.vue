@@ -15,7 +15,7 @@ export default {
     components: {
         ToolTemplate
     },
-    data: () => ({resultTypeEnum: ResultType}),
+    data: () => ({RESULT_TYPE: ResultType}),
     computed: {
         ...mapGetters("Tools/BufferAnalysis", Object.keys(getters)),
         selectedSourceLayer: {
@@ -208,10 +208,10 @@ export default {
                     >
                         <option
                             v-for="layer in selectOptions"
-                            :key="layer.get('id')"
+                            :key="layer.id"
                             :value="layer"
                         >
-                            {{ layer.get("name") }}
+                            {{ layer.name }}
                         </option>
                     </select>
                 </div>
@@ -256,12 +256,12 @@ export default {
                         :disabled="!selectedSourceLayer || !bufferRadius || selectedTargetLayer"
                     >
                         <option
-                            :value="resultTypeEnum.WITHIN"
+                            :value="RESULT_TYPE.WITHIN"
                         >
                             {{ $t("modules.tools.bufferAnalysis.overlapping") }}
                         </option>
                         <option
-                            :value="resultTypeEnum.OUTSIDE"
+                            :value="RESULT_TYPE.OUTSIDE"
                         >
                             {{ $t("modules.tools.bufferAnalysis.notOverlapping") }}
                         </option>
@@ -282,10 +282,10 @@ export default {
                     >
                         <option
                             v-for="layer in selectOptions"
-                            :key="layer.get('id')"
+                            :key="layer.id"
                             :value="layer"
                         >
-                            {{ layer.get("name") }}
+                            {{ layer.name }}
                         </option>
                     </select>
                 </div>

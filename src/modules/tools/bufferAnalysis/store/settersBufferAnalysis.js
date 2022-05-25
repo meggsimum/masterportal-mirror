@@ -9,7 +9,7 @@ import ValidationError from "../../../../utils/customErrors/validationError";
  * @throws Error
  * @return {void}
  */
-function applySelectedSourceLayer ({getters, commit, dispatch}, selectedSourceLayer) {
+function applySelectedSourceLayer ({getters, commit, dispatch, rootGetters}, selectedSourceLayer) {
     // unselect target layer if it is already selected
     if (getters.selectedTargetLayer) {
         getters.selectedTargetLayer.setIsSelected(false);
@@ -20,6 +20,8 @@ function applySelectedSourceLayer ({getters, commit, dispatch}, selectedSourceLa
     const selectedLayer = typeof selectedSourceLayer === "string"
         ? getters.selectOptions.find(item => item.id === selectedSourceLayer)
         : selectedSourceLayer;
+
+    console.error(rootGetters["Maps/getLayers"])
 
     // select only the new source layer and deselect all previous selected layers
     if (selectedLayer) {

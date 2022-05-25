@@ -7,6 +7,7 @@ import {
     Point,
     Polygon
 } from "ol/geom";
+import {rawLayerList} from "@masterportal/masterportalapi";
 
 /**
  * Injects OpenLayers geom classes to JSTS Parser
@@ -31,11 +32,11 @@ function initJSTSParser ({getters}) {
  * @return {void}
  */
 function loadSelectOptions ({commit}) {
-    const layers = Radio.request("ModelList", "getModelsByAttributes", {type: "layer", typ: "WFS"}) || [];
-
-    layers.forEach(layer => {
-        commit("addSelectOption", layer);
-    });
+    rawLayerList.getLayerList()
+        .filter(({typ}) => typ === "WFS")
+        .forEach(layer => {
+            commit("addSelectOption", layer);
+        });
 }
 
 export {
