@@ -27,6 +27,7 @@
 - `default`-gfiTheme: If a `|`-character is part of the response, every element separated by the character will be displayed in a separate paragraph.
 - Issue #764: Using parameters in WfsSearch as defined in [Filter Encoding Implementation Specification](https://portal.ogc.org/files/?artifact_id=8340); the default name for the like filter escape character is now `escapeChar` rather than `escape`. This requires a change of configuration for services deviating from the standard implementation, see docs.
 - map moved with new structure from src/modules/map to src/core/maps.
+- renamed FilterGeneral to Filter and removed old Filter Files.
 - 3D Mode:
     - The tool `coordTookit` can now be used in 3D mode again. A height is now also displayed in 3D mode.
     - The Measure tool is no longer available in 3D mode.
@@ -34,13 +35,9 @@
     - Decouple Cesium from window object.
     - The Get Feature Info (GFI) for WFS features can now be displayed in 3D mode.
     - Values from the attribute `cesiumParameter` from config.js are now set when instantiating map3D at the 3D scene.
-- renamed FilterGeneral to Filter and removed old Filter Files.
+    - The maps are removed from vuex-state and getters. The mapCollection is a global object now. Use it to get the 2D-map, the 3D-map or the 2D-view.
 - The following NPM packages are updated:
     - @masterportal/masterportalapi: 2.2.0 to 2.3.0 (This also raised ol to version 6.14.1)
-
-    todo:
-    -  Radio.trigger("Map", "clickedWindowPosition", extendedClickObject); entfernt, bitte auf store.["Maps/clickCoordinate"] horchen
-    - mapCollection global
 
 ### Deprecated
 - Switched Icon Library from Glyphicon to Bootstrap Icons. Edited Webpack Config. Updated icon usage in vue components to use scss. Updated icon usage in backbone modules. Edited docs & tests accordingly.
