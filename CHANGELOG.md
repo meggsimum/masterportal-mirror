@@ -20,6 +20,7 @@
     - new option optionsLimit for dropdown snippet
     - Parent-child Filter Mode in Dropdown snippet
 - Added possibility to display a legend for a layer of type 'StaticImage'.
+- Added latest Tag to release-Scripts.
 
 ### Changed
 - `default`-gfiTheme: If a `|`-character is part of the response, every element separated by the character will be displayed in a separate paragraph.
