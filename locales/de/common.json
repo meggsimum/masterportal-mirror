@@ -50,6 +50,7 @@
             "parcelSearch": "Flurstückssuche",
             "print": "Karte Drucken",
             "measure": "Strecke / Fläche messen",
+            "featureMeasure": "Strecke zwischen Features messen",
             "coordToolkit": "Koordinaten",
             "coord": "Koordinaten abfragen",
             "supplyCoord": "Koordinaten abfragen",
@@ -407,6 +408,9 @@
                 "detailsOfSelected": "Details des ausgewählten Features",
                 "alert": "Der Versuch das selektierte Feature zu zeigen ist fehlgeschlagen, da es keine Geometrie hat.",
                 "key": "{{shownFeatures}} von {{featureCount}} Features gelistet"
+            },
+            "featureMeasure": {
+                "distance": "Distanz"
             },
             "layerSlider": {
                 "displayLayers": "Anzeige diverser Layer.",

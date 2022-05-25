@@ -13,6 +13,7 @@ import Contact from "./contact/store/indexContact";
 import CoordToolkit from "./coordToolkit/store/indexCoordToolkit";
 import Draw from "./draw/store/indexDraw";
 import FeatureLister from "./featureLister/store/indexFeatureLister";
+import FeatureMeasure from "./featureMeasure/store/indexFeatureMeasure";
 import FileImport from "./fileImport/store/indexFileImport";
 import FilterGeneral from "./filterGeneral/store/indexFilterGeneral";
 import Gfi from "./gfi/store/indexGfi";
@@ -43,6 +44,7 @@ export default {
         CoordToolkit,
         Draw,
         FeatureLister,
+        FeatureMeasure,
         FileImport,
         FilterGeneral,
         Gfi,

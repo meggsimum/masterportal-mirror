@@ -49,6 +49,7 @@
             "compareFeatures": "Compare features",
             "print": "Print map",
             "measure": "Measure distance / area",
+            "featureMeasure": "Measure distance between Map-Features",
             "coordToolkit": "Coordinates",
             "coord": "Query coordinates",
             "supplyCoord": "Query coordinates",
@@ -407,6 +408,9 @@
                 "detailsOfSelected": "Details of the selected feature",
                 "alert": "The attempt to show the selected feature failed because it has no geometry.",
                 "key": "{{shownFeatures}} of {{featureCount}} features listed"
+            },
+            "featureMeasure": {
+                "distance": "Distance"
             },
             "layerSlider": {
                 "displayLayers": "Display of various layers.",
