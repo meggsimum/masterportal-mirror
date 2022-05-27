@@ -67,7 +67,17 @@ export default {
         filteredItems (items) {
             const attributesObject = this.getUniqueObjectFromAttributes(this.attrName, items);
 
-            this.featureInfo = attributesObject !== null ? this.beautifyObjectKeys(attributesObject) : null;
+            if (attributesObject === null) {
+                this.featureInfo = null;
+                return;
+            }
+
+            if (typeof this.gfiAttributes === "undefined") {
+                this.featureInfo = this.beautifyObjectKeys(attributesObject);
+            }
+            else {
+                this.featureInfo = Radio.request("Util", "renameKeys", this.gfiAttributes, attributesObject);
+            }
         },
         featureInfo: {
             handler () {
