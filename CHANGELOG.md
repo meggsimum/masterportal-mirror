@@ -12,7 +12,7 @@
 ### __Breaking Changes__
 ---
 #### *Bootstrap upgrade*
-The Bootstrap package was upgraded from 3.4.1 to 5.1.3. The code was refactored to the new bootstrap structure.
+The Bootstrap package was upgraded from 3.4.1 to 5.1.3. The code was refactored to the new Bootstrap structure.
 Masterportal developments with minor versions than Bootstrap 5.1.3 are no longer supported.
 Along with this upgrade Less is no longer supported, instead Sass has to be used for CSS.
 
