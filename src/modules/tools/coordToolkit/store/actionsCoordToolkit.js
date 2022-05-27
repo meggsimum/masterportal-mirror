@@ -243,7 +243,6 @@ export default {
             }
             if (mapMode === "3D" && position.length === 3) {
                 commit("setHeight", position[2].toFixed(1));
-                dispatch("MapMarker/placingPointMarker", position, {root: true});
             }
             commit("setPositionMapProjection", position);
             dispatch("changedPosition");

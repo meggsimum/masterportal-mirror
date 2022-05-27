@@ -254,9 +254,7 @@ export default {
             }
             else if (this.mapMode === "3D") {
                 this.eventHandler = new Cesium.ScreenSpaceEventHandler(this.get3DMap.getCesiumScene().canvas);
-                this.eventHandler.setInputAction(() => {
-                    this.positionClicked();
-                }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+                this.eventHandler.setInputAction(this.positionClicked, Cesium.ScreenSpaceEventType.LEFT_CLICK);
             }
         },
         removeInputActions () {
