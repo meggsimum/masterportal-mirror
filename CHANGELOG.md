@@ -9,6 +9,16 @@
 ---
 
 ## Unreleased - in development
+## __Breaking Changes__
+---
+#### Bootstrap upgrade
+The Bootstrap package was upgraded from 3.4.1 to 5.1.3. The code was refactored to the new bootstrap structure.
+Masterportal developments with minor versions than Bootstrap 5.1.3 are no longer supported.
+Along with this upgrade Less is no longer supported, instead Sass has to be used for CSS.
+
+#### Change in WFS filter parameter
+Issue #764: Using parameters in WfsSearch as defined in [Filter Encoding Implementation Specification](https://portal.ogc.org/files/?artifact_id=8340); the default name for the like filter escape character is now `escapeChar` rather than `escape`. This requires a change of configuration for services deviating from the standard implementation, see docs.
+---
 ### Added
 - The following NPM packages are added:
     - dependencies:
@@ -25,7 +35,6 @@
 
 ### Changed
 - `default`-gfiTheme: If a `|`-character is part of the response, every element separated by the character will be displayed in a separate paragraph.
-- Issue #764: Using parameters in WfsSearch as defined in [Filter Encoding Implementation Specification](https://portal.ogc.org/files/?artifact_id=8340); the default name for the like filter escape character is now `escapeChar` rather than `escape`. This requires a change of configuration for services deviating from the standard implementation, see docs.
 - map moved with new structure from src/modules/map to src/core/maps.
 - 3D Mode:
     - The tool `coordTookit` can now be used in 3D mode again. A height is now also displayed in 3D mode.
