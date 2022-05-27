@@ -232,10 +232,9 @@ const getters = {
      * @returns {String} pretty-printed mouse coordinate (in 3d with height).
      */
     prettyMouseCoord: (state, {mouseCoordinate}) => {
-        let prettyMouseCoord = mouseCoordinate ? `${mouseCoordinate[0].toString().substr(0, 9)}, ${mouseCoordinate[1].toString().substr(0, 10)}` : "";
+        let prettyMouseCoord = mouseCoordinate ? `${mouseCoordinate[0].toFixed(2).toString()}, ${mouseCoordinate[1].toFixed(2).toString()}` : "";
 
         prettyMouseCoord = mouseCoordinate?.length === 3 ? `${prettyMouseCoord}, ${mouseCoordinate[2].toFixed(1)}` : prettyMouseCoord;
-
         return prettyMouseCoord;
 
     },
