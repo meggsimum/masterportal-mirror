@@ -556,14 +556,16 @@ const BuildSpecModel = {
         const layerModel = Radio.request("ModelList", "getModelByAttributes", {id: layer?.get("id")});
         let foundChild;
 
-        if (layerModel.get("typ") === "GROUP") {
-            foundChild = layerModel.get("children").find(child => child.id === layerId);
-            if (foundChild) {
-                return Radio.request("StyleList", "returnModelById", foundChild.styleId);
+        if (typeof layerModel?.get === "function") {
+            if (layerModel.get("typ") === "GROUP") {
+                foundChild = layerModel.get("children").find(child => child.id === layerId);
+                if (foundChild) {
+                    return Radio.request("StyleList", "returnModelById", foundChild.styleId);
+                }
             }
-        }
-        else if (typeof layerModel?.get === "function") {
-            return Radio.request("StyleList", "returnModelById", layerModel.get("styleId"));
+            else {
+                return Radio.request("StyleList", "returnModelById", layerModel.get("styleId"));
+            }
         }
         return undefined;
     },
