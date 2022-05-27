@@ -1,3 +1,5 @@
+import {getStyleModelById} from "../../../../../src/core/layers/RadioBridge.js";
+
 /**
  * check how to highlight
  * @param {Object} param store context
@@ -122,7 +124,7 @@ function highlightViaParametricUrl (dispatch, getters, layerIdAndFeatureId) {
  * @returns {ol/feature} feature to highlight
  */
 function getHighlightFeature (layerId, featureId, getters) {
-    const layer = getters.layerById(layerId)?.olLayer;
+    const layer = getters.getLayerById(layerId)?.olLayer;
 
     if (layer) {
         return layer.getSource().getFeatureById(featureId)
@@ -141,11 +143,9 @@ function getHighlightFeature (layerId, featureId, getters) {
  */
 function increaseFeature (commit, getters, highlightObject) {
     const scaleFactor = highlightObject.scale ? highlightObject.scale : 1.5,
-        features = highlightObject.layer ? highlightObject.layer.features : undefined, // use list of features provided if given
-        feature = features?.find(feat => feat.id.toString() === highlightObject.id)?.feature // retrieve from list of features provided by id, if both are given
-            || highlightObject.layer?.id && highlightObject.id // if layerId and featureId are given
-            ? getHighlightFeature(highlightObject.layer?.id, highlightObject.id, getters) // get feature from layersource, incl. check against clustered features
-            : highlightObject.feature, // else, use provided feature itself if given
+        feature = highlightObject.feature // given already
+            ? highlightObject.feature
+            : getHighlightFeature(highlightObject.layer?.id, highlightObject.id, getters), // get feature from layersource, incl. check against clustered features
         clonedStyle = styleObject(highlightObject, feature) ? styleObject(highlightObject, feature).clone() : feature.getStyle()?.clone(),
         clonedImage = clonedStyle ? clonedStyle.getImage() : undefined;
 
@@ -171,19 +171,11 @@ function increaseFeature (commit, getters, highlightObject) {
  * @returns {ol/style} ol style
  */
 function styleObject (highlightObject, feature) {
-    let styleModel = Radio.request("StyleList", "returnModelById", highlightObject.layer.id),
-        style;
+    const stylelistmodel = highlightObject.styleId ? getStyleModelById(highlightObject.styleId) : getStyleModelById(highlightObject.layer.id);
+    let style;
 
-    if (!styleModel) {
-        if (highlightObject.styleId) {
-            styleModel = Radio.request("StyleList", "returnModelById", highlightObject.styleId);
-        }
-        else {
-            styleModel = Radio.request("StyleList", "returnModelById", highlightObject.layer.styleId);
-        }
-    }
-    if (styleModel) {
-        style = styleModel.createStyle(feature, false);
+    if (stylelistmodel !== undefined) {
+        style = stylelistmodel.createStyle(feature, false);
         if (Array.isArray(style) && style.length > 0) {
             style = style[0];
         }

@@ -39,19 +39,16 @@ export default {
             commit("setSelectedFeature", feature);
 
             dispatch("switchToDetails");
-            dispatch("Map/zoomTo", {
-                geometryOrExtent: featureGeometry,
-                options: {duration: 500, zoom: 9}
-            }, {root: true});
 
             if (styleObj && styleObj.zoomLevel) {
                 if (featureGeometry && typeof featureGeometry.getType === "function") {
                     if (featureGeometry.getType() === "Point") {
-                        Radio.trigger("MapView", "setCenter", featureGeometry.getCoordinates(), styleObj.zoomLevel);
+                        dispatch("Maps/setCenter", featureGeometry.getCoordinates(), {root: true});
                     }
                     else {
-                        Radio.trigger("MapView", "setCenter", getCenter(featureGeometry.getExtent()), styleObj.zoomLevel);
+                        dispatch("Maps/setCenter", getCenter(featureGeometry.getExtent()), {root: true});
                     }
+                    dispatch("Maps/setZoomLevel", styleObj.zoomLevel, {root: true});
                 }
             }
         }

@@ -102,8 +102,8 @@ export async function translate (urlParamsKey, urlParamsValue) {
             return {key: key, value: value};
         }
         case "highlightfeaturesbyattribute":
-        case "map/highlightfeaturesbyattribute": {
-            const key = "Map/highlightFeaturesByAttribute",
+        case "api/highlightfeaturesbyattribute": {
+            const key = "api/highlightFeaturesByAttribute",
                 value = convert(urlParamsValue);
 
             return {key: key, value: value};

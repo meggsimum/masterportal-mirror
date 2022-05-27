@@ -12,6 +12,8 @@ import {isUrl} from "../../../../utils/urlHelper";
 import {isEmailAddress} from "../../../../utils/isEmailAddress.js";
 import {isPhoneNumber, getPhoneNumberAsWebLink} from "../../../../utils/isPhoneNumber.js";
 
+import mapCollection from "../../../../core/maps/mapCollection";
+
 export default {
     name: "SelectFeatures",
     components: {
@@ -298,7 +300,7 @@ export default {
             const featureIndex = event.currentTarget.id.split("-")[0],
                 selected = this.selectedFeaturesWithRenderInformation[featureIndex];
 
-            Radio.request("Map", "getMap").getView().fit(selected.item.getGeometry());
+            mapCollection.getMap(this.$store.state.Maps.mode).getView().fit(selected.item.getGeometry());
             this.highlightFeature({featureId: selected.item, layerId: selected.layerId});
         },
 

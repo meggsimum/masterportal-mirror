@@ -45,11 +45,12 @@ export default {
 
         if (styleObj && styleObj.zoomLevel) {
             if (featureGeometryType === "Point") {
-                Radio.trigger("MapView", "setCenter", featureId.getGeometry().getCoordinates(), styleObj.zoomLevel);
+                dispatch("Maps/setCenter", featureId.getGeometry().getCoordinates(), {root: true});
             }
             else {
-                Radio.trigger("MapView", "setCenter", getCenter(featureId.getGeometry().getExtent()), styleObj.zoomLevel);
+                dispatch("Maps/setCenter", getCenter(featureId.getGeometry().getExtent()), {root: true});
             }
+            dispatch("Maps/setZoomLevel", styleObj.zoomLevel, {root: true});
         }
     }
 };

@@ -1,8 +1,5 @@
 import {WFS} from "ol/format.js";
-//import VectorLayer from "ol/layer/Vector.js";
 import VectorBaseLayer from "../core/layers/vectorBase";
-import VectorSource from "ol/source/Vector.js";
-import {Style} from "ol/style.js";
 import Point from "ol/geom/Point.js";
 import Feature from "ol/Feature.js";
 import axios from "axios";
@@ -43,7 +40,6 @@ export default {
             styleListModel = Radio.request("StyleList", "returnModelById", modelId),
             highlightLayer = new VectorBaseLayer(vectorAttrs);
         let hadPoint = false;
-        console.log(highlightLayer);
 
         features.forEach(feature => {
             const geometry = feature.getGeometry();
@@ -136,29 +132,29 @@ export default {
      * @returns {void}
     */
     handleGetFeatureResponse: function (dispatch, response, highlightFeaturesLayer) {
-        if (response.status === 200) {
-            const features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data);
-
-            if (features.length === 0) {
-                const parser = new DOMParser(),
-                    xmlDoc = parser.parseFromString(response.data, "text/xml"),
-                    exceptionText = xmlDoc.getElementsByTagName("ExceptionText")[0].childNodes[0].nodeValue;
-
-                if (exceptionText) {
-                    console.error("highlightFeaturesByAttribute: service exception: " + exceptionText);
-                    dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
-                    return;
-                }
-            }
-
-            this.highlightPointFeature(this.settings.pointStyleId, "highlight_point_layer", "highlightPoint", highlightFeaturesLayer.gfiAttributes, features);
-            this.highlightLineOrPolygonFeature(this.settings.polygonStyleId, "highlight_polygon_layer", "highlightPolygon", "Polygon", highlightFeaturesLayer.gfiAttributes, features);
-            this.highlightLineOrPolygonFeature(this.settings.lineStyleId, "highlight_line_layer", "highlightLine", "LineString", highlightFeaturesLayer.gfiAttributes, features);
-        }
-        else {
+        if (response.status !== 200) {
             console.warn(response.status);
             dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
+            return;
         }
+
+        const features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data);
+
+        if (features.length === 0) {
+            const parser = new DOMParser(),
+                xmlDoc = parser.parseFromString(response.data, "text/xml"),
+                exceptionText = xmlDoc.getElementsByTagName("ExceptionText")[0].childNodes[0].nodeValue;
+
+            if (exceptionText) {
+                console.error("highlightFeaturesByAttribute: service exception: " + exceptionText);
+                dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
+                return;
+            }
+        }
+
+        this.highlightPointFeature(this.settings.pointStyleId, "highlight_point_layer", "highlightPoint", highlightFeaturesLayer.gfiAttributes, features);
+        this.highlightLineOrPolygonFeature(this.settings.polygonStyleId, "highlight_polygon_layer", "highlightPolygon", "Polygon", highlightFeaturesLayer.gfiAttributes, features);
+        this.highlightLineOrPolygonFeature(this.settings.lineStyleId, "highlight_line_layer", "highlightLine", "LineString", highlightFeaturesLayer.gfiAttributes, features);
     },
 
     /**

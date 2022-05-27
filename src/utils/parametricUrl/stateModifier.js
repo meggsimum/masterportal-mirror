@@ -111,7 +111,7 @@ function callActions (state) {
         store.dispatch("ZoomTo/zoomToFeatures");
     }
 
-    if (state.urlParams["Maps/highlightFeaturesByAttribute"]) {
+    if (state.urlParams["api/highlightFeaturesByAttribute"]) {
         const propName = state.urlParams?.attributeName,
             propValue = state.urlParams?.attributeValue,
             queryType = state.urlParams?.attributeQuery,
