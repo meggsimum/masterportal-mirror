@@ -47,8 +47,8 @@ export default {
             v-if="legendObj !== undefined"
         >
             <div
-                v-for="legendPart in legendObj.legend"
-                :key="JSON.stringify(legendPart)"
+                v-for="(legendPart, index) in legendObj.legend"
+                :key="JSON.stringify(legendPart) + '_' + index"
                 class="layer-legend-container"
             >
                 <!-- String -->
