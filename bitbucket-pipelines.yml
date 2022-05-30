@@ -71,7 +71,7 @@ pipelines:
                 script:
                     - npm install
                     - npm run buildMdDoc
-                    - echo ./
+                    - ls -R
                     - apt-get update
             - step:
                 name: deploy files
