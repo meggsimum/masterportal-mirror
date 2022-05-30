@@ -81,7 +81,7 @@ pipelines:
                     - apt-get install -y curl
                     # find all zip folders in dist folder, loop through the results and post the zips to the BB download folder
                     - for zipFilePath in $(find docHtml -name \*.html); do
-                        curl -X POST --user "$DOC_USER:DOC_PASSWORD" "$DOC_URL" --form files=@"$zipFilePath" --verbose;
+                        curl -X POST --user "$DOC_USER:$DOC_PASSWORD" "$DOC_URL" --form files=@"$zipFilePath" --verbose;
                       done
     custom: # Pipelines that are triggered manually
         End2End-Tests on saucelabs:
