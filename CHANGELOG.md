@@ -12,9 +12,12 @@
 ### __Breaking Changes__
 ---
 #### *Bootstrap upgrade*
-The Bootstrap package was upgraded from 3.4.1 to 5.1.3. The code was refactored to the new Bootstrap structure.
-Masterportal developments with minor versions than Bootstrap 5.1.3 are no longer supported.
-Along with this upgrade Less is no longer supported, instead Sass has to be used for CSS.
+The Bootstrap package was upgraded from 3.4.1 to 5.1.3. Masterportal developments with minor versions than Bootstrap 5.1.3 are no longer supported.
+
+The upgrade included following necessary changes:
+- Code-Refactoring to the new Bootstrap structure.
+- Less is no longer supported, instead Sass has to be used for CSS.
+- As icon set bootstrap-icons replaced glyphicons.
 
 #### *Change in WFS filter parameter*
 Issue #764: Using parameters in WfsSearch as defined in [Filter Encoding Implementation Specification](https://portal.ogc.org/files/?artifact_id=8340); the default name for the like filter escape character is now `escapeChar` rather than `escape`. This requires a change of configuration for services deviating from the standard implementation, see docs.
