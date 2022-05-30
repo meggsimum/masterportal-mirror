@@ -61,6 +61,27 @@ pipelines:
                     - for zipFilePath in $(find dist -name \*.zip); do
                         curl -X POST --user "$bbapi_name:$bbapi_key" "https://api.bitbucket.org/2.0/repositories/geowerkstatt-hamburg/masterportal/downloads" --form files=@"$zipFilePath" --verbose;
                       done
+        'v2*.*.*':
+            - step:
+                name: publish docs
+                caches:
+                    - node
+                artifacts:
+                    - ./docHtml
+                script:
+                    - npm install
+                    - npm run buildMdDoc
+                    - apt-get update
+            - step:
+                name: deploy files
+                caches:
+                    - node
+                script:
+                    - apt-get install -y curl
+                    # find all zip folders in dist folder, loop through the results and post the zips to the BB download folder
+                    - for zipFilePath in $(find docHtml -name \*.html); do
+                        curl -X POST --user "$DOC_USER:DOC_PASSWORD" "$DOC_URL" --form files=@"$zipFilePath" --verbose;
+                      done
     custom: # Pipelines that are triggered manually
         End2End-Tests on saucelabs:
             - step: *install-e2e-tests-server-on-test-geoportal
