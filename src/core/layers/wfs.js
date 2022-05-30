@@ -6,7 +6,7 @@ import Cluster from "ol/source/Cluster";
 import {bbox, all} from "ol/loadingstrategy.js";
 
 /**
- * Creates a layer of type WMS.
+ * Creates a layer of type WFS.
  * @param {Object} attrs  attributes of the layer
  * @returns {void}
  */

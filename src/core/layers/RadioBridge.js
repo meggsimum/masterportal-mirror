@@ -11,6 +11,24 @@ export function layerVisibilityChanged (layerModel, value) {
     Radio.trigger("ModelList", "selectedChanged", layerModel, value);
     Radio.trigger("ModelList", "updatedSelectedLayerList", getLayerModelsByAttributes({isSelected: true, type: "layer"}));
 }
+/**
+ * Listens to changes of attribute isVisibleInMap.
+ * @param {Object} layerModel the layer
+ * @param {Function} listener the observer to call on changes
+ * @returns {void}
+ */
+export function listenToLayerVisibility (layerModel, listener) {
+    if (typeof listener !== "function") {
+        return;
+    }
+    Radio.channel("Layer").on({
+        "layerVisibleChanged": (id, value) => {
+            if (typeof layerModel?.id !== "undefined" && layerModel.id === id) {
+                listener(value);
+            }
+        }
+    });
+}
 
 /* ******************* Legend ******************* */
 /**
@@ -58,10 +76,10 @@ export function getResolutionByScale (scale, scaleType) {
 /**
  * Request options from Mapview
  * Can be done directly or is no longer needed if modelList is refactored.
- * @returns {void}
+ * @returns {Object} the options
  */
 export function getOptionsFromMapView () {
-    Radio.request("MapView", "getOptions");
+    return Radio.request("MapView", "getOptions");
 }
 
 /* ******************* Menu ******************* */
@@ -74,6 +92,24 @@ export function getOptionsFromMapView () {
  */
 export function outOfRangeChanged (layerModel, value) {
     Radio.trigger("Menu", "change:isOutOfRange", layerModel, value);
+}
+/**
+ * Listens to changes of attribute isOutOfRange.
+ * @param {Object} layerModel the layer
+ * @param {Function} listener the observer to call on changes
+ * @returns {void}
+ */
+export function listenToIsOutOfRange (layerModel, listener) {
+    if (typeof listener !== "function") {
+        return;
+    }
+    Radio.channel("Menu").on({
+        "change:isOutOfRange": (changedModel, value) => {
+            if (typeof layerModel?.id !== "undefined" && layerModel?.id === changedModel?.id) {
+                listener(value);
+            }
+        }
+    });
 }
 /**
  * Fires if property isVisibleInTree changes.

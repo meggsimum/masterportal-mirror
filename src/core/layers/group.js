@@ -6,7 +6,7 @@ import WFSLayer from "./wfs";
 import WMTSLayer from "./wmts";
 import GeoJSONLayer from "./geojson";
 import OAFLayer from "./oaf";
-import SensorLayer from "../../../modules/core/modelList/layer/sensor";
+import STALayer from "./sta";
 import HeatmapLayer from "../../../modules/core/modelList/layer/heatmap";
 import * as bridge from "./RadioBridge.js";
 /**
@@ -80,7 +80,10 @@ GroupedLayers.prototype.createLayerSource = function (attrs) {
             layerSource.push(new GeoJSONLayer(childLayerDefinition));
         }
         else if (childLayerDefinition.typ === "SensorThings") {
-            layerSource.push(new SensorLayer(childLayerDefinition));
+            const sensorLayer = new STALayer(childLayerDefinition);
+
+            sensorLayer.initializeSensorThings();
+            layerSource.push(sensorLayer);
         }
         else if (childLayerDefinition.typ === "Heatmap") {
             layerSource.push(new HeatmapLayer(childLayerDefinition));

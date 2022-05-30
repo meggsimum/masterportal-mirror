@@ -1,32 +1,377 @@
-import SensorLayerModel from "@modules/core/modelList/layer/sensor.js";
+import VectorSource from "ol/source/Vector.js";
+import VectorLayer from "ol/layer/Vector.js";
+import Cluster from "ol/source/Cluster.js";
 import Feature from "ol/Feature.js";
 import Point from "ol/geom/Point.js";
-import LineString from "ol/geom/LineString";
 import {expect} from "chai";
-import VectorLayer from "ol/layer/Vector.js";
-import {Vector as VectorSource} from "ol/source.js";
 import sinon from "sinon";
+import STALayer from "../../sta";
+import store from "../../../../app-store";
 
-describe("core/modelList/layer/sensor", () => {
-    let sensorLayer;
+describe("src/core/layers/sta.js", () => {
+    const consoleWarn = console.warn;
+    let attributes,
+        sensorLayer;
 
     before(() => {
+        mapCollection.clear();
         const map = {
             id: "ol",
             mode: "2D",
             addInteraction: sinon.stub(),
             removeInteraction: sinon.stub(),
             addLayer: () => sinon.stub(),
-            getView: () => ({
-                getProjection: () => "EPSG:25832"
-            })
+            getView: () => {
+                return {
+                    getResolutions: () => [2000, 1000]
+                };
+            }
         };
 
         mapCollection.clear();
         mapCollection.addMap(map, "2D");
+        i18next.init({
+            lng: "cimode",
+            debug: false
+        });
+    });
+    beforeEach(() => {
+        attributes = {
+            url: "https://url.de",
+            name: "staTestLayer",
+            id: "id",
+            typ: "SensorThings",
+            version: "1.1",
+            gfiTheme: "gfiTheme",
+            isChildLayer: false,
+            transparent: false,
+            isSelected: false
+        };
+        store.getters = {
+            treeType: "custom"
+        };
+        sensorLayer = new STALayer(attributes);
+        console.warn = sinon.stub();
+    });
 
-        sensorLayer = new SensorLayerModel();
-        sensorLayer.set("url", "test/test/test", {silent: true});
+    afterEach(() => {
+        sinon.restore();
+        console.warn = consoleWarn;
+    });
+
+    describe("createLayer", () => {
+        it("should create an ol.VectorLayer with source and style", () => {
+            const staLayer = new STALayer(attributes),
+                layer = staLayer.get("layer");
+
+            expect(layer).to.be.an.instanceof(VectorLayer);
+            expect(layer.getSource()).to.be.an.instanceof(VectorSource);
+            expect(typeof layer.getStyleFunction()).to.be.equals("function");
+            expect(layer.get("id")).to.be.equals(attributes.id);
+            expect(layer.get("name")).to.be.equals(attributes.name);
+            expect(layer.get("gfiTheme")).to.be.equals(attributes.gfiTheme);
+        });
+        it("createLayer shall create an ol.VectorLayer with cluster-source", () => {
+            attributes.clusterDistance = 60;
+            const staLayer = new STALayer(attributes),
+                layer = staLayer.get("layer");
+
+            expect(layer).to.be.an.instanceof(VectorLayer);
+            expect(layer.getSource()).to.be.an.instanceof(Cluster);
+            expect(layer.getSource().getDistance()).to.be.equals(attributes.clusterDistance);
+            expect(typeof layer.getStyleFunction()).to.be.equals("function");
+        });
+        it("createLayer with isSelected=true shall set layer visible", () => {
+            attributes.isSelected = true;
+            const staLayer = new STALayer(attributes),
+                layer = staLayer.get("layer");
+
+            expect(layer).to.be.an.instanceof(VectorLayer);
+            expect(layer.getSource()).to.be.an.instanceof(VectorSource);
+            expect(staLayer.get("isVisibleInMap")).to.be.true;
+            expect(staLayer.get("layer").getVisible()).to.be.true;
+        });
+        it("createLayer with isSelected=false shall set layer not visible", () => {
+            attributes.isSelected = false;
+            const staLayer = new STALayer(attributes),
+                layer = staLayer.get("layer");
+
+            expect(layer).to.be.an.instanceof(VectorLayer);
+            expect(layer.getSource()).to.be.an.instanceof(VectorSource);
+            expect(staLayer.get("isVisibleInMap")).to.be.false;
+            expect(staLayer.get("layer").getVisible()).to.be.false;
+        });
+    });
+
+    describe("getFeaturesFilterFunction", () => {
+        it("getFeaturesFilterFunction shall filter getGeometry", () => {
+            const staLayer = new STALayer(attributes),
+                featuresFilterFunction = staLayer.getFeaturesFilterFunction(attributes),
+                features = [{
+                    id: "1",
+                    getGeometry: () => sinon.stub()
+                },
+                {
+                    id: "2",
+                    getGeometry: () => undefined
+                }];
+
+            expect(typeof featuresFilterFunction).to.be.equals("function");
+            expect(featuresFilterFunction(features).length).to.be.equals(1);
+
+        });
+        it("getFeaturesFilterFunction shall filter bboxGeometry", () => {
+            attributes.bboxGeometry = {
+                intersectsExtent: (extent) => {
+                    if (extent.includes("1")) {
+                        return true;
+                    }
+                    return false;
+                },
+                getExtent: () => ["1"]
+            };
+            const staLayer = new STALayer(attributes),
+                featuresFilterFunction = staLayer.getFeaturesFilterFunction(attributes),
+                features = [{
+                    id: "1",
+                    getGeometry: () => {
+                        return {
+                            getExtent: () => ["1"]
+                        };
+
+                    }
+                },
+                {
+                    id: "2",
+                    getGeometry: () => undefined
+                },
+                {
+                    id: "3",
+                    getGeometry: () => {
+                        return {
+                            getExtent: () => ["2"]
+                        };
+                    }
+                }];
+
+            expect(typeof featuresFilterFunction).to.be.equals("function");
+            expect(featuresFilterFunction(features).length).to.be.equals(1);
+            expect(featuresFilterFunction(features)[0].id).to.be.equals("1");
+        });
+    });
+
+    describe("getPropertyname", () => {
+        it("getPropertyname shall return joined proertyNames or empty string", () => {
+            attributes.propertyNames = ["app:plan", "app:name"];
+            const staLayer = new STALayer(attributes);
+            let propertyname = staLayer.getPropertyname(attributes);
+
+            expect(propertyname).to.be.equals("app:plan,app:name");
+
+            attributes.propertyNames = [];
+            propertyname = staLayer.getPropertyname(attributes);
+            expect(propertyname).to.be.equals("");
+            attributes.propertyNames = undefined;
+            propertyname = staLayer.getPropertyname(attributes);
+            expect(propertyname).to.be.equals("");
+            attributes.propertyNames = undefined;
+            propertyname = staLayer.getPropertyname(attributes);
+            expect(propertyname).to.be.equals("");
+        });
+    });
+
+    describe("getStyleFunction", () => {
+        it("getStyleFunction shall return a function", () => {
+            sinon.stub(Radio, "request").callsFake((...args) => {
+                let ret = null;
+
+                args.forEach(arg => {
+                    if (arg === "returnModelById") {
+                        ret = {
+                            id: "id",
+                            createStyle: () => sinon.stub(),
+                            getGeometryTypeFromWFS: () => sinon.stub(),
+                            getLegendInfos: () => sinon.stub()
+                        };
+                    }
+                });
+                return ret;
+            });
+            const staLayer = new STALayer(attributes),
+                styleFunction = staLayer.getStyleFunction(attributes);
+
+            expect(styleFunction).not.to.be.null;
+            expect(typeof styleFunction).to.be.equals("function");
+        });
+    });
+
+    describe("updateSource", () => {
+        it("updateSource shall refresh source if 'sourceUpdated' is false", () => {
+            const staLayer = new STALayer(attributes),
+                layer = staLayer.get("layer"),
+                spy = sinon.spy(layer.getSource(), "refresh");
+
+            expect(staLayer.get("sourceUpdated")).to.be.false;
+            staLayer.updateSource();
+            expect(spy.calledOnce).to.be.true;
+            expect(staLayer.get("sourceUpdated")).to.be.true;
+        });
+        it("updateSource shall not refresh source if 'sourceUpdated' is true", () => {
+            attributes.sourceUpdated = true;
+            const staLayer = new STALayer(attributes),
+                layer = staLayer.get("layer"),
+                spy = sinon.spy(layer.getSource(), "refresh");
+
+            expect(staLayer.get("sourceUpdated")).to.be.true;
+            staLayer.updateSource();
+            expect(spy.notCalled).to.be.true;
+            expect(staLayer.get("sourceUpdated")).to.be.true;
+        });
+    });
+
+    describe("functions for features", () => {
+        let style1 = null,
+            style2 = null,
+            style3 = null;
+        const features = [{
+            getId: () => "1",
+            get: () => sinon.stub(),
+            set: () => sinon.stub(),
+            setStyle: (fn) => {
+                style1 = fn;
+            }
+        },
+        {
+            getId: () => "2",
+            get: () => sinon.stub(),
+            set: () => sinon.stub(),
+            setStyle: (fn) => {
+                style2 = fn;
+            }
+        },
+        {
+            getId: () => "3",
+            get: () => sinon.stub(),
+            set: () => sinon.stub(),
+            setStyle: (fn) => {
+                style3 = fn;
+            }
+        }];
+
+        it("hideAllFeatures", () => {
+            const staLayer = new STALayer(attributes),
+                layer = staLayer.get("layer"),
+                clearStub = sinon.stub(layer.getSource(), "clear"),
+                addFeaturesStub = sinon.stub(layer.getSource(), "addFeatures");
+
+            sinon.stub(layer.getSource(), "getFeatures").returns(features);
+
+            staLayer.hideAllFeatures();
+
+            expect(staLayer.get("layer").getSource().getFeatures().length).to.be.equals(3);
+            expect(clearStub.calledOnce).to.be.true;
+            expect(addFeaturesStub.calledOnce).to.be.true;
+            expect(typeof style1).to.be.equals("function");
+            expect(style1()).to.be.null;
+            expect(typeof style2).to.be.equals("function");
+            expect(style2()).to.be.null;
+            expect(typeof style3).to.be.equals("function");
+            expect(style3()).to.be.null;
+
+        });
+        it("showAllFeatures", () => {
+            sinon.stub(Radio, "request").callsFake((...args) => {
+                let ret = null;
+
+                args.forEach(arg => {
+                    if (arg === "returnModelById") {
+                        ret = {
+                            id: "id",
+                            createStyle: () => sinon.stub(),
+                            getGeometryTypeFromWFS: () => sinon.stub(),
+                            getLegendInfos: () => sinon.stub()
+                        };
+                    }
+                });
+                return ret;
+            });
+            const staLayer = new STALayer(attributes),
+                layer = staLayer.get("layer");
+
+            sinon.stub(layer.getSource(), "getFeatures").returns(features);
+            staLayer.showAllFeatures();
+
+            expect(staLayer.get("layer").getSource().getFeatures().length).to.be.equals(3);
+            expect(typeof style1).to.be.equals("function");
+            expect(style1()).not.to.be.null;
+            expect(typeof style2).to.be.equals("function");
+            expect(style2()).not.to.be.null;
+            expect(typeof style3).to.be.equals("function");
+            expect(style3()).not.to.be.null;
+
+        });
+        it("showFeaturesByIds", () => {
+            sinon.stub(Radio, "request").callsFake((...args) => {
+                let ret = null;
+
+                args.forEach(arg => {
+                    if (arg === "returnModelById") {
+                        ret = {
+                            id: "id",
+                            createStyle: () => sinon.stub(),
+                            getGeometryTypeFromWFS: () => sinon.stub(),
+                            getLegendInfos: () => sinon.stub()
+                        };
+                    }
+                });
+                return ret;
+            });
+            const staLayer = new STALayer(attributes),
+                layer = staLayer.get("layer"),
+                clearStub = sinon.stub(layer.getSource(), "clear");
+
+            sinon.stub(layer.getSource(), "addFeatures");
+            sinon.stub(layer.getSource(), "getFeatures").returns(features);
+            sinon.stub(layer.getSource(), "getFeatureById").returns(features[0]);
+            staLayer.showFeaturesByIds(["1"]);
+
+            expect(staLayer.get("layer").getSource().getFeatures().length).to.be.equals(3);
+            expect(typeof style1).to.be.equals("function");
+            expect(style1()).not.to.be.null;
+            expect(typeof style2).to.be.equals("function");
+            expect(style2()).to.be.null;
+            expect(typeof style3).to.be.equals("function");
+            expect(style3()).to.be.null;
+            expect(clearStub.calledOnce).to.be.true;
+        });
+    });
+
+    describe("functions for styling", () => {
+        it("getStyleAsFunction shall return a function", () => {
+            const staLayer = new STALayer(attributes);
+
+            let ret = staLayer.getStyleAsFunction(() => {
+                return "test";
+            });
+
+            expect(typeof ret).to.be.equals("function");
+            expect(ret()).to.be.equals("test");
+
+            ret = staLayer.getStyleAsFunction("test");
+            expect(typeof ret).to.be.equals("function");
+            expect(ret()).to.be.equals("test");
+        });
+        it("styling shall set style", () => {
+            const staLayer = new STALayer(attributes);
+
+            staLayer.set("style", () => {
+                return "test";
+            });
+
+            staLayer.styling();
+            expect(typeof staLayer.get("layer").getStyle()).to.be.equals("function");
+            expect(staLayer.get("layer").getStyle()()).to.be.equals("test");
+        });
     });
 
     describe("getMqttHostFromUrl", () => {
@@ -458,13 +803,6 @@ describe("core/modelList/layer/sensor", () => {
 
     describe("getFeaturesInExtent", () => {
         it("should return no feature within extent", () => {
-            sensorLayer.setLayer(new VectorLayer({
-                source: new VectorSource(),
-                name: "test",
-                typ: "SensorThings",
-                id: "123"
-            }));
-            sensorLayer.set("layerSource", sensorLayer.get("layer").getSource(), {silent: true});
             const features = [],
                 feature1 = new Feature({
                     geometry: new Point([50, 50])
@@ -677,33 +1015,6 @@ describe("core/modelList/layer/sensor", () => {
             sensorLayer.set("version", "1.1", {silent: true});
 
             expect(sensorLayer.aggregatePropertiesOfThings(allThings, "http://example.com", "1.1")).to.deep.equal(expectedOutcome);
-        });
-    });
-
-    describe("createFeatureByLocation", () => {
-        it("should parse point object", () => {
-            const obj = {
-                    "type": "Point",
-                    "coordinates": [10.210913, 53.488449]
-                },
-                epsg = "EPSG:4326",
-                mapColl = mapCollection.getMapView("2D").getProjection();
-
-            sensorLayer.set("epsg", "EPSG:4326", {silent: true});
-            expect(sensorLayer.createFeatureByLocation(obj, mapColl, epsg)).to.be.an.instanceof(Feature);
-            expect(sensorLayer.createFeatureByLocation(obj, mapColl, epsg).getGeometry()).to.be.an.instanceof(Point);
-        });
-        it("should parse line object", () => {
-            const obj = {
-                    "type": "LineString",
-                    "coordinates": [[10.210913, 53.488449], [11.210913, 54.488449]]
-                },
-                epsg = "EPSG:4326",
-                mapColl = mapCollection.getMapView("2D").getProjection();
-
-            sensorLayer.set("epsg", "EPSG:4326", {silent: true});
-            expect(sensorLayer.createFeatureByLocation(obj, mapColl, epsg)).to.be.an.instanceof(Feature);
-            expect(sensorLayer.createFeatureByLocation(obj, mapColl, epsg).getGeometry()).to.be.an.instanceof(LineString);
         });
     });
 
@@ -1547,20 +1858,20 @@ describe("core/modelList/layer/sensor", () => {
         });
     });
 
-    describe("getLayerState", () => {
+    describe("getStateOfSTALayer", () => {
         it("should return true if certain params are given", () => {
-            expect(sensorLayer.getLayerState(false, true, false)).to.be.true;
+            expect(sensorLayer.getStateOfSTALayer(false, true, false)).to.be.true;
         });
         it("should return false if certain params are given", () => {
-            expect(sensorLayer.getLayerState(false, false, true)).to.be.false;
-            expect(sensorLayer.getLayerState(true, false, true)).to.be.false;
-            expect(sensorLayer.getLayerState(true, true, true)).to.be.false;
+            expect(sensorLayer.getStateOfSTALayer(false, false, true)).to.be.false;
+            expect(sensorLayer.getStateOfSTALayer(true, false, true)).to.be.false;
+            expect(sensorLayer.getStateOfSTALayer(true, true, true)).to.be.false;
         });
         it("should return undefined if certain params are given", () => {
-            expect(sensorLayer.getLayerState(false, true, true)).to.be.undefined;
-            expect(sensorLayer.getLayerState(false, false, false)).to.be.undefined;
-            expect(sensorLayer.getLayerState(true, false, false)).to.be.undefined;
-            expect(sensorLayer.getLayerState(true, true, false)).to.be.undefined;
+            expect(sensorLayer.getStateOfSTALayer(false, true, true)).to.be.undefined;
+            expect(sensorLayer.getStateOfSTALayer(false, false, false)).to.be.undefined;
+            expect(sensorLayer.getStateOfSTALayer(true, false, false)).to.be.undefined;
+            expect(sensorLayer.getStateOfSTALayer(true, true, false)).to.be.undefined;
         });
     });
 

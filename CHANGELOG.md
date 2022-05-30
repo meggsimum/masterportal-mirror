@@ -19,6 +19,7 @@
 ### Changed
 - Changed class for several title elements on page from span to h1 or h2 and standardized their styling
 - WMTS feature is now realized via masterportalAPI functions.
+- SensorThingsAPI: The sensor layer has been moved from Backbone to Vue.
 
 ### Deprecated
 

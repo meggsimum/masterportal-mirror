@@ -122,7 +122,7 @@ Using the `SensorThingsHttp.get()` function, the `SensorThingsHttp` layer handle
 Here is a basic implementation of `SensorThingsHttp`, using basic events of the Masterportal, to show its functionality:
 
 ```js
-import {SensorThingsHttp} from "@modules/core/modelList/layer/sensorThingsHttp";
+import {SensorThingsHttp} from "@src/utils/sensorThingsHttp";
 
 const http = new SensorThingsHttp(),
     url = "https://iot.hamburg.de/v1.0/Things";
@@ -296,7 +296,7 @@ The extent needs to be described including its source projection and target proj
 See this basic implementation of `SensorThingsHttp` to receive data within the browser's current view extent only, using Masterportal events to show its functionality, as an example:
 
 ```js
-import {SensorThingsHttp} from "@modules/core/modelList/layer/sensorThingsHttp";
+import {SensorThingsHttp} from "@src/utils/sensorThingsHttp";
 
 const http = new SensorThingsHttp(),
     extent = Radio.request("MapView", "getCurrentExtent"),

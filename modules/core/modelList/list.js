@@ -7,7 +7,7 @@ import WMSTimeLayer from "../../../src/core/layers/wmsTime";
 import WMTSLayer from "../../../src/core/layers/wmts";
 import StaticImageLayer from "./layer/staticImage";
 import GeoJSONLayer from "../../../src/core/layers/geojson";
-import SensorLayer from "./layer/sensor";
+import STALayer from "../../../src/core/layers/sta";
 import HeatmapLayer from "./layer/heatmap";
 import TerrainLayer from "../../../src/core/layers/terrain";
 import EntitiesLayer from "../../../src/core/layers/entities";
@@ -200,7 +200,10 @@ const ModelList = Backbone.Collection.extend(/** @lends ModelList.prototype */{
                 return new GroupedLayers(attrs, options);
             }
             else if (attrs.typ === "SensorThings") {
-                return new SensorLayer(attrs, options);
+                const sensorLayer = new STALayer(attrs, options);
+
+                sensorLayer.initializeSensorThings();
+                return sensorLayer;
             }
             else if (attrs.typ === "Heatmap") {
                 return new HeatmapLayer(attrs, options);
