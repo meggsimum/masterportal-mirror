@@ -81,8 +81,7 @@ pipelines:
                     - apt-get install -y curl
                     # find all zip folders in dist folder, loop through the results and post the zips to the BB download folder
                     # curl -p --insecure "$DOC_USER:$DOC_PASSWORD@DOC_URLdocHtml/" -T zipFilePath --ftp-create-dirs --verbose;
-                    - for zipFilePath in $(find docHtml -name \*.html); do
-                        curl -p --insecure -u 'DOC_USER:DOC_PASSWORD' "DOC_URL" -T 'zipFilePath' --ftp-create-dirs --verbose;
+                    - find docHtml -type f -exec curl -p --insecure -u '$DOC_USER:$DOC_PASSWORD' --ftp-create-dirs -T {} "$DOC_URL" --verbose;
                       done
     custom: # Pipelines that are triggered manually
         End2End-Tests on saucelabs:
