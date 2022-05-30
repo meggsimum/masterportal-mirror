@@ -67,10 +67,11 @@ pipelines:
                 caches:
                     - node
                 artifacts:
-                    - ./docHtml
+                    - docHtml/**
                 script:
                     - npm install
                     - npm run buildMdDoc
+                    - echo "./"
                     - apt-get update
             - step:
                 name: deploy files
