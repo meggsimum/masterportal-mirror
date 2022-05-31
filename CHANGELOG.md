@@ -14,10 +14,14 @@
 #### *Bootstrap upgrade*
 The Bootstrap package was upgraded from 3.4.1 to 5.1.3. Masterportal developments with minor versions than Bootstrap 5.1.3 are no longer supported.
 
+Please check if your own developments e.g. addons are affected and you have to make adaptions to the new bootstrap version.
+Also the configuration of e.g. tools and controls in config.json has changed ("icon" instead of "glyphicon") and have to be updated. See [documentation](https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/config.json.md)
+
 The upgrade included following necessary changes:
-- Code-Refactoring to the new Bootstrap structure.
-- Less is no longer supported, instead Sass has to be used for CSS.
-- As icon set bootstrap-icons replaced glyphicons.
+
+- Code-Refactoring to the new Bootstrap structure. Here new Bootstrap classes replaced old ones. For examples see the [Masterportal Refactoring](https://bitbucket.org/geowerkstatt-hamburg/masterportal/pull-requests/3406) or [Bootstrap documentation](https://getbootstrap.com/docs/5.0/migration/)
+- Less is no longer supported, instead Sass has to be used for CSS. For examples see also [Masterportal Refactoring](https://bitbucket.org/geowerkstatt-hamburg/masterportal/pull-requests/3406)
+- As icon set [Bootstrap Icons](https://icons.getbootstrap.com/) replaced glyphicons. Also, the configuration in config.json considering elements like tools and controls have changed. The old attribute "glypicon" has changed to "icon" and as values the new bootstrap-icons have to be used.
 
 #### *Change in WFS filter parameter*
 Issue #764: Using parameters in WfsSearch as defined in [Filter Encoding Implementation Specification](https://portal.ogc.org/files/?artifact_id=8340); the default name for the like filter escape character is now `escapeChar` rather than `escape`. This requires a change of configuration for services deviating from the standard implementation, see docs.
