@@ -77,9 +77,9 @@ pipelines:
                 caches:
                     - node
                 script:
-                    - apt-get install -y ncftp
+                    - apt-get install -y wput
                     # find all doc html files in docHtml folder, loop through the results and post the files to the masterportal.org folder
-                    - ncftpput -R -v -u "$DOC_USER:$DOC_PASSWORD" "$DOC_URL" ftp-upload-path docHtml/*;
+                    - wput docHtml $DOC_URL2;
     custom: # Pipelines that are triggered manually
         End2End-Tests on saucelabs:
             - step: *install-e2e-tests-server-on-test-geoportal
