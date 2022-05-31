@@ -83,7 +83,7 @@ pipelines:
                     # curl -p --insecure "$DOC_USER:$DOC_PASSWORD@DOC_URLdocHtml/" -T zipFilePath --ftp-create-dirs --verbose;
                     # curl --insecure -u "$DOC_USER:$DOC_PASSWORD" "$DOC_URL" -T '$zipFilePath' --ftp-create-dirs --verbose;
                     - for zipFilePath in $(find docHtml -name \*.html); do
-                        url --insecure -u "$DOC_USER:$DOC_PASSWORD" "$DOC_URL" -T $zipFilePath --ftp-create-dirs --verbose;
+                        curl --insecure -u "$DOC_USER:$DOC_PASSWORD" "$DOC_URL" -T $zipFilePath --ftp-create-dirs --verbose;
                       done
     custom: # Pipelines that are triggered manually
         End2End-Tests on saucelabs:
