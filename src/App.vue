@@ -20,6 +20,7 @@ export default {
             if (this.readFromUrlParams() && checkIsURLQueryValid(window.location.search)) {
                 this.setUrlParams(new URLSearchParams(window.location.search));
             }
+            this.checkVueObservation();
         });
     },
     methods: {
@@ -30,7 +31,31 @@ export default {
         */
         readFromUrlParams: function () {
             return !Object.prototype.hasOwnProperty.call(Config, "allowParametricURL") || Config.allowParametricURL === true;
+        },
+        /**
+        * Logs an error, if map3D is observed by vue. Only in mode 'development'.
+        * NOTICE: this only works when 3D is enabled once!
+        *
+        * If the map3D is observed, and more information is needed:
+        * Log of the observables in vue:
+        * node_modules\vue\dist\vue.runtime.esm.js
+        * function defineReactive$$1
+        * line 1012: console.log(obj, key, val);
+        * @returns {void}
+        */
+        checkVueObservation () {
+            /* eslint-disable no-process-env */
+            if (process.env.NODE_ENV === "development") {
+                setInterval(() => {
+                    const map3D = mapCollection.getMap("3D");
+
+                    if (map3D?.__ob__) {
+                        console.error("map3d is observed by vue:", map3D, " This leads to extreme performance problems, and the cause must be eliminated. This can have several causes: the map3D is in vuex-state or is available via getter. Layers are in the state or in the getters and reference the map3D. Questions to geodatenanwendungen@gv.hamburg.de");
+                    }
+                }, 5000);
+            }
         }
+
     }
 };
 </script>
