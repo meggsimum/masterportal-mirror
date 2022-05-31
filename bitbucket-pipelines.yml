@@ -38,7 +38,7 @@ definitions:
             - /bin/bash ./deployScripts/transfer_ftp.sh
 
 pipelines:
-    # Start pipeline with tag to build examples zips and copy them to the Bitbucket download folder
+    # Start pipeline with tag to build examples zips and copy them to the Bitbucket download folder and copy docs to the masterportal.org folder
     tags:
         'v*.*.*':
             - step:
@@ -61,7 +61,7 @@ pipelines:
                     - for zipFilePath in $(find dist -name \*.zip); do
                         curl -X POST --user "$bbapi_name:$bbapi_key" "https://api.bitbucket.org/2.0/repositories/geowerkstatt-hamburg/masterportal/downloads" --form files=@"$zipFilePath" --verbose;
                       done
-        'v2*.*.*':
+        'v*.*.*':
             - step:
                 name: publish docs
                 caches:
@@ -71,7 +71,6 @@ pipelines:
                 script:
                     - npm install
                     - npm run buildMdDoc
-                    - ls -R
                     - apt-get update
             - step:
                 name: deploy files
@@ -79,11 +78,9 @@ pipelines:
                     - node
                 script:
                     - apt-get install -y curl
-                    # find all zip folders in dist folder, loop through the results and post the zips to the BB download folder
-                    # curl -p --insecure "$DOC_USER:$DOC_PASSWORD@DOC_URLdocHtml/" -T zipFilePath --ftp-create-dirs --verbose;
-                    # curl --insecure -u "$DOC_USER:$DOC_PASSWORD" "$DOC_URL" -T '$zipFilePath' --ftp-create-dirs --verbose;
-                    - for zipFilePath in $(find docHtml -name \*.html); do
-                        curl --insecure -u "$DOC_USER:$DOC_PASSWORD" "$DOC_URL" -T $zipFilePath --ftp-create-dirs --verbose;
+                    # find all doc html files in docHtml folder, loop through the results and post the files to the masterportal.org folder
+                    - for docFilePath in $(find docHtml -name \*.html); do
+                        curl --insecure -u "$DOC_USER:$DOC_PASSWORD" "$DOC_URL" -T $docFilePath --ftp-create-dirs --verbose;
                       done
     custom: # Pipelines that are triggered manually
         End2End-Tests on saucelabs:
