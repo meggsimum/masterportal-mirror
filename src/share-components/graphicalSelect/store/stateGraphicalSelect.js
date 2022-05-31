@@ -29,10 +29,13 @@ const state = {
     isMultiple: false,
     drawInteraction: undefined,
     circleOverlay: new Overlay({
+        id: "circle-overlay",
         offset: [15, 0],
         positioning: "center-left"
     }),
     tooltipOverlay: new Overlay({
+        id: "tooltip-overlay",
+        element: document.createElement("div"),
         offset: [15, 20],
         positioning: "top-left"
     }),

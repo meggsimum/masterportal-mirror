@@ -64,6 +64,7 @@
     - Vector layers like WFS, GeoJSON or OAF (OGC API - Features) are now displayed in 3D mode.
     - The Control Attributions now also works in 3D mode.
     - Issue #787: Layers in the topic tree under subject data (Fachdaten) are now preserved when switching to 3D mode.
+    - Fixed a bug that occurred when using the share component `GraphicalSelect` after switching from 3D to 2D mode
 - Fix error in menu if GFI Tool is set to isVisibleInMenu = false and no other tool is configured
 - Issue #751: Fix issue when printing groups of WFS layers.
 - Fix withoutGUIDraw
