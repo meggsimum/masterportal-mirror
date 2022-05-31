@@ -30,6 +30,7 @@ const state = {
     drawInteraction: undefined,
     circleOverlay: new Overlay({
         id: "circle-overlay",
+        element: document.createElement("div"),
         offset: [15, 0],
         positioning: "center-left"
     }),

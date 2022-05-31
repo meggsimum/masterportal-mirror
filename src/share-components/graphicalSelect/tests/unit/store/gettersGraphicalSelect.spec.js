@@ -46,13 +46,14 @@ describe("src/share-components/graphicalSelect/store/gettersGraphicalSelect", fu
     });
     it("returns the circleOverlay default values from state", () => {
         expect(getters.circleOverlay(stateGraphicalSelect).getId()).to.be.equal("circle-overlay");
+        expect(getters.circleOverlay(stateGraphicalSelect).getElement()).not.to.be.undefined;
         expect(getters.circleOverlay(stateGraphicalSelect).getOffset()).to.deep.equal([15, 0]);
         expect(getters.circleOverlay(stateGraphicalSelect).getPositioning()).to.be.equal("center-left");
     });
     it("returns the tooltipOverlay default values from state", () => {
         expect(getters.tooltipOverlay(stateGraphicalSelect).getId()).to.be.equal("tooltip-overlay");
+        expect(getters.tooltipOverlay(stateGraphicalSelect).getElement()).not.to.be.undefined;
         expect(getters.tooltipOverlay(stateGraphicalSelect).getOffset()).to.deep.equal([15, 20]);
         expect(getters.tooltipOverlay(stateGraphicalSelect).getPositioning()).to.be.equal("top-left");
-        expect(getters.tooltipOverlay(stateGraphicalSelect).getElement()).not.to.be.undefined;
     });
 });
