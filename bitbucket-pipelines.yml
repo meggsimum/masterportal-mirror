@@ -79,7 +79,7 @@ pipelines:
                 script:
                     - apt-get install -y curl
                     # find all doc html files in docHtml folder, loop through the results and post the files to the masterportal.org folder
-                    - for docFilePath in $(find docHtml -name \*.html); do
+                    - for docFilePath in $(find docHtml -name \*.*); do
                         curl --insecure -u "$DOC_USER:$DOC_PASSWORD" "$DOC_URL" -T $docFilePath --ftp-create-dirs --verbose;
                       done
     custom: # Pipelines that are triggered manually
