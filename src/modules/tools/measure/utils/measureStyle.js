@@ -77,7 +77,7 @@ export default [
                         coords.push(coordinate);
                     }
                 });
-                return new Polygon(coords);
+                return new Polygon([coords]);
             }
 
             return new MultiPoint(coords);
