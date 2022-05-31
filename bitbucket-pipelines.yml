@@ -77,7 +77,7 @@ pipelines:
                 caches:
                     - node
                 script:
-                    - apt-get install -y wput
+                    - apt-get install -y curl
                     # find all doc html files in docHtml folder and subfolder, loop through the results and post the files to the masterportal.org folder
                     - find docHtml -type f -exec curl --insecure --user "$DOC_USER:$DOC_PASSWORD" --ftp-create-dirs -T {} "$DOC_URL2" --verbose \;
     custom: # Pipelines that are triggered manually
