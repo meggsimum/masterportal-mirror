@@ -295,6 +295,31 @@ async function loadApp () {
         });
     }
     LoaderOverlay.hide();
+    checkVueObservation();
+}
+
+/**
+ * Logs an error, if map3D is observed by vue. Only in mode 'development'.
+ * NOTICE: this only works when 3D is enabled once!
+ *
+ * If the map3D is observed, and more information is needed:
+ * Log der Observables in vue:
+ * node_modules\vue\dist\vue.runtime.esm.js
+ * function defineReactive$$1
+ * line 1012: console.log(obj, key, val);
+ * @returns {void}
+ */
+function checkVueObservation () {
+    /* eslint-disable no-process-env */
+    if (process.env.NODE_ENV === "development") {
+        setInterval(() => {
+            const map3D = mapCollection.getMap("3D");
+
+            if (map3D?.__ob__) {
+                console.error("map3d is observed: ", map3D);
+            }
+        }, 5000);
+    }
 }
 
 /**
