@@ -61,7 +61,7 @@ pipelines:
                     - for zipFilePath in $(find dist -name \*.zip); do
                         curl -X POST --user "$bbapi_name:$bbapi_key" "https://api.bitbucket.org/2.0/repositories/geowerkstatt-hamburg/masterportal/downloads" --form files=@"$zipFilePath" --verbose;
                       done
-        'v*.*.*':
+        'v2*.*.*':
             - step:
                 name: publish docs
                 caches:
