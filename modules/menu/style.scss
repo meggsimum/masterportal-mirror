@@ -10,6 +10,19 @@
     display: none;
     background: $white;
 }
+/*-- streetSmart Addon Menu --*/
+.expandable-navbar {
+    display: flex;
+    align-items: start;
+    .navbar-nav {
+        flex-direction: row;
+        width: auto !important;
+    }
+    .navbar-right {
+        display: flex;
+        justify-content: end;
+    }
+}
 
 .navbar .navbar-nav > li > a {
     color: $dark_grey;
