@@ -68,8 +68,9 @@
 - Issue #751: Fix issue when printing groups of WFS layers.
 - Fix withoutGUIDraw
 - Legend now works correctly again, for multiple layers with the same legend reference.
-- Fix map resized when a tool is as sidebar and defined with active:true in config.json
-- Issue #771: Fix issue of WMS-TimeLayer being displayed wrong and without TimeSlider, when set visivle through URLParameter
+- Fix map resized when a tool is as sidebar and defined with active:true in config.json.
+- Issue #771: Fix issue of WMS-TimeLayer being displayed wrong and without TimeSlider, when set visivle through URLParameter.
+- Issue #668: Fix broken metadata url control with urlIsVisible.
 
 ---
 
