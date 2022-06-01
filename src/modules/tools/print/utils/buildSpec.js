@@ -492,7 +492,9 @@ const BuildSpecModel = {
                     if (styleGeometryFunction !== null && styleGeometryFunction !== undefined) {
                         clonedFeature.setGeometry(styleGeometryFunction(clonedFeature));
                         geometryType = styleGeometryFunction(clonedFeature).getType();
-                        this.checkPolygon(clonedFeature);
+                        if (geometryType === "Polygon") {
+                            this.checkPolygon(clonedFeature);
+                        }
                     }
                     stylingRules = this.getStylingRules(layer, clonedFeature, styleAttributes, style);
                     if (styleModel !== undefined && styleModel.get("labelField") && styleModel.get("labelField").length > 0) {
@@ -559,17 +561,19 @@ const BuildSpecModel = {
      * @param {ol.Feature} feature to inspect
      * @returns {ol.Feature} corrected feature, if necessary
      */
-    checkPolygon (feature){
-        if(feature.getGeometry().getType() === "Polygon" 
-            && Array.isArray(feature.getGeometry().getCoordinates()[0]) 
-            && feature.getGeometry().getCoordinates()[0].length === 2)
-        {
-            const coords = [];
+    checkPolygon (feature) {
+        if (Array.isArray(feature.getGeometry().getCoordinates()[0])) {
+            const coordinates = feature.getGeometry().getCoordinates()[0];
 
-            feature.getGeometry().getCoordinates()[0].forEach(coord => {
-                coords.push(coord);
-            });
-            feature.getGeometry().setCoordinates(coords);
+            if (coordinates[0][0] !== coordinates[coordinates.length - 1][0] && coordinates[0][1] !== coordinates[coordinates.length - 1][1]) {
+                const coords = [];
+
+                coordinates.forEach(coord => {
+                    coords.push(coord);
+                });
+                feature.getGeometry().setCoordinates(coords);
+            }
+
         }
         return feature;
     },
