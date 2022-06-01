@@ -329,6 +329,7 @@ export default {
                         </div>
                     </div>
                     <div
+                        v-if="showUrl"
                         id="url"
                         :show="isActiveTab('url')"
                         :class="getTabPaneClasses('url')"
