@@ -89,11 +89,7 @@ describe("src/core/layers/layer.js", () => {
         };
 
         store.getters = {
-            treeType: "custom",
-            "Maps/get2DMap": {removeLayer: () => {
-                layerRemoved = true;
-                return layerRemoved;
-            }}
+            treeType: "custom"
         };
         featureList = [];
         featureList.push(new Feature(new Point([1, 1])));
@@ -880,11 +876,7 @@ describe("src/core/layers/layer.js", () => {
         let layerWrapper = null;
 
         store.getters = {
-            treeType: treetype,
-            "Maps/get2DMap": {removeLayer: () => {
-                layerRemoved = true;
-                return layerRemoved;
-            }}
+            treeType: treetype
         };
 
         attributes.isSelected = !isSelected;
@@ -912,11 +904,7 @@ describe("src/core/layers/layer.js", () => {
         let layerWrapper = null;
 
         store.getters = {
-            treeType: treeType,
-            "Maps/get2DMap": {removeLayer: () => {
-                layerRemoved = true;
-                return layerRemoved;
-            }}
+            treeType: treeType
         };
 
         attributes.isVisibleInMap = !isVisibleInMap;

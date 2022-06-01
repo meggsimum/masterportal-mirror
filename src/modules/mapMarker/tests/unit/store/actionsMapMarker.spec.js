@@ -18,9 +18,19 @@ const {
 } = actions;
 
 describe("src/modules/mapMarker/store/actionsMapMarker.js", () => {
-    let markerPoint, markerPolygon, rootGetters;
+    let map,
+        markerPoint,
+        markerPolygon;
 
     beforeEach(() => {
+        mapCollection.clear();
+        map = {
+            id: "ol",
+            mode: "2D",
+            removeLayer: sinon.spy()
+        };
+        mapCollection.addMap(map, "2D");
+
         markerPoint = new VectorLayer({
             name: "markerPoint",
             source: new VectorSource(),
@@ -35,12 +45,6 @@ describe("src/modules/mapMarker/store/actionsMapMarker.js", () => {
             visible: false,
             style: new Style()
         });
-        rootGetters = {
-            "Maps/get2DMap": {
-                removeLayer: sinon.spy(),
-                addLayer: sinon.spy()
-            }
-        };
     });
     afterEach(() => {
         sinon.restore();
@@ -67,7 +71,7 @@ describe("src/modules/mapMarker/store/actionsMapMarker.js", () => {
             testAction(removePointMarker, null, state, {}, [
                 {type: "clearMarker", payload: "markerPoint"},
                 {type: "setVisibilityMarker", payload: {visbility: false, marker: "markerPoint"}}
-            ], {}, done, rootGetters);
+            ], {}, done);
         });
     });
     describe("rotatePointMarker", () => {
@@ -101,7 +105,7 @@ describe("src/modules/mapMarker/store/actionsMapMarker.js", () => {
             testAction(rotatePointMarker, payload, state, {}, [
                 {type: "clearMarker", payload: "markerPoint"},
                 {type: "addFeatureToMarker", payload: {feature: feature, marker: "markerPoint"}}
-            ], getters, done, rootGetters);
+            ], getters, done);
             expect(feature.getStyle().getImage().getRotation()).to.be.equals(payload * Math.PI / 180);
         });
     });
@@ -130,7 +134,7 @@ describe("src/modules/mapMarker/store/actionsMapMarker.js", () => {
             testAction(removePolygonMarker, null, state, {}, [
                 {type: "clearMarker", payload: "markerPolygon"},
                 {type: "setVisibilityMarker", payload: {visbility: false, marker: "markerPolygon"}}
-            ], {}, done, rootGetters);
+            ], {}, done);
         });
     });
 

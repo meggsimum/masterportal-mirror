@@ -37,9 +37,7 @@ describe("src/core/maps/store/actions/actionsMapMode.js", () => {
 
         testAction(clickEventCallback, payload, {}, {}, [
             {type: "updateClick", payload: Object.assign(payload, {map: "abcMap"}), dispatch: true}
-        ], {
-            get2DMap: "abcMap"
-        }, done);
+        ], {}, done);
 
         expect(radioTrigger.calledOnce).to.be.true;
         expect(radioTrigger.args[0][0]).to.equals("Map");
