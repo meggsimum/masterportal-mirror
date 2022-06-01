@@ -48,7 +48,15 @@ export default {
          * @returns {void}
          */
         show () {
-            this.$el.style.display = "block";
+            const el = document.querySelector(".modal"),
+                backdrop = document.querySelector(".modal-backdrop");
+
+            el.style.display = "block";
+            el.classList.add("show");
+            el.classList.remove("fade");
+            backdrop.style.display = "block";
+            backdrop.classList.add("show");
+            backdrop.classList.remove("fade");
         },
 
         /**
@@ -91,6 +99,12 @@ export default {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span class="control-icon bootstrap-icon standalone">
+                            <i class="bi-record-circle" />
+                        </span>
+                        {{ $t("common:modules.controls.orientation.titleGeolocatePOI") }}
+                    </h4>
                     <span
                         ref="close-icon"
                         class="bootstrap-icon"
@@ -103,12 +117,6 @@ export default {
                     >
                         <i class="bi-x-lg" />
                     </span>
-                    <h4 class="modal-title">
-                        <span class="control-icon bootstrap-icon standalone">
-                            <i class="bi-record-circle" />
-                        </span>
-                        {{ $t("common:modules.controls.orientation.titleGeolocatePOI") }}
-                    </h4>
                 </div>
                 <div class="choice-content">
                     <div class="choice-title">
@@ -160,15 +168,15 @@ export default {
 
 <style lang="scss" scoped>
     @import "~/css/mixins.scss";
+    @import "~variables";
 
     .poi-choice {
-        color: rgb(85, 85, 85);
+        color: $dark_grey;
         font-size: 14px;
         .modal-header {
             padding: 0;
             > .bootstrap-icon {
                 font-size: 16px;
-                float: right;
                 padding: 12px;
                 cursor: pointer;
                 &:focus {
@@ -189,7 +197,7 @@ export default {
             }
         }
         .modal-dialog {
-            z-index: 1041;
+            z-index: 1051;
         }
         .choice-content{
             display: inline-block;
