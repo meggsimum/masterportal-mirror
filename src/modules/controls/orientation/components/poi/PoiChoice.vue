@@ -51,12 +51,14 @@ export default {
             const el = document.querySelector(".modal"),
                 backdrop = document.querySelector(".modal-backdrop");
 
-            el.style.display = "block";
-            el.classList.add("show");
-            el.classList.remove("fade");
-            backdrop.style.display = "block";
-            backdrop.classList.add("show");
-            backdrop.classList.remove("fade");
+            if (el) {
+                el.style.display = "block";
+                el.classList.add("show");
+                el.classList.remove("fade");
+                backdrop.style.display = "block";
+                backdrop.classList.add("show");
+                backdrop.classList.remove("fade");
+            }
         },
 
         /**
