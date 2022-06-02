@@ -24,7 +24,7 @@
         top: 0;
         bottom: 0;
         z-index: 3;
-        color: $light_grey;
+        color: $dark_grey;
         display: none;
         align-items: center; // necessary after display: inline-flex is set dynamically
         pointer-events: all;
@@ -65,7 +65,7 @@
     background-color: $white;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
     float: left;
-    font-size: 13px;
+    font-size: 12px;
     list-style: outside none none;
     margin: 2px 0 0;
     min-width: 200px;
@@ -80,7 +80,6 @@
         color: $dark_grey;
         padding-right: 12px;
         padding-left: 3px;
-        padding-top: 5px;
         font-size: 17px;
     }
     img {
@@ -140,7 +139,7 @@
 }
 
 .results {
-    background-color: $light_grey;
+    background-color: $primary;
     font-size: 12px;
     text-align: right;
     padding: 6px;
@@ -151,13 +150,14 @@
             color: $white;
             font-size: 16px;
             vertical-align: middle;
+            padding-top: 1px;
         }
     }
 }
 li.results {
     &:hover {
         opacity: 0.6;
-        background-color: $light_grey;
+        background-color: $primary;
     }
 }
 #searchInputUL {
