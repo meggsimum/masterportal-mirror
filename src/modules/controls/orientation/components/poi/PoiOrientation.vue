@@ -66,7 +66,17 @@ export default {
          * @returns {void}
          */
         show () {
-            this.$el.style.display = "block";
+            const el = document.querySelector(".modal"),
+                backdrop = document.querySelector(".modal-backdrop");
+
+            if (el) {
+                el.style.display = "block";
+                el.classList.add("show");
+                el.classList.remove("fade");
+                backdrop.style.display = "block";
+                backdrop.classList.add("show");
+                backdrop.classList.remove("fade");
+            }
         },
 
         /**
@@ -311,6 +321,9 @@ export default {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h4 class="modal-title">
+                        {{ $t("common:modules.controls.orientation.titleGeolocatePOI") }}
+                    </h4>
                     <span
                         ref="close-icon"
                         class="bootstrap-icon"
@@ -323,9 +336,6 @@ export default {
                     >
                         <i class="bi-x-lg" />
                     </span>
-                    <h4 class="modal-title">
-                        {{ $t("common:modules.controls.orientation.titleGeolocatePOI") }}
-                    </h4>
                 </div>
                 <div>
                     <ul
@@ -413,9 +423,10 @@ export default {
 
 <style lang="scss" scoped>
     @import "~/css/mixins.scss";
+    @import "~variables";
 
     .poi {
-        color: rgb(85, 85, 85);
+        color: $dark_grey;
         font-size: 14px;
         .modal-header {
             padding: 0;
@@ -437,7 +448,7 @@ export default {
             }
         }
         .modal-dialog {
-            z-index: 1041;
+            z-index: 1051;
         }
         .tab-content{
             max-height: 78vH;
