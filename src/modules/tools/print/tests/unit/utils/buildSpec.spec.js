@@ -4,8 +4,13 @@ import WMTSTileGrid from "ol/tilegrid/WMTS";
 import TileGrid from "ol/tilegrid/TileGrid";
 import {TileWMS, ImageWMS, WMTS} from "ol/source.js";
 import {Tile, Vector} from "ol/layer.js";
+import VectorLayer from "ol/layer/Vector.js";
+import VectorSource from "ol/source/Vector.js";
+import Feature from "ol/Feature.js";
+import {Polygon} from "ol/geom.js";
 import {expect} from "chai";
 import {EOL} from "os";
+import measureStyle from "./../../../../measure/utils/measureStyle";
 import createTestFeatures from "./testHelper";
 import sinon from "sinon";
 
@@ -1040,5 +1045,44 @@ describe("src/modules/tools/print/utils/buildSpec", function () {
         });
 
 
+    });
+    describe.only("checkPolygon", function () {
+        it("should correct coordinates of measure-layer polygon with measureStyle", function () {
+            const source = new VectorSource(),
+                layer = new VectorLayer({
+                    source,
+                    style: measureStyle
+                }),
+                feature = new Feature({
+                    geometry: new Polygon([[[0, 0], [0, 1], [1, 1], [0, 0]]])
+                });
+            let styles = null,
+                checked1 = false,
+                checked2 = false;
+
+            layer.getSource().addFeature(feature);
+            styles = layer.getStyleFunction()(feature);
+            styles.forEach((aStyle) => {
+                const geom = aStyle.getGeometryFunction()(feature);
+                let corrected = null,
+                    coordinates = null;
+
+                feature.setGeometry(geom);
+                corrected = buildSpec.checkPolygon(feature);
+                coordinates = corrected.getGeometry().getCoordinates();
+                if (coordinates.length === 1) {
+                    if (coordinates[0].length === 4) {
+                        expect(corrected.getGeometry().getCoordinates()).to.deep.equals([[[0, 0], [0, 1], [1, 1], [0, 0]]]);
+                        checked1 = true;
+                    }
+                }
+                else if (coordinates.length === 2) {
+                    expect(corrected.getGeometry().getCoordinates()).to.deep.equals([[0, 0], [0, 0]]);
+                    checked2 = true;
+                }
+            });
+            expect(checked1).to.be.true;
+            expect(checked2).to.be.true;
+        });
     });
 });

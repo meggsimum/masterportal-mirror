@@ -556,7 +556,7 @@ const BuildSpecModel = {
     },
 
     /**
-     * If geometry type is 'Polygon' the geometry is checked for not closed linearRing.
+     * The geometry of the feature is checked for not closed linearRing. Used for type Polygon.
      * If it is not closed, the coordinates are adapted.
      * @param {ol.Feature} feature to inspect
      * @returns {ol.Feature} corrected feature, if necessary
