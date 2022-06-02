@@ -1,4 +1,3 @@
-$color_4: rgb(82, 82, 82);
 @import "~variables";
 
 /**************** Layer Settings ****************/
@@ -7,7 +6,7 @@ ul#tree {
     .layer-settings {
         flex-basis: 100%;
         margin-top: 10px;
-        border-top: 1px solid #ddd;
+        border-top: 1px solid $white;
         padding: 10px 0px 10px 5px;
         font-size: 12px;
         .bootstrap-icon {
@@ -18,7 +17,7 @@ ul#tree {
             padding-right: 16px;
         }
         .remove-layer {
-            color: $light_grey;
+            color: $white;
             font-weight: bold;
             background-color: $dark_grey;
             border-radius: 10px;
@@ -33,7 +32,7 @@ ul#tree {
             padding-top: 6px;
             font-size: 12px;
             border-radius: 10px;
-            background-color: $light_grey;
+            background-color: $dark_grey;
         }
     }
 }
