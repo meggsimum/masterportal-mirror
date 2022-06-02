@@ -14,7 +14,6 @@ import MenuLoader from "../modules/menu/menuLoader";
 import featureViaURL from "../src/utils/featureViaURL";
 import SliderView from "../modules/snippets/slider/view";
 import SliderRangeView from "../modules/snippets/slider/range/view";
-import DropdownView from "../modules/snippets/dropdown/view";
 import WindowView from "../modules/window/view";
 import SidebarView from "../modules/sidebar/view";
 import ShadowView from "../modules/tools/shadow/view";
@@ -161,7 +160,6 @@ async function loadApp () {
 
     new SliderView();
     new SliderRangeView();
-    new DropdownView();
 
     // Module laden
     // Tools
