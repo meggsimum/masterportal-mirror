@@ -26,7 +26,7 @@ const actions = {
                     commit("setFeatureA", feature);
                     commit("setFeatureALayerId", layer.get("id"));
                 }
-                console.log(feature, layer.get("id"));
+                // console.log(feature, layer.get("id"));
             });
         });
     }

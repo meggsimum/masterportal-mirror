@@ -6,7 +6,7 @@ import getters from "../store/gettersFeatureMeasure";
 import mutations from "../store/mutationsFeatureMeasure";
 import actions from "../store/actionsFeatureMeasure";
 import {getDistance} from "ol/sphere";
-import {transform as transformCoord, getProjection} from "@masterportal/masterportalapi/src/crs";
+import {transform as transformCoord} from "@masterportal/masterportalapi/src/crs";
 
 export default {
     name: "FeatureMeasure",
@@ -46,7 +46,7 @@ export default {
                 transformedCoordA = transformCoord("EPSG:25832", "EPSG:4326", coordA),
                 transformedCoordB = transformCoord("EPSG:25832", "EPSG:4326", coordB);
 
-            console.log(coordA, transformedCoordA);
+            // console.log(coordA, transformedCoordA);
             this.setDistance(Math.round(getDistance(transformedCoordA, transformedCoordB)));
         }
     }
