@@ -19,6 +19,7 @@
 ### Removed
 
 ### Fixed
+- Issue #790: Resolve import of isObject util failed was fixed.
 
 ---
 
