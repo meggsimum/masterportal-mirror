@@ -1,5 +1,5 @@
 import store from "../app-store";
-import isObject from "isObject";
+import isObject from "./isObject";
 
 /**
  * Compares the reference string and compared string with locales and options
