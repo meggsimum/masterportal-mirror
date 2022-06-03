@@ -14,16 +14,15 @@
  * @returns {*}  Retrieved value or undefined, if nothing found
  */
 function getByDotSyntax (obj, path, separator = ".") {
-    const pathArray = createKeyPathArray(path);
+    const pathArray = createKeyPathArray(path, separator);
 
     if (pathArray === false) {
         console.warn("Invalid path parameter given for \"getByDotSyntax()\":", path);
         return undefined;
     }
 
-    return getByArraySyntax(obj, pathArray, separator);
+    return getByArraySyntax(obj, pathArray);
 }
-export {getByDotSyntax};
 
 /**
  * Retrieves a value from an object by array syntax, like this:
@@ -35,6 +34,9 @@ export {getByDotSyntax};
  * @returns {*}  Retrieved value or undefined, if nothing found
  */
 function getByArraySyntax (obj, pathArray) {
+    if (!Array.isArray(pathArray)) {
+        return undefined;
+    }
     const step = pathArray.shift();
 
     if (obj instanceof Object === false || obj[step] === undefined) {
@@ -47,7 +49,6 @@ function getByArraySyntax (obj, pathArray) {
 
     return getByArraySyntax(obj[step], pathArray);
 }
-export {getByArraySyntax};
 
 /**
  * Creates flat array of strings out of a variety of possible path arrays or strings.
@@ -108,8 +109,20 @@ function createKeyPathArray (path, separator = ".") {
  * @returns {Boolean} true, if successfully merged
  */
 function fetchFirstModuleConfig (context, configPaths, moduleName, recursiveFallback = true) {
+    if (context?.state instanceof Object === false) {
+        console.warn("fetchFirstModuleConfig: The given context is missing a state:", context);
+        return false;
+    }
+    else if (typeof context?.rootGetters?.toolConfig !== "function") {
+        console.warn("fetchFirstModuleConfig: The given context is missing the toolConfig function of rootGetters:", context);
+        return false;
+    }
+    else if (!Array.isArray(configPaths)) {
+        console.warn("fetchFirstModuleConfig: The given configPaths must be an array, but none is given:", configPaths);
+        return false;
+    }
     const missingSources = [],
-        missingDefaultValues = [],
+        missingDefaultValue = [],
         // no real config-params, e.g. added during parsing: must not be in state as default
         defaultsNotInState = ["i18nextTranslate", "useConfigName", "type", "parentId", "onlyDesktop"],
         state = context.state[moduleName] || context.state;
@@ -127,21 +140,21 @@ function fetchFirstModuleConfig (context, configPaths, moduleName, recursiveFall
 
         // Config Source must be an object in order to set those into the module state
         if (source instanceof Object === false || Array.isArray(source)) {
-            console.error("Config für \"" + moduleName + "\" wurde ignoriert, da sie kein Object ist.", source);
-            console.warn("Pfad der fehlerhaften Config:", createKeyPathArray(path));
+            console.error("The config for \"" + moduleName + "\" is not an object and thereby ignored.", source);
+            console.warn("Path to the defective config:", createKeyPathArray(path));
             continue;
         }
 
-        // Check for missing default values in module state
+        // Check for missing default value in module state
         for (const sourceProp in source) {
             if (!defaultsNotInState.includes(sourceProp) && state[sourceProp] === undefined) {
-                missingDefaultValues.push(sourceProp);
+                missingDefaultValue.push(sourceProp);
             }
         }
 
-        if (missingDefaultValues.length > 0) {
-            console.warn("Im Modul \"" + moduleName + "\" wurden folgende Standardwerte nicht gefunden. Diese werden aus der Config übernommen, haben möglicherweise aber keinen Effekt.", missingDefaultValues);
-            console.warn("Pfad des Moduls:", createKeyPathArray(path));
+        if (missingDefaultValue.length > 0) {
+            console.warn("Default value were not found in module \"" + moduleName + "\". Those are taken from config now, but are not expected to have any effect.", missingDefaultValue);
+            console.warn("Path to the module:", createKeyPathArray(path));
         }
 
         // only use the first found config
@@ -159,7 +172,6 @@ function fetchFirstModuleConfig (context, configPaths, moduleName, recursiveFall
 
     return success;
 }
-export {fetchFirstModuleConfig};
 
 /**
  * Deep merges one object into another. If given source param is no object or an Array, nothing happens.
@@ -194,5 +206,12 @@ function deepMerge (source, target) {
 
     return target;
 }
-export {deepMerge};
+
+export {
+    getByDotSyntax,
+    getByArraySyntax,
+    createKeyPathArray,
+    fetchFirstModuleConfig,
+    deepMerge
+};
 
