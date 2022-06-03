@@ -468,7 +468,15 @@ export default {
                             this.mapHandler.clearLayer(filterId, this.isExtern());
                         }
 
-                        if (!this.isParentSnippet(snippetId) && !this.hasOnlyParentRules() && (Array.isArray(filterQuestion.rules) && filterQuestion.rules.length)) {
+                        if (!this.isParentSnippet(snippetId) && !this.hasOnlyParentRules()) {
+                            if (this.layerConfig.clearAll && (!Array.isArray(filterQuestion.rules) || !filterQuestion.rules.length)) {
+                                this.amountOfFilteredItems = false;
+                                if (typeof onsuccess === "function") {
+                                    onsuccess(filterAnswer);
+                                }
+                                return;
+                            }
+
                             this.mapHandler.addItemsToLayer(filterId, filterAnswer.items, this.isExtern());
                             if (!Object.prototype.hasOwnProperty.call(this.layerConfig, "showHits") || this.layerConfig.showHits) {
                                 this.amountOfFilteredItems = this.mapHandler.getAmountOfFilteredItemsByFilterId(filterId);
