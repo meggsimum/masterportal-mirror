@@ -253,8 +253,8 @@ export default {
         }
         .disabled {
             cursor: not-allowed;
-            background-color: $light_grey_inactive_contrast;
-            opacity: 0.2;
+            background-color: lighten($light_grey_inactive, 40%);
+            color: $light_grey_inactive_contrast;
         }
 
     }
