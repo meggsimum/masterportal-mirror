@@ -322,6 +322,6 @@ export default {
         width: 65vh;
         height: 47vh;
         overflow: auto;
-        padding: 15px 0 0 0;
+        padding: 15px;
     }
 </style>
