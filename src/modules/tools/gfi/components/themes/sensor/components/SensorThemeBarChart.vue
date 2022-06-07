@@ -319,7 +319,6 @@ export default {
     }
     .sensor-chart-container {
         position: relative;
-        width: 65vh;
         height: 30vh;
     }
 </style>
