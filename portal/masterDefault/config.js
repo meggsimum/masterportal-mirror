@@ -10,7 +10,8 @@ const Config = {
             "2298", // Straßenbaumkataster cache grau
             "2297", // Straßenbaumkataster cache
             "1791", // nachträgliche Bodenrichtwerte lagetypisch 1964
-            "8713" // Layer Schulinfo
+            "20170", "20171", "20172", "20173", "20174", "20175", "20176", // Einzellayer Lapro, Freiraumverbund
+            "19970", "19971", "20058", "20059" // INSPIRE HH Versorgungswirtschaft Wasser und Abwasser
         ],
         layerIDsToStyle: [
             {
@@ -47,7 +48,10 @@ const Config = {
             "6A0D8B9D-1BBD-441B-BA5C-6159EE41EE71", // Bodenrichtwerte für Hamburg
             "3233E124-E576-4B5D-978E-164720C4E75F", // MRH Große Verkehrsprojekte
             "24513F73-D928-450C-A334-E30037945729", // 3D Straßenbaumkataster Hamburg
-            "7595A206-F07E-470D-A6C1-2F74F0B0C64E" // 3D Hamburger Hauptkirchen
+            "7595A206-F07E-470D-A6C1-2F74F0B0C64E", // 3D Hamburger Hauptkirchen
+            "47233BC2-8D3F-4D9E-B760-BA153327F0E8", // HWRM-Karten 1.Zyklus Hamburg
+            "BD9B5D2E-B6B8-4857-99A5-306B0411E48B", // Baustellen GeoNetBake Hamburg
+            "4C2CB09B-5F74-4BDF-BE10-3F4DBEF5BB02" // Schadenskarte_1946
         ]
     },
     scaleLine: true,
