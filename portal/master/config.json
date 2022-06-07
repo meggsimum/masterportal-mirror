@@ -16,7 +16,7 @@
       "dev": true,
       "searchInterfaces": {
         "gazetteer": {
-          "serviceId": "8",
+          "serviceId": "6",
           "searchAddress": true,
           "searchStreets": true,
           "searchHouseNumbers": true,
