@@ -67,6 +67,7 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
     search: async function (searchString) {
         const searchStringAttribute = this.get("searchStringAttribute"),
             payload = this.appendSearchStringToPayload(this.get("payload"), searchStringAttribute, searchString),
+            payloadWithIgnoreIds = this.addIgnoreIdsToPayload(payload, Config?.tree),
             requestConfig = {
                 serviceId: this.get("serviceId"),
                 /**
@@ -75,13 +76,14 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
                 */
                 useProxy: this.get("useProxy"),
                 type: this.get("type"),
-                payload: payload,
+                payload: payloadWithIgnoreIds,
                 responseEntryPath: this.get("responseEntryPath")
             };
         let result;
 
         if (searchString.length >= this.get("minChars")) {
             result = await initializeSearch(requestConfig);
+
             this.createRecommendedList(result.hits);
         }
     },
@@ -103,6 +105,24 @@ const ElasticSearchModel = Backbone.Model.extend(/** @lends ElasticSearchModel.p
                 payload[searchStringAttribute] = searchString;
             }
         });
+
+        return payload;
+    },
+
+    /**
+     * Blacklist of layerids and metdataids.
+     * Adds layerids and metadataids to the payload that should not appear in the response.
+     * @param {Object} payload Payload as Object.
+     * @param {Object} configTree Tree configuration from config.js.
+     * @returns {Object} Payload with ignore ids.
+     */
+    addIgnoreIdsToPayload: function (payload, configTree) {
+        if (configTree?.layerIDsToIgnore?.length > 0) {
+            payload.params.id = configTree.layerIDsToIgnore;
+        }
+        if (configTree?.metaIDsToIgnore?.length > 0) {
+            payload.params["datasets.md_id"] = configTree.metaIDsToIgnore;
+        }
 
         return payload;
     },

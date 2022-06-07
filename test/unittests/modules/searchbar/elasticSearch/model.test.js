@@ -209,4 +209,45 @@ describe("modules/searchbar/elasticSearch", function () {
             );
         });
     });
+    describe("addIgnoreIdsToPayload", () => {
+        let payload;
+
+        beforeEach(() => {
+            payload = {
+                id: "The_ID",
+                params: {
+                    query_string: "sturm"
+                }
+            };
+        });
+
+        it("add layerIDsToIgnore and metaIDsToIgnore to the payload, if configTree is defined and not empty", () => {
+            const configTree = {
+                layerIDsToIgnore: ["7777"],
+                metaIDsToIgnore: ["ABC-123-DEF-456"]
+            };
+
+            expect(model.addIgnoreIdsToPayload(payload, configTree)).deep.equals({
+                id: "The_ID",
+                params: {
+                    query_string: "sturm",
+                    id: ["7777"],
+                    "datasets.md_id": ["ABC-123-DEF-456"]
+                }
+            });
+        });
+        it("don't add layerIDsToIgnore and metaIDsToIgnore to the payload, if configTree is defined with empty arrays", () => {
+            const configTree = {
+                layerIDsToIgnore: [],
+                metaIDsToIgnore: []
+            };
+
+            expect(model.addIgnoreIdsToPayload(payload, configTree)).deep.equals(payload);
+        });
+        it("don't add layerIDsToIgnore and metaIDsToIgnore to the payload if configTree is undefined", () => {
+            const configTree = undefined;
+
+            expect(model.addIgnoreIdsToPayload(payload, configTree)).deep.equals(payload);
+        });
+    });
 });

@@ -16,6 +16,7 @@
 - api/highlightFeaturesByAttribute URL mechanism to query WFS data by parameters and configuration
 - WfsSearch: A `multiSelect` mode has been added where multiple search results can be selected and viewn on the map.
 - A new type of addons can be loaded: pure javascript-files with locale-files. See https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/addOnsVue.md.
+- The elasticsearch now sends `layerIDsToIgnore` (as `id`) and `metaIDsToIgnore` (as `datasets.md_id`) to the service as well. These associated layers are filtered out of the response from Elastic.
 
 ### Changed
 - Changed class for several title elements on page from span to h1 or h2 and standardized their styling
