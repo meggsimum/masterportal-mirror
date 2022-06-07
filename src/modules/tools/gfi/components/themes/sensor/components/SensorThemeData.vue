@@ -73,12 +73,13 @@ export default {
         <table class="table">
             <thead>
                 <tr class="row">
-                    <th>
+                    <th class="col">
                         {{ firstColumnHeaderName }}
                     </th>
                     <th
                         v-for="(name, index) in columnHeaders"
                         :key="name + '_' + index"
+                        class="col"
                     >
                         {{ name }}
                     </th>
@@ -90,12 +91,13 @@ export default {
                     :key="key"
                     class="row"
                 >
-                    <th>
+                    <th class="col">
                         {{ beautifyKey(key) }}
                     </th>
                     <td
                         v-for="(property, index) in value"
                         :key="property + '_' + index"
+                        class="col"
                     >
                         <span v-if="isWebLink(property)">
                             <a
