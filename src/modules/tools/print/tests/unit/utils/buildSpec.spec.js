@@ -1046,7 +1046,7 @@ describe("src/modules/tools/print/utils/buildSpec", function () {
 
 
     });
-    describe.only("checkPolygon", function () {
+    describe("checkPolygon", function () {
         it("should correct coordinates of measure-layer polygon with measureStyle", function () {
             const source = new VectorSource(),
                 layer = new VectorLayer({
