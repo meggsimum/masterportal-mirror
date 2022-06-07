@@ -22,8 +22,34 @@
         "searchDistricts": true,
         "searchParcels": true
       },
-      "tree": {
-        "minChars": 3
+      "elasticSearch": {
+        "minChars": 3,
+        "serviceId": "elastic",
+        "type": "GET",
+        "triggerEvent": {
+          "channel": "Parser",
+          "event": "addGdiLayer"
+        },
+        "payload": {
+          "id": "query",
+          "params": {
+            "query_string": "",
+            "typ": [
+              "sensorthings",
+              "wms"
+            ],
+            "size": 30
+          }
+        },
+        "searchStringAttribute": "query_string",
+        "responseEntryPath": "hits.hits",
+        "hitMap": {
+          "name": "_source.name",
+          "id": "_source.id",
+          "source": "_source"
+        },
+        "hitType": "common:modules.searchbar.type.subject",
+        "hitIcon": "bi-list-ul"
       }
     },
     "menu": {
