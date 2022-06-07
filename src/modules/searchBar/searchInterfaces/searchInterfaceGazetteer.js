@@ -1,6 +1,6 @@
 import SearchInterface from "./searchInterface";
 import store from "../../../app-store";
-import {search, setGazetteerUrl, setShowGeographicIdentifier} from "masterportalAPI/src/searchAddress";
+import {search, setGazetteerUrl, setShowGeographicIdentifier} from "@masterportal/masterportalapi/src/searchAddress";
 
 /**
  * The search interface to the gazetteer.
