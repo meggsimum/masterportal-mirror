@@ -45,15 +45,17 @@ const Config = {
     startingMap3D: false,
     obliqueMap: true,
     cesiumParameter: {
-        tileCacheSize: 20,
-        enableLighting: true,
         fog: {
             enabled: true,
             density: 0.0002,
             screenSpaceErrorFactor: 2.0
         },
-        maximumScreenSpaceError: 2,
-        fxaa: true
+        fxaa: true,
+        globe: {
+            enableLighting: true,
+            maximumScreenSpaceError: 2,
+            tileCacheSize: 20
+        }
     },
     portalLanguage: {
         enabled: true,

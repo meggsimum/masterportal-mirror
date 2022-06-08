@@ -93,15 +93,17 @@ const Config = {
     gemarkungen: "https://geodienste.hamburg.de/lgv-config/gemarkung.json",
     obliqueMap: true,
     cesiumParameter: {
-        tileCacheSize: 20,
-        enableLighting: false,
         fog: {
             enabled: true,
             density: 0.0002,
             screenSpaceErrorFactor: 2.0
         },
-        maximumScreenSpaceError: 2,
-        fxaa: false
+        fxaa: false,
+        globe: {
+            enableLighting: true,
+            maximumScreenSpaceError: 2,
+            tileCacheSize: 20
+        }
     },
     startingMap3D: false,
     portalLanguage: {
