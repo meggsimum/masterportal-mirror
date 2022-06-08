@@ -6,7 +6,7 @@
     "url": "https://www.masterportal.org"
   },
   "bugs": "https://bitbucket.org/geowerkstatt-hamburg/masterportal/issues",
-  "version": "2.22.2",
+  "version": "2.22.0",
   "license": "MIT",
   "description": "The MasterPortal as OpenSource Geoportal",
   "repository": {
@@ -31,10 +31,10 @@
     "buildExamples": "node devtools/tasks/exampleBuild.js && node devtools/tasks/exampleCopy.js",
     "buildJsDoc": "node devtools/tasks/buildJsDoc.js",
     "buildMdDoc": "node devtools/tasks/buildMdDoc.js",
-    "versionHotfix": "npm version patch && npm run versionLatest && git push --tags",
-    "versionMinor": "npm version minor && npm run versionLatest && git push --tags",
-    "versionMajor": "npm version major && npm run versionLatest && git push --tags",
-    "versionLatest": "git push origin --no-verify && git tag latest -f",
+    "versionHotfix": "npm version patch && npm run versionLatest && git push --tags -f",
+    "versionMinor": "npm version minor && npm run versionLatest && git push --tags -f",
+    "versionMajor": "npm version major && npm run versionLatest && git push --tags -f",
+    "versionLatest": "git tag latest -f",
     "versionHotfix:all": "npm run versionHotfix && cd addons && npm run versionHotfix && cd .. && cd portalconfigs && npm run versionHotfix && cd ..",
     "versionMinor:all": "npm run versionMinor && cd addons && npm run versionMinor && cd .. && cd portalconfigs && npm run versionMinor && cd ..",
     "versionMajor:all": "npm run versionMajor && cd addons && npm run versionMajor && cd .. && cd portalconfigs && npm run versionMajor && cd ..",
