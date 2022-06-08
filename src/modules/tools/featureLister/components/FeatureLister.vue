@@ -388,7 +388,7 @@ export default {
 }
 .feature-lister-list-button {
     position: relative;
-    right: 0px;
+    right: 0;
 }
 .feature-lister-list-message {
     float: left;
@@ -412,12 +412,12 @@ export default {
 }
 .feature-lister-details {
     display: block;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     max-height: 100%;
     overflow: auto;
 }
 .feature-lister-list {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     display: contents;
     overflow: auto;
 }

@@ -156,7 +156,7 @@ export default {
     .tool-window-heading{
         padding: 0;
         border-bottom: 1px solid $dark_grey;
-        border-radius: 11px 11px 0px 0px;
+        border-radius: 11px 11px 0 0;
         background-color: $dark_grey;
         color: $light_grey;
         padding-top: 8px;

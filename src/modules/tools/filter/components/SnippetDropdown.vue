@@ -721,8 +721,8 @@ export default {
     .filter-select-box-container .multiselect .multiselect__placeholder {
         color: $light_grey;
         display: inline-block;
-        margin-bottom: 0px;
-        padding-top: 0px;
+        margin-bottom: 0;
+        padding-top: 0;
         font-size: 14px;
     }
     .filter-select-box-container .multiselect .multiselect__tag-icon:focus, .multiselect__tag-icon:hover {

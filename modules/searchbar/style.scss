@@ -163,7 +163,7 @@ li.results {
 #searchInputUL {
     div{
         opacity: 1;
-        border-radius: 0px;
+        border-radius: 0;
     }
     .selected {
         background: $light_blue;
@@ -218,7 +218,7 @@ li.results {
         height: 40px;
         width: 40px;
         padding: 6px 12px 1px 5px;
-        margin: 0px 5px 5px 5px;
+        margin: 0 5px 5px 5px;
     }
     .btn-table-search {
         >.icon-search {
@@ -231,7 +231,7 @@ li.results {
     >.input-group {
         width: 100%;
         .icon-cross2{
-            margin: 13px 7px 0px 0px;
+            margin: 13px 7px 0 0;
         }
         .icon-cross2:before{
             width: 50px;
@@ -339,7 +339,7 @@ li.results {
         background-color: $light_grey;
     }
     #searchInput {
-        margin: 1px 0px 7px 0px;
+        margin: 1px 0 7px 0;
         height: 40px;
         border-radius: 12px;
     }

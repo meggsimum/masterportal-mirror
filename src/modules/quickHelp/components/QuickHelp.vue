@@ -213,7 +213,7 @@ export default {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
     width: 50%;
     height: 50%;
-    margin: 0px;
+    margin: 0;
     z-index: 2000;
 }
 

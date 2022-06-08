@@ -420,7 +420,7 @@ export default {
     max-height:745px;
 }
 .select-features-tables p {
-    margin: 8px 0px;
+    margin: 8px 0;
 }
 td.featureName {
     width:30%;

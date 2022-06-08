@@ -38,7 +38,7 @@ $background_color_6: #D8D8D8;
 }
 .table-nav-main {
     background-color: $secondary_table_style;
-    margin: 0px 5px;
+    margin: 0 5px;
     width: 480px;
     height: 50px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
@@ -152,7 +152,7 @@ a {
         position: absolute;
     }
     #funnel {
-        bottom: 0px;
+        bottom: 0;
         margin-left: 165px;
         #middle-funnel {
             width: 20px;
@@ -188,7 +188,7 @@ a {
     height: 40px;
 }
 .table-nav-layers-panel {
-    border-width: 0px;
+    border-width: 0;
     -webkit-box-shadow: none;
     background-color: $secondary_table_style;
     border-radius: 12px;
@@ -202,7 +202,7 @@ a {
 }
 .table-nav-cat-panel {
     font-size: 17px;
-    border-width: 0px;
+    border-width: 0;
     -webkit-box-shadow: none;
     background-color: $secondary_table_style;
     border-radius: 12px;
@@ -228,7 +228,7 @@ a {
         margin-left: 221px;
     }
     #left-funnel-corner {
-        margin-left: 0px;
+        margin-left: 0;
     }
     #middle-funnel {
         width: 20px;
@@ -246,7 +246,7 @@ a {
     }
 }
 .layers {
-    padding-left: 0px;
+    padding-left: 0;
     padding-bottom: 12px;
     touch-action: pan-x pan-y;
 }
@@ -337,14 +337,14 @@ a {
     ul#layers {
         border: none;
         font-size: 15px;
-        padding: 0px 0;
+        padding: 0 0;
         min-width: 410px;
         overflow: auto;
         padding-bottom: 7px;
         ul {
             list-style: none;
-            padding: 0 0 0 0px;
-            -webkit-padding-start: 0px;
+            padding: 0 0 0 0;
+            -webkit-padding-start: 0;
             li {
                 border-bottom: 1px solid #ddd;
                 padding: 5px 15px;
@@ -421,8 +421,8 @@ a {
 }
 .closeclick-activated {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     touch-action: none;
 }
 .closeclick-deactivated {

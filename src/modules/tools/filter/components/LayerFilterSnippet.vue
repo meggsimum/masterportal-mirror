@@ -944,7 +944,7 @@ export default {
     @import "~/css/mixins.scss";
     @import "~variables";
     .win-body-vue {
-        padding: 0px;
+        padding: 0;
     }
     .panel-body {
         padding: 0 5px;
@@ -989,7 +989,7 @@ export default {
     .snippetTagText {
         font-size: 12px;
         float: left;
-        padding: 6px 4px 0px 0px;
+        padding: 6px 4px 0 0;
     }
     .form-group {
         clear: both;

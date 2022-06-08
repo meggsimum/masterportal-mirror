@@ -138,7 +138,7 @@ export default {
         color: $secondary_contrast;
         font-size: $font_size_tiny;
 
-        box-shadow: 0px -6px 12px $shadow;
+        box-shadow: 0 -6px 12px $shadow;
         padding: 4px 10px;
 
         z-index: 2;

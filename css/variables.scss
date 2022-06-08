@@ -146,8 +146,8 @@ $accent_contrast: #ffffff;
 /* ICON SIZES */
 $icon_length: 36px;
 $icon_length_small: 24px;
-$icon_length_menu: 0px; // TODO figure out correct value before usage
-$icon_length_list: 0px; // TODO figure out correct value before usage
+$icon_length_menu: 0; // TODO figure out correct value before usage
+$icon_length_list: 0; // TODO figure out correct value before usage
 
 /* FONT STYLES
  * TODO why is Arial Narrow an alternative to MPF Bold?
@@ -165,8 +165,8 @@ $font_size_small_custom: 11px;
 $font_size_tiny: 10px;
 
 /* Should something like this be supported for windows resp. buttons? TODO discuss */
-$interaction_border_radius: 0px;
-$information_border_radius: 0px;
+$interaction_border_radius: 0;
+$information_border_radius: 0;
 
 /* other */
 $shadow: rgba(0, 0, 0, 0.176);

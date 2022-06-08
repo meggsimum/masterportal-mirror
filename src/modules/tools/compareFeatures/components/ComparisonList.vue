@@ -307,8 +307,8 @@ export default {
         width: 100%;
     }
     .remove-feature {
-        top: 0px !important;
-        left: 0px;
+        top: 0 !important;
+        left: 0;
         &:focus {
             @include primary_action_focus;
         }

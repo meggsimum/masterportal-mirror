@@ -480,7 +480,7 @@ export default {
         margin: auto;
         top: 0;
         bottom: 1px;
-        left: 0px;
+        left: 0;
         background-color: transparent;
         pointer-events: none;
     }
