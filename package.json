@@ -34,7 +34,7 @@
     "versionHotfix": "npm version patch && npm run versionLatest && git push --tags",
     "versionMinor": "npm version minor && npm run versionLatest && git push --tags",
     "versionMajor": "npm version major && npm run versionLatest && git push --tags",
-    "versionLatest": "git push origin --no-verify && git tag latest",
+    "versionLatest": "git push origin --no-verify && git tag latest -f",
     "versionHotfix:all": "npm run versionHotfix && cd addons && npm run versionHotfix && cd .. && cd portalconfigs && npm run versionHotfix && cd ..",
     "versionMinor:all": "npm run versionMinor && cd addons && npm run versionMinor && cd .. && cd portalconfigs && npm run versionMinor && cd ..",
     "versionMajor:all": "npm run versionMajor && cd addons && npm run versionMajor && cd .. && cd portalconfigs && npm run versionMajor && cd ..",
