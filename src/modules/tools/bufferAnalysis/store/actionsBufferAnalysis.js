@@ -91,10 +91,12 @@ const actions = {
 
         if (selectedSourceLayer) {
             selectedSourceLayer.get("layer").setOpacity(1);
+            selectedSourceLayer.setIsSelected(false);
         }
 
         if (selectedTargetLayer) {
             selectedTargetLayer.get("layer").setOpacity(1);
+            selectedTargetLayer.setIsSelected(false);
         }
         dispatch("applySelectedSourceLayer", null);
         dispatch("applySelectedTargetLayer", null);
