@@ -46,17 +46,13 @@ export default {
     watch: {
         /**
          * When the feature changes, the popover is redrawn to keep the position of the click coordinate.
-         * Note: Starting from Bootstrap version 4 an update function for the popover is available.
-         *       Should be adapted when updating Bootstrap.
          * @returns {void}
          */
         feature () {
             this.$nextTick(() => {
-                this.overlay.setPosition(this.clickCoord);
-                // Upgrade to BT5
                 const popover = Popover.getInstance(this.overlay.getElement());
 
-                popover.show();
+                popover.update();
             });
         }
     },
