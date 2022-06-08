@@ -7,9 +7,8 @@
 - 3D: The position indicator inside of a 3D object vanishes when clicking on the object.
 
 ---
-## Unreleased - in development
-### __Breaking Changes__
 
+## Unreleased - in development
 ### Added
 
 ### Changed
@@ -17,9 +16,12 @@
 ### Deprecated
 
 ### Removed
-- deleted snippets: dropdown, exportButton, graphicalSelect, multiCheckbox
-- removed the dependency `bootstrap-select`
 
+### Fixed
+
+---
+
+## v2.22.1 - 2202-06-08
 ### Fixed
 - The light grey color in Search and transparency are now dark
 - Issue #790: Resolve import of isObject util failed was fixed.
