@@ -4,7 +4,6 @@ import getComponent from "../../../../utils/getComponent";
 import {Pointer} from "ol/interaction.js";
 import {getProjections} from "@masterportal/masterportalapi/src/crs";
 import {mapGetters, mapActions, mapMutations} from "vuex";
-import mapCollection from "../../../../core/maps/mapCollection.js";
 import getters from "../store/gettersCoordToolkit";
 import mutations from "../store/mutationsCoordToolkit";
 
@@ -201,7 +200,7 @@ export default {
                 this.removeInteractionFromMap(this.selectPointerMove);
                 this.setSelectPointerMove(null);
             }
-            if (this.mapMode === "3D") {
+            if (this.mapMode === "3D" && this.eventHandler) {
                 this.eventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
             }
         },

@@ -34,7 +34,8 @@ function loadSelectOptions ({commit}) {
     const layers = Radio.request("ModelList", "getModelsByAttributes", {type: "layer", typ: "WFS"}) || [];
 
     layers.forEach(layer => {
-        commit("addSelectOption", layer);
+        // freeze layer, else the map3d is observed by vue and performance suffers
+        commit("addSelectOption", Object.freeze(layer));
     });
 }
 

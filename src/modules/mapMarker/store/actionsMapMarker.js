@@ -1,7 +1,6 @@
 import {fetchFirstModuleConfig} from "../../../utils/fetchFirstModuleConfig";
 import Point from "ol/geom/Point.js";
 import Feature from "ol/Feature.js";
-import mapCollection from "../../../core/maps/mapCollection.js";
 
 /**
  * @const {String} configPaths an array of possible config locations. First one found will be used
