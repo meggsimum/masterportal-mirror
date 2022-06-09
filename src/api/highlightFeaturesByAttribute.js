@@ -1,5 +1,7 @@
 import {WFS} from "ol/format.js";
-import VectorBaseLayer from "../core/layers/vectorBase";
+import VectorLayer from "ol/layer/Vector.js";
+import VectorSource from "ol/source/Vector.js";
+import {Style} from "ol/style.js";
 import Point from "ol/geom/Point.js";
 import Feature from "ol/Feature.js";
 import axios from "axios";
@@ -20,25 +22,38 @@ export default {
     },
 
     /**
+     * creates a vector layer
+     * @param {String} styleId The style Id
+     * @param {String} layerId The layer Id
+     * @param {String} name Layer name
+     * @param {Object} gfiAttributes GFI attributes configuration
+     * @returns {Object} the created VectorLayer
+    */
+    createVectorLayer: function (styleId, layerId, name, gfiAttributes) {
+        return new VectorLayer({
+            id: layerId,
+            styleId: styleId,
+            name: name,
+            source: new VectorSource(),
+            visible: false,
+            style: new Style(),
+            alwaysOnTop: true,
+            gfiAttributes: gfiAttributes
+        });
+    },
+
+    /**
      * highlight Features for Points
      * @param {String} modelId The model Id
      * @param {String} styleId The style Id
      * @param {String} name Layer name
      * @param {Object} gfiAttributes GFI attributes configuration
      * @param {Array} features The loaded WFS features
-     * @returns {void}
+     * @returns {void} nothing
     */
     highlightPointFeature: function (modelId, styleId, name, gfiAttributes, features) {
-        const vectorAttrs = {
-                id: modelId,
-                styleId: styleId,
-                name: name,
-                typ: "VectorBase",
-                isSelected: false,
-                gfiAttributes: gfiAttributes
-            },
-            styleListModel = Radio.request("StyleList", "returnModelById", modelId),
-            highlightLayer = new VectorBaseLayer(vectorAttrs);
+        const styleListModel = Radio.request("StyleList", "returnModelById", modelId),
+            highlightLayer = this.createVectorLayer(modelId, styleId, name, gfiAttributes);
         let hadPoint = false;
 
         features.forEach(feature => {
@@ -54,15 +69,15 @@ export default {
 
                 iconFeature.setProperties(feature.getProperties());
                 iconFeature.setStyle(featureStyle);
-                highlightLayer.layer.getSource().addFeature(iconFeature);
+                highlightLayer.getSource().addFeature(iconFeature);
             }
         });
 
         if (hadPoint) {
-            highlightLayer.layer.setVisible(true);
-            Radio.trigger("Map", "addLayerOnTop", highlightLayer.layer);
+            highlightLayer.setVisible(true);
+            Radio.trigger("Map", "addLayerOnTop", highlightLayer);
 
-            Radio.trigger("Map", "zoomToExtent", {extent: highlightLayer.layer.getSource().getExtent()});
+            Radio.trigger("Map", "zoomToExtent", {extent: highlightLayer.getSource().getExtent()});
         }
     },
 
@@ -74,19 +89,11 @@ export default {
      * @param {String} geometryRequested Polygon or LineString
      * @param {Object} gfiAttributes GFI attributes configuration
      * @param {Array} features The loaded WFS features
-     * @returns {void}
+     * @returns {void} nothing
     */
     highlightLineOrPolygonFeature: function (modelId, styleId, name, geometryRequested, gfiAttributes, features) {
-        const vectorAttrs = {
-                id: modelId,
-                styleId: styleId,
-                name: name,
-                typ: "VectorBase",
-                isSelected: false,
-                gfiAttributes: gfiAttributes
-            },
-            styleListModel = Radio.request("StyleList", "returnModelById", modelId),
-            highlightLayer = new VectorBaseLayer(vectorAttrs);
+        const styleListModel = Radio.request("StyleList", "returnModelById", modelId),
+            highlightLayer = this.createVectorLayer(modelId, styleId, name, gfiAttributes);
         let hadGeometry = false;
 
         features.forEach(feature => {
@@ -101,15 +108,15 @@ export default {
 
                 newFeature.setProperties(feature.getProperties());
                 newFeature.setStyle(featureStyle);
-                highlightLayer.layer.getSource().addFeature(newFeature);
+                highlightLayer.getSource().addFeature(newFeature);
             }
         });
 
         if (hadGeometry) {
-            highlightLayer.layer.setVisible(true);
-            Radio.trigger("Map", "addLayerOnTop", highlightLayer.layer);
+            highlightLayer.setVisible(true);
+            Radio.trigger("Map", "addLayerOnTop", highlightLayer);
 
-            Radio.trigger("Map", "zoomToExtent", {extent: highlightLayer.layer.getSource().getExtent()});
+            Radio.trigger("Map", "zoomToExtent", {extent: highlightLayer.getSource().getExtent()});
         }
     },
 
@@ -132,29 +139,28 @@ export default {
      * @returns {void}
     */
     handleGetFeatureResponse: function (dispatch, response, highlightFeaturesLayer) {
-        if (response.status !== 200) {
-            console.warn(response.status);
-            dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
-            return;
-        }
+        if (response.status === 200) {
+            const features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data);
 
-        const features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data);
+            if (features.length === 0) {
+                const parser = new DOMParser(),
+                    xmlDoc = parser.parseFromString(response.data, "text/xml"),
+                    exceptionText = xmlDoc.getElementsByTagName("ExceptionText")[0].childNodes[0].nodeValue;
 
-        if (features.length === 0) {
-            const parser = new DOMParser(),
-                xmlDoc = parser.parseFromString(response.data, "text/xml"),
-                exceptionText = xmlDoc.getElementsByTagName("ExceptionText")[0].childNodes[0].nodeValue;
-
-            if (exceptionText) {
-                console.error("highlightFeaturesByAttribute: service exception: " + exceptionText);
-                dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
-                return;
+                if (exceptionText) {
+                    console.error("highlightFeaturesByAttribute: service exception: " + exceptionText);
+                    dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
+                }
             }
-        }
 
-        this.highlightPointFeature(this.settings.pointStyleId, "highlight_point_layer", "highlightPoint", highlightFeaturesLayer.gfiAttributes, features);
-        this.highlightLineOrPolygonFeature(this.settings.polygonStyleId, "highlight_polygon_layer", "highlightPolygon", "Polygon", highlightFeaturesLayer.gfiAttributes, features);
-        this.highlightLineOrPolygonFeature(this.settings.lineStyleId, "highlight_line_layer", "highlightLine", "LineString", highlightFeaturesLayer.gfiAttributes, features);
+            this.highlightPointFeature(this.settings.pointStyleId, "highlight_point_layer", "highlightPoint", highlightFeaturesLayer.gfiAttributes, features);
+            this.highlightLineOrPolygonFeature(this.settings.polygonStyleId, "highlight_polygon_layer", "highlightPolygon", "Polygon", highlightFeaturesLayer.gfiAttributes, features);
+            this.highlightLineOrPolygonFeature(this.settings.lineStyleId, "highlight_line_layer", "highlightLine", "LineString", highlightFeaturesLayer.gfiAttributes, features);
+        }
+        else {
+            console.warn(status);
+            dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
+        }
     },
 
     /**
