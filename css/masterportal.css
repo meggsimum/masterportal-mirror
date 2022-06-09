@@ -76,7 +76,7 @@ label {
 
 /*bootstrap überschreiben*/
 .list-group {
-    margin-bottom: 0px !important;
+    margin-bottom: 0 !important;
 }
 
 .form-group {
@@ -84,7 +84,7 @@ label {
 }
 
 .form-group:last-child {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .cluster {

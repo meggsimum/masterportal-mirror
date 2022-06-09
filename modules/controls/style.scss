@@ -8,8 +8,8 @@
 
 .controls-row-right {
     position: relative;
-    margin-right: 12px;
-    min-height: 40px;
+    margin-right: 1rem;
+    min-height: 3.3rem;
 }
 .controls-row-left {
     position: relative;
@@ -22,7 +22,7 @@
     .bootstrap-icon {
         color: $secondary;
         background-color: $light_grey;
-        box-shadow: 0 6px 12px $black;
+        box-shadow: 0 .5rem 1rem $black;
 
         &:hover {
             cursor: pointer;
@@ -35,62 +35,42 @@
 }
 .toggleButton {
     >.bootstrap-icon {
-        font-size: 22px;
-
-        >.bi-chevron-up {
-            padding: 5px 4px 6px 7px;
-        }
-        >.bi-chevron-down {
-            padding: 7px 4px 4px 7px;
-        }
+        font-size: 1.8rem;
     }
 }
-.zoomButtons {
-    margin-top: 20px;
+.zoomButtons, .orientationButtons {
+    margin-top: 1.67rem;
     >.bootstrap-icon {
-        font-size: 22px;
-        margin-top: 4px;
-
-        >.bi-plus-lg {
-            padding: 5px 5px 6px 7px;
-        }
-        >.bi-dash-lg {
-            padding: 5px 7px 6px 5px;
-        }
-    }
-}
-.orientationButtons {
-    margin-top: 20px;
-    >.bootstrap-icon {
-        font-size: 22px;
-        margin-top: 4px;
+        font-size: 1.8rem;
+        margin-top: .3rem;
 
         >.bi-geo-alt-fill {
             padding: 5px 7px 6px 6px;
         }
         >.bi-record-circle {
-            padding: 5px 6px 6px 6px;
+            padding: .7rem;
         }
     }
 }
+
 .geolocation_marker {
     color: $secondary;
-    padding: 2px 3px 2px 2px;
+    padding: .167rem;
     background: none repeat scroll $primary;
-    border-radius: 50px;
-    font-size: 20px;
+    border-radius: 4.167rem;
+    font-size: 1.67rem;
 }
 .control-view-top-right {
     position: absolute;
-    right: 16px;
+    right: 1.33rem;
     top: 0;
 }
 .control-view-bottom-right {
     position: absolute;
-    right: 30px;
-    bottom: 30px;
+    right: 2.5rem;
+    bottom: 2.5rem;
     .row.controls-row-right {
-        margin:10px 0 0 0;
+        margin: .83rem 0 0 0;
     }
 }
 .control-view-bottom-left {
@@ -103,8 +83,8 @@
 /***** Orienation3D *****/
 .nav-control{
     position: fixed;
-    top: 100px;
-    right: 100px;
+    top: 8.33rem;
+    right: 8.33rem;
 }
 
 .compassContainer{
@@ -206,7 +186,7 @@
     margin: .5rem 0 .25rem 1px;
 }
 .oblique .btn-group-wrap{
-    margin-left: 26px;
+    margin-left: 2.167rem;
 }
 
 .tilt-down{
@@ -230,8 +210,8 @@
     rgba(0,0,0,.14),0 3px 1px -2px
     rgba(0,0,0,.2),0 1px 5px 0
     rgba(0,0,0,.12);
-    width: 20px;
-    height: 20px;
+    width: 1.67rem;
+    height: 1.67rem;
     line-height: unset;
     font-size: 14px;
     color: $accent_contrast;
@@ -243,7 +223,7 @@
     margin-top: .2rem;
 }
 .control-box-btn.input-wrap{
-    width: 116px;
+    width: 9.67rem;
     text-align: left;
     font-size: .8rem;
     padding: 0 .2rem;
@@ -251,31 +231,31 @@
     cursor: auto;
 }
 .control-box-btn.input-wrap i{
-    margin-left: 3px;
-    margin-right: 2px;
+    margin-left: .25;
+    margin-right: .167rem;
 }
 
 .control-box-container {
     text-align: center;
     position: absolute;
-    padding-left: 12px;
+    padding-left: 1rem;
 }
 
 #orientation3d {
     position: absolute;
-    right:90px;
-    top:30px;
+    right: 7.5rem;
+    top: 2.5rem;
 }
 
 /***** 3DButton *****/
 .button3D {
-    margin-top: 20px;
+    margin-top: 1.67rem;
 }
 
 .button3D > .bootstrap-icon {
     font-size: 17px;
-    margin-top: 4px;
-    padding: 10px 6px 6px 6px;
+    margin-top: .33rem;
+    padding: .83rem .5rem .5rem .4rem;
     font-family: $font_family_accent;
     border: 0;
     /* pseudo-class state effects */
@@ -298,12 +278,12 @@
 }
 /***** Oblique *****/
 .buttonOblique {
-    margin-top: 20px;
+    margin-top: 1.67rem;
 }
 .buttonOblique > .bootstrap-icon {
-    font-size: 22px;
-    margin-top: 4px;
-    padding: 6px 7px 3px 7px;
+    font-size: 1.83rem;
+    margin-top: .3rem;
+    padding: .7rem;
     border: 0;
 }
 

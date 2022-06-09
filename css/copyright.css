@@ -3,10 +3,10 @@
     bottom: 0;
     right: 0;
     position: absolute;
-    font-size: 10px;
+    font-size: .8rem;
     z-index: 1000;
-    border-radius: 5px 0 0 !important;
-    padding: 4px 8px;
+    border-radius: .4rem 0 0 !important;
+    padding: .3rem .6rem;
 }
 
 .copyright a {
