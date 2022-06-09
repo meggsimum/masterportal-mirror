@@ -24,6 +24,7 @@
 - Removed the dependency `bootstrap-select`.
 
 ### Fixed
+- Lines imported as KML can now be edited and modified with the Draw tool.
 
 ---
 
