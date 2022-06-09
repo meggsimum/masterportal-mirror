@@ -32,6 +32,7 @@
 - The light grey color in Search and transparency are now dark
 - Issue #790: Resolve import of isObject util failed was fixed.
 - The Sensor Data GFI theme's layout is correct now.
+- A console warning on creating an entities-layer was removed.
 
 ---
 
