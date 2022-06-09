@@ -477,14 +477,6 @@
           "scaleSwitcher": {
             "name": "translate#common:menu.tools.scaleSwitcher",
             "icon": "bi-arrows-angle-contract"
-          },
-          "vueAddon": {
-            "name": "AddonTool",
-            "icon": "bi-bullseye"
-          },
-          "tacticalMark": {
-            "name": "Taktische Zeichen",
-            "icon": "bi-geo-fill"
           }
         }
       },
