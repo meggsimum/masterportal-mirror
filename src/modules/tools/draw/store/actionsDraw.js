@@ -27,7 +27,7 @@ const initialState = JSON.parse(JSON.stringify(stateDraw)),
          * @param {ol/Feature} feature The OpenLayers feature to append to the current "drawState".
          * @returns {void}
          */
-        async addDrawStateToFeature ({getters}, feature) {
+        addDrawStateToFeature ({getters}, feature) {
             if (!feature) {
                 return;
             }
