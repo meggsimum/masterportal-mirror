@@ -49,7 +49,7 @@ export default {
      * @param {String} name Layer name
      * @param {Object} gfiAttributes GFI attributes configuration
      * @param {Array} features The loaded WFS features
-     * @returns {void} nothing
+     * @returns {void}
     */
     highlightPointFeature: function (modelId, styleId, name, gfiAttributes, features) {
         const styleListModel = Radio.request("StyleList", "returnModelById", modelId),
@@ -89,7 +89,7 @@ export default {
      * @param {String} geometryRequested Polygon or LineString
      * @param {Object} gfiAttributes GFI attributes configuration
      * @param {Array} features The loaded WFS features
-     * @returns {void} nothing
+     * @returns {void}
     */
     highlightLineOrPolygonFeature: function (modelId, styleId, name, geometryRequested, gfiAttributes, features) {
         const styleListModel = Radio.request("StyleList", "returnModelById", modelId),
