@@ -139,28 +139,28 @@ export default {
      * @returns {void}
     */
     handleGetFeatureResponse: function (dispatch, response, highlightFeaturesLayer) {
-        if (response.status === 200) {
-            const features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data);
-
-            if (features.length === 0) {
-                const parser = new DOMParser(),
-                    xmlDoc = parser.parseFromString(response.data, "text/xml"),
-                    exceptionText = xmlDoc.getElementsByTagName("ExceptionText")[0].childNodes[0].nodeValue;
-
-                if (exceptionText) {
-                    console.error("highlightFeaturesByAttribute: service exception: " + exceptionText);
-                    dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
-                }
-            }
-
-            this.highlightPointFeature(this.settings.pointStyleId, "highlight_point_layer", "highlightPoint", highlightFeaturesLayer.gfiAttributes, features);
-            this.highlightLineOrPolygonFeature(this.settings.polygonStyleId, "highlight_polygon_layer", "highlightPolygon", "Polygon", highlightFeaturesLayer.gfiAttributes, features);
-            this.highlightLineOrPolygonFeature(this.settings.lineStyleId, "highlight_line_layer", "highlightLine", "LineString", highlightFeaturesLayer.gfiAttributes, features);
-        }
-        else {
-            console.warn(status);
+        if (response.status !== 200) {
+            console.warn(response.status);
             dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
+            return;
         }
+        const features = new WFS({version: highlightFeaturesLayer.version}).readFeatures(response.data);
+
+        if (features.length === 0) {
+            const parser = new DOMParser(),
+                xmlDoc = parser.parseFromString(response.data, "text/xml"),
+                exceptionText = xmlDoc.getElementsByTagName("ExceptionText")[0].childNodes[0].nodeValue;
+
+            if (exceptionText) {
+                console.error("highlightFeaturesByAttribute: service exception: " + exceptionText);
+                dispatch("Alerting/addSingleAlert", i18next.t("common:modules.highlightFeaturesByAttribute.messages.requestFailed"), {root: true});
+                return;
+            }
+        }
+
+        this.highlightPointFeature(this.settings.pointStyleId, "highlight_point_layer", "highlightPoint", highlightFeaturesLayer.gfiAttributes, features);
+        this.highlightLineOrPolygonFeature(this.settings.polygonStyleId, "highlight_polygon_layer", "highlightPolygon", "Polygon", highlightFeaturesLayer.gfiAttributes, features);
+        this.highlightLineOrPolygonFeature(this.settings.lineStyleId, "highlight_line_layer", "highlightLine", "LineString", highlightFeaturesLayer.gfiAttributes, features);
     },
 
     /**
