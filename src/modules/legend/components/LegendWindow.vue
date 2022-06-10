@@ -295,7 +295,7 @@ export default {
         prepareLegend (legendInfos) {
             let preparedLegend = [];
 
-            if (Array.isArray(legendInfos) && legendInfos.every(value => typeof value === "string")) {
+            if (Array.isArray(legendInfos) && legendInfos.every(value => typeof value === "string" && value !== null)) {
                 preparedLegend = legendInfos;
             }
             else if (Array.isArray(legendInfos)) {
