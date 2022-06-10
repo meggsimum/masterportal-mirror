@@ -91,6 +91,7 @@ export default {
          * @returns {void}
          */
         createLegend () {
+            console.log("createLegend");
             const visibleLayers = this.getVisibleLayers();
 
             visibleLayers.forEach(layer => this.toggleLayerInLegend(layer));
@@ -102,6 +103,7 @@ export default {
          * @returns {void}
          */
         createLegendForLayerInfo (layerIdForLayerInfo) {
+            console.log("createLegendForLayerInfo");
             const layerForLayerInfo = Radio.request("ModelList", "getModelByAttributes", {type: "layer", id: layerIdForLayerInfo});
             let legendObj = null,
                 isValidLegend = null,
@@ -170,6 +172,7 @@ export default {
          * @returns {void}
          */
         closeLegend (event) {
+            console.log("closeLegend");
             if (event.type === "click" || event.which === 32 || event.which === 13) {
                 const model = getComponent(this.id);
 
@@ -195,6 +198,8 @@ export default {
          * @returns {void}
          */
         toggleLayerInLegend (layer) {
+            console.log("toggleLayerInLegend");
+            console.log(layer);
             const isVisibleInMap = layer.get("isVisibleInMap"),
                 layerId = layer.get("id"),
                 layerName = layer.get("name"),
@@ -203,6 +208,7 @@ export default {
                 layerTyp = layer.get("typ");
 
             if (isVisibleInMap) {
+                console.log(isVisibleInMap);
                 if (layerTyp === "GROUP") {
                     this.generateLegendForGroupLayer(layer);
                 }
@@ -278,13 +284,28 @@ export default {
                 isLegendChanged = isValidLegend && !isNotYetInLegend && this.isLegendChanged(id, legendObj);
 
             if (isNotYetInLegend) {
+                console.log("addLegend");
+                console.log(legendObj);
                 this.addLegend(legendObj);
             }
             else if (isLegendChanged) {
+                console.log("isLegendChanged");
+                console.log(legendObj);
                 this.removeLegend(id);
                 this.addLegend(legendObj);
             }
+            console.log("this.sortLegend");
+            console.log("isValidLegend");
+            console.log(isValidLegend);
+            console.log(legendObj);
+            console.log("isNotYetInLegend");
+            console.log(isNotYetInLegend);
             this.sortLegend();
+        },
+
+        allElementsAreStrings(element, index, array) {
+            console.log(element);
+            return typeof element === "string" && element !== null && element.geometryType !== "Point";
         },
 
         /**
@@ -294,8 +315,11 @@ export default {
          */
         prepareLegend (legendInfos) {
             let preparedLegend = [];
+            console.log("prepareLegend:");
+            console.log(legendInfos);
 
-            if (Array.isArray(legendInfos) && legendInfos.every(value => typeof value === "string" && value !== null)) {
+            if (Array.isArray(legendInfos) && legendInfos.every(this.allElementsAreStrings) && legendInfos.length > 0) {
+                console.log("all values strings");
                 preparedLegend = legendInfos;
             }
             else if (Array.isArray(legendInfos)) {
@@ -308,9 +332,11 @@ export default {
                     };
 
                     if (geometryType) {
-
+                        console.log(geometryType);
                         if (geometryType === "Point") {
                             legendObj = this.prepareLegendForPoint(legendObj, style);
+                            console.log("prepareLegendForPoint");
+                            console.log(legendObj);
                         }
                         else if (geometryType === "LineString") {
                             legendObj = this.prepareLegendForLineString(legendObj, style);
