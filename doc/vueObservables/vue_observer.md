@@ -1,4 +1,4 @@
-# Vue Ractivity - observer erkennen und verhindern
+# Vue Ractivity - Observer erkennen und verhindern
 
 Reactivity = Wenn ein Datenwert geändert wird, löst dies eine Aktualisierung der Seite aus, um diese Änderung widerzuspiegeln.
 
@@ -42,7 +42,9 @@ Die Beobachtung der Layer müssen wir noch beseitigen.
 Beispiele in den controls und tools:
 
 ![Attributions](attributions.jpg)
+
 ![coordToolkit](coordToolkit.jpg)
+
 ![saveSelection](saveSelection.jpg)
 
 ### Erkennen, dass die map3D beobachtet wird
@@ -65,8 +67,8 @@ In der App.vue wird die Funktion ```checkVueObservation()``` im created-hook auf
 Das greift natürlich erst, wenn die map3D vorhanden ist, d.h. die 3D-Ansicht muss einmalig angeschaltet werden.
 
 Dann kommt diese Fehlermeldung:
-![map3DErrorMsg](map3DErrorMsg.jpg)
 
+![map3DErrorMsg](map3DErrorMsg.jpg)
 
 
 ## Tipps:
