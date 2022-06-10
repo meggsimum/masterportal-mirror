@@ -13,7 +13,7 @@ Vuex-Getter reagieren genau wie computed Properties auf Änderungen des states .
 
 Die Funktion mapGetters() wird in computed aufgerufen, dadurch werden alle (?) dort angegebenen getter beobachtet.
 
-Getter, auf die als property (z.B. in computed) zugegriffen wird, werden als Teil von Vue's reactivity system gecached. Wenn über methoden auf sie zugegriffen wird, dann wird der Inhalt nicht gecached.
+Getter, auf die als property (z.B. in computed) zugegriffen wird, werden als Teil von Vue's reactivity system gecached. Wenn über Methoden auf sie zugegriffen wird, dann wird der Inhalt nicht gecached.
 
 Ein beobachtetes Element mit dem Observer und den konstruierten gettern und settern:
 
