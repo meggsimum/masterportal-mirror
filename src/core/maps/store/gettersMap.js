@@ -287,7 +287,7 @@ const getters = {
 
                 returnLayer = groupLayer || returnLayer;
             }
-            else if (layer.get("id") === layerId) {
+            else if (layer.get("id") === layerId && layer.get("id") !== undefined) {
                 returnLayer = layer;
             }
         });

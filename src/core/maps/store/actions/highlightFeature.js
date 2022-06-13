@@ -86,7 +86,7 @@ function highlightViaParametricUrl (dispatch, getters, layerIdAndFeatureId) {
  * @returns {ol/feature} feature to highlight
  */
 function getHighlightFeature (layerId, featureId, getters) {
-    const layer = getters.layerById(layerId)?.olLayer;
+    const layer = getters.getLayerById({layerId: layerId})?.olLayer;
 
     if (layer) {
         return layer.getSource().getFeatureById(featureId)
@@ -104,15 +104,19 @@ function getHighlightFeature (layerId, featureId, getters) {
  * @returns {void}
  */
 function increaseFeature (commit, getters, highlightObject) {
-    const scaleFactor = highlightObject.scale ? highlightObject.scale : 1.5,
-        features = highlightObject.layer ? highlightObject.layer.features : undefined, // use list of features provided if given
-        feature = features?.find(feat => feat.id.toString() === highlightObject.id)?.feature // retrieve from list of features provided by id, if both are given
-            || highlightObject.layer?.id && highlightObject.id // if layerId and featureId are given
+    const scaleFactor = highlightObject.scale ? highlightObject.scale : 10.5,
+        features = highlightObject.layer ? highlightObject.layer.getSource().getFeatures() : undefined, // use list of features provided if given
+        feature = features?.find(feat => feat.id_.toString() === highlightObject.id)?.feature // retrieve from list of features provided by id, if both are given
             ? getHighlightFeature(highlightObject.layer?.id, highlightObject.id, getters) // get feature from layersource, incl. check against clustered features
-            : highlightObject.feature, // else, use provided feature itself if given
-        clonedStyle = styleObject(highlightObject, feature) ? styleObject(highlightObject, feature).clone() : feature.getStyle()?.clone(),
-        clonedImage = clonedStyle ? clonedStyle.getImage() : undefined;
+            : highlightObject.feature; // else, use provided feature itself if given
+    let clonedImage,
+        clonedStyle;
 
+    if (feature) {
+        clonedStyle = styleObject(highlightObject, feature) ? styleObject(highlightObject, feature).clone() : feature.getStyle()?.clone();
+
+        clonedImage = clonedStyle ? clonedStyle.getImage() : undefined;
+    }
     if (clonedImage) {
         commit("Maps/setHighlightedFeatures", [feature], {root: true});
         commit("Maps/setHighlightedFeatureStyles", [feature.getStyle()], {root: true});
