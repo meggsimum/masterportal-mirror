@@ -12,8 +12,6 @@ import {isUrl} from "../../../../utils/urlHelper";
 import {isEmailAddress} from "../../../../utils/isEmailAddress.js";
 import {isPhoneNumber, getPhoneNumberAsWebLink} from "../../../../utils/isPhoneNumber.js";
 
-import mapCollection from "../../../../core/maps/mapCollection";
-
 export default {
     name: "SelectFeatures",
     components: {
