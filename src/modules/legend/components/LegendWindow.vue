@@ -25,6 +25,7 @@ export default {
          */
         showLegend (showLegend) {
             if (showLegend) {
+                console.log("showLegend");
                 document.getElementsByClassName("navbar-collapse")[0].classList.remove("show");
                 this.createLegend();
                 // focus to first element
@@ -37,11 +38,13 @@ export default {
         },
         layerCounterIdForLayerInfo (layerCounterIdForLayerInfo) {
             if (layerCounterIdForLayerInfo) {
+                console.log("layerCounterIdForLayerInfo");
                 this.createLegendForLayerInfo(this.layerIdForLayerInfo);
             }
         },
         legendOnChanged (legend) {
             if (legend) {
+                console.log("legendOnChanged");
                 this.createLegend();
                 if (this.layerIdForLayerInfo) {
                     this.createLegendForLayerInfo(this.layerIdForLayerInfo);
@@ -138,6 +141,7 @@ export default {
         listenToLayerVisibilityChanged () {
             Backbone.Events.listenTo(Radio.channel("Layer"), {
                 "layerVisibleChanged": (id, isVisibleInMap, layer) => {
+                    console.log("layerVisibleChanged");
                     this.toggleLayerInLegend(layer);
                 }
             });
@@ -150,6 +154,7 @@ export default {
         listenToUpdatedSelectedLayerList () {
             Backbone.Events.listenTo(Radio.channel("ModelList"), {
                 "updatedSelectedLayerList": (layers) => {
+                    console.log("updatedSelectedLayerList");
                     layers.forEach(layer => this.toggleLayerInLegend(layer));
                 }
             });
@@ -162,6 +167,7 @@ export default {
         listenToLayerLegendUpdate () {
             Backbone.Events.listenTo(Radio.channel("LegendComponent"), {
                 "updateLegend": () => {
+                    console.log("updateLegend");
                     this.createLegend();
                 }
             });
@@ -254,6 +260,8 @@ export default {
          * @returns {Object[]} - merged Legends.
          */
         prepareLegendForGroupLayer (layerSource) {
+            console.log("prepareLegendForGroupLayer");
+            console.log(layerSource);
             let legends = [];
 
             layerSource.forEach(layer => {
@@ -324,6 +332,7 @@ export default {
             }
             else if (Array.isArray(legendInfos)) {
                 legendInfos.forEach(legendInfo => {
+                    console.log(legendInfo);
                     const geometryType = legendInfo.geometryType,
                         name = legendInfo.label,
                         style = legendInfo.styleObject;
@@ -331,6 +340,7 @@ export default {
                         name
                     };
 
+                    console.log(geometryType);
                     if (geometryType) {
                         console.log(geometryType);
                         if (geometryType === "Point") {
@@ -679,12 +689,15 @@ export default {
             let isValid = true;
 
             if (position < 0) {
+                console.log("position < 0");
                 isValid = false;
             }
             if (typeof legend === "boolean" || !legend) {
+                console.log("legend = boolean || !legend");
                 isValid = false;
             }
             if (Array.isArray(legend) && legend.length === 0) {
+                console.log("legend.length = 0");
                 isValid = false;
             }
             return isValid;
