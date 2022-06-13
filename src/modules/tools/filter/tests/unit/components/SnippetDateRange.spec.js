@@ -32,7 +32,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
             expect(wrapper.find("div").classes("snippetDateRangeContainer")).to.be.true;
             wrapper.destroy();
         });
-        it("should render correctly with prechecked as set value", () => {
+        it("should render correctly with prechecked as set value", async () => {
             const wrapper = shallowMount(SnippetDateRange, {
                 propsData: {
                     format: "DD_YYYY_MM",
@@ -41,6 +41,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.find(".snippetDateRangeFrom").element.value).to.be.equal("2021-07-24");
             expect(wrapper.find(".snippetDateRangeUntil").element.value).to.be.equal("2021-12-24");
         });
@@ -100,12 +101,13 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.vm.minimumValue).to.equal("2021-12-24");
             expect(wrapper.vm.maximumValue).to.equal("2022-12-24");
             expect(wrapper.vm.value).to.deep.equal(["", ""]);
             wrapper.destroy();
         });
-        it("should set both minimumValue and maximumValue from properties and value from prechecked if given", () => {
+        it("should set both minimumValue and maximumValue from properties and value from prechecked if given", async () => {
             const wrapper = shallowMount(SnippetDateRange, {
                 propsData: {
                     format: "DD_YYYY_MM",
@@ -116,12 +118,13 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.vm.minimumValue).to.equal("2021-12-24");
             expect(wrapper.vm.maximumValue).to.equal("2022-12-24");
             expect(wrapper.vm.value).to.deep.equal(["2022-07-24", "2022-09-24"]);
             wrapper.destroy();
         });
-        it("should ask the api for minimumValue or maximumValue if minValue and maxValue are not given", () => {
+        it("should ask the api for minimumValue or maximumValue if minValue and maxValue are not given", async () => {
             const wrapper = shallowMount(SnippetDateRange, {
                 propsData: {
                     format: "DD_YYYY_MM",
@@ -137,12 +140,13 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.vm.minimumValue).to.equal("2021-12-24");
             expect(wrapper.vm.maximumValue).to.equal("2022-12-24");
             expect(wrapper.vm.value).to.deep.equal(["2021-12-24", "2022-12-24"]);
             wrapper.destroy();
         });
-        it("should ask the api for minimumValue if minValue is not given", () => {
+        it("should ask the api for minimumValue if minValue is not given", async () => {
             let lastMinOnly = false,
                 lastMaxOnly = false;
             const wrapper = shallowMount(SnippetDateRange, {
@@ -162,6 +166,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(lastMinOnly).to.be.true;
             expect(lastMaxOnly).to.be.false;
             expect(wrapper.vm.minimumValue).to.equal("2021-12-24");
@@ -169,7 +174,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
             expect(wrapper.vm.value).to.deep.equal(["2021-12-24", "2022-12-24"]);
             wrapper.destroy();
         });
-        it("should ask the api for maximumValue if maxValue is not given", () => {
+        it("should ask the api for maximumValue if maxValue is not given", async () => {
             let lastMinOnly = false,
                 lastMaxOnly = false;
             const wrapper = shallowMount(SnippetDateRange, {
@@ -189,6 +194,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(lastMinOnly).to.be.false;
             expect(lastMaxOnly).to.be.true;
             expect(wrapper.vm.minimumValue).to.equal("2021-12-24");
@@ -278,6 +284,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
             });
             let called = false;
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.vm.value).to.deep.equal(["2021-07-24", "2021-12-24"]);
             await wrapper.vm.resetSnippet(() => {
                 called = true;
@@ -299,6 +306,7 @@ describe("src/module/tools/filter/components/SnippetDateRange.vue", () => {
             let called = false;
 
 
+            await wrapper.vm.$nextTick();
             wrapper.vm.inRangeValueLeft = "2020-01-01";
             wrapper.vm.inRangeValueRight = "2020-01-01";
             await wrapper.vm.resetSnippet(() => {

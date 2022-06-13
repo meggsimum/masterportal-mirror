@@ -16,6 +16,7 @@ import {
     notEqualTo as notEqualToFilter,
     or as orFilter
 } from "ol/format/filter";
+import moment from "moment";
 
 /**
  * InterfaceWfsExtern is the filter interface for WFS services
@@ -27,6 +28,8 @@ export default class InterfaceWfsExtern {
      */
     constructor () {
         this.axiosCancelTokenSources = {};
+        this.allFetchedAnswers = [];
+        this.waitingListForFeatures = [];
     }
 
     /**
@@ -56,10 +59,152 @@ export default class InterfaceWfsExtern {
      * @param {Boolean} [minOnly=false] if only min is of interest
      * @param {Boolean} [maxOnly=false] if only max is of interest
      * @param {Boolean} [isDate=false] if only from date or dateRange
+     * @param {Object} filterQuestion an object of with keys rules, filterId and format (only for date)
+     * @param {Object[]} filterQuestion.rules the rules
+     * @param {Number} filterQuestion.filterId the filterId
+     * @param {String} filterQuestion.format the date format - only needed if isDate is true
      * @param {Function|Boolean} [axiosMock=false] false to use axios, an object with get function(url, {params}) if mock is needed
      * @returns {void}
      */
-    getMinMax (service, attrName, onsuccess, onerror, minOnly = false, maxOnly = false, isDate = false, axiosMock = false) {
+    getMinMax (service, attrName, onsuccess, onerror, minOnly = false, maxOnly = false, isDate = false, filterQuestion = false, axiosMock = false) {
+        if (Array.isArray(filterQuestion?.rules) && filterQuestion.rules.length) {
+            this.getMinMaxPOST(service, attrName, onsuccess, onerror, minOnly, maxOnly, isDate, filterQuestion);
+        }
+        else {
+            this.getMinMaxGET(service, attrName, onsuccess, onerror, minOnly, maxOnly, isDate, axiosMock);
+        }
+    }
+
+    /**
+     * Returns the min and max values of the given service and attrName by a POST request.
+     * @param {Object} service the service to call, identical to filterQuestion.service
+     * @param {String} attrName the attribute to receive the min and max value from
+     * @param {Function} onsuccess a function({min, max}) with the received values
+     * @param {Function} onerror a function(errorMsg)
+     * @param {Boolean} [minOnly=false] if only min is of interest
+     * @param {Boolean} [maxOnly=false] if only max is of interest
+     * @param {Boolean} [isDate=false] if only from date or dateRange
+     * @param {Object} filterQuestion an object of with keys rules, filterId and format (only for date)
+     * @param {Object[]} filterQuestion.rules the rules
+     * @param {Number} filterQuestion.filterId the filterId
+     * @param {String} filterQuestion.format the date format - only needed if isDate is true
+     * @returns {void}
+     */
+    getMinMaxPOST (service, attrName, onsuccess, onerror, minOnly, maxOnly, isDate, {rules, filterId, format}) {
+        const filterQuestion = {
+            filterId,
+            service,
+            rules
+        };
+
+        if (!Array.isArray(this.waitingListForFeatures[filterId])) {
+            this.waitingListForFeatures[filterId] = [];
+        }
+        if (Array.isArray(this.allFetchedAnswers[filterId])) {
+            onsuccess(this.getMinMaxFromFeaturesByAttrName(this.allFetchedAnswers[filterId], attrName, isDate, format, minOnly, maxOnly));
+            return;
+        }
+
+        if (!this.allFetchedAnswers[filterId]) {
+            this.allFetchedAnswers[filterId] = true;
+            const allItems = [];
+
+            this.filter(filterQuestion, filterAnswer => {
+                filterAnswer.items.forEach(item => allItems.push(item));
+                if (filterAnswer.paging.page === filterAnswer.paging.total) {
+                    this.allFetchedAnswers[filterId] = allItems;
+                    while (this.waitingListForFeatures[filterId].length) {
+                        this.waitingListForFeatures[filterId].shift()();
+                    }
+                }
+            }, onerror);
+        }
+        this.waitingListForFeatures[filterId].push(() => {
+            onsuccess(this.getMinMaxFromFeaturesByAttrName(this.allFetchedAnswers[filterId], attrName, isDate, format, minOnly, maxOnly));
+        });
+    }
+    /**
+     * Gets the min and/or max values for given features.
+     * @param {Object[]} features an array of features
+     * @param {String} attrName the attrName to fetch min max value for
+     * @param {Boolean} isDate true if min max should be dates
+     * @param {String} format the format to parse the dates from the features
+     * @param {Boolean} [minOnly=false] if only min is of interest
+     * @param {Boolean} [maxOnly=false] if only max is of interest
+     * @returns {Object} an object either only with max or min / or an object with max and min
+     */
+    getMinMaxFromFeaturesByAttrName (features, attrName, isDate, format, minOnly, maxOnly) {
+        if (!Array.isArray(features)) {
+            return {};
+        }
+        const resultObject = {};
+        let min = false,
+            max = false;
+
+        features.forEach(feature => {
+            if (typeof feature?.get !== "function") {
+                return;
+            }
+            let attrValue = feature.get(attrName);
+
+            if (!isDate) {
+                try {
+                    attrValue = Number(attrValue);
+                }
+                catch (error) {
+                    onerror(error);
+                    return;
+                }
+
+                if (min === false || attrValue < min) {
+                    min = attrValue;
+                }
+                if (max === false || attrValue > max) {
+                    max = attrValue;
+                }
+            }
+            else {
+                try {
+                    attrValue = moment(attrValue, format);
+                }
+                catch (error) {
+                    onerror(error);
+                    return;
+                }
+
+                if (min === false || attrValue.isBefore(min)) {
+                    min = moment(attrValue, format);
+                }
+                if (max === false || attrValue.isAfter(max)) {
+                    max = moment(attrValue, format);
+                }
+            }
+        });
+        if (minOnly) {
+            resultObject.min = min;
+        }
+        if (maxOnly) {
+            resultObject.max = max;
+        }
+        if (!minOnly && !maxOnly) {
+            resultObject.min = min;
+            resultObject.max = max;
+        }
+        return resultObject;
+    }
+    /**
+     * Returns the min and max values of the given service and attrName by a GET request.
+     * @param {Object} service the service to call, identical to filterQuestion.service
+     * @param {String} attrName the attribute to receive the min and max value from
+     * @param {Function} onsuccess a function({min, max}) with the received values
+     * @param {Function} onerror a function(errorMsg)
+     * @param {Boolean} [minOnly=false] if only min is of interest
+     * @param {Boolean} [maxOnly=false] if only max is of interest
+     * @param {Boolean} [isDate=false] if only from date or dateRange
+     * @param {Function|Boolean} [axiosMock=false] false to use axios, an object with get function(url, {params}) if mock is needed
+     * @returns {void}
+     */
+    getMinMaxGET (service, attrName, onsuccess, onerror, minOnly = false, maxOnly = false, isDate = false, axiosMock = false) {
         const url = service?.url,
             params = {
                 service: "WFS",
@@ -119,10 +264,91 @@ export default class InterfaceWfsExtern {
      * @param {String} attrName the attribute to receive unique values from
      * @param {Function} onsuccess a function([]) with the received unique values as Array of values
      * @param {Function} onerror a function(errorMsg)
+     * @param {Object} filterQuestion an object of with keys: rules and filterId
+     * @param {Object[]} filterQuestion.rules the rules
+     * @param {Number} filterQuestion.filterId the filterId
      * @param {Function|Boolean} [axiosMock=false] false to use axios, an object with get function(url, {params}) if mock is needed
      * @returns {void}
      */
-    getUniqueValues (service, attrName, onsuccess, onerror, axiosMock = false) {
+    getUniqueValues (service, attrName, onsuccess, onerror, filterQuestion, axiosMock = false) {
+        if (Array.isArray(filterQuestion?.rules) && filterQuestion.rules.length > 0) {
+            this.getUniqueValueByPOST(service, attrName, onsuccess, onerror, filterQuestion);
+        }
+        else {
+            this.getUniqueValueByGET(service, attrName, onsuccess, onerror, axiosMock);
+        }
+    }
+    /**
+     * Returns a list of unique values (unsorted) of the given service and attrName by a POST request restricted by given rules.
+     * @param {Object} service the service to call, identical to filterQuestion.service
+     * @param {String} attrName the attribute to receive unique values from
+     * @param {Function} onsuccess a function([]) with the received unique values as Array of values
+     * @param {Function} onerror a function(errorMsg)
+     * @param {Object} filterQuestion an object of with keys: rules and filterId
+     * @param {Object[]} filterQuestion.rules the rules
+     * @param {Number} filterQuestion.filterId the filterId
+     * @returns {void}
+     */
+    getUniqueValueByPOST (service, attrName, onsuccess, onerror, {rules, filterId}) {
+        const filterQuestion = {
+            filterId,
+            service,
+            rules
+        };
+
+        if (typeof attrName !== "string"
+            || typeof onsuccess !== "function"
+            || !Array.isArray(rules)) {
+            return;
+        }
+        if (!Array.isArray(this.waitingListForFeatures[filterId])) {
+            this.waitingListForFeatures[filterId] = [];
+        }
+        if (Array.isArray(this.allFetchedAnswers[filterId])) {
+            onsuccess(this.allFetchedAnswers[filterId]);
+            return;
+        }
+
+        if (!this.allFetchedAnswers[filterId]) {
+            this.allFetchedAnswers[filterId] = true;
+            const allItems = [];
+
+            this.filter(filterQuestion, filterAnswer => {
+                filterAnswer.items.forEach(item => allItems.push(item));
+                if (filterAnswer.paging.page === filterAnswer.paging.total) {
+                    this.allFetchedAnswers[filterId] = allItems;
+                    while (this.waitingListForFeatures[filterId].length) {
+                        this.waitingListForFeatures[filterId].shift()();
+                    }
+                }
+            }, onerror);
+        }
+
+        this.waitingListForFeatures[filterId].push(() => {
+            const uniqueObject = {};
+
+            this.allFetchedAnswers[filterId].forEach(feature => {
+                if (typeof feature?.get !== "function") {
+                    return;
+                }
+                const attrValue = feature.get(attrName);
+
+                uniqueObject[attrValue] = true;
+
+            });
+            onsuccess(Object.keys(uniqueObject));
+        });
+    }
+    /**
+     * Returns a list of unique values (unsorted) of the given service and attrName by a GET request.
+     * @param {Object} service the service to call, identical to filterQuestion.service
+     * @param {String} attrName the attribute to receive unique values from
+     * @param {Function} onsuccess a function([]) with the received unique values as Array of values
+     * @param {Function} onerror a function(errorMsg)
+     * @param {Function|Boolean} [axiosMock=false] false to use axios, an object with get function(url, {params}) if mock is needed
+     * @returns {void}
+     */
+    getUniqueValueByGET (service, attrName, onsuccess, onerror, axiosMock) {
         const url = service?.url,
             params = {
                 service: "WFS",

@@ -57,10 +57,14 @@ export default class InterfaceWfsIntern {
      * @param {Boolean} [minOnly=false] if only min is of interest
      * @param {Boolean} [maxOnly=false] if only max is of interest
      * @param {Boolean} [isDate=false] if only from date type or dateRange type
+     * @param {Object} filterQuestion an object of with keys rules, filterId and format (only for date)
+     * @param {Object[]} filterQuestion.rules the rules
+     * @param {Number} filterQuestion.filterId the filterId
+     * @param {String} filterQuestion.format the date format - only needed if isDate is true
      * @returns {void}
      */
-    getMinMax (service, attrName, onsuccess, onerror, minOnly, maxOnly, isDate) {
-        return this.interfaceWfsExtern.getMinMax(service, attrName, onsuccess, onerror, minOnly, maxOnly, isDate);
+    getMinMax (service, attrName, onsuccess, onerror, minOnly, maxOnly, isDate, filterQuestion) {
+        return this.interfaceWfsExtern.getMinMax(service, attrName, onsuccess, onerror, minOnly, maxOnly, isDate, filterQuestion);
     }
 
     /**
@@ -69,10 +73,13 @@ export default class InterfaceWfsIntern {
      * @param {String} attrName the attribute to receive unique values from
      * @param {Function} onsuccess a function([]) with the received unique values as Array of values
      * @param {Function} onerror a function(errorMsg)
+     * @param {Object} filterQuestion an object of with keys rules and filterId
+     * @param {Object[]} filterQuestion.rules the rules
+     * @param {Number} filterQuestion.filterId the filterId
      * @returns {void}
      */
-    getUniqueValues (service, attrName, onsuccess, onerror) {
-        return this.interfaceWfsExtern.getUniqueValues(service, attrName, onsuccess, onerror);
+    getUniqueValues (service, attrName, onsuccess, onerror, filterQuestion) {
+        return this.interfaceWfsExtern.getUniqueValues(service, attrName, onsuccess, onerror, filterQuestion);
     }
 
     /**

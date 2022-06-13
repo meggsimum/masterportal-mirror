@@ -66,30 +66,18 @@ export default class FilterApi {
             featureNS = layerModel.get("featureNS");
 
         if (type === "wfs") {
-            if (!extern) {
-                this.service = {
-                    type,
-                    extern,
-                    layerId,
-                    url: layerModel.get("url"),
-                    typename: layerModel.get("featureType"),
-                    namespace: featureNS
-                };
-            }
-            else {
-                this.service = {
-                    type,
-                    extern,
-                    layerId,
-                    url: layerModel.get("url"),
-                    typename: layerModel.get("featureType"),
-                    namespace: featureNS,
-                    srsName: getMapProjection(),
-                    featureNS: featureNS.substr(0, featureNS.lastIndexOf("/")),
-                    featurePrefix: featureNS.substr(featureNS.lastIndexOf("/") + 1),
-                    featureTypes: [layerModel.get("featureType")]
-                };
-            }
+            this.service = {
+                type,
+                extern,
+                layerId,
+                url: layerModel.get("url"),
+                typename: layerModel.get("featureType"),
+                namespace: featureNS,
+                srsName: getMapProjection(),
+                featureNS: featureNS.substr(0, featureNS.lastIndexOf("/")),
+                featurePrefix: featureNS.substr(featureNS.lastIndexOf("/") + 1),
+                featureTypes: [layerModel.get("featureType")]
+            };
         }
         else if (type === "oaf") {
             if (!extern) {
@@ -179,9 +167,11 @@ export default class FilterApi {
      * @param {Boolean} [minOnly=false] if only min is of interest
      * @param {Boolean} [maxOnly=false] if only max is of interest
      * @param {Boolean} [isDate=false] if only from date or dateRange
+     * @param {Object[]} rules the rules to restrict the request
+     * @param {Number} filterId the filterId
      * @returns {void}
      */
-    getMinMax (attrName, onsuccess, onerror, minOnly, maxOnly, isDate) {
+    getMinMax (attrName, onsuccess, onerror, minOnly, maxOnly, isDate, {rules, filterId, format}) {
         if (!isObject(this.service)) {
             if (typeof onerror === "function") {
                 onerror(new Error("FilterApi.getMinMax: You have to set a default service first before using this function."));
@@ -189,7 +179,7 @@ export default class FilterApi {
             return;
         }
         const connector = this.getInterfaceByService(this.service, onerror),
-            cacheKey = hash.sha1(["getMinMax", JSON.stringify(this.service), attrName, minOnly, maxOnly].join("."));
+            cacheKey = hash.sha1(["getMinMax", JSON.stringify(this.service), attrName, minOnly, maxOnly, filterId].join("."));
 
         if (Object.prototype.hasOwnProperty.call(FilterApi.cache, cacheKey)) {
             if (typeof onsuccess === "function") {
@@ -217,7 +207,7 @@ export default class FilterApi {
                         obj.onerror(error);
                     }
                 });
-            }, minOnly, maxOnly, isDate);
+            }, minOnly, maxOnly, isDate, {rules, filterId, format}); // noch überall nachziehen
         }
         else {
             FilterApi.waitingList[cacheKey].push({onsuccess, onerror});
@@ -228,9 +218,11 @@ export default class FilterApi {
      * @param {String} attrName the attribute to receive unique values from
      * @param {Function} onsuccess a function([]) with the received unique values as Array of values
      * @param {Function} onerror a function(Error)
+     * @param {Object[]} rules the rules to restrict the request
+     * @param {Number} filterId the filterId
      * @returns {void}
      */
-    getUniqueValues (attrName, onsuccess, onerror) {
+    getUniqueValues (attrName, onsuccess, onerror, {rules, filterId}) {
         if (!isObject(this.service)) {
             if (typeof onerror === "function") {
                 onerror(new Error("FilterApi.getUniqueValues: You have to set a default service first before using this function."));
@@ -238,7 +230,10 @@ export default class FilterApi {
             return;
         }
         const connector = this.getInterfaceByService(this.service, onerror),
-            cacheKey = hash.sha1(["getUniqueValues", JSON.stringify(this.service), attrName].join("."));
+            cacheKey = hash.sha1(["getUniqueValues",
+                JSON.stringify(this.service),
+                attrName,
+                filterId].join("."));
 
         if (Object.prototype.hasOwnProperty.call(FilterApi.cache, cacheKey)) {
             if (typeof onsuccess === "function") {
@@ -266,7 +261,7 @@ export default class FilterApi {
                         obj.onerror(error);
                     }
                 });
-            });
+            }, {rules, filterId});
         }
         else {
             FilterApi.waitingList[cacheKey].push({onsuccess, onerror});

@@ -211,6 +211,7 @@ describe("src/modules/tools/filter/components/SnippetDropdown.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.find(".snippetListContainer").exists()).to.be.true;
             expect(wrapper.find(".snippetListContainer .radio").exists()).to.be.true;
 
@@ -228,6 +229,7 @@ describe("src/modules/tools/filter/components/SnippetDropdown.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.find(".snippetListContainer").exists()).to.be.true;
             expect(wrapper.find(".snippetListContainer .checkbox").exists()).to.be.true;
 

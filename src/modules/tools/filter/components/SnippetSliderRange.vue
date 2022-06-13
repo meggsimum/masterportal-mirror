@@ -35,6 +35,11 @@ export default {
             required: false,
             default: false
         },
+        filterId: {
+            type: Number,
+            required: false,
+            default: 0
+        },
         info: {
             type: [String, Boolean],
             required: false,
@@ -69,6 +74,13 @@ export default {
             type: Array,
             required: false,
             default: undefined
+        },
+        fixedRules: {
+            type: Array,
+            required: false,
+            default: () => {
+                return [];
+            }
         },
         snippetId: {
             type: Number,
@@ -164,46 +176,47 @@ export default {
             this.disable = typeof value === "boolean" ? value : true;
         }
     },
-    created () {
-        if (typeof this.minValue !== "undefined" && typeof this.maxValue !== "undefined") {
-            this.minimumValue = this.minValue;
-            this.maximumValue = this.maxValue;
-            this.value = Array.isArray(this.prechecked) && this.prechecked.length === 2 ? this.prechecked : [this.minimumValue, this.maximumValue];
-            this.$nextTick(() => {
-                this.isInitializing = false;
-                this.disable = false;
-            });
-        }
-        else if (this.api) {
-            this.api.getMinMax(this.attrName, minMaxObj => {
-                if (!isObject(minMaxObj)) {
-                    return;
-                }
-                this.minimumValue = Object.prototype.hasOwnProperty.call(minMaxObj, "min") ? minMaxObj.min : this.minValue;
-                this.maximumValue = Object.prototype.hasOwnProperty.call(minMaxObj, "max") ? minMaxObj.max : this.maxValue;
+    mounted () {
+        this.$nextTick(() => {
+            if (typeof this.minValue !== "undefined" && typeof this.maxValue !== "undefined") {
+                this.minimumValue = this.minValue;
+                this.maximumValue = this.maxValue;
                 this.value = Array.isArray(this.prechecked) && this.prechecked.length === 2 ? this.prechecked : [this.minimumValue, this.maximumValue];
                 this.$nextTick(() => {
                     this.isInitializing = false;
                     this.disable = false;
                 });
-            }, err => {
-                this.isInitializing = false;
-                this.disable = false;
-                console.warn(err);
-            }, typeof this.minValue === "undefined" && typeof this.maxValue !== "undefined", typeof this.minValue !== "undefined" && typeof this.maxValue === "undefined");
-        }
-        else {
-            this.value = Array.isArray(this.prechecked) && this.prechecked.length === 2 ? this.prechecked : [0, 100];
-            this.$nextTick(() => {
-                this.isInitializing = false;
-                this.disable = false;
-            });
-        }
-        if (this.visible && Array.isArray(this.prechecked) && this.prechecked.length === 2) {
-            this.emitCurrentRule(this.prechecked, true);
-        }
-    },
-    mounted () {
+            }
+            else if (this.api) {
+                this.api.getMinMax(this.attrName, minMaxObj => {
+                    if (!isObject(minMaxObj)) {
+                        return;
+                    }
+                    this.minimumValue = Object.prototype.hasOwnProperty.call(minMaxObj, "min") ? minMaxObj.min : this.minValue;
+                    this.maximumValue = Object.prototype.hasOwnProperty.call(minMaxObj, "max") ? minMaxObj.max : this.maxValue;
+                    this.value = Array.isArray(this.prechecked) && this.prechecked.length === 2 ? this.prechecked : [this.minimumValue, this.maximumValue];
+                    this.$nextTick(() => {
+                        this.isInitializing = false;
+                        this.disable = false;
+                    });
+                }, err => {
+                    this.isInitializing = false;
+                    this.disable = false;
+                    console.warn(err);
+                }, typeof this.minValue === "undefined" && typeof this.maxValue !== "undefined", typeof this.minValue !== "undefined" && typeof this.maxValue === "undefined", false,
+                {rules: this.fixedRules, filterId: this.filterId});
+            }
+            else {
+                this.value = Array.isArray(this.prechecked) && this.prechecked.length === 2 ? this.prechecked : [0, 100];
+                this.$nextTick(() => {
+                    this.isInitializing = false;
+                    this.disable = false;
+                });
+            }
+            if (this.visible && Array.isArray(this.prechecked) && this.prechecked.length === 2) {
+                this.emitCurrentRule(this.prechecked, true);
+            }
+        });
         this.$emit("setSnippetPrechecked", this.visible && Array.isArray(this.prechecked) && this.prechecked.length === 2);
     },
     methods: {

@@ -32,7 +32,7 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
             expect(wrapper.find("div").classes("snippetDateContainer")).to.be.true;
             wrapper.destroy();
         });
-        it("should render correctly with prechecked as set value", () => {
+        it("should render correctly with prechecked as set value", async () => {
             const wrapper = shallowMount(SnippetDate, {
                 propsData: {
                     format: "DD_YYYY_MM",
@@ -41,6 +41,7 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.find(".snippetDate").element.value).to.be.equal("2021-12-24");
         });
         it("should render hidden if visible is false", () => {
@@ -103,7 +104,7 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
             expect(wrapper.vm.value).to.equal("");
             wrapper.destroy();
         });
-        it("should set both minimumValue and maximumValue from properties and value from prechecked if given", () => {
+        it("should set both minimumValue and maximumValue from properties and value from prechecked if given", async () => {
             const wrapper = shallowMount(SnippetDate, {
                 propsData: {
                     format: "DD_YYYY_MM",
@@ -114,12 +115,13 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.vm.minimumValue).to.equal("2021-12-24");
             expect(wrapper.vm.maximumValue).to.equal("2022-12-24");
             expect(wrapper.vm.value).to.equal("2021-07-24");
             wrapper.destroy();
         });
-        it("should ask the api for minimumValue or maximumValue if minValue and maxValue are not given", () => {
+        it("should ask the api for minimumValue or maximumValue if minValue and maxValue are not given", async () => {
             const wrapper = shallowMount(SnippetDate, {
                 propsData: {
                     format: "DD_YYYY_MM",
@@ -135,12 +137,13 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.vm.minimumValue).to.equal("2021-12-24");
             expect(wrapper.vm.maximumValue).to.equal("2022-12-24");
             expect(wrapper.vm.value).to.equal("");
             wrapper.destroy();
         });
-        it("should ask the api for minimumValue if minValue is not given", () => {
+        it("should ask the api for minimumValue if minValue is not given", async () => {
             let lastMinOnly = false,
                 lastMaxOnly = false;
             const wrapper = shallowMount(SnippetDate, {
@@ -160,6 +163,7 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(lastMinOnly).to.be.true;
             expect(lastMaxOnly).to.be.false;
             expect(wrapper.vm.minimumValue).to.equal("2021-12-24");
@@ -167,7 +171,7 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
             expect(wrapper.vm.value).to.equal("");
             wrapper.destroy();
         });
-        it("should ask the api for maximumValue if maxValue is not given", () => {
+        it("should ask the api for maximumValue if maxValue is not given", async () => {
             let lastMinOnly = false,
                 lastMaxOnly = false;
             const wrapper = shallowMount(SnippetDate, {
@@ -187,6 +191,7 @@ describe("src/modules/tools/generalFilter/components/SnippetDate.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick;
             expect(lastMinOnly).to.be.false;
             expect(lastMaxOnly).to.be.true;
             expect(wrapper.vm.minimumValue).to.equal("2021-12-24");

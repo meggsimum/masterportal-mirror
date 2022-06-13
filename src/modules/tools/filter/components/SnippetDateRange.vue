@@ -41,6 +41,11 @@ export default {
             required: false,
             default: false
         },
+        filterId: {
+            type: Number,
+            required: false,
+            default: 0
+        },
         format: {
             type: String,
             required: false,
@@ -70,6 +75,13 @@ export default {
             type: Array,
             required: false,
             default: undefined
+        },
+        fixedRules: {
+            type: Array,
+            required: false,
+            default: () => {
+                return [];
+            }
         },
         snippetId: {
             type: Number,
@@ -187,70 +199,70 @@ export default {
             this.disable = typeof value === "boolean" ? value : true;
         }
     },
-    created () {
-        const momentPrecheckedLeft = moment(Array.isArray(this.prechecked) ? this.prechecked[0] : "", this.format),
-            momentPrecheckedRight = moment(Array.isArray(this.prechecked) ? this.prechecked[1] : "", this.format),
-            momentMin = moment(this.minValue, this.format),
-            momentMax = moment(this.maxValue, this.format);
+    mounted () {
+        this.$nextTick(() => {
+            const momentPrecheckedLeft = moment(Array.isArray(this.prechecked) ? this.prechecked[0] : "", this.format),
+                momentPrecheckedRight = moment(Array.isArray(this.prechecked) ? this.prechecked[1] : "", this.format),
+                momentMin = moment(this.minValue, this.format),
+                momentMax = moment(this.maxValue, this.format);
 
-        this.precheckedIsValid = momentPrecheckedLeft.isValid() || momentPrecheckedRight.isValid();
+            this.precheckedIsValid = momentPrecheckedLeft.isValid() || momentPrecheckedRight.isValid();
 
-        if (this.api) {
-            const attrName = [];
+            if (this.api) {
+                const attrName = [];
 
-            if (Array.isArray(this.attrName)) {
-                attrName.push(this.attrName[0]);
-                attrName.push(this.attrName[1]);
-            }
-            else if (typeof this.attrName === "string") {
-                attrName.push(this.attrName);
-                attrName.push(this.attrName);
-            }
+                if (Array.isArray(this.attrName)) {
+                    attrName.push(this.attrName[0]);
+                    attrName.push(this.attrName[1]);
+                }
+                else if (typeof this.attrName === "string") {
+                    attrName.push(this.attrName);
+                    attrName.push(this.attrName);
+                }
 
-            if (attrName.length === 2) {
-                this.minimumValue = momentMin.format(this.internalFormat);
-                this.maximumValue = momentMax.format(this.internalFormat);
+                if (attrName.length === 2) {
+                    this.minimumValue = momentMin.format(this.internalFormat);
+                    this.maximumValue = momentMax.format(this.internalFormat);
 
-                this.setMinimumMaximumValue(attrName[0], !momentMin.isValid(), false, () => {
-                    this.setMinimumMaximumValue(attrName[1], false, !momentMax.isValid(), () => {
-                        this.value[0] = momentPrecheckedLeft.isValid() ? momentPrecheckedLeft.format(this.internalFormat) : this.minimumValue;
-                        this.value[1] = momentPrecheckedRight.isValid() ? momentPrecheckedRight.format(this.internalFormat) : this.maximumValue;
+                    this.setMinimumMaximumValue(attrName[0], !momentMin.isValid(), false, () => {
+                        this.setMinimumMaximumValue(attrName[1], false, !momentMax.isValid(), () => {
+                            this.value[0] = momentPrecheckedLeft.isValid() ? momentPrecheckedLeft.format(this.internalFormat) : this.minimumValue;
+                            this.value[1] = momentPrecheckedRight.isValid() ? momentPrecheckedRight.format(this.internalFormat) : this.maximumValue;
 
-                        this.$nextTick(() => {
+                            this.$nextTick(() => {
+                                this.isInitializing = false;
+                                this.disable = false;
+                            });
+                        }, error => {
                             this.isInitializing = false;
                             this.disable = false;
+                            console.warn(error);
                         });
                     }, error => {
                         this.isInitializing = false;
                         this.disable = false;
                         console.warn(error);
                     });
-                }, error => {
+                }
+            }
+            else {
+                this.minimumValue = momentMin.isValid() ? momentMin.format(this.internalFormat) : "";
+                this.maximumValue = momentMax.isValid() ? momentMax.format(this.internalFormat) : "";
+                if (this.precheckedIsValid) {
+                    this.value = [
+                        momentPrecheckedLeft.isValid() ? momentPrecheckedLeft.format(this.internalFormat) : this.minimumValue,
+                        momentPrecheckedRight.isValid() ? momentPrecheckedRight.format(this.internalFormat) : this.maximumValue
+                    ];
+                }
+                this.$nextTick(() => {
                     this.isInitializing = false;
                     this.disable = false;
-                    console.warn(error);
                 });
             }
-        }
-        else {
-            this.minimumValue = momentMin.isValid() ? momentMin.format(this.internalFormat) : "";
-            this.maximumValue = momentMax.isValid() ? momentMax.format(this.internalFormat) : "";
-            if (this.precheckedIsValid) {
-                this.value = [
-                    momentPrecheckedLeft.isValid() ? momentPrecheckedLeft.format(this.internalFormat) : this.minimumValue,
-                    momentPrecheckedRight.isValid() ? momentPrecheckedRight.format(this.internalFormat) : this.maximumValue
-                ];
+            if (this.visible && this.precheckedIsValid) {
+                this.emitCurrentRule(this.prechecked, true);
             }
-            this.$nextTick(() => {
-                this.isInitializing = false;
-                this.disable = false;
-            });
-        }
-        if (this.visible && this.precheckedIsValid) {
-            this.emitCurrentRule(this.prechecked, true);
-        }
-    },
-    mounted () {
+        });
         this.$emit("setSnippetPrechecked", this.visible && this.precheckedIsValid);
     },
     methods: {
@@ -334,7 +346,8 @@ export default {
                 if (typeof onsuccess === "function") {
                     onsuccess();
                 }
-            }, onerror, minOnly, maxOnly, true);
+            }, onerror, minOnly, maxOnly, true,
+            {rules: this.fixedRules, filterId: this.filterId, format: this.format});
         },
         /**
          * Emits the current rule to whoever is listening.

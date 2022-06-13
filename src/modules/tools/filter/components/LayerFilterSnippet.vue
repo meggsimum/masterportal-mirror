@@ -98,6 +98,9 @@ export default {
         },
         snippetTagsResetAllText () {
             return this.$t("common:modules.tools.filter.snippetTags.resetAll");
+        },
+        fixedRules () {
+            return this.filterRules.filter(rule => rule?.fixed);
         }
     },
     watch: {
@@ -750,6 +753,7 @@ export default {
                     :delimitor="snippet.delimitor"
                     :disabled="disabled"
                     :display="snippet.display"
+                    :filter-id="layerConfig.filterId"
                     :info="snippet.info"
                     :is-parent="isParentSnippet(snippet.snippetId)"
                     :title="getTitle(snippet, layerConfig.layerId)"
@@ -759,6 +763,7 @@ export default {
                     :placeholder="snippet.placeholder"
                     :prechecked="snippet.prechecked"
                     :render-icons="snippet.renderIcons"
+                    :fixed-rules="fixedRules"
                     :snippet-id="snippet.snippetId"
                     :value="snippet.value"
                     :visible="snippet.visible"
@@ -801,12 +806,14 @@ export default {
                     :disabled="disabled"
                     :info="snippet.info"
                     :format="snippet.format"
+                    :filter-id="layerConfig.filterId"
                     :is-parent="isParentSnippet(snippet.snippetId)"
                     :title="getTitle(snippet, layerConfig.layerId)"
                     :max-value="snippet.maxValue"
                     :min-value="snippet.minValue"
                     :operator="snippet.operator"
                     :prechecked="snippet.prechecked"
+                    :fixed-rules="fixedRules"
                     :snippet-id="snippet.snippetId"
                     :visible="snippet.visible"
                     @changeRule="changeRule"
@@ -826,12 +833,14 @@ export default {
                     :disabled="disabled"
                     :info="snippet.info"
                     :format="snippet.format"
+                    :filter-id="layerConfig.filterId"
                     :is-parent="isParentSnippet(snippet.snippetId)"
                     :title="getTitle(snippet, layerConfig.layerId)"
                     :max-value="snippet.maxValue"
                     :min-value="snippet.minValue"
                     :operator="snippet.operator"
                     :prechecked="snippet.prechecked"
+                    :fixed-rules="fixedRules"
                     :snippet-id="snippet.snippetId"
                     :visible="snippet.visible"
                     @changeRule="changeRule"
@@ -850,6 +859,7 @@ export default {
                     :attr-name="snippet.attrName"
                     :decimal-places="snippet.decimalPlaces"
                     :disabled="disabled"
+                    :filter-id="layerConfig.filterId"
                     :info="snippet.info"
                     :is-parent="isParentSnippet(snippet.snippetId)"
                     :title="getTitle(snippet, layerConfig.layerId)"
@@ -857,6 +867,7 @@ export default {
                     :max-value="snippet.maxValue"
                     :operator="snippet.operator"
                     :prechecked="snippet.prechecked"
+                    :fixed-rules="fixedRules"
                     :snippet-id="snippet.snippetId"
                     :visible="snippet.visible"
                     @changeRule="changeRule"
@@ -875,6 +886,7 @@ export default {
                     :attr-name="snippet.attrName"
                     :decimal-places="snippet.decimalPlaces"
                     :disabled="disabled"
+                    :filter-id="layerConfig.filterId"
                     :info="snippet.info"
                     :is-parent="isParentSnippet(snippet.snippetId)"
                     :title="getTitle(snippet, layerConfig.layerId)"
@@ -882,6 +894,7 @@ export default {
                     :max-value="snippet.maxValue"
                     :operator="snippet.operator"
                     :prechecked="snippet.prechecked"
+                    :fixed-rules="fixedRules"
                     :snippet-id="snippet.snippetId"
                     :visible="snippet.visible"
                     @changeRule="changeRule"

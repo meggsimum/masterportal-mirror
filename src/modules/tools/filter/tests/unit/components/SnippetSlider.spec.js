@@ -33,7 +33,7 @@ describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
             expect(wrapper.find(".slider-single").exists()).to.be.true;
             wrapper.destroy();
         });
-        it("should render the component with set min and max values if configured", () => {
+        it("should render the component with set min and max values if configured", async () => {
             const wrapper = shallowMount(SnippetSlider, {
                 propsData: {
                     minValue: 0,
@@ -43,6 +43,7 @@ describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.find(".input-single").element.value).to.equal("50");
             expect(wrapper.find(".slider-single").element.value).to.equal("50");
             expect(wrapper.find(".slider-single").element.min).to.equal("0");
@@ -150,7 +151,7 @@ describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
             expect(wrapper.find(".snippetSliderLabel").exists()).to.be.false;
             wrapper.destroy();
         });
-        it("should set both minimumValue and maximumValue from properties if given", () => {
+        it("should set both minimumValue and maximumValue from properties if given", async () => {
             const wrapper = shallowMount(SnippetSlider, {
                 propsData: {
                     minValue: 1,
@@ -159,12 +160,13 @@ describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.vm.minimumValue).to.equal(1);
             expect(wrapper.vm.maximumValue).to.equal(3);
             expect(wrapper.vm.value).to.equal(1);
             wrapper.destroy();
         });
-        it("should set both minimumValue and maximumValue from properties and value from prechecked if given", () => {
+        it("should set both minimumValue and maximumValue from properties and value from prechecked if given", async () => {
             const wrapper = shallowMount(SnippetSlider, {
                 propsData: {
                     minValue: 1,
@@ -174,12 +176,13 @@ describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.vm.minimumValue).to.equal(1);
             expect(wrapper.vm.maximumValue).to.equal(3);
             expect(wrapper.vm.value).to.equal(2);
             wrapper.destroy();
         });
-        it("should ask the api for minimumValue or maximumValue if minValue and maxValue are not given", () => {
+        it("should ask the api for minimumValue or maximumValue if minValue and maxValue are not given", async () => {
             const wrapper = shallowMount(SnippetSlider, {
                 propsData: {
                     api: {
@@ -194,12 +197,13 @@ describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.vm.minimumValue).to.equal(10);
             expect(wrapper.vm.maximumValue).to.equal(12);
             expect(wrapper.vm.value).to.equal(10);
             wrapper.destroy();
         });
-        it("should ask the api for minimumValue if minValue is not given", () => {
+        it("should ask the api for minimumValue if minValue is not given", async () => {
             let lastMinOnly = false,
                 lastMaxOnly = false;
             const wrapper = shallowMount(SnippetSlider, {
@@ -218,6 +222,7 @@ describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(lastMinOnly).to.be.true;
             expect(lastMaxOnly).to.be.false;
             expect(wrapper.vm.minimumValue).to.equal(20);
@@ -225,7 +230,7 @@ describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
             expect(wrapper.vm.value).to.equal(20);
             wrapper.destroy();
         });
-        it("should ask the api for maximumValue if maxValue is not given", () => {
+        it("should ask the api for maximumValue if maxValue is not given", async () => {
             let lastMinOnly = false,
                 lastMaxOnly = false;
             const wrapper = shallowMount(SnippetSlider, {
@@ -244,6 +249,7 @@ describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
                 localVue
             });
 
+            await wrapper.vm.$nextTick();
             expect(lastMinOnly).to.be.false;
             expect(lastMaxOnly).to.be.true;
             expect(wrapper.vm.minimumValue).to.equal(30);
@@ -329,6 +335,7 @@ describe("src/modules/tools/filter/components/SnippetSlider.vue", () => {
             });
             let called = false;
 
+            await wrapper.vm.$nextTick();
             expect(wrapper.vm.value).to.equal(50);
             await wrapper.vm.resetSnippet(() => {
                 called = true;

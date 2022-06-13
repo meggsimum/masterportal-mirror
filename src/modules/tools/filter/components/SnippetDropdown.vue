@@ -60,6 +60,11 @@ export default {
             required: false,
             default: "default"
         },
+        filterId: {
+            type: Number,
+            required: false,
+            default: 0
+        },
         info: {
             type: [String, Boolean],
             required: false,
@@ -109,6 +114,13 @@ export default {
             type: [String, Object],
             required: false,
             default: undefined
+        },
+        fixedRules: {
+            type: Array,
+            required: false,
+            default: () => {
+                return [];
+            }
         },
         snippetId: {
             type: Number,
@@ -256,42 +268,6 @@ export default {
     },
     created () {
         this.dropdownSelected = Array.isArray(this.prechecked) ? this.prechecked : [];
-
-        if (!this.visible) {
-            this.dropdownValue = Array.isArray(this.prechecked) ? this.prechecked : [];
-            this.$nextTick(() => {
-                this.isInitializing = false;
-                this.disable = false;
-            });
-        }
-        else if (Array.isArray(this.value)) {
-            this.dropdownValue = this.value;
-            this.$nextTick(() => {
-                this.isInitializing = false;
-                this.disable = false;
-            });
-        }
-        else if (this.api && this.autoInit !== false) {
-            this.api.getUniqueValues(this.attrName, list => {
-                this.dropdownValue = this.splitListWithDelimitor(list, this.delimitor);
-                this.$nextTick(() => {
-                    this.isInitializing = false;
-                    this.disable = false;
-                });
-            }, error => {
-                this.disable = false;
-                this.isInitializing = false;
-                console.warn(error);
-            });
-        }
-        else {
-            this.dropdownValue = [];
-            this.$nextTick(() => {
-                this.isInitializing = false;
-                this.disable = false;
-            });
-        }
-
         if (this.visible && Array.isArray(this.prechecked) && this.prechecked.length) {
             this.emitCurrentRule(this.prechecked, true);
         }
@@ -311,7 +287,44 @@ export default {
             this.iconList = this.renderIcons;
         }
 
-        this.$emit("setSnippetPrechecked", this.visible && Array.isArray(this.prechecked) && this.prechecked.length);
+        this.$nextTick(() => {
+            if (!this.visible) {
+                this.dropdownValue = Array.isArray(this.prechecked) ? this.prechecked : [];
+                this.$nextTick(() => {
+                    this.isInitializing = false;
+                    this.disable = false;
+                });
+            }
+            else if (Array.isArray(this.value)) {
+                this.dropdownValue = this.value;
+                this.$nextTick(() => {
+                    this.isInitializing = false;
+                    this.disable = false;
+                });
+            }
+            else if (this.api && this.autoInit !== false) {
+                this.api.getUniqueValues(this.attrName, list => {
+                    this.dropdownValue = this.splitListWithDelimitor(list, this.delimitor);
+                    this.$nextTick(() => {
+                        this.isInitializing = false;
+                        this.disable = false;
+                    });
+                }, error => {
+                    this.disable = false;
+                    this.isInitializing = false;
+                    console.warn(error);
+                }, {rules: this.fixedRules, filterId: this.filterId});
+            }
+            else {
+                this.dropdownValue = [];
+                this.$nextTick(() => {
+                    this.isInitializing = false;
+                    this.disable = false;
+                });
+            }
+
+            this.$emit("setSnippetPrechecked", this.visible && Array.isArray(this.prechecked) && this.prechecked.length);
+        });
     },
     methods: {
         translateKeyWithPlausibilityCheck,
