@@ -228,6 +228,7 @@ export default {
          * @returns {void}
          */
         resetSnippet (onsuccess) {
+            this.isAdjusting = true;
             if (this.visible) {
                 if (typeof this.minimumValue === "number") {
                     this.value = this.minimumValue;
@@ -240,6 +241,7 @@ export default {
                 if (typeof onsuccess === "function") {
                     onsuccess();
                 }
+                this.isAdjusting = false;
             });
         },
         /**

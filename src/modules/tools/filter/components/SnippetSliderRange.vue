@@ -260,6 +260,7 @@ export default {
          * @returns {void}
          */
         resetSnippet (onsuccess) {
+            this.isAdjusting = true;
             if (this.visible) {
                 this.inRangeValueLeft = this.minimumValue;
                 this.inRangeValueRight = this.maximumValue;
@@ -268,6 +269,7 @@ export default {
                 if (typeof onsuccess === "function") {
                     onsuccess();
                 }
+                this.isAdjusting = false;
             });
         },
         /**
