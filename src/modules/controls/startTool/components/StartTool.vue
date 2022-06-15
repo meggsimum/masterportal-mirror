@@ -93,8 +93,9 @@ export default {
                 :icon-name="tool.icon"
                 :class="[component ? 'control' : 'Table']"
                 :title="$t(tool.name)"
-                :disabled="false"
+                :disabled="tool.disabled || false"
                 :on-click="() => onClick(tool)"
+                :error-message="$t(tool.errorMessage)"
             />
         </template>
     </div>

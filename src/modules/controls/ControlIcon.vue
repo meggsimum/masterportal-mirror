@@ -30,6 +30,11 @@ export default {
         inline: {
             type: Boolean,
             default: false
+        },
+        /** error message for an inactive control */
+        errorMessage: {
+            type: String,
+            default: ""
         }
     },
     computed: {
@@ -53,6 +58,9 @@ export default {
         @click.stop="onClick"
         @keyup.space.stop.prevent="onClick"
     >
+        <span v-if="errorMessage !== ''">
+            {{ errorMessage }}
+        </span>
         <!-- children should usually be placed absolutely in relation to ControlIcon -->
         <i
             :class="iconClass"
@@ -104,10 +112,24 @@ export default {
             // adjust line-height to use same height as ::before Element
             line-height: 0;
         }
+        >span {
+            display: none;
+        }
 
         /* pseudo-class state effects */
         &:hover {
-            background-color: lighten($primary, 10%);;
+            background-color: lighten($primary, 10%);
+            > span {
+                display: block;
+                background-color: lighten($primary, 10%);
+                position: absolute;
+                color: $white;
+                font-size: $font_size_small_custom;
+                right: 40px;
+                width: 300px;
+                top: -5px;
+                padding: 10px;
+            }
         }
         &:focus {
             background-color: lighten($primary, 15%);
