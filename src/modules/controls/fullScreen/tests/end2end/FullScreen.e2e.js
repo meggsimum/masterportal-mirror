@@ -20,7 +20,7 @@ function FullScreenTest ({builder, url, resolution, browsername, capability}) {
     const testIsApplicable = isMaster(url);
 
     if (testIsApplicable) {
-        describe.only("Modules Controls FullScreen", async function () {
+        describe("Modules Controls FullScreen", async function () {
             const fullScreenButtonSelector = By.css(".fullscreen-button .control-icon"),
                 removeIconSelector = By.css(".fullscreen-button .control-icon > .bi-fullscreen-exit"),
                 fullscreenIconSelector = By.css(".fullscreen-button .control-icon > .bi-arrows-fullscreen");
