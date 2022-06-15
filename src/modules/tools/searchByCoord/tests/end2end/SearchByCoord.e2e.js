@@ -107,7 +107,7 @@ async function SearchByCoordTests ({builder, url, resolution, capability}) {
                 await driver.wait(until.elementIsVisible(await driver.findElement(selectors.modal)), 10000, "Modal dialog did not become visible.");
             });
 
-            it("zooms to selected coordinates in ETRS89", async () => {
+            it.skip("zooms to selected coordinates in ETRS89", async () => {
                 await searchCoordinatesAndCheckResults({
                     optionSelector: selectors.etrs89Option,
                     easting: "564459",
@@ -116,7 +116,7 @@ async function SearchByCoordTests ({builder, url, resolution, capability}) {
                 });
             });
 
-            it("zooms to selected coordinates in WGS84", async () => {
+            it.skip("zooms to selected coordinates in WGS84", async () => {
                 await searchCoordinatesAndCheckResults({
                     optionSelector: selectors.wgs84Option,
                     easting: "53° 33' 50''",
@@ -125,7 +125,7 @@ async function SearchByCoordTests ({builder, url, resolution, capability}) {
                 });
             });
 
-            it("zooms to selected coordinates in WGS84(Dezimalgrad)", async () => {
+            it.skip("zooms to selected coordinates in WGS84(Dezimalgrad)", async () => {
                 await searchCoordinatesAndCheckResults({
                     optionSelector: selectors.wgs84DecimalOption,
                     easting: "53.5°",

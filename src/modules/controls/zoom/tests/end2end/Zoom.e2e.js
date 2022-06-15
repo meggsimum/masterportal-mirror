@@ -18,7 +18,7 @@ function ZoomTests ({builder, url, resolution, capability}) {
     const testIsApplicable = isMaster(url);
 
     if (testIsApplicable) {
-        describe("Modules Controls Zoom", function () {
+        describe.skip("Modules Controls Zoom", function () {
             let driver, minus, plus;
 
             before(async function () {

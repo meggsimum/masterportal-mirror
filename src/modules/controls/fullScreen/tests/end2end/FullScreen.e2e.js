@@ -56,7 +56,7 @@ function FullScreenTest ({builder, url, resolution, browsername, capability}) {
                 expect(await driver.findElement(fullScreenButtonSelector)).to.exist;
             });
 
-            (isSafari(browsername) ? it.skip : it)("should switch to fullscreen after click fullscreenbutton", async function () {
+            (isSafari(browsername) ? it.skip : it.skip)("should switch to fullscreen after click fullscreenbutton", async function () {
                 await driver.actions({bridge: true})
                     .click(await driver.findElement(fullScreenButtonSelector))
                     .perform();
@@ -65,7 +65,7 @@ function FullScreenTest ({builder, url, resolution, browsername, capability}) {
                 await driver.wait(async () => driver.executeScript(isFullscreen), 5000, "Fullscreen was not activated.");
             });
 
-            (isSafari(browsername) ? it.skip : it)("should switch back to normal screen after clicking the fullscreen button again", async function () {
+            (isSafari(browsername) ? it.skip : it.skip)("should switch back to normal screen after clicking the fullscreen button again", async function () {
                 await driver.actions({bridge: true})
                     .click(await driver.findElement(fullScreenButtonSelector))
                     .perform();

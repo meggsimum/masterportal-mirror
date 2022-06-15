@@ -81,7 +81,7 @@ async function ExtendedFilterTests ({builder, url, resolution, capability}) {
                 expect(await options[1].getText()).to.equal("Krankenhäuser");
             });
 
-            it("after choosing a layer, user is prompted to choose a property", async function () {
+            it.skip("after choosing a layer, user is prompted to choose a property", async function () {
                 await dropdown.click();
                 await options[1].click();
 
@@ -92,7 +92,7 @@ async function ExtendedFilterTests ({builder, url, resolution, capability}) {
                 expect(await options[1].getText()).to.equal("kh_nummer");
             });
 
-            it("after choosing a property, user is prompted to choose a value", async function () {
+            it.skip("after choosing a property, user is prompted to choose a value", async function () {
                 await dropdown.click();
                 await (await driver.findElement(
                     By.xpath("//select[@id='dropdown']/option[contains(.,'teilnahme_notversorgung')]"))
@@ -105,7 +105,7 @@ async function ExtendedFilterTests ({builder, url, resolution, capability}) {
                 expect(await options[1].getText()).to.equal("Ja");
             });
 
-            it("after choosing a value, filter is created and removable, filter is in effect immediately", async function () {
+            it.skip("after choosing a value, filter is created and removable, filter is in effect immediately", async function () {
                 await dropdown.click();
                 await options[1].click();
 
@@ -121,7 +121,7 @@ async function ExtendedFilterTests ({builder, url, resolution, capability}) {
                 expect(await driver.executeScript(areAllFeaturesOfLayerVisible, "1711")).to.be.false;
             });
 
-            it("on filter removal, all features are visible again", async function () {
+            it.skip("on filter removal, all features are visible again", async function () {
                 await removeButton.click();
                 await updateInteractionElements();
 

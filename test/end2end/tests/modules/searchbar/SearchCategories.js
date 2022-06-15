@@ -152,7 +152,7 @@ async function SearchCategories ({builder, browsername, url, resolution, capabil
                 expect(await driver.findElements(By.css("#searchInputUL > li.results"))).to.have.length(1);
             });
 
-            (isChrome(browsername) ? it : it.skip)("provides all results aggregated by categories, including sum of hits per category", async function () {
+            (isChrome(browsername) ? it.skip : it.skip)("provides all results aggregated by categories, including sum of hits per category", async function () {
                 if (await (await driver.findElement(By.id("searchInput"))).getAttribute("value") === "") {
                     await searchInput.sendKeys(searchString);
                 }
@@ -200,7 +200,7 @@ async function SearchCategories ({builder, browsername, url, resolution, capabil
                 });
             });
 
-            it("category 'Straße' shows results; on click, zooms to the place, changes resolution", async function () {
+            it.skip("category 'Straße' shows results; on click, zooms to the place, changes resolution", async function () {
                 await selectAndVerifyFirstHit({
                     setsMarker: true,
                     showsPolygon: false,
@@ -210,7 +210,7 @@ async function SearchCategories ({builder, browsername, url, resolution, capabil
                 });
             });
 
-            it("category 'Stadtteil' shows results; on click, zooms to the place and marks it with a marker, changes resolution", async function () {
+            it.skip("category 'Stadtteil' shows results; on click, zooms to the place and marks it with a marker, changes resolution", async function () {
                 await selectAndVerifyFirstHit({
                     setsMarker: true,
                     showsPolygon: false,

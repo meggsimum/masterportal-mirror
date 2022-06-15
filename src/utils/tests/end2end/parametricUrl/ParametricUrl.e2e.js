@@ -58,7 +58,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
                     expect(await driver.findElement(By.css("#north-pointer"))).to.exist;
                 });
-                it("?Map/mapMode=3D&heading=-1.2502079000000208 test shall start in 3D-mode and shall set heading", async function () {
+                it.skip("?Map/mapMode=3D&heading=-1.2502079000000208 test shall start in 3D-mode and shall set heading", async function () {
                     await loadUrl(driver, `${url}?Map/mapMode=3D&heading=-1.2502079000000208`, mode);
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
                     expect(await driver.findElement(By.css("#north-pointer"))).to.exist;
@@ -67,7 +67,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     expect(-1.2502079000000208).to.eql(heading);
                 });
-                it("?Map/mapMode=3D&tilt=45 test shall start in 3D-mode and shall set tilt", async function () {
+                it.skip("?Map/mapMode=3D&tilt=45 test shall start in 3D-mode and shall set tilt", async function () {
                     await loadUrl(driver, `${url}?Map/mapMode=3D&tilt=45`, mode);
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
                     expect(await driver.findElement(By.css("#north-pointer"))).to.exist;
@@ -76,7 +76,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     expect(45).to.eql(tilt);
                 });
-                it("?Map/mapMode=3D&altitude=127 test shall start in 3D-mode and shall set altitude", async function () {
+                it.skip("?Map/mapMode=3D&altitude=127 test shall start in 3D-mode and shall set altitude", async function () {
                     await loadUrl(driver, `${url}?Map/mapMode=3D&altitude=127`, mode);
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
                     expect(await driver.findElement(By.css("#north-pointer"))).to.exist;
@@ -176,7 +176,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect([566499, 5942803]).to.eql(center);
                 });
 
-                it("?zoomtogeometry=[number] zooms to a district", async function () {
+                it.skip("?zoomtogeometry=[number] zooms to a district", async function () {
                     const expectedCoordinate = [556535.269, 5937846.413000001];
 
                     // Bezirk 1 is Altona according to portal/master/config.js listing
@@ -193,7 +193,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await centersTo(driver, expectedCoordinate)).to.be.true;
                 });
 
-                it("?Map/zoomToGeometry=[number] zooms to a district", async function () {
+                it.skip("?Map/zoomToGeometry=[number] zooms to a district", async function () {
                     const expectedCoordinate = [556535.269, 5937846.413000001];
 
                     // Bezirk 1 is Altona according to portal/master/config.js listing
@@ -432,7 +432,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(10.58332761833642).to.be.closeTo(await driver.executeScript(getResolution), 0.000000001); // equals 1:40.000
                 });
 
-                it("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - KiTa layer GFI with example 'KiTa Im Volkspark' shows gfi", async function () {
+                it.skip("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - KiTa layer GFI with example 'KiTa Im Volkspark' shows gfi", async function () {
                     const paramUrl = `${url}/?layerIDs=4736,myId2&visibility=true,true&transparency=0,0`;
                     let counter = 0;
 
@@ -494,7 +494,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect((await driver.findElements(By.css("div.gfi"))).length).to.equal(0);
                 });
 
-                it("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - hospital layer GFI with example 'Agaplesion Diakonieklinikum Hamburg' shows gfi", async function () {
+                it.skip("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - hospital layer GFI with example 'Agaplesion Diakonieklinikum Hamburg' shows gfi", async function () {
                     const paramUrl = `${url}/?layerIDs=4736,myId2&visibility=true,true&transparency=0,0`;
                     let counter = 0;
 
@@ -616,7 +616,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await driver.findElements(By.xpath("//*[contains(text(),'Fehler beim Laden der Vorschau der Metadaten.')]"))).to.be.empty;
                 });
 
-                it("?layerIDs=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
+                it.skip("?layerIDs=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
                     await loadUrl(driver, `${url}?layerIDs=4736,4537&visibility=true,true&transparency=0,0&zoomLevel=6`, mode);
                     const coords = [566688.25, 5934320.50];
 
@@ -658,7 +658,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await driver.findElements(By.xpath("//*[contains(text(),'Fehler beim Laden der Vorschau der Metadaten.')]"))).to.be.empty;
                 });
 
-                it("?Map/layerids=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
+                it.skip("?Map/layerids=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
                     await loadUrl(driver, `${url}?Map/layerids=4736,4537&visibility=true,true&transparency=0,0&zoomLevel=6`, mode);
                     const coords = [566688.25, 5934320.50];
 
@@ -727,7 +727,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     ]), 20000);
                 });
 
-                it("?featureViaURL test point", async function () {
+                it.skip("?featureViaURL test point", async function () {
                     await loadUrl(driver, `${url}?featureViaURL=[{"layerId":"42","features":[{"coordinates":[10,53.57],"label":"TestPunkt"}]}]`, mode);
 
                     await driver.wait(until.elementLocated(By.css(".navbar")), 12000);
@@ -742,7 +742,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     await driver.executeScript(isLayerVisible, "4200");
                 });
 
-                it("?config= allows selecting a config", async function () {
+                it.skip("?config= allows selecting a config", async function () {
                     const splitUrl = url.split("_");
                     let urlAffix = "";
 
@@ -777,7 +777,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await driver.findElement(By.css("ul#tree .layer-catalog .header .form-label"))).to.exist;
                 });
 
-                it("?configJson= allows selecting a config", async function () {
+                it.skip("?configJson= allows selecting a config", async function () {
                     const splitUrl = url.split("_");
                     let urlAffix = "";
 

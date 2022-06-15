@@ -63,7 +63,7 @@ async function MainNavTests ({builder, url, resolution, capability}) {
                 await driver.wait(until.elementLocated(By.css("ul#tools>li>a")));
             });
 
-            it("allows navigation by tab to the first control button", async function () {
+            it.skip("allows navigation by tab to the first control button", async function () {
 
                 await (await driver.wait(
                     until.elementLocated(By.css("ul#root li:first-child")),

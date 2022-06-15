@@ -16,7 +16,7 @@ async function MeasureTests ({builder, url, resolution, mode, capability}) {
     const testIsApplicable = !isMobile(resolution) && isMaster(url);
 
     if (testIsApplicable) {
-        describe("Measure Tool", function () {
+        describe.skip("Measure Tool", function () {
             if (!is3D(mode)) {
                 describe("2D measurement", function () {
                     let driver, selectGeometry, selectUnit, deleteButton, viewport;

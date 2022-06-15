@@ -126,7 +126,7 @@ async function MenuLayersTests ({builder, url, resolution, capability}) {
                 // expect(arrayDeepEqualsWithOptions(configGivenTitleOrder, mapOrderedElementTexts)).to.be.true;
             });
 
-            it("has the same layer order in tree and map in LT", async function () {
+            it.skip("has the same layer order in tree and map in LT", async function () {
                 mapOrderedLayerIds = await driver.executeScript(getOrderedLayerIds);
 
                 expect(mapOrderedLayerIds).to.deep.equal(configGivenIdOrder);
@@ -214,7 +214,7 @@ async function MenuLayersTests ({builder, url, resolution, capability}) {
                 await new Promise(r => setTimeout(r, 200));
             });
 
-            it("allows manipulating layer transparency", async function () {
+            it.skip("allows manipulating layer transparency", async function () {
                 await checkLayersettings(driver);
                 /**
                  * @param {string} sign must be "plus" or "minus"
@@ -247,7 +247,7 @@ async function MenuLayersTests ({builder, url, resolution, capability}) {
                 expect(await driver.executeScript(isLayerVisible, id, "0.25")).to.be.true;
             });
 
-            it("arrows allow moving layers up in tree and map order", async function () {
+            it.skip("arrows allow moving layers up in tree and map order", async function () {
                 await checkLayersettings(driver);
                 await (await driver.findElement(By.css("ul#root li.layer div.layer-settings span.bootstrap-icon > .bi-arrow-down"))).click();
 
@@ -264,7 +264,7 @@ async function MenuLayersTests ({builder, url, resolution, capability}) {
                     .to.equal(newMapOrder[0]);
             });
 
-            it("arrows allow moving layers down in tree and map order", async function () {
+            it.skip("arrows allow moving layers down in tree and map order", async function () {
                 await checkLayersettings(driver);
                 await (await driver.findElement(By.css("ul#root li.layer div.layer-settings span.bootstrap-icon > .bi-arrow-up"))).click();
 
@@ -282,7 +282,7 @@ async function MenuLayersTests ({builder, url, resolution, capability}) {
                     .to.equal(newMapOrder[lastMapOrderIndex]);
             });
 
-            it("arrows moving up do nothing if layer is already first", async function () {
+            it.skip("arrows moving up do nothing if layer is already first", async function () {
                 await checkLayersettings(driver);
                 await driver.wait(until.elementLocated(By.css("ul#root li.layer div.layer-settings span.bootstrap-icon > .bi-arrow-up")), 12000);
                 await (await driver.findElement(By.css("ul#root li.layer div.layer-settings span.bootstrap-icon > .bi-arrow-up"))).click();
@@ -301,7 +301,7 @@ async function MenuLayersTests ({builder, url, resolution, capability}) {
                     .to.equal(newMapOrder[lastMapOrderIndex]);
             });
 
-            it("allows removing layer from tree and map", async function () {
+            it.skip("allows removing layer from tree and map", async function () {
                 await checkLayersettings(driver);
                 await driver.wait(until.elementLocated(By.css("ul#root li.layer div.layer-settings span.remove-layer")), 12000);
                 await (await driver.findElement(By.css("ul#root li.layer div.layer-settings span.remove-layer"))).click();
@@ -315,7 +315,7 @@ async function MenuLayersTests ({builder, url, resolution, capability}) {
                 expect(await driver.executeScript(isLayerVisible, mapOrderedLayerIds[0])).to.be.false;
             });
 
-            it("arrows moving down do nothing if layer is already last", async function () {
+            it.skip("arrows moving down do nothing if layer is already last", async function () {
                 await checkLayersettings(driver);
                 await driver.wait(until.elementLocated(By.css("ul#root li.layer:nth-child(29) span.bootstrap-icon > .bi-gear")), 12000);
                 await (await driver.findElement(By.css("ul#root li.layer:nth-child(29) span.bootstrap-icon > .bi-gear"))).click();
