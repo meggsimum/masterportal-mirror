@@ -4,11 +4,10 @@
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
 ## Known Issues
-- 3D: The position indicator inside of a 3D object vanishes when clicking on the object.
 
 ---
 
-## Unreleased - in development
+## v2.22.2 - 2022-06-15
 ### Added
 
 ### Changed
@@ -18,6 +17,7 @@
 ### Removed
 
 ### Fixed
+- Addons: Fixed tool Commuter flows.
 
 ---
 
