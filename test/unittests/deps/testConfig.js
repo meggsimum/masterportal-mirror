@@ -108,5 +108,19 @@ module.exports = {
             "HAMBURG-MITTE",
             "WANDSBEK"
         ]
-    }
+    },
+    zoomTo: [{
+        id: "zoomToGeometry",
+        layerId: "1692",
+        property: "bezirk_name",
+        allowedValues: [
+            "ALTONA",
+            "HARBURG",
+            "HAMBURG-NORD",
+            "BERGEDORF",
+            "EIMSBÜTTEL",
+            "HAMBURG-MITTE",
+            "WANDSBEK"
+        ]
+    }]
 };
