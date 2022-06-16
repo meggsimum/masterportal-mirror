@@ -29,7 +29,6 @@
     "build": "node devtools/tasks/build.js",
     "buildPortal": "node devtools/tasks/buildPortal.js",
     "buildExamples": "node devtools/tasks/exampleBuild.js && node devtools/tasks/exampleCopy.js",
-    "buildJsDoc": "node devtools/tasks/buildJsDoc.js",
     "buildMdDoc": "node devtools/tasks/buildMdDoc.js",
     "versionHotfix": "npm version patch && npm run versionLatest && git push --tags -f",
     "versionMinor": "npm version minor && npm run versionLatest && git push --tags -f",
@@ -38,7 +37,7 @@
     "versionHotfix:all": "npm run versionHotfix && cd addons && npm run versionHotfix && cd .. && cd portalconfigs && npm run versionHotfix && cd ..",
     "versionMinor:all": "npm run versionMinor && cd addons && npm run versionMinor && cd .. && cd portalconfigs && npm run versionMinor && cd ..",
     "versionMajor:all": "npm run versionMajor && cd addons && npm run versionMajor && cd .. && cd portalconfigs && npm run versionMajor && cd ..",
-    "prePushHook": "node ./node_modules/@masterportal/mpconfigparser/cli.js ./doc/config.json.md ./doc/config.json.de.md && eslint --max-warnings 0 \"./**/*.{vue,js}\" && npm run buildJsDoc && npm run test:all",
+    "prePushHook": "node ./node_modules/@masterportal/mpconfigparser/cli.js ./doc/config.json.md ./doc/config.json.de.md && eslint --max-warnings 0 \"./**/*.{vue,js}\" && npm run test:all",
     "prepare": "husky install"
   },
   "@comment dependencies and devDependencies": [
