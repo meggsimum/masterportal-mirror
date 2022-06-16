@@ -84,7 +84,7 @@ pipelines:
                     - mkdir $lastTag && cd $lastTag
                     - wget --user $DOC_USER --password $DOC_PASSWORD --no-parent -r $DOC_URLLatest
                     - cd ..
-                    # find   lastTag and docHtml folder , push the files to the masterportal.org folder
+                    # find lastTag and docHtml folder , push the files to the masterportal.org folder
                     - find $lastTag -type f -exec curl --insecure --user "$DOC_USER:$DOC_PASSWORD" --ftp-create-dirs -T {} "$DOC_URL$lastTag/" --verbose \;
                     - find docHtml -type f -exec curl --insecure --user "$DOC_USER:$DOC_PASSWORD" --ftp-create-dirs -T {} "$DOC_URLLatest" --verbose \;
     custom: # Pipelines that are triggered manually
