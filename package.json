@@ -16,12 +16,8 @@
   "main": "js/main.js",
   "scripts": {
     "start": "webpack-dev-server --config devtools/webpack.dev.js",
-    "test": "mochapack --webpack-config devtools/webpack.test.js --bail --recursive --timeout 15000 ./test/unittests/**/*.test.js ./addons/**/unittests/*.test.js",
+    "test": "mochapack --recursive --webpack-config devtools/webpack.test.js ./src_vue/**/*.spec.js ./addons/**/*.spec.js",
     "test:watch": "npm run test -- --watch",
-    "test:vue": "mochapack --recursive --webpack-config devtools/webpack.vue.test.js ./src/**/*.spec.js ./addons/**/*.spec.js",
-    "test:vue:watch": "npm run test:vue -- --watch",
-    "test:all": "npm run test && npm run test:vue",
-    "test:all:watch": "npm-run-all --parallel test:watch test:vue:watch",
     "browsertestWithDevServer": "env NODE_ENV=e2eTest env browser=fromCapabilities webpack-dev-server --reporter ./test/end2end/library/reporter.js --config devtools/webpack.browsertest.js",
     "browsertestOnExternalServer": "env browser=fromCapabilities env urlPart=\\/ ./node_modules/.bin/mocha --reporter ./test/end2end/library/reporter.js ./test/end2end/TestRunner.js",
     "browsertestOnSauceLabs": "env browser=fromCapabilities ./node_modules/.bin/mocha --reporter ./test/end2end/library/reporter.js ./test/end2end/TestRunner.js",
@@ -37,7 +33,7 @@
     "versionHotfix:all": "npm run versionHotfix && cd addons && npm run versionHotfix && cd .. && cd portalconfigs && npm run versionHotfix && cd ..",
     "versionMinor:all": "npm run versionMinor && cd addons && npm run versionMinor && cd .. && cd portalconfigs && npm run versionMinor && cd ..",
     "versionMajor:all": "npm run versionMajor && cd addons && npm run versionMajor && cd .. && cd portalconfigs && npm run versionMajor && cd ..",
-    "prePushHook": "node ./node_modules/@masterportal/mpconfigparser/cli.js ./doc/config.json.md ./doc/config.json.de.md && eslint --max-warnings 0 \"./**/*.{vue,js}\" && npm run test:all",
+    "prePushHook": "node ./node_modules/@masterportal/mpconfigparser/cli.js ./doc/config.json.md ./doc/config.json.de.md && eslint --max-warnings 0 \"./**/*.{vue,js}\" && npm run test",
     "prepare": "husky install"
   },
   "@comment dependencies and devDependencies": [

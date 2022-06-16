@@ -1,31 +1,35 @@
+/**
+ * See https://www.digitalocean.com/community/tutorials/vuejs-demistifying-vue-webpack
+ */
 const webpack = require("webpack"),
     path = require("path"),
     Vue = require("vue"),
     VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 require("regenerator-runtime/runtime");
-require("chai/register-expect");
 require("jsdom-global")();
+require("proj4");
+
 global.DOMParser = window.DOMParser;
+global.XMLSerializer = window.XMLSerializer;
 
 URL.createObjectURL = function () {
     return false;
 };
-
 Vue.config.devtools = false;
 
 module.exports = {
-    target: "node",
-    devtool: "cheap-module-eval-source-map",
-    output: {
-        devtoolModuleFilenameTemplate: "[absolute-resource-path]"
-    },
     mode: "development",
+    target: "node",
+    // use when debugging:
+    // devtool: "cheap-module-eval-source-map",
+    // output: {
+    //     devtoolModuleFilenameTemplate: "[absolute-resource-path]"
+    // },
+
     resolve: {
         alias: {
-            "@modules": path.resolve(__dirname, "../modules"),
-            "@addons": path.resolve(__dirname, "../addons"),
-            "@testUtil": path.resolve(__dirname, "../test/unittests/Util")
+            vue: "vue/dist/vue.js"
         }
     },
     module: {
@@ -41,16 +45,8 @@ module.exports = {
                 test: /\.vue$/,
                 loader: "vue-loader",
                 options: {
-                    loaders: {
-                        js: "babel-loader?presets[]=env"
-                    }
-                }
-            },
-            {
-                test: /\.(eot|svg|ttf|woff|woff2)$/,
-                loader: "file-loader",
-                options: {
-                    name: "[name].[ext]"
+                    loaders: {},
+                    optimizeSSR: false
                 }
             },
             {
@@ -58,10 +54,14 @@ module.exports = {
                 use: "null-loader"
             },
             {
-                test: /\.(png|jpe?g|gif)$/i,
+                test: /\.(svg)$/,
+                exclude: /fonts/, /* dont want svg fonts from fonts folder to be included */
                 use: [
                     {
-                        loader: "file-loader"
+                        loader: "svg-url-loader",
+                        options: {
+                            noquotes: true
+                        }
                     }
                 ]
             },
@@ -74,6 +74,14 @@ module.exports = {
                 use: {
                     loader: "worker-loader"
                 }
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: "file-loader"
+                    }
+                ]
             }
         ]
     },
@@ -88,24 +96,16 @@ module.exports = {
             Radio: "backbone.radio",
             _: "underscore",
             i18next: ["i18next/dist/cjs/i18next.js"],
-            Config: path.resolve(__dirname, "../test/unittests/deps/testConfig"),
-            XMLSerializer: path.resolve(__dirname, "../test/unittests/deps/testXmlSerializer"),
-            fs: "fs",
-            requestAnimationFrame: "raf"
+            mapCollection: [path.resolve(path.join(__dirname, "../src/core/maps/mapCollection.js")), "default"],
+            Config: path.resolve(__dirname, "../test/unittests/deps/testConfig")
+            // XMLSerializer: path.resolve(__dirname, "../test/unittests/deps/testXmlSerializer"),
+            // fs: "fs",
+            // requestAnimationFrame: "raf"
         }),
         new VueLoaderPlugin(),
-        new webpack.NormalModuleReplacementPlugin(/^mqtt$/, "mqtt/dist/mqtt.js"),
-        // ADDONS wird hier global definiert, da der pre-push den Fehler ADDONS is undefined in ./src/addons.js wirft,
-        // obwohl der linter die Zeile ignorieren soll
-        new webpack.DefinePlugin({
-            ADDONS: {},
-            VUE_ADDONS: {}
-        })
-        // if you want to see progress of compiling, activate this
-        // ,new webpack.ProgressPlugin({
-        //     handler(percentage, message, ...args) {
-        //         console.info(percentage, message, ...args);
-        //     }
-        //   })
-    ]
+        new webpack.IgnorePlugin(/canvas/, /jsdom$/)
+    ],
+    node: {
+        fs: "empty"
+    }
 };
