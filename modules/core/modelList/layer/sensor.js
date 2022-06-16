@@ -220,7 +220,6 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
             "change:isVisibleInMap": this.toggleSubscriptionsOnMapChanges,
             "change:isOutOfRange": this.toggleSubscriptionsOnMapChanges
         });
-        this.createLegend();
     },
 
     /**
