@@ -306,6 +306,7 @@ export default {
             document.body.removeChild(link);
             if (button.classList.contains("btn-primary")) {
                 button.classList.remove("btn-primary");
+                button.classList.add("btn-secondary");
             }
         },
 
@@ -556,7 +557,7 @@ export default {
                     <div class="col-md-6 d-grid gap-2 tool-print-download-button-container">
                         <button
                             v-if="file.finishState"
-                            class="btn btn-primary btn-sm tool-print-download-button-active"
+                            class="btn btn-primary btn-sm"
                             @click="download($event.target, file.downloadUrl, file.filename)"
                         >
                             {{ $t("common:modules.tools.print.downloadFile") }}
@@ -630,12 +631,6 @@ export default {
             .tool-print-download-button-disabled {
                 border-color: $dark_grey;
                 color: $dark-grey;
-            }
-
-            .tool-print-download-button-active {
-                border-color: $dark_grey;
-                background-color: $light_grey;
-                color: $dark_grey;
             }
 
             .tool-print-download-loader {
