@@ -1,6 +1,25 @@
 <script>
+import {mapMutations, mapActions} from "vuex";
+
 export default {
-    name: "App"
+    name: "App",
+    created () {
+        this.setConfigJs(Config);
+        this.loadConfigJson(Config?.portalConf);
+        this.loadServicesJson();
+        this.loadRestServicesJson(Config?.restConf);
+    },
+    methods: {
+        ...mapMutations([
+            "setConfigJs"
+        ]),
+
+        ...mapActions([
+            "loadConfigJson",
+            "loadRestServicesJson",
+            "loadServicesJson"
+        ])
+    }
 };
 </script>
 
