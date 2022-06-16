@@ -196,6 +196,7 @@ export default {
             line-height: 17px;
             color: $dark_grey;
             padding-top: 10px;
+            padding-left: 5px;
         }
         button {
             opacity: 0.6;
