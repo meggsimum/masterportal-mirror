@@ -537,7 +537,7 @@ export default {
             </div>
             <div
                 ref="selectBoxContainer"
-                class="select-box-container"
+                class="filter-select-box-container"
             >
                 <Multiselect
                     :id="'snippetSelectBox-' + snippetId"
@@ -646,9 +646,13 @@ export default {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
-<style lang="scss" scoped>
+<style lang="scss">
     @import "~variables";
-    .select-box-container .multiselect .multiselect__spinner:after, .multiselect__spinner:before {
+    .filter-select-box-container .multiselect, .filter-select-box-container .multiselect__input, .filter-select-box-container .multiselect__single {
+        font-family: inherit;
+        font-size: 12px;
+    }
+    .filter-select-box-container .multiselect .multiselect__spinner:after, .multiselect__spinner:before {
         position: absolute;
         content: "";
         top: 50%;
@@ -661,27 +665,27 @@ export default {
         border-top-color: $dark_grey;
         box-shadow: 0 0 0 1px transparent;
     }
-    .select-box-container .multiselect .multiselect__option {
+    .filter-select-box-container .multiselect .multiselect__option {
         display: block;
-        min-height: 30px;
-        line-height: 10px;
+        min-height: 16px;
+        line-height: 8px;
         text-decoration: none;
         text-transform: none;
         vertical-align: middle;
         position: relative;
         cursor: pointer;
         white-space: nowrap;
-        font-size: 14px;
+        padding: 10px 12px;
     }
-    .select-box-container .multiselect .multiselect__option--highlight {
+    .filter-select-box-container .multiselect .multiselect__option--highlight {
         background: $light_blue;
         outline: none;
         color: $white;
     }
-    .select-box-container .multiselect .option__image {
+    .filter-select-box-container .multiselect .option__image {
         width: 22px;
     }
-    .select-box-container .multiselect .multiselect__tag {
+    .filter-select-box-container .multiselect .multiselect__tag {
         position: relative;
         display: inline-block;
         padding: 4px 26px 4px 10px;
@@ -696,36 +700,40 @@ export default {
         max-width: 100%;
         text-overflow: ellipsis;
     }
-    .select-box-container .multiselect .multiselect__tags:focus-within {
+    .filter-select-box-container .multiselect .multiselect__tags:focus-within {
         border-color: $light_blue;
         outline: 0;
         box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
     }
-    .select-box-container .multiselect .multiselect__option--highlight:after {
+    .filter-select-box-container .multiselect .multiselect__option--highlight:after {
         content: attr(data-select);
         background: $light_blue;
         color: $white;
     }
-    .select-box-container .multiselect .multiselect__tag-icon::after {
+    .filter-select-box-container .multiselect .multiselect__tag-icon::after {
         content: "\D7";
         color: $light_grey;
         font-size: 14px;
     }
-    .select-box-container .multiselect .multiselect__tag-icon:hover {
+    .filter-select-box-container .multiselect .multiselect__tag-icon:hover {
         background: $light_blue;
     }
-    .select-box-container .multiselect .multiselect__placeholder {
+    .filter-select-box-container .multiselect .multiselect__placeholder {
         color: $light_grey;
         display: inline-block;
         margin-bottom: 0px;
         padding-top: 0px;
+        font-size: 14px;
     }
-    .select-box-container .multiselect .multiselect__tag-icon:focus, .multiselect__tag-icon:hover {
+    .filter-select-box-container .multiselect .multiselect__tag-icon:focus, .multiselect__tag-icon:hover {
         background: $light_grey;
     }
-    .select-box-container .multiselect__select {
+    .filter-select-box-container .multiselect__select {
         height: 34px;
         line-height: 14px;
+    }
+    .filter-select-box-container .multiselect__select::before {
+        top: 64%;
     }
     .multiselect--active {
         color: $black;
@@ -734,9 +742,9 @@ export default {
         outline: 0;
         box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
     }
-    .select-box-container .multiselect .multiselect__tags {
+    .filter-select-box-container .multiselect .multiselect__tags {
         min-height: 34px;
-        font-size: 14px;
+        font-size: 12px;
         line-height: 1.428571429;
         color: $dark_grey;
         background-color: $white;
