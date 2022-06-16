@@ -28,6 +28,7 @@
 - Lines imported as KML can now be edited and modified with the Draw tool.
 - Issue #663: Fixed tool Buffer Analysis where layer visibility updates would not be recognized in custom trees. Now, all visible layers at tool starting time are available within the tool.
 - Issue #778: Fixed layer information display selection in metadata window that now always has names options in its select input.
+- Attached Gfi is styled correctly.
 
 ---
 

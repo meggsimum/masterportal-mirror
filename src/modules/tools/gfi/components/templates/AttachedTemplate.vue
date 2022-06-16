@@ -147,7 +147,7 @@ export default {
             </h5>
             <button
                 ref="gfi-close-button"
-                class="close btn btn-sm col-1"
+                class="close btn btn-sm col-1 d-flex justify-content-center align-content-center"
                 aria-label="Close"
                 tabindex="0"
                 @click="close"
@@ -176,6 +176,7 @@ export default {
     @import "~variables";
 
     button.close {
+        height: fit-content;
         &:focus {
             @include primary_action_focus;
         }
@@ -191,9 +192,10 @@ export default {
         border-bottom: 1px solid $light_grey;
         h5 {
             font-size: 13px;
-            font-weight: normal;
+            font-family: $font_family_accent;
             line-height: 17px;
             color: $dark_grey;
+            padding-top: 10px;
         }
         button {
             opacity: 0.6;
@@ -221,5 +223,8 @@ export default {
         max-width: 40vw !important;
         border: 0 !important;
         z-index: 1 !important;
+    }
+    .popover-body {
+        padding: 5px !important;
     }
 </style>
