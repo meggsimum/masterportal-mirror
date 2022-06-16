@@ -123,7 +123,6 @@
     "husky": "^7.0.4",
     "imports-loader": "1.2.0",
     "inquirer": "^8.2.0",
-    "jaguarjs-jsdoc": "^1.1.0",
     "jsdoc": "^3.6.10",
     "jsdom": "14.1.0",
     "jsdom-global": "^3.0.2",
