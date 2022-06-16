@@ -7,27 +7,6 @@
 
 ---
 
-## v2.22.2 - 2022-06-15
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-- Addons: Fixed tool Commuter flows.
-
----
-
-## v2.22.1 - 2202-06-08
-### Fixed
-- The light grey color in Search and transparency are now dark
-- Issue #790: Resolve import of isObject util failed was fixed.
-
----
-
 ## Unreleased - in development
 ### __Breaking Changes__
 
@@ -47,6 +26,20 @@
 ### Fixed
 - Lines imported as KML can now be edited and modified with the Draw tool.
 - Issue #663: Fixed tool Buffer Analysis where layer visibility updates would not be recognized in custom trees. Now, all visible layers at tool starting time are available within the tool.
+
+---
+
+## v2.22.2 - 2022-06-15
+
+### Fixed
+- Addons: Fixed tool Commuter flows.
+
+---
+
+## v2.22.1 - 2202-06-08
+### Fixed
+- The light grey color in Search and transparency are now dark
+- Issue #790: Resolve import of isObject util failed was fixed.
 
 ---
 
