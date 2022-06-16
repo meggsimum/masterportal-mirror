@@ -84,7 +84,7 @@ export default {
                         :download="download.file"
                     >
                         <button
-                            class="btn btn-sm btn-secondary"
+                            class="btn btn-sm btn-primary"
                             :disabled="disableFileDownload"
                             type="button"
                             @click="fileDownloaded"
@@ -113,7 +113,6 @@ a {
 }
 
 #tool-draw-download-file {
-    background-color: buttonface;
     text-decoration: none;
     padding: 0;
 }
