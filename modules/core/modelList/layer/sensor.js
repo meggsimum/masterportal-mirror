@@ -216,11 +216,11 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
             id: this.get("id"),
             altitudeMode: this.get("altitudeMode")
         }));
-        this.createLegend();
         this.listenTo(this, {
             "change:isVisibleInMap": this.toggleSubscriptionsOnMapChanges,
             "change:isOutOfRange": this.toggleSubscriptionsOnMapChanges
         });
+        this.createLegend();
     },
 
     /**
@@ -1305,6 +1305,7 @@ const SensorLayer = Layer.extend(/** @lends SensorLayer.prototype */{
     createLegend: function () {
         const styleModel = getStyleModelById(this.get("styleId"));
         let legend = this.get("legend");
+
         /**
          * @deprecated in 3.0.0
          */
