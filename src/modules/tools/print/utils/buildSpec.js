@@ -386,11 +386,13 @@ const BuildSpecModel = {
      * @returns {Object} - wms layer spec
      */
     buildTileWms: function (layer) {
+        const singleTile = true;//source.getParams().SINGLETILE
+
         const source = layer.getSource(),
             mapObject = {
                 baseURL: source.getUrls()[0],
                 opacity: layer.getOpacity(),
-                type: source.getParams().SINGLETILE ? "WMS" : "tiledwms",
+                type: singleTile ? "WMS" : "tiledwms",
                 layers: source.getParams().LAYERS.split(","),
                 styles: source.getParams().STYLES ? source.getParams().STYLES.split(",") : undefined,
                 imageFormat: source.getParams().FORMAT,
@@ -400,7 +402,7 @@ const BuildSpecModel = {
                 }
             };
 
-        if (!source.getParams().SINGLETILE) {
+        if (!singleTile) {
             mapObject.tileSize = [source.getParams().WIDTH, source.getParams().HEIGHT];
         }
         if (Object.prototype.hasOwnProperty.call(source.getParams(), "SLD_BODY") && source.getParams().SLD_BODY !== undefined) {
