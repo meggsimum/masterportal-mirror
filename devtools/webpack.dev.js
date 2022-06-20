@@ -35,7 +35,10 @@ module.exports = function () {
             headers: {
                 "Access-Control-Allow-Origin": "*"
             },
-            https: true,
+            https: {
+                key: "cert.key",
+                cert: "cert.pem"
+            },
             open: false,
             openPage: "portal/master",
             overlay: true,
