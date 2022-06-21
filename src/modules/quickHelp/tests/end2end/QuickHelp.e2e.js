@@ -48,7 +48,7 @@ async function QuickHelpTests ({builder, url, resolution, capability}) {
                 await driver.wait(until.elementIsVisible(quickHelp), 5000);
             });
 
-            it.skip("clicking the cross sign in the quick help window will close it", async () => {
+            it("clicking the cross sign in the quick help window will close it", async () => {
                 const cross = await driver.findElement(By.css("#quickHelp span.bootstrap-icon > .bi-x-lg"));
 
                 await cross.click();
@@ -58,8 +58,8 @@ async function QuickHelpTests ({builder, url, resolution, capability}) {
                 );
             });
 
-            it.skip("will close the quickHelp if clicking the questionmark sign twice", async () => {
-                navBarIcon = await driver.findElement(By.css("div#searchbar span.glyphicon-question-sign"));
+            it("will close the quickHelp if clicking the questionmark sign twice", async () => {
+                navBarIcon = await driver.findElement(By.css("div#searchbar span.bootstrap-icon > .bi-question-circle-fill"));
                 await navBarIcon.click();
 
                 quickHelp = await driver.wait(until.elementLocated(By.css("#quickHelp")), 1000);
