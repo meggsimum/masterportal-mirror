@@ -39,10 +39,10 @@ const ListViewMain = Backbone.View.extend(/** @lends ListViewMain.prototype */{
         });
 
         models.forEach(model => {
-            if (model.get("icon") === "") {
+            if(model.get("icon") === ""){
                 const toolState = store.state.Tools[upperFirst(model.get("id"))];
-
-                if (toolState && toolState.icon) {
+               
+                if(toolState && toolState.icon){
                     model.set("icon", toolState.icon);
                 }
             }
