@@ -3,7 +3,7 @@ const webdriver = require("selenium-webdriver"),
     {getDriver, initDriver, quitDriver} = require("../../../../../../test/end2end/library/driver"),
     {getCenter, getResolution, setResolution, hasVectorLayerLength} = require("../../../../../../test/end2end/library/scripts"),
     {logTestingCloudUrlToTest, reclickUntilNotStale, closeSingleAlert} = require("../../../../../../test/end2end/library/utils"),
-    {isBasic, isCustom, isMobile} = require("../../../../../../test/end2end/settings"),
+    {isBasic, isCustom, isMobile, isMaster} = require("../../../../../../test/end2end/settings"),
     namedProjectionsBasic = require("../../../../../../portal/basic/config").namedProjections,
     namedProjectionsMaster = require("../../../../../../portal/master/config").namedProjections,
     namedProjectionsCustom = require("../../../../../../portal/masterCustom/config").namedProjections,
@@ -22,7 +22,7 @@ const webdriver = require("selenium-webdriver"),
  * @returns {void}
  */
 async function CoordToolkitTests ({builder, url, resolution, config, capability}) {
-    describe.skip("CoordToolkit", function () {
+    describe("CoordToolkit", function () {
         const selectors = {
                 tools: By.xpath("//ul[@id='tools']/.."),
                 toolCoordToolkit: By.css("ul#tools span.bootstrap-icon > .bi-globe"),
@@ -41,14 +41,15 @@ async function CoordToolkitTests ({builder, url, resolution, config, capability}
                 copyCoordsPairBtn: By.css("button#copyCoordsPairBtn"),
                 heightLabel: By.css("label#coordinatesHeightLabel"),
                 heightFieldSel: By.css("input#coordinatesHeightField"),
-                wgs84Option: By.xpath("//option[contains(.,'WGS 84 (long/lat)')]"),
-                utm32nOption: By.xpath("//option[contains(.,'ETRS89/UTM 32N')]"),
-                etrs89Option: By.xpath("//option[contains(.,'ETRS89')]"),
-                wgs84DecimalOption: By.xpath("//option[contains(.,'WGS 84(Dezimalgrad) (EPSG:4326)')]"),
+                wgs84Option: By.xpath("//option[contains(text(),'WGS 84 (long/lat)') ]"),
+                utm32nOption: By.xpath("//option[contains(text(),'ETRS89/UTM 32N')]"),
+                etrs89Option: By.xpath("//option[contains(text(),'ETRS89')]"),
+                wgs84DecimalOption: By.xpath("//option[contains(text(),'WGS 84(Dezimalgrad)')]"),
                 viewport: By.css(".ol-viewport"),
                 searchByCoordBtn: By.css("button#searchByCoordBtn")
             },
-            expectedResolution = 0.66;
+            expectedResolutionMaster = 2.6458319045841048,
+            expectedResolutionOthers = 0.66;
         let driver, viewport, eastingField, northingField, heightField, searchByCoordBtn;
 
         /**
@@ -121,7 +122,7 @@ async function CoordToolkitTests ({builder, url, resolution, config, capability}
                 driver = await initDriver(builder, url, resolution);
             }
         });
-
+        
 
         it("displays a modal dialog containing the tool elements", async () => {
             // can't keep tools/toolCoordToolkit as variable - tends to go stale in /portal/basic
@@ -284,7 +285,8 @@ async function CoordToolkitTests ({builder, url, resolution, config, capability}
             await driver.wait(until.elementLocated(selectors.coordSystemSelect), 5000);
 
             const coordSystemSelect = await driver.findElement(selectors.coordSystemSelect),
-                option = await driver.findElement(optionSelector);
+                option = await driver.findElement(optionSelector),
+                expectedResolution = isMaster(url) ? expectedResolutionMaster: expectedResolutionOthers
 
             await driver.wait(until.elementIsVisible(coordSystemSelect));
 

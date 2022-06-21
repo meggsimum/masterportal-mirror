@@ -48,7 +48,7 @@ async function ZoomTests ({builder, url, resolution, capability}) {
                 }
             });
 
-            it.skip("should zoom in on mouse wheel up", async function () {
+            it("should zoom in on mouse wheel up", async function () {
                 this.timeout(15000);
                 const res = await driver.executeScript(getResolution);
 
@@ -60,7 +60,7 @@ async function ZoomTests ({builder, url, resolution, capability}) {
                 } while (res <= await driver.executeScript(getResolution));
             });
 
-            it.skip("should zoom out on mouse wheel down", async function () {
+            it("should zoom out on mouse wheel down", async function () {
                 this.timeout(15000);
                 const res = await driver.executeScript(getResolution);
 
