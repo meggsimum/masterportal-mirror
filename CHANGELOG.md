@@ -31,6 +31,7 @@
 - Issue #788: Legend not updating correctly
 - Download print Buttons will now be blue at first and grey once the button was clicked.
 - Attached Gfi is styled correctly.
+- Quickly clicking on a tab in the Elektro GFI will now not lead to a reload of the page.
 
 ---
 
