@@ -32,6 +32,7 @@
 - Issue #788: Legend not updating correctly
 - Download print Buttons will now be blue at first and grey once the button was clicked.
 - Attached Gfi is styled correctly.
+- Tools without icon attribute in config.json use default icon from state now.
 
 ---
 

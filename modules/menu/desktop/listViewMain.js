@@ -3,8 +3,8 @@ import DesktopFolderView from "./folder/viewMenu";
 import CatalogFolderView from "./folder/viewCatalog";
 import DesktopStaticLinkView from "./staticlink/view";
 import DesktopViewpointView from "./viewPoint/view";
-
-// import "bootstrap";
+import store from "../../../src/app-store/index";
+import upperFirst from "../../../src/utils/upperFirst";
 
 const ListViewMain = Backbone.View.extend(/** @lends ListViewMain.prototype */{
     /**
@@ -38,6 +38,15 @@ const ListViewMain = Backbone.View.extend(/** @lends ListViewMain.prototype */{
             return model.get("type") === "tool" || model.get("type") === "staticlink" || (model.get("parentId") === "root" && model.get("type") === "folder") || model.get("type") === "viewpoint";
         });
 
+        models.forEach(model => {
+            if (model.get("icon") === "") {
+                const toolState = store.state.Tools[upperFirst(model.get("id"))];
+
+                if (toolState && toolState.icon) {
+                    model.set("icon", toolState.icon);
+                }
+            }
+        });
         this.parseViews(models);
     },
     /**
