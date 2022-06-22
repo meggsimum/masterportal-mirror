@@ -58,7 +58,7 @@ async function ScaleSwitcherTests ({builder, url, resolution, capability}) {
 
                 await driver.wait(until.elementIsVisible(await driver.findElement(By.id("scale-switcher"))));
 
-                const header = await driver.findElement(By.css("div.win-heading div.heading-element p.title"), 5000),
+                const header = await driver.findElement(By.css("div.win-heading div.basic-drag-handle p.title"), 5000),
                     label = await driver.findElement(By.css("div#scale-switcher label"), 5000),
                     select = await driver.findElement(By.id("scale-switcher-select"), 5000),
                     selectValue = await select.getAttribute("value");

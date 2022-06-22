@@ -53,7 +53,7 @@ async function LayerSliderTests ({builder, url, resolution, capability}) {
 
                 await driver.wait(until.elementIsVisible(await driver.findElement(By.id("tool-layer-slider"))));
 
-                const header = await driver.findElement(By.css("div.win-heading div.heading-element p.title"), 5000),
+                const header = await driver.findElement(By.css("div.win-heading div.basic-drag-handle p.title"), 5000),
                     h5 = await driver.findElement(By.css("div#tool-layer-slider h5"), 5000),
                     progress = await driver.findElement(By.css("div#tool-layer-slider-player .progress"), 5000),
                     play = await driver.findElement(By.css("div#tool-layer-slider-player div.input-group button#play"), 5000),
