@@ -58,6 +58,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
                     expect(await driver.findElement(By.css("#north-pointer"))).to.exist;
                 });
+                //https://www.jira.geoportal-hamburg.de/browse/BG-2998
                 it.skip("?Map/mapMode=3D&heading=-1.2502079000000208 test shall start in 3D-mode and shall set heading", async function () {
                     await loadUrl(driver, `${url}?Map/mapMode=3D&heading=-1.2502079000000208`, mode);
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
@@ -67,6 +68,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     expect(-1.2502079000000208).to.eql(heading);
                 });
+                //https://www.jira.geoportal-hamburg.de/browse/BG-2998
                 it.skip("?Map/mapMode=3D&tilt=45 test shall start in 3D-mode and shall set tilt", async function () {
                     await loadUrl(driver, `${url}?Map/mapMode=3D&tilt=45`, mode);
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
@@ -76,6 +78,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     expect(45).to.eql(tilt);
                 });
+                //https://www.jira.geoportal-hamburg.de/browse/BG-2998
                 it.skip("?Map/mapMode=3D&altitude=127 test shall start in 3D-mode and shall set altitude", async function () {
                     await loadUrl(driver, `${url}?Map/mapMode=3D&altitude=127`, mode);
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
@@ -175,7 +178,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     expect([566499, 5942803]).to.eql(center);
                 });
-
+                //https://www.jira.geoportal-hamburg.de/browse/BG-2999
                 it.skip("?zoomtogeometry=[number] zooms to a district", async function () {
                     const expectedCoordinate = [556535.269, 5937846.413000001];
 
@@ -192,7 +195,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     await driver.wait(until.elementLocated(By.css(".navbar")), 12000);
                     expect(await centersTo(driver, expectedCoordinate)).to.be.true;
                 });
-
+                //https://www.jira.geoportal-hamburg.de/browse/BG-2999
                 it.skip("?Map/zoomToGeometry=[number] zooms to a district", async function () {
                     const expectedCoordinate = [556535.269, 5937846.413000001];
 
@@ -432,7 +435,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(10.58332761833642).to.be.closeTo(await driver.executeScript(getResolution), 0.000000001); // equals 1:40.000
                 });
 
-                it.skip("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - KiTa layer GFI with example 'KiTa Im Volkspark' shows gfi", async function () {
+                it("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - KiTa layer GFI with example 'KiTa Im Volkspark' shows gfi", async function () {
                     const paramUrl = `${url}/?layerIDs=4736,myId2&visibility=true,true&transparency=0,0`;
                     let counter = 0;
 
@@ -494,7 +497,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect((await driver.findElements(By.css("div.gfi"))).length).to.equal(0);
                 });
 
-                it.skip("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - hospital layer GFI with example 'Agaplesion Diakonieklinikum Hamburg' shows gfi", async function () {
+                it("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - hospital layer GFI with example 'Agaplesion Diakonieklinikum Hamburg' shows gfi", async function () {
                     const paramUrl = `${url}/?layerIDs=4736,myId2&visibility=true,true&transparency=0,0`;
                     let counter = 0;
 
@@ -616,7 +619,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await driver.findElements(By.xpath("//*[contains(text(),'Fehler beim Laden der Vorschau der Metadaten.')]"))).to.be.empty;
                 });
 
-                it.skip("?layerIDs=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
+                it("?layerIDs=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
                     await loadUrl(driver, `${url}?layerIDs=4736,4537&visibility=true,true&transparency=0,0&zoomLevel=6`, mode);
                     const coords = [566688.25, 5934320.50];
 
@@ -658,7 +661,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await driver.findElements(By.xpath("//*[contains(text(),'Fehler beim Laden der Vorschau der Metadaten.')]"))).to.be.empty;
                 });
 
-                it.skip("?Map/layerids=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
+                it("?Map/layerids=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
                     await loadUrl(driver, `${url}?Map/layerids=4736,4537&visibility=true,true&transparency=0,0&zoomLevel=6`, mode);
                     const coords = [566688.25, 5934320.50];
 
@@ -694,7 +697,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     // check layer information in topic tree
                     await (await driver.findElement(By.css("div#navbarRow li:first-child"))).click();
                     await driver.wait(until.elementIsVisible(await driver.findElement(By.id("tree"))));
-                    await (await driver.findElement(By.xpath("//ul[@id='tree']/li[.//span[@title='Eignungsflächen']]//span//[contains(@class,'bi-info-circle-fill')]"))).click();
+                    await (await driver.findElement(By.xpath("//ul[@id='tree']/li[.//span[@title='Eignungsflächen']]//span//i[contains(@class,'bi-info-circle-fill')]"))).click();
                     await driver.wait(until.elementIsVisible(await driver.findElement(By.id("layerInformation"))));
 
                     expect(await driver.findElements(By.xpath("//*[contains(text(),'Fehler beim Laden der Vorschau der Metadaten.')]"))).to.be.empty;
@@ -726,7 +729,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                         {coordinate: [567043.565, 5934455.808], image: "https://geodienste.hamburg.de/lgv-config/img/location_eventlotse.svg"}
                     ]), 20000);
                 });
-
+                //https://www.jira.geoportal-hamburg.de/browse/BG-3000
                 it.skip("?featureViaURL test point", async function () {
                     await loadUrl(driver, `${url}?featureViaURL=[{"layerId":"42","features":[{"coordinates":[10,53.57],"label":"TestPunkt"}]}]`, mode);
 
@@ -742,7 +745,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     await driver.executeScript(isLayerVisible, "4200");
                 });
 
-                it.skip("?config= allows selecting a config", async function () {
+                it("?config= allows selecting a config", async function () {
                     const splitUrl = url.split("_");
                     let urlAffix = "";
 
@@ -757,8 +760,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
                         await closeSingleAlert(driver);
                     }
-
-                    expect(await driver.findElement(By.css("ul#tree .layer-catalog .header .form-inline .catalog-selection .form-select"))).to.exist;
+                    expect(await driver.findElement(By.css("ul#tree .layer-catalog .menu-row.header > div > form > .catalog-selection > select"))).to.exist;
 
                     // test by redirecting master to default with layers
                     // await loadUrl(driver, `${url}?layerIDs=19969,4915&visibility=true,true&transparency=0,0&config=../masterDefault${urlAffix}/config.json`, mode);
@@ -777,7 +779,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await driver.findElement(By.css("ul#tree .layer-catalog .header .form-label"))).to.exist;
                 });
 
-                it.skip("?configJson= allows selecting a config", async function () {
+                it("?configJson= allows selecting a config", async function () {
                     const splitUrl = url.split("_");
                     let urlAffix = "";
 
@@ -789,7 +791,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     // test by redirecting master to default
                     await loadUrl(driver, `${url}?configJson=../masterDefault${urlAffix}/config.json`, mode);
 
-                    expect(await driver.findElement(By.css("ul#tree .layer-catalog .header .form-inline .catalog-selection .form-select"))).to.exist;
+                    expect(await driver.findElement(By.css("ul#tree .layer-catalog .menu-row.header > div > form > .catalog-selection > select"))).to.exist;
 
                     // test by redirecting master to custom
                     await loadUrl(driver, `${url}?configJson=../masterCustom${urlAffix}/config.json`, mode);
