@@ -104,6 +104,7 @@ $primary: $dark_blue;
 $white: #ffffff;
 $black: #000;
 $light_red: #E10019;
+$danger: $light_red;
 $dark_grey: #424242;
 $light_blue: #00437A;
 
@@ -150,14 +151,13 @@ $icon_length_menu: 0; // TODO figure out correct value before usage
 $icon_length_list: 0; // TODO figure out correct value before usage
 
 /* FONT STYLES
- * TODO why is Arial Narrow an alternative to MPF Bold?
- * I don't know ... is it?
  */
 $font_family_default: "MasterPortalFont", "Arial", sans-serif;
 $font_family_narrow: "MasterPortalFont", "Arial Narrow", Arial, sans-serif;
-$font_family_accent: "MasterPortalFont Bold", "Arial Narrow", Arial, sans-serif;
+$font_family_accent: "MasterPortalFont Bold", "Arial Narrow Bold", Arial, sans-serif;
 
 /* NOTE if three sizes suffice, we could move this to bootstrap 3 variables */
+$font_size_gigantic: 26px;
 $font_size_huge: 16px;
 $font_size_big: 14px;
 $font_size_default: 12px;
