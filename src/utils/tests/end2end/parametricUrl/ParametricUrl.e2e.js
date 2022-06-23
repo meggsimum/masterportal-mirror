@@ -58,7 +58,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
                     expect(await driver.findElement(By.css("#north-pointer"))).to.exist;
                 });
-                //https://www.jira.geoportal-hamburg.de/browse/BG-2998
+                // https://www.jira.geoportal-hamburg.de/browse/BG-2998
                 it.skip("?Map/mapMode=3D&heading=-1.2502079000000208 test shall start in 3D-mode and shall set heading", async function () {
                     await loadUrl(driver, `${url}?Map/mapMode=3D&heading=-1.2502079000000208`, mode);
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
@@ -68,7 +68,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     expect(-1.2502079000000208).to.eql(heading);
                 });
-                //https://www.jira.geoportal-hamburg.de/browse/BG-2998
+                // https://www.jira.geoportal-hamburg.de/browse/BG-2998
                 it.skip("?Map/mapMode=3D&tilt=45 test shall start in 3D-mode and shall set tilt", async function () {
                     await loadUrl(driver, `${url}?Map/mapMode=3D&tilt=45`, mode);
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
@@ -78,7 +78,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     expect(45).to.eql(tilt);
                 });
-                //https://www.jira.geoportal-hamburg.de/browse/BG-2998
+                // https://www.jira.geoportal-hamburg.de/browse/BG-2998
                 it.skip("?Map/mapMode=3D&altitude=127 test shall start in 3D-mode and shall set altitude", async function () {
                     await loadUrl(driver, `${url}?Map/mapMode=3D&altitude=127`, mode);
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
@@ -178,7 +178,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     expect([566499, 5942803]).to.eql(center);
                 });
-                //https://www.jira.geoportal-hamburg.de/browse/BG-2999
+                // https://www.jira.geoportal-hamburg.de/browse/BG-2999
                 it.skip("?zoomtogeometry=[number] zooms to a district", async function () {
                     const expectedCoordinate = [556535.269, 5937846.413000001];
 
@@ -195,7 +195,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     await driver.wait(until.elementLocated(By.css(".navbar")), 12000);
                     expect(await centersTo(driver, expectedCoordinate)).to.be.true;
                 });
-                //https://www.jira.geoportal-hamburg.de/browse/BG-2999
+                // https://www.jira.geoportal-hamburg.de/browse/BG-2999
                 it.skip("?Map/zoomToGeometry=[number] zooms to a district", async function () {
                     const expectedCoordinate = [556535.269, 5937846.413000001];
 
@@ -729,7 +729,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                         {coordinate: [567043.565, 5934455.808], image: "https://geodienste.hamburg.de/lgv-config/img/location_eventlotse.svg"}
                     ]), 20000);
                 });
-                //https://www.jira.geoportal-hamburg.de/browse/BG-3000
+                // https://www.jira.geoportal-hamburg.de/browse/BG-3000
                 it.skip("?featureViaURL test point", async function () {
                     await loadUrl(driver, `${url}?featureViaURL=[{"layerId":"42","features":[{"coordinates":[10,53.57],"label":"TestPunkt"}]}]`, mode);
 

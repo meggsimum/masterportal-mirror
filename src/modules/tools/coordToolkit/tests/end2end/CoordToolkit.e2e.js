@@ -122,7 +122,7 @@ async function CoordToolkitTests ({builder, url, resolution, config, capability}
                 driver = await initDriver(builder, url, resolution);
             }
         });
-        
+
 
         it("displays a modal dialog containing the tool elements", async () => {
             // can't keep tools/toolCoordToolkit as variable - tends to go stale in /portal/basic
@@ -286,7 +286,7 @@ async function CoordToolkitTests ({builder, url, resolution, config, capability}
 
             const coordSystemSelect = await driver.findElement(selectors.coordSystemSelect),
                 option = await driver.findElement(optionSelector),
-                expectedResolution = isMaster(url) ? expectedResolutionMaster: expectedResolutionOthers
+                expectedResolution = isMaster(url) ? expectedResolutionMaster : expectedResolutionOthers;
 
             await driver.wait(until.elementIsVisible(coordSystemSelect));
 

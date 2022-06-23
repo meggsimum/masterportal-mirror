@@ -33,11 +33,12 @@ const webdriver = require("selenium-webdriver"),
  */
 async function checkLayersettings (driver) {
     if (Object.keys(await driver.findElements(By.css(".layer-settings"))).length === 0) {
-        const button =await driver.wait(
+        const button = await driver.wait(
             until.elementLocated(By.css("#tree > li:nth-child(1) > div > span > span.bootstrap-icon.settings-icon.rotate.settings.tabable > i")),
             1000,
             "layer settings did not appear"
         );
+
         button.click();
         await new Promise(r => setTimeout(r, 2000));
     }
@@ -223,7 +224,7 @@ async function MenuLayersTests ({builder, url, resolution, capability}) {
                  */
                 async function getButton (sign) {
                     if (sign === "plus") {
-                        return driver.findElement(By.css(`span.transparency span.bootstrap-icon.increase-icon.tabable`));
+                        return driver.findElement(By.css("span.transparency span.bootstrap-icon.increase-icon.tabable"));
                     }
                     return driver.findElement(By.css("span.transparency span.bootstrap-icon.decrease-icon.tabable > i.bi-dash-circle-fill"));
                 }
@@ -240,7 +241,7 @@ async function MenuLayersTests ({builder, url, resolution, capability}) {
                 await (await getButton("minus")).click();
 
                 expect(await driver.executeScript(isLayerVisible, id, "0.55")).to.be.true;
-                
+
                 await (await getButton("plus")).sendKeys(Key.ENTER);
                 await (await getButton("plus")).sendKeys(Key.ENTER);
                 await (await getButton("plus")).sendKeys(Key.ENTER);
@@ -302,7 +303,7 @@ async function MenuLayersTests ({builder, url, resolution, capability}) {
                     .to.equal(newMapOrder[lastMapOrderIndex]);
             });
 
-            it("allows removing layer from tree and map", async function () {                
+            it("allows removing layer from tree and map", async function () {
                 await checkLayersettings(driver);
                 await driver.wait(until.elementLocated(By.css("#tree li div.layer-settings span.remove-layer.tabable")), 12000);
                 await (await driver.findElement(By.css("#tree li div.layer-settings span.remove-layer.tabable"))).click();

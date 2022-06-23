@@ -81,18 +81,19 @@ async function ExtendedFilterTests ({builder, url, resolution, capability}) {
                 expect(await options[1].getText()).to.equal("Krankenhäuser");
             });
 
-            it.skip("after choosing a layer, user is prompted to choose a property", async function () {
+            it("after choosing a layer, user is prompted to choose a property", async function () {
                 await dropdown.click();
                 await options[1].click();
 
                 await updateInteractionElements();
 
                 expect(dropdown).to.exist;
-                expect(options).to.have.lengthOf(14);
-                expect(await options[1].getText()).to.equal("kh_nummer");
+                // number of attributes of layer "Krankenhäuser"
+                expect(options).to.have.lengthOf(21);
+                expect(await options[1].getText()).to.equal("id");
             });
 
-            it.skip("after choosing a property, user is prompted to choose a value", async function () {
+            it("after choosing a property, user is prompted to choose a value", async function () {
                 await dropdown.click();
                 await (await driver.findElement(
                     By.xpath("//select[@id='dropdown']/option[contains(.,'not_und_unfallversorgung')]"))
@@ -102,10 +103,10 @@ async function ExtendedFilterTests ({builder, url, resolution, capability}) {
 
                 expect(dropdown).to.exist;
                 expect(options).to.have.lengthOf(4);
-                expect(await options[1].getText()).to.equal("Ja");
+                expect(await options[1].getText()).to.equal("Teilnahme an der Not- und Unfallversorgung");
             });
 
-            it.skip("after choosing a value, filter is created and removable, filter is in effect immediately", async function () {
+            it("after choosing a value, filter is created and removable, filter is in effect immediately", async function () {
                 await dropdown.click();
                 await options[1].click();
 
