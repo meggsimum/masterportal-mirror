@@ -16,7 +16,7 @@ async function ScaleSwitcherTests ({builder, url, resolution, capability}) {
     const testIsApplicable = isMaster(url);
 
     if (testIsApplicable) {
-        describe.only("ScaleSwitcher", function () {
+        describe("ScaleSwitcher", function () {
             let driver;
 
             before(async function () {

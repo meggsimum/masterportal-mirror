@@ -13,7 +13,7 @@ async function QuickHelpTests ({builder, url, resolution, capability}) {
     const testIsApplicable = isCustom(url) || isMaster(url);
 
     if (testIsApplicable) {
-        describe("QuickHelp", function () {
+        describe.only("QuickHelp", function () {
             let driver, navBarIcon, quickHelp;
 
             before(async function () {
