@@ -216,7 +216,7 @@ function getOrderedIdsFromConfig (configJson) {
         ...configJson.Themenconfig.Fachdaten.Layer,
         ...configJson.Themenconfig.Hintergrundkarten.Layer
     ]
-        .filter(layer => !["12883", "12884", "13032", "5708"].includes(layer.id)) // remove initially inactive and non-tree layers
+        .filter(layer => !["12883", "12884", "13032", "5708","157", "46"].includes(layer.id)) // remove initially inactive and non-tree layers
         .map(layer => {
             // remove tree-invisible layers
             if (layer.isVisibleInTree === false) {
