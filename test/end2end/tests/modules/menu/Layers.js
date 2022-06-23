@@ -335,9 +335,6 @@ async function MenuLayersTests ({builder, url, resolution, capability}) {
                     lastMapIdOrderIndex = mapOrderedElementTexts.length - 1,
                     lastNewIdOrderIndex = newMapOrder.length - 1;
 
-                    console.log("mapOrderedElementTexts:",mapOrderedElementTexts);
-                    console.log("newTitleOrder:",newTitleOrder);
-
                 expect(newTitleOrder[lastNewTitleOrderIndex - 1])
                     .to.equal(mapOrderedElementTexts[lastMapTitleOrderIndex - 1]);
                 expect(newTitleOrder[lastNewTitleOrderIndex])
