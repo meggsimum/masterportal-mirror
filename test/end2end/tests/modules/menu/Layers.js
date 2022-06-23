@@ -49,7 +49,7 @@ async function checkLayersettings (driver) {
  * @returns {void}
  */
 async function MenuLayersTests ({builder, url, resolution, capability}) {
-    describe.only("Menu Layers", async function () {
+    describe("Menu Layers", async function () {
         let driver,
             // services,
             // as seen in Map
