@@ -58,8 +58,8 @@ async function SearchCategories ({builder, browsername, url, resolution, capabil
              * @returns {void}
              */
             async function selectAndVerifyFirstHit ({setsMarker, showsPolygon, movesCenter, changesResolution, categoryName, idPart, searchKey}) {
-                const categorySelector = By.xpath(`//li[contains(@class,'type')][contains(.,'${categoryName || idPart}')]`),
-                    categoryOpenSelector = By.xpath(`//li[contains(@class,'type')][contains(@class,'open')][contains(.,'${categoryName || idPart}')]`),
+                const categorySelector = By.xpath(`//li[contains(@class,'type')][contains(text(),'${categoryName || idPart}')]`),
+                    categoryOpenSelector = By.xpath(`//li[contains(@class,'type')][contains(@class,'open')][contains(text(),'${categoryName || idPart}')]`),
                     entrySelector = By.xpath(`//li[contains(@id,'${idPart}')][contains(@class,'hit')]`);
                 let marker = null,
                     elList = null,
@@ -152,12 +152,12 @@ async function SearchCategories ({builder, browsername, url, resolution, capabil
                 expect(await driver.findElements(By.css("#searchInputUL > li.results"))).to.have.length(1);
             });
 
-            (isChrome(browsername) ? it.skip : it.skip)("provides all results aggregated by categories, including sum of hits per category", async function () {
+            (isChrome(browsername) ? it : it.skip)("provides all results aggregated by categories, including sum of hits per category", async function () {
                 if (await (await driver.findElement(By.id("searchInput"))).getAttribute("value") === "") {
                     await searchInput.sendKeys(searchString);
                 }
-                await driver.wait(until.elementIsVisible(await driver.findElement(By.css("#searchInputUL > li.results"))), 5000);
-                await (await driver.findElement(By.css("#searchInputUL > li.results"))).click();
+                await driver.wait(until.elementIsVisible(await driver.findElement(By.css("#searchInputUL > li.list-group-item.results"))), 5000);
+                await (await driver.findElement(By.css("#searchInputUL > li.list-group-item.results"))).click();
                 expect(await driver.findElements(By.css("#searchInputUL > li.list-group-item.type > span.badge"))).to.not.equals(0);
             });
 
@@ -200,23 +200,25 @@ async function SearchCategories ({builder, browsername, url, resolution, capabil
                 });
             });
 
-            it.skip("category 'Straße' shows results; on click, zooms to the place, changes resolution", async function () {
+            it("category 'Straße' shows results; on click, zooms to the place, changes resolution", async function () {
                 await selectAndVerifyFirstHit({
                     setsMarker: true,
                     showsPolygon: false,
                     movesCenter: true,
                     changesResolution: true,
-                    idPart: "Straße"
+                    idPart: "Straße",
+                    searchKey: "repel"
                 });
             });
 
-            it.skip("category 'Stadtteil' shows results; on click, zooms to the place and marks it with a marker, changes resolution", async function () {
+            it("category 'Stadtteil' shows results; on click, zooms to the place and marks it with a marker, changes resolution", async function () {
                 await selectAndVerifyFirstHit({
                     setsMarker: true,
                     showsPolygon: false,
                     movesCenter: true,
                     changesResolution: true,
-                    idPart: "Stadtteil"
+                    idPart: "Stadtteil",
+                    searchKey: "Altona"
                 });
             });
 
