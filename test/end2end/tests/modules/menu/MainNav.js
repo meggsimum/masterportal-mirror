@@ -63,7 +63,7 @@ async function MainNavTests ({builder, url, resolution, capability}) {
                 await driver.wait(until.elementLocated(By.css("ul#tools>li>a")));
             });
 
-            it.skip("allows navigation by tab to the first control button", async function () {
+            it("allows navigation by tab to the first control button", async function () {
 
                 await (await driver.wait(
                     until.elementLocated(By.css("ul#root li:first-child")),
@@ -87,9 +87,11 @@ async function MainNavTests ({builder, url, resolution, capability}) {
                 await driver.switchTo().activeElement().sendKeys(Key.TAB);
                 await driver.switchTo().activeElement().sendKeys(Key.TAB);
 
-                const attribs = await driver.switchTo().activeElement().getAttribute("class");
+                const attribs = await driver.switchTo().activeElement().getAttribute("class"),
+                    title = await driver.switchTo().activeElement().getAttribute("title");
 
-                expect(attribs.includes("bi-arrows-angle-expand")).to.be.true;
+                expect(attribs.includes("control-icon bootstrap-icon standalone")).to.be.true;
+                expect(title).to.be.equals("Vollbild aktivieren");
             });
         }
     });
