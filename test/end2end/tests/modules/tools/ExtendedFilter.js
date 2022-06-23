@@ -95,7 +95,7 @@ async function ExtendedFilterTests ({builder, url, resolution, capability}) {
             it.skip("after choosing a property, user is prompted to choose a value", async function () {
                 await dropdown.click();
                 await (await driver.findElement(
-                    By.xpath("//select[@id='dropdown']/option[contains(.,'teilnahme_notversorgung')]"))
+                    By.xpath("//select[@id='dropdown']/option[contains(.,'not_und_unfallversorgung')]"))
                 ).click();
 
                 await updateInteractionElements();
@@ -114,7 +114,7 @@ async function ExtendedFilterTests ({builder, url, resolution, capability}) {
                 expect(dropdown).to.exist;
                 expect(options).to.have.lengthOf(3);
                 removeButton = driver.findElement(
-                    By.xpath("//button[contains(.,'teilnahme_notversorgung')]")
+                    By.xpath("//button[contains(.,'not_und_unfallversorgung)]")
                 );
                 expect(removeButton).to.exist;
 
