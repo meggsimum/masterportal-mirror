@@ -20,6 +20,8 @@
 - Changed class for several title elements on page from span to h1 or h2 and standardized their styling
 - WMTS feature is now realized via masterportalAPI functions.
 - SensorThingsAPI: The sensor layer has been moved from Backbone to Vue.
+- The following NPM packages are updated:
+    - @masterportal/mpconfigparser: 1.2.0 to 1.3.0
 
 ### Deprecated
 
