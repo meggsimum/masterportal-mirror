@@ -28,6 +28,9 @@ export default async function (config) {
                     else if (addonConf.type === "control") {
                         await loadControl(addonKey);
                     }
+                    else if (addonConf.type === "javascript") {
+                        await loadAddon(addonKey);
+                    }
                 }
             }
             catch (e) {

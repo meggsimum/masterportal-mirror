@@ -144,6 +144,26 @@ addons
 |   |   |
 |   |   |-- package.json
 
+|-- myJavascript
+|   index.js
+|   myJavascript.js
+|   mySecondJavascript.js
+|	|-- locales
+|	|   |-- de
+|   |	|   |-- additional.json
+|	|   |-- en
+|   |	|   |-- additional.json
+|   |
+|	|-- doc
+|	|   |-- config.json.md
+|   |
+|	|-- tests
+|	|   |-- end2end
+|   |	|   |-- myJavascript.e2e.js
+|	|   |-- unit
+|   |   |	|-- myJavascript.spec.js
+|   |
+|   |-- package.json
 
 ```
 
@@ -157,12 +177,13 @@ Within the add-ons folder, a configuration file `addonsConf.json` must exist. Th
 
 Matching the example above, this would be a fitting configuration.
 
-Two types of add-ons are supported:
-* tools (`"type": "tool"`)
+This types of add-ons are supported:
+* Tools (`"type": "tool"`)
 * GFI themes (`"type": "gfiTheme"`)
 * Controls (`"type": "control"`)
+* Javascript (`"type": "javascript"`)
 
-All entries to the `addonsConf.json` defined by an object are expected to be written in Vue. The deprecated Backbone add-ons are always defined by a string.
+All entries to the `addonsConf.json` defined by an object are expected to be written in Vue or pure javascript. The deprecated Backbone add-ons are always defined by a string.
 
 By default, an add-on's key is the name of its folder. By using the parameter `path` you may specify any other path. This way, you may group multiple add-ons in a folder.
 
@@ -185,6 +206,9 @@ By default, an add-on's key is the name of its folder. By using the parameter `p
   "anotherControl": {
     "type": "control",
     "path": "myControlFolder/myControlSubFolder"
+  },
+  "myJavascript": {
+    "type": "javascript"
   }
 }
 ```
@@ -334,7 +358,7 @@ Theoretically, the entry point may be configured within the `addonsConf.json` fi
 Please check that all components are imported correctly, and not in a `.default` one level deeper in the object. This may e.g. happen if you use `import * as VueAddonComponent from" ./components/VueAddon.vue ";` to import the component.
 
 ```js
-// myMasterPortalFolder/addons/VueAddon/index.js
+// myMasterPortalFolder/addons/vueAddon/index.js
 
 import VueAddonComponent from "./components/VueAddon.vue";
 import VueAddonStore from "./store/VueAddon";
@@ -388,6 +412,27 @@ const Config = {
                 "icon": "bi-list-ul"
           },
 ```
+
+### index.js for pure javascript
+
+```js
+// myMasterPortalFolder/addons/myJavascript/index.js
+
+import myJavascript from "./myJavascript";
+import mySecondJavascript from "./mySecondJavascript";
+import deLocale from "./locales/de/additional.json";
+import enLocale from "./locales/en/additional.json";
+
+export default {
+    myJavascript,
+    mySecondJavascript,
+    locales: {
+        de: deLocale,
+        en: enLocale
+    }
+};
+```
+
 
 ### Write JSDoc
 
