@@ -156,8 +156,8 @@ async function SearchCategories ({builder, browsername, url, resolution, capabil
                 if (await (await driver.findElement(By.id("searchInput"))).getAttribute("value") === "") {
                     await searchInput.sendKeys(searchString);
                 }
-                await driver.wait(until.elementIsVisible(await driver.findElement(By.css("#searchInputUL > li.list-group-item.results"))), 5000);
-                await (await driver.findElement(By.css("#searchInputUL > li.list-group-item.results"))).click();
+                await driver.wait(until.elementIsVisible(await driver.findElement(By.css("#searchInputUL > li.list-group-item"))), 5000);
+                await (await driver.findElement(By.css("#searchInputUL > li.list-group-item"))).click();
                 expect(await driver.findElements(By.css("#searchInputUL > li.list-group-item.type > span.badge"))).to.not.equals(0);
             });
 

@@ -32,7 +32,7 @@ async function ParcelSearchTests ({builder, url, resolution, capability}) {
                 parcelField: By.css("input#parcelField"),
                 submitButton: By.css("button#submitbutton"),
                 minimize: By.css("#window .bi-dash-lg"),
-                maximize: By.css("#window p.title")
+                maximize: By.css(".title-move")
             };
             let driver, districtField, parcelField, submitButton;
 

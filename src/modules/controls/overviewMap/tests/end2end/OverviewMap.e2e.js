@@ -97,7 +97,7 @@ function OverviewMap ({builder, url, resolution, capability}) {
             it("allows panning the map from the overview map", async function () {
                 const center = await driver.executeScript(getCenter);
 
-                overviewMapBox = await driver.findElement(By.css(".ol-overviewmap-box"));
+                overviewMapBox = await driver.findElement(By.css(".ol-overviewmap"));
 
                 await driver.actions({bridge: true})
                     .move({origin: overviewMapBox})

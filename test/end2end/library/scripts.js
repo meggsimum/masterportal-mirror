@@ -418,7 +418,7 @@ function isFullscreen () {
  * @returns {ol/coordinate~Coordinate} center coordinate
  */
 function getCenter () {
-    return mapCollection.getMapView("2D").getCenter();//Backbone.Radio.request("MapView", "getCenter");
+    return mapCollection.getMapView("2D").getCenter();// Backbone.Radio.request("MapView", "getCenter");
 }
 /**
  * @returns {ol/coordinate~Coordinate} the extent
@@ -467,14 +467,14 @@ function getResolution () {
  * @returns {Number} tilt value in 3D mode
  */
 function getTilt () {
-    return  mapCollection.getMap("3D").getCamera().getTilt();
+    return mapCollection.getMap("3D").getCamera().getTilt();
 }
 
 /**
  * @returns {Number} heading value in 3D mode
  */
 function getHeading () {
-    return  mapCollection.getMap("3D").getCamera().getHeading();
+    return mapCollection.getMap("3D").getCamera().getHeading();
 }
 
 /** @returns {(Number | null)} currently active OB mode direction flag */

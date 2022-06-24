@@ -19,7 +19,7 @@ const webdriver = require("selenium-webdriver"),
     // contains saucelabs"
     testService = process.env.npm_config_testservice,
     browser = process.env.browser || "firefox,chrome,edge",
-    url = process.env.url || "https://localhost:9001/",
+    url = process.env.url || "https://localhost:9002/",
     urlPart = process.env.urlPart.replace(/\\/g, "") || "portal/",
     // proxy for local testing
     localHttpProxy = process.env.http_proxy,
@@ -134,7 +134,7 @@ function runTests (browsers) {
                     if (localHttpProxy || localHttpsProxy) {
                         setLocalProxy(currentBrowser, builder);
                     }
-
+                    console.warn(completeUrl);
                     resolutions.forEach(resolution => {
                         tests(builder, completeUrl, currentBrowser, resolution, config, mode, null);
                     });

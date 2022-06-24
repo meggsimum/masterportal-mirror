@@ -29,7 +29,7 @@ async function CoordTests ({builder, url, resolution, config, capability}) {
                 tools: By.xpath("//ul[@id='tools']/.."),
                 toolCoord: By.css("ul#tools span.bootstrap-icon > .bi-bullseye"),
                 modal: By.css(".tool-window-vue"),
-                header: By.css(".tool-window-vue p.title span"),
+                header: By.css(".tool-window-vue h2.title"),
                 coordSystemLabel: By.xpath("//label[@for='coordSystemField']"),
                 coordSystemSelect: By.css("select#coordSystemField"),
                 eastingLabel: By.css("label#coordinatesEastingLabel"),

@@ -27,7 +27,7 @@ async function CoordToolkitTests ({builder, url, resolution, config, capability}
                 tools: By.xpath("//ul[@id='tools']/.."),
                 toolCoordToolkit: By.css("ul#tools span.bootstrap-icon > .bi-globe"),
                 modal: By.css(".tool-window-vue"),
-                header: By.css(".tool-window-vue p.title span"),
+                header: By.css(".tool-window-vue h2.title"),
                 supplyCoordRadio: By.css("input#supplyCoordRadio"),
                 searchByCoordRadio: By.css("input#searchByCoordRadio"),
                 coordSystemLabel: By.xpath("//label[@for='coordSystemField']"),
