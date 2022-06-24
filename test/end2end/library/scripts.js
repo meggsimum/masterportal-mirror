@@ -109,7 +109,7 @@ function mouseWheelDown () {
  * @returns {boolean} true if AND(layer exists, layer is visible, layer opacity is as expected)
  */
 function isLayerVisible () {
-    const map = Backbone.Radio.request("Map", "getMap"),
+    const map = mapCollection.getMap("2D"),
         expectedOpacity = typeof arguments[1] === "undefined" ? "1" : arguments[1];
     let layer = false;
 
@@ -128,7 +128,7 @@ function isLayerVisible () {
  * @returns {boolean} true, if mapMarker is visible
  */
 function isMarkerPointVisible () {
-    const map = Backbone.Radio.request("Map", "getMap");
+    const map = mapCollection.getMap("2D");
     let layer = false;
 
     map.getLayers().forEach(l => {
@@ -146,7 +146,7 @@ function isMarkerPointVisible () {
  * @returns {Array} containing the coordinates
  */
 function getMarkerPointCoord () {
-    const map = Backbone.Radio.request("Map", "getMap");
+    const map = mapCollection.getMap("2D");
     let layer = false;
 
     map.getLayers().forEach(l => {
@@ -171,7 +171,7 @@ function getMarkerPointCoord () {
  * @returns {boolean} true if layer with "name" exists and its source has "length" features
  */
 function hasVectorLayerLength () {
-    const layer = Backbone.Radio.request("Map", "getMap")
+    const layer = mapCollection.getMap("2D")
         .getLayers()
         .getArray()
         .filter(l => l.get("name") === arguments[0])[0];
@@ -193,7 +193,7 @@ function hasVectorLayerLength () {
  * @returns {boolean} true if layer with "name" exists and its source has "length" features
  */
 function hasVectorLayerStyle () {
-    const layer = Backbone.Radio.request("Map", "getMap")
+    const layer = mapCollection.getMap("2D")
             .getLayers()
             .getArray()
             .filter(l => l.get("name") === arguments[0])[0],
@@ -225,7 +225,7 @@ function hasVectorLayerStyle () {
  */
 function areLayersOrdered () {
     const layerIds = arguments[0],
-        map = Backbone.Radio.request("Map", "getMap");
+        map = mapCollection.getMap("2D");
 
     map.getLayers().forEach(l => {
         if (l.get("id") === layerIds[0]) {
@@ -245,7 +245,7 @@ function areLayersOrdered () {
  * @returns {boolean} true if a layer was found that holds all features as specified
  */
 function doesLayerWithFeaturesExist () {
-    const map = Backbone.Radio.request("Map", "getMap"),
+    const map = mapCollection.getMap("2D"),
         searched = arguments[0];
     let found = false;
 
@@ -287,8 +287,7 @@ function doesLayerWithFeaturesExist () {
 
 /** @returns {boolean} true if all of map.getLayers have visibility set to false */
 function areAllLayersHidden () {
-    return !Backbone.Radio
-        .request("Map", "getMap")
+    return !mapCollection.getMap("2D")
         .getLayers()
         .getArray()
         .map(l => l.getVisible())
@@ -301,8 +300,7 @@ function areAllLayersHidden () {
  * @returns {boolean} true if all features of a layer are visible
  */
 function areAllFeaturesOfLayerVisible () {
-    return Backbone.Radio
-        .request("Map", "getMap")
+    return mapCollection.getMap("2D")
         .getLayers()
         .getArray()
         .find(l => l.get("id") === arguments[0])
@@ -317,7 +315,7 @@ function areAllFeaturesOfLayerVisible () {
  * @returns {boolean} true if all texts are found in order as feature texts
  */
 function areRegExpsInMeasureLayer () {
-    const texts = Backbone.Radio.request("Map", "getMap")
+    const texts = mapCollection.getMap("2D")
             .getLayers()
             .getArray()
             .filter(l => l.get("name") === "measure_layer")[0]
@@ -351,7 +349,7 @@ function areRegExpsInMeasureLayer () {
  * @returns {string} the texts
  */
 function getMeasureLayersTexts () {
-    const texts = Backbone.Radio.request("Map", "getMap")
+    const texts = mapCollection.getMap("2D")
         .getLayers()
         .getArray()
         .filter(l => l.get("name") === "measure_layer")[0]
@@ -370,7 +368,7 @@ function getMeasureLayersTexts () {
  * @returns {(Array.<number[]> | null)} coordinates or null if layer or feature not found
  */
 function getCoordinatesOfXthFeatureInLayer () {
-    const layer = Backbone.Radio.request("Map", "getMap")
+    const layer = mapCollection.getMap("2D")
         .getLayers()
         .getArray()
         .filter(l => l.get("name") === arguments[1])[0];
@@ -420,7 +418,7 @@ function isFullscreen () {
  * @returns {ol/coordinate~Coordinate} center coordinate
  */
 function getCenter () {
-    return Backbone.Radio.request("MapView", "getCenter");
+    return mapCollection.getMapView("2D").getCenter();//Backbone.Radio.request("MapView", "getCenter");
 }
 /**
  * @returns {ol/coordinate~Coordinate} the extent
@@ -432,19 +430,19 @@ function getExtent () {
  * @returns {Number} heading in 3D mode
  */
 function get3DHeading () {
-    return Backbone.Radio.request("Map", "getMap3d").getCamera().getHeading();
+    return mapCollection.getMap("3D").getCamera().getHeading();
 }
 /**
  * @returns {Number} tilt in 3D mode
  */
 function get3DTilt () {
-    return Backbone.Radio.request("Map", "getMap3d").getCamera().getTilt();
+    return mapCollection.getMap("3D").getCamera().getTilt();
 }
 /**
  * @returns {Number} altitude in 3D mode
  */
 function get3DAltitude () {
-    return Backbone.Radio.request("Map", "getMap3d").getCamera().getAltitude();
+    return mapCollection.getMap("3D").getCamera().getAltitude();
 }
 
 /**
@@ -469,14 +467,14 @@ function getResolution () {
  * @returns {Number} tilt value in 3D mode
  */
 function getTilt () {
-    return Backbone.Radio.request("Map", "getMap3d").getCamera().getTilt();
+    return  mapCollection.getMap("3D").getCamera().getTilt();
 }
 
 /**
  * @returns {Number} heading value in 3D mode
  */
 function getHeading () {
-    return Backbone.Radio.request("Map", "getMap3d").getCamera().getHeading();
+    return  mapCollection.getMap("3D").getCamera().getHeading();
 }
 
 /** @returns {(Number | null)} currently active OB mode direction flag */
@@ -506,7 +504,7 @@ function setCenter () {
  * @returns {void}
  */
 function setTilt (tilt) {
-    Backbone.Radio.request("Map", "getMap3d").getCamera().setTilt(tilt);
+    mapCollection.getMap("3D").getCamera().setTilt(tilt);
 }
 
 /**
@@ -538,9 +536,7 @@ function setResolution () {
  * @returns {string[]} layers by id
  */
 function getOrderedLayerIds () {
-    return Backbone
-        .Radio
-        .request("Map", "getMap")
+    return mapCollection.getMap("2D")
         .getLayers()
         .getArray()
         .sort((layer1, layer2) => {

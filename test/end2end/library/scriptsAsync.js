@@ -9,7 +9,7 @@
  * @returns {void}
  */
 function onMoveEnd (callback) {
-    Backbone.Radio.request("Map", "getMap").once("moveend", () => callback());
+    mapCollection.getMap("2D").once("moveend", () => callback());
 }
 
 module.exports = {
