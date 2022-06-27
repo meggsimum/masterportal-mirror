@@ -18,7 +18,7 @@ export default {
         axios.get(targetPath)
             .then(response => {
                 commit("setPortalConfig", response.data?.Portalconfig);
-                commit("setThemenConfig", response.data?.Themenconfig);
+                commit("setLayerConfig", response.data?.Themenconfig);
             })
             .catch(error => {
                 console.error(`Error occured during loading config.json specified by config.js (${targetPath}).`, error);
@@ -27,16 +27,16 @@ export default {
 
     /**
      * Load the rest-services.json.
-     * @param {Object} restConf The URL to rest-services.json.
+     * @param {Object} restConfig The URL to rest-services.json.
      * @returns {void}
      */
-    loadRestServicesJson ({commit}, restConf) {
-        axios.get(restConf)
+    loadRestServicesJson ({commit}, restConfig) {
+        axios.get(restConfig)
             .then(response => {
-                commit("setRestConf", response.data);
+                commit("setRestConfig", response.data);
             })
             .catch(error => {
-                console.error(`Error occured during loading rest-services.json specified by config.js (${restConf}).`, error);
+                console.error(`Error occured during loading rest-services.json specified by config.js (${restConfig}).`, error);
             });
     },
 

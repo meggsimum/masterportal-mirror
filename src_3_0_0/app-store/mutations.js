@@ -8,8 +8,19 @@ export default {
     setConfigJs (state, configJs) {
         state.configJs = configJs;
     },
+
     /**
-     * Sets config.js.
+     * Sets layer configuration.
+     * @param {Object} state store state
+     * @param {Object} layerConfig Layerconfig from config.json
+     * @returns {void}
+     */
+    setLayerConfig (state, layerConfig) {
+        state.layerConfig = layerConfig;
+    },
+
+    /**
+     * Sets portal configuration.
      * @param {Object} state store state
      * @param {Object} portalConfig Portalconfig from config.json
      * @returns {void}
@@ -19,22 +30,12 @@ export default {
     },
 
     /**
-     * Sets config.js.
-     * @param {Object} state store state
-     * @param {Object} themenConfig Themenconfig from config.json
-     * @returns {void}
-     */
-    setThemenConfig (state, themenConfig) {
-        state.themenConfig = themenConfig;
-    },
-
-    /**
      * Sets rest services configuration.
      * @param {Object} state store state
-     * @param {Object} restConf rest-services.json
+     * @param {Object} restConfig rest-services.json
      * @returns {void}
      */
-    setRestConf (state, restConf) {
-        state.restConf = restConf;
+    setRestConfig (state, restConfig) {
+        state.restConfig = restConfig;
     }
 };

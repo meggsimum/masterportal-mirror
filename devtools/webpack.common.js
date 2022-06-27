@@ -8,7 +8,7 @@ const webpack = require("webpack"),
     rootPath = path.resolve(__dirname, "../"),
     addonBasePath = path.resolve(rootPath, "addons"),
     addonConfigPath = path.resolve(addonBasePath, "addonsConf.json"),
-    entryPoints = {masterportal: path.resolve(rootPath, "src_vue/main.js")};
+    entryPoints = {masterportal: path.resolve(rootPath, "src_3_0_0/main.js")};
 
 let addonEntryPoints = {};
 
