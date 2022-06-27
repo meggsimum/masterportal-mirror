@@ -36,6 +36,7 @@
 - Attached Gfi is styled correctly.
 - Quickly clicking on a tab in the Elektro GFI will now not lead to a reload of the page.
 - Tools without icon attribute in config.json use default icon from state now.
+- The minimized ToolTemplate will now be blue and variables are used in css the template's css code.
 
 ---
 
