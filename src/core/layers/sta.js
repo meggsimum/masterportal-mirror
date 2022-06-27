@@ -1,19 +1,19 @@
-import VectorLayer from "ol/layer/Vector.js";
-import VectorSource from "ol/source/Vector.js";
-import LoaderOverlay from "../../utils/loaderOverlay";
 import Layer from "./layer";
-import * as bridge from "./RadioBridge.js";
+import LoaderOverlay from "../../utils/loaderOverlay";
+import * as bridge from "./RadioBridge";
 import Cluster from "ol/source/Cluster";
-import {SensorThingsMqtt} from "../../utils/sensorThingsMqtt.js";
-import {SensorThingsHttp} from "../../utils/sensorThingsHttp.js";
-import store from "../../app-store";
-import isObject from "../../utils/isObject.js";
-import changeTimeZone from "../../utils/changeTimeZone.js";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import {buffer, containsExtent} from "ol/extent";
+import {GeoJSON} from "ol/format";
+import changeTimeZone from "../../utils/changeTimeZone";
 import getProxyUrl from "../../utils/getProxyUrl";
+import isObject from "../../utils/isObject";
+import {SensorThingsMqtt} from "../../utils/sensorThingsMqtt";
+import {SensorThingsHttp} from "../../utils/sensorThingsHttp";
+import store from "../../app-store";
 import moment from "moment";
 import "moment-timezone";
-import {GeoJSON} from "ol/format.js";
-import {buffer, containsExtent} from "ol/extent";
 
 /**
  * Creates a layer for the SensorThings API.
@@ -68,8 +68,6 @@ export default function STALayer (attrs) {
     this.options = {};
 
     this.createLayer(Object.assign(defaults, attrs));
-
-    // call the super-layer
     Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
     this.set("style", this.getStyleFunction(attrs));
 
@@ -106,9 +104,7 @@ STALayer.prototype.createLayer = function (attrs) {
         },
         styleFn = this.getStyleFunction(attrs),
         options = {
-            doNotLoadInitially: true,
             clusterGeometryFunction: (feature) => {
-                // do not cluster invisible features; can't rely on style since it will be null initially
                 if (feature.get("hideInClustering") === true) {
                     return null;
                 }
@@ -136,7 +132,7 @@ STALayer.prototype.createLayer = function (attrs) {
             }
         };
 
-    if (styleFn) {
+    if (typeof styleFn === "function") {
         styleFn.bind(this);
     }
     options.style = styleFn;
@@ -189,44 +185,41 @@ STALayer.prototype.getFeaturesFilterFunction = function (attrs) {
         return filteredFeatures;
     };
 };
+
 /**
  * Returns the property names.
  * @param {Object} attrs params of the raw layer
  * @returns {String} the property names as comma separated string
  */
 STALayer.prototype.getPropertyname = function (attrs) {
-    let propertyname = "";
-
-    if (Array.isArray(attrs.propertyNames)) {
-        propertyname = attrs.propertyNames.join(",");
+    if (Array.isArray(attrs?.propertyNames)) {
+        return attrs.propertyNames.join(",");
     }
-    return propertyname;
+    return "";
 };
+
 /**
  * Getter of style for layer.
  * @param {Object} attrs params of the raw layer
  * @returns {Function} a function to get the style with or null plus console error if no style model was found
  */
 STALayer.prototype.getStyleFunction = function (attrs) {
-    const styleId = attrs.styleId,
+    const styleId = attrs?.styleId,
         styleModel = bridge.getStyleModelById(styleId);
-    let isClusterFeature = false,
-        style = null;
 
-    if (styleModel !== undefined) {
-        style = function (feature) {
-            const feat = feature !== undefined ? feature : this;
+    if (typeof styleModel !== "undefined") {
+        return function (feature) {
+            const feat = typeof feature !== "undefined" ? feature : this,
+                isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
 
-            isClusterFeature = typeof feat.get("features") === "function" || typeof feat.get("features") === "object" && Boolean(feat.get("features"));
             return styleModel.createStyle(feat, isClusterFeature);
         };
     }
-    else {
-        console.error(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
-    }
+    console.error(i18next.t("common:modules.core.modelList.layer.wrongStyleId", {styleId}));
 
-    return style;
+    return null;
 };
+
 /**
  * Updates the layers source by calling refresh at source. Depending on attribute 'sourceUpdated'.
  * @returns {void}
@@ -237,8 +230,9 @@ STALayer.prototype.updateSource = function () {
         this.layer.getSource().refresh();
     }
 };
+
 /**
- * Creates the legend
+ * Creates the legend.
  * @returns {void}
  */
 STALayer.prototype.createLegend = function () {
@@ -265,24 +259,23 @@ STALayer.prototype.createLegend = function () {
         this.set("legend", [legend]);
     }
 };
+
 /**
- * Hides all features by setting style= null for all features.
+ * Hides all features by setting style=null for all features.
  * @returns {void}
  */
 STALayer.prototype.hideAllFeatures = function () {
     const layerSource = this.get("layerSource") instanceof Cluster ? this.get("layerSource").getSource() : this.get("layerSource"),
         features = layerSource.getFeatures();
 
-    // optimization - clear and re-add to prevent cluster updates on each change
     layerSource.clear();
-
     features.forEach((feature) => {
         feature.set("hideInClustering", true);
         feature.setStyle(() => null);
     });
-
     layerSource.addFeatures(features);
 };
+
 /**
  * Shows all features by setting their style.
  * @returns {void}
@@ -297,6 +290,7 @@ STALayer.prototype.showAllFeatures = function () {
         feature.setStyle(style(feature));
     });
 };
+
 /**
  * Only shows features that match the given ids.
  * @param {String[]} featureIdList List of feature ids.
@@ -320,6 +314,7 @@ STALayer.prototype.showFeaturesByIds = function (featureIdList) {
     layerSource.addFeatures(allLayerFeatures);
     bridge.resetVectorLayerFeatures(this.get("id"), allLayerFeatures);
 };
+
 /**
  * Returns the style as a function.
  * @param {Function|Object} style ol style object or style function.
@@ -329,7 +324,6 @@ STALayer.prototype.getStyleAsFunction = function (style) {
     if (typeof style === "function") {
         return style;
     }
-
     return function () {
         return style;
     };
@@ -558,23 +552,21 @@ STALayer.prototype.callSensorThingsAPI = function (url, version, urlParams, curr
     const requestUrl = this.buildSensorThingsUrl(url, version, urlParams),
         http = new SensorThingsHttp({
             rootNode: urlParams?.root
-        }),
-        /**
-         * A function to receive the response of a http call.
-         * @param {Object} result the response from the http request as array buffer
-         * @returns {void}
-         */
-        httpOnSuccess = function (result) {
+        });
+
+    if (!this.get("loadThingsOnlyInCurrentExtent")) {
+        http.get(requestUrl, result => {
             if (typeof onsuccess === "function") {
                 onsuccess(this.getAllThings(result, urlParams, url, version));
             }
-        }.bind(this);
-
-    if (!this.get("loadThingsOnlyInCurrentExtent")) {
-        http.get(requestUrl, httpOnSuccess, null, null, onerror);
+        }, null, null, onerror);
     }
     else {
-        http.getInExtent(requestUrl, currentExtent, intersect, httpOnSuccess, null, null, onerror);
+        http.getInExtent(requestUrl, currentExtent, intersect, result => {
+            if (typeof onsuccess === "function") {
+                onsuccess(this.getAllThings(result, urlParams, url, version));
+            }
+        }, null, null, onerror);
     }
 };
 
@@ -1007,6 +999,7 @@ STALayer.prototype.aggregateProperties = function (things, keys) {
         });
         result[key] = value.join(" | ");
     });
+
     return result;
 };
 
