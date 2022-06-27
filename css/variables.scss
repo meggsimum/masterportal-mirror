@@ -164,6 +164,8 @@ $font_size_default: 12px;
 $font_size_small_custom: 11px;
 $font_size_tiny: 10px;
 
+$font_size_text: $font_size_default;
+
 /* Should something like this be supported for windows resp. buttons? TODO discuss */
 $interaction_border_radius: 0;
 $information_border_radius: 0;
