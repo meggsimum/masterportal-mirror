@@ -285,11 +285,7 @@ export default {
 
 <style lang="scss" scoped>
     @import "~/css/mixins.scss";
-    $color: rgb(255, 255, 255);
-    $font_family: "MasterPortalFont", sans-serif;
-    $background_color_1: rgb(255, 255, 255);
-    $background_color_2: #e10019;
-    $background_color_4: #646262;
+    @import "~variables";
 
     #vue-tool-content-body {
         display:block;
@@ -300,7 +296,7 @@ export default {
     }
 
     .win-heading{
-        border-bottom: 1px solid rgb(229, 229, 229);
+        border-bottom: 1px solid $white;
         font-family: $font_family_accent;
         display:flex;
         flex-direction:row;
@@ -326,7 +322,7 @@ export default {
             }
 
             > .bootstrap-icon {
-                padding: 8px 8px 8px 8px;
+                padding: 8px;
                 &:focus {
                     @include primary_action_focus;
                 }
@@ -344,7 +340,7 @@ export default {
     }
 
     .tool-window-vue {
-        background-color: $background_color_1;
+        background-color: $white;
         display: block;
         position: absolute;
         padding:0;
@@ -364,13 +360,13 @@ export default {
         }
 
         .win-body-vue {
-            max-height:72vh;
+            max-height: 72vh;
         }
 
         .basic-resize-handle {
-            position:absolute;
-            width:6px;
-            height:6px;
+            position: absolute;
+            width: 6px;
+            height: 6px;
         }
         #basic-resize-handle-tl { top: 0; left: 0; }
         #basic-resize-handle-tr { top: 0; right: 0;}
@@ -383,11 +379,11 @@ export default {
 
             #vue-tool-content-body { display:none; }
             .win-heading{
-                background-color:$background_color_2;
+                background-color: $primary;
                 .bootstrap-icon, .title {
-                    color: $color;
+                    color: $white;
                 }
-                border-bottom:none;
+                border-bottom: none;
                 overflow: hidden;
             }
         }
@@ -397,26 +393,24 @@ export default {
         position: relative;
         padding: $padding;
         -webkit-overflow-scrolling: touch;
-        background-color: $background_color_1;
+        background-color: $white;
         overflow: auto;
         width: 100%;
     }
 
     .table-tool-win-all-vue {
-        font-family: $font_family;
         border-radius: 12px;
         margin-bottom: 30px;
         .win-heading {
-            font-family: $font_family;
             font-size: 14px;
-            background-color: $background_color_4;
+            background-color: $dark_grey;
             .heading-element {
                 > .title {
-                    color: $color;
+                    color: $white;
                     font-size: 14px;
                 }
-                > .buttons { color: $color; }
-                > .bootstrap-icon { color: $color; }
+                > .buttons { color: $white; }
+                > .bootstrap-icon { color: $white; }
             }
         }
         .win-body-vue {
@@ -428,9 +422,9 @@ export default {
     }
 
     #tool-sidebar-vue {
-        background-color: $background_color_1;
-        padding:0 0 0 12px;
-        height:100%;
+        background-color: $white;
+        padding: 0 0 0 12px;
+        height: 100%;
         width: var(--initialToolWidth);
 
         @media (max-width: 767px) {
@@ -449,9 +443,9 @@ export default {
         bottom:0;
         padding:6px;
         transition:background-color 0.25s;
-        background-color:#DDDDDD;
+        background-color: $light_grey;
 
-        &:hover { background-color:#BBBBBB; }
+        &:hover { background-color: $light_grey; }
         &>div {
             position: absolute;
             top:50%;
