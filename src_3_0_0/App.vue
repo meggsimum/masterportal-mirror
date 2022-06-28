@@ -5,9 +5,9 @@ export default {
     name: "App",
     created () {
         this.setConfigJs(Config);
-        this.loadConfigJson(Config?.portalConf);
+        this.loadConfigJson();
         this.loadServicesJson();
-        this.loadRestServicesJson(Config?.restConf);
+        this.loadRestServicesJson();
     },
     methods: {
         ...mapMutations([

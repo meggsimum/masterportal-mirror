@@ -3,16 +3,15 @@ import {initializeLayerList} from "@masterportal/masterportalapi/src/rawLayerLis
 
 export default {
     /**
-     * Load the rest-services.json.
-     * @param {Object} portalConf The URL to config.json.
+     * Load the rest-services.json and commit it to the state.
      * @returns {void}
      */
-    loadConfigJson ({commit}, portalConf) {
+    loadConfigJson ({commit, state}) {
         const format = ".json";
         let targetPath = "config.json";
 
-        if (portalConf?.slice(-5) === format) {
-            targetPath = portalConf;
+        if (state.configJs?.portalConf?.slice(-5) === format) {
+            targetPath = state.configJs.portalConf;
         }
 
         axios.get(targetPath)
@@ -26,27 +25,24 @@ export default {
     },
 
     /**
-     * Load the rest-services.json.
-     * @param {Object} restConfig The URL to rest-services.json.
+     * Load the rest-services.json and commit it to the state.
      * @returns {void}
      */
-    loadRestServicesJson ({commit}, restConfig) {
-        axios.get(restConfig)
+    loadRestServicesJson ({commit, state}) {
+        axios.get(state.configJs?.restConf)
             .then(response => {
                 commit("setRestConfig", response.data);
             })
             .catch(error => {
-                console.error(`Error occured during loading rest-services.json specified by config.js (${restConfig}).`, error);
+                console.error(`Error occured during loading rest-services.json specified by config.js (${state.configJs?.restConf}).`, error);
             });
     },
 
     /**
-     * Load the services.json.
-     * @param {object} _ Store state.
-     * @param {Object} layerConf The URL to services.json.
+     * Load the services.json via masterportalapi.
      * @returns {void}
      */
-    loadServicesJson (_, layerConf) {
-        initializeLayerList(layerConf);
+    loadServicesJson ({state}) {
+        initializeLayerList(state.configJs?.layerConf);
     }
 };
