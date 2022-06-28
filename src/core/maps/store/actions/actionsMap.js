@@ -111,11 +111,13 @@ export default {
     },
     /**
      * Creates the olcesium  3D map.
+     * @param {Object} param.rootState the rootState.
      * @fires Core#RadioRequestMapGetMap
      * @returns {OLCesium} - ol cesium map.
      */
-    createMap3D () {
+    createMap3D ({rootState}) {
         const backwardsConfigCesiumParameter = {...Config?.cesiumParameter};
+        let map3D = null;
 
         /**
          * @deprecated in the next major-release!
@@ -136,14 +138,24 @@ export default {
             backwardsConfigCesiumParameter.globe.tileCacheSize = backwardsConfigCesiumParameter.tileCacheSize;
             console.warn("The attribute 'cesiumParameter.tileCacheSize' is deprecated. Please use 'cesiumParameter.globe.tileCacheSize'!");
         }
-
-        return api.map.createMap({
+        map3D = api.map.createMap({
             cesiumParameter: backwardsConfigCesiumParameter,
             map2D: mapCollection.getMap("2D"),
             shadowTime: function () {
                 return this.time || Cesium.JulianDate.fromDate(new Date());
             }
         }, "3D");
+        if (rootState.urlParams.heading !== undefined || rootState.urlParams.tilt !== undefined || rootState.urlParams.altitude !== undefined) {
+            const cameraParams = {
+                heading: rootState.urlParams.heading,
+                tilt: rootState.urlParams.tilt,
+                altitude: rootState.urlParams.altitude
+            };
+
+            api.map.olcsMap.setCameraParameter(cameraParams, map3D, Cesium);
+        }
+
+        return map3D;
     },
     ...actionsMapAttributesMapper,
     ...actionsMapInteractions,

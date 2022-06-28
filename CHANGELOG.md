@@ -43,7 +43,7 @@
   - Instead of getting all the layers from config.js, only the layers in portal will be loaded.
   - It does not depend on the gfi attributes to show the mouseHover tooltip.
   - Instead of text, the mouseHover tooltip will be shown as html content.
-
+- 3D-UrlParameters heading, tilt and altitude are now set.
 
 ---
 

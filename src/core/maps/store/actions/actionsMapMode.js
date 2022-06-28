@@ -25,13 +25,14 @@ export default {
      * @param {Object} param.getters the getters.
      * @param {Object} param.dispatch the dispatch.
      * @param {Object} param.commit the commit.
+     * @param {Object} param.rootState the rootState.
      * @fires Core#RadioRequestMapGetMapMode
      * @fires Core#RadioTriggerMapBeforeChange
      * @fires Alerting#RadioTriggerAlertAlert
      * @fires Core#RadioTriggerMapChange
      * @returns {void}
      */
-    async activateMap3D ({getters, dispatch, commit}) {
+    async activateMap3D ({getters, dispatch, commit, rootState}) {
         const mapMode = getters.mode;
         let map3D = mapCollection.getMap("3D");
 
@@ -69,7 +70,10 @@ export default {
             mapCollection.addMap(map3D, "3D");
             api.map.olcsMap.handle3DEvents({scene: map3D.getCesiumScene(), map3D: map3D, callback: (clickObject) => dispatch("clickEventCallback", Object.freeze(clickObject))});
         }
-        dispatch("controlZoomLevel", {currentMapMode: mapMode, targetMapMode: "3D"});
+        if (rootState.urlParams.altitude === undefined) {
+            // only zoom,if no altitude is given by url params,else altitude has no effect
+            dispatch("controlZoomLevel", {currentMapMode: mapMode, targetMapMode: "3D"});
+        }
         map3D.setEnabled(true);
         commit("setMode", "3D");
         Radio.trigger("Map", "change", "3D");
