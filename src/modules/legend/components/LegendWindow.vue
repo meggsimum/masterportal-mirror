@@ -789,11 +789,12 @@ export default {
     }
     #legend {
         position: absolute;
+        left: calc(100% - 250px);
+        top: 20px;
         .legend-window {
             position: absolute;
             min-width:200px;
             max-width:600px;
-            right: 0;
             margin: 10px 10px 30px 10px;
             background-color: $white;
             z-index: 9999;

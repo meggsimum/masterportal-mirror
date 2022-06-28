@@ -63,13 +63,11 @@ export default {
             <div
                 id="map"
             />
+            <LegendWindow />
             <ToolManager
                 v-if="configJson"
                 :show-in-sidebar="false"
             />
-            <div class="menu">
-                <LegendWindow />
-            </div>
             <div class="elements-positioned-over-map">
                 <LayerInformation />
                 <ControlBar class="controls" />
@@ -139,14 +137,6 @@ export default {
             .controls {
                 flex-grow: 1;
             }
-        }
-
-        .menu {
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            width: 100%;
         }
     }
 </style>
