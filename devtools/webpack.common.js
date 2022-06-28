@@ -174,12 +174,7 @@ module.exports = function () {
         plugins: [
             // provide libraries globally
             new webpack.ProvidePlugin({
-                jQuery: "jquery",
-                $: "jquery",
-                Backbone: "backbone",
-                Radio: "backbone.radio",
-                i18next: ["i18next/dist/cjs/i18next.js"],
-                _: "underscore"
+                i18next: ["i18next/dist/cjs/i18next.js"]
             }),
             // create css under build/
             new MiniCssExtractPlugin({

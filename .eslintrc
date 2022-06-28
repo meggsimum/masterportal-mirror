@@ -30,10 +30,8 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:backbone/recommended",
         "plugin:vue/recommended",
-        "plugin:vuejs-accessibility/recommended",
-        "plugin:you-dont-need-lodash-underscore/all"
+        "plugin:vuejs-accessibility/recommended"
     ],
     "rules": {
         // Possible Problems - These rules relate to possible logic errors in code:
@@ -253,10 +251,6 @@
          */
         "vuejs-accessibility/no-onchange": "off",
         // eslint-plugin-chai-friendly
-        "chai-friendly/no-unused-expressions": 2,
-        // eslint-plugin-backbone
-        "backbone/no-native-jquery": [0, "selector"],
-        "backbone/no-silent": 0
-
+        "chai-friendly/no-unused-expressions": 2
     }
 }

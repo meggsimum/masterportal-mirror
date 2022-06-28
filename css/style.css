@@ -1,10 +1,7 @@
 @charset "utf-8";
 
 
-@import "../node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css";
 @import "../node_modules/bootstrap-slider/dist/css/bootstrap-slider.css";
-@import "../node_modules/bootstrap-toggle/css/bootstrap-toggle.css";
-@import "../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css";
 @import "../node_modules/ol/ol.css";
 @import "../node_modules/olcs/olcs.css";
 @import "fonts.css";

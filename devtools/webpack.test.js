@@ -90,11 +90,6 @@ module.exports = {
     },
     plugins: [
         new webpack.ProvidePlugin({
-            jQuery: "jquery",
-            $: "jquery",
-            Backbone: "backbone",
-            Radio: "backbone.radio",
-            _: "underscore",
             i18next: ["i18next/dist/cjs/i18next.js"],
             mapCollection: [path.resolve(path.join(__dirname, "../src/core/maps/mapCollection.js")), "default"],
             Config: path.resolve(__dirname, "../test/unittests/deps/testConfig")

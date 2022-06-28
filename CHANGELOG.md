@@ -3,7 +3,35 @@
 
 [Semantic versioning](https://semver.org/spec/v2.0.0.html) is used.
 
-## Known Issues
+## v3.0.0-alpha - in development
+### __Breaking Changes__
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+- The following NPM packages are removed:
+    - dependencies
+        - backbone
+        - backbone.radio
+        - bootstrap-colorpicker
+        - bootstrap-datepicker
+        - bootstrap-toggle
+        - jquery
+        - jquery-ui
+        - rbush
+        - rbush-knn
+        - vcs-oblique
+    - devDependencies:
+        - eslint-plugin-backbone
+        - eslint-plugin-you-dont-need-lodash-underscore
+        - jsdoc
+        - sinon-chai
+
+### Fixed
 
 ---
 
