@@ -70,8 +70,8 @@ export default {
             mapCollection.addMap(map3D, "3D");
             api.map.olcsMap.handle3DEvents({scene: map3D.getCesiumScene(), map3D: map3D, callback: (clickObject) => dispatch("clickEventCallback", Object.freeze(clickObject))});
         }
-        if (rootState.urlParams.altitude === undefined) {
-            // only zoom,if no altitude is given by url params,else altitude has no effect
+        if (typeof rootState.urlParams.altitude === "undefined" && typeof Config?.cesiumParameter?.camera?.altitude === "undefined") {
+            // only zoom,if no altitude is given by url params or config, else altitude has no effect
             dispatch("controlZoomLevel", {currentMapMode: mapMode, targetMapMode: "3D"});
         }
         map3D.setEnabled(true);

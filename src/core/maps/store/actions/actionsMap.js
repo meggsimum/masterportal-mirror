@@ -10,6 +10,7 @@ import findWhereJs from "../../../../utils/findWhereJs";
 import api from "@masterportal/masterportalapi/src/maps/api";
 import {getWmsFeaturesByMimeType} from "../../../../api/gfi/getWmsFeaturesByMimeType";
 import getProxyUrl from "../../../../utils/getProxyUrl";
+import parseCesiumParameters from "../../../../utils/parseCesiumParameters";
 
 export default {
 
@@ -116,46 +117,13 @@ export default {
      * @returns {OLCesium} - ol cesium map.
      */
     createMap3D ({rootState}) {
-        const backwardsConfigCesiumParameter = {...Config?.cesiumParameter};
-        let map3D = null;
-
-        /**
-         * @deprecated in the next major-release!
-         * Backward compatibility: globe parameters are set in the object globe now
-         */
-        if (!backwardsConfigCesiumParameter.globe) {
-            backwardsConfigCesiumParameter.globe = {};
-        }
-        if (backwardsConfigCesiumParameter.enableLighting) {
-            backwardsConfigCesiumParameter.globe.enableLighting = backwardsConfigCesiumParameter.enableLighting;
-            console.warn("The attribute 'cesiumParameter.enableLighting' is deprecated. Please use 'cesiumParameter.globe.enableLighting'!");
-        }
-        if (backwardsConfigCesiumParameter.maximumScreenSpaceError) {
-            backwardsConfigCesiumParameter.globe.maximumScreenSpaceError = backwardsConfigCesiumParameter.maximumScreenSpaceError;
-            console.warn("The attribute 'cesiumParameter.maximumScreenSpaceError' is deprecated. Please use 'cesiumParameter.globe.maximumScreenSpaceError'!");
-        }
-        if (backwardsConfigCesiumParameter.tileCacheSize) {
-            backwardsConfigCesiumParameter.globe.tileCacheSize = backwardsConfigCesiumParameter.tileCacheSize;
-            console.warn("The attribute 'cesiumParameter.tileCacheSize' is deprecated. Please use 'cesiumParameter.globe.tileCacheSize'!");
-        }
-        map3D = api.map.createMap({
-            cesiumParameter: backwardsConfigCesiumParameter,
+        return api.map.createMap({
+            cesiumParameter: parseCesiumParameters(rootState),
             map2D: mapCollection.getMap("2D"),
             shadowTime: function () {
                 return this.time || Cesium.JulianDate.fromDate(new Date());
             }
         }, "3D");
-        if (rootState.urlParams.heading !== undefined || rootState.urlParams.tilt !== undefined || rootState.urlParams.altitude !== undefined) {
-            const cameraParams = {
-                heading: rootState.urlParams.heading,
-                tilt: rootState.urlParams.tilt,
-                altitude: rootState.urlParams.altitude
-            };
-
-            api.map.olcsMap.setCameraParameter(cameraParams, map3D, Cesium);
-        }
-
-        return map3D;
     },
     ...actionsMapAttributesMapper,
     ...actionsMapInteractions,
