@@ -44,8 +44,8 @@
   - Instead of getting all the layers from config.js, only the layers in portal will be loaded.
   - It does not depend on the gfi attributes to show the mouseHover tooltip.
   - Instead of text, the mouseHover tooltip will be shown as html content.
-
 - The minimized ToolTemplate will now be blue and variables are used in css the template's css code.
+- The transparency of a layer in the topic tree can now only be between 0 and 100 for increase or decrease.
 
 ---
 

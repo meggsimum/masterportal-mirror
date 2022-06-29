@@ -245,26 +245,34 @@ Layer.prototype.setTransparency = function (newValue) {
  * @return {void}
  */
 Layer.prototype.decTransparency = function () {
-    const transparency = parseInt(this.get("transparency"), 10);
+    const transparency = parseInt(this.get("transparency"), 10),
+        decTransparency = transparency - 10;
 
-    if (transparency <= 100 && transparency > 0) {
-        this.setTransparency(transparency - 10);
-        bridge.renderMenu();
-        bridge.renderMenuSelection();
+    if (decTransparency >= 0) {
+        this.setTransparency(decTransparency);
     }
+    else {
+        this.setTransparency(0);
+    }
+    bridge.renderMenu();
+    bridge.renderMenuSelection();
 };
 /**
  * Increases layer transparency by 10 percent.
  * @return {void}
  */
 Layer.prototype.incTransparency = function () {
-    const transparency = parseInt(this.get("transparency"), 10);
+    const transparency = parseInt(this.get("transparency"), 10),
+        incTransparency = transparency + 10;
 
-    if (transparency <= 90) {
-        this.setTransparency(transparency + 10);
-        bridge.renderMenu();
-        bridge.renderMenuSelection();
+    if (incTransparency <= 100) {
+        this.setTransparency(incTransparency);
     }
+    else {
+        this.setTransparency(100);
+    }
+    bridge.renderMenu();
+    bridge.renderMenuSelection();
 };
 /**
  * Transforms transparency into opacity and sets opacity on layer.

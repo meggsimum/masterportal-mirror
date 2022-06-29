@@ -258,6 +258,30 @@ describe("src/core/layers/layer.js", () => {
         layerWrapper.incTransparency();
         expect(layerWrapper.attributes.transparency).to.be.equals(100);
     });
+    it("incTransparency shall work in 10er steps and max 100, even if the starting transparency is 75", function () {
+        attributes.transparency = 75;
+        const layerWrapper = new Layer(attributes, olLayer);
+
+        expect(layerWrapper.attributes.transparency).to.be.equals(75);
+        layerWrapper.incTransparency();
+        expect(layerWrapper.attributes.transparency).to.be.equals(85);
+        layerWrapper.incTransparency();
+        expect(layerWrapper.attributes.transparency).to.be.equals(95);
+        layerWrapper.incTransparency();
+        expect(layerWrapper.attributes.transparency).to.be.equals(100);
+    });
+    it("decTransparency shall work in 10er steps and min 0, even if the starting transparency is 25", function () {
+        attributes.transparency = 25;
+        const layerWrapper = new Layer(attributes, olLayer);
+
+        expect(layerWrapper.attributes.transparency).to.be.equals(25);
+        layerWrapper.decTransparency();
+        expect(layerWrapper.attributes.transparency).to.be.equals(15);
+        layerWrapper.decTransparency();
+        expect(layerWrapper.attributes.transparency).to.be.equals(5);
+        layerWrapper.decTransparency();
+        expect(layerWrapper.attributes.transparency).to.be.equals(0);
+    });
     it("updateLayerTransparency shall update layers opacity", function () {
         attributes.isSelected = false;
         attributes.transparency = 50;
