@@ -118,7 +118,7 @@ export default {
      */
     createMap3D ({rootState}) {
         return api.map.createMap({
-            cesiumParameter: parseCesiumParameters(rootState),
+            cesiumParameter: parseCesiumParameters(rootState.urlParams),
             map2D: mapCollection.getMap("2D"),
             shadowTime: function () {
                 return this.time || Cesium.JulianDate.fromDate(new Date());
