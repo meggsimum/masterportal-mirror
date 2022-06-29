@@ -109,7 +109,7 @@ function mouseWheelDown () {
  * @returns {boolean} true if AND(layer exists, layer is visible, layer opacity is as expected)
  */
 function isLayerVisible () {
-    const map = mapCollection.getMap("2D"),
+    const map = getMap(),
         expectedOpacity = typeof arguments[1] === "undefined" ? "1" : arguments[1];
     let layer = false;
 
@@ -128,7 +128,7 @@ function isLayerVisible () {
  * @returns {boolean} true, if mapMarker is visible
  */
 function isMarkerPointVisible () {
-    const map = mapCollection.getMap("2D");
+    const map = getMap();
     let layer = false;
 
     map.getLayers().forEach(l => {
@@ -141,12 +141,23 @@ function isMarkerPointVisible () {
     }
     return false;
 }
+
+function getMap(){
+    let map = mapCollection.getMap("2D");
+    if(!map){
+        map = mapCollection.getMap("2D");
+    }
+    if(!map){
+        map =  Backbone.Radio.request("Map", "getMap");
+    }
+    return map;
+}
 /**
  * Returns the coordinates of the mapMarker with name "markerPoint" or null, if no marker exists.
  * @returns {Array} containing the coordinates
  */
 function getMarkerPointCoord () {
-    const map = mapCollection.getMap("2D");
+    const map = getMap();
     let layer = false;
 
     map.getLayers().forEach(l => {
@@ -171,7 +182,7 @@ function getMarkerPointCoord () {
  * @returns {boolean} true if layer with "name" exists and its source has "length" features
  */
 function hasVectorLayerLength () {
-    const layer = mapCollection.getMap("2D")
+    const layer = getMap()
         .getLayers()
         .getArray()
         .filter(l => l.get("name") === arguments[0])[0];
@@ -193,7 +204,7 @@ function hasVectorLayerLength () {
  * @returns {boolean} true if layer with "name" exists and its source has "length" features
  */
 function hasVectorLayerStyle () {
-    const layer = mapCollection.getMap("2D")
+    const layer = getMap()
             .getLayers()
             .getArray()
             .filter(l => l.get("name") === arguments[0])[0],
@@ -225,7 +236,7 @@ function hasVectorLayerStyle () {
  */
 function areLayersOrdered () {
     const layerIds = arguments[0],
-        map = mapCollection.getMap("2D");
+        map = getMap();
 
     map.getLayers().forEach(l => {
         if (l.get("id") === layerIds[0]) {
@@ -245,7 +256,7 @@ function areLayersOrdered () {
  * @returns {boolean} true if a layer was found that holds all features as specified
  */
 function doesLayerWithFeaturesExist () {
-    const map = mapCollection.getMap("2D"),
+    const map = getMap(),
         searched = arguments[0];
     let found = false;
 
@@ -287,7 +298,7 @@ function doesLayerWithFeaturesExist () {
 
 /** @returns {boolean} true if all of map.getLayers have visibility set to false */
 function areAllLayersHidden () {
-    return !mapCollection.getMap("2D")
+    return !getMap()
         .getLayers()
         .getArray()
         .map(l => l.getVisible())
@@ -300,7 +311,7 @@ function areAllLayersHidden () {
  * @returns {boolean} true if all features of a layer are visible
  */
 function areAllFeaturesOfLayerVisible () {
-    return mapCollection.getMap("2D")
+    return getMap()
         .getLayers()
         .getArray()
         .find(l => l.get("id") === arguments[0])
@@ -315,7 +326,7 @@ function areAllFeaturesOfLayerVisible () {
  * @returns {boolean} true if all texts are found in order as feature texts
  */
 function areRegExpsInMeasureLayer () {
-    const texts = mapCollection.getMap("2D")
+    const texts = getMap()
             .getLayers()
             .getArray()
             .filter(l => l.get("name") === "measure_layer")[0]
@@ -349,7 +360,7 @@ function areRegExpsInMeasureLayer () {
  * @returns {string} the texts
  */
 function getMeasureLayersTexts () {
-    const texts = mapCollection.getMap("2D")
+    const texts = getMap()
         .getLayers()
         .getArray()
         .filter(l => l.get("name") === "measure_layer")[0]
@@ -368,7 +379,7 @@ function getMeasureLayersTexts () {
  * @returns {(Array.<number[]> | null)} coordinates or null if layer or feature not found
  */
 function getCoordinatesOfXthFeatureInLayer () {
-    const layer = mapCollection.getMap("2D")
+    const layer = getMap()
         .getLayers()
         .getArray()
         .filter(l => l.get("name") === arguments[1])[0];
@@ -536,7 +547,7 @@ function setResolution () {
  * @returns {string[]} layers by id
  */
 function getOrderedLayerIds () {
-    return mapCollection.getMap("2D")
+    return getMap()
         .getLayers()
         .getArray()
         .sort((layer1, layer2) => {

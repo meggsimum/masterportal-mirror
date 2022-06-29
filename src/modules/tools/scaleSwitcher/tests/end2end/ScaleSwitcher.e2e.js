@@ -65,7 +65,7 @@ async function ScaleSwitcherTests ({builder, url, resolution, capability}) {
 
                 expect(await header.getText()).to.equals("Maßstab umschalten");
                 expect(await label.getText()).to.equals("Maßstab");
-                expect(selectValue).to.equals("60000");
+                expect(selectValue).to.equals("10000");
             });
 
             it("Switch scale to 1 : 10000 and check if the scale of the map has switched as well", async function () {
