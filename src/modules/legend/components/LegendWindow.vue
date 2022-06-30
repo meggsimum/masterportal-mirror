@@ -711,10 +711,10 @@ export default {
 <template>
     <div
         id="legend"
+         v-if="showLegend"
         :class="mobile ? 'legend-mobile' : 'legend'"
     >
         <div
-            v-if="showLegend"
             :class="mobile ? 'legend-window-mobile' : (uiStyle === 'TABLE' ? 'legend-window-table': 'legend-window')"
         >
             <BasicDragHandle
