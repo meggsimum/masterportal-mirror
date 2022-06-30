@@ -1,15 +1,23 @@
-/** Looks through the list and returns the first value that matches all of the key-value pairs listed in properties
- * listed in hitId.
- * @param {Object[]} [list=[]] - the list.
- * @param {Object} properties property/entry to search for.
- * @returns {Object} - returns the first value/entry, that matches.
+import isObject from "isObject";
+
+/**
+ * Looks through the given list and returns the first value that matches all of the key value pairs of properties.
+ * @param {Object[]} list A list of objects to look through.
+ * @param {Object} properties An object to match with all key value pairs.
+ * @returns {Object} Returns the first object in list which matches all given properties.
  */
-function findWhereJs (list = [], properties = "") {
-    return list.find(
-        item => Object.keys(properties).every(
-            key => item[key] === properties[key]
-        )
-    );
+function findWhereJs (list, properties) {
+    if (!Array.isArray(list) || !isObject(properties)) {
+        return undefined;
+    }
+    return list.find(item => {
+        if (!isObject(item)) {
+            return undefined;
+        }
+        return Object.keys(properties).every(key => {
+            return item[key] === properties[key];
+        });
+    });
 }
 
 export default findWhereJs;

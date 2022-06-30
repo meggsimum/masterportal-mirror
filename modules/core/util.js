@@ -1,5 +1,6 @@
-import uniqueId from "../../src/utils/uniqueId.js";
+import uniqueId from "../../src/utils/uniqueId";
 import LoaderOverlay from "../../src/utils/loaderOverlay";
+import findWhereJs from "../../src/utils/findWhereJs";
 
 const Util = Backbone.Model.extend(/** @lends Util.prototype */{
     defaults: {
@@ -741,18 +742,14 @@ const Util = Backbone.Model.extend(/** @lends Util.prototype */{
         return arrayWithStrings;
     },
 
-    /** Looks through the list and returns the first value that matches all of the key-value pairs listed in properties
-     * listed in hitId.
-     * @param {Object[]} [list=[]] - the list.
-     * @param {Object} properties property/entry to search for.
-     * @returns {Object} - returns the first value/entry, that matches.
+    /**
+     * Looks through the given list and returns the first value that matches all of the key value pairs of properties.
+     * @param {Object[]} list A list of objects to look through.
+     * @param {Object} properties An object to match with all key value pairs.
+     * @returns {Object} Returns the first object in list which matches all given properties.
      */
     findWhereJs: function (list = [], properties = "") {
-        return list.find(
-            item => Object.keys(properties).every(
-                key => item[key] === properties[key]
-            )
-        );
+        return findWhereJs(list, properties);
     },
 
     /**
