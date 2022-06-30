@@ -14,7 +14,7 @@ const webdriver = require("selenium-webdriver"),
 async function ParametricUrlTests ({builder, url, resolution, browsername, mode, capability}) {
     // Run only in Edge Browser on BB Pipeline to improve perfomance of tests
     if (!capability || isChrome(browsername)) {
-        describe.only("URL Query Parameters", function () {
+        describe("URL Query Parameters", function () {
             let driver;
 
             before(async function () {
@@ -948,6 +948,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                         center = "572765.7219565103,5940389.380731404";
 
                     await loadUrl(driver, `${url}?layerIDs=${layers}&visibility=${visibility}&transparency=${transparency}&center=${center}&zoomlevel=5`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
 
                     layers = layers.split(",");
                     visibility = visibility.split(",");
