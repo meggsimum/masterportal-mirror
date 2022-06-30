@@ -92,6 +92,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     let center = null;
 
                     await loadUrl(driver, `${url}?Map/projection=EPSG:8395&Map/center=[3565836,5945355]`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     center = await driver.executeScript(getCenter);
                     center = center.map(d => {
                         return Math.round(d);
@@ -170,6 +171,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                 });
                 it("?center= allows setting array of coordinates of map", async function () {
                     await loadUrl(driver, `${url}?center=[566499,5942803]`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     await driver.wait(until.elementLocated(By.css(".navbar")), 10000);
 
                     const center = await driver.executeScript(getCenter);
@@ -178,6 +180,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                 });
                 it("?Map/center= allows setting array of coordinates of map", async function () {
                     await loadUrl(driver, `${url}?Map/center=[566499,5942803]`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     await driver.wait(until.elementLocated(By.css(".navbar")), 10000);
 
                     const center = await driver.executeScript(getCenter);
@@ -449,6 +452,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     if (await driver.getCurrentUrl() !== paramUrl) {
                         await loadUrl(driver, paramUrl, mode);
+                        await driver.wait(new Promise(r => setTimeout(r, 100)));
                     }
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
@@ -480,6 +484,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     if (await driver.getCurrentUrl() !== paramUrl) {
                         await loadUrl(driver, paramUrl, mode);
+                        await driver.wait(new Promise(r => setTimeout(r, 100)));
                     }
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
@@ -537,6 +542,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     if (await driver.getCurrentUrl() !== paramUrl) {
                         await loadUrl(driver, paramUrl, mode);
+                        await driver.wait(new Promise(r => setTimeout(r, 100)));
                     }
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
@@ -584,6 +590,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     if (await driver.getCurrentUrl() !== paramUrl) {
                         await loadUrl(driver, paramUrl, mode);
+                        await driver.wait(new Promise(r => setTimeout(r, 100)));
                     }
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
@@ -603,6 +610,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                 it("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - layers are shown in the topic tree and present layer information", async function () {
                     await loadUrl(driver, `${url}?layerIDs=4736,myId2&visibility=true,true&transparency=0,0`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
                         await closeSingleAlert(driver);
                     }
@@ -617,6 +625,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                 it("?Map/layerids=, &visibility=, and &transparency= have working gfi/legend/info - layers are shown in the topic tree and present layer information", async function () {
                     await loadUrl(driver, `${url}?Map/layerids=4736,myId2&visibility=true,true&transparency=0,0`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
                         await closeSingleAlert(driver);
                     }
@@ -631,6 +640,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                 it("?layerIDs=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
                     await loadUrl(driver, `${url}?layerIDs=4736,4537&visibility=true,true&transparency=0,0&zoomLevel=6`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     const coords = [566688.25, 5934320.50];
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
@@ -673,6 +683,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                 it("?Map/layerids=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
                     await loadUrl(driver, `${url}?Map/layerids=4736,4537&visibility=true,true&transparency=0,0&zoomLevel=6`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     const coords = [566688.25, 5934320.50];
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
