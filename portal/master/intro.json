@@ -1,0 +1,16 @@
+{
+    "steps": [{
+        "title": "Willkommen",
+        "text": "Hello World! 👋"
+    },
+    {
+        "element": ".panel-default",
+        "title": "Hier sehen wir:",
+        "text": "Das ist ein Dropwdown :3"
+    },
+    {
+        "title": "Auf wiedersehen!",
+        "element":".multiselect",
+        "text": "common:modules.tools.print.autoAdjustScale"
+    }]
+}

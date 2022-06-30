@@ -64,6 +64,9 @@
 // 5. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
 @import "~bootstrap/scss/utilities/api";
 
+// import TourGuide Stlyes:
+@import '~shepherd.js/dist/css/shepherd.css';
+
 // 6. Add additional custom code here
 // we need to overwrite the bootstrap nav styles to be conform with accessibility (contrast ratio)
 .navtabs > li > a {

@@ -21,7 +21,7 @@ import {
 } from "../utils/openlayerFunctions.js";
 import LayerCategory from "./LayerCategory.vue";
 import isObject from "../../../../utils/isObject.js";
-import introJs from "../../../../../node_modules/intro.js/intro.js";
+const jsonFile = require("../../../../../portal/master/intro.json");
 
 export default {
     name: "FilterGeneral",
@@ -65,23 +65,38 @@ export default {
     watch: {
         active (value) {
             if (value) {
-                setTimeout(() => {
-                    introJs().setOptions({
-                        steps: [{
-                            title: "Willkommen",
-                            intro: "Hello World! 👋"
-                        },
-                        {
-                            element: document.querySelector(".panel-default"),
-                            intro: "Das ist ein Dropwdown :3"
-                        },
-                        {
-                            title: "Auf wiedersehen!",
-                            element: document.querySelector(".multiselect"),
-                            intro: "Bis dann!"
-                        }]
-                    }).start();
-                }, 1000);
+                this.$nextTick(() => {
+                    const tour = this.$shepherd({
+                        useModalOverlay: true,
+                        defaultStepOptions: {
+                            classes: "shadow-md bg-purple-dark",
+                            scrollTo: true
+                        }
+                    });
+
+                    jsonFile.steps.forEach(step => {
+                        tour.addStep({
+                            id: "example-step_" + jsonFile.steps[step],
+                            text: this.$t(step.text),
+                            title: step.title,
+                            attachTo: {
+                                element: step.element,
+                                on: "bottom"
+                            },
+                            classes: "example-step-extra-class",
+                            cancelIcon: "enabled",
+                            buttons: [
+                                {
+                                    text: this.$t("common:modules.tools.print.autoAdjustScale"),
+                                    action: tour.next
+                                }
+                            ]
+                        });
+
+                    });
+
+                    tour.start();
+                });
             }
         }
     },

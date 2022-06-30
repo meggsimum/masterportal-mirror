@@ -24,7 +24,9 @@ import {initiateVueI18Next} from "./vueI18Next";
 import {handleUrlParamsBeforeVueMount, readUrlParamEarly} from "../src/utils/parametricUrl/ParametricUrlBridge";
 import {createMaps} from "../src/core/maps/maps.js";
 import mapCollection from "../src/core/maps/mapCollection.js";
+import VueShepherd from "vue-shepherd";
 
+Vue.use(VueShepherd);
 /**
  * Vuetify
  * @description Test vuetify as main UI framework
@@ -356,6 +358,7 @@ function loadAddOnsAfterLanguageLoaded (legacyAddons) {
             });
         }
     });
+
 }
 
 export {loadApp};
