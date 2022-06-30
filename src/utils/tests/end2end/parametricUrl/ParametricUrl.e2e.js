@@ -102,10 +102,12 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     let coord;
 
                     await loadUrl(driver, `${url}?MapMarker=[565874,5934140]`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     coord = await driver.executeScript(getMarkerPointCoord);
                     expect([565874, 5934140]).to.eql(coord);
 
                     await loadUrl(driver, `${url}?MapMarker=572299,5926885`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     coord = await driver.executeScript(getMarkerPointCoord);
                     expect([572299, 5926885]).to.eql(coord);
 
