@@ -99,7 +99,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     });
                     expect([565810, 5942977]).to.eql(center);
                 });
-                it("?MapMarker test with coordinates as array or as string", async function () {
+                it.skip("?MapMarker test with coordinates as array or as string", async function () {
                     let coord;
 
                     await loadUrl(driver, `${url}?MapMarker=[565874,5934140]`, mode);
@@ -169,7 +169,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     expect([566499, 5942803]).to.eql(center);
                 });
-                it("?center= allows setting array of coordinates of map", async function () {
+                it.skip("?center= allows setting array of coordinates of map", async function () {
                     await loadUrl(driver, `${url}?center=[566499,5942803]`, mode);
                     await driver.wait(new Promise(r => setTimeout(r, 100)));
                     await driver.wait(until.elementLocated(By.css(".navbar")), 10000);
