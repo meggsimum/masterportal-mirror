@@ -111,6 +111,9 @@ async function LegendTests ({builder, config, url, resolution, capability}) {
                     until.elementLocated(By.css("a.current-language")), 9000)
                 ).click();
                 await driver.wait(new Promise(r => setTimeout(r, 5000)));
+                await (await driver.wait(
+                    until.elementLocated(By.css(".legend-menu-item")), 2000)
+                ).click();
             });
         });
     }
