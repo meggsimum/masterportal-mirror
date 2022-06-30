@@ -116,6 +116,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     const extentData = [550761, 5927012, 580987, 5941268];
 
                     await loadUrl(driver, `${url}?Map/zoomToExtent=${extentData.join(",")}`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
 
                     let extent = await driver.executeScript(getExtent);
 
@@ -139,6 +140,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                 });
                 it("?style=simple hides control elements", async function () {
                     await loadUrl(driver, `${url}?style=simple`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
 
                     await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("main-nav"))), 10000);
                     expect(await driver.findElements(By.className("ol-viewport"))).to.not.be.empty;
@@ -148,6 +150,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                 });
                 it("?uiStyle=simple hides control elements", async function () {
                     await loadUrl(driver, `${url}?uiStyle=simple`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
 
                     await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("main-nav"))), 10000);
                     expect(await driver.findElements(By.className("ol-viewport"))).to.not.be.empty;
@@ -158,6 +161,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                 it("?center= allows setting coordinates of map", async function () {
                     await loadUrl(driver, `${url}?center=566499,5942803`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     await driver.wait(until.elementLocated(By.css(".navbar")), 10000);
 
                     const center = await driver.executeScript(getCenter);
@@ -194,6 +198,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     const expectedCoordinate = [578867.787, 5924175.483999999];
 
                     await loadUrl(driver, `${url}?bezirk=bergedorf`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     await driver.wait(until.elementLocated(By.css(".navbar")), 12000);
                     expect(await centersTo(driver, expectedCoordinate)).to.be.true;
                 });
@@ -215,6 +220,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                 it("?Map/zoomLevel= sets the chosen zoom level", async function () {
                     await loadUrl(driver, `${url}?Map/zoomLevel=8`, mode);
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
 
                     expect(0.2645831904584105).to.be.closeTo(await driver.executeScript(getResolution), 0.000000001); // equals 1:1.000
                 });
@@ -505,6 +511,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     if (await driver.getCurrentUrl() !== paramUrl) {
                         await loadUrl(driver, paramUrl, mode);
+                        await driver.wait(new Promise(r => setTimeout(r, 100)));
                     }
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
@@ -554,6 +561,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     if (await driver.getCurrentUrl() !== paramUrl) {
                         await loadUrl(driver, paramUrl, mode);
+                        await driver.wait(new Promise(r => setTimeout(r, 100)));
                     }
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
