@@ -5,7 +5,7 @@ import {Polygon, LineString} from "ol/geom.js";
 import VectorSource from "ol/source/Vector.js";
 import VectorLayer from "ol/layer/Vector.js";
 import {Style} from "ol/style.js";
-import errorHandling from "../../utils/errorHandling.js";
+import handleAxiosError from "../../utils/handleAxiosError.js";
 
 describe("api/highlightFeaturesByAttribute", () => {
     const expectedEqualToOGC = `<ogc:PropertyIsEqualTo matchCase='false' wildCard='%' singleChar='#' escapeChar='!'>
@@ -237,7 +237,7 @@ describe("api/highlightFeaturesByAttribute", () => {
         beforeEach(function () {
             error = sinon.spy();
             sinon.stub(console, "error").callsFake(error);
-            spyErrorHandling = sinon.spy(errorHandling, "errorHandling");
+            spyErrorHandling = sinon.spy(handleAxiosError, "handleAxiosError");
         });
 
         afterEach(function () {
