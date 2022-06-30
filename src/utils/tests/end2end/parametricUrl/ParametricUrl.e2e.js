@@ -14,7 +14,7 @@ const webdriver = require("selenium-webdriver"),
 async function ParametricUrlTests ({builder, url, resolution, browsername, mode, capability}) {
     // Run only in Edge Browser on BB Pipeline to improve perfomance of tests
     if (!capability || isChrome(browsername)) {
-        describe("URL Query Parameters", function () {
+        describe.only("URL Query Parameters", function () {
             let driver;
 
             before(async function () {

@@ -116,7 +116,7 @@ async function ExtendedFilterTests ({builder, url, resolution, capability}) {
                 expect(options).to.have.lengthOf(3);
                 removeButton = driver.findElement(
                     By.css("button [title=\"Teilnahme an der Not- und Unfallversorgung\"]")
-                    //By.xpath("//button[contains(.,'not_und_unfallversorgung)]")
+                    // By.xpath("//button[contains(.,'not_und_unfallversorgung)]")
                 );
                 expect(removeButton).to.exist;
 

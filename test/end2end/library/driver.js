@@ -46,6 +46,7 @@ async function loadUrl (driver, url, mode) {
         console.warn("isInitalLoadingFinished err:", err);
         console.warn("Try again to load url ", url);
         doLoadUrl(driver, url);
+        await driver.wait(new Promise(r => setTimeout(r, 100)));
     });
 
     // prepare 3D resp. OB mode for tests - 2D mode is initial mode, nothing to do
