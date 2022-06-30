@@ -75,6 +75,10 @@ const actions = {
             else if (id === "zoomToGeometry") {
                 urlValues = state[id].split(",").map(value => value.toUpperCase().trim());
                 allowedValues = conf.allowedValues.map(value => String(value));
+                // zoom to bezirk by urlParameter ?zoomtogeometry=1, means zoom to 1. entry in allowedValues
+                if (urlValues.length === 1 && allowedValues !== undefined && !allowedValues.includes(urlValues[0]) && parseInt(urlValues[0], 10) < allowedValues.length && parseInt(urlValues[0], 10) > 0) {
+                    urlValues[0] = allowedValues[parseInt(urlValues[0], 10) - 1];
+                }
             }
             else {
                 return new Promise((_, reject) => reject(i18next.t("common:utils.parametricURL.zoomTo", {wrongConfigId: id})));
