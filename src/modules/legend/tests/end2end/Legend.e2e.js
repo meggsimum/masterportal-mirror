@@ -18,7 +18,7 @@ async function LegendTests ({builder, config, url, resolution, capability}) {
         }[config];
 
     if (testIsApplicable) {
-        describe.only("Legend", function () {
+        describe("Legend", function () {
             let driver;
 
             before(async function () {
