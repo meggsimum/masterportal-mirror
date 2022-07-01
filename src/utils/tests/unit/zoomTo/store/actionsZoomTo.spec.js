@@ -3,8 +3,6 @@ import {expect} from "chai";
 import sinon from "sinon";
 import {getLayerList} from "@masterportal/masterportalapi/src/rawLayerList";
 import VectorLayer from "ol/layer/Vector";
-import {addProjection} from "ol/proj.js";
-import Projection from "ol/proj/Projection.js";
 import actions from "../../../../zoomTo/store/actionsZoomTo";
 
 const fs = require("fs"),
@@ -39,23 +37,11 @@ describe("src/utils/zoomTo/store/actionsZoomTo.js", () => {
             requestSpy,
             state;
 
-        before(() => {
-            const proj = new Projection({
-                code: "EPSG:25832",
-                units: "m",
-                axisOrientation: "enu",
-                global: false
-            });
-
-            addProjection(proj);
-        });
-
         beforeEach(() => {
             consoleErrorSpy = sinon.spy();
             consoleWarnSpy = sinon.spy();
             dispatch = sinon.spy();
             requestSpy = sinon.spy();
-            // sinon.stub(axios, "get").callsFake(axiosFake);
             sinon.stub(Radio, "request").callsFake(requestSpy);
             sinon.stub(console, "error").callsFake(consoleErrorSpy);
             sinon.stub(console, "warn").callsFake(consoleWarnSpy);
