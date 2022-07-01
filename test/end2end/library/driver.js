@@ -75,6 +75,8 @@ async function doLoadUrl (driver, url) {
                 urlWithBasicAuth = firstPart + "lgv:test@" + secondPart;
 
             await driver.get(urlWithBasicAuth);
+            await driver.findElements(By.css(".loader-is-initially-loading"))
+            await driver.wait(until.elementIsNotVisible(driver.findElement(By.css(".loader-is-initially-loading"))), 10000);
         }
 
     }
