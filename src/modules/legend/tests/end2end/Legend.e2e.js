@@ -18,7 +18,7 @@ async function LegendTests ({builder, config, url, resolution, capability}) {
         }[config];
 
     if (testIsApplicable) {
-        describe("Legend", function () {
+        describe.only("Legend", function () {
             let driver;
 
             before(async function () {
@@ -47,6 +47,11 @@ async function LegendTests ({builder, config, url, resolution, capability}) {
 
 
             it("should contain active layers", async function () {
+                do{
+                    await driver.wait(new Promise(r => setTimeout(r, 50)));
+                }
+                while(await driver.findElements(By.css("centered-box-wrapper loader-is-loading loader-is-initially-loading")))
+
                 // retry until functionality is active - may get stuck else
                 do {
                     await (await driver.wait(
