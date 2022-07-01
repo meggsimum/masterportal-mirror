@@ -47,11 +47,6 @@ async function LegendTests ({builder, config, url, resolution, capability}) {
 
 
             it("should contain active layers", async function () {
-                do {
-                    await driver.wait(new Promise(r => setTimeout(r, 50)));
-                }
-                while (await driver.findElements(By.css("centered-box-wrapper loader-is-loading loader-is-initially-loading")));
-
                 // retry until functionality is active - may get stuck else
                 do {
                     await (await driver.wait(
@@ -66,12 +61,12 @@ async function LegendTests ({builder, config, url, resolution, capability}) {
                 );
 
                 // const legendContent = await driver.wait(until.elementLocated(By.css("div.legend-content")), 2000),
-                // headers = await legendContent.findElements(By.css("div.layer-title")),
-                // text = await getTextOfElements(headers);
+                headers = await legendContent.findElements(By.css("div.layer-title")),
+                text = await getTextOfElements(headers);
 
-                // for (const entry of expectedEntries) {
-                //     expect(text).to.include(entry);
-                // }
+                for (const entry of expectedEntries) {
+                    expect(text).to.include(entry);
+                }
             });
             it("should respect order of menu entries in portal/master/config.json", async function () {
                 const allEntries = await driver.findElements(By.css("#root li a span.menuitem")),
