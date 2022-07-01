@@ -78,7 +78,7 @@ async function doLoadUrl (driver, url) {
         }
 
     }
-    else{
+    else {
         await driver.get(url);
     }
 }

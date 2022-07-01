@@ -47,10 +47,10 @@ async function LegendTests ({builder, config, url, resolution, capability}) {
 
 
             it("should contain active layers", async function () {
-                do{
+                do {
                     await driver.wait(new Promise(r => setTimeout(r, 50)));
                 }
-                while(await driver.findElements(By.css("centered-box-wrapper loader-is-loading loader-is-initially-loading")))
+                while (await driver.findElements(By.css("centered-box-wrapper loader-is-loading loader-is-initially-loading")));
 
                 // retry until functionality is active - may get stuck else
                 do {
@@ -66,8 +66,8 @@ async function LegendTests ({builder, config, url, resolution, capability}) {
                 );
 
                 // const legendContent = await driver.wait(until.elementLocated(By.css("div.legend-content")), 2000),
-                    // headers = await legendContent.findElements(By.css("div.layer-title")),
-                    // text = await getTextOfElements(headers);
+                // headers = await legendContent.findElements(By.css("div.layer-title")),
+                // text = await getTextOfElements(headers);
 
                 // for (const entry of expectedEntries) {
                 //     expect(text).to.include(entry);
