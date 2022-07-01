@@ -14,7 +14,7 @@ const webdriver = require("selenium-webdriver"),
 async function ParametricUrlTests ({builder, url, resolution, browsername, mode, capability}) {
     // Run only in Edge Browser on BB Pipeline to improve perfomance of tests
     if (!capability || isChrome(browsername)) {
-        describe("URL Query Parameters", function () {
+        describe.only("URL Query Parameters", function () {
             let driver;
 
             before(async function () {
@@ -88,7 +88,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     expect(altitude).to.be.closeTo(127, 3);
                 });
-                it.skip("?Map/projection=EPSG:8395&Map/center=[3565836,5945355] test with center", async function () {
+                it("?Map/projection=EPSG:8395&Map/center=[3565836,5945355] test with center", async function () {
                     let center = null;
 
                     await loadUrl(driver, `${url}?Map/projection=EPSG:8395&Map/center=[3565836,5945355]`, mode);
@@ -98,21 +98,19 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     });
                     expect([565810, 5942977]).to.eql(center);
                 });
-                it.skip("?MapMarker test with coordinates as array or as string", async function () {
+                it("?MapMarker test with coordinates as array or as string", async function () {
                     let coord;
 
                     await loadUrl(driver, `${url}?MapMarker=[565874,5934140]`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     coord = await driver.executeScript(getMarkerPointCoord);
                     expect([565874, 5934140]).to.eql(coord);
 
                     await loadUrl(driver, `${url}?MapMarker=572299,5926885`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     coord = await driver.executeScript(getMarkerPointCoord);
                     expect([572299, 5926885]).to.eql(coord);
 
                 });
-                it.skip("?Map/zoomToExtent test", async function () {
+                it("?Map/zoomToExtent test", async function () {
                     const extentData = [550761, 5927012, 580987, 5941268];
 
                     await loadUrl(driver, `${url}?Map/zoomToExtent=${extentData.join(",")}`, mode);
@@ -139,7 +137,6 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                 });
                 it("?style=simple hides control elements", async function () {
                     await loadUrl(driver, `${url}?style=simple`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
 
                     await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("main-nav"))), 10000);
                     expect(await driver.findElements(By.className("ol-viewport"))).to.not.be.empty;
@@ -147,7 +144,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await driver.findElements(By.className("top-controls"))).to.be.empty;
                     expect(await driver.findElements(By.className("bottom-controls"))).to.be.empty;
                 });
-                it.skip("?uiStyle=simple hides control elements", async function () {
+                it("?uiStyle=simple hides control elements", async function () {
                     await loadUrl(driver, `${url}?uiStyle=simple`, mode);
 
                     await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("main-nav"))), 10000);
@@ -159,14 +156,13 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                 it("?center= allows setting coordinates of map", async function () {
                     await loadUrl(driver, `${url}?center=566499,5942803`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     await driver.wait(until.elementLocated(By.css(".navbar")), 10000);
 
                     const center = await driver.executeScript(getCenter);
 
                     expect([566499, 5942803]).to.eql(center);
                 });
-                it.skip("?center= allows setting array of coordinates of map", async function () {
+                it("?center= allows setting array of coordinates of map", async function () {
                     await loadUrl(driver, `${url}?center=[566499,5942803]`, mode);
                     await driver.wait(until.elementLocated(By.css(".navbar")), 10000);
 
@@ -176,7 +172,6 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                 });
                 it("?Map/center= allows setting array of coordinates of map", async function () {
                     await loadUrl(driver, `${url}?Map/center=[566499,5942803]`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     await driver.wait(until.elementLocated(By.css(".navbar")), 10000);
 
                     const center = await driver.executeScript(getCenter);
@@ -197,7 +192,6 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     const expectedCoordinate = [578867.787, 5924175.483999999];
 
                     await loadUrl(driver, `${url}?bezirk=bergedorf`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     await driver.wait(until.elementLocated(By.css(".navbar")), 12000);
                     expect(await centersTo(driver, expectedCoordinate)).to.be.true;
                 });
@@ -213,14 +207,12 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                 it("?zoomlevel= sets the chosen zoom level", async function () {
                     await loadUrl(driver, `${url}?zoomlevel=8`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
 
                     expect(0.2645831904584105).to.be.closeTo(await driver.executeScript(getResolution), 0.000000001); // equals 1:1.000
                 });
 
                 it("?Map/zoomLevel= sets the chosen zoom level", async function () {
                     await loadUrl(driver, `${url}?Map/zoomLevel=8`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
 
                     expect(0.2645831904584105).to.be.closeTo(await driver.executeScript(getResolution), 0.000000001); // equals 1:1.000
                 });
@@ -443,7 +435,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(10.58332761833642).to.be.closeTo(await driver.executeScript(getResolution), 0.000000001); // equals 1:40.000
                 });
 
-                it.skip("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - KiTa layer GFI with example 'KiTa Im Volkspark' shows gfi", async function () {
+                it("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - KiTa layer GFI with example 'KiTa Im Volkspark' shows gfi", async function () {
                     const paramUrl = `${url}/?layerIDs=4736,myId2&visibility=true,true&transparency=0,0`;
                     let counter = 0;
 
@@ -458,6 +450,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     do {
                         expect(counter++).to.be.below(25);
                         await clickFeature(driver, [559308.323, 5937846.748]);
+                        await driver.wait(new Promise(r => setTimeout(r, 100)));
                     } while ((await driver.findElements(By.css("div.gfi"))).length === 0);
 
                     await driver.wait(until.elementLocated(By.css("div.gfi")), 12000);
@@ -479,7 +472,6 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     if (await driver.getCurrentUrl() !== paramUrl) {
                         await loadUrl(driver, paramUrl, mode);
-                        await driver.wait(new Promise(r => setTimeout(r, 100)));
                     }
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
@@ -511,7 +503,6 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     if (await driver.getCurrentUrl() !== paramUrl) {
                         await loadUrl(driver, paramUrl, mode);
-                        await driver.wait(new Promise(r => setTimeout(r, 100)));
                     }
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
@@ -531,7 +522,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect((await driver.findElements(By.css("div.gfi"))).length).to.equal(0);
                 });
 
-                it.skip("?Map/layerids=, &visibility=, and &transparency= have working gfi/legend/info - hospital layer GFI with example 'Agaplesion Diakonieklinikum Hamburg' shows gfi", async function () {
+                it("?Map/layerids=, &visibility=, and &transparency= have working gfi/legend/info - hospital layer GFI with example 'Agaplesion Diakonieklinikum Hamburg' shows gfi", async function () {
                     const paramUrl = `${url}/?Map/layerids=4736,myId2&visibility=true,true&transparency=0,0`;
                     let counter = 0;
 
@@ -556,7 +547,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect((await driver.findElements(By.css("div.gfi"))).length).to.equal(0);
                 });
 
-                it.skip("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - both layers have their respective legend loaded", async function () {
+                it("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - both layers have their respective legend loaded", async function () {
                     const paramUrl = `${url}/?layerIDs=4736,myId2&visibility=true,true&transparency=0,0`;
 
                     if (await driver.getCurrentUrl() !== paramUrl) {
@@ -583,7 +574,6 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     if (await driver.getCurrentUrl() !== paramUrl) {
                         await loadUrl(driver, paramUrl, mode);
-                        await driver.wait(new Promise(r => setTimeout(r, 100)));
                     }
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
@@ -601,9 +591,8 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect((await driver.findElements(By.css("div.legend-window"))).length).to.equal(0);
                 });
 
-                it.skip("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - layers are shown in the topic tree and present layer information", async function () {
+                it("?layerIDs=, &visibility=, and &transparency= have working gfi/legend/info - layers are shown in the topic tree and present layer information", async function () {
                     await loadUrl(driver, `${url}?layerIDs=4736,myId2&visibility=true,true&transparency=0,0`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
                         await closeSingleAlert(driver);
                     }
@@ -618,7 +607,6 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                 it("?Map/layerids=, &visibility=, and &transparency= have working gfi/legend/info - layers are shown in the topic tree and present layer information", async function () {
                     await loadUrl(driver, `${url}?Map/layerids=4736,myId2&visibility=true,true&transparency=0,0`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
                         await closeSingleAlert(driver);
                     }
@@ -631,9 +619,8 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await driver.findElements(By.xpath("//*[contains(text(),'Fehler beim Laden der Vorschau der Metadaten.')]"))).to.be.empty;
                 });
 
-                it.skip("?layerIDs=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
+                it("?layerIDs=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
                     await loadUrl(driver, `${url}?layerIDs=4736,4537&visibility=true,true&transparency=0,0&zoomLevel=6`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     const coords = [566688.25, 5934320.50];
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
@@ -676,7 +663,6 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                 it("?Map/layerids=, &visibility=, and &transparency= with set zoom level have working gfi/legend/info", async function () {
                     await loadUrl(driver, `${url}?Map/layerids=4736,4537&visibility=true,true&transparency=0,0&zoomLevel=6`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     const coords = [566688.25, 5934320.50];
 
                     if (await (await driver.findElements(By.xpath("//div[@class='singleAlertMessage']//parent::div//parent::div//parent::div//parent::div//parent::div//preceding-sibling::span"))).length > 0) {
@@ -717,7 +703,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await driver.findElements(By.xpath("//*[contains(text(),'Fehler beim Laden der Vorschau der Metadaten.')]"))).to.be.empty;
                 });
 
-                it.skip("?featureid= displays markers for features", async function () {
+                it("?featureid= displays markers for features", async function () {
                     await loadUrl(driver, `${url}?featureid=18,26`, mode);
                     await driver.wait(until.elementLocated(By.css(".navbar")), 12000);
                     await driver.wait(async () => driver.executeScript(doesLayerWithFeaturesExist, [
@@ -753,7 +739,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     ]), 20000);
                 });
 
-                it.skip("?featureViaURL test line", async function () {
+                it("?featureViaURL test line", async function () {
                     await loadUrl(driver, `${url}?featureViaURL=[{"layerId":"4200","features":[{"coordinates":[[10.15,53.5],[10.05,53.5],[10.05,53.55]],"label":"TestLinie"}]}]`, mode);
                     await driver.wait(until.elementLocated(By.css(".navbar")), 12000);
                     await driver.executeScript(isLayerVisible, "4200");
@@ -920,7 +906,6 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     const topicSelector = By.css("div#navbarRow li:first-child");
 
                     await loadUrl(driver, `${url}?Map/mdId=EBA4BF12-3ED2-4305-9B67-8E689FE8C445`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
 
                     // check if active in tree
                     await driver.wait(until.elementLocated(topicSelector));
@@ -932,7 +917,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     await driver.executeScript(isLayerVisible, "1562_4");
                 });
 
-                it.skip("opening and configuring lots of layers works", async function () {
+                it("opening and configuring lots of layers works", async function () {
                     //  ?layerIDs=368,717,2423,1562,2432,1935geofox-bahn,2444,1561,2941,2452&visibility=true,false,false,false,false,false,false,false,false,false&transparency=0,0,0,0,0,0,0,0,0,0&center=572765.7219565103,5940389.380731404&zoomlevel=5
                     let layers = "368,717,2423,1562,2432,1935geofox-bahn,2444,1561,2941,2452",
                         visibility = "true,false,false,false,false,false,false,false,false,false",
@@ -940,7 +925,6 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                         center = "572765.7219565103,5940389.380731404";
 
                     await loadUrl(driver, `${url}?layerIDs=${layers}&visibility=${visibility}&transparency=${transparency}&center=${center}&zoomlevel=5`, mode);
-                    await driver.wait(new Promise(r => setTimeout(r, 100)));
 
                     layers = layers.split(",");
                     visibility = visibility.split(",");
