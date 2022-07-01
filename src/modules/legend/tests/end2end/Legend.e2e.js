@@ -60,7 +60,7 @@ async function LegendTests ({builder, config, url, resolution, capability}) {
                     !await (await driver.findElements(By.id("legend")))[0].isDisplayed()
                 );
 
-                // const legendContent = await driver.wait(until.elementLocated(By.css("div.legend-content")), 2000),
+                const legendContent = await driver.wait(until.elementLocated(By.css("div.legend-content")), 2000),
                 headers = await legendContent.findElements(By.css("div.layer-title")),
                 text = await getTextOfElements(headers);
 
