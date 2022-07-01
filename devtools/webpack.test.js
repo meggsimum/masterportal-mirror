@@ -1,7 +1,7 @@
 /**
  * See https://www.digitalocean.com/community/tutorials/vuejs-demistifying-vue-webpack
  */
-const webpack = require("webpack"),
+const {webpack} = require("webpack"),
     path = require("path"),
     Vue = require("vue"),
     VueLoaderPlugin = require("vue-loader/lib/plugin");
@@ -20,7 +20,7 @@ Vue.config.devtools = false;
 
 module.exports = {
     mode: "development",
-    target: "node",
+    target: false,
     // use when debugging:
     // devtool: "cheap-module-eval-source-map",
     // output: {
@@ -30,6 +30,9 @@ module.exports = {
     resolve: {
         alias: {
             vue: "vue/dist/vue.js"
+        },
+        fallback: {
+            fs: "empty"
         }
     },
     module: {
@@ -67,7 +70,7 @@ module.exports = {
             },
             {
                 test: /\.xml$/i,
-                use: "raw-loader"
+                type: "asset/resource"
             },
             {
                 test: /\.worker\.js$/,
@@ -77,11 +80,7 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
-                use: [
-                    {
-                        loader: "file-loader"
-                    }
-                ]
+                type: "asset/resource"
             }
         ]
     },
@@ -98,9 +97,6 @@ module.exports = {
             // requestAnimationFrame: "raf"
         }),
         new VueLoaderPlugin(),
-        new webpack.IgnorePlugin(/canvas/, /jsdom$/)
-    ],
-    node: {
-        fs: "empty"
-    }
+        new webpack.IgnorePlugin({resourceRegExp: [/canvas/, /jsdom$/]})
+    ]
 };

@@ -24,17 +24,21 @@ else {
 module.exports = function (env, args) {
     const path2Addon = typeof args.ADDON === "string" && args.ADDON !== "" ? args.ADDON : "";
 
-    return merge.smart({
+    return merge({
         mode: "development",
         devtool: "eval-cheap-module-source-map",
         devServer: {
+            client: {
+                overlay: true
+            },
             port: 9001,
-            publicPath: "/build/",
-            overlay: true,
             open: true,
             https: true,
             openPage: "portal/master",
             proxy: proxies
+        },
+        output: {
+            publicPath: "/build/"
         },
         module: {
             rules: [

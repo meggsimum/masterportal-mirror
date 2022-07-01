@@ -8,9 +8,9 @@ import Vue from "vue";
 import App from "./App.vue";
 import store from "./app-store";
 
-import loadAddons from "./plugins/addons";
+// import loadAddons from "./plugins/addons";
 import remoteInterface from "./plugins/remoteInterface";
-import {instantiateVuetify} from "./plugins/vuetify";
+// import {instantiateVuetify} from "./plugins/vuetify";
 import {initiateVueI18Next, initLanguage} from "./plugins/i18next";
 
 /* eslint-disable no-process-env */
@@ -33,7 +33,7 @@ const configPath = window.location.pathname.substring(0, window.location.pathnam
 // Wait until config.js is loaded
 loadConfigJs.then(() => {
     initLanguage(Config.portalLanguage);
-    loadAddons(Config.addons);
+    // loadAddons(Config.addons);
 
     // Load remoteInterface
     if (Object.prototype.hasOwnProperty.call(Config, "remoteInterface")) {
@@ -45,8 +45,8 @@ loadConfigJs.then(() => {
         name: "VueApp",
         render: h => h(App),
         store,
-        i18n: initiateVueI18Next(),
-        vuetify: instantiateVuetify()
+        i18n: initiateVueI18Next()
+        // vuetify: instantiateVuetify()
     });
 
     app.$mount();
