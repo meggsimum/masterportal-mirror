@@ -61,8 +61,8 @@ async function LegendTests ({builder, config, url, resolution, capability}) {
                 );
 
                 const legendContent = await driver.wait(until.elementLocated(By.css("div.legend-content")), 2000),
-                headers = await legendContent.findElements(By.css("div.layer-title")),
-                text = await getTextOfElements(headers);
+                    headers = await legendContent.findElements(By.css("div.layer-title")),
+                    text = await getTextOfElements(headers);
 
                 for (const entry of expectedEntries) {
                     expect(text).to.include(entry);

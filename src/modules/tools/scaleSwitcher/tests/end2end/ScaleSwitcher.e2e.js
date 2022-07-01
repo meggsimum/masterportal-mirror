@@ -1,6 +1,6 @@
 const webdriver = require("selenium-webdriver"),
     {isMaster} = require("../../../../../../test/end2end/settings"),
-    {initDriver, getDriver, quitDriver} = require("../../../../../../test/end2end/library/driver"),
+    {initDriver, getDriver, quitDriver, loadUrl} = require("../../../../../../test/end2end/library/driver"),
     {logTestingCloudUrlToTest} = require("../../../../../../test/end2end/library/utils"),
     {expect} = require("chai"),
     {By, until} = webdriver,
@@ -27,6 +27,8 @@ async function ScaleSwitcherTests ({builder, url, resolution, capability}) {
                     builder.withCapabilities(capability);
                 }
                 driver = await getDriver();
+                // load url new, to get scale of just started app
+                await loadUrl(driver, `${url}`);
             });
 
             after(async function () {
