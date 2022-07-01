@@ -58,8 +58,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
                     expect(await driver.findElement(By.css("#north-pointer"))).to.exist;
                 });
-                // https://www.jira.geoportal-hamburg.de/browse/BG-2998
-                it.skip("?Map/mapMode=3D&heading=-1.2502079000000208 test shall start in 3D-mode and shall set heading", async function () {
+                it("?Map/mapMode=3D&heading=-1.2502079000000208 test shall start in 3D-mode and shall set heading", async function () {
                     await loadUrl(driver, `${url}?Map/mapMode=3D&heading=-1.2502079000000208`, mode);
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
                     expect(await driver.findElement(By.css("#north-pointer"))).to.exist;
@@ -68,8 +67,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     expect(-1.2502079000000208).to.eql(heading);
                 });
-                // https://www.jira.geoportal-hamburg.de/browse/BG-2998
-                it.skip("?Map/mapMode=3D&tilt=45 test shall start in 3D-mode and shall set tilt", async function () {
+                it("?Map/mapMode=3D&tilt=45 test shall start in 3D-mode and shall set tilt", async function () {
                     await loadUrl(driver, `${url}?Map/mapMode=3D&tilt=45`, mode);
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
                     expect(await driver.findElement(By.css("#north-pointer"))).to.exist;
@@ -78,8 +76,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
 
                     expect(45).to.eql(tilt);
                 });
-                // https://www.jira.geoportal-hamburg.de/browse/BG-2998
-                it.skip("?Map/mapMode=3D&altitude=127 test shall start in 3D-mode and shall set altitude", async function () {
+                it("?Map/mapMode=3D&altitude=127 test shall start in 3D-mode and shall set altitude", async function () {
                     await loadUrl(driver, `${url}?Map/mapMode=3D&altitude=127`, mode);
                     await driver.wait(until.elementLocated(By.css("#north-pointer")), 5000);
                     expect(await driver.findElement(By.css("#north-pointer"))).to.exist;
@@ -179,7 +176,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect([566499, 5942803]).to.eql(center);
                 });
                 // https://www.jira.geoportal-hamburg.de/browse/BG-2999
-                it.skip("?zoomtogeometry=[number] zooms to a district", async function () {
+                it("?zoomtogeometry=[number] zooms to a district", async function () {
                     const expectedCoordinate = [556535.269, 5937846.413000001];
 
                     // Bezirk 1 is Altona according to portal/master/config.js listing
@@ -196,7 +193,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await centersTo(driver, expectedCoordinate)).to.be.true;
                 });
                 // https://www.jira.geoportal-hamburg.de/browse/BG-2999
-                it.skip("?Map/zoomToGeometry=[number] zooms to a district", async function () {
+                it("?Map/zoomToGeometry=[number] zooms to a district", async function () {
                     const expectedCoordinate = [556535.269, 5937846.413000001];
 
                     // Bezirk 1 is Altona according to portal/master/config.js listing
