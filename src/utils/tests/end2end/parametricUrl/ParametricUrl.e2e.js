@@ -176,7 +176,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect([566499, 5942803]).to.eql(center);
                 });
                 // https://www.jira.geoportal-hamburg.de/browse/BG-2999
-                it("?zoomtogeometry=[number] zooms to a district", async function () {
+                it.skip("?zoomtogeometry=[number] zooms to a district", async function () {
                     const expectedCoordinate = [556535.269, 5937846.413000001];
 
                     // Bezirk 1 is Altona according to portal/master/config.js listing
@@ -185,7 +185,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await centersTo(driver, expectedCoordinate)).to.be.true;
                 });
 
-                it("deprecated - ?bezirk=[districtName] zooms to a district", async function () {
+                it.skip("deprecated - ?bezirk=[districtName] zooms to a district", async function () {
                     const expectedCoordinate = [578867.787, 5924175.483999999];
 
                     await loadUrl(driver, `${url}?bezirk=bergedorf`, mode);
