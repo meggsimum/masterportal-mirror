@@ -80,6 +80,7 @@ function tests (builder, url, browsername, resolution, config, mode, capability)
                 require("./tests/modules/searchbar/ElasticSearch.js"),
 
                 // modules/tools
+                require("../../src/modules/tools/scaleSwitcher/tests/end2end/ScaleSwitcher.e2e.js"),
                 require("../../src/modules/tools/contact/tests/end2end/Contact.e2e.js"),
                 require("../../src/modules/tools/layerSlider/tests/end2end/LayerSlider.e2e.js"),
                 // require("./tests/modules/tools/PopulationRequest_HH.js"),
@@ -87,7 +88,6 @@ function tests (builder, url, browsername, resolution, config, mode, capability)
                 require("./tests/modules/tools/List.js"),
                 require("../../src/modules/tools/coordToolkit/tests/end2end/CoordToolkit.e2e.js"),
                 require("../../src/modules/tools/measure/tests/end2end/Measure.e2e.js"),
-                require("../../src/modules/tools/scaleSwitcher/tests/end2end/ScaleSwitcher.e2e.js"),
                 require("./tests/modules/tools/ParcelSearch.js"),
 
                 // src/modules/tools/gfi
