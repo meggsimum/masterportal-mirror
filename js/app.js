@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "../src/App.vue";
 import store from "../src/app-store";
-import loadAddons from "../src/addons";
+// import loadAddons from "../src/addons";
 import "../modules/restReader/RadioBridge";
 import Autostarter from "../modules/core/autostarter";
 import Util from "../modules/core/util";
@@ -72,8 +72,8 @@ Vue.config.productionTip = false;
  */
 async function loadApp () {
     /* eslint-disable no-undef */
-    const legacyAddons = Object.is(ADDONS, {}) ? {} : ADDONS,
-        utilConfig = {},
+    // const legacyAddons = Object.is(ADDONS, {}) ? {} : ADDONS,
+    const utilConfig = {},
         style = Radio.request("Util", "getUiStyle"),
         vueI18Next = initiateVueI18Next(),
         // instantiate Vue with Vuetify Plugin if the "vuetify" flag is set in the config.js
@@ -258,39 +258,39 @@ async function loadApp () {
     }
 
     if (Config.addons !== undefined) {
-        Radio.channel("Addons");
-        const i18nextLanguages = vueI18Next?.i18next?.options?.getLanguages() ? vueI18Next.i18next.options.getLanguages() : {};
-        let initCounter = 0;
+        // Radio.channel("Addons");
+        // const i18nextLanguages = vueI18Next?.i18next?.options?.getLanguages() ? vueI18Next.i18next.options.getLanguages() : {};
+        // let initCounter = 0;
 
-        Config.addons.forEach((addonKey) => {
-            if (legacyAddons[addonKey] !== undefined) {
-                initCounter++;
-            }
-        });
+        // Config.addons.forEach((addonKey) => {
+        //     if (legacyAddons[addonKey] !== undefined) {
+        //         initCounter++;
+        //     }
+        // });
 
-        initCounter = initCounter * Object.keys(i18nextLanguages).length;
+        // initCounter = initCounter * Object.keys(i18nextLanguages).length;
 
         // loads all language files from addons for backbone- and vue-addons
-        Config.addons.forEach((addonKey) => {
-            if (legacyAddons[addonKey] !== undefined) {
-                Object.keys(i18nextLanguages).forEach((lng) => {
-                    import(
-                        /* webpackChunkName: "additionalLocales" */
-                        /* webpackInclude: /[\\\/]additional.json$/ */
-                        `../addons/${addonKey}/locales/${lng}/additional.json`)
-                        .then(({default: additionalLocales}) => {
-                            vueI18Next.i18next.addResourceBundle(lng, "additional", additionalLocales, true);
-                            initCounter--;
-                            checkInitCounter(initCounter, legacyAddons);
-                        }).catch(error => {
-                            initCounter--;
-                            console.warn(error);
-                            console.warn("Translation files of addon " + addonKey + " could not be loaded or does not exist. Addon is not translated.");
-                            checkInitCounter(initCounter, legacyAddons);
-                        });
-                });
-            }
-        });
+        // Config.addons.forEach((addonKey) => {
+        //     if (legacyAddons[addonKey] !== undefined) {
+        //         Object.keys(i18nextLanguages).forEach((lng) => {
+        //             import(
+        //                 /* webpackChunkName: "additionalLocales" */
+        //                 /* webpackInclude: /[\\\/]additional.json$/ */
+        //                 `../addons/${addonKey}/locales/${lng}/additional.json`)
+        //                 .then(({default: additionalLocales}) => {
+        //                     vueI18Next.i18next.addResourceBundle(lng, "additional", additionalLocales, true);
+        //                     initCounter--;
+        //                     checkInitCounter(initCounter, legacyAddons);
+        //                 }).catch(error => {
+        //                     initCounter--;
+        //                     console.warn(error);
+        //                     console.warn("Translation files of addon " + addonKey + " could not be loaded or does not exist. Addon is not translated.");
+        //                     checkInitCounter(initCounter, legacyAddons);
+        //                 });
+        //         });
+        //     }
+        // });
     }
     LoaderOverlay.hide();
 }

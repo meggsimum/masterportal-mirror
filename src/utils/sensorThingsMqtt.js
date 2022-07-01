@@ -1,4 +1,4 @@
-import * as mqtt from "mqtt";
+import * as mqtt from "precompiled-mqtt";
 import {SensorThingsHttp} from "./sensorThingsHttp";
 import {SensorThingsMqttConnector} from "./sensorThingsMqttConnector";
 

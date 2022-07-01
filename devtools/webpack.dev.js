@@ -1,16 +1,13 @@
-/* eslint-disable no-sync */
-/* eslint-disable global-require */
-const merge = require("webpack-merge"),
-    // auskommentieren um eine grafische Darstellung vom bundle als html zu erzeugen
-    // Visualizer = require("webpack-visualizer-plugin"),
-    Common = require("./webpack.common.js"),
+/* eslint-disable no-process-env */
+const {merge} = require("webpack-merge"),
+    path = require("path"),
     fse = require("fs-extra"),
     HttpsProxyAgent = require("https-proxy-agent"),
-    /* eslint-disable no-process-env */
-    proxyServer = process.env.HTTPS_PROXY || process.env.HTTP_PROXY,
-    /* eslint-disable no-process-env */
-    proxyAgent = proxyServer !== undefined ? new HttpsProxyAgent(proxyServer) : "";
+    common = require("./webpack.common.js"),
 
+    rootPath = path.resolve(__dirname, "../"),
+    proxyServer = process.env.HTTPS_PROXY || process.env.HTTP_PROXY,
+    proxyAgent = proxyServer !== undefined ? new HttpsProxyAgent(proxyServer) : "";
 
 let proxies;
 
@@ -24,52 +21,46 @@ else {
 Object.keys(proxies).forEach(proxy => {
     if (proxies[proxy].agent !== undefined) {
         proxies[proxy].agent = proxyAgent;
+        proxies[proxy].logLevel = "error";
     }
 });
 
-module.exports = function () {
-    return merge.smart({
-        mode: "development",
-        devtool: "cheap-module-eval-source-map",
-        devServer: {
-            headers: {
-                "Access-Control-Allow-Origin": "*"
-            },
-            https: true,
-            open: false,
-            openPage: "portal/master",
-            overlay: true,
-            port: 9001,
-            proxy: proxies,
+module.exports = merge(common, {
+    mode: "development",
+    cache: false,
+    devtool: "eval-cheap-module-source-map",
+    devServer: {
+        client: {
+            overlay: true
+        },
+        compress: true,
+        devMiddleware: {
             publicPath: "/build/"
         },
-        module: {
-            rules: [
-                // Bootstrap Icons werden von bootstrap gelesen
-                {
-                    test: /bootstrap-icons\.(eot|svg|ttf|woff|woff2)$/,
-                    loader: "file-loader",
-                    options: {
-                        name: "[name].[ext]",
-                        publicPath: "../../node_modules/bootstrap-icons/font/fonts"
-                    }
-                },
-                // alle anderen Schriftarten
-                {
-                    test: /\.(eot|svg|ttf|woff|woff2)$/,
-                    loader: "file-loader",
-                    options: {
-                        name: "[name].[ext]",
-                        publicPath: "../../css/fonts"
-                    }
-                }
-            ]
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+        },
+        hot: true,
+        open: false,
+        port: 9001,
+        proxy: proxies,
+        server: "https",
+        static: {
+            directory: rootPath
         }
-        // auskommentieren um eine grafische Darstellung vom bundle als html unter "build/statistics.html" zu erzeugen
-        // plugins: [
-        //     new Visualizer({
-        //         filename: "./statistics.html"
-        //     })
-        // ]
-    }, new Common());
-};
+    },
+    output: {
+        path: path.resolve(__dirname, "../build/"),
+        filename: "js/[name].js",
+        publicPath: "../../build/"
+    },
+    module: {
+        rules: [
+            // Fonts and SVGs
+            {
+                test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+                type: "asset/resource"
+            }
+        ]
+    }
+});

@@ -1,4 +1,5 @@
-import * as jsts from "jsts/dist/jsts";
+import OL3Parser from "../../../../../node_modules/jsts/org/locationtech/jts/io/OL3Parser";
+import GeoJSONWriter from "../../../../../node_modules/jsts/org/locationtech/jts/io/GeoJSONWriter";
 import {Fill, Stroke, Style} from "ol/style";
 import {ResultType} from "./enums";
 
@@ -51,8 +52,8 @@ const state = {
     selectOptions: [],
     intersections: [],
     resultFeatures: [],
-    jstsParser: new jsts.io.OL3Parser(),
-    geoJSONWriter: new jsts.io.GeoJSONWriter(),
+    jstsParser: new OL3Parser(),
+    geoJSONWriter: new GeoJSONWriter(),
     bufferStyle: new Style({
         fill: new Fill({
             color: ["255", "230", "65", "0.3"]
