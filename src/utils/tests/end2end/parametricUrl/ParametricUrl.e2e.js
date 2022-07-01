@@ -193,7 +193,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect(await centersTo(driver, expectedCoordinate)).to.be.true;
                 });
                 // https://www.jira.geoportal-hamburg.de/browse/BG-2999
-                it("?Map/zoomToGeometry=[number] zooms to a district", async function () {
+                it.skip("?Map/zoomToGeometry=[number] zooms to a district", async function () {
                     const expectedCoordinate = [556535.269, 5937846.413000001];
 
                     // Bezirk 1 is Altona according to portal/master/config.js listing
