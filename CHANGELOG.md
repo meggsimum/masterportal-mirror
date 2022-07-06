@@ -25,6 +25,7 @@
 - Fix config.json.md regarding chapter depth.
 - The following NPM packages are updated:
     - @masterportal/mpconfigparser: 1.2.0 to 1.3.0
+    - @masterportal/masterportalapi: 2.3.0 to 2.4.0
   - Some `Radio.trigger` and `Radio.request` calls have been replaced by direct accesses to the `Vuex store`.
 
 ### Deprecated
