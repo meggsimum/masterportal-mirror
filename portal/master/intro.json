@@ -1,5 +1,5 @@
 {
-    "steps": [{
+    "stepsFilter": [{
         "title": "Willkommen",
         "text": "Hello World! 👋"
     },
@@ -12,5 +12,19 @@
         "title": "Auf wiedersehen!",
         "element":".multiselect",
         "text": "common:modules.tools.print.autoAdjustScale"
+    }],
+    "stepsPrint": [{
+        "title": "Willkommen",
+        "text": "Hello World! 👋"
+    },
+    {
+        "element": "#docTitle",
+        "title": "Gib hier einen coolen Titel ein.",
+        "text": "Wer das liest ist doof"
+    },
+    {
+        "title": "Auf wiedersehen!",
+        "element":".btn-primary",
+        "text": "Ende Gelände"
     }]
 }

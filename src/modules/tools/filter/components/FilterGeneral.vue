@@ -66,34 +66,6 @@ export default {
         active (value) {
             if (value) {
                 this.$nextTick(() => {
-                    const tour = this.$shepherd({
-                        useModalOverlay: true,
-                        defaultStepOptions: {
-                            classes: "shadow-md bg-purple-dark",
-                            scrollTo: true
-                        }
-                    });
-
-                    jsonFile.steps.forEach(step => {
-                        tour.addStep({
-                            id: "example-step_" + jsonFile.steps[step],
-                            text: this.$t(step.text),
-                            title: step.title,
-                            attachTo: {
-                                element: step.element,
-                                on: "bottom"
-                            },
-                            classes: "example-step-extra-class",
-                            cancelIcon: "enabled",
-                            buttons: [
-                                {
-                                    text: this.$t("common:modules.tools.print.autoAdjustScale"),
-                                    action: tour.next
-                                }
-                            ]
-                        });
-
-                    });
 
                     tour.start();
                 });

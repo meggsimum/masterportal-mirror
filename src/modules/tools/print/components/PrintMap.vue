@@ -9,6 +9,7 @@ import axios from "axios";
 import getVisibleLayer from "../utils/getVisibleLayer";
 import {Vector} from "ol/layer.js";
 import Cluster from "ol/source/Cluster";
+const jsonFile = require("../../../../../portal/master/intro.json");
 
 /**
  * Tool to print a part of the map
@@ -104,6 +105,43 @@ export default {
                 this.setIsScaleSelectedManually(false);
                 this.retrieveCapabilites();
                 this.setCurrentMapScale(this.scale);
+
+                this.$nextTick(() => {
+                    const tour = this.$shepherd({
+                        useModalOverlay: true,
+                        defaultStepOptions: {
+                            classes: "shadow-md bg-purple-dark",
+                            scrollTo: true
+                        }
+                    });
+
+                    jsonFile.stepsPrint.forEach(step => {
+                        tour.addStep({
+                            id: "example-step_" + jsonFile.stepsPrint[step],
+                            text: this.$t(step.text),
+                            title: step.title,
+                            attachTo: {
+                                element: step.element,
+                                on: "bottom"
+                            },
+                            classes: "example-step-extra-class",
+                            cancelIcon: "enabled",
+                            buttons: [
+                                {
+                                    text: "Zurück",
+                                    action: tour.back
+                                },
+                                {
+                                    text: "Weiter",
+                                    action: tour.next
+                                }
+                            ]
+                        });
+
+                    });
+
+                    tour.start();
+                });
             }
             else {
                 this.setFileDownloads([]);
