@@ -11,6 +11,7 @@
 ### __Breaking Changes__
 
 ### Added
+- add unit tests: actionsMapLayers/createLayer
 
 ### Changed
 
@@ -20,6 +21,8 @@
 
 ### Fixed
 - fix unix-related path issue in findWhereJs.js
+- fix actionsMapLayers/createLayer tried to access non-existent reference
+
 
 ---
 
