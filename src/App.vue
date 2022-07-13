@@ -6,7 +6,6 @@ import isDevMode from "./utils/isDevMode";
 import PortalFooter from "./modules/portalFooter/components/PortalFooter.vue";
 import LayerSelector from "./modules/layerSelector/components/LayerSelector.vue";
 import {checkIsURLQueryValid} from "./utils/parametricUrl/stateModifier";
-import Shepherd from "shepherd.js";
 
 export default {
     name: "App",
@@ -24,13 +23,6 @@ export default {
                 this.setUrlParams(new URLSearchParams(window.location.search));
             }
             this.checkVueObservation();
-        });
-        const tour = this.$shepherd({
-            useModalOverlay: true,
-            defaultStepOptions: {
-                classes: "shadow-md bg-purple-dark",
-                scrollTo: true
-            }
         });
     },
     methods: {
