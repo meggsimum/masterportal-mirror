@@ -6,7 +6,7 @@
     {
         "element": ".panel-default",
         "title": "Hier sehen wir:",
-        "text": "Das ist ein Dropwdown :3"
+        "text": "Das ist ein Dropwdown :3 Evtl. müsste man dann hier den Klick verbieten, kann man auch einstellen."
     },
     {
         "title": "Auf wiedersehen!",
@@ -20,7 +20,12 @@
     {
         "element": "#docTitle",
         "title": "Gib hier einen coolen Titel ein.",
-        "text": "Wer das liest ist doof"
+        "text": "<img src=\"https://media.giphy.com/media/duNowzaVje6Di3hnOu/giphy.gif\" alt=\"funny GIF\" width=\"100%\">"
+    },
+    {
+        "element": "#printLayout",
+        "title": "Gib hier einen coolen Titel ein.",
+        "text": "Wer das liest ist doch nicht doof"
     },
     {
         "title": "Auf wiedersehen!",

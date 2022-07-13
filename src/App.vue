@@ -32,27 +32,6 @@ export default {
                 scrollTo: true
             }
         });
-
-        jsonFile.stepsFilter.forEach(step => {
-            tour.addStep({
-                id: "example-step_" + jsonFile.stepsFilter[step],
-                text: this.$t(step.text),
-                title: step.title,
-                attachTo: {
-                    element: step.element,
-                    on: "bottom"
-                },
-                classes: "example-step-extra-class",
-                cancelIcon: "enabled",
-                buttons: [
-                    {
-                        text: this.$t("common:modules.tools.print.autoAdjustScale"),
-                        action: tour.next
-                    }
-                ]
-            });
-
-        });
     },
     methods: {
         ...mapMutations(["setUrlParams"]),
