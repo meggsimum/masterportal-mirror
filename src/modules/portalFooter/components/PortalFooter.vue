@@ -175,6 +175,10 @@ export default {
 
         a[target=_blank]{
             color: $primary;
+            padding: .2rem;
+            &:hover{
+                @include primary_action_hover;
+            }
         }
 
         .portal-footer-scaleLine {
