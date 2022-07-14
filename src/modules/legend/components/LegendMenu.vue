@@ -103,7 +103,7 @@ export default {
         <li
             v-if="showLegendInMenu && mobile"
             :class="{ open: showLegend }"
-            class="list-group-item ps-1"
+            class="list-group-item ps-1 mobile"
             @click="toggleLegend"
             @keydown.enter="toggleLegend"
         >
@@ -134,15 +134,5 @@ export default {
         border-right: 1px solid #e5e5e5;
         font-size: 14px;
         cursor: pointer;
-        .mobile {
-            .list-group-item {
-                padding: 12px 5px;
-            }
-            li {
-                font-family: "MasterPortalFont", "Arial Narrow", Arial, sans-serif;
-                padding-left: 6px;
-                vertical-align: text-bottom;
-            }
-        }
     }
 </style>
