@@ -102,6 +102,7 @@ export default {
         </ul>
         <li
             v-if="showLegendInMenu && mobile"
+            id="legend-menu"
             :class="{ open: showLegend }"
             class="list-group-item ps-1 mobile"
             @click="toggleLegend"
