@@ -20,6 +20,7 @@
 
 ### Fixed
 - fix unix-related path issue in findWhereJs.js
+- link in footer will now have white text for better readability.
 
 ---
 
