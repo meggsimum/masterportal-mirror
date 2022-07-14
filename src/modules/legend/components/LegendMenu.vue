@@ -17,6 +17,11 @@ export default {
         ...mapGetters("Legend", Object.keys(getters)),
         ...mapGetters(["mobile", "uiStyle"])
     },
+    watch: {
+        mobile: function () {
+            this.$forceUpdate();
+        }
+    },
     mounted () {
         this.element = this.$el;
         this.childNode = this.$el.childNodes[0].childNodes[0];
@@ -95,26 +100,20 @@ export default {
                 </a>
             </li>
         </ul>
-        <ul
-            v-if="mobile"
-            id="legend-menu"
-            class="list-group mobile"
+        <li
+            v-if="showLegendInMenu && mobile"
+            :class="{ open: showLegend }"
+            class="list-group-item ps-1"
+            @click="toggleLegend"
+            @keydown.enter="toggleLegend"
         >
-            <li
-                v-if="showLegendInMenu"
-                :class="{ open: showLegend }"
-                class="list-group-item legend-menu-item"
-                @click="toggleLegend"
-                @keydown.enter="toggleLegend"
-            >
-                <div>
-                    <span class="bootstrap-icon d-sm-none d-md-inline-block">
-                        <i :class="icon" />
-                    </span>
-                    <span class="title">{{ $t(name) }}</span>
-                </div>
-            </li>
-        </ul>
+            <div class="folder-item d-flex align-items-center">
+                <span class="bootstrap-icon d-sm-none d-md-inline-block">
+                    <i :class="icon" />
+                </span>
+                <span class="title">{{ $t(name) }}</span>
+            </div>
+        </li>
         <a
             v-if="!mobile && uiStyle === 'TABLE'"
             href="#"
