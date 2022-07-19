@@ -126,6 +126,8 @@ async function CoordToolkitTests ({builder, url, resolution, config, capability}
 
         it("displays a modal dialog containing the tool elements", async () => {
             // can't keep tools/toolCoordToolkit as variable - tends to go stale in /portal/basic
+            await (await driver.findElement(By.xpath("//ul[@id='tools']//.."))).click();
+            await (await driver.findElement(By.css("#tools .bi-globe"))).click();
             await driver.wait(until.elementIsVisible(await driver.findElement(selectors.tools)));
             while (!await (await driver.findElement(selectors.toolCoordToolkit)).isDisplayed()) {
                 await reclickUntilNotStale(driver, selectors.tools);

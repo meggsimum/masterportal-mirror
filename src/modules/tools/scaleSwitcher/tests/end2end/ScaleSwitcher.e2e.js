@@ -54,6 +54,7 @@ async function ScaleSwitcherTests ({builder, url, resolution, capability}) {
                 do {
                     expect(counter++).to.be.below(10);
                     await (await driver.findElement(By.xpath("//ul[@id='tools']//.."))).click();
+                    await driver.wait(new Promise(r => setTimeout(r, 100)));
                     await (await driver.findElement(By.css("#tools .bi-arrows-angle-contract"))).click();
                     await driver.wait(new Promise(r => setTimeout(r, 100)));
                 } while ((await driver.findElements(By.id("scale-switcher"))).length === 0);
