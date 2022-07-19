@@ -13,6 +13,7 @@
 ### Added
 
 ### Changed
+- CompareFeatures: The values true and false are now translated.
 
 ### Deprecated
 

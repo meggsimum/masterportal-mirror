@@ -524,6 +524,10 @@
                     "limitReached": "The maximum number of objects in the comparison list has been reached.",
                     "removeObjects": "Please remove at least one object before proceeding.",
                     "goToComparisonlist": "To the comparison list"
+                },
+                "trueFalse": {
+                  "true": "Yes",
+                  "false": "No"
                 }
             },
             "saveSelection": {
