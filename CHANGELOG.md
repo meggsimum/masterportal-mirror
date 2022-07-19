@@ -22,6 +22,7 @@
 - fix unix-related path issue in findWhereJs.js
 - Issue #804: Legend window will not be cut off when width changes to a maximum.
 - link in footer will now have white text for better readability.
+- Issue #807: transparency setting for child layers is getting set/initialized now.
 
 ---
 
