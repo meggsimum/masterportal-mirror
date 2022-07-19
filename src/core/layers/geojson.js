@@ -22,9 +22,9 @@ export default function GeoJSONLayer (attrs) {
     this.createLayer(Object.assign(defaults, attrs));
     this.setStyle(this.getStyleFunction(attrs));
 
+    // call the super-layer
+    Layer.call(this, Object.assign(defaults, attrs), this.layer, true);
     if (!attrs.isChildLayer) {
-        // call the super-layer
-        Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
         this.checkForScale({scale: store.getters["Maps/scale"]});
     }
 

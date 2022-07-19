@@ -20,7 +20,8 @@ export default function WMSLayer (attrs) {
 
     this.createLayer(Object.assign(defaults, attrs));
     // call the super-layer
-    Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
+    // initialize=true, even if it's a child layer so that the transparency gets set
+    Layer.call(this, Object.assign(defaults, attrs), this.layer, true);
     this.createLegend();
     bridge.listenToChangeSLDBody(this);
 

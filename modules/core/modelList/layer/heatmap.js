@@ -35,9 +35,8 @@ const HeatmapLayer = Layer.extend(/** @lends HeatmapLayer.prototype */{
     initialize: function () {
         this.checkForScale(Radio.request("MapView", "getOptions"));
 
-        if (!this.get("isChildLayer")) {
-            Layer.prototype.initialize.apply(this);
-        }
+        Layer.prototype.initialize.apply(this);
+
         this.listenTo(Radio.channel("VectorLayer"), {
             "featuresLoaded": this.loadInitialData,
             "featureUpdated": this.updateFeature,
