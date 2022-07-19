@@ -265,11 +265,18 @@ const getters = {
     },
     /**
      * calculate the extent for the current view state and the passed size
-     * @param {Object} state - the state
      * @return {ol.extent} extent
      */
-    getCurrentExtent: (state) => {
-        return getters.getView().calculateExtent(state.size);
+    getCurrentExtent: () => {
+        let size;
+
+        if (getters.size) {
+            size = getters.size;
+        }
+        else {
+            size = mapCollection.getMap("2D").getSize();
+        }
+        return getters.getView().calculateExtent(size);
     },
     /**
     * Returns a layer or a child layer of a layer group by id.

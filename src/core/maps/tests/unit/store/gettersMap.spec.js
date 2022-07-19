@@ -255,10 +255,11 @@ describe("src/core/maps/store/gettersMap.js", () => {
          */
         global.requestAnimationFrame = () => "";
 
-        let map;
+        let map, size;
 
         beforeEach(() => {
             mapCollection.clear();
+            size = [1920, 887];
             map = new Map({
                 id: "ol",
                 mode: "2D",
@@ -283,17 +284,20 @@ describe("src/core/maps/store/gettersMap.js", () => {
                 })
             });
 
-            map.setSize([1059, 887]);
-
+            map.setSize(size);
             mapCollection.addMap(map, "2D");
         });
 
         it("getCurrentExtent - calculate the extent for the current view state and the passed size", function () {
+            getters.size = size;
+
             expect(getters.getCurrentExtent()).to.deep.equal([
-                565080.2504286248,
-                5933346.250428624,
-                566667.7495713752,
-                5934933.749571376
+                550634.0082295956, 5927099.441301902, 581113.9917704044, 5941180.558698098
+            ]);
+
+            map.getView().setZoom(3);
+            expect(getters.getCurrentExtent()).to.not.have.members([
+                550634.0082295956, 5927099.441301902, 581113.9917704044, 5941180.558698098
             ]);
         });
     });
