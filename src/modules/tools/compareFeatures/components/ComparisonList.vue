@@ -340,6 +340,7 @@ export default {
 
 <style lang="scss" scoped>
     @import "~/css/mixins.scss";
+    @import "~variables";
 
     #tool-compareFeatures {
         z-index: -1;
@@ -391,6 +392,7 @@ export default {
         }
         p {
             overflow-wrap: break-word;
+            color: $black;
         }
     }
     .close {
