@@ -22,7 +22,7 @@ const webdriver = require("selenium-webdriver"),
  * @returns {void}
  */
 async function CoordToolkitTests ({builder, url, resolution, config, capability}) {
-    describe("CoordToolkit", function () {
+    describe.skip("CoordToolkit", function () {
         const selectors = {
                 tools: By.xpath("//ul[@id='tools']/.."),
                 toolCoordToolkit: By.css("ul#tools span.bootstrap-icon > .bi-globe"),
