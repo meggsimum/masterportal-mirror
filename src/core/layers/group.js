@@ -138,7 +138,7 @@ GroupedLayers.prototype.updateSource = function () {
     }, this);
 };
 /**
- * Sets the groupedLayers transparency accordimng to the medium of it's children.
+ * Sets the groupedLayers transparency according to the medium of it's children.
  * @returns {void}
  */
 GroupedLayers.prototype.updateTransparency = function () {
