@@ -82,6 +82,12 @@ export function prettyValue (value) {
     else if (value.includes("|")) {
         return value.split("|").join("\n");
     }
+    else if (value?.toLowerCase() === "true") {
+        return i18next.t("common:modules.tools.compareFeatures.trueFalse.true");
+    }
+    else if (value?.toLowerCase() === "false" || value?.toLowerCase() === "no") {
+        return i18next.t("common:modules.tools.compareFeatures.trueFalse.false");
+    }
     return value;
 }
 
