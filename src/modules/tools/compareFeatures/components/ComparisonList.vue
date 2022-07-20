@@ -89,12 +89,12 @@ export default {
                                 >{{ value }}</a>
                             </p>
                             <p
-                                v-else-if="value.toLowerCase() === 'true'"
+                                v-else-if="value && value.toLowerCase() === 'true'"
                             >
                                 <span>{{ $t('common:modules.tools.compareFeatures.trueFalse.true') }}</span>
                             </p>
                             <p
-                                v-else-if="value.toLowerCase() === 'false' || value.toLowerCase() === 'no'"
+                                v-else-if="value && (value.toLowerCase() === 'false' || value.toLowerCase() === 'no')"
                             >
                                 <span>{{ $t('common:modules.tools.compareFeatures.trueFalse.false') }}</span>
                             </p>
@@ -152,12 +152,12 @@ export default {
                                 >{{ value }}</a>
                             </p>
                             <p
-                                v-else-if="value.toLowerCase() === 'true'"
+                                v-else-if="value && value.toLowerCase() === 'true'"
                             >
                                 <span>{{ $t('common:modules.tools.compareFeatures.trueFalse.true') }}</span>
                             </p>
                             <p
-                                v-else-if="value.toLowerCase() === 'false' || value.toLowerCase() === 'no'"
+                                v-else-if="value && (value.toLowerCase() === 'false' || value.toLowerCase() === 'no')"
                             >
                                 <span>{{ $t('common:modules.tools.compareFeatures.trueFalse.false') }}</span>
                             </p>
@@ -226,12 +226,12 @@ export default {
                                 >{{ value }}</a>
                             </p>
                             <p
-                                v-else-if="value.toLowerCase() === 'true'"
+                                v-else-if="value && value.toLowerCase() === 'true'"
                             >
                                 <span>{{ $t('common:modules.tools.compareFeatures.trueFalse.true') }}</span>
                             </p>
                             <p
-                                v-else-if="value.toLowerCase() === 'false' || value.toLowerCase() === 'no'"
+                                v-else-if="value && (value.toLowerCase() === 'false' || value.toLowerCase() === 'no')"
                             >
                                 <span>{{ $t('common:modules.tools.compareFeatures.trueFalse.false') }}</span>
                             </p>
@@ -291,12 +291,12 @@ export default {
                                 >{{ value }}</a>
                             </p>
                             <p
-                                v-else-if="value.toLowerCase() === 'true'"
+                                v-else-if="value && value.toLowerCase() === 'true'"
                             >
                                 <span>{{ $t('common:modules.tools.compareFeatures.trueFalse.true') }}</span>
                             </p>
                             <p
-                                v-else-if="value.toLowerCase() === 'false' || value.toLowerCase() === 'no'"
+                                v-else-if="value && (value.toLowerCase() === 'false' || value.toLowerCase() === 'no')"
                             >
                                 <span>{{ $t('common:modules.tools.compareFeatures.trueFalse.false') }}</span>
                             </p>
