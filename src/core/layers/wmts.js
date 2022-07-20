@@ -21,7 +21,7 @@ export default function WMTSLayer (attrs, options) {
     this.layer = wmts.createLayer(Object.assign(defaults, attrs, options));
 
     // call the super-layer
-    Layer.call(this, Object.assign(defaults, attrs, options), this.layer, true);
+    Layer.call(this, Object.assign(defaults, attrs, options), this.layer, !attrs.isChildLayer);
     this.createLegend();
 
     if (this.get("isVisibleInMap")) {

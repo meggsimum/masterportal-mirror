@@ -68,9 +68,7 @@ export default function STALayer (attrs) {
     this.options = {};
 
     this.createLayer(Object.assign(defaults, attrs));
-
-    // call the super-layer
-    Layer.call(this, Object.assign(defaults, attrs), this.layer, true);
+    Layer.call(this, Object.assign(defaults, attrs), this.layer, !attrs.isChildLayer);
     this.set("style", this.getStyleFunction(attrs));
 
     moment.locale("de");
