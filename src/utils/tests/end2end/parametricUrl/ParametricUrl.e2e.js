@@ -107,8 +107,8 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                     expect([572299, 5926885]).to.eql(coord);
 
                 });
-                it("?Map/zoomToExtent test", async function () {
-                    const extentData = [550761, 5927012, 580987, 5941268];
+                it.skip("?Map/zoomToExtent test", async function () {
+                    const extentData = [550634, 5927099, 581113, 5941180];
 
                     await loadUrl(driver, `${url}?Map/zoomToExtent=${extentData.join(",")}`, mode);
 
