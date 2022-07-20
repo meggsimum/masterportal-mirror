@@ -30,6 +30,8 @@ export default function GroupedLayers (attrs) {
     if (this.get("isVisibleInMap")) {
         this.updateSource();
     }
+
+    this.updateTransparency();
 }
 // Link prototypes and add prototype methods, means GroupedLayers uses all methods and properties of Layer
 GroupedLayers.prototype = Object.create(Layer.prototype);
@@ -62,31 +64,45 @@ GroupedLayers.prototype.createLayerSource = function (attrs) {
 
     attrs.children.forEach(childLayerDefinition => {
         if (childLayerDefinition.typ === "WMS") {
-            layerSource.push(new WMSLayer(childLayerDefinition));
+            const layer = new WMSLayer(childLayerDefinition);
+            layer.initialize(childLayerDefinition);
+            layerSource.push(layer);
         }
         else if (childLayerDefinition.typ === "WMTS") {
-            layerSource.push(new WMTSLayer(childLayerDefinition));
+            const layer = new WMTSLayer(childLayerDefinition);
+            layer.initialize(childLayerDefinition);
+            layerSource.push(layer);
         }
         else if (childLayerDefinition.typ === "WFS") {
             if (childLayerDefinition.outputFormat === "GeoJSON") {
-                layerSource.push(new GeoJSONLayer(childLayerDefinition));
+                const layer = new GeoJSONLayer(childLayerDefinition);
+                layer.initialize(childLayerDefinition);
+                layerSource.push(layer);
             }
-            layerSource.push(new WFSLayer(childLayerDefinition));
+            const layer = new WFSLayer(childLayerDefinition);
+            layer.initialize(childLayerDefinition);
+            layerSource.push(layer);
         }
         else if (childLayerDefinition.typ === "OAF") {
-            layerSource.push(new OAFLayer(childLayerDefinition));
+            const layer = new OAFLayer(childLayerDefinition);
+            layer.initialize(childLayerDefinition);
+            layerSource.push(layer);
         }
         else if (childLayerDefinition.typ === "GeoJSON") {
-            layerSource.push(new GeoJSONLayer(childLayerDefinition));
+            const layer = new GeoJSONLayer(childLayerDefinition);
+            layer.initialize(childLayerDefinition);
+            layerSource.push(layer);
         }
         else if (childLayerDefinition.typ === "SensorThings") {
             const sensorLayer = new STALayer(childLayerDefinition);
-
+            sensorLayer.initialize(childLayerDefinition);
             sensorLayer.initializeSensorThings();
             layerSource.push(sensorLayer);
         }
         else if (childLayerDefinition.typ === "Heatmap") {
-            layerSource.push(new HeatmapLayer(childLayerDefinition));
+            const layer = new HeatmapLayer(childLayerDefinition);
+            layer.initialize(childLayerDefinition);
+            layerSource.push(layer);
         }
         layerSource[layerSource.length - 1].prepareLayerObject();
     }, this);
@@ -112,6 +128,21 @@ GroupedLayers.prototype.updateSource = function () {
             layerSource.updateSource();
         }
     }, this);
+};
+/**
+ * Sets the groupedLayers transparency accordimng to the medium of it's children.
+ * @returns {void}
+ */
+ GroupedLayers.prototype.updateTransparency = function () {
+    let transparencies = 0; 
+    this.get("children").forEach(childLayer => {
+        if (Object.prototype.hasOwnProperty.call(childLayer, 'transparency')) {
+            transparencies += childLayer.transparency;
+        }
+    }, this);
+    if (transparencies > 0) {
+        this.set("transparency", transparencies / this.get("children").length);
+    }
 };
 /**
  * This function start the presentation of the layerinformation and legend.
