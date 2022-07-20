@@ -141,8 +141,9 @@ GroupedLayers.prototype.updateSource = function () {
  * Sets the groupedLayers transparency accordimng to the medium of it's children.
  * @returns {void}
  */
- GroupedLayers.prototype.updateTransparency = function () {
-    let transparencies = 0; 
+GroupedLayers.prototype.updateTransparency = function () {
+    let transparencies = 0;
+
     this.get("children").forEach(childLayer => {
         if (Object.prototype.hasOwnProperty.call(childLayer, "transparency")) {
             transparencies += childLayer.transparency;
