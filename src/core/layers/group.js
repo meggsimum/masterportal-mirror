@@ -65,42 +65,50 @@ GroupedLayers.prototype.createLayerSource = function (attrs) {
     attrs.children.forEach(childLayerDefinition => {
         if (childLayerDefinition.typ === "WMS") {
             const layer = new WMSLayer(childLayerDefinition);
+
             layer.initialize(childLayerDefinition);
             layerSource.push(layer);
         }
         else if (childLayerDefinition.typ === "WMTS") {
             const layer = new WMTSLayer(childLayerDefinition);
+
             layer.initialize(childLayerDefinition);
             layerSource.push(layer);
         }
         else if (childLayerDefinition.typ === "WFS") {
             if (childLayerDefinition.outputFormat === "GeoJSON") {
                 const layer = new GeoJSONLayer(childLayerDefinition);
+
                 layer.initialize(childLayerDefinition);
                 layerSource.push(layer);
             }
             const layer = new WFSLayer(childLayerDefinition);
+
             layer.initialize(childLayerDefinition);
             layerSource.push(layer);
         }
         else if (childLayerDefinition.typ === "OAF") {
             const layer = new OAFLayer(childLayerDefinition);
+
             layer.initialize(childLayerDefinition);
             layerSource.push(layer);
         }
         else if (childLayerDefinition.typ === "GeoJSON") {
             const layer = new GeoJSONLayer(childLayerDefinition);
+
             layer.initialize(childLayerDefinition);
             layerSource.push(layer);
         }
         else if (childLayerDefinition.typ === "SensorThings") {
             const sensorLayer = new STALayer(childLayerDefinition);
+
             sensorLayer.initialize(childLayerDefinition);
             sensorLayer.initializeSensorThings();
             layerSource.push(sensorLayer);
         }
         else if (childLayerDefinition.typ === "Heatmap") {
             const layer = new HeatmapLayer(childLayerDefinition);
+
             layer.initialize(childLayerDefinition);
             layerSource.push(layer);
         }
@@ -136,7 +144,7 @@ GroupedLayers.prototype.updateSource = function () {
  GroupedLayers.prototype.updateTransparency = function () {
     let transparencies = 0; 
     this.get("children").forEach(childLayer => {
-        if (Object.prototype.hasOwnProperty.call(childLayer, 'transparency')) {
+        if (Object.prototype.hasOwnProperty.call(childLayer, "transparency")) {
             transparencies += childLayer.transparency;
         }
     }, this);
