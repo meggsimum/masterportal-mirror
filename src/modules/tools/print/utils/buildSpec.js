@@ -203,7 +203,12 @@ const BuildSpecModel = {
             }
         }
         this.setVisibleLayerIds(visibleLayerIds);
-        attributes.map.layers = layers.reverse();
+        if (store.state.Tools.Print.printService === "plotservice") {
+            attributes.map.layers = layers;
+        }
+        else {
+            attributes.map.layers = layers.reverse();
+        }
     },
 
     /**
