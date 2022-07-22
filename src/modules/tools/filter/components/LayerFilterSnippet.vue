@@ -317,12 +317,16 @@ export default {
         /**
          * Handles the active strategy.
          * @param {Number|Number[]} snippetId the snippet Id(s)
+         * @param {Boolean|undefined} reset true if filtering should reset the layer (fuzzy logic)
          * @returns {void}
          */
-        handleActiveStrategy (snippetId) {
+        handleActiveStrategy (snippetId, reset = undefined) {
             if (this.isLockedHandleActiveStrategy) {
                 return;
             }
+            const rules = reset === true ? [] : false,
+                adjust = reset !== true,
+                alterMap = reset !== false;
 
             this.filter(snippetId, filterAnswer => {
                 const adjustments = getSnippetAdjustments(this.snippets, filterAnswer?.items, filterAnswer?.paging?.page, filterAnswer?.paging?.total),
@@ -337,7 +341,11 @@ export default {
                         adjust: isObject(adjustments[snippet.snippetId]) ? adjustments[snippet.snippetId] : false
                     };
                 });
-            });
+            }, adjust, alterMap, rules);
+
+            if (reset) {
+                this.handleActiveStrategy(snippetId, false);
+            }
         },
         /**
          * Pushing the value if there are prechecked value in snippet
@@ -384,7 +392,7 @@ export default {
             this.deleteRulesOfChildren(this.getSnippetById(snippetId));
             if (this.isStrategyActive() || this.isParentSnippet(snippetId)) {
                 this.$nextTick(() => {
-                    this.handleActiveStrategy(snippetId);
+                    this.handleActiveStrategy(snippetId, !this.hasUnfixedRules() && this.layerConfig.resetLayer ? true : undefined);
                 });
             }
         },
@@ -424,7 +432,7 @@ export default {
             if (this.isStrategyActive()) {
                 this.$nextTick(() => {
                     this.isLockedHandleActiveStrategy = false;
-                    this.handleActiveStrategy();
+                    this.handleActiveStrategy(undefined, this.layerConfig.resetLayer ? true : undefined);
                 });
             }
         },
@@ -509,9 +517,12 @@ export default {
          * Filters the layer with the current snippet rules.
          * @param {Number|Number[]} [snippetId=false] the id(s) of the snippet that triggered the filtering
          * @param {Function} [onsuccess=false] a function to call on success
+         * @param {Boolean} adjustment true if the filter should adjust
+         * @param {Boolean} alterLayer true if the layer should alter the layer items
+         * @param {Object[]} rules array of rules
          * @returns {void}
          */
-        filter (snippetId = false, onsuccess = false) {
+        filter (snippetId = false, onsuccess = false, adjustment = true, alterLayer = true, rules = false) {
             const filterId = this.layerConfig.filterId,
                 filterQuestion = {
                     filterId,
@@ -520,7 +531,7 @@ export default {
                         paging: this.layerConfig?.paging ? this.layerConfig.paging : 1000,
                         searchInMapExtent: this.getSearchInMapExtent()
                     },
-                    rules: this.getCleanArrayOfRules()
+                    rules: Array.isArray(rules) ? rules : this.getCleanArrayOfRules()
                 };
 
             this.setFormDisable(true);
@@ -529,6 +540,14 @@ export default {
             if (this.api instanceof FilterApi && this.mapHandler instanceof MapHandler) {
                 this.mapHandler.activateLayer(filterId, () => {
                     this.api.filter(filterQuestion, filterAnswer => {
+                        if (typeof onsuccess === "function" && !alterLayer) {
+                            this.amountOfFilteredItems = false;
+                            if (adjustment) {
+                                onsuccess(filterAnswer);
+                            }
+                            return;
+                        }
+
                         this.paging = filterAnswer.paging;
                         this.filteredItems = [];
                         if (this.paging?.page === 1) {
@@ -571,8 +590,7 @@ export default {
                         else {
                             this.amountOfFilteredItems = false;
                         }
-
-                        if (typeof onsuccess === "function") {
+                        if (typeof onsuccess === "function" && adjustment) {
                             onsuccess(filterAnswer);
                         }
                     }, error => {

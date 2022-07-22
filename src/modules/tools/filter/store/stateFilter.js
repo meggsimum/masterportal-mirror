@@ -18,6 +18,7 @@ export default {
     name: "common:menu.tools.filter",
     renderToWindow: false,
     resizableWindow: true,
+    resetLayer: false,
     deactivateGFI: false,
     layerSelectorVisible: true,
     multiLayerSelector: true,
