@@ -31,7 +31,7 @@ export default {
         if (state.serviceId !== "") {
             serviceUrl = rootGetters.getRestServiceById(state.serviceId).url;
 
-            if (!serviceUrl.includes("/print/")) {
+            if (state.printService === "mapfish" && !serviceUrl.includes("/print/")) {
                 serviceUrl = serviceUrl + "print/";
             }
 

@@ -126,7 +126,8 @@ describe("src/modules/tools/print/store/actionsPrint", function () {
         it("should start another print request with service url without /print/", done => {
             const state = {
                     serviceUrl: "https://geodienste.hamburg.de/mapfish_print_internet/",
-                    printAppId: "master"
+                    printAppId: "master",
+                    printService: "mapfish"
                 },
                 response = {
                     ref: "d023a604-99b0-4a4d-aa40-a1d3b5a0fd5d@5f00580a-5fd4-4579-8d21-1ad07051d09a",
