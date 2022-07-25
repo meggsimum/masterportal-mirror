@@ -270,7 +270,7 @@ const getters = {
     getCurrentExtent: () => {
         let size;
 
-        if (getters.size) {
+        if (Array.isArray(getters.size)) {
             size = getters.size;
         }
         else {
