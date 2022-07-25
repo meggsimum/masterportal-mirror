@@ -218,7 +218,7 @@ export default {
             response = "",
             serviceUrlDefinition = state.serviceUrl;
 
-        if (state.printService === "mapfish" && !state.serviceUrl.includes("/print/")) {
+        if (state.printService !== "plotservice" && !state.serviceUrl.includes("/print/")) {
             serviceUrlDefinition = state.serviceUrl + "print/";
         }
 
@@ -233,7 +233,7 @@ export default {
                 serviceUrl = rootGetters.getRestServiceById("mapfish").url;
             }
 
-            if (state.printService === "mapfish" && !serviceUrl.includes("/print/")) {
+            if (state.printService !== "plotservice" && !serviceUrl.includes("/print/")) {
                 serviceUrl = serviceUrl + "print/";
             }
 
@@ -307,7 +307,7 @@ export default {
     waitForPrintJob: async function ({state, dispatch, commit}, response) {
         let printFolderUrlPart = "";
 
-        if (state.printService === "mapfish" && !state.serviceUrl.includes("/print/")) {
+        if (state.printService !== "plotservice" && !state.serviceUrl.includes("/print/")) {
             printFolderUrlPart = "print/";
         }
 
@@ -327,7 +327,7 @@ export default {
     waitForPrintJobSuccess: async function ({state, dispatch, commit}, response) {
         let printFolderUrlPart = "";
 
-        if (state.printService === "mapfish" && !state.serviceUrl.includes("/print/")) {
+        if (state.printService !== "plotservice" && !state.serviceUrl.includes("/print/")) {
             printFolderUrlPart = "print/";
         }
 
