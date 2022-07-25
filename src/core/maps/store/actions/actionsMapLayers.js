@@ -7,13 +7,13 @@ export default {
      * Creates a new vector layer and adds it to the map.
      * If it already exists, this layer is returned.
      * @param {Object} param store context.
-     * @param {Object} param.state the state.
-     * @param {Object} param.dispatch the dispatch.
+     * @param {Function} param.dispatch the dispatch.
+     * @param {Object} param.getters the getters.
      * @param {String} name The name and the id for the layer.
      * @returns {module:ol/layer} The created or the already existing layer.
      */
-    createLayer ({state, dispatch}, name) {
-        const layerList = state.layerList;
+    createLayer ({dispatch, getters}, name) {
+        const layerList = getters.getLayerList;
 
         let resultLayer = layerList.find(layer => {
             return layer.get("name") === name;
