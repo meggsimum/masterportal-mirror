@@ -97,17 +97,13 @@ export default {
     mutations: {
         /**
          * Replaces current attribution array with a new one.
-         * If list was extended, attributions flyout is also opened.
          * If list was cleared, attributions flyout is also closed.
          * @param {Object} state previous state
          * @param {AttributionListItem[]} attributionList new list
          * @returns {void}
          */
         setAttributions (state, attributionList) {
-            if (attributionList.length > state.attributionList.length) {
-                state.open = true;
-            }
-            else if (attributionList.length === 0) {
+            if (attributionList.length === 0) {
                 state.open = false;
             }
             state.attributionList = attributionList;
