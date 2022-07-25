@@ -4,35 +4,6 @@ import VectorSource from "ol/source/Vector.js";
 
 export default {
     /**
-     * Creates a new vector layer and adds it to the map.
-     * If it already exists, this layer is returned.
-     * @param {Object} param store context.
-     * @param {Object} param.state the state.
-     * @param {Object} param.dispatch the dispatch.
-     * @param {String} name The name and the id for the layer.
-     * @returns {module:ol/layer} The created or the already existing layer.
-     */
-    createLayer ({state, dispatch}, name) {
-        const layerList = state.layerList;
-
-        let resultLayer = layerList.find(layer => {
-            return layer.get("name") === name;
-        });
-
-        if (resultLayer !== undefined) {
-            return resultLayer;
-        }
-
-        resultLayer = new VectorLayer({
-            id: name,
-            name: name,
-            source: new VectorSource(),
-            zIndex: 999
-        });
-        dispatch("addLayer", resultLayer);
-        return resultLayer;
-    },
-    /**
      * Adds a layer to the map.
      * Layers with the attribute "alwaysOnTop": true are set on top of the map.
      * @param {Object} param store context.
@@ -89,17 +60,18 @@ export default {
     addLayerOnTop ({dispatch}, layer) {
         dispatch("addLayerToIndex", {layer: layer, zIndex: mapCollection.getMap("2D").getLayers().getLength()});
     },
+
     /**
-     * Checks if the layer with the given name already exists and uses it,
-     * creates a new layer and returns it if not.
-     * @param {Object} param store context.
-     * @param {Object} param.getters the getters.
-     * @param {Object} param.dispatch the dispatch.
-     * @param {String} layerName The name of the layer to check.
-     * @param {Boolean} [alwaysOnTop=true] Layers with the attribute "alwaysOnTop": true are set on top of the map.
-     * @returns {module:ol/layer/Base~BaseLaye}  the found layer or a new layer with the given name.
+     * Checks if the layer with the given name already exists and uses it or creates a new layer and returns it if not.
+     * @param {Object} context - A context object of the store instance.
+     * @param {Function} context.dispatch - The dispatch function to call other actions.
+     * @param {Object} context.getters - The getters of the map.
+     * @param {Object} payload - The action payload.
+     * @param {String} payload.layerName - The name of the new layer or the already existing layer.
+     * @param {Boolean} [payload.alwaysOnTop=true] - Layers with the attribute "alwaysOnTop": true are set on top of the map.
+     * @returns {module:ol/layer/Base~BaseLaye} The found layer or a new layer with the given name.
      */
-    async addNewLayerIfNotExists ({getters, dispatch}, {layerName, alwaysOnTop = true}) {
+    async addNewLayerIfNotExists ({dispatch, getters}, {layerName, alwaysOnTop = true}) {
         let resultLayer = await getters.getLayerByName(layerName);
 
         if (!resultLayer) {
