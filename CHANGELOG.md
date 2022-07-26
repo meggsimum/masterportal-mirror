@@ -16,6 +16,7 @@
 - Added DPI selection to print dialog (as advertised by mapfish print via "dpiSuggestions")
 - Filter:
     - New option added called "resetLayer". If true it will change the reset button in the filter to a button which resets the whole layer and ignores the prechecked values
+- Possibility for development with self-signed SSL-certificates. See [wiki-doc](https://bitbucket.org/geowerkstatt-hamburg/masterportal/wiki/Entwicklungsumgebung%20mit%20selbstsignierten%20SSL-Zertifikat%20einrichten)
 
 ### Changed
 - CompareFeatures: The values true and false are now translated.
