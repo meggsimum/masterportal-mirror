@@ -16,6 +16,7 @@
   "main": "js/main.js",
   "scripts": {
     "start": "webpack-dev-server --config devtools/webpack.dev.js",
+    "start:ssl": "webpack-dev-server --config devtools/webpack.dev.js --https --cert license/localhost.pem --key license/localhost.key",
     "test": "mochapack --webpack-config devtools/webpack.test.js --bail --recursive --timeout 15000 ./test/unittests/**/*.test.js ./addons/**/unittests/*.test.js",
     "test:watch": "npm run test -- --watch",
     "test:vue": "mochapack --recursive --webpack-config devtools/webpack.vue.test.js ./src/**/*.spec.js ./addons/**/*.spec.js",
@@ -31,6 +32,7 @@
     "buildExamples": "node devtools/tasks/exampleBuild.js && node devtools/tasks/exampleCopy.js",
     "buildJsDoc": "node devtools/tasks/buildJsDoc.js",
     "buildMdDoc": "node devtools/tasks/buildMdDoc.js",
+    "createSSLCert": "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout license/localhost.key -out license/localhost.pem -config license/req.cnf -sha256",
     "versionHotfix": "npm version patch && npm run versionLatest && git push --tags -f",
     "versionMinor": "npm version minor && npm run versionLatest && git push --tags -f",
     "versionMajor": "npm version major && npm run versionLatest && git push --tags -f",
@@ -150,6 +152,7 @@
     "sinon-chai": "^3.7.0",
     "svg-url-loader": "^7.1.1",
     "text-loader": "^0.0.1",
+    "openssl-nodejs": "^1.0.5",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14",
