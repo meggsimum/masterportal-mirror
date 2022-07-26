@@ -19,6 +19,7 @@
 
 ### Changed
 - CompareFeatures: The values true and false are now translated.
+- Rename the layer names `measure_layer` to `measureLayer` and draw `import_draw_layer` to `importDrawLayer`.
 
 ### Deprecated
 

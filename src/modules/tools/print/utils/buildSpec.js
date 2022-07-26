@@ -264,7 +264,7 @@ const BuildSpecModel = {
                     returnLayer = this.buildWmts(layer, source);
                 }
             }
-            else if (typeof layer?.get === "function" && layer.get("name") === "import_draw_layer") {
+            else if (typeof layer?.get === "function" && layer.get("name") === "importDrawLayer") {
                 returnLayer = this.getDrawLayerInfo(layer, extent);
             }
             else if (layer instanceof Vector) {
@@ -460,7 +460,7 @@ const BuildSpecModel = {
         const mapfishStyleObject = {
                 "version": "2"
             },
-            layersToNotReverse = ["measure_layer", "import_draw_layer"];
+            layersToNotReverse = ["measureLayer", "importDrawLayer"];
 
         if (!layersToNotReverse.includes(layer.values_.id)) {
             features.reverse();
@@ -538,7 +538,7 @@ const BuildSpecModel = {
                         styleObject.symbolizers.push(this.buildPolygonStyle(style, layer));
                     }
                     else if (geometryType === "LineString" || geometryType === "MultiLineString") {
-                        if (layer.values_.id === "measure_layer" && style.stroke_ === null) {
+                        if (layer.values_.id === "measureLayer" && style.stroke_ === null) {
                             return;
                         }
                         styleObject.symbolizers.push(this.buildLineStringStyle(style, layer));

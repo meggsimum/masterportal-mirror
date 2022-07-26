@@ -54,7 +54,7 @@ describe("src/modules/tools/measure/components/MeasureInMapTooltip.vue", () => {
                                 polygonAreas: () => ({polygonId: "500 m²"}),
                                 featureId: () => featureId,
                                 layer: () => new VectorLayer({
-                                    name: "measure_layer",
+                                    name: "measureLayer",
                                     source: new VectorSource(),
                                     alwaysOnTop: true,
                                     style: new Style()

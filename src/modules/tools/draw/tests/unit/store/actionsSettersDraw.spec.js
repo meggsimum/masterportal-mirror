@@ -62,7 +62,7 @@ describe("src/modules/tools/draw/store/actions/settersDraw.js", () => {
             expect(commit.thirdCall.args[0]).to.equal("setLayer");
             expect(commit.thirdCall.args[1]).to.be.undefined;
             expect(dispatch.callCount).to.equal(4);
-            expect(dispatch.firstCall.args).to.eql(["Maps/addNewLayerIfNotExists", "import_draw_layer", {root: true}]);
+            expect(dispatch.firstCall.args).to.eql(["Maps/addNewLayerIfNotExists", "importDrawLayer", {root: true}]);
             expect(dispatch.secondCall.args).to.eql(["createDrawInteractionAndAddToMap", {active: true}]);
             expect(dispatch.thirdCall.args).to.eql(["createSelectInteractionAndAddToMap", false]);
             expect(dispatch.getCall(3).args).to.eql(["createModifyInteractionAndAddToMap", false]);
@@ -78,7 +78,7 @@ describe("src/modules/tools/draw/store/actions/settersDraw.js", () => {
             expect(commit.thirdCall.args[0]).to.equal("setLayer");
             expect(commit.thirdCall.args[1]).to.be.undefined;
             expect(dispatch.callCount).to.equal(5);
-            expect(dispatch.firstCall.args).to.eql(["Maps/addNewLayerIfNotExists", "import_draw_layer", {root: true}]);
+            expect(dispatch.firstCall.args).to.eql(["Maps/addNewLayerIfNotExists", "importDrawLayer", {root: true}]);
             expect(dispatch.secondCall.args).to.eql(["createDrawInteractionAndAddToMap", {active: true}]);
             expect(dispatch.thirdCall.args).to.eql(["createSelectInteractionAndAddToMap", false]);
             expect(dispatch.getCall(3).args).to.eql(["createModifyInteractionAndAddToMap", false]);

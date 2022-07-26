@@ -13,8 +13,8 @@ describe("tools/measure/utils/measureStyle", function () {
             layer = new VectorLayer({
                 source,
                 style,
-                id: "measure_layer",
-                name: "measure_layer",
+                id: "measureLayer",
+                name: "measureLayer",
                 alwaysOnTop: true
             }),
             feature = new Feature({

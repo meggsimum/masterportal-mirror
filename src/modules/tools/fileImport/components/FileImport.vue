@@ -95,7 +95,7 @@ export default {
                 const reader = new FileReader();
 
                 reader.onload = async f => {
-                    const vectorLayer = await this.addNewLayerIfNotExists("import_draw_layer");
+                    const vectorLayer = await this.addNewLayerIfNotExists("importDrawLayer");
 
                     this.importKML({raw: f.target.result, layer: vectorLayer, filename: file.name});
                 };

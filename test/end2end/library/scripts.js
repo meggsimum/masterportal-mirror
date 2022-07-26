@@ -320,7 +320,7 @@ function areRegExpsInMeasureLayer () {
     const texts = Backbone.Radio.request("Map", "getMap")
             .getLayers()
             .getArray()
-            .filter(l => l.get("name") === "measure_layer")[0]
+            .filter(l => l.get("name") === "measureLayer")[0]
             .getSource()
             .getFeatures()
             .map(f => f.getStyle())
@@ -347,14 +347,14 @@ function areRegExpsInMeasureLayer () {
 }
 
 /**
- * Returns the etxts contained in styles of measure_layer.
+ * Returns the etxts contained in styles of measureLayer.
  * @returns {string} the texts
  */
 function getMeasureLayersTexts () {
     const texts = Backbone.Radio.request("Map", "getMap")
         .getLayers()
         .getArray()
-        .filter(l => l.get("name") === "measure_layer")[0]
+        .filter(l => l.get("name") === "measureLayer")[0]
         .getSource()
         .getFeatures()
         .map(f => f.getStyle())
@@ -568,7 +568,7 @@ function getOrderedLayerIds () {
             return false;
         })
         .filter(id => id) // sort out functional layers, e.g. mapMarker layer
-        .filter(id => !["12883", "12884", "13032", "157", "46", "zoom_to_feature_layer", "measure_layer", "import_draw_layer"].includes(id)) // sort out e.g. 3D-, oblique-, static image- layer not initially visible
+        .filter(id => !["12883", "12884", "13032", "157", "46", "measureLayer", "importDrawLayer"].includes(id)) // sort out e.g. 3D-, oblique-, static image- layer not initially visible
         .map(id => Array.isArray(id) ? id[0] : id) // MP always uses first id as representant
         .map(id => String(parseInt(id, 10))) // e.g. "1933geofox_stations" should only be 1933 for comparison
         .reverse(); // layers are returned in "inverted" order (last is first in tree)
