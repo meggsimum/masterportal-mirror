@@ -33,11 +33,15 @@ VectorTileLayer.prototype = Object.create(Layer.prototype);
 
 /**
  * Creates vector tile layer.
- * @param {Object} attr the attributes for the layer
+ * @param {Object} attrs the attributes for the layer
  * @return {void}
  */
-VectorTileLayer.prototype.createLayer = function (attr) {
-    this.layer = vectorTile.createLayer(attr);
+VectorTileLayer.prototype.createLayer = function (attrs) {
+    const layerParams = {
+        gfiAttributes: attrs.gfiAttributes
+    };
+
+    this.layer = vectorTile.createLayer(attrs, {layerParams});
 };
 
 /**
