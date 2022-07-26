@@ -27,6 +27,8 @@ css/modules.css
 
 dist
 
+devtools/license*
+
 examples*
 
 examples.zip
