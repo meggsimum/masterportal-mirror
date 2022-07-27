@@ -726,8 +726,7 @@ async function ParametricUrlTests ({builder, url, resolution, browsername, mode,
                         {coordinate: [567043.565, 5934455.808], image: "https://geodienste.hamburg.de/lgv-config/img/location_eventlotse.svg"}
                     ]), 20000);
                 });
-                // https://www.jira.geoportal-hamburg.de/browse/BG-3000
-                it.skip("?featureViaURL test point", async function () {
+                it("?featureViaURL test point", async function () {
                     await loadUrl(driver, `${url}?featureViaURL=[{"layerId":"42","features":[{"coordinates":[10,53.57],"label":"TestPunkt"}]}]`, mode);
 
                     await driver.wait(until.elementLocated(By.css(".navbar")), 12000);
