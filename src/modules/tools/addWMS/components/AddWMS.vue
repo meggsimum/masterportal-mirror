@@ -26,31 +26,7 @@ export default {
     },
     computed: {
         ...mapGetters("Tools/AddWMS", Object.keys(getters)),
-        ...mapGetters("Maps", ["projection"]),
-
-        placeholder () {
-            return i18next.t("common:modules.tools.addWMS.placeholder");
-        },
-
-        textLoadLayer () {
-            return i18next.t("common:modules.tools.addWMS.textLoadLayer");
-        },
-
-        errorEmptyUrl () {
-            return i18next.t("common:modules.tools.addWMS.errorEmptyUrl");
-        },
-
-        errorHttpUrl () {
-            return i18next.t("common:modules.tools.addWMS.errorHttpsMessage");
-        },
-
-        errorIfInExtent () {
-            return i18next.t("common:modules.tools.addWMS.ifInExtent");
-        },
-
-        completeMessage () {
-            return i18next.t("common:modules.tools.addWMS.completeMessage");
-        }
+        ...mapGetters("Maps", ["projection"])
     },
     watch: {
         /**
@@ -130,7 +106,7 @@ export default {
                 return;
             }
             else if (url.includes("http:")) {
-                this.$store.dispatch("Alerting/addSingleAlert", this.errorHttpUrl);
+                this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.errorHttpsMessage"));
                 return;
             }
             LoaderOverlay.show();
@@ -160,7 +136,7 @@ export default {
                         }
 
                         if (!checkExtent) {
-                            this.$store.dispatch("Alerting/addSingleAlert", this.errorIfInExtent);
+                            this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.ifInExtent"));
                             return;
                         }
 
@@ -178,7 +154,7 @@ export default {
                         });
                         Radio.trigger("ModelList", "closeAllExpandedFolder");
 
-                        this.$store.dispatch("Alerting/addSingleAlert", this.completeMessage);
+                        this.$store.dispatch("Alerting/addSingleAlert", i18next.t("common:modules.tools.addWMS.completeMessage"));
 
                     }
                     catch (e) {
@@ -355,7 +331,7 @@ export default {
                     v-if="invalidUrl"
                     class="addwms_error"
                 >
-                    {{ errorEmptyUrl }}
+                    {{ $t('common:modules.tools.addWMS.errorEmptyUrl') }}
                 </div>
                 <input
                     id="wmsUrl"
@@ -363,7 +339,7 @@ export default {
                     aria-label="WMS-Url"
                     type="text"
                     class="form-control wmsUrlsChanged"
-                    :placeholder="placeholder"
+                    :placeholder="$t('common:modules.tools.addWMS.placeholder')"
                     @keydown.enter="inputUrl"
                 >
                 <button
@@ -375,7 +351,7 @@ export default {
                     <span
                         class=""
                         aria-hidden="true"
-                    >{{ textLoadLayer }}</span>
+                    >{{ $t('common:modules.tools.addWMS.textLoadLayer') }}</span>
                     <span
                         class="bootstrap-icon"
                         aria-hidden="true"
