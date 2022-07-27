@@ -35,6 +35,7 @@
 - layerSequence: fix possibility to move layers in tree despite defined layerSequence
 - Print: fix handling for highresolution plotService
 - Fixed a bug where the wrong GFi was displayed after turning on and off different layers.
+- Fixed language switching bug in the addWMS tool
 
 ---
 
