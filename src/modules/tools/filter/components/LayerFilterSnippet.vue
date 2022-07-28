@@ -68,6 +68,11 @@ export default {
             type: [Number, Boolean],
             required: false,
             default: undefined
+        },
+        filterGeometry: {
+            type: [Object, Boolean],
+            required: false,
+            default: false
         }
     },
     data () {
@@ -531,7 +536,9 @@ export default {
                     snippetId: typeof snippetId === "number" || Array.isArray(snippetId) ? snippetId : false,
                     commands: {
                         paging: this.layerConfig?.paging ? this.layerConfig.paging : 1000,
-                        searchInMapExtent: this.getSearchInMapExtent()
+                        searchInMapExtent: this.getSearchInMapExtent(),
+                        geometryName: this.layerConfig.geometryName,
+                        filterGeometry: this.filterGeometry
                     },
                     rules: Array.isArray(rules) ? rules : this.getCleanArrayOfRules()
                 };

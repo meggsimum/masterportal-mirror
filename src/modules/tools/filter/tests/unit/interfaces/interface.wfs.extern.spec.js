@@ -6,7 +6,9 @@ describe("src/modules/tools/filter/interfaces/utils/interface.wfs.extern.js", ()
     let interfaceWfsExtern = null;
 
     beforeEach(() => {
-        interfaceWfsExtern = new InterfaceWfsExtern();
+        interfaceWfsExtern = new InterfaceWfsExtern({
+            getCurrentExtent: false
+        });
     });
 
     describe("constructor", () => {

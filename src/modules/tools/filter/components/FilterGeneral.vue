@@ -44,7 +44,8 @@ export default {
             layerConfigs: [],
             selectedLayers: [],
             layerLoaded: {},
-            layerFilterSnippetPostKey: ""
+            layerFilterSnippetPostKey: "",
+            filterGeometry: false
         };
     },
     computed: {
@@ -208,6 +209,7 @@ export default {
                                 :live-zoom-to-features="liveZoomToFeatures"
                                 :filter-rules="filters[slotProps.layer.filterId]"
                                 :filter-hits="filtersHits[slotProps.layer.filterId]"
+                                :filter-geometry="filterGeometry"
                                 @updateRules="updateRules"
                                 @deleteAllRules="deleteAllRules"
                                 @updateFilterHits="updateFilterHits"
@@ -226,6 +228,7 @@ export default {
                         :live-zoom-to-features="liveZoomToFeatures"
                         :filter-rules="filters[layerConfig.filterId]"
                         :filter-hits="filtersHits[layerConfig.filterId]"
+                        :filter-geometry="filterGeometry"
                         @updateRules="updateRules"
                         @deleteAllRules="deleteAllRules"
                         @updateFilterHits="updateFilterHits"

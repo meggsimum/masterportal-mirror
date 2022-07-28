@@ -11,13 +11,15 @@ export default class InterfaceGeojsonIntern {
      * @param {IntervalRegister} intervalRegister the object to register and unregister intervals with
      * @param {Function} handlers.getFeaturesByLayerId a function(layerId) to receive the features from ol with - only used for filter function
      * @param {Function} handlers.isFeatureInMapExtent a function(feature) to check if the feature is in the current map extent
+     * @param {Function} handlers.isFeatureInGeometry a function(feature, geometry) to check if the feature intersects with the given geometry
      */
-    constructor (intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent}) {
+    constructor (intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent, isFeatureInGeometry}) {
         this.intervalRegister = intervalRegister;
         this.getFeaturesByLayerId = getFeaturesByLayerId;
         this.isFeatureInMapExtent = isFeatureInMapExtent;
+        this.isFeatureInGeometry = isFeatureInGeometry;
         this.interfaceGeojsonExtern = new InterfaceGeojsonExtern(intervalRegister);
-        this.interfaceWfsIntern = new InterfaceWfsIntern(intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent});
+        this.interfaceWfsIntern = new InterfaceWfsIntern(intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent, isFeatureInGeometry});
     }
 
     /**

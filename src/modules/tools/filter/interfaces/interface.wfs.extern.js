@@ -4,6 +4,7 @@ import {describeFeatureTypeWFS} from "../utils/describeFeatureTypeWFS.js";
 import {WFS} from "ol/format";
 import {
     bbox as bboxFilter,
+    intersects as intersectsFilter,
     and as andFilter,
     between as betweenFilter,
     during as duringFilter,
@@ -25,11 +26,13 @@ import moment from "moment";
 export default class InterfaceWfsExtern {
     /**
      * @constructor
+     * @param {Function} handlers.getCurrentExtent a function to receive the current browser extent
      */
-    constructor () {
+    constructor ({getCurrentExtent}) {
         this.axiosCancelTokenSources = {};
         this.allFetchedItems = [];
         this.waitingListForRequests = [];
+        this.getCurrentExtent = getCurrentExtent;
     }
 
     /**
@@ -405,7 +408,7 @@ export default class InterfaceWfsExtern {
      * @returns {void}
      */
     filter (filterQuestion, onsuccess, onerror, axiosMock = false) {
-        const filter = Array.isArray(filterQuestion.rules) && filterQuestion.rules.length ? this.getFilter(filterQuestion.rules) : undefined,
+        const filter = Array.isArray(filterQuestion.rules) && filterQuestion.rules.length ? this.getFilter(filterQuestion.rules, filterQuestion.commands?.searchInMapExtent, filterQuestion.commands?.geometryName, filterQuestion.commands?.filterGeometry) : undefined,
             featureRequest = new WFS().writeGetFeature({
                 srsName: filterQuestion?.service?.srsName,
                 featureNS: filterQuestion?.service?.featureNS,
@@ -626,21 +629,14 @@ export default class InterfaceWfsExtern {
     /**
      * Returns an ol filter object to use for the given rules.
      * @param {Object[]} rules the rules to parse through
-     * @param {String} [geometryName=false] the attrName of the geometry
-     * @param {Function} [getCurrentExtent=false] a function to get the current browser extent with
+     * @param {Boolean} searchInMapExtent a flag if the filter should apply only in current browser extent
+     * @param {String} geometryName the attrName of the geometry
+     * @param {Function} filterGeometry a geometry in which to filter
      * @returns {Object} an ol filter object to use with writeGetFeature method
      */
-    getFilter (rules, geometryName = false, getCurrentExtent = false) {
+    getFilter (rules, searchInMapExtent, geometryName, filterGeometry) {
         const args = [];
 
-        if (rules.length === 1) {
-            return this.getRuleFilter(
-                rules[0]?.attrName,
-                rules[0]?.operator,
-                rules[0]?.value,
-                this.getLogicalHandlerByOperator(rules[0]?.operator, this.isIso8601(rules[0]?.format))
-            );
-        }
         rules.forEach(rule => {
             args.push(this.getRuleFilter(
                 rule?.attrName,
@@ -650,8 +646,15 @@ export default class InterfaceWfsExtern {
             ));
         });
 
-        if (typeof geometryName === "string" && typeof getCurrentExtent === "function") {
-            args.push(bboxFilter(geometryName, getCurrentExtent()));
+        if (typeof geometryName === "string" && isObject(filterGeometry)) {
+            args.push(intersectsFilter(geometryName, filterGeometry));
+        }
+        else if (searchInMapExtent && typeof geometryName === "string" && typeof this.getCurrentExtent === "function") {
+            args.push(bboxFilter(geometryName, this.getCurrentExtent()));
+        }
+
+        if (args.length === 1) {
+            return args[0];
         }
         return andFilter(...args);
     }

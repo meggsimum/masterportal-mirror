@@ -42,14 +42,35 @@ function getFeaturesByLayerId (layerId) {
 }
 
 /**
+ * Returns the current browser extent.
+ * @returns {ol/Extent} The current browser extent.
+ */
+function getCurrentExtent () {
+    return store.getters["Maps/getCurrentExtent"];
+}
+
+/**
  * Checks if the given feature is in the current map extent of the browser.
  * @param {ol/Feature} feature the feature to check
  * @returns {Boolean} true if the feature is in the current map extent of the browser
  */
 function isFeatureInMapExtent (feature) {
-    const mapExtent = store.getters["Maps/getCurrentExtent"];
+    const mapExtent = getCurrentExtent();
 
     return intersects(mapExtent, feature.getGeometry().getExtent());
+}
+
+/**
+ * Checks if the given geometry intersects with the extent of the given feature.
+ * @param {ol/Feature} feature the feature to check
+ * @param {ol/Geometry} geometry the geometry to intersect with
+ * @returns {Boolean} true if the feature intersects the geometry
+ */
+function isFeatureInGeometry (feature, geometry) {
+    if (typeof geometry?.intersectsExtent !== "function") {
+        return false;
+    }
+    return geometry.intersectsExtent(feature.getGeometry().getExtent());
 }
 
 /**
@@ -162,7 +183,9 @@ export {
     createLayerIfNotExists,
     getFeaturesByLayerId,
     getLayerByLayerId,
+    getCurrentExtent,
     isFeatureInMapExtent,
+    isFeatureInGeometry,
     liveZoom,
     showFeaturesByIds,
     addLayerByLayerId,

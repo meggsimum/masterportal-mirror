@@ -29,11 +29,13 @@ export default class InterfaceWfsIntern {
      * @param {IntervalRegister} intervalRegister the object to register and unregister intervals with
      * @param {Function} handlers.getFeaturesByLayerId a function(layerId) to receive the features from ol with - only used for filter function
      * @param {Function} handlers.isFeatureInMapExtent a function(feature) to check if the feature is in the current map extent
+     * @param {Function} handlers.isFeatureInGeometry a function(feature, geometry) to check if the feature intersects with the given geometry
      */
-    constructor (intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent}) {
+    constructor (intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent, isFeatureInGeometry}) {
         this.intervalRegister = intervalRegister;
         this.getFeaturesByLayerId = getFeaturesByLayerId;
         this.isFeatureInMapExtent = isFeatureInMapExtent;
+        this.isFeatureInGeometry = isFeatureInGeometry;
         this.interfaceWfsExtern = new InterfaceWfsExtern(intervalRegister);
     }
 
@@ -129,6 +131,12 @@ export default class InterfaceWfsIntern {
             }
             return;
         }
+        else if (typeof this.isFeatureInGeometry !== "function") {
+            if (typeof onerror === "function") {
+                onerror(new Error("InterfaceWfsIntern.filter: isFeatureInGeometry must be a function"));
+            }
+            return;
+        }
         else if (!isObject(filterQuestion)) {
             if (typeof onerror === "function") {
                 onerror(new Error("InterfaceWfsIntern.filter: filterQuestion must be an object"));
@@ -141,6 +149,7 @@ export default class InterfaceWfsIntern {
             snippetId = clonedQuestion?.snippetId,
             commands = clonedQuestion?.commands,
             rules = clonedQuestion?.rules,
+            filterGeometry = filterQuestion?.commands?.filterGeometry,
             searchInMapExtent = commands?.searchInMapExtent,
             paging = commands?.paging > 0 ? commands.paging : 1000,
             features = this.getFeaturesByLayerId(service?.layerId),
@@ -153,6 +162,7 @@ export default class InterfaceWfsIntern {
             for (let n = 0; n < paging; n++) {
                 if (
                     (!searchInMapExtent || this.isFeatureInMapExtent(features[idx]))
+                    && (!isObject(filterGeometry) || this.isFeatureInGeometry(features[idx], filterGeometry))
                     && this.checkRules(features[idx], rules)
                 ) {
                     items.push(features[idx]);

@@ -7,7 +7,8 @@ describe("src/modules/tools/filter/interfaces/utils/interface.wfs.intern.js", ()
     beforeEach(() => {
         interfaceWfsIntern = new InterfaceWfsIntern(false, {
             getFeaturesByLayerId: false,
-            isFeatureInMapExtent: false
+            isFeatureInMapExtent: false,
+            isFeatureInGeometry: false
         });
     });
 

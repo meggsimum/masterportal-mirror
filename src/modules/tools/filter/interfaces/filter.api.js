@@ -3,7 +3,9 @@ import isObject from "../../../../utils/isObject";
 import {
     getMapProjection,
     getFeaturesByLayerId,
-    isFeatureInMapExtent
+    getCurrentExtent,
+    isFeatureInMapExtent,
+    isFeatureInGeometry
 } from "../utils/openlayerFunctions.js";
 import IntervalRegister from "../utils/intervalRegister.js";
 import InterfaceWfsIntern from "./interface.wfs.intern.js";
@@ -31,11 +33,11 @@ export default class FilterApi {
             FilterApi.cache = {};
             FilterApi.waitingList = {};
             FilterApi.interfaces = {
-                wfsIntern: new InterfaceWfsIntern(FilterApi.intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent}),
-                wfsExtern: new InterfaceWfsExtern(),
-                oafIntern: new InterfaceOafIntern(FilterApi.intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent}),
+                wfsIntern: new InterfaceWfsIntern(FilterApi.intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent, isFeatureInGeometry}),
+                wfsExtern: new InterfaceWfsExtern({getCurrentExtent}),
+                oafIntern: new InterfaceOafIntern(FilterApi.intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent, isFeatureInGeometry}),
                 oafExtern: new InterfaceOafExtern(),
-                geojsonIntern: new InterfaceGeojsonIntern(FilterApi.intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent}),
+                geojsonIntern: new InterfaceGeojsonIntern(FilterApi.intervalRegister, {getFeaturesByLayerId, isFeatureInMapExtent, isFeatureInGeometry}),
                 geojsonExtern: new InterfaceGeojsonExtern()
             };
         }
