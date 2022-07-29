@@ -169,7 +169,7 @@ const getters = {
     */
     getLayerById: () => ({layerId, searchInGroupLayers = true}) => {
         let returnLayer = null;
-
+console.log(mapCollection.getMap("2D").getLayers().getArray());
         mapCollection.getMap("2D").getLayers().getArray().forEach(layer => {
             if (searchInGroupLayers && layer instanceof LayerGroup) {
                 const groupLayer = layer.getLayers().getArray().find(childLayer => childLayer.get("id") === layerId);

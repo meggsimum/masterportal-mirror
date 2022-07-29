@@ -84,6 +84,7 @@ export default {
 
             dispatch("addLayer", resultLayer);
         }
+
         return resultLayer;
     }
 };

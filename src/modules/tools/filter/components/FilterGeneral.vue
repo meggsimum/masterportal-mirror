@@ -21,11 +21,13 @@ import {
 } from "../utils/openlayerFunctions.js";
 import LayerCategory from "./LayerCategory.vue";
 import isObject from "../../../../utils/isObject.js";
+import GeometryFilter from "./GeometryFilter.vue";
 
 export default {
     name: "FilterGeneral",
     components: {
         ToolTemplate,
+        GeometryFilter,
         LayerFilterSnippet,
         LayerCategory
     },
@@ -44,7 +46,8 @@ export default {
             layerConfigs: [],
             selectedLayers: [],
             layerLoaded: {},
-            layerFilterSnippetPostKey: ""
+            layerFilterSnippetPostKey: "",
+            filterGeometry: false
         };
     },
     computed: {
@@ -162,6 +165,11 @@ export default {
          */
         setLayerFilterSnippetPostKey (value) {
             this.layerFilterSnippetPostKey = value;
+        },
+
+        updateFilterGeometry (geometry) {
+            console.log(geometry);
+            this.filterGeometry = geometry;
         }
     }
 };
@@ -182,6 +190,10 @@ export default {
                 v-if="active"
                 id="tool-general-filter"
             >
+
+                <GeometryFilter
+                    @updateFilterGeometry="updateFilterGeometry"
+                />
                 <LayerCategory
                     v-if="Array.isArray(layerConfigs) && layerConfigs.length && layerSelectorVisible"
                     class="layerSelector"
