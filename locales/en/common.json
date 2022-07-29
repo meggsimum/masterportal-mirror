@@ -378,6 +378,11 @@
                 "hintInfoScale": "The selected print scale differs from the scale in the map window. This can lead to a different map layout in print.",
                 "invisibleLayer": "The following topics cannot be printed in the selected print scale {{scale}}:"
             },
+            "sessionTool": {
+                "uploadHeader": "Load Session",
+                "buttonText": "Select file",
+                "downloadHeader": "Save Session"
+            },
             "shadow": {
                 "shadowDisplay": "Shadow display"
               },
