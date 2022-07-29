@@ -79,7 +79,7 @@
     "bootstrap-slider": "^11.0.2",
     "bootstrap-toggle": "2.2.2",
     "chart.js": "^2.9.3",
-    "core-js": "3.15.2",
+    "core-js": "3.24.0",
     "dom-parser": "^0.1.6",
     "dom-storage": "^2.1.0",
     "html2canvas": "^1.4.0",

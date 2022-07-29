@@ -22,6 +22,9 @@
 - CompareFeatures: The values true and false are now translated.
 - The interactions between the `GFI` and the `Map` have been moved from the Map module to the GFI module/tool.
 - Rename the layer names `measure_layer` to `measureLayer` and draw `import_draw_layer` to `importDrawLayer`.
+- The following NPM packages have been updated:
+    - dependencies:
+        - core-js: 3.15.2 to 3.24.0
 
 ### Deprecated
 

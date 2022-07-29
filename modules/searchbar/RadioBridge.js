@@ -33,14 +33,14 @@ Radio.channel("VisibleVector").on({
             );
 
         store.commit("Maps/setClickCoordinate", [hit.coordinate[0], hit.coordinate[1]]);
-        store.commit("Maps/setGfiFeatures", [feature]);
+        store.commit("Tools/Gfi/setGfiFeatures", [feature]);
     }
 });
 
 Radio.channel("GFI").on({
     "setIsVisible": function (isVisible) {
         if (!isVisible) {
-            store.commit("Maps/setGfiFeatures", null);
+            store.commit("Tools/Gfi/setGfiFeatures", null);
         }
     }
 });

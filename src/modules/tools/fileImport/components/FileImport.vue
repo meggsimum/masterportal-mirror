@@ -91,7 +91,7 @@ export default {
             }
         },
         addFile (files) {
-            files.forEach(file => {
+            Array.from(files).forEach(file => {
                 const reader = new FileReader();
 
                 reader.onload = async f => {

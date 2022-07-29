@@ -23,7 +23,7 @@ const projections = getProjections("EPSG:25832", "EPSG:4326", "32"),
  * @returns {void}
  */
 function addUniqueStyleId (convertedFeatures) {
-    convertedFeatures.getElementsByTagName("ExtendedData").forEach(extendedData => {
+    Array.from(convertedFeatures.getElementsByTagName("ExtendedData")).forEach(extendedData => {
         extendedData.getElementsByTagName("value")[0].textContent = uniqueId("");
     });
 }
@@ -230,7 +230,7 @@ export default async function convertFeaturesToKml (features) {
 
     addUniqueStyleId(convertedFeatures);
 
-    convertedFeatures.getElementsByTagName("Placemark").forEach((placemark, i) => {
+    Array.from(convertedFeatures.getElementsByTagName("Placemark")).forEach((placemark, i) => {
         if (placemark.getElementsByTagName("Point").length > 0 && skip[i] === false) {
             const style = placemark.getElementsByTagName("Style")[0];
 
